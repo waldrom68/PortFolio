@@ -9,7 +9,12 @@
                         <span>Datos</span>
                     </div>
                 </div>
-                <div class="col-sm-9" style="border: 1px solid">col-auto DATA 1</div>
+                <div class="col-sm-9" style="border: 1px solid">
+                    <app-data 
+                        [dataObj]="dataObj"
+                        [visibility]="visibility"
+                    ></app-data>
+                </div>
             </div>
         </div>
         <!-- contenedor Perfil -->
@@ -20,7 +25,9 @@
                         <span>Perfil</span>
                     </div>
                 </div>
-                <div class="col-sm-9" style="border: 1px solid">col-auto DATA 2</div>
+                <div class="col-sm-9" style="border: 1px solid">
+                    <app-profile [perfilObj]="perfilObj"></app-profile>
+                </div>
             </div>
         </div>
 
@@ -36,7 +43,9 @@
                         <span>Objetivo</span>
                     </div>
                 </div>
-                <div class="col-sm-9" style="border: 1px solid">col-auto DATA 3</div>
+                <div class="col-sm-9" style="border: 1px solid">
+                    <app-objetive [objetivoObj]="objetivoObj"></app-objetive>
+                </div>
             </div>
         </div>
         <!-- contenedor Experiencia -->
@@ -48,12 +57,18 @@
                     </div>
                 </div>
                 
-                <div class="col-sm-9" style="border: 1px solid">col-auto DATA 4</div>
+                <div class="col-sm-9" style="border: 1px solid">
+                    <app-datos-trayectoria 
+                        [experienciaObj]="experienciaObj">
+                    </app-datos-trayectoria>
+                
+                </div>
                     
 
 
             </div>
         </div>
     </div>
+    
 
     

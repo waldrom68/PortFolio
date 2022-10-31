@@ -1,0 +1,8 @@
+<p>{{dataObj.resume}}</p>
+
+<ul *ngIf=dataObj.visible>
+    <li *ngFor="let elemento of dataObj.datos">
+        {{elemento}}
+
+    </li>
+</ul>

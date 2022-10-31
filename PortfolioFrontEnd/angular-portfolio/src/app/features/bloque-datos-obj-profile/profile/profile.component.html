@@ -1,0 +1,7 @@
+<p>{{perfilObj.resume}}</p>
+
+<div *ngIf=perfilObj.visible >
+    <li *ngFor="let elemento of perfilObj.datos">
+        {{elemento}}
+    </li>
+</div>

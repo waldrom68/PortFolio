@@ -1,0 +1,8 @@
+<p>{{objetivoObj.resume}}</p>
+
+<ul *ngIf=objetivoObj.visible>
+    <li *ngFor="let elemento of objetivoObj.datos">
+        {{elemento}}
+
+    </li>
+</ul>
