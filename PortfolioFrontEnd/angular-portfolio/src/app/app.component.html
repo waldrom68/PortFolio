@@ -1,4 +1,47 @@
-<!-- add the selector from the CustomerDashboardComponent -->
+<!-- HTML principal -->
+
 <app-top-bar></app-top-bar>
 
-<app-datos-personales></app-datos-personales>
+
+<div class="container-fluid">
+    <div class="row text-center aling-self-center py-3">
+
+        <!-- Caja componentes: Perfil, objetivo, trayectoria, Formación, habilidades e intereses -->
+        <div class="col-sm-8 g-0 m-auto">
+
+            <div class="col aling-self-center order-1" style="border: 1px solid;">
+
+                <section id="profileObjectiveAndTrajectory" class="row p-0 m-0">
+                    <p class="h4 text-center">Perfil, objetivo, trayectoria</p>
+
+                    <!-- Datos personales, Perfil, Objetivo profesional y Experiencia -->
+                    <app-bloque-datos-obj-profile></app-bloque-datos-obj-profile>
+
+                </section>
+            </div>
+
+            <div class="col aling-self-center order-1" style="border: 1px solid;">
+
+                <section id="profileObjectiveAndTrajectory" class="row p-0 m-0">
+                    <p class="h4 text-center">Formación, habilidades e intereses</p>
+
+                    <!-- Datos formacion, skills, intereses -->
+                    <app-bloque-formacion-skill-int></app-bloque-formacion-skill-int>
+
+                </section>
+            </div>
+        
+        </div>
+        
+        <div class="col-sm-4 g-0 m-auto">
+            <!-- Componente datos-personales: Imagen y nombre -->
+            <section id="nameAndImage" class="col order-5 opacity-75 align-self-center" style="border: 1px solid;">
+
+                <!-- templateUrl: 'app/features/datos-personales/datos-personales.component.html', -->
+                <app-personal-card></app-personal-card>
+
+            </section>
+
+        </div>
+    </div>
+</div>

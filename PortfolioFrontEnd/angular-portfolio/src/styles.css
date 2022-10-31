@@ -1,1 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,400;0,900;1,700&display=swap');
+
+@font-face {
+    font-family: 'Julius-Sans-One';
+    font-style: normal;  /* light */                       
+    src: local('Julius Sans One'), local('Julius-Sans-One'), url(./assets/fonts/JuliusSansOne-Regular.ttf);
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+}
+
+:root {
+    --body-font-family:'Julius-Sans-One','roboto', system-ui, "Segoe UI", "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+    --metal: #e3e3e3;
+    --metallight-shadow: #b5b5b5;
+    --metaldark-shadow: #787878;
+}
+
+body {
+    font-family: var(--body-font-family);
+
+    background-image: linear-gradient(90deg, var(--metaldark-shadow) 0%, var(--metallight-shadow) 25%, var(--metal) 50%, var(--metallight-shadow) 75%, var(--metaldark-shadow) 100% ) !important;
+}

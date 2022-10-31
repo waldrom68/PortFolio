@@ -1,28 +1,30 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { DatosPersonalesComponent } from './datos-personales/datos-personales.component';
-import { DatosTrayectoriaComponent } from './datos-trayectoria/datos-trayectoria.component';
-import { DatosFormacionComponent } from './datos-formacion/datos-formacion.component';
-import { DatosHabilidadesComponent } from './datos-habilidades/datos-habilidades.component';
+
+import { BloqueDatosObjProfileComponent } from './bloque-datos-obj-profile/bloque-datos-obj-profile.component';
+import { BloqueFormacionSkillIntComponent } from './bloque-formacion-skill-int/bloque-formacion-skill-int.component';
+import { PersonalCardComponent } from './bloque-datos-obj-profile/personal-card/personal-card.component'
 
 
 
 @NgModule({
   declarations: [
-    DatosPersonalesComponent,
-    DatosTrayectoriaComponent,
-    DatosFormacionComponent,
-    DatosHabilidadesComponent
+    BloqueDatosObjProfileComponent,
+    BloqueFormacionSkillIntComponent,
+    PersonalCardComponent,
   ],
+
   imports: [
-    CommonModule
+    CommonModule,
+
   ],
+
   exports: [
-    DatosPersonalesComponent,
-    DatosTrayectoriaComponent,
-    DatosFormacionComponent,
-    DatosHabilidadesComponent
+    BloqueDatosObjProfileComponent,
+    BloqueFormacionSkillIntComponent,
+    PersonalCardComponent,
+
   ]
 
 })

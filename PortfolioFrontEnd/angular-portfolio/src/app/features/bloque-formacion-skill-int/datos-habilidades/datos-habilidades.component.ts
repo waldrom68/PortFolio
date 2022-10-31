@@ -5,6 +5,8 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './datos-habilidades.component.html',
   styleUrls: ['./datos-habilidades.component.css']
 })
+
+
 export class DatosHabilidadesComponent implements OnInit {
 
   constructor() { }
