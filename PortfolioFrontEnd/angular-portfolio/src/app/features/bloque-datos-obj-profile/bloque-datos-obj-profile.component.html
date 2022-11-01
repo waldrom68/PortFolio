@@ -27,6 +27,7 @@
                 </div>
                 <div class="col-sm-9" style="border: 1px solid">
                     <app-profile [perfilObj]="perfilObj"></app-profile>
+
                 </div>
             </div>
         </div>
@@ -44,7 +45,18 @@
                     </div>
                 </div>
                 <div class="col-sm-9" style="border: 1px solid">
+                   
                     <app-objetive [objetivoObj]="objetivoObj"></app-objetive>
+
+                    <input type="checkbox" name="" id="Objetivo" #newValue
+                    [checked]="objetivoObj.visible"
+                    (click)="updateVisibility(newValue.checked, newValue.id)"
+                    >
+                    <ng-template #sinMostrar>
+                        Ver mas
+                    </ng-template>
+                    <span *ngIf="newValue.checked; else sinMostrar">Ver menos</span>
+
                 </div>
             </div>
         </div>
@@ -58,10 +70,11 @@
                 </div>
                 
                 <div class="col-sm-9" style="border: 1px solid">
+
                     <app-datos-trayectoria 
-                        [experienciaObj]="experienciaObj">
+                        [experienciaObj]="experienciaObj"
+                        >
                     </app-datos-trayectoria>
-                
                 </div>
                     
 
@@ -71,4 +84,3 @@
     </div>
     
 
-    

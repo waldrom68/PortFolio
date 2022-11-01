@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-datos-trayectoria',
@@ -8,6 +8,8 @@ import { Component, Input, OnInit } from '@angular/core';
 export class DatosTrayectoriaComponent implements OnInit {
 
   @Input() experienciaObj:any
+
+  // @Output() visivility = new EventEmitter<boolean>();
 
 
   constructor() { }

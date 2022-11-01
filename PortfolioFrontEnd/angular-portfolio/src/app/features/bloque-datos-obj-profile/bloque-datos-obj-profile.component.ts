@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-bloque-datos-obj-profile',
@@ -8,12 +8,14 @@ import { Component, OnInit } from '@angular/core';
 
 export class BloqueDatosObjProfileComponent implements OnInit {
 
-  visibility:any = [
-    {"data": true},
-    {"profile": true},
-    {"objetivo": true},
-    {"experiencia": true},
-  ];
+
+  visibility = {
+    "dataObj": true,
+    "perfilObj": true,
+    "objetivoObj": true,
+    "experienciaObj": true,
+    }
+  
 
 
   name:string = "Walter";
@@ -32,13 +34,12 @@ export class BloqueDatosObjProfileComponent implements OnInit {
       this.profession
     ],
 
-    "visible": true,
+    "visible": this.visibility.dataObj,
     "resume": "PERSONALMENTE SOY YO"
   }
  
 
-  perfil:string = `
-  Ocupé cargos de RRHH y disfruté mejorar procesos, generar tableros de control para la toma de decisiones, y hacer de "una especie de analista funcional" para servir de enlace entre áreas de negocio y de tecnología. Ciertamente era un Analista Universitario de Sistemas en un área de recursos humanos.
+  perfil:string = `Ocupé cargos de RRHH y disfruté mejorar procesos, generar tableros de control para la toma de decisiones, y hacer de "una especie de analista funcional" para servir de enlace entre áreas de negocio y de tecnología. Ciertamente era un Analista Universitario de Sistemas en un área de recursos humanos.
   Luego de 24 años trabajando en la universidad, ahora he vuelto a mi esencia: “creatividad, innovación, sistemas y tecnología”.
   En resumen, además de contar con criterio empresarial tengo conocimientos y experiencia para sumar valor a cualquier proyecto, y quienes me conocen destacarán mi compromiso para alcanzar objetivos, mi lealtad, integridad y disciplina.`
 
@@ -46,7 +47,7 @@ export class BloqueDatosObjProfileComponent implements OnInit {
 
   perfilObj: any = {
     "datos": this.perfilList,
-    "visible": true,
+    "visible": this.visibility.perfilObj,
     "resume": "SOY LO QUE ESTAS BUSCANDO"
   }
   
@@ -59,7 +60,7 @@ export class BloqueDatosObjProfileComponent implements OnInit {
 
   objetivoObj : any = {
     "datos": this.objetivoList,
-    "visible": true,
+    "visible": this.visibility.objetivoObj,
     "resume": "En resumen, QUIERO LABURAR"
   }
 
@@ -71,13 +72,35 @@ export class BloqueDatosObjProfileComponent implements OnInit {
 
   experienciaObj:any = {
     "datos": this.experiencia,
-    "visible": true,
+    "visible": this.visibility.experienciaObj,
     "resume": "En resumen, SOY UN GENIO"
   }
  
+
+  arrayVisivility = [true]
+
+  updateVisibility(nuevaCaracteristica:boolean, element:string) {
+    this.arrayVisivility.push(nuevaCaracteristica)
+
+    console.log("estado:", nuevaCaracteristica)
+    console.log("elemento:", element)
+    switch (element) {
+      case "Objetivo":
+        this.objetivoObj.visible = nuevaCaracteristica;
+        break;
+    
+      default:
+        break;
+    }
+
+
+  }
+  
+
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  
 }
