@@ -1,6 +1,7 @@
 
 <div class="container py-4 p-0 m-0">
     <div class="card">
+        {{prueba}}
         <div class="ratio ratio-1x1 rounded-circle overflow-hidden" style="width: 50%; height: 50%; margin: auto;">
         <!-- style="width: 50%; height: 50%; margin: auto;" -->
             <!-- <img src="../assets/images/ico.svg" class="card-img-top img-cover" alt="Walter" > -->
@@ -13,7 +14,8 @@
             <h6 class="card-text" *ngFor="let elemento of profession">{{ elemento }}</h6>
             <hr style="border: 1px solid;">
             <p>Nacido en {{since}}, {{location}}</p>
+            {{childMessage}}
         </div>
     </div>
-
 </div>
+

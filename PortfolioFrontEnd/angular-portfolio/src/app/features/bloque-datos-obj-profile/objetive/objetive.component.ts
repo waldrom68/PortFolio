@@ -8,10 +8,16 @@ import { Component, Input, OnInit } from '@angular/core';
 export class ObjetiveComponent implements OnInit {
 
   @Input() objetivoObj:any
+  @Input() newDatos:any
   
-  constructor() { }
+
+
+  constructor() { 
+
+  }
 
   ngOnInit(): void {
+    
   }
 
 }

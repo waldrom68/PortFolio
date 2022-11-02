@@ -7,11 +7,14 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class ProfileComponent implements OnInit {
 
-  @Input() perfilObj:any
+  @Input() newDatos:any
   
+
+  // miPerfil:string[] = newDatos.perfil.split('\n');
   constructor() { }
 
   ngOnInit(): void {
+
   }
 
 }

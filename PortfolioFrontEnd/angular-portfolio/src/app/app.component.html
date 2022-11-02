@@ -28,6 +28,7 @@
                     <!-- Datos formacion, skills, intereses -->
                     <app-bloque-formacion-skill-int></app-bloque-formacion-skill-int>
 
+
                 </section>
             </div>
         
@@ -38,10 +39,13 @@
             <section id="nameAndImage" class="col order-5 opacity-75 align-self-center" style="border: 1px solid;">
 
                 <!-- templateUrl: 'app/features/datos-personales/datos-personales.component.html', -->
-                <app-personal-card></app-personal-card>
+
+                <app-personal-card [childMessage]="parentMessage" [prueba]="message"
+                ></app-personal-card>
 
             </section>
 
         </div>
     </div>
 </div>
+

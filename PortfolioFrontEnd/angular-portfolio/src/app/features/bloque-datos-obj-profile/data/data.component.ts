@@ -9,6 +9,8 @@ export class DataComponent implements OnInit {
 
   @Input() dataObj: any
   @Input() visibility: any
+  
+  @Input() newDatos:any
 
   constructor() { }
 

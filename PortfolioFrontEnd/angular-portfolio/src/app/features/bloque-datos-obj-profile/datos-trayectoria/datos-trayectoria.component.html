@@ -1,7 +1,7 @@
-<p>{{experienciaObj.resume}}</p>
+<p>{{newDatos.experiencia_resume}}</p>
 
-<ul *ngIf=experienciaObj.visible>
-    <li *ngFor="let elemento of experienciaObj.datos">
+<ul *ngIf=newDatos.visibility>
+    <li *ngFor="let elemento of newDatos.experiencia">
         {{elemento.desde}} hasta {{elemento.hasta}} ({{elemento.empresa}})
     </li>
 </ul>

@@ -1,8 +1,17 @@
 
     <!-- Datos personales y Perfil -->
     <div class="row p-0 m-0">
+        
         <!-- Contenedor Datos personales -->
         <div class="p-2 col-md-6" style="border: 1px solid;">
+            <input type="checkbox" name="" id="Objetivo" #newValue
+            [checked]="newDatos.visibility"
+            (click)="updateVisibility(newValue.checked, newValue.id, $event.target)"
+            >
+            <ng-template #sinMostrar>
+                Ver mas
+            </ng-template>
+            <span *ngIf="newValue.checked; else sinMostrar">Ver menos</span>
             <div class="p-2 row">
                 <div class="col-sm-3" style="border: 1px solid">
                     <div class="badge text-bg-light bg-transparent" style="width: 6rem;">
@@ -13,6 +22,7 @@
                     <app-data 
                         [dataObj]="dataObj"
                         [visibility]="visibility"
+                        [newDatos]="newDatos"
                     ></app-data>
                 </div>
             </div>
@@ -26,7 +36,7 @@
                     </div>
                 </div>
                 <div class="col-sm-9" style="border: 1px solid">
-                    <app-profile [perfilObj]="perfilObj"></app-profile>
+                    <app-profile [newDatos]="newDatos"></app-profile>
 
                 </div>
             </div>
@@ -46,16 +56,7 @@
                 </div>
                 <div class="col-sm-9" style="border: 1px solid">
                    
-                    <app-objetive [objetivoObj]="objetivoObj"></app-objetive>
-
-                    <input type="checkbox" name="" id="Objetivo" #newValue
-                    [checked]="objetivoObj.visible"
-                    (click)="updateVisibility(newValue.checked, newValue.id)"
-                    >
-                    <ng-template #sinMostrar>
-                        Ver mas
-                    </ng-template>
-                    <span *ngIf="newValue.checked; else sinMostrar">Ver menos</span>
+                    <app-objetive [newDatos]="newDatos"></app-objetive>
 
                 </div>
             </div>
@@ -71,8 +72,8 @@
                 
                 <div class="col-sm-9" style="border: 1px solid">
 
-                    <app-datos-trayectoria 
-                        [experienciaObj]="experienciaObj"
+                <app-datos-trayectoria 
+                        [newDatos]="newDatos"
                         >
                     </app-datos-trayectoria>
                 </div>
