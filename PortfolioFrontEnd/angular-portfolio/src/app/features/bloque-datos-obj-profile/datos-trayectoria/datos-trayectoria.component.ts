@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 
-import {Experiencia} from '../../../data'
-import {EXPERIENCIA} from '../../../mock-data'
+import {WorkExperience} from '../../../data'
+import {WORKEXPERIENCE} from '../../../mock-data'
 
 @Component({
   selector: 'app-datos-trayectoria',
@@ -10,11 +10,7 @@ import {EXPERIENCIA} from '../../../mock-data'
 })
 export class DatosTrayectoriaComponent implements OnInit {
 
-  experiencia: Experiencia[] = EXPERIENCIA
-
-  @Input() newDatos:any
-
- 
+  experiencia: WorkExperience[] = WORKEXPERIENCE
   
   constructor() {
     

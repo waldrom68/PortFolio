@@ -1,4 +1,4 @@
-import {Data, Formacion, HardSkill, SoftSkill, Intereses, Experiencia} from './data'
+import {Data, Formacion, HardSkill, SoftSkill, Intereses, WorkExperience} from './data'
 
 export const DATA: Data = 
     {
@@ -33,7 +33,7 @@ export const FORMACION: Formacion[] = [
 ]
 
 
-export const EXPERIENCIA: Experiencia[] =[
+export const WORKEXPERIENCE: WorkExperience[] =[
     {
     id: 1,
     start_date:"09-1993",

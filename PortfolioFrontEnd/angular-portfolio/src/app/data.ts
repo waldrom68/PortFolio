@@ -14,7 +14,7 @@ export class Data {
     experiencia_resume:string
     }
 
-export interface Experiencia {
+export interface WorkExperience {
     id: number;
     start_date:string;
     end_date:string;
