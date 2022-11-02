@@ -70,12 +70,7 @@ export class BloqueDatosObjProfileComponent implements OnInit {
   message: string = "Mensaje desde el hijo: BloqueDatosObjProfileComponent"
 
 
-  updateVisibility(nuevaCaracteristica:boolean, element:string, data:any) {
-    // this.arrayVisivility.push(nuevaCaracteristica)
-        this.newDatos.visibility = nuevaCaracteristica;
-  }
-
-  
+   
   constructor() { }
 
   ngOnInit(): void {

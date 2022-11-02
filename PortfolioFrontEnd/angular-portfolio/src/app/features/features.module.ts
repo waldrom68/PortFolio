@@ -10,6 +10,10 @@ import { DatosTrayectoriaComponent } from './bloque-datos-obj-profile/datos-tray
 import { ProfileComponent } from './bloque-datos-obj-profile/profile/profile.component';
 import { ObjetiveComponent } from './bloque-datos-obj-profile/objetive/objetive.component';
 import { DataComponent } from './bloque-datos-obj-profile/data/data.component';
+import { DatosFormacionComponent } from './bloque-formacion-skill-int/datos-formacion/datos-formacion.component';
+import { SoftSkillsComponent } from './bloque-formacion-skill-int/soft-skills/soft-skills.component';
+import { HardSkillsComponent } from './bloque-formacion-skill-int/hard-skills/hard-skills.component';
+import { InteresesComponent } from './bloque-formacion-skill-int/intereses/intereses.component';
 
 
 
@@ -23,6 +27,10 @@ import { DataComponent } from './bloque-datos-obj-profile/data/data.component';
     ProfileComponent,
     ObjetiveComponent,
     DataComponent,
+    DatosFormacionComponent,
+    SoftSkillsComponent,
+    HardSkillsComponent,
+    InteresesComponent,
   ],
 
   imports: [

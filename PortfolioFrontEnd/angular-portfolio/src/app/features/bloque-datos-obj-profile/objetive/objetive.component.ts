@@ -1,5 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 
+
+import {Data} from '../../../data'
+import {DATA} from '../../../mock-data'
+
 @Component({
   selector: 'app-objetive',
   templateUrl: './objetive.component.html',
@@ -7,10 +11,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class ObjetiveComponent implements OnInit {
 
-  @Input() objetivoObj:any
-  @Input() newDatos:any
-  
-
+  data: Data = DATA
 
   constructor() { 
 

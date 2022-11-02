@@ -1,8 +1,8 @@
-<p>{{newDatos.experiencia_resume}}</p>
+<p>datos-trayectoria work!</p>
 
-<ul *ngIf=newDatos.visibility>
-    <li *ngFor="let elemento of newDatos.experiencia">
-        {{elemento.desde}} hasta {{elemento.hasta}} ({{elemento.empresa}})
+<ul>
+    <li *ngFor="let elemento of experiencia">
+        {{elemento.start_date}} al {{elemento.end_date}} {{elemento.organization}} {{elemento.position}}
     </li>
 </ul>
 

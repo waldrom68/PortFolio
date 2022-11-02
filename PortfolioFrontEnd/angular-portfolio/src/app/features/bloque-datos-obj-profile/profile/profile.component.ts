@@ -1,5 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 
+
+import {Data} from '../../../data'
+import {DATA} from '../../../mock-data'
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -7,7 +10,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class ProfileComponent implements OnInit {
 
-  @Input() newDatos:any
+  data: Data = DATA
   
 
   // miPerfil:string[] = newDatos.perfil.split('\n');
