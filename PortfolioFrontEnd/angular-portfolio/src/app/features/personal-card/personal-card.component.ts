@@ -14,9 +14,6 @@ export class PersonalCardComponent implements OnInit {
 
   data:Data = DATA
  
-  @Input() childMessage: string;
-  @Input() prueba: string;
-
   constructor() { 
   }
   

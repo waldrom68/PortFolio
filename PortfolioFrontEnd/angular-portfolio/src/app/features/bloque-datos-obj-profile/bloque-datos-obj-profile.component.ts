@@ -1,7 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
-// Custom validation password field, y clase Empleado
-import { createPasswordStrengthValidator, datosExperiencia, datosPersonales } from '../features.model';
 
 @Component({
   selector: 'app-bloque-datos-obj-profile',
