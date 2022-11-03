@@ -1,6 +1,3 @@
-import { NumberValueAccessor } from "@angular/forms";
-
-
 export class Data {
     id:number;
     name:string;

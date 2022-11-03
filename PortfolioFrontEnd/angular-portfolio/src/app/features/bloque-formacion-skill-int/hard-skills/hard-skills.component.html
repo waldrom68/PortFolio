@@ -1,7 +1,7 @@
 <p>hard-skills works!</p>
 
-<ul>
-    <li *ngFor="let elemento of hardskill">
-        {{elemento.name}}: {{elemento.assessment}} 
-    </li>
-</ul>
+<app-hard-item 
+    *ngFor="let item of hardskill"
+    [item]="item">
+
+</app-hard-item>
