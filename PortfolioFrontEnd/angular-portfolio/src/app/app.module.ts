@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 // import the feature module here so you can add it to the imports array below
 import { CoreModule } from './core/core.module';
 import { FeaturesModule } from './features/features.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 
@@ -16,7 +17,7 @@ import { FeaturesModule } from './features/features.module';
   imports: [
     BrowserModule,
     CoreModule,  // add the feature module here
-    FeaturesModule,  // add the feature module here
+    FeaturesModule, FontAwesomeModule,  // add the feature module here
   ],
 
   providers: [],

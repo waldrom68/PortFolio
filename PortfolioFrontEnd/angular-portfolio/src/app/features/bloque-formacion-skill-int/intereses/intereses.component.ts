@@ -10,6 +10,7 @@ import {INTERESES} from '../../../mock-data'
 })
 export class InteresesComponent implements OnInit {
   intereses: Intereses[] = INTERESES;
+
   constructor() { }
 
   ngOnInit(): void {

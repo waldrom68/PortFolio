@@ -1,5 +1,6 @@
-import { AfterViewInit, Component } from '@angular/core';
+import { Component } from '@angular/core';
 
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-root',
@@ -11,9 +12,7 @@ export class AppComponent  {
 
   title = 'angular-portfolio';
 
-  parentMessage = "message from parent: AppComponent"
-  message:string;
-
+  faTimes = faTimes;
 
   
 }
