@@ -3,6 +3,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import {Data} from '../../data'
 import {DATA} from '../../mock-data'
 
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+
 @Component({
   selector: 'app-personal-card',
   templateUrl: './personal-card.component.html',
@@ -11,8 +13,8 @@ import {DATA} from '../../mock-data'
 
 
 export class PersonalCardComponent implements OnInit {
-
-  data:Data = DATA
+  faTimes = faTimes;
+  data:Data = DATA;
  
   constructor() { 
   }

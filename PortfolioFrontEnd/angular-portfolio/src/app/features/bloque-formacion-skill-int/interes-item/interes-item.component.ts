@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Intereses } from '../../../data'
 
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faPen, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-interes-item',
@@ -12,6 +12,7 @@ export class InteresItemComponent implements OnInit {
   @Input() item: Intereses;
   
   faTimes = faTimes;
+  faPen = faPen;
   
   constructor() { }
 

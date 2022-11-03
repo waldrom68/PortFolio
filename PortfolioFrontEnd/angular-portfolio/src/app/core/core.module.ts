@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { TopBarComponent } from './top-bar/top-bar.component';
 
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 @NgModule({
@@ -10,10 +11,12 @@ import { TopBarComponent } from './top-bar/top-bar.component';
     TopBarComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    FontAwesomeModule
   ],
   exports: [
     TopBarComponent,
+    FontAwesomeModule
   ]
 
 })

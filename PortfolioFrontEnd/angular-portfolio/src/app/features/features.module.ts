@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
 import { BloqueDatosObjProfileComponent } from './bloque-datos-obj-profile/bloque-datos-obj-profile.component';
 import { BloqueFormacionSkillIntComponent } from './bloque-formacion-skill-int/bloque-formacion-skill-int.component';
 import { PersonalCardComponent } from './personal-card/personal-card.component';
@@ -37,9 +39,10 @@ import { InteresItemComponent } from './bloque-formacion-skill-int/interes-item/
     InteresesComponent,
     InteresItemComponent,
   ],
-
+  
   imports: [
     CommonModule,
+    FontAwesomeModule,
 
   ],
 
@@ -47,6 +50,7 @@ import { InteresItemComponent } from './bloque-formacion-skill-int/interes-item/
     BloqueDatosObjProfileComponent,
     BloqueFormacionSkillIntComponent,
     PersonalCardComponent,
+    FontAwesomeModule
   ]
 
 })

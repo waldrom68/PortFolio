@@ -1,5 +1,5 @@
-import { Component, OnInit, Output } from '@angular/core';
-
+import { Component, NgModule, OnInit } from '@angular/core';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-bloque-datos-obj-profile',
@@ -9,7 +9,8 @@ import { Component, OnInit, Output } from '@angular/core';
 
 
 export class BloqueDatosObjProfileComponent implements OnInit {
-
+  faTimes = faTimes;
+  
   constructor() { }
 
   ngOnInit(): void {

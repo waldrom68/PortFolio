@@ -1,1 +1,13 @@
-<li style="background-color:gainsboro">{{item.name}}: {{item.assessment}} (ok!)</li>
+<span style="background-color:gainsboro">{{item.name}}: {{item.assessment}}
+    <fa-icon 
+        [icon]="faTimes"
+        [ngStyle] = "{'color':'red','font-weight':'bolder', 'margin':'0 5px'}"
+    >
+    </fa-icon>
+    <fa-icon 
+        [icon]="faPen"
+        [ngStyle] = "{'color':'green','font-weight':'bolder', 'margin':'0 5px'}"
+        >
+    </fa-icon>
+</span>
+<br>

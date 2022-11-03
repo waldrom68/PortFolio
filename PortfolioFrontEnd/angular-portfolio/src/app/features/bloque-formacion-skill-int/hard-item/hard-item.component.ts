@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { faPen, faTimes } from '@fortawesome/free-solid-svg-icons';
+
 import { HardSkill } from '../../../data';
 
 @Component({
@@ -8,6 +10,8 @@ import { HardSkill } from '../../../data';
 })
 export class HardItemComponent implements OnInit {
 
+  faTimes = faTimes;
+  faPen = faPen;
   @Input() item: HardSkill
 
   constructor() { }
