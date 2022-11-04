@@ -43,3 +43,10 @@ export interface Intereses {
     id: number;
     name:string;
 }
+
+export interface Users {
+    id: number;
+    username: string;
+    password: string;
+}
+

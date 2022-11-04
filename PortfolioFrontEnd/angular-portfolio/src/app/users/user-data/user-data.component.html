@@ -1,13 +1,19 @@
 <p>
-  user-data works!
+  USUARIO ADMINISTRADOR: ({{isAdmin}})
+  <fa-icon 
+  [icon]="faTimes"
+  [ngStyle] = "{'color':'green'}" >
+  </fa-icon>
 </p>
 
-<h1>{{prueba}}</h1>
-
-<fa-icon 
-[icon]="faTimes"
-[ngStyle] = "{'color':'red'}" >
-</fa-icon>
 
 
-<app-user-data-item></app-user-data-item>
+<div *ngIf="isAdmin">
+  
+  <app-user-data-item  
+    *ngFor="let item of users"
+      [user]="item"
+    >
+  ></app-user-data-item>
+
+</div>

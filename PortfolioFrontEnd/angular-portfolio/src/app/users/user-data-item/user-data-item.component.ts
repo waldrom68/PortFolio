@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
+import { Users } from '../../data'
 
 @Component({
   selector: 'app-user-data-item',
@@ -11,10 +12,14 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 export class UserDataItemComponent implements OnInit {
   faTimes = faTimes
   
+  @Input() user : Users
+
+  
   prueba:string = "User item data"
   constructor() { }
-
+  
   ngOnInit() {
+
   }
 
 }
