@@ -18,3 +18,4 @@ export class DatosFormacionComponent implements OnInit {
   }
 
 }
+
