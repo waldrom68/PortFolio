@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { HttpClientModule} from '@angular/common/http'
 
 import { AppComponent } from './app.component';
 
@@ -19,6 +20,7 @@ import { UsersModule } from './users/users.module';
   imports: [
     BrowserModule,
     FontAwesomeModule,  // Catch this module for export to other levels
+    HttpClientModule,  // para el uso del servicio que lee la db.json
     
     CoreModule,  // add the Core module here
     FeaturesModule,  // add the features module here
