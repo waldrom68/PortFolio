@@ -1,7 +1,7 @@
-import {Data, Formacion, HardSkill, SoftSkill, Intereses, WorkExperience, Users} from './data'
+import {Data, Formacion, HardSkill, SoftSkill, Intereses, WorkExperience, User} from './data'
 
 
-export const USERS: Users[] = [
+export const USERS: User[] = [
     {
         id: 1,
         username: "waldrom",

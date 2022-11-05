@@ -1,1 +1,9 @@
-{{user.username}}, {{user.password}}
+<p>
+    {{user.username}}, {{user.password}}
+    <fa-icon 
+        [icon]="faTimes"
+        [ngStyle] = "{'color':'red'}"
+        (click)="onDelete(user)" 
+        >
+    </fa-icon>
+</p>

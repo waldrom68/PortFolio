@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { UserService } from '../../service/user.service';
 
 import { faTimes, faUserSecret } from '@fortawesome/free-solid-svg-icons';
 
 
-import { Users } from '../../data'
+import { User } from '../../data'
 import { USERS } from '../../mock-data';
 
 // Est importaciones serán reemplazadas por user.service, quien se encargará de la gestion de los datos
@@ -15,11 +15,13 @@ import { USERS } from '../../mock-data';
   styleUrls: ['./user-data.component.css']
 })
 export class UserDataComponent implements OnInit {
-
-  users: Users[] = [];
+  users: User[] = [];
   faTimes = faTimes
  
   prueba:string = "Users Data"
+
+  // @Input() user:Users
+
   constructor(
       private userService: UserService
   ) { }
@@ -36,4 +38,9 @@ export class UserDataComponent implements OnInit {
       // console.log(this.users)
   }
 
+  deleteUser(user: User) {
+    console.log("Padre recibe pedido de eliminar a:", user)
+    this.userService.delUsers(user).subscribe();
+
+  }
 }

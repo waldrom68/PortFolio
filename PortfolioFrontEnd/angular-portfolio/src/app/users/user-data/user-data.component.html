@@ -1,8 +1,10 @@
 <p>
   USUARIO ADMINISTRADOR: ({{isAdmin}})
   <fa-icon 
-  [icon]="faTimes"
-  [ngStyle] = "{'color':'green'}" >
+    [icon]="faTimes"
+    [ngStyle] = "{'color':'green'}"
+
+    >
   </fa-icon>
 </p>
 
@@ -13,6 +15,7 @@
   <app-user-data-item  
     *ngFor="let item of users"
       [user]="item"
+      (onDeleteUser)="deleteUser(item)"
     >
   ></app-user-data-item>
 
