@@ -33,9 +33,20 @@ export class UserService {
   delUsers(user:User): Observable<User[]>{
     const url = `${this.apiURL}/${user.id}`
     console.log("url del servicio de borrado", url)
+    console.log("Lo borro de db.Json, accediendo a la APIRest")
     return this.http.delete<User[]>(url)
   }
  
-  
+  // updateUsers(user:User): Observable<User[]>{
+  //   const url = `${this.apiURL}/${user.id}`
+  //   user = {
+  //       "id": 1,
+  //       "username": "RUPERTO",
+  //       "password": "tomate"
+  //     }
+
+  //     console.log("url del servicio de actualizacion de datos", url)
+      // return this.http.put(url, user)
+  // }
 
 }

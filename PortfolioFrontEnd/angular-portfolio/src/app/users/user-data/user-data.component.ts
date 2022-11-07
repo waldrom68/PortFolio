@@ -6,6 +6,7 @@ import { faTimes, faUserSecret } from '@fortawesome/free-solid-svg-icons';
 
 import { User } from '../../data'
 import { USERS } from '../../mock-data';
+import { takeLast } from 'rxjs';
 
 // Est importaciones serán reemplazadas por user.service, quien se encargará de la gestion de los datos
 // import { USERS } from '../mock-data';
@@ -40,6 +41,16 @@ export class UserDataComponent implements OnInit {
 
   deleteUser(user: User) {
     console.log("Padre recibe pedido de eliminar a:", user)
+    this.userService.delUsers(user).subscribe( ()=> {
+      this.users = this.users.filter( (t) => { return t.id !== user.id
+      })
+    }
+     );
+
+  }
+
+  ToggleUser(user: User) {
+    console.log("Padre recibe pedido de modificar a:", user)
     this.userService.delUsers(user).subscribe();
 
   }

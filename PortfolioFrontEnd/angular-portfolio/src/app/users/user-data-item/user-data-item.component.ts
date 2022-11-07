@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faTimes, faPen } from '@fortawesome/free-solid-svg-icons';
 
 import { User } from '../../data'
 
@@ -11,10 +11,12 @@ import { User } from '../../data'
 })
 export class UserDataItemComponent implements OnInit {
   faTimes = faTimes;
+  faPen = faPen
   
   @Input() user : User;
   // extraigo el delete para que lo maneje la lista de usuarios y no la instancia de usuario
   @Output() onDeleteUser: EventEmitter<User> = new EventEmitter()
+  @Output() onToggleUser: EventEmitter<User> = new EventEmitter()
 
   
   prueba:string = "User item data";
@@ -28,6 +30,11 @@ export class UserDataItemComponent implements OnInit {
     console.log("Recibo pedido de eliminar un item del listado");
     // llamo al metodo del padre via emit()
     this.onDeleteUser.emit(user);
+  }
 
+  onToggle(user: User) {
+    console.log("Recibo pedido de modificar un item del listado");
+    // llamo al metodo del padre via emit()
+    this.onToggleUser.emit(user);
   }
 }
