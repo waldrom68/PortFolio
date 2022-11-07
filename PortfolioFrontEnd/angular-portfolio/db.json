@@ -3,22 +3,32 @@
     {
       "id": 1,
       "username": "waldrom",
-      "password": "tomate"
+      "password": "tomate",
+      "admin": true
     },
     {
       "id": 2,
       "username": "Ruperto",
-      "password": "tomate23"
+      "password": "tomate23",
+      "admin": false
+    },
+    {
+      "id": 3,
+      "username": "Waldomar",
+      "password": "tomawdewqte",
+      "admin": false
     },
     {
       "id": 4,
       "username": "Eustauio",
-      "password": "fdg"
+      "password": "fdg",
+      "admin": false
     },
     {
       "id": 5,
       "username": "Giriperto",
-      "password": "tomfgdgate"
+      "password": "tomfgdgate",
+      "admin": false
     }
   ],
   "Data": {

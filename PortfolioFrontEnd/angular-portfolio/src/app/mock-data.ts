@@ -5,10 +5,10 @@ export const USERS: User[] = [
     {
         id: 1,
         username: "waldrom",
-        password: "tomate"
+        password: "tomate",
+        "admin": false
     }
 ]
-   
 
 
 export const DATA: Data = 

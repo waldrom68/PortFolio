@@ -9,7 +9,13 @@ import { Observable, of } from 'rxjs';
 import { User } from '../data'
 import { USERS } from '../mock-data';
 
-import { HttpClient, HttpHandler } from '@angular/common/http'
+import { HttpClient, HttpHeaders } from '@angular/common/http'
+
+const httpOption = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json',
+  })
+}
 
 @Injectable({
   providedIn: 'root'
@@ -31,22 +37,38 @@ export class UserService {
     // codigo que usa el servidor api
   }
   delUsers(user:User): Observable<User[]>{
+    // Este codigo elimina de la DB el usuario
     const url = `${this.apiURL}/${user.id}`
+
     console.log("url del servicio de borrado", url)
     console.log("Lo borro de db.Json, accediendo a la APIRest")
     return this.http.delete<User[]>(url)
   }
  
-  // updateUsers(user:User): Observable<User[]>{
-  //   const url = `${this.apiURL}/${user.id}`
-  //   user = {
-  //       "id": 1,
-  //       "username": "RUPERTO",
-  //       "password": "tomate"
-  //     }
+  updateUsers(user:User): Observable<User[]>{
+    // Este codigo modifica el valor del usuario en la DB
+    console.log("El elemento a modificar es:", user)
 
-  //     console.log("url del servicio de actualizacion de datos", url)
-      // return this.http.put(url, user)
-  // }
+    const url = `${this.apiURL}/${user.id}`;
+    const newData: User = 
+    {
+      "id": user.id,
+      "username": "ElBagallo",
+      "password": "TieneSuerte",
+      "admin": false
+    
+    }
 
+      console.log("url del servicio de actualizacion de datos", url);
+      return this.http.put<User[]>(url, newData)
+  }
+
+  toggleAdminUsers(user:User): Observable<User>{
+    // Este codigo elimina de la DB el usuario
+    const url = `${this.apiURL}/${user.id}`
+
+    console.log("url del servicio", url)
+    console.log("Lo actualizo en la db.Json, accediendo a la APIRest")
+    return this.http.put<User>(url, user, httpOption)
+  }
 }

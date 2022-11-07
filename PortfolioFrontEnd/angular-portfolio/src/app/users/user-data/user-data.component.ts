@@ -40,18 +40,41 @@ export class UserDataComponent implements OnInit {
   }
 
   deleteUser(user: User) {
+    // Este codigo acualiza el array Users para que se actualice en 
+    // el frontend, sin necesidad de recargar la pagina
     console.log("Padre recibe pedido de eliminar a:", user)
     this.userService.delUsers(user).subscribe( ()=> {
       this.users = this.users.filter( (t) => { return t.id !== user.id
-      })
+      } )
     }
      );
 
   }
 
-  ToggleUser(user: User) {
+  updateUser(user: User) {
+    // Este codigo acualiza el array Users para que se actualice en 
+    // el frontes, sin necesidad de recargar la pagina
     console.log("Padre recibe pedido de modificar a:", user)
-    this.userService.delUsers(user).subscribe();
+    console.log("Los datos nuevos son:", user);
+    user = {
+      "id": user.id,
+      "username": "ElBagallo",
+      "password": "TieneSuerte",
+      "admin": false
+    }
+    
+
+    this.userService.updateUsers(user).subscribe();
+  }
+
+  toggleAdmin(user: User) {
+    // Este codigo alterna entre admin y no admin para que se actualice en
+    // el frontend
+    console.log("Padre recibe pedido alternar admin:", user)
+    user.admin = !user.admin
+
+    this.userService.toggleAdminUsers(user).subscribe();
 
   }
 }
+

@@ -16,6 +16,9 @@
     *ngFor="let item of users"
       [user]="item"
       (onDeleteUser)="deleteUser(item)"
+      (onUpdateUser)="updateUser(item)"
+      (onToggleUser)="toggleAdmin(item)"
+
     >
   ></app-user-data-item>
 

@@ -1,0 +1,20 @@
+.user {
+    background-color: antiquewhite;
+    margin: 5px;
+    padding: 5px;
+    cursor: pointer;
+    border-left: 5px transparent;
+}
+
+.user.admin {
+    border-left: 5px solid orange;
+    border-top-left-radius: 5px ;
+    border-bottom-left-radius: 5px ;
+}
+
+.user p {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
