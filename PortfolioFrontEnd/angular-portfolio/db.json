@@ -4,7 +4,7 @@
       "id": 1,
       "username": "waldrom",
       "password": "tomate",
-      "admin": true
+      "admin": false
     },
     {
       "id": 2,
@@ -16,7 +16,7 @@
       "id": 3,
       "username": "Waldomar",
       "password": "tomawdewqte",
-      "admin": false
+      "admin": true
     },
     {
       "id": 4,

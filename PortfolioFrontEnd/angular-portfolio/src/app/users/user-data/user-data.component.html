@@ -11,14 +11,20 @@
 
 
 <div *ngIf="isAdmin">
-  
+
+  <app-add-user
+    (onAddUser)="addUser($event)"
+  >
+  </app-add-user>
+
+
   <app-user-data-item  
     *ngFor="let item of users"
       [user]="item"
       (onDeleteUser)="deleteUser(item)"
       (onUpdateUser)="updateUser(item)"
       (onToggleUser)="toggleAdmin(item)"
-
+ 
     >
   ></app-user-data-item>
 

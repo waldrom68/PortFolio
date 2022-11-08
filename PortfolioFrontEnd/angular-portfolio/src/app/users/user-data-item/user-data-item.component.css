@@ -1,20 +1,23 @@
 .user {
+    display: flex;
     background-color: antiquewhite;
     margin: 5px;
-    padding: 5px;
+    padding: 10px;
     cursor: pointer;
     border-left: 5px transparent;
+    
 }
 
 .user.admin {
     border-left: 5px solid orange;
     border-top-left-radius: 5px ;
     border-bottom-left-radius: 5px ;
+    padding-left: 5px;
 }
 
-.user p {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
+.user.prevent-select {
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+    }
 

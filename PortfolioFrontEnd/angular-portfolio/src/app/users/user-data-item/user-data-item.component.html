@@ -1,4 +1,4 @@
-<div class="user"
+<div class="user prevent-select"
     [ngClass]="{ admin: user.admin}"
     (dblclick)="onToggle(user)"
     >
@@ -6,17 +6,19 @@
     <p>
         {{user.username}}, {{user.password}}
     </p>
+
+
+    <fa-icon 
+    [icon]="faTimes"
+        [ngStyle] = "{'color':'red'}"
+        (click)="onDelete(user)" 
+        >
+    </fa-icon>
+    <fa-icon 
+        [icon]="faPen"
+        [ngStyle] = "{'color':'green'}"
+        (click)="onUpdate(user)" 
+    >
+</fa-icon>
 </div>
-        <fa-icon 
-            [icon]="faTimes"
-            [ngStyle] = "{'color':'red'}"
-            (click)="onDelete(user)" 
-            >
-        </fa-icon>
-        <fa-icon 
-            [icon]="faPen"
-            [ngStyle] = "{'color':'green'}"
-            (click)="onUpdate(user)" 
-            >
-        </fa-icon>
 

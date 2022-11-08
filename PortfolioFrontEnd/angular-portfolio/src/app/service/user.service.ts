@@ -11,7 +11,7 @@ import { USERS } from '../mock-data';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 
-const httpOption = {
+const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json',
   })
@@ -45,6 +45,21 @@ export class UserService {
     return this.http.delete<User[]>(url)
   }
  
+  toggleAdminUsers(user:User): Observable<User>{
+    // Este codigo elimina de la DB el usuario
+    const url = `${this.apiURL}/${user.id}`
+
+    console.log("url del servicio", url)
+    console.log("Lo actualizo en la db.Json, accediendo a la APIRest")
+    return this.http.put<User>(url, user, httpOptions)
+  }
+
+  addUsers(user:User): Observable<User>{
+    // Este codigo elimina de la DB el usuario
+    console.log("Recibo en servicios datos para agregar un nuevo usuario")
+    return this.http.post<User>(this.apiURL, user, httpOptions)
+  }  
+
   updateUsers(user:User): Observable<User[]>{
     // Este codigo modifica el valor del usuario en la DB
     console.log("El elemento a modificar es:", user)
@@ -63,12 +78,5 @@ export class UserService {
       return this.http.put<User[]>(url, newData)
   }
 
-  toggleAdminUsers(user:User): Observable<User>{
-    // Este codigo elimina de la DB el usuario
-    const url = `${this.apiURL}/${user.id}`
 
-    console.log("url del servicio", url)
-    console.log("Lo actualizo en la db.Json, accediendo a la APIRest")
-    return this.http.put<User>(url, user, httpOption)
-  }
 }

@@ -44,27 +44,10 @@ export class UserDataComponent implements OnInit {
     // el frontend, sin necesidad de recargar la pagina
     console.log("Padre recibe pedido de eliminar a:", user)
     this.userService.delUsers(user).subscribe( ()=> {
-      this.users = this.users.filter( (t) => { return t.id !== user.id
-      } )
-    }
-     );
-
-  }
-
-  updateUser(user: User) {
-    // Este codigo acualiza el array Users para que se actualice en 
-    // el frontes, sin necesidad de recargar la pagina
-    console.log("Padre recibe pedido de modificar a:", user)
-    console.log("Los datos nuevos son:", user);
-    user = {
-      "id": user.id,
-      "username": "ElBagallo",
-      "password": "TieneSuerte",
-      "admin": false
-    }
-    
-
-    this.userService.updateUsers(user).subscribe();
+        this.users = this.users.filter( (t) => { return t.id !== user.id
+        } )
+      }
+    );
   }
 
   toggleAdmin(user: User) {
@@ -76,5 +59,26 @@ export class UserDataComponent implements OnInit {
     this.userService.toggleAdminUsers(user).subscribe();
 
   }
+  
+  addUser(user: User) {
+    console.log("aqui llegue", user)
+    this.userService.addUsers(user).subscribe( (user) => {
+      this.users.push(user); 
+    });
+  }
+  
+  
+  updateUser(user: User) {
+    // Este codigo acualiza el array Users para que se actualice en 
+    // el frontes, sin necesidad de recargar la pagina
+    console.log("Padre recibe pedido de modificar a:", user)
+    console.log("Los datos nuevos son:", user);
+    user = {
+      "id": user.id,
+      "username": "ElBagallo",
+      "password": "TieneSuerte",
+      "admin": false
+  }
+    this.userService.updateUsers(user).subscribe();
+  }
 }
-
