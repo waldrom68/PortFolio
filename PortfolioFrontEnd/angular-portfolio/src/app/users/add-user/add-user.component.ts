@@ -1,6 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { UserDataComponent } from '../user-data/user-data.component';
-
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { User } from '../../data'
 
@@ -12,11 +10,12 @@ import { User } from '../../data'
 })
 export class AddUserComponent implements OnInit {
   @Output() onAddUser: EventEmitter<User> = new EventEmitter
+ 
 
-  miusername:string = "";
-  mipassword:string = "";
-  miadmin:boolean = false;
-
+  username:string = "";
+  password:string = "";
+  admin:boolean = false;
+  id:number=0;
 
   constructor() { }
 
@@ -25,18 +24,22 @@ export class AddUserComponent implements OnInit {
   }
 
   onSubmit() {
-    if(this.miusername.length > 0 && this.mipassword.length > 0) {
-      alert("agregando al usuario: " + this.miusername);
+    if(this.username.length > 0 && this.password.length > 0) {
       // return
+      
+      // const {id, username, password, admin} = this
+      // const newData = this
+      
+      const newData:User = {
+        id: Math.trunc(Math.random()*100),
+        username: this.username, 
+        password: this.password, 
+        admin: this.admin, 
+      }
+      
+      this.onAddUser.emit(newData);
     }
-    
-    const newUser: User = {
-      id: 15,
-      username: this.miusername,
-      password: this.mipassword,
-      admin: this.miadmin
-    }
-    this.onAddUser.emit(newUser);
+      
   }
 
 } 

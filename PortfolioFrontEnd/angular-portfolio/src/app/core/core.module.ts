@@ -16,7 +16,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
   ],
   exports: [
     TopBarComponent,
-    FontAwesomeModule
+    // FontAwesomeModule
   ]
 
 })

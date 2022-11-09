@@ -11,8 +11,14 @@
 
 
 <div *ngIf="isAdmin">
-
+  <input 
+    type="button"
+    class="btn btn-success btn-sm"
+    (click)="toggleForm()"
+    value ="{{enableForm ? 'Cancelar': 'Agregar'}}"
+  >
   <app-add-user
+    *ngIf="enableForm"
     (onAddUser)="addUser($event)"
   >
   </app-add-user>

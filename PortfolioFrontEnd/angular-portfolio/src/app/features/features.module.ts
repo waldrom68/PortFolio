@@ -54,7 +54,7 @@ import { InteresItemComponent } from './bloque-formacion-skill-int/interes-item/
     BloqueDatosObjProfileComponent,
     BloqueFormacionSkillIntComponent,
     PersonalCardComponent,
-    FontAwesomeModule
+    // FontAwesomeModule
   ]
 
 })

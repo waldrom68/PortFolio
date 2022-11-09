@@ -14,14 +14,13 @@ export class UserDataItemComponent implements OnInit {
   faPen = faPen
   
   @Input() user : User;
-  // extraigo el delete para que lo maneje la lista de usuarios y no la instancia 
-  // de usuario
+  // extraigo el delete/update/etc para que lo maneje la lista de usuarios y 
+  // no la instancia de usuario
   @Output() onDeleteUser: EventEmitter<User> = new EventEmitter()
   @Output() onUpdateUser: EventEmitter<User> = new EventEmitter()
   @Output() onToggleUser: EventEmitter<User> = new EventEmitter()
 
-  
-  prueba:string = "User item data";
+
   constructor() {
   }
   
@@ -29,19 +28,19 @@ export class UserDataItemComponent implements OnInit {
   }
   
   onDelete(user: User) {
-    console.log("Recibo pedido de eliminar un item del listado");
+    console.log("Realizo pedido de eliminar un item del listado");
     // llamo al metodo del padre via emit()
     this.onDeleteUser.emit(user);
   }
 
   onUpdate(user: User) {
-    console.log("Recibo pedido de modificar un item del listado", user);
+    console.log("Realizo pedido de modificar un item del listado");
     // llamo al metodo del padre via emit()
     this.onUpdateUser.emit(user);
   }
 
   onToggle(user: User) {
-    console.log("Recibo pedido de alternar admin del listado", user);
+    console.log("Realizo pedido de alternar admin desde el listado");
     // llamo al metodo del padre via emit()
     this.onToggleUser.emit(user);
   }

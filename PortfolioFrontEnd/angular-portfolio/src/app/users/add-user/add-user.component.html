@@ -2,24 +2,23 @@
   style="border: 2px solid black; padding:15px; background:whitesmoke"
   (ngSubmit)="onSubmit(); "
   >
-
   <div class="mb-3">
-    <label for="miusername" class="form-label">Username</label>
+    <label for="username" class="form-label">Username</label>
     <input type="text" 
-      class="form-control" 
-      id="miusername"
-      name="miusername"
-      [(ngModel)]="miusername"
-      />
+    class="form-control" 
+    id="username"
+    name="username"
+    [(ngModel)]="username"
+    />
 
     <div class="mb-3">
-      <label for="mipassword" class="form-label">Password</label>
+      <label for="password" class="form-label">Password</label>
       <input 
         type="text" 
         class="form-control" 
-        id="mipassword"
-        name="mipassword"
-        [(ngModel)]="mipassword"
+        id="password"
+        name="password"
+        [(ngModel)]="password"
         />
       <div id="passwordhelp" class="form-text">We'll never share your email with anyone else.</div>
     </div>
@@ -29,14 +28,15 @@
     <input 
       type="checkbox" 
       class="form-check-input" 
-      id="miadmin"
-      name="miadmin"
-      [(ngModel)]="miadmin"
+      id="admin"
+      name="admin"
+      [(ngModel)]="admin"
       />
-    <label class="form-check-label" for="miadmin">Administrador</label>
+    <label class="form-check-label" for="admin">Administrador</label>
   </div>
   <!-- {{ newusername }} -->
-  <button type="submit" class="btn btn-primary btn-block" value="Agregar">Agregar</button>
+  <input type="submit" class="btn btn-primary btn-sm btn-block" value="Guardar"/>
+
 </form>
-{{miusername}}
+{{username}}
 <br>

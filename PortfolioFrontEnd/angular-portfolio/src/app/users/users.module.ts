@@ -24,7 +24,7 @@ import { AddUserComponent } from './add-user/add-user.component';
   exports: [
     UserDataComponent,
     // FormsModule,
-    FontAwesomeModule
+    // FontAwesomeModule
   ]
 })
 export class UsersModule { }
