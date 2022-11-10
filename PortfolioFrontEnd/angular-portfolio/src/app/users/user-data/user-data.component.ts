@@ -22,7 +22,7 @@ export class UserDataComponent implements OnInit {
   users: User[] = [];
   faTimes = faTimes;
 
-  isAdmin = true;
+  isAdmin = false;
   enableForm = false;
 
   UserData: User

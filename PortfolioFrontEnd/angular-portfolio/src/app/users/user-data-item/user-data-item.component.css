@@ -7,6 +7,15 @@
     border-left: 5px transparent;
     
 }
+.user2 {
+    display: flex;
+    background-color: pink;
+    margin: 5px;
+    padding: 10px;
+    cursor: pointer;
+    border-left: 5px transparent;
+    
+}
 
 .user.admin {
     border-left: 5px solid orange;

@@ -15,6 +15,8 @@ export class UserDataItemComponent implements OnInit {
   faPen = faPen
   
   @Input() user : User;
+  @Input() isAdmin : boolean;
+  
   // extraigo el delete/update/etc para que lo maneje la lista de usuarios y 
   // no la instancia de usuario
   @Output() onDeleteUser: EventEmitter<User> = new EventEmitter()
@@ -35,21 +37,30 @@ export class UserDataItemComponent implements OnInit {
 
 
   onDelete(user: User) {
-    console.log("Realizo pedido de eliminar un item del listado");
     // llamo al metodo del padre via emit()
-    this.onDeleteUser.emit(user);
+    if (this.isAdmin) {
+      console.log("Realizo pedido de eliminar un item del listado");
+      this.onDeleteUser.emit(user);
+    }
+
   }
 
   onUpdate(user: User) {
-    console.log("Realizo pedido de modificar un item del listado");
     // llamo al metodo del padre via emit()
-    this.onUpdateUser.emit(user);
+    if (this.isAdmin) {
+      console.log("Realizo pedido de modificar un item del listado");
+      this.onUpdateUser.emit(user);
+    }
+      
   }
 
   onToggle(user: User) {
-    console.log("Realizo pedido de alternar admin desde el listado");
     // llamo al metodo del padre via emit()
-    this.onToggleUser.emit(user);
+    if (this.isAdmin) {
+      console.log("Realizo pedido de alternar admin desde el listado");
+      this.onToggleUser.emit(user);
+    }
+      
   }
 
 

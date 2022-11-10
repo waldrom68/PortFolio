@@ -7,8 +7,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 })
 export class MessageBoxComponent implements OnInit {
   // displayStyle = "block";
-  displayAlert: boolean = false
   
+  @Input() displayAlert: boolean;
   @Input() title: string;
   @Input() message: string;
   @Input() btnOkText: string;

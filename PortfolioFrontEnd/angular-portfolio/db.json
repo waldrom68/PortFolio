@@ -2,7 +2,7 @@
   "User": [
     {
       "id": 1,
-      "username": "waldrom",
+      "username": "waldrom68",
       "password": "tomate",
       "admin": false
     },
@@ -16,7 +16,7 @@
       "id": 3,
       "username": "Waldomar",
       "password": "tomawdewqte",
-      "admin": true
+      "admin": false
     },
     {
       "id": 5,
@@ -26,9 +26,9 @@
     },
     {
       "id": 6,
-      "username": "Eustaquio",
-      "password": "laclavetonta",
-      "admin": false
+      "username": "Eustauio",
+      "password": "miTontaClave",
+      "admin": true
     }
   ],
   "Data": {
