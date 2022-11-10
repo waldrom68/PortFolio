@@ -56,6 +56,10 @@ export class UserDataComponent implements OnInit {
 
   }
 
+  // btnClick(accept:any) {
+  //   console.log("Respuesta de aceptación:", accept)
+  // }
+  
   displayForm() {
     // Alterna los estados de mostrar o no mostrar formulario
     this.enableForm = !this.enableForm;

@@ -19,15 +19,15 @@
       "admin": true
     },
     {
-      "id": 4,
-      "username": "Eustauio",
-      "password": "fdg",
-      "admin": false
-    },
-    {
       "id": 5,
       "username": "Giriperto",
       "password": "tomfgdgate",
+      "admin": false
+    },
+    {
+      "id": 6,
+      "username": "Eustaquio",
+      "password": "laclavetonta",
       "admin": false
     }
   ],

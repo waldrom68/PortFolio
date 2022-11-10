@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-message-box',
@@ -6,47 +6,53 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./message-box.component.css']
 })
 export class MessageBoxComponent implements OnInit {
-  displayStyle = "block";
-    
-  displayAlert = true;
-
+  // displayStyle = "block";
+  displayAlert: boolean = false
+  
   @Input() title: string;
   @Input() message: string;
   @Input() btnOkText: string;
   @Input() btnCancelText: string;
+  @Input() backColor: string;
 
-  constructor(
-
-    ) {
-      
+  @Output() onBtnClick = new EventEmitter();
+  
+  
+  constructor() {
     }
 
   ngOnInit() {
+    console.log("iniciando el message-box")
   }
 
    
   openPopup() {
-    this.displayStyle = "block";
+    // this.displayStyle = "block";
+    this.displayAlert = true;
   }
   closePopup() {
-    this.displayStyle = "none";
+    // this.displayStyle = "none";
+    this.displayAlert = false;
   }
 
   public decline() {
-    this.displayAlert = false;
-    console.log("rechazó")
+    this.closePopup()
+    this.onBtnClick.emit(false);
   }
   
   public accept() {
-    this.displayAlert = false;
-    console.log("aceptó")
-    // this.activeModal.close(true);
+    this.closePopup()
+    this.onBtnClick.emit(true);
+
   }
   
   public dismiss() {
-    console.log("ignoró")
-    this.displayAlert = false;
-    // this.activeModal.dismiss();
+
+    this.openPopup()
+    this.onBtnClick.emit(false);
+
 
   }
+
+ 
 }
