@@ -57,21 +57,12 @@ export class UserService {
 
   updateUsers(user:User): Observable<User>{
     // Este codigo modifica el valor del usuario en la DB
-    console.log("El elemento a modificar es:", user)
-
+    console.log("El elemento a modificar en la DB es:", user)
     const url = `${this.apiURL}/${user.id}`;
-    const newData: User = 
-    {
-      "id": user.id,
-      "username": "ElBagallo",
-      "password": "TieneSuerte",
-      "admin": false
-    
-    }
+ 
+    console.log("url del servicio de actualizacion de datos", url);
+    return this.http.put<User>(url, user)
 
-      console.log("url del servicio de actualizacion de datos", url);
-      return this.http.put<User>(url, newData)
   }
-
 
 }

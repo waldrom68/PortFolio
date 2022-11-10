@@ -8,7 +8,7 @@
     class="form-control" 
     id="username"
     name="username"
-    [(ngModel)]="username"
+    [(ngModel)]="UserData.username"
     />
 
     <div class="mb-3">
@@ -18,7 +18,7 @@
         class="form-control" 
         id="password"
         name="password"
-        [(ngModel)]="password"
+        [(ngModel)]="UserData.password"
         />
       <div id="passwordhelp" class="form-text">We'll never share your email with anyone else.</div>
     </div>
@@ -30,7 +30,7 @@
       class="form-check-input" 
       id="admin"
       name="admin"
-      [(ngModel)]="admin"
+      [(ngModel)]="UserData.admin"
       />
     <label class="form-check-label" for="admin">Administrador</label>
   </div>
@@ -38,5 +38,5 @@
   <input type="submit" class="btn btn-primary btn-sm btn-block" value="Guardar"/>
 
 </form>
-{{username}}
+{{UserData.username}}
 <br>

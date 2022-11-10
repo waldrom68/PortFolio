@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 
 import { faTimes, faPen } from '@fortawesome/free-solid-svg-icons';
+import { MessageBoxComponent } from '../../shared/message-box/message-box.component';
 
 import { User } from '../../data'
 
@@ -20,6 +21,10 @@ export class UserDataItemComponent implements OnInit {
   @Output() onUpdateUser: EventEmitter<User> = new EventEmitter()
   @Output() onToggleUser: EventEmitter<User> = new EventEmitter()
 
+  // Carga en el formulario, la instancia del usuario
+  @Output() setUser: EventEmitter<User> = new EventEmitter()
+
+
 
   constructor() {
   }
@@ -27,6 +32,8 @@ export class UserDataItemComponent implements OnInit {
   ngOnInit() {
   }
   
+
+
   onDelete(user: User) {
     console.log("Realizo pedido de eliminar un item del listado");
     // llamo al metodo del padre via emit()
@@ -44,6 +51,7 @@ export class UserDataItemComponent implements OnInit {
     // llamo al metodo del padre via emit()
     this.onToggleUser.emit(user);
   }
+
 
 
 }

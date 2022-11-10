@@ -6,10 +6,13 @@ import { HttpClientModule} from '@angular/common/http'
 
 import { AppComponent } from './app.component';
 
+
 // import the feature module here so you can add it to the imports array below
 import { CoreModule } from './core/core.module';
 import { FeaturesModule } from './features/features.module';
 import { UsersModule } from './users/users.module';
+
+import { SharedModule } from './shared/shared.module';
 
 
 
@@ -23,15 +26,16 @@ import { UsersModule } from './users/users.module';
     FontAwesomeModule,  // Catch this module for export to other levels
     HttpClientModule,  // para el uso del servicio que lee la db.json
 
-    
+    SharedModule,
     CoreModule,  // add the Core module here
     FeaturesModule,  // add the features module here
-    UsersModule,  // add the Users module here
+    UsersModule  // add the Users module here
+
   ],
   exports: [
-
-    FontAwesomeModule
-  ],
+    SharedModule,
+    FontAwesomeModule,
+   ],
 
   providers: [],
 

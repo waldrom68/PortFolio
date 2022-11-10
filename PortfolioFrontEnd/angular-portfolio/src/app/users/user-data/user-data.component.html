@@ -1,5 +1,6 @@
 <p>
   USUARIO ADMINISTRADOR: ({{isAdmin}})
+  
   <fa-icon 
     [icon]="faTimes"
     [ngStyle] = "{'color':'green'}"
@@ -9,17 +10,24 @@
 </p>
 
 
+<app-message-box></app-message-box>
 
+
+
+{{UserData.username}}
 <div *ngIf="isAdmin">
   <input 
     type="button"
     class="btn btn-success btn-sm"
-    (click)="toggleForm()"
+    (click)="displayForm()"
     value ="{{enableForm ? 'Cancelar': 'Agregar'}}"
   >
   <app-add-user
     *ngIf="enableForm"
     (onAddUser)="addUser($event)"
+    (onModificarUser)="editUser($event)"
+    [UserData] = "UserData"
+
   >
   </app-add-user>
 
@@ -28,8 +36,8 @@
     *ngFor="let item of users"
       [user]="item"
       (onDeleteUser)="deleteUser(item)"
-      (onUpdateUser)="updateUser(item)"
       (onToggleUser)="toggleAdmin(item)"
+      (onUpdateUser)="setUser(item)"
  
     >
   ></app-user-data-item>

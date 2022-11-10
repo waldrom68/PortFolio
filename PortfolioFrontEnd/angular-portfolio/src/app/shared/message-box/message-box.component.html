@@ -1,0 +1,24 @@
+
+<div
+    class="modal" 
+    id="exampleModal" 
+    tabindex="-1" 
+    role="dialog" 
+    [ngStyle]="{'display':displayStyle}"
+    >
+
+    <div class="modal-header">
+      <h4 class="modal-title">{{ title }}Titulo</h4>
+        <button type="button" class="close" aria-label="Close" (click)="dismiss()">
+          <span aria-hidden="false">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        {{ message }}Está seguro que quiere borrar esto?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="decline()">{{ btnCancelText }}Cancelar</button>
+        <button type="button" class="btn btn-primary" (click)="accept()">{{ btnOkText }}Aceptar</button>
+      </div>
+      
+</div>

@@ -1,6 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { UserService } from '../../service/user.service';
 
+import { MessageBoxComponent } from '../../shared/message-box/message-box.component';
+
+
 import { faTimes, faUserSecret } from '@fortawesome/free-solid-svg-icons';
 
 import { User } from '../../data'
@@ -19,18 +22,31 @@ export class UserDataComponent implements OnInit {
   users: User[] = [];
   faTimes = faTimes;
 
-  isAdmin = true
+  isAdmin = true;
   enableForm = false;
 
-
+  UserData: User
   
   // @Input() user:Users
   constructor(
     // Inicializamos los servicios del modulo User
-      private userService: UserService
+      private userService: UserService, 
+      // private messagebox: MessageBoxComponent
   ) { }
 
+  resetUser() {
+    this.UserData = {
+      "id": 0,
+      "username": "",
+      "password": "",
+      "admin": false 
+    }
+  }
+
   ngOnInit() {
+    // Inicializo atributos para el Form
+    this.resetUser()
+
     // Like promise, levanta los datos del servicio 
     // Ejecutamos el servicio al inicializar el modulo
     // -no controla las excepciones del callback de la promesa-
@@ -40,10 +56,47 @@ export class UserDataComponent implements OnInit {
 
   }
 
-  toggleForm() {
+  displayForm() {
+    // Alterna los estados de mostrar o no mostrar formulario
     this.enableForm = !this.enableForm;
   }
 
+  setUser(user: User) {
+    // Carga los datos en los atributos del Form.
+    this.UserData = user;
+    this.displayForm();
+  }
+
+  addUser(user: User) {
+    // Con los datos del form, agrega un nuevo usuario a la DB 
+    // via el userService y actualizo el array de users
+    this.userService.addUsers(user).subscribe( (user) => {
+      this.users.push(user); 
+    });
+
+    this.resetUser();  // Dejo en blanco el Formulario
+    this.displayForm();
+  }
+  
+  editUser(user:User) {
+    // Con los datos del form, modifico en la DB los datos del usuario
+    console.log("en user-data-component, recibo la instruccion de registrar los datos en la db")
+    console.log("recibo este user:", user)
+    console.log("tengo esta variable:", this.UserData)
+    // completo los campos del formulario con los atributos de la instancia
+    this.UserData = {
+      "id": user.id,
+      "username": user.username,
+      "password": user.password,
+      "admin": user.admin
+    }
+    
+    this.userService.updateUsers(this.UserData).subscribe();
+
+    this.resetUser();  // Dejo en blanco el Formulario
+    this.displayForm();
+    }
+    
   deleteUser(user: User) {
     // Este codigo acualiza el array Users para que se actualice en 
     // el frontend, sin necesidad de recargar la pagina
@@ -62,24 +115,10 @@ export class UserDataComponent implements OnInit {
 
   }
   
-  addUser(user: User) {
-    this.userService.addUsers(user).subscribe( (user) => {
-      this.users.push(user); 
-    });
-  }
+
   
-  updateUser(user: User) {
-  // Este codigo fue anulado porque no anda.
-  console.log("Padre recibe pedido de modificar a:", user)
-  this.toggleForm()
 
-  user = {
-    "id": user.id,
-    "username": "ElBagallo",
-    "password": "TieneSuerte",
-    "admin": false }
 
-    // this.userService.updateUsers(user).subscribe();
-  }
+
 
 }

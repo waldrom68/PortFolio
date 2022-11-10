@@ -3,6 +3,9 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { SharedModule} from '../shared/shared.module'
+import { MessageBoxComponent } from '../shared/message-box/message-box.component';
+
 
 import { UserDataComponent } from './user-data/user-data.component';
 import { UserDataItemComponent } from './user-data-item/user-data-item.component';
@@ -12,7 +15,8 @@ import { AddUserComponent } from './add-user/add-user.component';
   imports: [
     CommonModule,
     FormsModule,
-    FontAwesomeModule
+    FontAwesomeModule, 
+    SharedModule
   ],
   declarations: [
     UserDataComponent,
@@ -22,6 +26,7 @@ import { AddUserComponent } from './add-user/add-user.component';
     // FontAwesomeModule 
   ],
   exports: [
+    // MessageBoxComponent,
     UserDataComponent,
     // FormsModule,
     // FontAwesomeModule
