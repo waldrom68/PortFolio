@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
-
 import { User } from '../../data'
 
 
@@ -17,11 +16,6 @@ export class AddUserComponent implements OnInit {
   @Output() onModificarUser: EventEmitter<User> = new EventEmitter
  
 
-  // username:string = this.editUser.username;
-  // password:string = "";
-  // admin:boolean = false;
-  // id:number=0;
-
   constructor() { }
 
   ngOnInit(): void {
@@ -29,33 +23,19 @@ export class AddUserComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log("hice click en el submit del form y ahora tengo estos datos:", this.UserData.username )
+    // console.log("hice click en el submit del form y ahora tengo estos datos:", this.UserData)
 
+    
+    // Aqui debieran ir las reglas de validacion de los campos del formulario
     if(this.UserData.username.length > 0 && this.UserData.password.length > 0) {
-      // return
-      
-      // const {id, username, password, admin} = this
-      // const newData = this
-      if (this.UserData.id==0) {
-        console.log("Es un registro nuevo con estos datos:", this.UserData )
 
-        const newData:User = {
-          id: Math.trunc(Math.random()*100),
-          username: this.UserData.username, 
-          password: this.UserData.password, 
-          admin: this.UserData.admin, 
-        }
-        console.log("via el emit, llamo a onAddUser.emit(newData) con esta info:", newData)
-        this.onAddUser.emit(newData);
+      if (this.UserData.id==0) {
+        // console.log("Es un registro nuevo con estos datos:", this.UserData )
+        // console.log("via el emit, llamo a onAddUser.emit(newData) con esta info:", this.UserData )
+        this.onAddUser.emit(this.UserData );
         
         } else {
-          const newData:User = {
-            id: this.UserData.id,
-            username: this.UserData.username, 
-            password: this.UserData.password, 
-            admin: this.UserData.admin, 
-          }
-          console.log("Via editUser llamado desde el html, llamo a onUpdateUser.emit(newData) con esta info:",this.UserData )
+          // console.log("Via editUser llamado desde el html, llamo a onUpdateUser.emit(newData) con esta info:",this.UserData )
           this.onModificarUser.emit(this.UserData);
         }
     }

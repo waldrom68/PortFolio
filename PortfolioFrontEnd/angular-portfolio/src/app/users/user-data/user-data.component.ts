@@ -22,7 +22,7 @@ export class UserDataComponent implements OnInit {
   users: User[] = [];
   faTimes = faTimes;
 
-  isAdmin = false;
+  isAdmin = true;
   enableForm = false;
 
   UserData: User
@@ -84,18 +84,7 @@ export class UserDataComponent implements OnInit {
   
   editUser(user:User) {
     // Con los datos del form, modifico en la DB los datos del usuario
-    console.log("en user-data-component, recibo la instruccion de registrar los datos en la db")
-    console.log("recibo este user:", user)
-    console.log("tengo esta variable:", this.UserData)
-    // completo los campos del formulario con los atributos de la instancia
-    this.UserData = {
-      "id": user.id,
-      "username": user.username,
-      "password": user.password,
-      "admin": user.admin
-    }
-    
-    this.userService.updateUsers(this.UserData).subscribe();
+    this.userService.updateUsers(user).subscribe();
 
     this.resetUser();  // Dejo en blanco el Formulario
     this.displayForm();
@@ -104,7 +93,8 @@ export class UserDataComponent implements OnInit {
   deleteUser(user: User) {
     // Este codigo acualiza el array Users para que se actualice en 
     // el frontend, sin necesidad de recargar la pagina
-     this.userService.delUsers(user).subscribe( ()=> {
+     this.userService.delUsers(user).subscribe( (tt)=> {
+        // despues de ejecutarse el borrado de la DB, la quitamos del listado de Users
         this.users = this.users.filter( (t) => { return t.id !== user.id } )
       }
     );

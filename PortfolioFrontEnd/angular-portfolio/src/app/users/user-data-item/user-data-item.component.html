@@ -6,7 +6,7 @@
  
         <!-- [ngClass]="{ admin: user.admin}" -->
         <div class="user prevent-select col-lg-4"
-            [ngClass]="isAdmin ? 'user admin' : 'user2'"
+        [ngClass]="{'user':isAdmin, 'user2': !isAdmin, 'admin':user.admin}"
             (dblclick)="onToggle(user)"
             
             >

@@ -1,0 +1,81 @@
+
+.contenedor {
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    /* touch-action: manipulation; */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer */
+    -khtml-user-select: none; /* KHTML browsers (e.g. Konqueror) */
+    -webkit-user-select: none; /* Chrome, Safari, and Opera */
+    -webkit-touch-callout: none; /* Disable Android and iOS callouts*/
+}
+
+.contenedor::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 25px;
+    background: #000;
+    filter: blur(15px);
+
+    transition: 1.5s;
+    z-index: -1; 
+    perspective: 0px;
+}
+
+.flip-box {
+    background-color: transparent;
+    perspective: 1000px;
+    width:280px;
+    height: 100px;
+}
+
+    .flip-box-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        /* text-align: center; */
+        transition: transform 1.5s;
+        transform-style: preserve-3d;
+        -webkit-transform-style: preserve-3d;
+    }
+
+    .contenedor:hover .flip-box-inner, .contenedor:active .flip-box-inner {
+       transform: rotateY(180deg); 
+    }
+
+    .contenedor:hover:after, .contenedor:active:after {
+        transform: 
+            translate(-50%,-50%)
+            rotateY(-180deg);
+            box-shadow: 5px 5px 5px 5px rgb(40, 246, 33);
+    }
+
+    .flip-box-front, .flip-box-back {
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        border-radius: 25px;
+    }
+
+    .flip-box-front {
+        background-image: linear-gradient(90deg, var(--metaldark-shadow) 0%, var(--metallight-shadow) 25%, var(--metal) 50%, var(--metallight-shadow) 75%, var(--metaldark-shadow) 100% ) !important;   ;
+        
+    }
+    .flip-box-back {
+        background-image: linear-gradient(90deg, var(--metaldark-shadow) 0%, var(--metallight-shadow) 25%, var(--metal) 50%, var(--metallight-shadow) 75%, var(--metaldark-shadow) 100% ) !important;
+        transform: rotateY(180deg); 
+    }
