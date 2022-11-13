@@ -1,7 +1,9 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 
 import { faTimes, faPen } from '@fortawesome/free-solid-svg-icons';
-import { MessageBoxComponent } from '../../shared/message-box/message-box.component';
+// import { UiService } from 'src/app/service/ui.service';
+// import { Subscription } from 'rxjs'
+
 
 import { User } from '../../data'
 
@@ -14,6 +16,7 @@ export class UserDataItemComponent implements OnInit {
   faTimes = faTimes;
   faPen = faPen
   
+
   @Input() user : User;
   @Input() isAdmin : boolean;
   
@@ -28,13 +31,13 @@ export class UserDataItemComponent implements OnInit {
 
 
 
-  constructor() {
-  }
+  constructor(
+    // private uiService:UiService
+  ) {   }
   
   ngOnInit() {
   }
   
-
 
   onDelete(user: User) {
     // llamo al metodo del padre via emit()

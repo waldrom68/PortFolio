@@ -7,14 +7,16 @@ import { MessageBoxComponent } from './message-box/message-box.component';
 
 @NgModule({
   declarations: [
-    MessageBoxComponent
+    MessageBoxComponent,
+
 
   ],
   imports: [
     CommonModule
   ],
   exports: [
-    MessageBoxComponent
+    MessageBoxComponent,
+
   ]
 })
 export class SharedModule { }

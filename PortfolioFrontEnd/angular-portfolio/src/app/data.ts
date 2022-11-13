@@ -51,3 +51,57 @@ export interface User {
     admin: boolean,
 }
 
+// 
+export interface Users {
+    id:number,
+    name:string,
+    last_name:string,
+    foto:string, 
+    location:string,
+    profession:string[], 
+    profile:string[], 
+    objetive:string[], 
+    since:string,
+    experiencia_resume:string,
+    username:string,
+    password:string,
+    admin:boolean
+    }
+
+    export interface Studies {
+        id: number,
+        start_date:string,
+        end_date:string,
+        institution:string,
+        degree:string,
+        userId:number,
+    }
+
+    export interface LaboralCareer {
+        id: number,
+        start_date:string,
+        end_date:string,
+        organization:string,
+        position:string,
+        userId:number,
+    }
+    
+    export interface SoftSkill {
+        id: number,
+        name:string,
+        assessment:number,
+        userId:number,
+    }
+    
+    export interface HardSkill {
+        id: number,
+        name:string,
+        assessment:number,
+        userId:number,
+    }
+    
+    export interface Interests {
+        id: number,
+        name:string,
+        userId:number,
+    }

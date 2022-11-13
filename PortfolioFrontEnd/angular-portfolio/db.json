@@ -7,12 +7,6 @@
       "admin": false
     },
     {
-      "id": 2,
-      "username": "Ruperto",
-      "password": "tomate23",
-      "admin": true
-    },
-    {
       "id": 3,
       "username": "Waldomar",
       "password": "tomawdewqte",
@@ -33,13 +27,19 @@
     {
       "id": 6,
       "username": "eltontin",
-      "password": "con-la-clave",
+      "password": "con-la-clave-cortita",
       "admin": true
     },
     {
       "id": 7,
       "username": "layegua",
       "password": "sincodigos",
+      "admin": false
+    },
+    {
+      "id": 8,
+      "username": "elputo intento",
+      "password": "por enesima vez",
       "admin": false
     }
   ],
@@ -110,11 +110,8 @@
       "name": "Viajar"
     }
   ],
-  
-
-
   "Users": [
-      {
+    {
       "id": 1,
       "name": "Walter",
       "last_name": "Romero",
@@ -140,86 +137,92 @@
       "admin": true
     }
   ],
-
   "Studies": [
     {
       "id": 1,
       "start_date": "3/1990",
       "end_date": "12/1996",
       "institution": "UCALP",
-      "degree": "Analista de sistemas"
+      "degree": "Analista de sistemas",
+      "userId": 1
     },
     {
       "id": 2,
       "start_date": "3/1990",
       "end_date": "12/1996",
       "institution": "EDUCACION IT",
-      "degree": "Full Stack Python"
+      "degree": "Full Stack Python",
+      "userId": 1
     }
   ],
-
   "LaboralCareer": [
     {
       "id": 1,
       "start_date": "09-1993",
       "end_date": "02-2018",
       "organization": "ITBA",
-      "position": "Director"
+      "position": "Director",
+      "userId": 1
     },
     {
       "id": 2,
       "start_date": "09-1990",
       "end_date": "12-1993",
       "organization": "freelance",
-      "position": "Programador"
+      "position": "Programador",
+      "userId": 1
     }
   ],
-  
-  "SoftSkill": [
+  "SoftSkills": [
     {
       "id": 1,
       "name": "Amabilidad",
-      "assessment": 7
+      "assessment": 7,
+      "userId": 1
     },
     {
       "id": 2,
       "name": "Respeto",
-      "assessment": 6
+      "assessment": 6,
+      "userId": 1
     },
     {
       "id": 3,
       "name": "Integridad",
-      "assessment": 9
+      "assessment": 9,
+      "userId": 1
     }
   ],
-
-  "HardSkill": [
+  "HardSkills": [
     {
       "id": 1,
       "name": "Python",
-      "assessment": 65
+      "assessment": 65,
+      "userId": 1
     },
     {
       "id": 2,
       "name": "html",
-      "assessment": 50
+      "assessment": 50,
+      "userId": 1
     },
     {
       "id": 1,
       "name": "CSS3",
-      "assessment": 45
+      "assessment": 45,
+      "userId": 1
     }
   ],
-
   "Interests": [
     {
       "id": 1,
-      "name": "Paddel"
+      "name": "Paddel",
+      "userId": 1
     },
     {
       "id": 2,
-      "name": "Viajar"
+      "name": "Viajar",
+      "userId": 1
     }
   ]
-
 }

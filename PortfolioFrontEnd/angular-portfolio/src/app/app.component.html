@@ -1,14 +1,32 @@
 <!-- HTML principal -->
-
+<!-- <router-outlet></router-outlet> -->
 <app-top-bar></app-top-bar>
 
+
+
 <div class="container-fluid">
-    <fa-icon 
+    <!-- <fa-icon 
         [icon]="faTimes"
         [ngStyle] = "{'color':'red'}" >
-    </fa-icon>
+    </fa-icon> -->
     
-    <app-user-data></app-user-data> 
+    <div class="row justify-content-end">
+
+        <app-add-button-user
+            textBtnAdd = "{{ showListUsers ? 'Cerrar listado' : 'Ver usuarios' }}"
+            BGcolor = "{{ showListUsers ? 'azure' : 'cadetblue' }}"
+            FGcolor = 'black'
+
+            (btnClick)="toggleListUser(showListUsers ? 'azure' : 'cadetblue')"
+        >
+        </app-add-button-user>
+
+    </div>
+
+    <app-user-data
+        *ngIf='showListUsers'
+    >
+    </app-user-data> 
 
     <div class="row text-center aling-self-center py-3">
 
@@ -17,7 +35,7 @@
 
             <div class="col aling-self-center order-1" style="border: 1px solid;">
 
-                <section id="profileObjectiveAndTrajectory" class="row p-0 m-0">
+                <section id="profileObjectiveAndTrajectory" class="row p-0 m-0 justify-content-center">
                     <p class="h4 text-center">Perfil, objetivo, trayectoria</p>
 
                     <!-- Datos personales, Perfil, Objetivo profesional y Experiencia -->
@@ -28,7 +46,7 @@
 
             <div class="col aling-self-center order-1" style="border: 1px solid;">
 
-                <section id="profileObjectiveAndTrajectory" class="row p-0 m-0">
+                <section id="formacionSkillInt" class="row p-0 m-0 justify-content-center">
                     <p class="h4 text-center">Formación, habilidades e intereses</p>
 
                     <!-- Datos formacion, skills, intereses -->
@@ -40,11 +58,9 @@
         
         </div>
         
+        <!-- Componente datos-personales: Imagen y nombre -->
         <div class="col-sm-4 g-0 m-auto">
-            <!-- Componente datos-personales: Imagen y nombre -->
             <section id="nameAndImage" class="col order-5 opacity-75 align-self-center" style="border: 1px solid;">
-
-                <!-- templateUrl: 'app/features/datos-personales/datos-personales.component.html', -->
 
                 <app-personal-card></app-personal-card>
 
@@ -55,3 +71,4 @@
 
 </div>
 
+<app-footer></app-footer>

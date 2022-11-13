@@ -1,8 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { UserService } from '../../service/user.service';
+import { TopBarComponent } from '../../core/top-bar/top-bar.component'
 
-import { MessageBoxComponent } from '../../shared/message-box/message-box.component';
+import { UiService } from 'src/app/service/ui.service';  // para escuchar el botton de mostrar formulario de alta
+import { Subscription } from 'rxjs';  // idem
 
+
+import { UserService } from '../../service/user.service';  // para traer los datos de la db.json
 
 import { faTimes, faUserSecret } from '@fortawesome/free-solid-svg-icons';
 
@@ -19,29 +22,23 @@ import { User } from '../../data'
 
 
 export class UserDataComponent implements OnInit {
-  users: User[] = [];
   faTimes = faTimes;
-
-  isAdmin = true;
-  enableForm = false;
-
-  UserData: User
   
+  showAddForm:boolean = false;
+  subscriptionAddForm?: Subscription;
+  
+  users: User[] = [];
+  isAdmin = true;
+  UserData: User
+
   // @Input() user:Users
   constructor(
     // Inicializamos los servicios del modulo User
       private userService: UserService, 
-      // private messagebox: MessageBoxComponent
+      private uiService:UiService,  // defino el servicio para el botton de mostrar form
+
   ) { }
 
-  resetUser() {
-    this.UserData = {
-      "id": 0,
-      "username": "",
-      "password": "",
-      "admin": false 
-    }
-  }
 
   ngOnInit() {
     // Inicializo atributos para el Form
@@ -56,19 +53,33 @@ export class UserDataComponent implements OnInit {
 
   }
 
-  // btnClick(accept:any) {
-  //   console.log("Respuesta de aceptación:", accept)
-  // }
-  
+  // Metodos propios de la clase UserDataComponent
+  resetUser() {
+    this.UserData = {
+      "id": 0,
+      "username": "",
+      "password": "",
+      "admin": false 
+    }
+  }
   displayForm() {
     // Alterna los estados de mostrar o no mostrar formulario
-    this.enableForm = !this.enableForm;
+    this.showAddForm = !this.showAddForm;
   }
-
   setUser(user: User) {
     // Carga los datos en los atributos del Form.
     this.UserData = user;
-    this.displayForm();
+    this.displayForm();  // Cierro el formulario
+  }
+
+
+  // Eventos recibidos desde: add-button-user.component.html
+  // 
+  toggleAddUser(value:any) {
+    // Recibo el metodo y lo relaciono con el uiService.
+    console.log("En user-data-compornets.ts recibo el valor de :", value);
+    this.showAddForm = !this.showAddForm;
+    this.uiService.toggleAddForm(value)
   }
 
   addUser(user: User) {
@@ -79,7 +90,7 @@ export class UserDataComponent implements OnInit {
     });
 
     this.resetUser();  // Dejo en blanco el Formulario
-    this.displayForm();
+    // this.displayForm();  // Cierro el formulario
   }
   
   editUser(user:User) {
@@ -87,7 +98,7 @@ export class UserDataComponent implements OnInit {
     this.userService.updateUsers(user).subscribe();
 
     this.resetUser();  // Dejo en blanco el Formulario
-    this.displayForm();
+    this.displayForm();  // Cierro el formulario
     }
     
   deleteUser(user: User) {

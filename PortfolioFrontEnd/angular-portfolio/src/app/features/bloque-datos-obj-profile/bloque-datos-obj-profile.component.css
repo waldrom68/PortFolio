@@ -7,7 +7,7 @@
     justify-content: center;
     align-items: center;
     /* touch-action: manipulation; */
-    -moz-user-select: none; /* Firefox */
+    user-select: none; /* Firefox */
     -ms-user-select: none; /* Internet Explorer */
     -khtml-user-select: none; /* KHTML browsers (e.g. Konqueror) */
     -webkit-user-select: none; /* Chrome, Safari, and Opera */
@@ -24,7 +24,7 @@
     transform: translate(-50%, -50%);
     border-radius: 25px;
     background: #000;
-    filter: blur(15px);
+    filter: blur(35px);
 
     transition: 1.5s;
     z-index: -1; 
@@ -46,6 +46,7 @@
         transition: transform 1.5s;
         transform-style: preserve-3d;
         -webkit-transform-style: preserve-3d;
+        
     }
 
     .contenedor:hover .flip-box-inner, .contenedor:active .flip-box-inner {
@@ -56,7 +57,7 @@
         transform: 
             translate(-50%,-50%)
             rotateY(-180deg);
-            box-shadow: 5px 5px 5px 5px rgb(40, 246, 33);
+            box-shadow: 3px 3px 3px 3px rgb(40, 246, 33);
     }
 
     .flip-box-front, .flip-box-back {
@@ -73,9 +74,11 @@
 
     .flip-box-front {
         background-image: linear-gradient(90deg, var(--metaldark-shadow) 0%, var(--metallight-shadow) 25%, var(--metal) 50%, var(--metallight-shadow) 75%, var(--metaldark-shadow) 100% ) !important;   ;
-        
     }
     .flip-box-back {
         background-image: linear-gradient(90deg, var(--metaldark-shadow) 0%, var(--metallight-shadow) 25%, var(--metal) 50%, var(--metallight-shadow) 75%, var(--metaldark-shadow) 100% ) !important;
         transform: rotateY(180deg); 
+        /* height: 200%; */
+        box-shadow: 3px 3px 3px 3px rgb(40, 246, 33);
+
     }

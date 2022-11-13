@@ -1,148 +1,143 @@
-    <!-- Objetivo profesional y Experiencia -->
-    <div class="row p-0 m-0">
-        <!-- contenedor Objetivo profesional -->
-        <div class="p-2 col-md-6 etiqueta" style="border: 1px solid;">
-            <div class="p-2 row">
-                <div class="col">
-                    <a class="contenedor">
-                        <div class="flip-box">
-                            <div class="flip-box-inner">
-                                <div class="flip-box-front">
-                                    
-                                    <div class="font-weight-bold align-self-center">Objetivo</div>
+<div class="row p-4 m-0">
+<!-- Datos personales y Perfil -->
+    <!-- Contenedor Datos personales -->
+    <div class="p-2 col-md-6 etiqueta" style="border: 1px solid;">
+        <div class="p-2 row">
+            <div class="col">
+                <a class="" 
+                *ngIf="enableCardDat"
+                >
+                <div class="flip-box contenedor">
+                    <div class="flip-box-inner">
+                        <div class="flip-box-front">
+                            
+                            <div class="font-weight-bold align-self-center">Datos personales</div>
+                            
+                        </div>
+                        <div class="flip-box-back"
+                            (click)="toggleContenedorDat()"
 
-                                </div>
-                                <div class="flip-box-back" onclick="alert('Hola')">
-                                    
-                                    <span class="font-weight-bold align-self-center">Detras</span>
-
-                                </div>
+                            >
+                                <span class="font-weight-bold align-self-center">Ver detalles</span>
                             </div>
                         </div>
-                    </a>
-                </div>
-                <!-- <div class="col-sm-9" style="border: 1px solid">
-                   
-                    <app-objetive></app-objetive>
-
-                </div> -->
+                    </div>
+                </a>
             </div>
-        </div>
-        <!-- contenedor Experiencia -->
-        <div class="p-2 col-md-6 etiqueta" style="border: 1px solid;">
-            <div class="p-2 row">
-                <div class="col">
-                    <a class="contenedor">
-                        <div class="flip-box">
-                            <div class="flip-box-inner">
-                                <div class="flip-box-front">
-                                    
-                                    <div class="font-weight-bold align-self-center">Experiencia</div>
-
-                                </div>
-                                <div class="flip-box-back" onclick="alert('Hola')">
-                                    
-                                    <span class="font-weight-bold align-self-center">Detras</span>
-
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                
-                <!-- <div class="col-sm-9" style="border: 1px solid">
-
-                <app-datos-trayectoria></app-datos-trayectoria>
-                
-                </div> -->
-                    
-
-
-            </div>
-        </div>
-    </div>
-    <!-- Datos personales y Perfil -->
-    <div class="row p-0 m-0">
-
-        <!-- Contenedor Datos personales -->
-        <div class="p-2 col-md-6" style="border: 1px solid;">
-
-            <!-- <input type="checkbox" name="" id="Objetivo" #newValue
-            [checked]="newDatos.visibility"
-            (click)="updateVisibility(newValue.checked, newValue.id, $event.target)"
+            <div class="col-sm-9" style="border: 1px solid"
+                *ngIf="enableDetDat"
+                (click)="toggleContenedorDat()"
             >
-            <ng-template #sinMostrar>
-                Ver mas
-            </ng-template>
-            <span *ngIf="newValue.checked; else sinMostrar">Ver menos</span> -->
-
-            <div class="p-2 row">
-                <div class="col-sm-3" style="border: 1px solid">
-                    <div class="badge text-bg-light bg-transparent" style="width: 6rem;">
-                        <span>Datos</span>
-                        <fa-icon 
-                        [icon]="faTimes"
-                        [ngStyle] = "{'color':'red', 'text-aling':'center'}" >
-                    </fa-icon>
-                    </div>
-                </div>
-                <div class="col-sm-9" style="border: 1px solid">
-                    <app-data></app-data>
-                </div>
+                <app-data></app-data>
             </div>
         </div>
-        <!-- contenedor Perfil -->
-        <div class="p-2 col-md-6" style="border: 1px solid;">
-            <div class="p-2 row">
-                <div class="col-sm-3" style="border: 1px solid">
-                    <div class="badge text-bg-light bg-transparent" style="width: 6rem;">
-                        <span>Perfil</span>
-                    </div>
-                </div>
-                <div class="col-sm-9" style="border: 1px solid">
-                    <app-profile></app-profile>
-
-                </div>
-            </div>
-        </div>
-
     </div>
 
-    <!-- Objetivo profesional y Experiencia -->
-    <div class="row p-0 m-0">
-        <!-- contenedor Objetivo profesional -->
-        <div class="p-2 col-md-6" style="border: 1px solid;">
-            <div class="p-2 row">
-                <div class="col-sm-3" style="border: 1px solid">
-                    <div class="badge text-bg-light bg-transparent text-wrap" style="width: 6rem;">
-                        <span>Objetivo</span>
+    <!-- contenedor Perfil -->
+    <div class="p-2 col-md-6 etiqueta" style="border: 1px solid;">
+        <div class="p-2 row">
+            <div class="col">
+                <a class="contenedor" 
+                *ngIf="enableCardPerfil"
+                >
+                <div class="flip-box">
+                    <div class="flip-box-inner">
+                        <div class="flip-box-front">
+                            
+                            <div class="font-weight-bold align-self-center">Perfil</div>
+                            
+                        </div>
+                        <div class="flip-box-back"
+                            (click)="toggleContenedorPerfil()"
+
+                            >
+                                <span class="font-weight-bold align-self-center">Ver detalles</span>
+                            </div>
+                        </div>
                     </div>
+                </a>
+            </div>
+            <div class="col-sm-9" style="border: 1px solid"
+                *ngIf="enableDetPerfil"
+                (click)="toggleContenedorPerfil()"
+            >
+                <app-profile></app-profile>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Objetivo profesional y Experiencia -->
+    <div class="row p-4 m-0">
+        <!-- contenedor Objetivo profesional -->
+        <div class="p-2 col-md-6 etiqueta" style="border: 1px solid;">
+            <div class="p-2 row">
+                <div class="col">
+                    <a class="contenedor" 
+                    *ngIf="enableCardObj"
+                    >
+                    <div class="flip-box">
+                        <div class="flip-box-inner">
+                            <div class="flip-box-front">
+                                
+                                <div class="font-weight-bold align-self-center">Objetivo</div>
+                                
+                            </div>
+                            <div class="flip-box-back"
+                                (click)="toggleContenedorObj()"
+
+                                >
+                                    <span class="font-weight-bold align-self-center">Ver detalles</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
                 </div>
-                <div class="col-sm-9" style="border: 1px solid">
-                   
+                <div class="col-sm-9" style="border: 1px solid"
+                    *ngIf="enableDetObj"
+                    (click)="toggleContenedorObj()"
+                >
                     <app-objetive></app-objetive>
 
                 </div>
             </div>
         </div>
+
         <!-- contenedor Experiencia -->
-        <div class="p-2 col-md-6" style="border: 1px solid;">
+        <div class="p-2 col-md-6 etiqueta" style="border: 1px solid;">
             <div class="p-2 row">
-                <div class="col-sm-3" style="border: 1px solid">
-                    <div class="badge text-bg-light bg-transparent text-wrap" style="width: 6rem;">
-                        <span>Experiencia</span>
-                    </div>
+                <div class="col">
+                    <a class="contenedor" 
+                    *ngIf="enableCardExp"
+                    >
+                    <div class="flip-box">
+                        <div class="flip-box-inner">
+                            <div class="flip-box-front">
+                                
+                                <div class="font-weight-bold align-self-center">Experiencia</div>
+                                
+                            </div>
+                            <div class="flip-box-back"
+                                (click)="toggleContenedorExp()"
+
+                                >
+                                    <span class="font-weight-bold align-self-center">Ver detalles</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
                 </div>
+                <div class="col-sm-9" style="border: 1px solid"
+                    *ngIf="enableDetExp"
+                    (click)="toggleContenedorExp()"
+                >
+
+                    <app-datos-trayectoria></app-datos-trayectoria>
                 
-                <div class="col-sm-9" style="border: 1px solid">
-
-                <app-datos-trayectoria></app-datos-trayectoria>
                 </div>
-                    
-
-
             </div>
         </div>
     </div>
-    
+
 

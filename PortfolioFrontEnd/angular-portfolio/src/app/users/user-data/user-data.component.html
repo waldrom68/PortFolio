@@ -1,32 +1,42 @@
 <p>
   USUARIO ADMINISTRADOR: ({{isAdmin}})
-  
-  <fa-icon 
-    [icon]="faTimes"
-    [ngStyle] = "{'color':'green'}"
-
-    >
-  </fa-icon>
 </p>
- 
 
-
-{{UserData.username}}
 <div>
-  <input 
-    type="button"
-    class="btn btn-success btn-sm"
-    (click)="displayForm()"
-    value ="{{enableForm ? 'Cancelar': 'Agregar'}}"
+
+ <!-- <app-message-box
+    *ngIf="showConfirm"
+    title="Usuario"
+    message="Esta seguro de que quiere eliminar el usuario"
+    btnCancelText="Cancelar"
+    btnOkText="Confirmar"
+    backColor="azure"
   >
+  </app-message-box> -->
+
+      <app-add-button-user
+        textBtnAdd = "{{ showAddForm ? 'Cerrar formulario' : 'Agregar mi ideal de usuario' }}"
+        BGcolor = "{{ showAddForm ? 'red' : 'green' }}"
+        FGcolor = 'azure'
+
+        (btnClick)="toggleAddUser(showAddForm ? 'red' : 'green')"
+      >
+      </app-add-button-user>
+
+
+
   <app-add-user
-    *ngIf="enableForm"
+    *ngIf="showAddForm"
     (onAddUser)="addUser($event)"
     (onModificarUser)="editUser($event)"
     [UserData] = "UserData"
 
-  >
+    >
   </app-add-user>
+
+
+
+  
 
 
   <app-user-data-item  

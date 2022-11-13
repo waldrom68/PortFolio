@@ -66,16 +66,19 @@ export const HARDSKILL: HardSkill[] = [
     id: 1,
     name:"Python",
     assessment:65,
+    userId:1
 },
     {
     id: 2,
     name:"html",
     assessment:50,
+    userId:1
 },
     {
     id: 1,
     name:"CSS3",
     assessment:45,
+    userId:1
 }
 ]
 
@@ -84,16 +87,19 @@ export const SOFTSKILL: SoftSkill[] = [
         id: 1,
         name:"Amabilidad",
         assessment:7,
+        userId:1
     },
     {
         id: 2,
         name:"Respeto",
         assessment:6,
+        userId:1
     },
     {
         id: 3,
         name:"Integridad",
         assessment:9,
+        userId:1
     }
 ] 
 
@@ -107,3 +113,4 @@ export const INTERESES: Intereses[] = [
     name:"Viajar",
     }
 ]
+

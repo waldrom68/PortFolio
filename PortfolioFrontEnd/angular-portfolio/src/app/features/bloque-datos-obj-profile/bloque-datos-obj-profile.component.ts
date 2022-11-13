@@ -1,5 +1,5 @@
 import { Component, NgModule, OnInit } from '@angular/core';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faL, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-bloque-datos-obj-profile',
@@ -10,12 +10,36 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 export class BloqueDatosObjProfileComponent implements OnInit {
   faTimes = faTimes;
+  enableCardObj: boolean = true
+  enableDetObj: boolean = false
+  enableCardExp: boolean = true
+  enableDetExp: boolean = false
+  enableCardDat: boolean = true
+  enableDetDat: boolean = false
+  enableCardPerfil: boolean = true
+  enableDetPerfil: boolean = false
   
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  toggleContenedorObj() {
+    this.enableCardObj = !this.enableCardObj
+    this.enableDetObj = !this.enableDetObj
+    }
+  toggleContenedorExp() {
+    this.enableCardExp = !this.enableCardExp
+    this.enableDetExp = !this.enableDetExp
+    }
+  toggleContenedorDat() {
+    this.enableCardDat = !this.enableCardDat
+    this.enableDetDat = !this.enableDetDat
+    }
+  toggleContenedorPerfil() {
+    this.enableCardPerfil = !this.enableCardPerfil
+    this.enableDetPerfil = !this.enableDetPerfil
+    }
 }
 
 
