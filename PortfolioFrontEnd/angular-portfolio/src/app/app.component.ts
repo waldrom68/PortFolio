@@ -20,6 +20,7 @@ export class AppComponent  {
   faTimes = faTimes;
 
   showListUsers: boolean = false;
+  showDatos: boolean = false;
   
 
 constructor(
@@ -40,7 +41,13 @@ ngOnInit() {
     // Recibo el metodo y lo relaciono con el uiService.
     console.log("En user-data-compornets.ts recibo el valor de :", value);
     this.showListUsers = !this.showListUsers;
-    this.uiService.toggleAddForm(value)
+    this.uiService.toggleComponent(value)
   }
 
+  toggleDatos(value:any) {
+    // Recibo el metodo y lo relaciono con el uiService.
+    console.log("En user-data-compornets.ts recibo el valor de :", value);
+    this.showDatos = !this.showDatos;
+    this.uiService.toggleComponent(value)
+  }
 }

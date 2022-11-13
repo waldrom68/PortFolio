@@ -141,3 +141,15 @@
     </div>
 
 
+    <app-data-card
+        *ngIf="enableCard"
+        frontText="Frente nuevo"
+        backText="Detras nuevo"
+     >
+    </app-data-card>
+
+    <div
+        *ngIf="enableDet"
+    >
+        <h1>Mostraria los datos</h1>
+    </div>

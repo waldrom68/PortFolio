@@ -19,10 +19,22 @@ export class BloqueDatosObjProfileComponent implements OnInit {
   enableCardPerfil: boolean = true
   enableDetPerfil: boolean = false
   
+  enableCard: boolean = true
+  enableDet: boolean = false
+
+  showDatos: Boolean = false
+
   constructor() { }
 
   ngOnInit(): void {
   }
+
+  onClick(evento:any) {
+    alert("estoy aqui")
+    this.showDatos = !this.showDatos
+  }
+
+
 
   toggleContenedorObj() {
     this.enableCardObj = !this.enableCardObj

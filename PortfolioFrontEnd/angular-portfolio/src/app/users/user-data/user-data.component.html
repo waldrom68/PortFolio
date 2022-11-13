@@ -14,14 +14,15 @@
   >
   </app-message-box> -->
 
-      <app-add-button-user
-        textBtnAdd = "{{ showAddForm ? 'Cerrar formulario' : 'Agregar mi ideal de usuario' }}"
-        BGcolor = "{{ showAddForm ? 'red' : 'green' }}"
-        FGcolor = 'azure'
+<!-- Botton generico que habilita o no el display de un componente -->
+  <app-btn-display
+      textBtnAdd = "{{ showAddForm ? 'Cerrar formulario' : 'Agregar mi ideal de usuario' }}"
+      BGcolor = "{{ showAddForm ? 'red' : 'green' }}"
+      FGcolor = 'azure'
 
-        (btnClick)="toggleAddUser(showAddForm ? 'red' : 'green')"
-      >
-      </app-add-button-user>
+      (btnClick)="toggleAddUser(showAddForm ? 'red' : 'green')"
+    >
+  </app-btn-display>
 
 
 

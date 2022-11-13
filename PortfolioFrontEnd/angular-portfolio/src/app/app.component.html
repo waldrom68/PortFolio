@@ -12,21 +12,30 @@
     
     <div class="row justify-content-end">
 
-        <app-add-button-user
+        <!-- <app-add-button-user
             textBtnAdd = "{{ showListUsers ? 'Cerrar listado' : 'Ver usuarios' }}"
             BGcolor = "{{ showListUsers ? 'azure' : 'cadetblue' }}"
             FGcolor = 'black'
 
             (btnClick)="toggleListUser(showListUsers ? 'azure' : 'cadetblue')"
         >
-        </app-add-button-user>
+        </app-add-button-user> -->
 
+        <app-btn-display
+            textBtnAdd = "{{ showListUsers ? 'Cerrar listado' : 'Ver usuarios' }}"
+            BGcolor = "{{ showListUsers ? 'azure' : 'cadetblue' }}"
+            FGcolor = 'black'
+            
+            (btnClick)="toggleListUser(showListUsers ? 'azure' : 'cadetblue')"
+            >
+        </app-btn-display>
     </div>
 
     <app-user-data
         *ngIf='showListUsers'
     >
-    </app-user-data> 
+    </app-user-data>
+
 
     <div class="row text-center aling-self-center py-3">
 

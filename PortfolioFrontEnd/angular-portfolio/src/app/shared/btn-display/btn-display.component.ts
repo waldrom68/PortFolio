@@ -1,26 +1,21 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Subject } from 'rxjs';
 
 @Component({
-  selector: 'app-add-button-user',
-  templateUrl: './add-button-user.component.html',
-  styleUrls: ['./add-button-user.component.css']
+  selector: 'app-btn-display',
+  templateUrl: './btn-display.component.html',
+  styleUrls: ['./btn-display.component.css']
 })
-export class AddButtonUserComponent implements OnInit {
-
+export class BtnDisplayComponent implements OnInit {
   @Input() textBtnAdd: string;
   @Input() BGcolor: string;
   @Input() FGcolor: string;
 
   @Output() btnClick = new EventEmitter();
-
-  constructor() { 
-
-  }
+  
+  constructor() { }
 
   ngOnInit(): void {
   }
-
   onClick(target: any) {
     this.btnClick.emit()
   }

@@ -26,6 +26,7 @@ const appRouters: Routes = [
 @NgModule({
   declarations: [	
     AppComponent,
+    // DataComponent
    ],
   imports: [
     BrowserModule,
@@ -42,7 +43,6 @@ const appRouters: Routes = [
   exports: [
     SharedModule,
     FontAwesomeModule,
-
    ],
 
   providers: [],

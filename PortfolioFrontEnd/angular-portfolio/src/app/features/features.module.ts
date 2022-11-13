@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { SharedModule } from '../shared/shared.module';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
@@ -47,7 +47,7 @@ import { InteresItemComponent } from './bloque-formacion-skill-int/interes-item/
   imports: [
     CommonModule,
     FontAwesomeModule,
-
+    SharedModule,
   ],
 
   exports: [

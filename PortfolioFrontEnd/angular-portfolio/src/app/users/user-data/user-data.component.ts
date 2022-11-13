@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { TopBarComponent } from '../../core/top-bar/top-bar.component'
 
 import { UiService } from 'src/app/service/ui.service';  // para escuchar el botton de mostrar formulario de alta
 import { Subscription } from 'rxjs';  // idem
@@ -26,6 +25,7 @@ export class UserDataComponent implements OnInit {
   
   showAddForm:boolean = false;
   subscriptionAddForm?: Subscription;
+  
   
   users: User[] = [];
   isAdmin = true;
@@ -79,7 +79,7 @@ export class UserDataComponent implements OnInit {
     // Recibo el metodo y lo relaciono con el uiService.
     console.log("En user-data-compornets.ts recibo el valor de :", value);
     this.showAddForm = !this.showAddForm;
-    this.uiService.toggleAddForm(value)
+    this.uiService.onToggleComponet(value)
   }
 
   addUser(user: User) {
