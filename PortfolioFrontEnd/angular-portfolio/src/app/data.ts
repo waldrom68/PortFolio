@@ -105,3 +105,11 @@ export interface Users {
         name:string,
         userId:number,
     }
+
+    export interface Cards {
+        name: string,
+        status:boolean,
+        group: number,
+        data: any,
+        modelTemplate: string
+    }

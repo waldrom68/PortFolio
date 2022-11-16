@@ -1,35 +1,51 @@
-<p>data-card works!</p>
+<div class="row p-4 m-0">
 
-<div class="p-2 col-md-6 etiqueta" style="border: 1px solid;">
+<div class="p-2 col-md-6 etiqueta" style="border: 1px solid; color:red;"
+    *ngFor="let card of detailCard"
+>
+
     <div class="p-2 row">
         <div class="col">
             <a class="" 
-                *ngIf="enableCard"
+                *ngIf="statusCards"
             >
-            <div class="flip-box container-card">
-                <div class="flip-box-inner">
-                    <div class="flip-box-front">
-                        
-                        <div class="font-weight-bold align-self-center">{{frontText}}</div>
-                        
-                    </div>
-                    <div class="flip-box-back"
-                        (click)="toggleContenedor()"
-
-                        >
-                            <span class="font-weight-bold align-self-center">{{backText}}</span>
+                <div class="flip-box container-card">
+                    <div class="flip-box-inner">
+                        <div class="flip-box-front">
+                            
+                            <div class="font-weight-bold align-self-center">{{card.name}}</div>
+                            
                         </div>
-                    </div>
+                        <div class="flip-box-back"
+                            (click)="toggleContenedor(card.name)"
+
+                            >
+                                <span class="font-weight-bold align-self-center">ver mas</span>
+                            </div>
+                        </div>
                 </div>
             </a>
         </div>
-        <div class="col-sm-9" style="border: 1px solid"
-            *ngIf="enableDet"
-            (click)="onClick($event)"
-        >
-            <!-- <app-data></app-data> -->
-            <h1>Mostrando al pedo</h1>
+        {{card.name}}: {{card.status}}
+        <div class="" style="border: 1px solid"
+            *ngIf="card.status"
+            >
+            <a (click)="onClick($event)">
+                <fa-icon 
+                    [icon]="faTimes"
+                    [ngStyle] = "{'color':'red'}" >
+                </fa-icon>
+            </a>
+
+            <p>{{card.name}} works!</p>
+
+            <div *ngIf="card.modelTemplate == 'lista'">
+                <li *ngFor="let item of card.data">{{item}}</li>
+            </div>
         </div>
 
     </div>
+
+
+</div>
 </div>

@@ -1,4 +1,4 @@
-import {Data, Formacion, HardSkill, SoftSkill, Intereses, WorkExperience, User} from './data'
+import {Data, Formacion, HardSkill, SoftSkill, Intereses, WorkExperience, User, Cards} from './data'
 
 
 export const USERS: User[] = [
@@ -51,14 +51,14 @@ export const WORKEXPERIENCE: WorkExperience[] =[
     end_date:"02-2018",
     organization:"ITBA",
     position:"Director"
-}, 
-{
+    }, 
+    {
     id: 2,
     start_date:"09-1990",
     end_date:"12-1993",
     organization:"freelance",
     position:"Programador"
-}, 
+    }, 
 ] 
 
 export const HARDSKILL: HardSkill[] = [
@@ -114,3 +114,34 @@ export const INTERESES: Intereses[] = [
     }
 ]
 
+
+export const CARDS: Cards[] = [
+    {
+      name: 'Datos personales',
+      status:false,
+      group:1,
+      data: DATA,
+      modelTemplate: "objeto"
+    },
+    {
+      name: 'Perfil',
+      status:false,
+      group:1,
+      data: DATA.profile,
+      modelTemplate: "lista"
+    },
+    {
+      name: 'Objetivo',
+      status:false,
+      group:2,
+      data: DATA.objetive,
+      modelTemplate: "lista"
+    },
+    {
+      name: 'Trayectoria',
+      status:false,
+      group:2,
+      data: WORKEXPERIENCE,
+      modelTemplate: "objeto"
+    },
+  ]

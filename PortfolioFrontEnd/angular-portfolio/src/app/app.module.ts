@@ -32,7 +32,7 @@ const appRouters: Routes = [
     BrowserModule,
     FontAwesomeModule,  // Catch this module for export to other levels
     HttpClientModule,  // para el uso del servicio que lee la db.json
-    RouterModule.forRoot(appRouters, {enableTracing:true}),
+    RouterModule.forRoot(appRouters, {enableTracing:false}),
 
     SharedModule,
     CoreModule,  // add the Core module here

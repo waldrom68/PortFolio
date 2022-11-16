@@ -28,7 +28,15 @@
                 *ngIf="enableDetDat"
                 (click)="toggleContenedorDat()"
             >
+
+
+
                 <app-data></app-data>
+
+
+
+
+
             </div>
         </div>
     </div>
@@ -140,16 +148,30 @@
         </div>
     </div>
 
+<!-- Preparando el layout nuevo, el que usa los servicios -->
 
+<!-- <div class="row p-4 m-0"> -->
+    
     <app-data-card
-        *ngIf="enableCard"
-        frontText="Frente nuevo"
-        backText="Detras nuevo"
-     >
+        *ngIf="statusCards"
+
+        [statusCards]="statusCards"
+
+        [detailCard]="CardsGroup1"
+        
+        (toggleCards)="alPadre()"
+    >
     </app-data-card>
 
-    <div
-        *ngIf="enableDet"
+    <app-data-card
+        *ngIf="statusCards"
+
+        [statusCards]="statusCards"
+
+        [detailCard]="CardsGroup2"
+        
+        (toggleCards)="alPadre()"
     >
-        <h1>Mostraria los datos</h1>
-    </div>
+    </app-data-card>
+<!-- </div> -->
+
