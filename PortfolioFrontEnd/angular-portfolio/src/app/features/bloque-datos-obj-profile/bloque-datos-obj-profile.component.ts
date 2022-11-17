@@ -1,4 +1,4 @@
-import { Component, NgModule, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { faL, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { UiService } from 'src/app/service/ui.service';
 
@@ -56,7 +56,7 @@ export class BloqueDatosObjProfileComponent implements OnInit {
 
   ngOnInit(): void {
     // this.botones = this.miServicio.getDetalles();
-    this.detailCards = this.miServicio.getStatus();
+    this.detailCards = this.miServicio.getCards();
 
     this.CardsGroup1 = this.detailCards.filter(function (elem:any)
         { return elem.group == 1; }  ) 

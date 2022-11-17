@@ -4,7 +4,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { MessageBoxComponent } from './message-box/message-box.component';
 import { BtnDisplayComponent } from './btn-display/btn-display.component';
-import { DataCardComponent } from './data-card/data-card.component';
+
 
 
 
@@ -13,7 +13,7 @@ import { DataCardComponent } from './data-card/data-card.component';
   declarations: [
     MessageBoxComponent,
     BtnDisplayComponent,
-    DataCardComponent,
+
 
   ],
   imports: [
@@ -23,7 +23,6 @@ import { DataCardComponent } from './data-card/data-card.component';
   exports: [
     MessageBoxComponent,
     BtnDisplayComponent,
-    DataCardComponent,
     FontAwesomeModule
 
   ]

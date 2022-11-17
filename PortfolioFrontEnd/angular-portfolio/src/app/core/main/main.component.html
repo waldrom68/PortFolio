@@ -1,0 +1,89 @@
+<div class="row text-center aling-self-center py-0" id="Init"
+>
+    <div class="col-sm-8 aling-self-center order-0">
+        <section id="formacionSkillInt" class="row p-0 m-0 justify-content-center"
+        *ngIf="statusCards else mostrardetalle"
+        >
+            <p class="h4 text-center">{{labelGroup1}}</p>
+            <app-data-card
+                [detailCard]="CardsGroup1"
+                (toggleCards)="toggleCards()"
+                >
+            </app-data-card>
+        </section>
+
+        <section id="formacionSkillInt" class="row p-0 m-0 justify-content-center"
+        *ngIf="statusCards"
+        >
+            <p class="h4 text-center">{{labelGroup2}}</p>
+            <app-data-card
+                [detailCard]="CardsGroup2"
+                (toggleCards)="toggleCards()"
+                >
+            </app-data-card>
+        </section>
+
+        <!-- zona para mostrar los detalles de cada Card -->
+        <ng-template #mostrardetalle>
+            <div class="" style="border: 1px solid"
+            *ngFor="let item of CardsGroup1"
+            >
+               <div *ngIf="item.status">
+
+                    <a (click)="cerrarDetalles()">
+                        <fa-icon 
+                        [icon]="faTimes"
+                        [ngStyle] = "{'color':'red'}"
+                        >
+                    </fa-icon>
+                    </a>
+                    <div *ngIf="item.modelTemplate=='lista'">
+                        <h3>mostrar detalle de {{item.name}}</h3>
+                        <li *ngFor="let valor of item.data">{{valor}}</li>
+                    </div>
+                    <div *ngIf="item.modelTemplate!='lista'">
+                        <h3>mostrar detalle de {{item.name}}</h3>
+                    </div>
+                
+                </div>
+            </div>
+
+            <div class="" style="border: 1px solid"
+            *ngFor="let item2 of CardsGroup2"
+            >
+                <div *ngIf="item2.status">
+
+                    <a (click)="cerrarDetalles()">
+                        <fa-icon 
+                        [icon]="faTimes"
+                        [ngStyle] = "{'color':'red'}" 
+                        >
+                    </fa-icon>
+                    </a>
+                    <div *ngIf="item2.modelTemplate=='lista'">
+                        <h3>mostrar detalle de {{item2.name}}</h3>
+                        <li *ngFor="let valor of item2.data">{{valor}}</li>
+                    </div>
+                    <div *ngIf="item2.modelTemplate!='lista'">
+                        <h3>mostrar detalle de {{item2.name}}</h3>
+                    </div>
+                
+                </div>
+            </div>
+        </ng-template>
+
+    </div>
+
+    <div class="col-sm-4 g-0 m-auto"
+        *ngIf="statusCards"
+    >
+        <section id="nameAndImage" class="col order-5 opacity-75 align-self-center" style="border: 1px solid;">
+
+            <app-personal-card></app-personal-card>
+
+        </section>
+
+    </div>
+
+
+</div>

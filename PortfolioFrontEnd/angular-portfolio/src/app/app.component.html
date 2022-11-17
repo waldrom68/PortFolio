@@ -2,25 +2,19 @@
 <!-- <router-outlet></router-outlet> -->
 <app-top-bar></app-top-bar>
 
-
-
 <div class="container-fluid">
-    <!-- <fa-icon 
-        [icon]="faTimes"
-        [ngStyle] = "{'color':'red'}" >
-    </fa-icon> -->
+
+    <app-main></app-main>
+
+</div>
+
+<app-footer></app-footer>
+
+<!-- 
+<div class="container-fluid">
+
     
     <div class="row justify-content-end">
-
-        <!-- <app-add-button-user
-            textBtnAdd = "{{ showListUsers ? 'Cerrar listado' : 'Ver usuarios' }}"
-            BGcolor = "{{ showListUsers ? 'azure' : 'cadetblue' }}"
-            FGcolor = 'black'
-
-            (btnClick)="toggleListUser(showListUsers ? 'azure' : 'cadetblue')"
-        >
-        </app-add-button-user> -->
-
         <app-btn-display
             textBtnAdd = "{{ showListUsers ? 'Cerrar listado' : 'Ver usuarios' }}"
             BGcolor = "{{ showListUsers ? 'azure' : 'cadetblue' }}"
@@ -34,12 +28,12 @@
     <app-user-data
         *ngIf='showListUsers'
     >
-    </app-user-data>
+    </app-user-data> -->
 
-
+<!-- 
     <div class="row text-center aling-self-center py-3">
 
-        <!-- Caja componentes: Perfil, objetivo, trayectoria, Formación, habilidades e intereses -->
+        
         <div class="col-sm-8 g-0 m-auto">
 
             <div class="col aling-self-center order-1" style="border: 1px solid;">
@@ -47,7 +41,7 @@
                 <section id="profileObjectiveAndTrajectory" class="row p-0 m-0 justify-content-center">
                     <p class="h4 text-center">Perfil, objetivo, trayectoria</p>
 
-                    <!-- Datos personales, Perfil, Objetivo profesional y Experiencia -->
+
                     <app-bloque-datos-obj-profile></app-bloque-datos-obj-profile>
 
                 </section>
@@ -58,7 +52,7 @@
                 <section id="formacionSkillInt" class="row p-0 m-0 justify-content-center">
                     <p class="h4 text-center">Formación, habilidades e intereses</p>
 
-                    <!-- Datos formacion, skills, intereses -->
+
                     <app-bloque-formacion-skill-int></app-bloque-formacion-skill-int>
 
 
@@ -67,7 +61,6 @@
         
         </div>
         
-        <!-- Componente datos-personales: Imagen y nombre -->
         <div class="col-sm-4 g-0 m-auto">
             <section id="nameAndImage" class="col order-5 opacity-75 align-self-center" style="border: 1px solid;">
 
@@ -78,6 +71,6 @@
         </div>
     </div>
 
-</div>
+</div> -->
 
-<app-footer></app-footer>
+

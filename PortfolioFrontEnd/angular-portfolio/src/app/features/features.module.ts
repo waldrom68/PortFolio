@@ -6,7 +6,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { BloqueDatosObjProfileComponent } from './bloque-datos-obj-profile/bloque-datos-obj-profile.component';
 import { BloqueFormacionSkillIntComponent } from './bloque-formacion-skill-int/bloque-formacion-skill-int.component';
-import { PersonalCardComponent } from './personal-card/personal-card.component';
+// import { PersonalCardComponent } from './personal-card/personal-card.component';
 
 import { DatosTrayectoriaComponent } from './bloque-datos-obj-profile/datos-trayectoria/datos-trayectoria.component';
 import { ProfileComponent } from './bloque-datos-obj-profile/profile/profile.component';
@@ -29,7 +29,7 @@ import { InteresItemComponent } from './bloque-formacion-skill-int/interes-item/
   declarations: [
     BloqueDatosObjProfileComponent,
     BloqueFormacionSkillIntComponent,
-    PersonalCardComponent,
+    // PersonalCardComponent,
     DatosTrayectoriaComponent,
     ProfileComponent,
     ObjetiveComponent,
@@ -53,7 +53,7 @@ import { InteresItemComponent } from './bloque-formacion-skill-int/interes-item/
   exports: [
     BloqueDatosObjProfileComponent,
     BloqueFormacionSkillIntComponent,
-    PersonalCardComponent,
+    // PersonalCardComponent,
     // FontAwesomeModule
   ]
 

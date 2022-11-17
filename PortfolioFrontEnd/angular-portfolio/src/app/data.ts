@@ -111,5 +111,6 @@ export interface Users {
         status:boolean,
         group: number,
         data: any,
+        resume:string,
         modelTemplate: string
     }

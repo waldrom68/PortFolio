@@ -11,25 +11,17 @@ import { UiService } from 'src/app/service/ui.service';
 })
 export class DataCardComponent implements OnInit {
   faTimes = faTimes;
-  
-  @Input() frontText: string;
-  @Input() backText: string;
-  @Input() tittle:string;
-  @Input() statusCards:boolean;
-  
-  // @Input() data:string[];
-  
+   
   @Input() detailCard:Cards [];
 
-
   @Output() toggleCards = new EventEmitter();
-
-  enableCard: boolean = true
-  enableDet: boolean = false
   
-  // botones:any
+  // statusCards:boolean;
 
-  constructor( private miServicio: UiService) { }
+
+  constructor( private miServicio: UiService) {
+    // this.statusCards = this.miServicio.getStatusCards()
+   }
 
 
   ngOnInit(): void {
@@ -38,21 +30,21 @@ export class DataCardComponent implements OnInit {
 
   toggleContenedor(dato:string) {
     // PENDIENTE resolver esta chanchada en el codigo, VER EL EMIT
-    this.statusCards = !this.statusCards
     //  ----------------------------------------------------------
     // this.enableDet = !this.enableDet
     this.toggleCards.emit();
     this.miServicio.muestraDetalles(dato);
-    // console.log(this.miServicio.getDetalles())
+      // console.log(this.miServicio.getDetalles())
+      console.log("hice click para ver detalles", dato)
+      console.log("Y esto es lo que obtengo", this.miServicio.getCards())
     
   }
   
-  onClick(target: any) {
-    // PENDIENTE resolver esta chanchada en el codigo, VER EL EMIT
-    this.statusCards = !this.statusCards
-    //  ----------------------------------------------------------
-    console.log("\nEmito el click en el detalle y emito el toggleCards.emit\n[detalle del Card -data-card-component.ts-]")
-    this.toggleCards.emit()
-    this.miServicio.ocultarDetalles();
-    }
+//   onClick(target: any) {
+//     // PENDIENTE resolver esta chanchada en el codigo, VER EL EMIT
+//     //  ----------------------------------------------------------
+//     console.log("\nEmito el click en el detalle y emito el toggleCards.emit\n[detalle del Card -data-card-component.ts-]")
+//     this.toggleCards.emit()
+//     this.miServicio.ocultarDetalles();
+//     }
 }

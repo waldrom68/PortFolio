@@ -116,32 +116,54 @@ export const INTERESES: Intereses[] = [
 
 
 export const CARDS: Cards[] = [
+
     {
-      name: 'Datos personales',
-      status:false,
-      group:1,
-      data: DATA,
-      modelTemplate: "objeto"
+        name: 'Perfil',
+        status:false,
+        group:1,
+        data: DATA.profile,
+        resume: "",
+        modelTemplate: "lista"
     },
     {
-      name: 'Perfil',
-      status:false,
-      group:1,
-      data: DATA.profile,
-      modelTemplate: "lista"
+        name: 'Objetivo',
+        status:false,
+        group:1,
+        data: DATA.objetive,
+        resume: "",
+        modelTemplate: "lista"
     },
     {
-      name: 'Objetivo',
-      status:false,
-      group:2,
-      data: DATA.objetive,
-      modelTemplate: "lista"
+        name: 'Trayectoria',
+        status:false,
+        group:1,
+        data: WORKEXPERIENCE,
+        resume: "",
+        modelTemplate: "objeto"
     },
     {
-      name: 'Trayectoria',
-      status:false,
-      group:2,
-      data: WORKEXPERIENCE,
-      modelTemplate: "objeto"
+        name: 'Formación',
+        status:false,
+        group:1,
+        data: FORMACION,
+        resume: "Analista de Sistemas, MBA, Full-Stack",
+        modelTemplate: "lista"
     },
+    {
+        name: 'Habilidades',
+        status:false,
+        group:2,
+        data: HARDSKILL ,
+        resume: "Python, Django, JS, Java, Angular, SQL, CSS3, HTML",
+        modelTemplate: "lista"
+    },
+    {
+        name: 'Proyectos',
+        status:false,
+        group:2,
+        data: INTERESES,
+        resume: "",
+        modelTemplate: "lista"
+      },
+    
   ]

@@ -21,6 +21,8 @@ export class AppComponent  {
 
   showListUsers: boolean = false;
   showDatos: boolean = false;
+
+  prueba:boolean = false
   
 
 constructor(
