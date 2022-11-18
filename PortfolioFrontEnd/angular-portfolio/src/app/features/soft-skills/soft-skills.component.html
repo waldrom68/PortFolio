@@ -1,0 +1,12 @@
+<ng-container *ngIf="myData.length">
+
+    <app-soft-item 
+        *ngFor="let item of myData"
+        [item]="item"
+        [isAdmin]="isAdmin"
+        (onDeleteUser)="deleteSoftSkill(item)"
+    >
+
+    </app-soft-item>
+
+</ng-container>

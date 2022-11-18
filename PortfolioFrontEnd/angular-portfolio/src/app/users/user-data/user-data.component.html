@@ -36,16 +36,13 @@
 
 
 
-  
-
-
   <app-user-data-item  
     *ngFor="let item of users"
       [user]="item"
       [isAdmin]="isAdmin"
       (onDeleteUser)="deleteUser(item)"
-      (onToggleUser)="toggleAdmin(item)"
       (onUpdateUser)="setUser(item)"
+      (onToggleUser)="toggleAdmin(item)"
  
     >
   ></app-user-data-item>

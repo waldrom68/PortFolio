@@ -30,9 +30,12 @@ export class MainComponent implements OnInit {
 
   element: object;
   fragment:string = 'Init';
+
+  prueba$:UiService;
   
   constructor( private miServicio: UiService,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+
     ) { }
 
 

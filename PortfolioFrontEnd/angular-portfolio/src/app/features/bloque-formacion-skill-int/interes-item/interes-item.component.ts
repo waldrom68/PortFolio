@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Intereses } from '../../../data'
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Interests } from '../../../data'
 
 import { faPen, faTimes } from '@fortawesome/free-solid-svg-icons';
 
@@ -9,7 +9,12 @@ import { faPen, faTimes } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./interes-item.component.css']
 })
 export class InteresItemComponent implements OnInit {
-  @Input() item: Intereses;
+  @Input() item: Interests;
+
+  // PENDIENTE vincular con el logueo
+  @Input() isAdmin: boolean;
+
+  @Output() onDelete: EventEmitter<Interests> = new EventEmitter()
   
   faTimes = faTimes;
   faPen = faPen;
@@ -17,6 +22,14 @@ export class InteresItemComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+
   }
 
+  delete(interest: Interests) {
+    // llamo al metodo del padre via emit()
+    if (this.isAdmin) {
+      this.onDelete.emit(interest);
+    }
+
+  }
 }

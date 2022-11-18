@@ -1,0 +1,11 @@
+<ng-container *ngIf="myData.length">
+
+    <app-interes-item
+        *ngFor="let item of myData"
+        [item]="item"
+        [isAdmin]="isAdmin"
+        (onDelete)="deleteInterest(item)">
+
+    </app-interes-item>
+
+</ng-container>

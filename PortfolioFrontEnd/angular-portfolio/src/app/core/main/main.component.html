@@ -1,77 +1,91 @@
-<div class="row text-center aling-self-center py-0" id="Init"
->
+<ng-container *ngIf="prueba$">
+    prueba de Observable, no subscribí ni defini el observable
+    ver https://blog.angular-university.io/how-to-build-angular2-apps-using-rxjs-observable-data-services-pitfalls-to-avoid/
+</ng-container>
+<div class="row text-center aling-self-center py-0" id="Init">
     <div class="col-sm-8 aling-self-center order-0">
 
-        <section id="" class="row p-0 m-0 justify-content-center"
-        *ngIf="statusCards"
-        >
-            <p class="h4 text-center">{{labelGroup1}}</p>
-            <app-data-card
-                [detailCard]="CardsGroup1"
-                (toggleCards)="toggleCards()"
-                >
-            </app-data-card>
-        </section>
+        <ng-container *ngIf="statusCards">
+            <section id="" class="row p-0 m-0 justify-content-center">
+                <p class="h4 text-center">{{labelGroup1}}</p>
+                <app-data-card
+                    [detailCard]="CardsGroup1"
+                    (toggleCards)="toggleCards()"
+                    >
+                </app-data-card>
+            </section>
 
-        <section id="" class="row p-0 m-0 justify-content-center"
-        *ngIf="statusCards"
-        >
-            <p class="h4 text-center">{{labelGroup2}}</p>
-            <app-data-card
-                [detailCard]="CardsGroup2"
-                (toggleCards)="toggleCards()"
-                >
-            </app-data-card>
-        </section>
+            <section id="" class="row p-0 m-0 justify-content-center">
+                <p class="h4 text-center">{{labelGroup2}}</p>
+                <app-data-card
+                    [detailCard]="CardsGroup2"
+                    (toggleCards)="toggleCards()"
+                    >
+                </app-data-card>
+            </section>
+        </ng-container>
 
         <!-- zona para mostrar los detalles de cada Card -->
-        <div *ngIf = "statusCards == false">
-            <a (click)="toggleCards()">
-                <fa-icon 
-                [icon]="faTimes"
-                [ngStyle] = "{'color':'red'}"
-                >
-            </fa-icon>
-            </a>
+        <ng-container *ngIf = "statusCards == false">
+            <div>
+                <a (click)="toggleCards()">
+                    <fa-icon 
+                    [icon]="faTimes"
+                    [ngStyle] = "{'color':'red'}"
+                    >
+                </fa-icon>
+                </a>
 
-            <div 
-                class="" 
-                *ngFor="let card of detailCards"
-            >
                 <div 
-                    *ngIf="card.status"
-                    [ngSwitch]="card.name"
-                    style="border: 1px solid"
+                    *ngFor="let card of detailCards"
                 >
-                    <!-- <app-stout-item    *ngSwitchCase="'stout'"    [item]="currentItem"></app-stout-item> -->
-                    <p *ngSwitchCase="'Perfil'">Mostrar detalle de Perfil</p>
-                    <p *ngSwitchCase="'Objetivo'">Mostrar detalle de Objetivo</p>
-                    <p *ngSwitchCase="'Trayectoria'">Mostrar detalle de Trayectoria</p>
-                    <p *ngSwitchCase="'Formación'">Mostrar detalle de Formación</p>
-                    <p *ngSwitchCase="'Habilidades personales'">Mostrar detalle de Habilidades personales</p>
-                    <p *ngSwitchCase="'Habilidades tecnicas'">Mostrar detalle de Habilidades tecnicas</p>
-                    <p *ngSwitchCase="'Proyectos'">Mostrar detalle de Proyectos</p>
-                    <p *ngSwitchCase="'Intereses'">Mostrar detalle de Intereses</p>
-                    <p *ngSwitchDefault>Tarjeta no encontrada</p>
+                    <ng-container *ngIf="card.status"
+                        [ngSwitch]="card.name"
+                        style="border: 1px solid"
+                    >
+                        <!-- <app-stout-item    *ngSwitchCase="'stout'"    [item]="currentItem"></app-stout-item> -->
+                        <p *ngSwitchCase="'Perfil'">Mostrar detalle de Perfil</p>
+                        <p *ngSwitchCase="'Objetivo'">Mostrar detalle de Objetivo</p>
+                        <p *ngSwitchCase="'Trayectoria'">Mostrar detalle de Trayectoria</p>
+                        <p *ngSwitchCase="'Formación'">Mostrar detalle de Formación</p>
+                        <div *ngSwitchCase="'Habilidades personales'">Muestra las habilidades personales de la base de datos, habilitado el delete
+                            <hr>
+                            <app-soft-skills></app-soft-skills>
+                        </div>
 
+                        <div *ngSwitchCase="'Habilidades tecnicas'">Muestra las Habilidades tecnicas de la base de datos, habilitado el delete
+                            <br>
+                            <app-hard-skills></app-hard-skills>
+
+                        </div>
+                        <p *ngSwitchCase="'Proyectos'">Mostrar detalle de Proyectos</p>
+                        <div *ngSwitchCase="'Intereses'">Muestra los intereses de la base de datos, habilitado el delete
+                            <hr>
+                            <app-intereses></app-intereses>
+
+                        </div>
+                        <p *ngSwitchDefault>Tarjeta no encontrada</p>
+
+                    </ng-container>
                 </div>
-            </div>
 
+
+            </div>
+        </ng-container>
+    </div>
+
+    <ng-container *ngIf="statusCards">
+        <div class="col-sm-4 g-0 m-auto"
+            
+        >
+            <section id="nameAndImage" class="col order-5 opacity-75 align-self-center" style="border: 1px solid;">
+
+                <app-personal-card></app-personal-card>
+
+            </section>
 
         </div>
-
-    </div>
-
-    <div class="col-sm-4 g-0 m-auto"
-        *ngIf="statusCards"
-    >
-        <section id="nameAndImage" class="col order-5 opacity-75 align-self-center" style="border: 1px solid;">
-
-            <app-personal-card></app-personal-card>
-
-        </section>
-
-    </div>
+    </ng-container>
 
 
 </div>

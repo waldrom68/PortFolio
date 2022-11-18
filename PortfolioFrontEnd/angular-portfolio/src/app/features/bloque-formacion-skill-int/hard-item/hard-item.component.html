@@ -1,13 +1,16 @@
 <span style="background-color:gainsboro">{{item.name}}: {{item.assessment}}
-    <fa-icon 
-        [icon]="faTimes"
-        [ngStyle] = "{'color':'red','font-weight':'bolder', 'margin':'0 5px'}"
-    >
-    </fa-icon>
-    <fa-icon 
-        [icon]="faPen"
-        [ngStyle] = "{'color':'green','font-weight':'bolder', 'margin':'0 5px'}"
+    <!-- <ng-container *ngIf="isAdmin"> -->
+        <fa-icon 
+            [icon]="faTimes"
+            [ngStyle] = "{'color':'red','font-weight':'bolder', 'margin':'0 5px'}"
+            (click)="delete(item)" 
         >
-    </fa-icon>
+        </fa-icon>
+        <fa-icon 
+            [icon]="faPen"
+            [ngStyle] = "{'color':'green','font-weight':'bolder', 'margin':'0 5px'}"
+            >
+        </fa-icon>
+    <!-- </ng-container> -->
 </span>
 <br>

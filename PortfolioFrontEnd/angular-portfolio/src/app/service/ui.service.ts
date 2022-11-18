@@ -29,7 +29,6 @@ export class UiService {
     this.portfolioinit = PORTFOLIOINIT;
    }
 
-   
   // Pendiente, esto debe vincularse con el logueo
   getUserLoggin() {
      return this.portfolioinit.userDefault

@@ -28,6 +28,7 @@ export class DataService {
         private http: HttpClient
   ) { }
 
+
   // codigo que usa el servidor api para traer los datos de la DB
   getUser(): Observable<Users[]> {
     return this.http.get<Users[]>(`${this.apiURL}/Users/${this.USERID}`)
@@ -48,6 +49,12 @@ export class DataService {
     return this.http.get<SoftSkill[]>(this.EndPoint )
   }
 
+  getInterests(): Observable<Interests[]> {
+    this.EndPoint = `${this.apiURL}/Interests?userId=${this.USERID}`
+    return this.http.get<Interests[]>(this.EndPoint )
+  }
+
+
   getHardSkill(): Observable<HardSkill[]> {
     this.EndPoint = `${this.apiURL}/HardSkills?userId=${this.USERID}`
     return this.http.get<HardSkill[]>(this.EndPoint )
@@ -56,16 +63,10 @@ export class DataService {
 
 
 
-  getInterests(): Observable<Interests[]> {
-    this.EndPoint = `${this.apiURL}/Interestss?userId=${this.USERID}`
-    return this.http.get<Interests[]>(this.EndPoint )
-  }
 
-  delInterests(interest:Interests): Observable<Interests>{
-    // Este codigo elimina de la DB al usuario
-    const url = `${this.apiURL}/Interests${interest.id}`
-    return this.http.delete<Interests>(url)
-  }
+
+
+ 
 
   addInterests(interest:Interests): Observable<Interests>{
     // Este codigo agrega un usuario a la DB 
@@ -76,6 +77,27 @@ export class DataService {
     // Este codigo modifica el valor del usuario en la DB
     const url = `${this.apiURL}/Interests/${interest.id}`;
         return this.http.put<Interests>(url, interest)
+  }
+  
+
+  // ELIMINACION DE REGISTROS
+  // 
+  delSoftSkills(softskill:SoftSkill): Observable<SoftSkill>{
+    // Este codigo elimina de la DB al usuario
+    const url = `${this.apiURL}/SoftSkills/${softskill.id}`
+    return this.http.delete<SoftSkill>(url)
+  }
+
+  delInterests(interest:Interests): Observable<Interests>{
+    // Este codigo elimina de la DB al usuario
+    const url = `${this.apiURL}/Interests/${interest.id}`
+    return this.http.delete<Interests>(url)
+  }
+
+  delHardSkills(softskill:HardSkill): Observable<HardSkill>{
+    // Este codigo elimina de la DB al usuario
+    const url = `${this.apiURL}/HardSkills/${softskill.id}`
+    return this.http.delete<HardSkill>(url)
   }
 
 }

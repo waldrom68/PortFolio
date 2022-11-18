@@ -20,7 +20,7 @@
     },
     {
       "id": 5,
-      "username": "giriperto",
+      "username": "giliperto",
       "password": "tiramelagoma",
       "admin": false
     },
@@ -38,7 +38,7 @@
     },
     {
       "id": 8,
-      "username": "elputo intento",
+      "username": "elputo intento BIS",
       "password": "por enesima vez",
       "admin": false
     }
@@ -110,10 +110,6 @@
       "name": "OLD  DBViajar"
     }
   ],
-
-
-
-
   "Users": [
     {
       "id": 1,
@@ -174,7 +170,7 @@
       "degree": "Analista Universitario de Sistemas",
       "level": "Grado",
       "userId": 1
-    },
+    }
   ],
   "LaboralCareer": [
     {
@@ -197,7 +193,7 @@
   "SoftSkills": [
     {
       "id": 1,
-      "name": "Adaptación al cambio",
+      "name": "Adaptación al CLIMA jeje",
       "assessment": 3,
       "userId": 1
     },
@@ -290,7 +286,7 @@
     },
     {
       "id": 3,
-      "name": "Cocinar",
+      "name": "culear",
       "userId": 1
     },
     {
@@ -304,7 +300,6 @@
       "userId": 1
     }
   ],
-
   "Projects": [
     {
       "id": 1,

@@ -31,6 +31,8 @@ export class UserDataComponent implements OnInit {
   isAdmin = true;
   UserData: User
 
+  prueba$: boolean = false;
+
   // @Input() user:Users
   constructor(
     // Inicializamos los servicios del modulo User
