@@ -20,7 +20,7 @@ export class DataCardComponent implements OnInit {
 
 
   constructor( private miServicio: UiService) {
-    // this.statusCards = this.miServicio.getStatusCards()
+  
    }
 
 
@@ -29,22 +29,14 @@ export class DataCardComponent implements OnInit {
   }
 
   toggleContenedor(dato:string) {
-    // PENDIENTE resolver esta chanchada en el codigo, VER EL EMIT
-    //  ----------------------------------------------------------
-    // this.enableDet = !this.enableDet
     this.toggleCards.emit();
-    this.miServicio.muestraDetalles(dato);
+    
+    this.miServicio.toggleDetalles(dato);
       // console.log(this.miServicio.getDetalles())
       console.log("hice click para ver detalles", dato)
       console.log("Y esto es lo que obtengo", this.miServicio.getCards())
     
   }
   
-//   onClick(target: any) {
-//     // PENDIENTE resolver esta chanchada en el codigo, VER EL EMIT
-//     //  ----------------------------------------------------------
-//     console.log("\nEmito el click en el detalle y emito el toggleCards.emit\n[detalle del Card -data-card-component.ts-]")
-//     this.toggleCards.emit()
-//     this.miServicio.ocultarDetalles();
-//     }
+
 }

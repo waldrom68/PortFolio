@@ -52,4 +52,6 @@ ngOnInit() {
     this.showDatos = !this.showDatos;
     this.uiService.toggleComponent(value)
   }
+
+
 }

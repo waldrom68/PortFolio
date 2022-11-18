@@ -49,7 +49,7 @@ export class BloqueDatosObjProfileComponent implements OnInit {
   }
 
   toggle(elemento:string) {
-    this.miServicio.muestraDetalles(elemento);
+    this.miServicio.toggleDetalles(elemento);
   }
 
   constructor(private miServicio: UiService) { }

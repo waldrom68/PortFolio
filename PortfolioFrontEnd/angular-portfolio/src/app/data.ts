@@ -114,3 +114,15 @@ export interface Users {
         resume:string,
         modelTemplate: string
     }
+
+    export interface Projects {
+        id: number,
+        name:string,
+        resume:string,
+        userId:number
+    }
+    export interface PortfolioInit {
+        theme: string,
+        status:boolean,
+        userDefault:number
+    }

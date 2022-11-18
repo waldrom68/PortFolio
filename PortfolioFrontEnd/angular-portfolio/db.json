@@ -46,7 +46,7 @@
   "Data": {
     "id": 1,
     "name": "Walter",
-    "last_name": "Romero",
+    "last_name": "OLD  DB",
     "foto": "../assets/images/ico.svg",
     "location": "Bernal, Bs.As. Argentina.",
     "profession": [
@@ -54,12 +54,12 @@
       "PYTHON - JAVA"
     ],
     "profile": [
-      "Ocupé cargos de RRHH y disfruté mejorar procesos, generar tableros de control para la toma de decisiones, y hacer de 'una especie de analista funcional' para servir de enlace entre áreas de negocio y de tecnología. Ciertamente era un Analista Universitario de Sistemas en un área de recursos humanos.",
+      "OLD  DBOcupé cargos de RRHH y disfruté mejorar procesos, generar tableros de control para la toma de decisiones, y hacer de 'una especie de analista funcional' para servir de enlace entre áreas de negocio y de tecnología. Ciertamente era un Analista Universitario de Sistemas en un área de recursos humanos.",
       "Luego de 24 años trabajando en la universidad, ahora he vuelto a mi esencia: 'creatividad, innovación, sistemas y tecnología'.",
       "En resumen, además de contar con criterio empresarial tengo conocimientos y experiencia para sumar valor a cualquier proyecto, y quienes me conocen destacarán mi compromiso para alcanzar objetivos, mi lealtad, integridad y disciplina."
     ],
     "objetive": [
-      "Me atraen los desafíos y aventuras en donde pueda seguir ayudando, creando, innovando, mejorando ...",
+      "OLD  DBMe atraen los desafíos y aventuras en donde pueda seguir ayudando, creando, innovando, mejorando ...",
       "Podés contactarme si tenés alguna idea o propuesta y será un plus si es divertida."
     ],
     "since": "1968",
@@ -74,7 +74,7 @@
       "start_date": "3/1990",
       "end_date": "12/1996",
       "institution": "UCALP",
-      "degree": "Analista de sistemas"
+      "degree": "OLD  DBAnalista de sistemas"
     },
     {
       "id": 2,
@@ -90,7 +90,7 @@
       "start_date": "09-1993",
       "end_date": "02-2018",
       "organization": "ITBA",
-      "position": "Director"
+      "position": "OLD  DBDirector"
     },
     {
       "id": 2,
@@ -103,34 +103,35 @@
   "Intereses": [
     {
       "id": 1,
-      "name": "Paddel"
+      "name": "OLD  DBPaddel"
     },
     {
       "id": 2,
-      "name": "Viajar"
+      "name": "OLD  DBViajar"
     }
   ],
+
+
+
+
   "Users": [
     {
       "id": 1,
       "name": "Walter",
       "last_name": "Romero",
       "foto": "../assets/images/ico.svg",
-      "location": "Bernal, Bs.As. Argentina.",
+      "since": "nacido en 1968",
+      "location": "Argentina, Bs.As.",
       "profession": [
         "Full Stack Developer",
         "PYTHON - JAVA"
       ],
       "profile": [
-        "Ocupé cargos de RRHH y disfruté mejorar procesos, generar tableros de control para la toma de decisiones, y hacer de 'una especie de analista funcional' para servir de enlace entre áreas de negocio y de tecnología. Ciertamente era un Analista Universitario de Sistemas en un área de recursos humanos.",
-        "Luego de 24 años trabajando en la universidad, ahora he vuelto a mi esencia: 'creatividad, innovación, sistemas y tecnología'.",
-        "En resumen, además de contar con criterio empresarial tengo conocimientos y experiencia para sumar valor a cualquier proyecto, y quienes me conocen destacarán mi compromiso para alcanzar objetivos, mi lealtad, integridad y disciplina."
+        "Ocupé cargos de RRHH y disfruté mejorar procesos, generar tableros de control para la toma de decisiones, y hacer de 'una especie de analista funcional' para servir de enlace entre áreas de negocio y de tecnología. Ciertamente era un Analista Universitario de Sistemas en un área de recursos humanos.\nLuego de 24 años trabajando en la universidad, ahora he vuelto a mi esencia: 'creatividad, innovación, sistemas y tecnología'.\nEn resumen, además de contar con criterio empresarial tengo conocimientos y experiencia para sumar valor a cualquier proyecto, y quienes me conocen destacarán mi compromiso para alcanzar objetivos, mi lealtad, integridad y disciplina."
       ],
       "objetive": [
-        "Me atraen los desafíos y aventuras en donde pueda seguir ayudando, creando, innovando, mejorando ...",
-        "Podés contactarme si tenés alguna idea o propuesta y será un plus si es divertida."
+        "Me atraen los desafíos y aventuras en donde pueda seguir ayudando, creando, innovando, mejorando ...\nPodés contactarme si tenés alguna idea o propuesta y será un plus si es divertida."
       ],
-      "since": "1968",
       "experiencia_resume": "SOY CLARAMENTE EL INDICADO",
       "username": "waldrom",
       "password": "sinclave",
@@ -139,21 +140,41 @@
   ],
   "Studies": [
     {
-      "id": 1,
-      "start_date": "3/1990",
-      "end_date": "12/1996",
-      "institution": "UCALP",
-      "degree": "Analista de sistemas",
+      "id": 4,
+      "start_date": "2022",
+      "end_date": "..",
+      "institution": "Min. de Desarrollo Productivo y CESSI",
+      "degree": "Programador Web full stack JS",
+      "level": "Especialización",
+      "userId": 1
+    },
+    {
+      "id": 3,
+      "start_date": "2021",
+      "end_date": "2022",
+      "institution": "EDUCACION IT",
+      "degree": "Python Web Developer",
+      "level": "Especialización",
       "userId": 1
     },
     {
       "id": 2,
-      "start_date": "3/1990",
-      "end_date": "12/1996",
-      "institution": "EDUCACION IT",
-      "degree": "Full Stack Python",
+      "start_date": "2007",
+      "end_date": "2012",
+      "institution": "UP",
+      "degree": "Maestría en Dirección de Empresas",
+      "level": "Posgrado",
       "userId": 1
-    }
+    },
+    {
+      "id": 1,
+      "start_date": "2000",
+      "end_date": "1996",
+      "institution": "UCALP",
+      "degree": "Analista Universitario de Sistemas",
+      "level": "Grado",
+      "userId": 1
+    },
   ],
   "LaboralCareer": [
     {
@@ -176,43 +197,86 @@
   "SoftSkills": [
     {
       "id": 1,
-      "name": "Amabilidad",
-      "assessment": 7,
+      "name": "Adaptación al cambio",
+      "assessment": 3,
       "userId": 1
     },
     {
       "id": 2,
-      "name": "Respeto",
-      "assessment": 6,
+      "name": "Capacidad analítica",
+      "assessment": 4,
       "userId": 1
     },
     {
       "id": 3,
-      "name": "Integridad",
-      "assessment": 9,
+      "name": "Gestión del tiempo",
+      "assessment": 4,
+      "userId": 1
+    },
+    {
+      "id": 4,
+      "name": "Inteligencia emocional y social",
+      "assessment": 4,
+      "userId": 1
+    },
+    {
+      "id": 5,
+      "name": "Seguridad personal",
+      "assessment": 3,
+      "userId": 1
+    },
+    {
+      "id": 6,
+      "name": "Trabajo en equipo",
+      "assessment": 3,
       "userId": 1
     }
   ],
   "HardSkills": [
     {
       "id": 1,
-      "name": "Python",
+      "name": "CSS",
       "assessment": 65,
       "userId": 1
     },
     {
       "id": 2,
-      "name": "html",
-      "assessment": 50,
+      "name": "Django",
+      "assessment": 35,
       "userId": 1
     },
     {
-      "id": 1,
-      "name": "CSS3",
-      "assessment": 45,
+      "id": 3,
+      "name": "HTML",
+      "assessment": 70,
+      "userId": 1
+    },
+    {
+      "id": 3,
+      "name": "HTML",
+      "assessment": 70,
+      "userId": 1
+    },
+    {
+      "id": 4,
+      "name": "Javascript",
+      "assessment": 60,
+      "userId": 1
+    },
+    {
+      "id": 5,
+      "name": "MySQL",
+      "assessment": 60,
+      "userId": 1
+    },
+    {
+      "id": 5,
+      "name": "Python",
+      "assessment": 80,
       "userId": 1
     }
   ],
+
   "Interests": [
     {
       "id": 1,
@@ -222,6 +286,40 @@
     {
       "id": 2,
       "name": "Viajar",
+      "userId": 1
+    },
+    {
+      "id": 3,
+      "name": "Cocinar",
+      "userId": 1
+    },
+    {
+      "id": 4,
+      "name": "Asistir, colaborar",
+      "userId": 1
+    },
+    {
+      "id": 5,
+      "name": "Restaurar muebles, objetos",
+      "userId": 1
+    }
+  ],
+
+  "Projects": [
+    {
+      "id": 1,
+      "year": "2022",
+      "name": "CV static web page",
+      "resume": "Elaborado sin Frameworks, unicamente con JS, HTML y CSS3",
+      "link": "https://waldrom68.github.io/",
+      "userId": 1
+    },
+    {
+      "id": 2,
+      "year": "2022",
+      "name": "Guia audica para eventos",
+      "resume": "Elaborado con el Framework Django, Python, JS, HTML y CSS3",
+      "link": "https://waldrom68.pythonanywhere.com/",
       "userId": 1
     }
   ]

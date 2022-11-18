@@ -1,8 +1,9 @@
 <div class="row text-center aling-self-center py-0" id="Init"
 >
     <div class="col-sm-8 aling-self-center order-0">
-        <section id="formacionSkillInt" class="row p-0 m-0 justify-content-center"
-        *ngIf="statusCards else mostrardetalle"
+
+        <section id="" class="row p-0 m-0 justify-content-center"
+        *ngIf="statusCards"
         >
             <p class="h4 text-center">{{labelGroup1}}</p>
             <app-data-card
@@ -12,7 +13,7 @@
             </app-data-card>
         </section>
 
-        <section id="formacionSkillInt" class="row p-0 m-0 justify-content-center"
+        <section id="" class="row p-0 m-0 justify-content-center"
         *ngIf="statusCards"
         >
             <p class="h4 text-center">{{labelGroup2}}</p>
@@ -24,53 +25,40 @@
         </section>
 
         <!-- zona para mostrar los detalles de cada Card -->
-        <ng-template #mostrardetalle>
-            <div class="" style="border: 1px solid"
-            *ngFor="let item of CardsGroup1"
-            >
-               <div *ngIf="item.status">
+        <div *ngIf = "statusCards == false">
+            <a (click)="toggleCards()">
+                <fa-icon 
+                [icon]="faTimes"
+                [ngStyle] = "{'color':'red'}"
+                >
+            </fa-icon>
+            </a>
 
-                    <a (click)="cerrarDetalles()">
-                        <fa-icon 
-                        [icon]="faTimes"
-                        [ngStyle] = "{'color':'red'}"
-                        >
-                    </fa-icon>
-                    </a>
-                    <div *ngIf="item.modelTemplate=='lista'">
-                        <h3>mostrar detalle de {{item.name}}</h3>
-                        <li *ngFor="let valor of item.data">{{valor}}</li>
-                    </div>
-                    <div *ngIf="item.modelTemplate!='lista'">
-                        <h3>mostrar detalle de {{item.name}}</h3>
-                    </div>
-                
+            <div 
+                class="" 
+                *ngFor="let card of detailCards"
+            >
+                <div 
+                    *ngIf="card.status"
+                    [ngSwitch]="card.name"
+                    style="border: 1px solid"
+                >
+                    <!-- <app-stout-item    *ngSwitchCase="'stout'"    [item]="currentItem"></app-stout-item> -->
+                    <p *ngSwitchCase="'Perfil'">Mostrar detalle de Perfil</p>
+                    <p *ngSwitchCase="'Objetivo'">Mostrar detalle de Objetivo</p>
+                    <p *ngSwitchCase="'Trayectoria'">Mostrar detalle de Trayectoria</p>
+                    <p *ngSwitchCase="'Formación'">Mostrar detalle de Formación</p>
+                    <p *ngSwitchCase="'Habilidades personales'">Mostrar detalle de Habilidades personales</p>
+                    <p *ngSwitchCase="'Habilidades tecnicas'">Mostrar detalle de Habilidades tecnicas</p>
+                    <p *ngSwitchCase="'Proyectos'">Mostrar detalle de Proyectos</p>
+                    <p *ngSwitchCase="'Intereses'">Mostrar detalle de Intereses</p>
+                    <p *ngSwitchDefault>Tarjeta no encontrada</p>
+
                 </div>
             </div>
 
-            <div class="" style="border: 1px solid"
-            *ngFor="let item2 of CardsGroup2"
-            >
-                <div *ngIf="item2.status">
 
-                    <a (click)="cerrarDetalles()">
-                        <fa-icon 
-                        [icon]="faTimes"
-                        [ngStyle] = "{'color':'red'}" 
-                        >
-                    </fa-icon>
-                    </a>
-                    <div *ngIf="item2.modelTemplate=='lista'">
-                        <h3>mostrar detalle de {{item2.name}}</h3>
-                        <li *ngFor="let valor of item2.data">{{valor}}</li>
-                    </div>
-                    <div *ngIf="item2.modelTemplate!='lista'">
-                        <h3>mostrar detalle de {{item2.name}}</h3>
-                    </div>
-                
-                </div>
-            </div>
-        </ng-template>
+        </div>
 
     </div>
 

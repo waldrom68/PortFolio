@@ -1,5 +1,5 @@
 import {Data, Formacion, HardSkill, SoftSkill, Intereses, WorkExperience, User, Cards} from './data'
-
+import { PortfolioInit } from './data'
 
 export const USERS: User[] = [
     {
@@ -14,15 +14,15 @@ export const USERS: User[] = [
 export const DATA: Data = 
     {
     id: 1,
-    name : "Walter",
-    last_name : "Romero",
+    name : "Walterio",
+    last_name : "Mock",
     foto: "../assets/images/ico.svg",
     location : "Bernal, Bs.As. Argentina.",
     profession : ["Full Stack Developer","PYTHON - JAVA"],
-    profile :["Ocupé cargos de RRHH y disfruté mejorar procesos, generar tableros de control para la toma de decisiones, y hacer de 'una especie de analista funcional' para servir de enlace entre áreas de negocio y de tecnología. Ciertamente era un Analista Universitario de Sistemas en un área de recursos humanos.","Luego de 24 años trabajando en la universidad, ahora he vuelto a mi esencia: 'creatividad, innovación, sistemas y tecnología'.","En resumen, además de contar con criterio empresarial tengo conocimientos y experiencia para sumar valor a cualquier proyecto, y quienes me conocen destacarán mi compromiso para alcanzar objetivos, mi lealtad, integridad y disciplina."],
-    objetive : ["Me atraen los desafíos y aventuras en donde pueda seguir ayudando, creando, innovando, mejorando ...","Podés contactarme si tenés alguna idea o propuesta y será un plus si es divertida."],
-    since : "1968",
-    experiencia_resume : "SOY CLARAMENTE EL INDICADO",
+    profile :["Mock cargos de RRHH y disfruté mejorar procesos, generar tableros de control para la toma de decisiones, y hacer de 'una especie de analista funcional' para servir de enlace entre áreas de negocio y de tecnología. Ciertamente era un Analista Universitario de Sistemas en un área de recursos humanos.","Luego de 24 años trabajando en la universidad, ahora he vuelto a mi esencia: 'creatividad, innovación, sistemas y tecnología'.","En resumen, además de contar con criterio empresarial tengo conocimientos y experiencia para sumar valor a cualquier proyecto, y quienes me conocen destacarán mi compromiso para alcanzar objetivos, mi lealtad, integridad y disciplina."],
+    objetive : ["Mock atraen los desafíos y aventuras en donde pueda seguir ayudando, creando, innovando, mejorando ...","Podés contactarme si tenés alguna idea o propuesta y será un plus si es divertida."],
+    since : "1948",
+    experiencia_resume : "Mock SOY CLARAMENTE EL INDICADO",
     }
 
 
@@ -32,7 +32,7 @@ export const FORMACION: Formacion[] = [
         start_date:"3/1990",
         end_date:"12/1996",
         institution:"UCALP",
-        degree:"Analista de sistemas",
+        degree:"Mock Analista de sistemas",
     },
     {
         id: 2,
@@ -49,7 +49,7 @@ export const WORKEXPERIENCE: WorkExperience[] =[
     id: 1,
     start_date:"09-1993",
     end_date:"02-2018",
-    organization:"ITBA",
+    organization:"Mock ITBA",
     position:"Director"
     }, 
     {
@@ -64,7 +64,7 @@ export const WORKEXPERIENCE: WorkExperience[] =[
 export const HARDSKILL: HardSkill[] = [
     {
     id: 1,
-    name:"Python",
+    name:"Mock Python",
     assessment:65,
     userId:1
 },
@@ -85,7 +85,7 @@ export const HARDSKILL: HardSkill[] = [
 export const SOFTSKILL: SoftSkill[] = [
     {
         id: 1,
-        name:"Amabilidad",
+        name:"Mock Amabilidad",
         assessment:7,
         userId:1
     },
@@ -106,7 +106,7 @@ export const SOFTSKILL: SoftSkill[] = [
 export const INTERESES: Intereses[] = [
    {
     id: 1,
-    name:"Paddel",
+    name:"Mock Paddel",
     },
    {
     id: 2,
@@ -146,24 +146,49 @@ export const CARDS: Cards[] = [
         status:false,
         group:1,
         data: FORMACION,
-        resume: "Analista de Sistemas, MBA, Full-Stack",
+        resume: "card class Analista de Sistemas, MBA, Full-Stack",
         modelTemplate: "lista"
     },
     {
-        name: 'Habilidades',
+        name: 'Habilidades tecnicas',
         status:false,
         group:2,
         data: HARDSKILL ,
-        resume: "Python, Django, JS, Java, Angular, SQL, CSS3, HTML",
+        resume: "card class Python, Django, JS, Java, Angular, SQL, CSS3, HTML",
+        modelTemplate: "lista"
+    },
+    {
+        name: 'Habilidades personales',
+        status:false,
+        group:2,
+        data: SOFTSKILL ,
+        resume: "Persona integra",
         modelTemplate: "lista"
     },
     {
         name: 'Proyectos',
         status:false,
         group:2,
+        data: [],
+        resume: "",
+        modelTemplate: "lista"
+    },
+    {
+        name: 'Intereses',
+        status:false,
+        group:2,
         data: INTERESES,
         resume: "",
         modelTemplate: "lista"
-      },
+    }
     
   ]
+
+  export const PORTFOLIOINIT: PortfolioInit = 
+    {
+        theme: 'Dark',
+        status:true,
+        userDefault: 1,
+    }
+
+  

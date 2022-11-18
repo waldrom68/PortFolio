@@ -35,6 +35,8 @@ export class MainComponent implements OnInit {
     private renderer: Renderer2
     ) { }
 
+
+
   ngOnInit(): void {
     this.detailCards = this.miServicio.getCards();
     this.statusCards = this.miServicio.getStatusCards()
@@ -52,11 +54,10 @@ export class MainComponent implements OnInit {
         return valor.name;
       }).join(this.separador)
 
-      this.labelGroup2 = this.CardsGroup2.map( (valor:any) => {
+    this.labelGroup2 = this.CardsGroup2.map( (valor:any) => {
         return valor.name;
       }).join(this.separador)
 
-    console.log(this.labelGroup2)
     }
 
   ngAfterViewInit(): void {
@@ -66,22 +67,14 @@ export class MainComponent implements OnInit {
 
 
 
-    cerrarDetalles() {
+    toggleCards() {
+      // PENDIENTE, DEBO TOGGLEAR LOS ARRAY PARCIALES, NO EL DE ORIGEN
       console.log("Recibo en main, instruccion de cerrar detalles");
-      this.miServicio.ocultarDetalles();
-      this.miServicio.toggleCards();
+      this.miServicio.toggleDetalles();
+      this.miServicio.toggleStatusCards();
       this.statusCards = this.miServicio.getStatusCards()
       console.log("Es estado del statusCards es", this.statusCards)
     }
 
-    toggleCards() {
-      console.log("Ejecusion de toggleCards en main.component")
-      this.miServicio.toggleCards();
-      this.miServicio.ocultarDetalles();
-      this.statusCards = this.miServicio.getStatusCards()
-      console.log("Es estado del statusCards es", this.statusCards)
-      // this.CardsGroup1 = this.detailCards.filter(function (elem:any)
-      //   { return elem.group == 1; }  ) 
-    }
 
 }
