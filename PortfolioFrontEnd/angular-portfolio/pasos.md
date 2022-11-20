@@ -155,8 +155,12 @@ https://stackblitz.com/edit/ng-reusable-modal?file=src%2Fapp%2Fapp.module.ts,ang
 https://plainenglish.io/blog/creating-a-splash-screen-in-angular-for-loading-all-the-data-at-startup-b0b91d9d9f93
 
 
-cd C:\Users\waldr\OneDrive\Documentos\Proyectos\Portfolio\PortfolioFrontEnd
+### Evaluar el manejo de los servicios de forma async
+ https://balramchavan.medium.com/using-async-await-feature-in-angular-587dd56fdc77
 
+
+
+############################################################
 git push main dev
 
 
