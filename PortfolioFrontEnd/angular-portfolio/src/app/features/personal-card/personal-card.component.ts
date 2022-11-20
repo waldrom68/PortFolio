@@ -1,9 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 
-import {Data} from '../../data'
-import {DATA} from '../../mock-data'
+import {Users} from '../../data'
+// import {DATA} from '../../mock-data'
 
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { DataService } from 'src/app/service/data.service';
 
 @Component({
   selector: 'app-personal-card',
@@ -13,10 +14,20 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 
 export class PersonalCardComponent implements OnInit {
+  // PENDIENTE DEBE VINCULARSE CON EL LOGUEO
+  isAdmin = true;
+
+  // intereses: Intereses[] = INTERESES;
+  myData: Users;
+
   faTimes = faTimes;
-  data:Data = DATA;
+  
  
-  constructor() { 
+  constructor( private dataService: DataService, ) { 
+    this.dataService.getGralData().subscribe(user =>
+      this.myData = user
+
+    );
   }
   
   ngOnInit(): void {

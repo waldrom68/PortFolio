@@ -51,8 +51,6 @@ export class MainComponent implements OnInit {
         { return elem.group == 2; }  )
 
     // Armo etiqueta de cada grupo:
-    console.log(this.CardsGroup1)
-
     this.labelGroup1 = this.CardsGroup1.map( (valor:any) => {
         return valor.name;
       }).join(this.separador)
@@ -72,11 +70,9 @@ export class MainComponent implements OnInit {
 
     toggleCards() {
       // PENDIENTE, DEBO TOGGLEAR LOS ARRAY PARCIALES, NO EL DE ORIGEN
-      console.log("Recibo en main, instruccion de cerrar detalles");
       this.miServicio.toggleDetalles();
       this.miServicio.toggleStatusCards();
       this.statusCards = this.miServicio.getStatusCards()
-      console.log("Es estado del statusCards es", this.statusCards)
     }
 
 

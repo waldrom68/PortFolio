@@ -21,3 +21,10 @@ body {
 
     background-image: linear-gradient(90deg, var(--metaldark-shadow) 0%, var(--metallight-shadow) 25%, var(--metal) 50%, var(--metallight-shadow) 75%, var(--metaldark-shadow) 100% ) !important;
 }
+
+mat-dialog-container#modal-component {
+    border: 3px solid #262626;
+    border-radius: 11px;
+    background-color: #1a1a1a;
+    color: white;
+}

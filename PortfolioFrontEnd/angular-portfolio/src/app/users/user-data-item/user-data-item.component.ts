@@ -42,7 +42,7 @@ export class UserDataItemComponent implements OnInit {
   onDelete(user: User) {
     // llamo al metodo del padre via emit()
     if (this.isAdmin) {
-      console.log("Realizo pedido de eliminar un item del listado");
+      // console.log("Realizo pedido de eliminar un item del listado");
       this.onDeleteUser.emit(user);
     }
 
@@ -51,7 +51,7 @@ export class UserDataItemComponent implements OnInit {
   onUpdate(user: User) {
     // llamo al metodo del padre via emit()
     if (this.isAdmin) {
-      console.log("Realizo pedido de modificar un item del listado");
+      // console.log("Realizo pedido de modificar un item del listado");
       this.onUpdateUser.emit(user);
     }
       
@@ -60,7 +60,7 @@ export class UserDataItemComponent implements OnInit {
   onToggle(user: User) {
     // llamo al metodo del padre via emit()
     if (this.isAdmin) {
-      console.log("Realizo pedido de alternar admin desde el listado");
+      // console.log("Realizo pedido de alternar admin desde el listado");
       this.onToggleUser.emit(user);
     }
       

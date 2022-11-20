@@ -1,6 +1,10 @@
 <p>datos-formacion works!</p>
-<ul>
-    <li *ngFor="let elemento of formacion">
-        {{elemento.start_date}} hasta {{elemento.end_date}}, {{elemento.degree}} ({{elemento.institution}}) 
-    </li>
-</ul>
+
+
+<ng-container *ngIf="myData.length">
+    <ul>
+        <li *ngFor="let elemento of myData">
+            {{elemento.start_date}} hasta {{elemento.end_date}}, {{elemento.degree}} ({{elemento.institution}}) 
+        </li>
+    </ul>
+</ng-container>

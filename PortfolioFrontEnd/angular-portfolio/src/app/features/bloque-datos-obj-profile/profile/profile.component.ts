@@ -1,23 +1,31 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { DataService } from 'src/app/service/data.service';
 
 
-import {Data} from '../../../data'
-import {DATA} from '../../../mock-data'
+import {Users} from '../../../data'
+// import {DATA} from '../../../mock-data'
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
+  // PENDIENTE DEBE VINCULARSE CON EL LOGUEO
+  isAdmin = true;
 
-  data: Data = DATA
+  // intereses: Intereses[] = INTERESES;
+  myData: Users;
   
 
   // miPerfil:string[] = newDatos.perfil.split('\n');
-  constructor() { }
-
+  constructor( private dataService: DataService, ) { 
+    this.dataService.getGralData().subscribe(user =>
+      this.myData = user
+    );
+  }
+    
   ngOnInit(): void {
-
+    
   }
 
 }

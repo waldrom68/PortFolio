@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { DataService } from 'src/app/service/data.service';
 
-import {Formacion} from '../../../data'
-import {FORMACION} from '../../../mock-data'
+import {Studies} from '../../../data'
+// import {FORMACION} from '../../../mock-data'
 
 @Component({
   selector: 'app-datos-formacion',
@@ -9,10 +10,17 @@ import {FORMACION} from '../../../mock-data'
   styleUrls: ['./datos-formacion.component.css']
 })
 export class DatosFormacionComponent implements OnInit {
-  formacion: Formacion[] = FORMACION;
+  // PENDIENTE DEBE VINCULARSE CON EL LOGUEO
+  isAdmin = true;
 
-  constructor() { }
-
+  // intereses: Intereses[] = INTERESES;
+  myData: Studies[] = [];
+  
+  constructor( private dataService: DataService, ) { 
+    this.dataService.getStudies().subscribe(studie =>
+      [this.myData = studie]
+    );
+  }
   ngOnInit(): void {
 
   }

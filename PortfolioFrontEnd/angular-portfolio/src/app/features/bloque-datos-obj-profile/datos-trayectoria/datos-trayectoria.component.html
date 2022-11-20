@@ -1,8 +1,10 @@
 <p>datos-trayectoria work!</p>
 
-<ul>
-    <li *ngFor="let elemento of experiencia">
-        {{elemento.start_date}} al {{elemento.end_date}} {{elemento.organization}} {{elemento.position}}
-    </li>
-</ul>
+<ng-container *ngIf="myData.length">
+    <ul>
+        <li *ngFor="let elemento of myData">
+            {{elemento.start_date}} al {{elemento.end_date}} {{elemento.organization}} {{elemento.position}}
+        </li>
+    </ul>
+</ng-container>
 

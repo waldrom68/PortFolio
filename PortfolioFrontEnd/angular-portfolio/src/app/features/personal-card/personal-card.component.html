@@ -1,4 +1,6 @@
 
+<ng-container *ngIf="myData; else statusWait">
+
 <div class="container py-4 p-0 m-0">
     <div class="card">
 
@@ -7,20 +9,34 @@
         [icon]="faTimes"
         [ngStyle] = "{'color':'red', 'text-aling':'center'}" >
         </fa-icon>
-        <div class="ratio ratio-1x1 rounded-circle overflow-hidden" style="width: 50%; height: 50%; margin: auto;">
-        <!-- style="width: 50%; height: 50%; margin: auto;" -->
-            <!-- <img src="../assets/images/ico.svg" class="card-img-top img-cover" alt="Walter" > -->
-            <img src="{{data.foto}}" class="card-img-top img-cover" alt="Walter" >
-        </div>
+        <ng-container *ngIf="myData">
 
-        <div class="card-body">
-            <h5 class="card-title">{{ data.name }} {{ data.last_name }}</h5>
-            
-            <h6 class="card-text" *ngFor="let elemento of data.profession">{{ elemento }}</h6>
-            <hr style="border: 1px solid;">
-            <p>Nacido en {{data.since}}. {{data.location}}</p>
+            <div class="ratio ratio-1x1 rounded-circle overflow-hidden" style="width: 50%; height: 50%; margin: auto;">
 
-        </div>
+                <img src={{myData.foto}} class="card-img-top img-cover" alt="Walter" >
+            </div>
+
+            <div class="card-body">
+                <h5 class="card-title">
+                    {{ myData.name }} {{ myData.last_name }}
+                </h5>
+                
+                <h6 class="card-text" 
+                    *ngFor="let elemento of myData.profession.split('\n')">{{ elemento }}
+                </h6>
+                <hr style="border: 1px solid;">
+                <p>Nacido en {{myData.since}}. {{myData.location}}</p>
+
+            </div>
+        </ng-container>
     </div>
 </div>
 
+</ng-container>
+
+<ng-template #statusWait >
+    <div
+        [ngStyle]="{'background-color': 'red'}">
+        <h6 >ESPERANDO</h6>
+    </div>
+</ng-template>

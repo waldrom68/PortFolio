@@ -58,11 +58,11 @@ export class UiService {
         }
       });
       // this.visited = mensaje
-      console.log("En el servicio, resultado del proceso", this.cards)
+      // console.log("En el servicio, resultado del proceso", this.cards)
   }
 
   toggleStatusCards(){
-    console.log("En servicio el statusCards esta en", this.statusCards)
+    // console.log("En servicio el statusCards esta en", this.statusCards)
     this.statusCards = !this.statusCards;
   }
 
@@ -72,12 +72,12 @@ export class UiService {
   // PENDIENTE DE ELIMINAR ESTOS METODOS. REVISAR PREVIAMENTE
   // Metodos que existian antes del uso del servicio para las Tarjetas
   toggleComponent(value:any): void {
-    console.log("usando el servicio de ver/no ver componente", value)
+    // console.log("usando el servicio de ver/no ver componente", value)
     this.showComponent = !this.showComponent
   }
 
   onToggleComponet(value:any): Observable<any> {
-    console.log("estoy en el metodo onToggle del uiService", value)
+    // console.log("estoy en el metodo onToggle del uiService", value)
     return this.subjectShowComponent.asObservable();
   }
 

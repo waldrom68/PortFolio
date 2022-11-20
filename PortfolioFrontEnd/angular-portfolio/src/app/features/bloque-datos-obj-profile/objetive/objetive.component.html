@@ -1,7 +1,10 @@
 <p>objetive work!</p>
 
-<ul>
-    <li *ngFor="let elemento of data.objetive">
-        {{elemento}}
-    </li>
-</ul>
+
+<ng-container *ngIf="myData">
+    <ul>
+        <li *ngFor="let elemento of myData.objetive.split('\n')">
+            {{elemento}}
+        </li>
+    </ul>
+</ng-container>

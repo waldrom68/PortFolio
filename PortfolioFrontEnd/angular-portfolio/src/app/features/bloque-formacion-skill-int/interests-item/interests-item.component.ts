@@ -4,11 +4,11 @@ import { Interests } from '../../../data'
 import { faPen, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-  selector: 'app-interes-item',
-  templateUrl: './interes-item.component.html',
-  styleUrls: ['./interes-item.component.css']
+  selector: 'app-interests-item',
+  templateUrl: './interests-item.component.html',
+  styleUrls: ['./interests-item.component.css']
 })
-export class InteresItemComponent implements OnInit {
+export class InterestsItemComponent implements OnInit {
   @Input() item: Interests;
 
   // PENDIENTE vincular con el logueo
@@ -18,11 +18,10 @@ export class InteresItemComponent implements OnInit {
   
   faTimes = faTimes;
   faPen = faPen;
-  
+
   constructor() { }
 
   ngOnInit(): void {
-
   }
 
   delete(interest: Interests) {
@@ -32,4 +31,5 @@ export class InteresItemComponent implements OnInit {
     }
 
   }
+
 }

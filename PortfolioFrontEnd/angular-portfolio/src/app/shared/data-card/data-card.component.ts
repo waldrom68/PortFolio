@@ -33,8 +33,8 @@ export class DataCardComponent implements OnInit {
     
     this.miServicio.toggleDetalles(dato);
       // console.log(this.miServicio.getDetalles())
-      console.log("hice click para ver detalles", dato)
-      console.log("Y esto es lo que obtengo", this.miServicio.getCards())
+      // console.log("hice click para ver detalles", dato)
+      // console.log("Y esto es lo que obtengo", this.miServicio.getCards())
     
   }
   

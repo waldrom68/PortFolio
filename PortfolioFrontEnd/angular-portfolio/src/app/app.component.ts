@@ -4,6 +4,7 @@ import { UiService } from 'src/app/service/ui.service';  // para escuchar el bot
 import { Subscription } from 'rxjs';  // idem
 
 
+
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 
@@ -29,26 +30,25 @@ constructor(
   // Inicializamos los servicios del modulo User
         private uiService:UiService,  // defino el servicio para el botton de mostrar form
 
-) { }
+  ) { }
 
 
-ngOnInit() {
+  ngOnInit() {
 
-}
+  }
 
-
+  
 // Eventos recibidos desde: add-button-user.component.html
   // 
   toggleListUser(value:any) {
     // Recibo el metodo y lo relaciono con el uiService.
-    console.log("En user-data-compornets.ts recibo el valor de :", value);
+
     this.showListUsers = !this.showListUsers;
     this.uiService.toggleComponent(value)
   }
 
   toggleDatos(value:any) {
     // Recibo el metodo y lo relaciono con el uiService.
-    console.log("En user-data-compornets.ts recibo el valor de :", value);
     this.showDatos = !this.showDatos;
     this.uiService.toggleComponent(value)
   }

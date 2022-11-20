@@ -5,27 +5,25 @@ import {Interests} from '../../data'
 // import {INTERESES} from '../../../mock-data'
 
 @Component({
-  selector: 'app-intereses',
-  templateUrl: './intereses.component.html',
-  styleUrls: ['./intereses.component.css']
+  selector: 'app-interests',
+  templateUrl: './interests.component.html',
+  styleUrls: ['./interests.component.css']
 })
-export class InteresesComponent implements OnInit {
+export class InterestsComponent implements OnInit {
   // PENDIENTE DEBE VINCULARSE CON EL LOGUEO
   isAdmin = true;
 
   // intereses: Intereses[] = INTERESES;
   myData: Interests[] = [];
 
-  constructor(
-    private dataService: DataService,
-  ) { }
-
+  constructor( private dataService: DataService, ) { }
+    
   ngOnInit(): void {
     this.dataService.getInterests().subscribe(interest =>
       [this.myData = interest]
     );
   }
-
+  
   deleteInterest(interest: Interests) {
     // Este codigo acualiza el array Users para que se actualice en 
     // el frontend, sin necesidad de recargar la pagina

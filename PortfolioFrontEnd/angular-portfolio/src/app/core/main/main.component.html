@@ -2,82 +2,100 @@
     prueba de Observable, no subscribí ni defini el observable
     ver https://blog.angular-university.io/how-to-build-angular2-apps-using-rxjs-observable-data-services-pitfalls-to-avoid/
 </ng-container>
-<div class="row text-center aling-self-center py-0" id="Init">
-    <div class="col-sm-8 aling-self-center order-0">
 
-        <ng-container *ngIf="statusCards">
-            <section id="" class="row p-0 m-0 justify-content-center">
-                <p class="h4 text-center">{{labelGroup1}}</p>
-                <app-data-card
-                    [detailCard]="CardsGroup1"
-                    (toggleCards)="toggleCards()"
+<ng-container *ngIf="detailCards; else statusWait">
+
+    <div class="row text-center aling-self-center py-0" id="Init">
+        <div class="col-sm-8 aling-self-center order-0">
+
+            <ng-container *ngIf="statusCards">
+                <section id="" class="row p-0 m-0 justify-content-center">
+                    <p class="h4 text-center">{{labelGroup1}}</p>
+                    <app-data-card
+                        [detailCard]="CardsGroup1"
+                        (toggleCards)="toggleCards()"
+                        >
+                    </app-data-card>
+                </section>
+
+                <section id="" class="row p-0 m-0 justify-content-center">
+                    <p class="h4 text-center">{{labelGroup2}}</p>
+                    <app-data-card
+                        [detailCard]="CardsGroup2"
+                        (toggleCards)="toggleCards()"
+                        >
+                    </app-data-card>
+                </section>
+            </ng-container>
+
+            <!-- zona para mostrar los detalles de cada Card -->
+            <ng-container *ngIf = "statusCards == false">
+                <div>
+                    <a (click)="toggleCards()">
+                        <fa-icon 
+                        [icon]="faTimes"
+                        [ngStyle] = "{'color':'red'}"
+                        >
+                    </fa-icon>
+                    </a>
+
+                    <div 
+                        *ngFor="let card of detailCards"
                     >
-                </app-data-card>
-            </section>
+                        <ng-container *ngIf="card.status"
+                            [ngSwitch]="card.name"
+                            style="border: 1px solid"
+                        >
+                            <!-- <app-stout-item    *ngSwitchCase="'stout'"    [item]="currentItem"></app-stout-item> -->
+                            <div *ngSwitchCase="'Perfil'">Mostrar detalle de Perfil
+                                <app-profile></app-profile>
 
-            <section id="" class="row p-0 m-0 justify-content-center">
-                <p class="h4 text-center">{{labelGroup2}}</p>
-                <app-data-card
-                    [detailCard]="CardsGroup2"
-                    (toggleCards)="toggleCards()"
-                    >
-                </app-data-card>
-            </section>
-        </ng-container>
+                            </div>
+                            <div *ngSwitchCase="'Objetivo'">Mostrar detalle de Objetivo
+                                <app-objetive></app-objetive>
+                            </div>
+                            <div *ngSwitchCase="'Trayectoria'">Mostrar detalle de Trayectoria
+                                <app-datos-trayectoria></app-datos-trayectoria>
+                            </div>
+                            <div *ngSwitchCase="'Formación'">Mostrar detalle de Formación
+                                <app-datos-formacion>
+                            
+                                </app-datos-formacion>
+                            </div>
 
-        <!-- zona para mostrar los detalles de cada Card -->
-        <ng-container *ngIf = "statusCards == false">
-            <div>
-                <a (click)="toggleCards()">
-                    <fa-icon 
-                    [icon]="faTimes"
-                    [ngStyle] = "{'color':'red'}"
-                    >
-                </fa-icon>
-                </a>
 
-                <div 
-                    *ngFor="let card of detailCards"
-                >
-                    <ng-container *ngIf="card.status"
-                        [ngSwitch]="card.name"
-                        style="border: 1px solid"
-                    >
-                        <!-- <app-stout-item    *ngSwitchCase="'stout'"    [item]="currentItem"></app-stout-item> -->
-                        <p *ngSwitchCase="'Perfil'">Mostrar detalle de Perfil</p>
-                        <p *ngSwitchCase="'Objetivo'">Mostrar detalle de Objetivo</p>
-                        <p *ngSwitchCase="'Trayectoria'">Mostrar detalle de Trayectoria</p>
-                        <p *ngSwitchCase="'Formación'">Mostrar detalle de Formación</p>
-                        <div *ngSwitchCase="'Habilidades personales'">Muestra las habilidades personales de la base de datos, habilitado el delete
-                            <hr>
-                            <app-soft-skills></app-soft-skills>
-                        </div>
 
-                        <div *ngSwitchCase="'Habilidades tecnicas'">Muestra las Habilidades tecnicas de la base de datos, habilitado el delete
-                            <br>
-                            <app-hard-skills></app-hard-skills>
+                            <div *ngSwitchCase="'Habilidades personales'">Muestra las habilidades personales de la base de datos, habilitado el delete
+                                <hr>
+                                <app-soft-skills></app-soft-skills>
+                            </div>
+                            <div *ngSwitchCase="'Habilidades tecnicas'">Muestra las Habilidades tecnicas de la base de datos, habilitado el delete
+                                <br>
+                                <app-hard-skills></app-hard-skills>
+                            </div>
+                            <div *ngSwitchCase="'Proyectos'">Muestra los proyectos de la base de datos, habilitado el delete
+                                <hr>
+                                <app-projects></app-projects>
 
-                        </div>
-                        <p *ngSwitchCase="'Proyectos'">Mostrar detalle de Proyectos</p>
-                        <div *ngSwitchCase="'Intereses'">Muestra los intereses de la base de datos, habilitado el delete
-                            <hr>
-                            <app-intereses></app-intereses>
+                            </div>
+                            <div *ngSwitchCase="'Intereses'">Muestra los intereses de la base de datos, habilitado el delete
+                                <hr>
+                                <app-interests></app-interests>
 
-                        </div>
-                        <p *ngSwitchDefault>Tarjeta no encontrada</p>
+                            </div>
 
-                    </ng-container>
+                            <p *ngSwitchDefault>Tarjeta no encontrada</p>
+
+                        </ng-container>
+                    </div>
+
+
                 </div>
+            </ng-container>
+        </div>
 
 
-            </div>
-        </ng-container>
-    </div>
-
-    <ng-container *ngIf="statusCards">
-        <div class="col-sm-4 g-0 m-auto"
-            
-        >
+        <div class="col-sm-4 g-0 m-auto">
             <section id="nameAndImage" class="col order-5 opacity-75 align-self-center" style="border: 1px solid;">
 
                 <app-personal-card></app-personal-card>
@@ -85,7 +103,17 @@
             </section>
 
         </div>
-    </ng-container>
 
 
-</div>
+
+    </div>
+    
+</ng-container>
+
+
+<ng-template #statusWait >
+    <div
+        [ngStyle]="{'background-color': 'red'}">
+        <h1 >ESPERANDO</h1>
+    </div>
+</ng-template>

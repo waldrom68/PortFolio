@@ -1,7 +1,9 @@
 <p>profile work!</p>
 
-<ul>
-    <li *ngFor="let elemento of data.profile">
-        {{elemento}}
-    </li>
-</ul>
+<ng-container *ngIf="myData">
+    <ul>
+        <li *ngFor="let elemento of myData.profile.split('\n')">
+            {{elemento}}
+        </li>
+    </ul>
+</ng-container>

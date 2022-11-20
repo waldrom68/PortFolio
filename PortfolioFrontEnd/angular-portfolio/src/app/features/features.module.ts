@@ -14,13 +14,15 @@ import { ObjetiveComponent } from './bloque-datos-obj-profile/objetive/objetive.
 import { DataComponent } from './bloque-datos-obj-profile/data-personal/data.component';
 import { DatosFormacionComponent } from './bloque-formacion-skill-int/datos-formacion/datos-formacion.component';
 import { FormacionItemComponent } from './bloque-formacion-skill-int/formacion-item/formacion-item.component';
-// import { SoftSkillsComponent } from './bloque-formacion-skill-int/soft-skills/soft-skills.component';
-// import { SoftItemComponent } from './bloque-formacion-skill-int/soft-item/soft-item.component';
-// import { HardSkillsComponent } from './hard-skills/hard-skills.component';
-// import { HardItemComponent } from './bloque-formacion-skill-int/hard-item/hard-item.component';
 
-// import { InteresItemComponent } from './bloque-formacion-skill-int/interes-item/interes-item.component';
-// import { InteresesComponent } from './intereses/intereses.component';
+import { InterestsItemComponent } from './bloque-formacion-skill-int/interests-item/interests-item.component';
+import { HardItemComponent } from './bloque-formacion-skill-int/hard-item/hard-item.component';
+import { ProjectsItemComponent } from './bloque-formacion-skill-int/projects-item/projects-item.component';
+import { SoftItemComponent } from './bloque-formacion-skill-int/soft-item/soft-item.component';
+
+// import { SoftSkillsComponent } from './bloque-formacion-skill-int/soft-skills/soft-skills.component';
+// import { HardSkillsComponent } from './hard-skills/hard-skills.component';
+
 
 
 
@@ -31,18 +33,22 @@ import { FormacionItemComponent } from './bloque-formacion-skill-int/formacion-i
     BloqueDatosObjProfileComponent,
     BloqueFormacionSkillIntComponent,
     // PersonalCardComponent,
-    DatosTrayectoriaComponent,
-    ProfileComponent,
-    ObjetiveComponent,
+    // DatosTrayectoriaComponent,
+    // ProfileComponent,
+    // ObjetiveComponent,
     DataComponent,
-    DatosFormacionComponent,
+    // DatosFormacionComponent,
     FormacionItemComponent,
-    // SoftSkillsComponent,
-    // SoftItemComponent,
-    // HardSkillsComponent,
+
+    // InterestsItemComponent,
     // HardItemComponent,
-    // InteresesComponent,
+    // ProjectsItemComponent,
+    // SoftItemComponent,
     // InteresItemComponent,
+
+    // SoftSkillsComponent,
+    // HardSkillsComponent,
+    // InteresesComponent,
   ],
   
   imports: [
