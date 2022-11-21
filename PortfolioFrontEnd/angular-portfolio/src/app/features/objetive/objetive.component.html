@@ -1,0 +1,12 @@
+
+<ng-container *ngIf="myData">
+
+    <app-objetive-item 
+        [item]="myData"
+        [isAdmin]="isAdmin"
+        (delete)="delete(myData)"
+    >
+
+</app-objetive-item>
+
+</ng-container>

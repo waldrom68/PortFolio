@@ -26,11 +26,11 @@ export class SoftSkillsComponent implements OnInit {
     );
   }
 
-  deleteSoftSkill(softskill: SoftSkill) {
+  delete(softskill: SoftSkill) {
     // Este codigo acualiza el array Users para que se actualice en 
     // el frontend, sin necesidad de recargar la pagina
      this.dataService.delSoftSkills(softskill).subscribe( (tt)=> {
-        // despues de ejecutarse el borrado de la DB, la quitamos del listado de Users
+        // despues de ejecutarse el borrado de la DB, la quitamos del listado de myData
         this.myData = this.myData.filter( (t) => { return t.id !== softskill.id } )
       }
     );

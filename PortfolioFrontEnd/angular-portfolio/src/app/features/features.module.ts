@@ -8,9 +8,9 @@ import { BloqueDatosObjProfileComponent } from './bloque-datos-obj-profile/bloqu
 import { BloqueFormacionSkillIntComponent } from './bloque-formacion-skill-int/bloque-formacion-skill-int.component';
 // import { PersonalCardComponent } from './personal-card/personal-card.component';
 
-import { DatosTrayectoriaComponent } from './bloque-datos-obj-profile/datos-trayectoria/datos-trayectoria.component';
-import { ProfileComponent } from './bloque-datos-obj-profile/profile/profile.component';
-import { ObjetiveComponent } from './bloque-datos-obj-profile/objetive/objetive.component';
+import { DatosTrayectoriaComponent } from './datos-trayectoria/datos-trayectoria.component';
+import { ProfileComponent } from './profile/profile.component';
+import { ObjetiveComponent } from './objetive/objetive.component';
 import { DataComponent } from './bloque-datos-obj-profile/data-personal/data.component';
 import { DatosFormacionComponent } from './bloque-formacion-skill-int/datos-formacion/datos-formacion.component';
 import { FormacionItemComponent } from './bloque-formacion-skill-int/formacion-item/formacion-item.component';
@@ -38,7 +38,7 @@ import { SoftItemComponent } from './bloque-formacion-skill-int/soft-item/soft-i
     // ObjetiveComponent,
     DataComponent,
     // DatosFormacionComponent,
-    FormacionItemComponent,
+    // FormacionItemComponent,
 
     // InterestsItemComponent,
     // HardItemComponent,

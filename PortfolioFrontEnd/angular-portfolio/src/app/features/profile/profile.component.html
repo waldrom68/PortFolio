@@ -1,0 +1,12 @@
+
+<ng-container *ngIf="myData">
+
+    <app-profile-item 
+        [item]="myData"
+        [isAdmin]="isAdmin"
+        (delete)="delete(myData)"
+    >
+
+    </app-profile-item>
+
+</ng-container>

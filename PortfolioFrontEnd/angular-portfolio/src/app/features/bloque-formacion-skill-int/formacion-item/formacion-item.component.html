@@ -1,1 +1,19 @@
-<p>formacion-item works!</p>
+    <span style="background-color:gainsboro">
+            {{item.start_date}} hasta {{item.end_date}}, {{item.degree}} ({{item.institution}}) 
+            <ng-container *ngIf="isAdmin">
+            <fa-icon 
+                [icon]="faTimes"
+                [ngStyle] = "{'color':'red','font-weight':'bolder', 'margin':'0 5px'}"
+                (click)="onDelete(item)"
+            >
+            </fa-icon>
+            <fa-icon 
+                [icon]="faPen"
+                [ngStyle] = "{'color':'green','font-weight':'bolder', 'margin':'0 5px'}"
+                >
+            </fa-icon>
+        </ng-container>
+    </span>
+    <br>
+
+

@@ -37,6 +37,14 @@ export class DataService {
   getGralData(): Observable<Users> {
     return this.http.get<Users>(`${this.apiURL}/Users/${this.USERID}`)
   }
+
+  updateGralData(user:Users): Observable<Users>{
+    // Este codigo modifica el valor del usuario en la DB
+    const url = `${this.apiURL}/Users/${user.id}`;
+        return this.http.put<Users>(url, user)
+  }
+
+
   // HardSkills
   getHardSkill(): Observable<HardSkill[]> {
     this.EndPoint = `${this.apiURL}/HardSkills?userId=${this.USERID}`
@@ -47,6 +55,7 @@ export class DataService {
     const url = `${this.apiURL}/HardSkills/${softskill.id}`
     return this.http.delete<HardSkill>(url)
   }
+
   // Interests
   getInterests(): Observable<Interests[]> {
     this.EndPoint = `${this.apiURL}/Interests?userId=${this.USERID}`
@@ -57,6 +66,7 @@ export class DataService {
     const url = `${this.apiURL}/Interests/${interest.id}`
     return this.http.delete<Interests>(url)
   }
+
   // SoftSkills
   getSoftSkill(): Observable<SoftSkill[]> {
   this.EndPoint = `${this.apiURL}/SoftSkills?userId=${this.USERID}`
@@ -67,6 +77,7 @@ export class DataService {
   const url = `${this.apiURL}/SoftSkills/${softskill.id}`
   return this.http.delete<SoftSkill>(url)
   }
+
   // Projects
   getProjects(): Observable<Projects[]> {
     this.EndPoint = `${this.apiURL}/Projects?userId=${this.USERID}`
@@ -78,7 +89,32 @@ export class DataService {
     return this.http.delete<Projects>(url)
   }
 
-  
+  // Studies
+  getStudies(): Observable<Studies[]> {
+    this.EndPoint = `${this.apiURL}/Studies?userId=${this.USERID}`
+    return this.http.get<Studies[]>(this.EndPoint )
+  }
+  delStudies(studie:Studies): Observable<Studies>{
+    // Este codigo elimina de la DB al usuario
+    const url = `${this.apiURL}/Studies/${studie.id}`
+    return this.http.delete<Studies>(url)
+  }
+
+  // Laboral Career
+  getLaboralCareer(): Observable<LaboralCareer[]> {
+    this.EndPoint = `${this.apiURL}/LaboralCareer?userId=${this.USERID}`
+    return this.http.get<LaboralCareer[]>(this.EndPoint )
+  }
+  delLaboralCareers(career:LaboralCareer): Observable<LaboralCareer>{
+    // Este codigo elimina de la DB al usuario
+    const url = `${this.apiURL}/LaboralCareer/${career.id}`
+    return this.http.delete<LaboralCareer>(url)
+  }
+
+
+
+
+
   // pendientes de implementar
   addInterests(interest:Interests): Observable<Interests>{
     // Este codigo agrega un usuario a la DB 
@@ -91,15 +127,8 @@ export class DataService {
         return this.http.put<Interests>(url, interest)
   }
 
-  getStudies(): Observable<Studies[]> {
-    this.EndPoint = `${this.apiURL}/Studies?userId=${this.USERID}`
-    return this.http.get<Studies[]>(this.EndPoint )
-  }
 
-  getLaboralCareer(): Observable<LaboralCareer[]> {
-    this.EndPoint = `${this.apiURL}/LaboralCareer?userId=${this.USERID}`
-    return this.http.get<LaboralCareer[]>(this.EndPoint )
-  }
+
 
 
  

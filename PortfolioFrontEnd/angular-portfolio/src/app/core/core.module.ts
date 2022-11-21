@@ -20,10 +20,14 @@ import { InterestsComponent } from '../features/interests/interests.component';
 import { InterestsItemComponent } from '../features/bloque-formacion-skill-int/interests-item/interests-item.component';
 import { ProjectsItemComponent } from '../features/bloque-formacion-skill-int/projects-item/projects-item.component';
 import { ProjectsComponent } from '../features/projects/projects.component';
-import { ProfileComponent } from '../features/bloque-datos-obj-profile/profile/profile.component';
-import { ObjetiveComponent } from '../features/bloque-datos-obj-profile/objetive/objetive.component';
-import { DatosTrayectoriaComponent } from '../features/bloque-datos-obj-profile/datos-trayectoria/datos-trayectoria.component';
+import { ProfileComponent } from '../features/profile/profile.component';
+import { ObjetiveComponent } from '../features/objetive/objetive.component';
+import { DatosTrayectoriaComponent } from '../features/datos-trayectoria/datos-trayectoria.component';
 import { DatosFormacionComponent } from '../features/bloque-formacion-skill-int/datos-formacion/datos-formacion.component';
+import { FormacionItemComponent } from '../features/bloque-formacion-skill-int/formacion-item/formacion-item.component';
+import { CareerItemComponent } from '../features/bloque-datos-obj-profile/career-item/career-item.component';
+import { ProfileItemComponent } from '../features/bloque-datos-obj-profile/profile-item/profile-item.component';
+import { ObjetiveItemComponent } from '../features/bloque-datos-obj-profile/objetive-item/objetive-item.component';
 
 
 
@@ -48,6 +52,10 @@ import { DatosFormacionComponent } from '../features/bloque-formacion-skill-int/
     SoftItemComponent,
     HardItemComponent,
     ProjectsItemComponent,
+    FormacionItemComponent,
+    CareerItemComponent,
+    ProfileItemComponent,
+    ObjetiveItemComponent,
     
   ],
   imports: [
@@ -64,6 +72,10 @@ import { DatosFormacionComponent } from '../features/bloque-formacion-skill-int/
     ObjetiveComponent,
     DatosTrayectoriaComponent,
     DatosFormacionComponent,
+    FormacionItemComponent,
+    CareerItemComponent,
+    ProfileItemComponent,
+    ObjetiveItemComponent
 
     // InterestsComponent,
     // SoftSkillsComponent,

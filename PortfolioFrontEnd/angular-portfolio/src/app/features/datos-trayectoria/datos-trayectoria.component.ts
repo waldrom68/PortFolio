@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { DataService } from 'src/app/service/data.service';
 
-import { LaboralCareer } from '../../../data'
+import { LaboralCareer } from '../../data'
 // import {WORKEXPERIENCE} from '../../../mock-data'
 
 @Component({
@@ -16,16 +16,23 @@ export class DatosTrayectoriaComponent implements OnInit {
   // intereses: Intereses[] = INTERESES;
   myData: LaboralCareer[] = [];
   
+  constructor( private dataService: DataService, ) { }
+  
 
-  constructor( private dataService: DataService, ) { 
+  ngOnInit(): void {
     this.dataService.getLaboralCareer().subscribe(career =>
       [this.myData = career]
     );
   }
-  
-  ngOnInit(): void {
 
-
+  delete(careers: LaboralCareer) {
+    // Este codigo acualiza el array Users para que se actualice en 
+    // el frontend, sin necesidad de recargar la pagina
+     this.dataService.delLaboralCareers(careers).subscribe( (tt)=> {
+        // despues de ejecutarse el borrado de la DB, la quitamos del listado de myData
+        this.myData = this.myData.filter( (t) => { return t.id !== careers.id } )
+      }
+    );
   }
 
 }

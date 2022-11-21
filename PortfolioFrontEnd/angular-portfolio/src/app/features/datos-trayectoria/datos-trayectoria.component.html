@@ -1,14 +1,15 @@
-<p>datos-formacion works!</p>
+<p>datos-trayectoria work!</p>
 
 <ng-container *ngIf="myData.length">
 
-    <app-formacion-item 
+    <app-career-item 
         *ngFor="let item of myData"
         [item]="item"
         [isAdmin]="isAdmin"
         (delete)="delete(item)"
     >
 
-    </app-formacion-item>
+    </app-career-item>
 
 </ng-container>
+
