@@ -18,6 +18,7 @@ import { SharedModule } from './shared/shared.module';
 
 import { ModalActionsService } from './service/modal-actions.service';
 import { DataService } from './service/data.service';
+import { UiService } from './service/ui.service';
 
 
 
@@ -57,7 +58,7 @@ const appRouters: Routes = [
     FontAwesomeModule,
    ],
 
-  providers: [ModalActionsService, DataService ],
+  providers: [ModalActionsService, DataService, UiService ],
 
   bootstrap: [AppComponent],
   entryComponents: []

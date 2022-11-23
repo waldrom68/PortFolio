@@ -25,7 +25,7 @@ export class AddUserComponent implements OnInit {
   onSubmit() {
     // console.log("hice click en el submit del form y ahora tengo estos datos:", this.UserData)
 
-    
+    console.log("estoy en onSubmit")
     // Aqui debieran ir las reglas de validacion de los campos del formulario
     if(this.UserData.username.length > 0 && this.UserData.password.length > 0) {
 

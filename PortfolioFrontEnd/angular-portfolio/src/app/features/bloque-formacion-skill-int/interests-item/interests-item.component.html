@@ -1,3 +1,4 @@
+
 <span style="background-color:gainsboro">{{item.name}}
     <ng-container *ngIf="isAdmin">
       <fa-icon 
@@ -9,8 +10,11 @@
       <fa-icon 
           [icon]="faPen"
           [ngStyle] = "{'color':'green','font-weight':'bolder', 'margin':'0 5px'}"
+          (click)="toggleForm(item)"
           >
       </fa-icon>
   </ng-container>
   </span>
+ 
+
   <br>

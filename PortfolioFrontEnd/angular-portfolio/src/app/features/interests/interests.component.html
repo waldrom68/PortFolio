@@ -4,8 +4,19 @@
         *ngFor="let item of myData"
         [item]="item"
         [isAdmin]="isAdmin"
-        (onDelete)="deleteInterest(item)">
+        (onDelete)="deleteInterest(item)"
+        (onToggleForm)="toggleForm(item)"
+
+        >
 
     </app-interests-item>
 
 </ng-container>
+
+<app-interests-form
+    *ngIf="showForm"
+    [showForm]="showForm"
+    [formData]="formData"
+    (onUpdate)=" upDateInterest($event)"
+    ></app-interests-form>
+    <!-- (onUpdate)="upDateInterest(interest)" -->

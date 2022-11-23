@@ -12,13 +12,14 @@ import { DatosTrayectoriaComponent } from './datos-trayectoria/datos-trayectoria
 import { ProfileComponent } from './profile/profile.component';
 import { ObjetiveComponent } from './objetive/objetive.component';
 import { DataComponent } from './bloque-datos-obj-profile/data-personal/data.component';
-import { DatosFormacionComponent } from './bloque-formacion-skill-int/datos-formacion/datos-formacion.component';
+// import { DatosFormacionComponent } from './bloque-formacion-skill-int/datos-formacion/datos-formacion.component';
 import { FormacionItemComponent } from './bloque-formacion-skill-int/formacion-item/formacion-item.component';
 
 import { InterestsItemComponent } from './bloque-formacion-skill-int/interests-item/interests-item.component';
 import { HardItemComponent } from './bloque-formacion-skill-int/hard-item/hard-item.component';
 import { ProjectsItemComponent } from './bloque-formacion-skill-int/projects-item/projects-item.component';
 import { SoftItemComponent } from './bloque-formacion-skill-int/soft-item/soft-item.component';
+import { ObjetiveFormComponent } from './bloque-datos-obj-profile/objetive-form/objetive-form.component';
 
 // import { SoftSkillsComponent } from './bloque-formacion-skill-int/soft-skills/soft-skills.component';
 // import { HardSkillsComponent } from './hard-skills/hard-skills.component';
@@ -37,6 +38,7 @@ import { SoftItemComponent } from './bloque-formacion-skill-int/soft-item/soft-i
     // ProfileComponent,
     // ObjetiveComponent,
     DataComponent,
+    // ObjetiveFormComponent,
     // DatosFormacionComponent,
     // FormacionItemComponent,
 
@@ -60,6 +62,7 @@ import { SoftItemComponent } from './bloque-formacion-skill-int/soft-item/soft-i
   exports: [
     BloqueDatosObjProfileComponent,
     BloqueFormacionSkillIntComponent,
+    // ObjetiveFormComponent,
     // SoftItemComponent,
     // PersonalCardComponent,
     // FontAwesomeModule

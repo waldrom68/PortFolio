@@ -43,73 +43,6 @@
       "admin": false
     }
   ],
-  "Data": {
-    "id": 1,
-    "name": "Walter",
-    "last_name": "OLD  DB",
-    "foto": "../assets/images/ico.svg",
-    "location": "Bernal, Bs.As. Argentina.",
-    "profession": [
-      "Full Stack Developer",
-      "PYTHON - JAVA"
-    ],
-    "profile": [
-      "OLD  DBOcupé cargos de RRHH y disfruté mejorar procesos, generar tableros de control para la toma de decisiones, y hacer de 'una especie de analista funcional' para servir de enlace entre áreas de negocio y de tecnología. Ciertamente era un Analista Universitario de Sistemas en un área de recursos humanos.",
-      "Luego de 24 años trabajando en la universidad, ahora he vuelto a mi esencia: 'creatividad, innovación, sistemas y tecnología'.",
-      "En resumen, además de contar con criterio empresarial tengo conocimientos y experiencia para sumar valor a cualquier proyecto, y quienes me conocen destacarán mi compromiso para alcanzar objetivos, mi lealtad, integridad y disciplina."
-    ],
-    "objetive": [
-      "OLD  DBMe atraen los desafíos y aventuras en donde pueda seguir ayudando, creando, innovando, mejorando ...",
-      "Podés contactarme si tenés alguna idea o propuesta y será un plus si es divertida."
-    ],
-    "since": "1968",
-    "experiencia_resume": "SOY CLARAMENTE EL INDICADO",
-    "username": "waldrom",
-    "password": "sinclave",
-    "admin": true
-  },
-  "Formacion": [
-    {
-      "id": 1,
-      "start_date": "3/1990",
-      "end_date": "12/1996",
-      "institution": "UCALP",
-      "degree": "OLD  DBAnalista de sistemas"
-    },
-    {
-      "id": 2,
-      "start_date": "3/1990",
-      "end_date": "12/1996",
-      "institution": "EDUCACION IT",
-      "degree": "Full Stack Python"
-    }
-  ],
-  "WorkExperience": [
-    {
-      "id": 1,
-      "start_date": "09-1993",
-      "end_date": "02-2018",
-      "organization": "ITBA",
-      "position": "OLD  DBDirector"
-    },
-    {
-      "id": 2,
-      "start_date": "09-1990",
-      "end_date": "12-1993",
-      "organization": "freelance",
-      "position": "Programador"
-    }
-  ],
-  "Intereses": [
-    {
-      "id": 1,
-      "name": "OLD  DBPaddel"
-    },
-    {
-      "id": 2,
-      "name": "OLD  DBViajar"
-    }
-  ],
   "Users": [
     {
       "id": 1,
@@ -288,7 +221,7 @@
     },
     {
       "id": 5,
-      "name": "Restaurar muebles, objetos",
+      "name": "Restaurar muebles y objetos",
       "userId": 1
     }
   ],
@@ -308,6 +241,88 @@
       "resume": "Elaborado con el Framework Django, Python, JS, HTML y CSS3",
       "link": "https://waldrom68.pythonanywhere.com/",
       "userId": 1
+    }
+  ],
+  "PortfolioInit": [
+    {
+      "userId": 1,
+      "appearance": {
+        "theme": "Dark",
+        "status": true
+      },
+      "cards": [
+        {
+          "name": "Perfil",
+          "status": false,
+          "group": 1,
+          "data": "",
+          "resume": "",
+          "modelTemplate": "lista"
+        },
+        {
+          "name": "Objetivo",
+          "status": false,
+          "group": 1,
+          "data": "",
+          "resume": "",
+          "modelTemplate": "lista"
+        },
+        {
+          "name": "Trayectoria",
+          "status": false,
+          "group": 1,
+          "data": [],
+          "modelTemplate": "objeto"
+        },
+        {
+          "name": "Formación",
+          "status": false,
+          "group": 1,
+          "data": [],
+          "resume": "card class Analista de Sistemas, MBA, Full-Stack",
+          "modelTemplate": "lista"
+        },
+        {
+          "name": "Habilidades tecnicas",
+          "status": false,
+          "group": 2,
+          "data": [],
+          "resume": "card class Python, Django, JS, Java, Angular, SQL, CSS3, HTML",
+          "modelTemplate": "lista"
+        },
+        {
+          "name": "Habilidades personales",
+          "status": false,
+          "group": 2,
+          "data": [],
+          "resume": "Persona integra",
+          "modelTemplate": "lista"
+        },
+        {
+          "name": "Proyectos",
+          "status": false,
+          "group": 2,
+          "data": [],
+          "resume": "",
+          "modelTemplate": "lista"
+        },
+        {
+          "name": "Intereses",
+          "status": false,
+          "group": 2,
+          "data": [],
+          "resume": "",
+          "modelTemplate": "lista"
+        }
+      ],
+      "displayPersonalData": {
+        "name": true,
+        "last_name": true,
+        "foto": true,
+        "location": true,
+        "profession": true,
+        "since": true
+      }
     }
   ]
 }

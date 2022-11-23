@@ -1,0 +1,13 @@
+
+  <form [formGroup]="form"
+  (ngSubmit)="onEnviar($event)"
+  >
+    <div>
+      <label for="name">Nombre</label>
+      <input type="text" formControlName="name" name="name">
+    </div>
+    <div>
+      <button type="submit">Guardar</button>
+    </div>
+  </form>
+

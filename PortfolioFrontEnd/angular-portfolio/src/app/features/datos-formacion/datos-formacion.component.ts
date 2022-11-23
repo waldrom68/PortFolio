@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from 'src/app/service/data.service';
 
-import {Studies} from '../../../data'
+import {Studies} from '../../data'
 // import {FORMACION} from '../../../mock-data'
 
 

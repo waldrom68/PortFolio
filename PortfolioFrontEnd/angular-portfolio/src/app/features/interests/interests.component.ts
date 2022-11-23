@@ -4,19 +4,25 @@ import { DataService } from 'src/app/service/data.service';
 import {Interests} from '../../data'
 // import {INTERESES} from '../../../mock-data'
 
+
 @Component({
   selector: 'app-interests',
   templateUrl: './interests.component.html',
   styleUrls: ['./interests.component.css']
 })
 export class InterestsComponent implements OnInit {
+  
   // PENDIENTE DEBE VINCULARSE CON EL LOGUEO
   isAdmin = true;
-
+  
   // intereses: Intereses[] = INTERESES;
   myData: Interests[] = [];
+  
+  showForm: boolean = false;
+  formData: Interests;
 
-  constructor( private dataService: DataService, ) { }
+  constructor( 
+    private dataService: DataService,) { }
     
   ngOnInit(): void {
     this.dataService.getInterests().subscribe(interest =>
@@ -24,6 +30,11 @@ export class InterestsComponent implements OnInit {
     );
   }
   
+  toggleForm(interest: Interests) {
+    this.showForm = !this.showForm;
+    this.formData = interest;
+  }
+
   deleteInterest(interest: Interests) {
     // Este codigo acualiza el array Users para que se actualice en 
     // el frontend, sin necesidad de recargar la pagina
@@ -32,6 +43,10 @@ export class InterestsComponent implements OnInit {
         this.myData = this.myData.filter( (t) => { return t.id !== interest.id } )
       }
     );
+  }
+
+  upDateInterest(interest: Interests) {
+     this.dataService.updateInterest(interest).subscribe();
   }
 
 }

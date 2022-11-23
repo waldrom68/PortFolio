@@ -28,6 +28,9 @@ export class DataService {
         private http: HttpClient
   ) { }
 
+  gerUserID() {
+    return this.USERID
+  }
 
   // codigo que usa el servidor api para traer los datos de la DB
   alertDelete(modalData: any) {
@@ -66,6 +69,11 @@ export class DataService {
     const url = `${this.apiURL}/Interests/${interest.id}`
     return this.http.delete<Interests>(url)
   }
+  updateInterest(interest:Interests): Observable<Interests>{
+    const url = `${this.apiURL}/Interests/${interest.id}`;
+    return this.http.put<Interests>(url, interest)
+  }
+
 
   // SoftSkills
   getSoftSkill(): Observable<SoftSkill[]> {

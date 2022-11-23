@@ -54,7 +54,7 @@ export class UserDataItemComponent implements OnInit {
       // console.log("Realizo pedido de modificar un item del listado");
       this.onUpdateUser.emit(user);
     }
-      
+
   }
 
   onToggle(user: User) {

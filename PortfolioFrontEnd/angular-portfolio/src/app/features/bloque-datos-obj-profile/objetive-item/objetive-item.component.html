@@ -1,17 +1,58 @@
-<span style="background-color:gainsboro">
-  {{item.objetive}}
-  <ng-container *ngIf="isAdmin">
-    <fa-icon 
-      [icon]="faTimes"
-      [ngStyle] = "{'color':'red','font-weight':'bolder', 'margin':'0 5px'}"
-      (click)="onDelete(item)"
+  
+<ng-container *ngIf="isAdmin && item.objetive.length == 0 && showAddForm == false"
+  
+>
+  <span class="btn btn-default btn-sm" 
+  (click)="toggleForm()"
+  >
+    <fa-icon
+      ngClass="fa-2x"
+      [icon]="faPlusCircle"
       >
     </fa-icon>
-    <fa-icon 
-    [icon]="faPen"
-    [ngStyle] = "{'color':'green','font-weight':'bolder', 'margin':'0 5px'}"
-    >
-  </fa-icon>
+  </span>
 </ng-container>
-</span>
+
+
+<div 
+  style="background-color:gainsboro"
+  *ngFor="let paragraph of item.objetive.split('\n')"
+  >
+    <p>{{paragraph}}</p> 
+</div>
+
+
+<ng-container 
+  *ngIf="isAdmin && item.objetive.length > 0"
+  >
+    <span class="btn btn-danger"
+      (click)="onDelete(item)"
+    >
+      <fa-icon
+        ngClass="fa-sm"
+        [icon]="faTrash"
+        >
+      </fa-icon> 
+      Borrar
+    </span>
+    <span class="btn btn-success">
+      <fa-icon 
+        [icon]="faPencil"
+        ngClass = "fa-sm"
+      >
+      </fa-icon> 
+      Editar
+    </span>
+</ng-container>
+
+<ng-container
+  *ngIf="showAddForm"
+>
+  <app-objetive-form
+  >
+  </app-objetive-form>
+
+
+</ng-container>
+
 <br>

@@ -1,7 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import {Users} from '../../../data'
+import { Users } from '../../../data'
 
-import { faPen, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faTimes, faTrash, faPencil, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { Subscription } from 'rxjs';
+import { DataService } from 'src/app/service/data.service';
 
 @Component({
   selector: 'app-objetive-item',
@@ -17,18 +19,49 @@ export class ObjetiveItemComponent implements OnInit {
   @Output() delete: EventEmitter<Users> = new EventEmitter()
   
   faTimes = faTimes;
-  faPen = faPen;
+  faTrash = faTrash;
+  faPencil = faPencil;
+  faPlusCircle = faPlusCircle;
 
-  constructor() { }
+  showAddForm:boolean = false;
+  subscriptionAddForm?: Subscription;
+  UserData: Users
+
+  constructor( private dataservice: DataService, ) {
+    this.UserData = this.item;
+   }
 
   ngOnInit() {
   }
-  
-  onDelete(user: Users) {
-    // llamo al metodo del padre via emit()
-    if (this.isAdmin) {
-        this.delete.emit(user);
+    // Metodos propios de la clase UserDataComponent
+    resetUser() {
+      this.UserData = {
+            "id": 0,
+            "name": "",
+            "last_name": "",
+            "foto": "",
+            "since": "",
+            "location": "",
+            "profession": "",
+            "profile": "",
+            "objetive": "",
+            "experiencia_resume": "",
+            "username": "",
+            "password": "",
+            "admin": false
+          }
     }
 
-  }
+    toggleForm() {
+      // Alterna los estados de mostrar o no mostrar formulario
+      this.showAddForm = !this.showAddForm;
+    }
+
+    onDelete(user: Users) {
+      // llamo al metodo del padre via emit()
+      if (this.isAdmin) {
+          this.delete.emit(user);
+      }
+
+    }
 }
