@@ -32,6 +32,13 @@ export class InterestsFormComponent implements OnInit {
     })
   }
 
+  get Nombre(): any {
+    return this.form.get("name")
+  }
+
+  resetForm() {
+    this.formData.name = ""
+  }
   onEnviar(event: Event, ) {
     event.preventDefault;
     if (this.form.valid) {

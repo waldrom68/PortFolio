@@ -33,13 +33,18 @@ export class InterestsItemComponent implements OnInit {
   showForm: boolean = false;
   formData: Interests;
 
-
+  
   constructor( private dataService: DataService, ) { }
 
   ngOnInit(): void {
   }
 
-
+  color:string = 'red';
+  
+  changeStyle($event: Event){
+    console.log("hice un hover")
+    this.color = $event.type == 'mouseover' ? 'yellow' : 'normal';
+  }
 
   toggleForm(interest: Interests) {
     this.showForm = !this.showForm;

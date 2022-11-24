@@ -1,27 +1,52 @@
 
   <form class="form-inline"
-  [formGroup]="form"
+    [formGroup]="form"
+    #myForm="ngForm"
+    (ngSubmit)="onEnviar($event); myForm.resetForm()"
   >
-  <!-- (ngSubmit)="onEnviar($event)" -->
-
-      <input type="text" formControlName="name" name="name"
+    <div style="display: flex ; width:100% ">
+      <input type="text" formControlName="name" name="name" class="input-data"
       [ngStyle]="{'width':'90%'}"
+      formControlName="name"
+      [ngClass] = "{error: (Nombre.invalid && Nombre.touched)}"
+      
       >
 
-        <fa-icon 
-          [icon]="faCheck"
-          [ngStyle] = "{'color':'green','font-weight':'bolder', 'margin':'0 5px'}"
-          (click)="onEnviar($event)"
-          >
-        </fa-icon>
+      <div class="col">
+        <button type="submit" class="btn btn-outline-success btn-sm"
+            [ngStyle]="{'padding-right':'1em','padding-left':'1em'}"
+             [disabled]="!form.valid"
+        >
+          <fa-icon 
+            [icon]="faCheck"
+            [ngStyle] = "{'color':'green','font-weight':'bolder'}"
+            >
+          </fa-icon>
+        </button>
+
+      </div>
+
+      <div class="col"
+        (click)="onCancel($event); myForm.resetForm()"
+      >
+        <button class="btn btn-outline-success btn-sm"
+        [ngStyle]="{'padding-right':'1em','padding-left':'1em'}"
+        >
+          <fa-icon 
+            [icon]="faTimes"
+            [ngStyle] = "{'color':'red','font-weight':'bolder'}"
+            >
+          </fa-icon>
+        </button>
+
+      </div>
 
 
-        <fa-icon 
-          [icon]="faTimes"
-          [ngStyle] = "{'color':'red','font-weight':'bolder', 'margin':'0 5px'}"
-          (click)="onCancel($event)"
-          >
-        </fa-icon>
+    </div>
+
 
     </form>
+    <small class="mensajeError"
+      *ngIf="form.hasError('minlength', 'name')"> Minimo {{ Nombre.errors.minlength.requiredLength }} caracteres
+    </small>
 

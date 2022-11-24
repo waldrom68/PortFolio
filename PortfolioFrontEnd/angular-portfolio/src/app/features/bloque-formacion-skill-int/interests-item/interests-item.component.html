@@ -1,13 +1,20 @@
 
-<ng-container *ngIf="!showForm">
-            <td>{{showBtnAction}}</td>
+<ng-container *ngIf="!showForm"
+
+>
+            <td
+            
+            
+            >{{showBtnAction}}</td>
             <td style="width:80%;"
             >
             <!-- (dblclick)="toggleForm(item);" -->
-                <span>{{item.name}}  </span>
+                <span [ngClass]="color" (mouseover)="changeStyle($event)" (mouseout)="changeStyle($event)"
+                >{{item.name}}  </span>
             </td>
             
             <td *ngIf="isAdmin && showBtnAction"
+                class="btn btn-outline-secondary btn-sm"
                 (click)="toggleForm(item);"
             >
                 <fa-icon 
@@ -18,11 +25,13 @@
             </td>
     
             <td *ngIf="isAdmin && showBtnAction"
+                class="btn btn-outline-secondary btn-sm"
+                [ngStyle] = "{'color':'red','margin':'0 5px'}"
                 (click)="delete(item)" 
             >
                 <fa-icon 
                     [icon]="faTrash"
-                    [ngStyle] = "{'color':'red','font-weight':'bolder', 'margin':'0 5px'}"
+                    [ngStyle] = "{'color':'red','margin':'0 5px'}"
                 >
                 </fa-icon>
             </td>
