@@ -1,13 +1,27 @@
 
-  <form [formGroup]="form"
-  (ngSubmit)="onEnviar($event)"
+  <form class="form-inline"
+  [formGroup]="form"
   >
-    <div>
-      <label for="name">Nombre</label>
-      <input type="text" formControlName="name" name="name">
-    </div>
-    <div>
-      <button type="submit">Guardar</button>
-    </div>
-  </form>
+  <!-- (ngSubmit)="onEnviar($event)" -->
+
+      <input type="text" formControlName="name" name="name"
+      [ngStyle]="{'width':'90%'}"
+      >
+
+        <fa-icon 
+          [icon]="faCheck"
+          [ngStyle] = "{'color':'green','font-weight':'bolder', 'margin':'0 5px'}"
+          (click)="onEnviar($event)"
+          >
+        </fa-icon>
+
+
+        <fa-icon 
+          [icon]="faTimes"
+          [ngStyle] = "{'color':'red','font-weight':'bolder', 'margin':'0 5px'}"
+          (click)="onCancel($event)"
+          >
+        </fa-icon>
+
+    </form>
 

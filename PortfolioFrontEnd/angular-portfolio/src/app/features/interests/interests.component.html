@@ -1,22 +1,54 @@
-<ng-container *ngIf="myData.length">
 
-    <app-interests-item
-        *ngFor="let item of myData"
-        [item]="item"
-        [isAdmin]="isAdmin"
-        (onDelete)="deleteInterest(item)"
-        (onToggleForm)="toggleForm(item)"
+<ng-container *ngIf="myData.length" ngClass="row">
+    <table class="table table-sm table-dark text-left">
+        <tbody>
+            <tr>
+                <app-interests-item
+                    *ngFor="let item of myData"
+                    [ngStyle]="{'display':'flex','margin':'auto'}"
+                    [item]="item"
+                    [isAdmin]="isAdmin"
+                    [(showBtnAction)]="showBtnAction"
+                    
+                    
+                    (onDelete)="deleteInterest(item)"
+                    >
+                    
+                </app-interests-item>
+                <!-- [(size)]= "size" -->
 
-        >
+                <app-interests-form
+                    *ngIf="showForm"
+                    [ngStyle]="{'width':'100%'}"
 
-    </app-interests-item>
+                    [formData]="formData"
 
+                    (showBtnActionChange)="showBtnAction"
+                    (onUpdate)=" addInterest($event)"
+                    (cancel)="cancelation($event)"
+                    >
+                </app-interests-form>
+                    <!-- [showForm]="showForm" -->
+            </tr>
+
+
+
+
+        </tbody>
+    </table>
+    {{showBtnAction}} -> showBtnAction
 </ng-container>
 
-<app-interests-form
-    *ngIf="showForm"
-    [showForm]="showForm"
-    [formData]="formData"
-    (onUpdate)=" upDateInterest($event)"
-    ></app-interests-form>
-    <!-- (onUpdate)="upDateInterest(interest)" -->
+<ng-container *ngIf="myData.length && (isAdmin && showBtnAction)">
+    <span class="btn btn-default btn-sm" 
+    (click)="toggleForm()"
+    >
+    <fa-icon
+        ngClass="fa-2x"
+        [icon]="faPlusCircle"
+
+        >
+    </fa-icon>
+    </span>
+</ng-container>
+

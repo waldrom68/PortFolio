@@ -125,7 +125,10 @@ export class DataService {
 
   // pendientes de implementar
   addInterests(interest:Interests): Observable<Interests>{
+    console.log("estoy en el metodo del servicio")
     // Este codigo agrega un usuario a la DB 
+    interest.userId = this.USERID;
+    console.log(interest.constructor.name)
     return this.http.post<Interests>(`${this.apiURL}/Interests`, interest, httpOptions)
   }
 

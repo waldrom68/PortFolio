@@ -103,7 +103,8 @@ export interface Users {
     export interface Interests {
         id: number,
         name:string,
-        userId:number,
+        userId:number
+
     }
 
     export interface Cards {

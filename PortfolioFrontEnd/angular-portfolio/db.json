@@ -201,7 +201,7 @@
   "Interests": [
     {
       "id": 1,
-      "name": "Paddel",
+      "name": "Padle",
       "userId": 1
     },
     {
@@ -222,6 +222,11 @@
     {
       "id": 5,
       "name": "Restaurar muebles y objetos",
+      "userId": 1
+    },
+    {
+      "id": 6,
+      "name": "hacer milanesas a la napo",
       "userId": 1
     }
   ],

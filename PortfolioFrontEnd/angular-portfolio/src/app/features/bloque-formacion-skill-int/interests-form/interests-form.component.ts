@@ -1,5 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+
+import { faCheck, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons';
+
 import { Interests } from '../../../data';
 
 @Component({
@@ -8,10 +11,13 @@ import { Interests } from '../../../data';
   styleUrls: ['./interests-form.component.css']
 })
 export class InterestsFormComponent implements OnInit {
-  @Input() showForm: boolean;
   @Input() formData: Interests;
 
   @Output() onUpdate: EventEmitter<Interests> = new EventEmitter()
+  @Output() cancel: EventEmitter<Interests> = new EventEmitter()
+
+  faCheck = faCheck;
+  faTimes = faTimes;
 
   form: FormGroup;
 
@@ -34,9 +40,15 @@ export class InterestsFormComponent implements OnInit {
       this.onUpdate.emit(this.formData)
 
     } else {
+      
       console.log("no es valido el valor ingresado")
       this.form.markAllAsTouched();
 
     }
+  }
+
+  onCancel(event: Event, ) {
+    this.cancel.emit();
+
   }
 }

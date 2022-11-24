@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from 'src/app/service/data.service';
 
+import { faPen, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+
 import {Interests} from '../../data'
 // import {INTERESES} from '../../../mock-data'
 
@@ -17,22 +19,44 @@ export class InterestsComponent implements OnInit {
   
   // intereses: Intereses[] = INTERESES;
   myData: Interests[] = [];
+  formData: Interests;  // instancia vacia, para cuando se solicite un alta
   
-  showForm: boolean = false;
-  formData: Interests;
+  faPlusCircle = faPlusCircle;
+  faPen = faPen;
 
+  showForm: boolean = false;  // flag para mostrar o no el formulario
+  // ocultarAcciones: boolean = false;
+  
+  showBtnAction: boolean;  // flag para mostrar o no los btn's de acciones del usuario
+  // size = 2
+ 
+ 
   constructor( 
-    private dataService: DataService,) { }
+    private dataService: DataService,
+    ) {
+      this.formData = { id:0, name:"", userId:0 }
+     }
     
   ngOnInit(): void {
     this.dataService.getInterests().subscribe(interest =>
       [this.myData = interest]
     );
+
+    if (this.isAdmin) {
+      this.showBtnAction = true 
+    } else {
+      this.showBtnAction = false
+    }
+
   }
-  
-  toggleForm(interest: Interests) {
+
+   
+  toggleForm() {
     this.showForm = !this.showForm;
-    this.formData = interest;
+    // if (this.size == 8) {
+    //   this.size = 2
+    // } else { this.size = 8;}
+    this.showBtnAction = !this.showBtnAction
   }
 
   deleteInterest(interest: Interests) {
@@ -45,8 +69,21 @@ export class InterestsComponent implements OnInit {
     );
   }
 
-  upDateInterest(interest: Interests) {
-     this.dataService.updateInterest(interest).subscribe();
+  cancelation(interest: Interests) {
+    this.toggleForm();
   }
+
+  upDateInterest(interest: Interests) {
+    this.dataService.updateInterest(interest).subscribe();
+  }
+
+  addInterest(interest: Interests) {
+
+    this.dataService.addInterests(interest).subscribe( (tt)=> {
+        this.myData.push( tt );
+        this.toggleForm();
+      }
+    );
+ }
 
 }
