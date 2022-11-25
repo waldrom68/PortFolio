@@ -8,7 +8,6 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 export class MessageBoxComponent implements OnInit {
   // displayStyle = "block";
   
-  @Input() displayAlert: boolean;
   @Input() title: string;
   @Input() message: string;
   @Input() btnOkText: string;
@@ -26,29 +25,29 @@ export class MessageBoxComponent implements OnInit {
   }
 
    
-  openPopup() {
+  openModal() {
     // this.displayStyle = "block";
-    this.displayAlert = true;
+    console.log("Abriendo el Modal")
   }
-  closePopup() {
+  closeModal() {
     // this.displayStyle = "none";
-    this.displayAlert = false;
+    console.log("Cerrando el modal")
   }
 
   public decline() {
-    this.closePopup()
+    this.closeModal()
     this.onBtnClick.emit(false);
   }
   
   public accept() {
-    this.closePopup()
+    this.closeModal()
     this.onBtnClick.emit(true);
 
   }
   
   public dismiss() {
 
-    this.openPopup()
+    this.openModal()
     this.onBtnClick.emit(false);
 
 

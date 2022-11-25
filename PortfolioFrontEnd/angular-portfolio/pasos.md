@@ -110,7 +110,7 @@
   - Poner el servidor de json para ver nuestros datos
     npm run server
 
-
+- ng add @angular/material
 
 ## ERRORES 
 
@@ -128,11 +128,14 @@ https://fontawesome.com/icons
 ## PENDIENTES
 STRUC: En la estructura del proyecto, dicha estructura debiera replicarse en los submodulos de features. Actualmente dentro de features se cargan todos los componentes, habría que subdividirlo en sus dos partes/bloques de datos.
 
+- Estilos en linea a archivo externo
 
 ## INVESTIGAR
 ### ngx-cacheable is becoming ts-cacheable
 https://www.npmjs.com/package/ts-cacheable
 
+### How to Convert Your Angular Application to a Native Mobile App (Android and iOS)
+https://betterprogramming.pub/how-to-convert-your-angular-application-to-a-native-mobile-app-android-and-ios-c212b38976df
 
 ### MODELS:
 Users
@@ -145,6 +148,8 @@ Interests
 
 ### Modal
 https://material.angular.io/guide/getting-started
+
+https://medium.com/swlh/how-to-create-a-modal-dialog-component-in-angular-8-88028d909be0
 
 https://levelup.gitconnected.com/how-to-create-a-reusable-modal-dialog-component-in-angular-8-241cc738d260
 

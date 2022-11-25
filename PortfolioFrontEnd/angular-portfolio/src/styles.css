@@ -16,6 +16,8 @@
     --metaldark-shadow: #787878;
 }
 
+html, body { height: 100%; }
+
 body {
     font-family: var(--body-font-family);
 
@@ -28,3 +30,5 @@ mat-dialog-container#modal-component {
     background-color: #1a1a1a;
     color: white;
 }
+
+

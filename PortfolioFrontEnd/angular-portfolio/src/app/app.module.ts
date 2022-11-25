@@ -19,8 +19,9 @@ import { SharedModule } from './shared/shared.module';
 import { ModalActionsService } from './service/modal-actions.service';
 import { DataService } from './service/data.service';
 import { UiService } from './service/ui.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 
 // import { ProjectsComponent } from './features/projects/projects.component';
@@ -50,8 +51,8 @@ const appRouters: Routes = [
     SharedModule,
     CoreModule,  // add the Core module here
     FeaturesModule,  // add the features module here
-    UsersModule  // add the Users module here
-
+    UsersModule, BrowserAnimationsModule,  // add the Users module here
+    MatToolbarModule,
   ],
   exports: [
     SharedModule,
