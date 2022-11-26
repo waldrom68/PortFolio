@@ -56,7 +56,7 @@ export class BloqueDatosObjProfileComponent implements OnInit {
 
   ngOnInit(): void {
     // this.botones = this.miServicio.getDetalles();
-    this.detailCards = this.miServicio.getCards();
+    this.detailCards = this.miServicio.getCards()
 
     this.CardsGroup1 = this.detailCards.filter(function (elem:any)
         { return elem.group == 1; }  ) 

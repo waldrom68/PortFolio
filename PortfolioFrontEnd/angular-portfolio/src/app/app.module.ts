@@ -19,9 +19,13 @@ import { SharedModule } from './shared/shared.module';
 import { ModalActionsService } from './service/modal-actions.service';
 import { DataService } from './service/data.service';
 import { UiService } from './service/ui.service';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
+
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MessageBoxComponent } from './shared/message-box/message-box.component';
 
 
 // import { ProjectsComponent } from './features/projects/projects.component';
@@ -37,6 +41,7 @@ const appRouters: Routes = [
 @NgModule({
   declarations: [	
     AppComponent, 
+    MessageBoxComponent,
     // ProjectsComponent, 
     // InterestsComponent,
     // DataComponent
@@ -51,7 +56,10 @@ const appRouters: Routes = [
     SharedModule,
     CoreModule,  // add the Core module here
     FeaturesModule,  // add the features module here
-    UsersModule, BrowserAnimationsModule,  // add the Users module here
+    UsersModule, 
+    BrowserAnimationsModule,  // add the Users module here
+    MatButtonModule,
+    MatDialogModule,
     MatToolbarModule,
   ],
   exports: [
@@ -62,6 +70,6 @@ const appRouters: Routes = [
   providers: [ModalActionsService, DataService, UiService ],
 
   bootstrap: [AppComponent],
-  entryComponents: []
+  entryComponents: [MessageBoxComponent]
 })
 export class AppModule { }

@@ -14,12 +14,11 @@
 
       <div class="col">
         <button type="submit" class="btn btn-outline-success btn-sm"
-            [ngStyle]="{'padding-right':'1em','padding-left':'1em'}"
+            ngClass="faConfirm"
              [disabled]="!form.valid"
         >
           <fa-icon 
             [icon]="faCheck"
-            [ngStyle] = "{'color':'green','font-weight':'bolder'}"
             >
           </fa-icon>
         </button>
@@ -30,11 +29,10 @@
         (click)="onCancel($event); myForm.resetForm()"
       >
         <button class="btn btn-outline-success btn-sm"
-        [ngStyle]="{'padding-right':'1em','padding-left':'1em'}"
+        ngClass="faCancel"
         >
-          <fa-icon 
-            [icon]="faTimes"
-            [ngStyle] = "{'color':'red','font-weight':'bolder'}"
+        <fa-icon 
+        [icon]="faTimes"
             >
           </fa-icon>
         </button>

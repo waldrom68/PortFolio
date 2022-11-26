@@ -49,7 +49,7 @@
       "name": "Walter",
       "last_name": "Romero",
       "foto": "../assets/images/ico.svg",
-      "since": "nacido en 1968",
+      "since": "1968",
       "location": "Argentina, Bs.As.",
       "profession": "Full Stack Developer\nPYTHON - JAVA",
       "profile": "Ocupé cargos de RRHH y disfruté mejorar procesos, generar tableros de control para la toma de decisiones, y hacer de 'una especie de analista funcional' para servir de enlace entre áreas de negocio y de tecnología. Ciertamente era un Analista Universitario de Sistemas en un área de recursos humanos.\nLuego de 24 años trabajando en la universidad, ahora he vuelto a mi esencia: 'creatividad, innovación, sistemas y tecnología'.\nEn resumen, además de contar con criterio empresarial tengo conocimientos y experiencia para sumar valor a cualquier proyecto, y quienes me conocen destacarán mi compromiso para alcanzar objetivos, mi lealtad, integridad y disciplina.",
@@ -226,7 +226,7 @@
     },
     {
       "id": 6,
-      "name": "hacer milanesas a la napolitana",
+      "name": "hacer milanesas a la napo",
       "userId": 1
     }
   ],
@@ -248,86 +248,91 @@
       "userId": 1
     }
   ],
-  "PortfolioInit": [
+  "PortfolioInit": {
+    "userId": 1,
+    "theme": "Dark",
+    "status": true
+  },
+  "Cards": [
     {
-      "userId": 1,
-      "appearance": {
-        "theme": "Dark",
-        "status": true
-      },
-      "cards": [
-        {
-          "name": "Perfil",
-          "status": false,
-          "group": 1,
-          "data": "",
-          "resume": "",
-          "modelTemplate": "lista"
-        },
-        {
-          "name": "Objetivo",
-          "status": false,
-          "group": 1,
-          "data": "",
-          "resume": "",
-          "modelTemplate": "lista"
-        },
-        {
-          "name": "Trayectoria",
-          "status": false,
-          "group": 1,
-          "data": [],
-          "modelTemplate": "objeto"
-        },
-        {
-          "name": "Formación",
-          "status": false,
-          "group": 1,
-          "data": [],
-          "resume": "card class Analista de Sistemas, MBA, Full-Stack",
-          "modelTemplate": "lista"
-        },
-        {
-          "name": "Habilidades tecnicas",
-          "status": false,
-          "group": 2,
-          "data": [],
-          "resume": "card class Python, Django, JS, Java, Angular, SQL, CSS3, HTML",
-          "modelTemplate": "lista"
-        },
-        {
-          "name": "Habilidades personales",
-          "status": false,
-          "group": 2,
-          "data": [],
-          "resume": "Persona integra",
-          "modelTemplate": "lista"
-        },
-        {
-          "name": "Proyectos",
-          "status": false,
-          "group": 2,
-          "data": [],
-          "resume": "",
-          "modelTemplate": "lista"
-        },
-        {
-          "name": "Intereses",
-          "status": false,
-          "group": 2,
-          "data": [],
-          "resume": "",
-          "modelTemplate": "lista"
-        }
-      ],
-      "displayPersonalData": {
-        "name": true,
-        "last_name": true,
-        "foto": true,
-        "location": true,
-        "profession": true,
-        "since": true
-      }
+      "name": "Perfil",
+      "status": false,
+      "group": 1,
+      "data": "",
+      "resume": "",
+      "modelTemplate": "lista",
+      "userId": 1
+    },
+    {
+      "name": "Objetivo",
+      "status": false,
+      "group": 1,
+      "data": "",
+      "resume": "",
+      "modelTemplate": "lista",
+      "userId": 1
+    },
+    {
+      "name": "Trayectoria",
+      "status": false,
+      "group": 1,
+      "data": [],
+      "modelTemplate": "objeto",
+      "userId": 1
+    },
+    {
+      "name": "Formación",
+      "status": false,
+      "group": 1,
+      "data": [],
+      "resume": "Analista de Sistemas, MBA, Full-Stack",
+      "modelTemplate": "lista",
+      "userId": 1
+    },
+    {
+      "name": "Habilidades tecnicas",
+      "status": false,
+      "group": 2,
+      "data": [],
+      "resume": "Python, Django, JS, Java, Angular, SQL, CSS3, HTML",
+      "modelTemplate": "lista",
+      "userId": 1
+    },
+    {
+      "name": "Habilidades personales",
+      "status": false,
+      "group": 2,
+      "data": [],
+      "resume": "Persona integra",
+      "modelTemplate": "lista",
+      "userId": 1
+    },
+    {
+      "name": "Proyectos",
+      "status": false,
+      "group": 2,
+      "data": [],
+      "resume": "",
+      "modelTemplate": "lista",
+      "userId": 1
+    },
+    {
+      "name": "Intereses",
+      "status": false,
+      "group": 2,
+      "data": [],
+      "resume": "",
+      "modelTemplate": "lista",
+      "userId": 1
     }
-  ]
+  ],
+  "DisplayPersonalData": {
+    "name": true,
+    "last_name": true,
+    "foto": true,
+    "location": true,
+    "profession": true,
+    "since": true,
+    "userId": 1
+  }
 }

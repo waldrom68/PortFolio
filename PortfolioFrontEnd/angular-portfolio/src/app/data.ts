@@ -106,6 +106,12 @@ export interface Users {
         userId:number
 
     }
+    export interface Projects {
+        id: number,
+        name:string,
+        resume:string,
+        userId:number
+    }
 
     export interface Cards {
         name: string,
@@ -113,17 +119,23 @@ export interface Users {
         group: number,
         data: any,
         resume:string,
-        modelTemplate: string
+        modelTemplate: string,
+        userId:number,
     }
-
-    export interface Projects {
-        id: number,
-        name:string,
-        resume:string,
-        userId:number
-    }
+    
     export interface PortfolioInit {
+        userId:number,
         theme: string,
         status:boolean,
-        userDefault:number
+    }
+
+    export interface DisplayPersonalData {
+        name: boolean,
+        last_name: boolean,
+        foto: boolean,
+        location: boolean,
+        profession: boolean,
+        since: boolean,
+        userId:number,
+        
     }

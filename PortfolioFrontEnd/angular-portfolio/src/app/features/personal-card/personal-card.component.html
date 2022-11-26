@@ -2,13 +2,8 @@
 <ng-container *ngIf="myData; else statusWait">
 
 <div class="container py-4 p-0 m-0">
-    <div class="card">
-
-        <p>personal-card works!</p>
-        <fa-icon 
-        [icon]="faTimes"
-        [ngStyle] = "{'color':'red', 'text-aling':'center'}" >
-        </fa-icon>
+    <div class="card"
+    >
         <ng-container *ngIf="myData">
 
             <div class="ratio ratio-1x1 rounded-circle overflow-hidden" style="width: 50%; height: 50%; margin: auto;">

@@ -31,12 +31,14 @@
             <!-- zona para mostrar los detalles de cada Card -->
             <ng-container *ngIf = "statusCards == false">
                 <div>
-                    <a (click)="toggleCards()">
+                    <a (click)="toggleCards()"
+                        ngClass='faClose'
+                    >
                         <fa-icon 
-                        [icon]="faTimes"
-                        [ngStyle] = "{'color':'red'}"
-                        >
-                    </fa-icon>
+                            [icon]="faTimes"
+                            ngClass="faClose fa-2x"
+                            >
+                        </fa-icon>
                     </a>
 
                     <div 
@@ -51,7 +53,7 @@
                                 <app-profile></app-profile>
 
                             </div>
-                            <div *ngSwitchCase="'Objetivo'">Mostrar detalle de Objetivo
+                            <div *ngSwitchCase="'MOCK Objetivo'">Mostrar detalle de Objetivo
                                 <app-objetive></app-objetive>
                             </div>
                             <div *ngSwitchCase="'Trayectoria'">Mostrar detalle de Trayectoria

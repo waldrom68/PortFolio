@@ -19,19 +19,18 @@
             >
                 <fa-icon 
                     [icon]="faPen"
-                    [ngStyle] = "{'color':'green','font-weight':'bolder', 'margin':'0 5px'}"
+                    [ngStyle] = "{'color':'green','margin':'0px 1em'}"
                 >
                 </fa-icon>
             </td>
     
             <td *ngIf="isAdmin && showBtnAction"
                 class="btn btn-outline-secondary btn-sm"
-                [ngStyle] = "{'color':'red','margin':'0 5px'}"
                 (click)="delete(item)" 
             >
                 <fa-icon 
                     [icon]="faTrash"
-                    [ngStyle] = "{'color':'red','margin':'0 5px'}"
+                    [ngStyle] = "{'color':'red','margin':'0px 1em'}"
                 >
                 </fa-icon>
             </td>

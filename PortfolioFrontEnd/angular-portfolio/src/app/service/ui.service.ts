@@ -1,8 +1,10 @@
-import { ThisReceiver } from '@angular/compiler';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { Cards, PortfolioInit} from '../data';
+
 import { CARDS, PORTFOLIOINIT } from '../mock-data';
+
+import { DataService } from './data.service';
 
 
 
@@ -16,22 +18,29 @@ export class UiService {
   private subjectShowComponent = new Subject<any>();
 
   private portfolioinit:PortfolioInit;
-
-
+  
+  
   private statusCards:boolean = true;  // Indica si se muestran las Cards en el main
   private cards: Cards[];  // Contiene los datos para Cards/etiquetas que levante de mock-data
-  
+  private cards2: Cards[];
   
   private visited:string="";  // Nombre de la tarjeta sobre la cual hice click -PENDIENTE
+  
+  portfolioinit2:PortfolioInit;
 
-  constructor( ) {
+  constructor(
+    private dataService: DataService,
+   ) {
     this.cards = CARDS
     this.portfolioinit = PORTFOLIOINIT;
    }
 
+
+
+
   // Pendiente, esto debe vincularse con el logueo
   getUserLoggin() {
-     return this.portfolioinit.userDefault
+     return this.portfolioinit2.userId
   }
     
     // Metodos para el manejo del layout de las tarjetas

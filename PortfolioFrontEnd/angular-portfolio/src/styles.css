@@ -32,3 +32,49 @@ mat-dialog-container#modal-component {
 }
 
 
+.faClose {
+    float:right;
+    border-radius: 5px;
+}
+.faClose > svg {
+        padding: 0px 5px;
+        color: var(--danger);
+    }
+    .faClose > svg:hover {
+        padding: 0px 5px;
+        color:white;
+        background-color: var(--danger);
+    }
+    
+.faCancel{
+    float:right;
+    padding: 0px 1em;
+    border-radius: 5px;
+    }
+    .faCancel:hover {
+        background-color: var(--danger);
+    }
+    .faCancel > svg {
+        padding: 0px 5px;
+        color: var(--danger);
+    }
+    .faCancel > svg:hover {
+        padding: 0px 5px;
+        color:white;
+    }
+
+.faConfirm{
+    float:right;
+    padding: 0px 1em;
+    border-radius: 5px;
+    }
+    .faConfirm > svg {
+        padding: 0px 5px;
+        color: green;
+    }
+    .faConfirm > svg:hover {
+        padding: 0px 5px;
+        color:white;
+    }
+
+

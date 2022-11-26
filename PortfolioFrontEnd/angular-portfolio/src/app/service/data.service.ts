@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
-import { Users, HardSkill, SoftSkill, Studies, LaboralCareer, Interests, Projects } from '../data'
+import { Users, HardSkill, SoftSkill, Studies, LaboralCareer, Interests, Projects, PortfolioInit, Cards } from '../data'
 
 
 import { HttpClient, HttpHeaders } from '@angular/common/http'  // Para ejecutar los metodos GET, PUT, POST, ETC
@@ -32,6 +32,17 @@ export class DataService {
     return this.USERID
   }
 
+  getPortFolioInit(): Observable<PortfolioInit> {
+    // console.log("url",`${this.apiURL}/PortfolioInit/?userId=${this.USERID}`)
+    // console.log(this.http.get<PortfolioInit>(`${this.apiURL}/PortfolioInit/?userId=${this.USERID}`))
+    return this.http.get<PortfolioInit>(`${this.apiURL}/PortfolioInit/?userId=${this.USERID}`)
+  }
+
+  getPortFolioCards(): Observable<Cards[]> {
+    
+    console.log(`${this.apiURL}/Cards/?userId=${this.USERID}`)
+    return this.http.get<Cards[]>(`${this.apiURL}/Cards/?userId=${this.USERID}`)
+  }
   // codigo que usa el servidor api para traer los datos de la DB
   alertDelete(modalData: any) {
     alert("Product with ID " + modalData.productId + " has been deleted.");

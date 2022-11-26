@@ -33,7 +33,8 @@ export class MainComponent implements OnInit {
 
   prueba$:UiService;
   
-  constructor( private miServicio: UiService,
+  constructor( 
+    private miServicio: UiService,
     private renderer: Renderer2,
 
     ) { }
@@ -43,6 +44,7 @@ export class MainComponent implements OnInit {
   ngOnInit(): void {
     this.detailCards = this.miServicio.getCards();
     this.statusCards = this.miServicio.getStatusCards()
+    
 
     // Separo los grupos
     this.CardsGroup1 = this.detailCards.filter(function (elem:any)

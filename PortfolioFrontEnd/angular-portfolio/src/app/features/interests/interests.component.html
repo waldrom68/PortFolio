@@ -36,15 +36,17 @@
 
         </tbody>
     </table>
-    {{showBtnAction}} -> showBtnAction
+
 </ng-container>
 
 <ng-container *ngIf="myData.length && (isAdmin && showBtnAction)">
     <span class="btn btn-default btn-sm" 
+    [ngStyle]="{'float':'right'}"
+
     (click)="toggleForm()"
     >
     <fa-icon
-        ngClass="fa-2x"
+        ngClass="fa-3x"
         [icon]="faPlusCircle"
 
         >

@@ -1,4 +1,5 @@
-import {Data, Formacion, HardSkill, SoftSkill, Intereses, WorkExperience, User, Cards} from './data'
+import {Data, Formacion, HardSkill, SoftSkill, Intereses, WorkExperience, User, Cards, DisplayPersonalData} from './data'
+
 import { PortfolioInit } from './data'
 
 export const USERS: User[] = [
@@ -116,79 +117,94 @@ export const INTERESES: Intereses[] = [
 
 
 export const CARDS: Cards[] = [
-
-    {
-        name: 'Perfil',
-        status:false,
-        group:1,
-        data: DATA.profile,
+        {
+        name: "Perfil",
+        status: false,
+        group: 1,
+        data: "",
         resume: "",
-        modelTemplate: "lista"
+        modelTemplate: "lista",
+        userId: 1
     },
     {
-        name: 'Objetivo',
-        status:false,
-        group:1,
-        data: DATA.objetive,
+        name: "MOCK Objetivo",
+        status: false,
+        group: 1,
+        data: "",
         resume: "",
-        modelTemplate: "lista"
+        modelTemplate: "lista",
+        userId: 1
     },
     {
-        name: 'Trayectoria',
-        status:false,
-        group:1,
-        data: WORKEXPERIENCE,
-        resume: "",
-        modelTemplate: "objeto"
+    name: "Trayectoria",
+    status: false,
+    group: 1,
+    data: [],
+    resume: "",
+    modelTemplate: "objeto",
+    userId: 1
     },
     {
-        name: 'Formación',
-        status:false,
-        group:1,
-        data: FORMACION,
-        resume: "card class Analista de Sistemas, MBA, Full-Stack",
-        modelTemplate: "lista"
+    name: "Formación",
+    status: false,
+    group: 1,
+    data: [],
+    resume: "Analista de Sistemas, MBA, Full-Stack",
+    modelTemplate: "lista",
+    userId: 1
     },
     {
-        name: 'Habilidades tecnicas',
-        status:false,
-        group:2,
-        data: HARDSKILL ,
-        resume: "card class Python, Django, JS, Java, Angular, SQL, CSS3, HTML",
-        modelTemplate: "lista"
+    name: "Habilidades tecnicas",
+    status: false,
+    group: 2,
+    data: [],
+    resume: "Python, Django, JS, Java, Angular, SQL, CSS3, HTML",
+    modelTemplate: "lista",
+    userId: 1
     },
     {
-        name: 'Habilidades personales',
-        status:false,
-        group:2,
-        data: SOFTSKILL ,
-        resume: "Persona integra",
-        modelTemplate: "lista"
+    name: "Habilidades personales",
+    status: false,
+    group: 2,
+    data: [],
+    resume: "Persona integra",
+    modelTemplate: "lista",
+    userId: 1
     },
     {
-        name: 'Proyectos',
-        status:false,
-        group:2,
-        data: [],
-        resume: "",
-        modelTemplate: "lista"
+    name: "Proyectos",
+    status: false,
+    group: 2,
+    data: [],
+    resume: "",
+    modelTemplate: "lista",
+    userId: 1
     },
     {
-        name: 'Intereses',
-        status:false,
-        group:2,
-        data: INTERESES,
-        resume: "",
-        modelTemplate: "lista"
+    name: "Intereses",
+    status: false,
+    group: 2,
+    data: [],
+    resume: "",
+    modelTemplate: "lista",
+    userId: 1
     }
-    
-  ]
+]
 
-  export const PORTFOLIOINIT: PortfolioInit = 
-    {
-        theme: 'Dark',
-        status:true,
-        userDefault: 1,
-    }
+export const PORTFOLIOINIT: PortfolioInit = 
+{
+    userId:1,
+    theme: "Dark",
+    status: true
+}
 
-  
+export const DISPLAYPERSONALDATA: DisplayPersonalData = 
+{
+    name: true,
+    last_name: true,
+    foto: true,
+    location: true,
+    profession: true,
+    since: true,
+    userId: 1
+}

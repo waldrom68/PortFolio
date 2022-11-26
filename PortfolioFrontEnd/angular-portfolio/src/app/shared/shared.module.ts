@@ -12,7 +12,7 @@ import { BtnDisplayComponent } from './btn-display/btn-display.component';
 
 @NgModule({
   declarations: [
-    MessageBoxComponent,
+    // MessageBoxComponent,
     BtnDisplayComponent,
 
 
@@ -22,7 +22,7 @@ import { BtnDisplayComponent } from './btn-display/btn-display.component';
     FontAwesomeModule
   ],
   exports: [
-    MessageBoxComponent,
+    // MessageBoxComponent,
     BtnDisplayComponent,
     FontAwesomeModule
 

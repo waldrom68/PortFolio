@@ -113,8 +113,11 @@
 - ng add @angular/material
 
 ## ERRORES 
-
-### NO LOGRO RENDERIZAR UN MULTILINEA QUE MANTENGA LOS PARRAFOR SEPARADOS (se resolvio usando .split() y manejandolo como un array)
+Eliminar carpeta node_modules
+Borrar archivo package-lock.json
+Limpiar cache con -> npm cache clean --force
+Reinstalar -> npm install
+### NO LOGRO RENDERIZAR UN MULTILINEA QUE MANTENGA LOS PARRAFOS SEPARADOS (se resolvio usando .split() y manejandolo como un array)
 
 
 // Último video completo de pildorasinformàticas:
@@ -128,7 +131,9 @@ https://fontawesome.com/icons
 ## PENDIENTES
 STRUC: En la estructura del proyecto, dicha estructura debiera replicarse en los submodulos de features. Actualmente dentro de features se cargan todos los componentes, habría que subdividirlo en sus dos partes/bloques de datos.
 
-- Estilos en linea a archivo externo
+- La configuracion inicial sigue levantando los valores de mock-data
+
+- Mover estilos en linea a archivo externo
 
 ## INVESTIGAR
 ### ngx-cacheable is becoming ts-cacheable
