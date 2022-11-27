@@ -28,11 +28,11 @@ export class ObjetiveComponent implements OnInit {
   }
 
   update(user: Users) {
-    this.dataService.updateGralData(user).subscribe()
-    
+   
     // Este codigo acualiza el array Users para que se actualice en 
     // el frontend, sin necesidad de recargar la pagina
     this.myData.objetive = ""
+    this.dataService.updateGralData(user).subscribe()
   }
 
 }

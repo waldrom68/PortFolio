@@ -1,11 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DataService } from 'src/app/service/data.service';
 
 import { faPen, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
-import {Interests} from '../../data'
+import {Cliente, Interests} from '../../data'
 // import {INTERESES} from '../../../mock-data'
 
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MessageBoxComponent } from '../../shared/message-box/message-box.component';
+import { ModalActionsService } from 'src/app/service/modal-actions.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-interests',
@@ -13,7 +17,8 @@ import {Interests} from '../../data'
   styleUrls: ['./interests.component.css']
 })
 export class InterestsComponent implements OnInit {
-  
+
+
   // PENDIENTE DEBE VINCULARSE CON EL LOGUEO
   isAdmin = true;
   
@@ -28,11 +33,17 @@ export class InterestsComponent implements OnInit {
   // ocultarAcciones: boolean = false;
   
   showBtnAction: boolean;  // flag para mostrar o no los btn's de acciones del usuario
-  // size = 2
  
  
+  itemParaBorrar: Interests;
+  flagBorrado: boolean = false;
+  flagBorrado$: Observable<boolean>;
+
+
   constructor( 
     private dataService: DataService,
+    public matDialog: MatDialog,
+    private modalService: ModalActionsService,
     ) {
       this.formData = { id:0, name:"", userId:0 }
      }
@@ -48,9 +59,19 @@ export class InterestsComponent implements OnInit {
       this.showBtnAction = false
     }
 
+    // subscribo y me entero si se cambia el estatus del flag  
+    this.flagBorrado$ = this.modalService.getFlagBorrado$();
+    this.flagBorrado$.subscribe( (tt)=> {
+      console.log(`Se acepto el borrado del item "${this.itemParaBorrar.name}"`);
+      this.myData = this.myData.filter( (t) => { return t.id !== this.itemParaBorrar.id } )
+    }
+    )
+
+
+
   }
 
-   
+
   toggleForm() {
     this.showForm = !this.showForm;
     // if (this.size == 8) {
@@ -59,18 +80,29 @@ export class InterestsComponent implements OnInit {
     this.showBtnAction = !this.showBtnAction
   }
 
-  deleteInterest(interest: Interests) {
+  // deleteInterest(interest: Interests ) {
+  //   console.log("emito orden de abrir el modal")
+  //   this.openDeleteModal(interest)
+  //   console.log("estoy despues de abrir el mmodal")
     // Este codigo acualiza el array Users para que se actualice en 
     // el frontend, sin necesidad de recargar la pagina
-     this.dataService.delInterests(interest).subscribe( (tt)=> {
-        // despues de ejecutarse el borrado de la DB, la quitamos del listado de myData
-        this.myData = this.myData.filter( (t) => { return t.id !== interest.id } )
-      }
-    );
-  }
+
+// PENDIENTE HA SIDO COMENTADO TRANSITORIAMENTE PARA VER EL FUNCIONAMIENTO DEL MESSAGE-BOX
+    //  this.dataService.delInterests(interest).subscribe( (tt)=> {
+    //     // despues de ejecutarse el borrado de la DB, la quitamos del listado de myData
+    //     this.myData = this.myData.filter( (t) => { return t.id !== interest.id } )
+    //   }
+    // );
+  // }
+
 
   cancelation(interest: Interests) {
     this.toggleForm();
+  }
+
+  deleteItem(interest: Interests){
+    this.itemParaBorrar = interest;
+    this.openDeleteModal(interest)
   }
 
   upDateInterest(interest: Interests) {
@@ -78,12 +110,41 @@ export class InterestsComponent implements OnInit {
   }
 
   addInterest(interest: Interests) {
-
     this.dataService.addInterests(interest).subscribe( (tt)=> {
         this.myData.push( tt );
         this.toggleForm();
       }
     );
- }
+  }
+
+  openDeleteModal(data:any) {
+    // Acciones definidas en el modal-action.service.ts
+    const userId = "user01";
+    const dialogConfig = new MatDialogConfig();
+    // The user can't close the dialog by clicking outside its body
+    dialogConfig.disableClose = true;
+    dialogConfig.id = "modal-component";
+    dialogConfig.height = "350px";
+    dialogConfig.width = "600px";
+    dialogConfig.data = {
+      // atributos generales del message-box
+      name: "delInterest",
+      title: `Hi ${userId}, está por eliminiar uno de los intereses ?`,
+      description: `Esto significa que será eliminado "${data.name}", y ya no se podrá acceder a sus datos, ¿está seguro?`,
+      // por defecto mostrararía Aceptar
+      actionButtonText: "Eliminar",
+      // por defecto mostraría Cancelar
+      cancelActionText: "",
+      // por defecto utilizará el definido en style.css "mat-dialog-container#modal-component"
+      backColor: "",
+
+      // atributos exclusivos para este message-box
+      data: data,
+    }
+
+    // https://material.angular.io/components/dialog/overview
+    const modalDialog = this.matDialog.open(MessageBoxComponent, dialogConfig);
+
+  }
 
 }

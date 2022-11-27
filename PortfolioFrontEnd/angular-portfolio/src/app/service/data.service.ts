@@ -28,13 +28,24 @@ export class DataService {
         private http: HttpClient
   ) { }
 
+  // codigo que se recibe desde un message-box service
+  alertDelete(modalData: any) {
+    alert("Product with ID " + modalData.productId + " has been deleted.");
+  }
+  alertLogout(modalData: any) {
+    alert("Are you sure you want to logout " + modalData.userId + "?");
+  }
+  alertInterest(modalData: any) {
+    console.log("Are you sure you want to del interest?");
+    console.log("y recibo este parametro", modalData)
+  }
+
+
   gerUserID() {
     return this.USERID
   }
 
   getPortFolioInit(): Observable<PortfolioInit> {
-    // console.log("url",`${this.apiURL}/PortfolioInit/?userId=${this.USERID}`)
-    // console.log(this.http.get<PortfolioInit>(`${this.apiURL}/PortfolioInit/?userId=${this.USERID}`))
     return this.http.get<PortfolioInit>(`${this.apiURL}/PortfolioInit/?userId=${this.USERID}`)
   }
 
@@ -42,10 +53,6 @@ export class DataService {
     
     console.log(`${this.apiURL}/Cards/?userId=${this.USERID}`)
     return this.http.get<Cards[]>(`${this.apiURL}/Cards/?userId=${this.USERID}`)
-  }
-  // codigo que usa el servidor api para traer los datos de la DB
-  alertDelete(modalData: any) {
-    alert("Product with ID " + modalData.productId + " has been deleted.");
   }
 
   getGralData(): Observable<Users> {
@@ -65,7 +72,6 @@ export class DataService {
     return this.http.get<HardSkill[]>(this.EndPoint )
   }
   delHardSkills(softskill:HardSkill): Observable<HardSkill>{
-    // Este codigo elimina de la DB al usuario
     const url = `${this.apiURL}/HardSkills/${softskill.id}`
     return this.http.delete<HardSkill>(url)
   }
@@ -76,7 +82,6 @@ export class DataService {
     return this.http.get<Interests[]>(this.EndPoint )
   }
   delInterests(interest:Interests): Observable<Interests>{
-    // Este codigo elimina de la DB al usuario
     const url = `${this.apiURL}/Interests/${interest.id}`
     return this.http.delete<Interests>(url)
   }
@@ -103,7 +108,6 @@ export class DataService {
     return this.http.get<Projects[]>(this.EndPoint )
   }
   delProjects(projects:Projects): Observable<Projects>{
-    // Este codigo elimina de la DB al usuario
     const url = `${this.apiURL}/Projects/${projects.id}`
     return this.http.delete<Projects>(url)
   }
@@ -114,7 +118,6 @@ export class DataService {
     return this.http.get<Studies[]>(this.EndPoint )
   }
   delStudies(studie:Studies): Observable<Studies>{
-    // Este codigo elimina de la DB al usuario
     const url = `${this.apiURL}/Studies/${studie.id}`
     return this.http.delete<Studies>(url)
   }
@@ -125,7 +128,6 @@ export class DataService {
     return this.http.get<LaboralCareer[]>(this.EndPoint )
   }
   delLaboralCareers(career:LaboralCareer): Observable<LaboralCareer>{
-    // Este codigo elimina de la DB al usuario
     const url = `${this.apiURL}/LaboralCareer/${career.id}`
     return this.http.delete<LaboralCareer>(url)
   }

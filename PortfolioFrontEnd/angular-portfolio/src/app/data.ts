@@ -139,3 +139,7 @@ export interface Users {
         userId:number,
         
     }
+
+    export interface Cliente {
+        status:boolean,
+    }

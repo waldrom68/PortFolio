@@ -1,5 +1,6 @@
 
 <ng-container *ngIf="myData.length">
+
     <table class="table table-sm table-dark text-left">
         <tbody>
             <tr>
@@ -9,9 +10,8 @@
                     [item]="item"
                     [isAdmin]="isAdmin"
                     [(showBtnAction)]="showBtnAction"
-                    
-                    
-                    (onDelete)="deleteInterest(item)"
+
+                    (onDelete)="deleteItem(item)"
                     >
                     
                 </app-interests-item>
@@ -36,7 +36,6 @@
 
         </tbody>
     </table>
-
 </ng-container>
 
 <ng-container *ngIf="myData.length && (isAdmin && showBtnAction)">
@@ -53,4 +52,5 @@
     </fa-icon>
     </span>
 </ng-container>
+
 

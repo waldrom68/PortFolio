@@ -25,6 +25,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
+
 import { MessageBoxComponent } from './shared/message-box/message-box.component';
 
 
@@ -58,6 +59,7 @@ const appRouters: Routes = [
     FeaturesModule,  // add the features module here
     UsersModule, 
     BrowserAnimationsModule,  // add the Users module here
+    
     MatButtonModule,
     MatDialogModule,
     MatToolbarModule,

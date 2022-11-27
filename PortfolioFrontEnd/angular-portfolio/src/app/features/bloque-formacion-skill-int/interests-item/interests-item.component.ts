@@ -42,7 +42,6 @@ export class InterestsItemComponent implements OnInit {
   color:string = 'red';
   
   changeStyle($event: Event){
-    console.log("hice un hover")
     this.color = $event.type == 'mouseover' ? 'yellow' : 'normal';
   }
 

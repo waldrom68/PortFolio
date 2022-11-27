@@ -1,15 +1,15 @@
 
 <div
     class="" 
-    id="exampleModal" 
+    id="modal-content-wrapper" 
     tabindex="-1" 
     role="dialog" 
-    [ngStyle]="{'background-color': 'showConfirmAction' ? backColor: 'red'}"
+    [ngStyle]="{'background-color': 'showConfirmAction' ? modalData.backColor: 'red'}"
 >
 
     <div class="modal-header">
       <h4 class="modal-title">
-        {{ title }}
+        {{ modalData.title }}
       </h4>
       <button type="button" class="close" aria-label="Close" 
         (click)="dismiss()"
@@ -18,18 +18,31 @@
       </button>
       </div>
       <div class="modal-body">
-        {{ message }}
+        {{ modalData.description }}
       </div>
       <div class="modal-footer">
           <button type="button" class="btn btn-danger" 
             (click)="decline()"
           >
-          {{ btnCancelText }}
+            <span *ngIf="modalData.cancelActionText else default">
+              {{  modalData.cancelActionText }}
+            </span>
+            <ng-template #default>
+                Cancelar
+            </ng-template>
           </button>
+
+
           <button type="button" class="btn btn-primary" 
             (click)="accept()"
           >
-          {{ btnOkText }}</button>
+            <span *ngIf="modalData.actionButtonText else default2">
+              {{  modalData.actionButtonText }}
+            </span>
+            <ng-template #default2>
+                Aceptar
+            </ng-template>
+          </button>
       </div>
 
 </div>

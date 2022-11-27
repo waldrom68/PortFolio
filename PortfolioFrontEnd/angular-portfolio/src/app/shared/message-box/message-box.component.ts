@@ -1,56 +1,51 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Cliente } from 'src/app/data';
+
+import { ModalActionsService } from '../../service/modal-actions.service';
 
 @Component({
   selector: 'app-message-box',
   templateUrl: './message-box.component.html',
   styleUrls: ['./message-box.component.css']
 })
-export class MessageBoxComponent implements OnInit {
-  // displayStyle = "block";
-  
-  @Input() title: string;
-  @Input() message: string;
-  @Input() btnOkText: string;
-  @Input() btnCancelText: string;
-  @Input() backColor: string;
 
-  @Output() onBtnClick = new EventEmitter();
+
+export class MessageBoxComponent implements OnInit {
   
-  
-  constructor() {
-    }
+  constructor(
+    public dialogRef: MatDialogRef<MessageBoxComponent>,
+    @Inject(MAT_DIALOG_DATA) public modalData: any,
+    private modalService: ModalActionsService,
+    ) { }
+
 
   ngOnInit() {
     console.log("iniciando el message-box")
   }
 
-   
-  openModal() {
-    // this.displayStyle = "block";
-    console.log("Abriendo el Modal")
-  }
+
   closeModal() {
-    // this.displayStyle = "none";
-    console.log("Cerrando el modal")
+    // Cierro el modal, no existen otras acciones para realizar;
+    this.dialogRef.close();
+  }
+
+  public accept() {
+    // Delego al servicio las acciones a seguir.
+    this.modalService.modalAction(this.modalData);
+    // Genero un cambio en el Flag del servicio, al ser observable, quien lo llamó se entera del cambio de estado
+    this.modalService.toggleFlagBorrado()
+    this.closeModal()
   }
 
   public decline() {
+    // Cerro el cuadro de dialogo;
     this.closeModal()
-    this.onBtnClick.emit(false);
   }
-  
-  public accept() {
-    this.closeModal()
-    this.onBtnClick.emit(true);
 
-  }
-  
   public dismiss() {
-
-    this.openModal()
-    this.onBtnClick.emit(false);
-
-
+    // Rechazó las acciones a seguir.
+    this.closeModal()
   }
 
  
