@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 
-import { Users, HardSkill, SoftSkill, Studies, LaboralCareer, Interests, Projects, PortfolioInit, Cards } from '../data'
-
+import { Users, HardSkill, SoftSkill, Studies, LaboralCareer, Interests, Projects, PortfolioInit, Cards, User } from '../data'
 
 import { HttpClient, HttpHeaders } from '@angular/common/http'  // Para ejecutar los metodos GET, PUT, POST, ETC
 
@@ -22,24 +21,26 @@ export class DataService {
 
   // PENDIENTE, vincular con el logging
   private USERID:number = 1; 
+  
+  private USER: Users;
+  private flagChangeUser: boolean = false;
+  private flagChangeUser$ = new Subject<boolean>();
+
+
 
   constructor(  
         // inicializamos el metodo http
         private http: HttpClient
   ) { }
 
-  // codigo que se recibe desde un message-box service
-  alertDelete(modalData: any) {
-    alert("Product with ID " + modalData.productId + " has been deleted.");
-  }
-  alertLogout(modalData: any) {
-    alert("Are you sure you want to logout " + modalData.userId + "?");
-  }
-  alertInterest(modalData: any) {
-    console.log("Are you sure you want to del interest?");
-    console.log("y recibo este parametro", modalData)
+  changeUser() {
+    this.flagChangeUser = !this.flagChangeUser;
+    this.flagChangeUser$.next( this.flagChangeUser);
   }
 
+  getFlagChangeUser$(): Observable<boolean> {
+    return this.flagChangeUser$.asObservable();
+  }
 
   gerUserID() {
     return this.USERID

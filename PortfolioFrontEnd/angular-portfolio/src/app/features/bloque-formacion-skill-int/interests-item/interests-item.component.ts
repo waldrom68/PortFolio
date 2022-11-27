@@ -42,7 +42,7 @@ export class InterestsItemComponent implements OnInit {
   color:string = 'red';
   
   changeStyle($event: Event){
-    this.color = $event.type == 'mouseover' ? 'yellow' : 'normal';
+    this.color = $event.type == 'mouseover' ? 'resaltado' : 'normal';
   }
 
   toggleForm(interest: Interests) {

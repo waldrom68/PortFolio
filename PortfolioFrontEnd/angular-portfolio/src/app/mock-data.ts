@@ -118,6 +118,7 @@ export const INTERESES: Intereses[] = [
 
 export const CARDS: Cards[] = [
         {
+        id:1,
         name: "Perfil",
         status: false,
         group: 1,
@@ -127,6 +128,7 @@ export const CARDS: Cards[] = [
         userId: 1
     },
     {
+        id:2,
         name: "MOCK Objetivo",
         status: false,
         group: 1,
@@ -136,6 +138,7 @@ export const CARDS: Cards[] = [
         userId: 1
     },
     {
+    id:3,
     name: "Trayectoria",
     status: false,
     group: 1,
@@ -145,6 +148,7 @@ export const CARDS: Cards[] = [
     userId: 1
     },
     {
+        id:4,
     name: "Formación",
     status: false,
     group: 1,
@@ -154,6 +158,7 @@ export const CARDS: Cards[] = [
     userId: 1
     },
     {
+        id:5,
     name: "Habilidades tecnicas",
     status: false,
     group: 2,
@@ -163,6 +168,7 @@ export const CARDS: Cards[] = [
     userId: 1
     },
     {
+        id:6,
     name: "Habilidades personales",
     status: false,
     group: 2,
@@ -172,6 +178,7 @@ export const CARDS: Cards[] = [
     userId: 1
     },
     {
+        id:7,
     name: "Proyectos",
     status: false,
     group: 2,
@@ -181,6 +188,7 @@ export const CARDS: Cards[] = [
     userId: 1
     },
     {
+        id:8,
     name: "Intereses",
     status: false,
     group: 2,
@@ -193,13 +201,15 @@ export const CARDS: Cards[] = [
 
 export const PORTFOLIOINIT: PortfolioInit = 
 {
-    userId:1,
+    id:1,
     theme: "Dark",
-    status: true
+    status: true,
+    userId:1,
 }
 
 export const DISPLAYPERSONALDATA: DisplayPersonalData = 
 {
+    id:1,
     name: true,
     last_name: true,
     foto: true,

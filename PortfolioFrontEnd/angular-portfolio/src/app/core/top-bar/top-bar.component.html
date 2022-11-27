@@ -1,11 +1,25 @@
 <!-- componente, mobile menu -->
 <section id="menu" class="pos-f-t">
   <div class="collapse" id="navbarToggleExternalContent">
+    <h6 
+       [ngStyle] = "{'color':'blue','font-weight':'bolder', 'margin':'0 1em', 'float':'right'}"
+    >
+    Usuario autenticado -> {{flagUserAdmin}}</h6>
+
+    
     <div class="bg-dark p-4">
       <h4 class="text-white">User logging</h4>
-      <span class="text-muted">Ingresar como administrador</span>
+      <!-- <span class="text-muted btn" -->
+      <button class="btn btn-primary btn-sm"
+      (click)="loggin()"
+        >
+        Ingresar como administrador
+        
+      </button>
     </div>
   </div>
+
+
   <nav class="navbar navbar-dark bg-dark justify-content-end">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>

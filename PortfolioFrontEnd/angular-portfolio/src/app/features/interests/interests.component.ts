@@ -3,7 +3,7 @@ import { DataService } from 'src/app/service/data.service';
 
 import { faPen, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
-import {Cliente, Interests} from '../../data'
+import { Interests } from '../../data'
 // import {INTERESES} from '../../../mock-data'
 
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
@@ -19,9 +19,10 @@ import { Observable } from 'rxjs';
 export class InterestsComponent implements OnInit {
 
 
-  // PENDIENTE DEBE VINCULARSE CON EL LOGUEO
-  isAdmin = true;
-  
+  // PENDIENTE: SERVICIO QUE DEBE VINCULARSE CON EL LOGUEO
+    flagUserAdmin: boolean = false;
+    flagUserAdmin$: Observable<boolean>;
+
   // intereses: Intereses[] = INTERESES;
   myData: Interests[] = [];
   formData: Interests;  // instancia vacia, para cuando se solicite un alta
@@ -32,16 +33,16 @@ export class InterestsComponent implements OnInit {
   showForm: boolean = false;  // flag para mostrar o no el formulario
   // ocultarAcciones: boolean = false;
   
-  showBtnAction: boolean;  // flag para mostrar o no los btn's de acciones del usuario
- 
+  showBtnAction: boolean= true;  // flag para mostrar o no los btn's de acciones del usuario
  
   itemParaBorrar: Interests;
   flagBorrado: boolean = false;
   flagBorrado$: Observable<boolean>;
 
-
+ 
   constructor( 
     private dataService: DataService,
+    
     public matDialog: MatDialog,
     private modalService: ModalActionsService,
     ) {
@@ -53,11 +54,11 @@ export class InterestsComponent implements OnInit {
       [this.myData = interest]
     );
 
-    if (this.isAdmin) {
-      this.showBtnAction = true 
-    } else {
-      this.showBtnAction = false
-    }
+    // if (this.flagUserAdmin) {
+    //   this.showBtnAction = true 
+    // } else {
+    //   this.showBtnAction = false
+    // }
 
     // subscribo y me entero si se cambia el estatus del flag  
     this.flagBorrado$ = this.modalService.getFlagBorrado$();
@@ -67,6 +68,8 @@ export class InterestsComponent implements OnInit {
     }
     )
 
+    this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();
+    this.flagUserAdmin$.subscribe(  flagUserAdmin => this.flagUserAdmin = flagUserAdmin)
 
 
   }
@@ -74,9 +77,6 @@ export class InterestsComponent implements OnInit {
 
   toggleForm() {
     this.showForm = !this.showForm;
-    // if (this.size == 8) {
-    //   this.size = 2
-    // } else { this.size = 8;}
     this.showBtnAction = !this.showBtnAction
   }
 

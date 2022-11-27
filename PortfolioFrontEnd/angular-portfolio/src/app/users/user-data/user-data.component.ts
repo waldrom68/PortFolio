@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs';  // idem
 
 import { UserService } from '../../service/user.service';  // para traer los datos de la db.json
 
-import { faTimes, faUserSecret } from '@fortawesome/free-solid-svg-icons';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 import { User } from '../../data'
 
@@ -31,9 +31,6 @@ export class UserDataComponent implements OnInit {
   isAdmin = true;
   UserData: User
 
-  prueba$: boolean = false;
-
-  // @Input() user:Users
   constructor(
     // Inicializamos los servicios del modulo User
       private userService: UserService, 

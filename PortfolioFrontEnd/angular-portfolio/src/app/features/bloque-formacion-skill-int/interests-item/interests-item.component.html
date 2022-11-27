@@ -1,39 +1,38 @@
 
 <ng-container *ngIf="!showForm"
-
+    
 >
-            <td
-            
-            
-            >{{showBtnAction}}</td>
-            <td style="width:80%;"
+    <div class="container row"
+    [ngClass]="color" (mouseover)="changeStyle($event)" (mouseout)="changeStyle($event)"
+    >
+            <div class="col-8"
             >
             <!-- (dblclick)="toggleForm(item);" -->
-                <span [ngClass]="color" (mouseover)="changeStyle($event)" (mouseout)="changeStyle($event)"
+                <span 
                 >{{item.name}}  </span>
-            </td>
-            
-            <td *ngIf="isAdmin && showBtnAction"
-                class="btn btn-outline-secondary btn-sm"
-                (click)="toggleForm(item);"
+            </div>
+            <div class="col-4"
+             *ngIf="isAdmin && showBtnAction"
+             [ngStyle] = "{'display':'flex'}"
             >
                 <fa-icon 
                     [icon]="faPen"
                     [ngStyle] = "{'color':'green','margin':'0px 1em'}"
+                    class="btn btn-outline-secondary btn-sm"
+                (click)="toggleForm(item);"
                 >
                 </fa-icon>
-            </td>
-    
-            <td *ngIf="isAdmin && showBtnAction"
-                class="btn btn-outline-secondary btn-sm"
-                (click)="delete(item)" 
-            >
+
                 <fa-icon 
                     [icon]="faTrash"
                     [ngStyle] = "{'color':'red','margin':'0px 1em'}"
+                    class="btn btn-outline-secondary btn-sm"
+                (click)="delete(item)"
                 >
                 </fa-icon>
-            </td>
+
+        </div>
+    </div>
 </ng-container >
 
 <app-interests-form

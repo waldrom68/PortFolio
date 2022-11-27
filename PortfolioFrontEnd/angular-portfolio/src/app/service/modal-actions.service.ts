@@ -1,6 +1,5 @@
 import { Injectable, Output } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { Cliente } from '../data';
 
 import { DataService } from '../service/data.service'
 
@@ -23,8 +22,8 @@ export class ModalActionsService {
   toggleFlagBorrado() {
     this.flagBorrado = true;
     this.flagBorrado$.next(this.flagBorrado);
-
   }
+  
   // getter del flag de seguimiento de la opcion elegida
   getFlagBorrado$(): Observable<boolean> {
     return this.flagBorrado$.asObservable();
@@ -33,13 +32,6 @@ export class ModalActionsService {
 
   modalAction(modalData: any) {
     switch (modalData.name) {
-      case "logout":
-        this.logout(modalData);
-        break;
-      
-      case "deleteProduct":
-        this.deleteProduct(modalData);
-        break;
 
       case "delInterest":
         this.deleteInterest(modalData);
@@ -52,16 +44,6 @@ export class ModalActionsService {
     }
   }
 
-
-   private logout(modalData: any) {
-    // Llamada al metodo de data.service.ts
-    this.dataservice.alertLogout(modalData);
-  }
-
-  private deleteProduct(modalData: any) {
-    // Llamada al metodo de data.service.ts
-    this.dataservice.alertDelete(modalData)
-  }
 
   private deleteInterest(modalData: any) {
     // Llamada al metodo de data.service.ts

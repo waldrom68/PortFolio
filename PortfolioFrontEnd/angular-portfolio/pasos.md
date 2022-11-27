@@ -133,7 +133,13 @@ STRUC: En la estructura del proyecto, dicha estructura debiera replicarse en los
 
 - La configuracion inicial sigue levantando los valores de mock-data
 
+- El isAdmin (el flag que habilita la edicion) sigue siendo una variable que se declara en cada componente, debiera estar en el servicio de data-service, logging-service o user-service
+
 - Mover estilos en linea a archivo externo
+
+- Agregar estilos para los fa-icon, tenemos los de linea como editar-confirmar eliminar-cancelar y los fa-icon de acciones como add(), close() los cuales deben tener un tamaño mayor.
+
+- Usar como observable los toggleCards, actualmente lo manejo con @Input() y @Output()
 
 ## INVESTIGAR
 ### ngx-cacheable is becoming ts-cacheable

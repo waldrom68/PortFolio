@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Cliente } from 'src/app/data';
+
 
 import { ModalActionsService } from '../../service/modal-actions.service';
 

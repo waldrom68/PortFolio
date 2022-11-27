@@ -114,6 +114,7 @@ export interface Users {
     }
 
     export interface Cards {
+        id: number,
         name: string,
         status:boolean,
         group: number,
@@ -124,12 +125,14 @@ export interface Users {
     }
     
     export interface PortfolioInit {
+        id: number,
         userId:number,
         theme: string,
         status:boolean,
     }
 
     export interface DisplayPersonalData {
+        id: number,
         name: boolean,
         last_name: boolean,
         foto: boolean,
@@ -138,8 +141,4 @@ export interface Users {
         since: boolean,
         userId:number,
         
-    }
-
-    export interface Cliente {
-        status:boolean,
     }
