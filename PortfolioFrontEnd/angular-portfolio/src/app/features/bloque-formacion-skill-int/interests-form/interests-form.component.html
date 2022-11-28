@@ -1,40 +1,33 @@
 
   <form class="form-inline"
+    style="display: flex ; width:90% "
     [formGroup]="form"
+
     #myForm="ngForm"
     (ngSubmit)="onEnviar($event); myForm.resetForm()"
   >
-    <div style="display: flex ; width:100% ">
+    <div class="col" style="display: flex ; width:100% ">
       <input type="text" formControlName="name" name="name" class="input-data"
-      [ngStyle]="{'width':'90%'}"
+      [ngStyle]="{'width':'100%'}"
       formControlName="name"
       [ngClass] = "{error: (Nombre.invalid && Nombre.touched)}"
-      
       >
 
-      <div class="col">
+      <div class="col-4 icon-group"
+      >
+
         <button type="submit" class="btn btn-outline-success btn-sm"
-            ngClass="faConfirm"
-             [disabled]="!form.valid"
+        ngClass="faConfirm fa-ico"
+        [disabled]="!form.valid"
         >
-          <fa-icon 
-            [icon]="faCheck"
-            >
-          </fa-icon>
+          <fa-icon  [icon]="faCheck"> </fa-icon>
         </button>
 
-      </div>
-
-      <div class="col"
+        <button class="btn btn-outline-danger btn-sm"
         (click)="onCancel($event); myForm.resetForm()"
-      >
-        <button class="btn btn-outline-success btn-sm"
-        ngClass="faCancel"
+        ngClass="faCancel fa-ico"
         >
-        <fa-icon 
-        [icon]="faTimes"
-            >
-          </fa-icon>
+          <fa-icon [icon]="faTimes"> </fa-icon>
         </button>
 
       </div>

@@ -2,7 +2,8 @@
 <ng-container *ngIf="detailCards; else statusWait">
 
     <div class="row text-center aling-self-center py-0" id="Init">
-        <div class="col-sm-8 aling-self-center order-0">
+        <div class="col-sm-8 aling-self-center order-0"
+        >
 
             <ng-container *ngIf="statusCards">
                 <section id="" class="row p-0 m-0 justify-content-center">
@@ -26,68 +27,72 @@
 
             <!-- zona para mostrar los detalles de cada Card -->
             <ng-container *ngIf = "statusCards == false">
-                <div>
-                    <a (click)="toggleCards()"
-                        ngClass='faClose'
+                <div class="flex">
+                    <button class="btn btn-default btn-sm" 
+                    ngClass='faControl faClose'
+
+                    (click)="toggleCards()"
                     >
                         <fa-icon 
                             [icon]="faTimes"
                             ngClass="faClose fa-2x"
                             >
                         </fa-icon>
-                    </a>
-
-                    <div 
-                        *ngFor="let card of detailCards"
+                    </button>
+                </div>
+                <div 
+                    *ngFor="let card of detailCards"
+                    ngClass="mx-auto"
+                >
+                    <ng-container *ngIf="card.status"
+                        
+                        [ngSwitch]="card.name"
+                        style="border: 1px solid"
                     >
-                        <ng-container *ngIf="card.status"
-                            [ngSwitch]="card.name"
-                            style="border: 1px solid"
-                        >
-                            <!-- <app-stout-item    *ngSwitchCase="'stout'"    [item]="currentItem"></app-stout-item> -->
-                            <div *ngSwitchCase="'Perfil'">Mostrar detalle de Perfil
-                                <app-profile></app-profile>
 
-                            </div>
-                            <div *ngSwitchCase="'MOCK Objetivo'">Mostrar detalle de Objetivo
-                                <app-objetive></app-objetive>
-                            </div>
-                            <div *ngSwitchCase="'Trayectoria'">Mostrar detalle de Trayectoria
-                                <app-datos-trayectoria></app-datos-trayectoria>
-                            </div>
-                            <div *ngSwitchCase="'Formación'">Mostrar detalle de Formación
-                                <app-datos-formacion>
-                            
-                                </app-datos-formacion>
-                            </div>
+                        <!-- <app-stout-item    *ngSwitchCase="'stout'"    [item]="currentItem"></app-stout-item> -->
+                        <div *ngSwitchCase="'Perfil'">Mostrar detalle de Perfil
+                            <app-profile></app-profile>
+
+                        </div>
+                        <div *ngSwitchCase="'MOCK Objetivo'">Mostrar detalle de Objetivo
+                            <app-objetive></app-objetive>
+                        </div>
+                        <div *ngSwitchCase="'Trayectoria'">Mostrar detalle de Trayectoria
+                            <app-datos-trayectoria></app-datos-trayectoria>
+                        </div>
+                        <div *ngSwitchCase="'Formación'">Mostrar detalle de Formación
+                            <app-datos-formacion>
+                        
+                            </app-datos-formacion>
+                        </div>
 
 
 
-                            <div *ngSwitchCase="'Habilidades personales'">Muestra las habilidades personales de la base de datos, habilitado el delete
-                                <hr>
-                                <app-soft-skills></app-soft-skills>
-                            </div>
-                            <div *ngSwitchCase="'Habilidades tecnicas'">Muestra las Habilidades tecnicas de la base de datos, habilitado el delete
-                                <br>
-                                <app-hard-skills></app-hard-skills>
-                            </div>
-                            <div *ngSwitchCase="'Proyectos'">Muestra los proyectos de la base de datos, habilitado el delete
-                                <hr>
-                                <app-projects></app-projects>
+                        <div *ngSwitchCase="'Habilidades personales'">Muestra las habilidades personales de la base de datos, habilitado el delete
+                            <hr>
+                            <app-soft-skills></app-soft-skills>
+                        </div>
+                        <div *ngSwitchCase="'Habilidades tecnicas'">Muestra las Habilidades tecnicas de la base de datos, habilitado el delete
+                            <br>
+                            <app-hard-skills></app-hard-skills>
+                        </div>
+                        <div *ngSwitchCase="'Proyectos'">Muestra los proyectos de la base de datos, habilitado el delete
+                            <hr>
+                            <app-projects></app-projects>
 
-                            </div>
-                            <div *ngSwitchCase="'Intereses'">Muestra los intereses de la base de datos, habilitado el delete
-                                <hr>
-                                <app-interests></app-interests>
+                        </div>
+                        <div *ngSwitchCase="'Intereses'"
+                            ngClass="basic-container"
+                        > <h3>{{card.name}}</h3>
+                            <hr>
+                            <app-interests></app-interests>
 
-                            </div>
+                        </div>
 
-                            <p *ngSwitchDefault>Tarjeta no encontrada</p>
+                        <p *ngSwitchDefault>Tarjeta no encontrada</p>
 
-                        </ng-container>
-                    </div>
-
-
+                    </ng-container>
                 </div>
             </ng-container>
         </div>

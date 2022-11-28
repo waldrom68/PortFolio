@@ -33,6 +33,10 @@ export class DataService {
         private http: HttpClient
   ) { }
 
+  getFlagUserAdmin() {
+    return this.flagChangeUser
+  }
+  
   changeUser() {
     this.flagChangeUser = !this.flagChangeUser;
     this.flagChangeUser$.next( this.flagChangeUser);
@@ -41,6 +45,8 @@ export class DataService {
   getFlagChangeUser$(): Observable<boolean> {
     return this.flagChangeUser$.asObservable();
   }
+
+
 
   gerUserID() {
     return this.USERID

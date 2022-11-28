@@ -31,7 +31,6 @@ export class TopBarComponent implements OnInit {
   
   loggin() {
     this.dataService.changeUser();
-    
   }
 
 }

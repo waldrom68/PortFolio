@@ -2,6 +2,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { faCheck, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { Observable } from 'rxjs';
+import { DataService } from 'src/app/service/data.service';
 
 import { Interests } from '../../../data';
 
@@ -11,6 +13,10 @@ import { Interests } from '../../../data';
   styleUrls: ['./interests-form.component.css']
 })
 export class InterestsFormComponent implements OnInit {
+  // PENDIENTE: SERVICIO QUE DEBE VINCULARSE CON EL LOGUEO
+  flagUserAdmin: boolean = false;
+  flagUserAdmin$: Observable<boolean>;
+
   @Input() formData: Interests;
 
   @Output() onUpdate: EventEmitter<Interests> = new EventEmitter()
@@ -21,7 +27,9 @@ export class InterestsFormComponent implements OnInit {
 
   form: FormGroup;
 
-  constructor( private formBuilder: FormBuilder, ) { 
+  constructor( 
+    private formBuilder: FormBuilder,
+    private dataService: DataService, ) { 
     
   }
 
@@ -29,7 +37,11 @@ export class InterestsFormComponent implements OnInit {
     this.form = this.formBuilder.group({
       name:[this.formData.name, [Validators.required,
         Validators.minLength(5) ]],
-    })
+    });
+    this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();
+    this.flagUserAdmin$.subscribe(  flagUserAdmin => this.flagUserAdmin = flagUserAdmin)
+    this.flagUserAdmin = this.dataService.getFlagUserAdmin()
+
   }
 
   get Nombre(): any {
@@ -41,17 +53,26 @@ export class InterestsFormComponent implements OnInit {
   }
   onEnviar(event: Event, ) {
     event.preventDefault;
-    if (this.form.valid) {
+    // Si deja de estar logueado, no registro lo que haya modificado y cierro form.
+    if (!this.flagUserAdmin) {
 
-      this.formData.name = this.form.get("name")?.value
-      this.onUpdate.emit(this.formData)
+      this.cancel.emit();
 
     } else {
       
-      console.log("no es valido el valor ingresado")
-      this.form.markAllAsTouched();
-
+      if (this.form.valid) {
+  
+        this.formData.name = this.form.get("name")?.value
+        this.onUpdate.emit(this.formData)
+  
+      } else {
+        
+        console.log("no es valido el valor ingresado")
+        this.form.markAllAsTouched();
+  
+      }
     }
+
   }
 
   onCancel(event: Event, ) {

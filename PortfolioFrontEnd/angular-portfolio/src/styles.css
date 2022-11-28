@@ -20,7 +20,6 @@ html, body { height: 100%; }
 
 body {
     font-family: var(--body-font-family);
-
     background-image: linear-gradient(90deg, var(--metaldark-shadow) 0%, var(--metallight-shadow) 25%, var(--metal) 50%, var(--metallight-shadow) 75%, var(--metaldark-shadow) 100% ) !important;
 }
 
@@ -31,11 +30,33 @@ mat-dialog-container#modal-component {
     color: white;
 }
 
+.init {
 
-.faClose {
-    float:right;
-    border-radius: 5px;
 }
+
+.basic-container {
+    background-color: gainsboro;
+    border-radius: 5px;
+    box-shadow: 5px 5px 5px darkslategray;
+
+    margin: 0.5em;
+    padding: 0.5em;
+}
+
+.icon-group {
+    display: flex;
+}
+button.fa-ico {
+    margin: 0px 1em;
+}
+
+.faControl {
+    display:block;
+    float: right;
+    padding: 5px 1em;
+    /* margin-right: 1em; */
+    }
+
 .faClose > svg {
         padding: 0px 5px;
         color: var(--danger);
@@ -46,13 +67,13 @@ mat-dialog-container#modal-component {
         background-color: var(--danger);
     }
     
+
+
 .faCancel{
-    float:right;
+    display:flex;
     padding: 0px 1em;
     border-radius: 5px;
-    }
-    .faCancel:hover {
-        background-color: var(--danger);
+    align-items: center;
     }
     .faCancel > svg {
         padding: 0px 5px;
@@ -64,9 +85,10 @@ mat-dialog-container#modal-component {
     }
 
 .faConfirm{
-    float:right;
+    display:flex;
     padding: 0px 1em;
     border-radius: 5px;
+    align-items: center;
     }
     .faConfirm > svg {
         padding: 0px 5px;
@@ -76,5 +98,4 @@ mat-dialog-container#modal-component {
         padding: 0px 5px;
         color:white;
     }
-
 

@@ -1,12 +1,9 @@
 
 <ng-container *ngIf="myData.length">
-
-    <div class="table-dark text-left">
+    <div class="table-dark text-left container" >
                 <app-interests-item
                     *ngFor="let item of myData"
-                    [ngStyle]="{'display':'flex','margin':'auto'}"
                     [item]="item"
-                    [isAdmin]="flagUserAdmin"
                     
                     (onDelete)="deleteItem(item)"
                     [(showBtnAction)]="showBtnAction"
@@ -17,7 +14,6 @@
 
                 <app-interests-form
                     *ngIf="showForm && flagUserAdmin"
-                    [ngStyle]="{'width':'100%'}"
 
                     [formData]="formData"
 
@@ -31,9 +27,8 @@
 </ng-container>
 
 <ng-container *ngIf="myData.length && (flagUserAdmin && showBtnAction)">
-    <span class="btn btn-default btn-sm" 
-    [ngStyle]="{'float':'right'}"
-
+    <button class="btn btn-default btn-sm" 
+    ngClass="faControl fa-ico"
     (click)="toggleForm()"
     >
     <fa-icon
@@ -42,7 +37,7 @@
 
         >
     </fa-icon>
-    </span>
+    </button>
 </ng-container>
 
 

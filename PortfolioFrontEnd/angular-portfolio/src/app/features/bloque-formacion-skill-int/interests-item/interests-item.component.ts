@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 import { faTrash, faPen, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { Observable } from 'rxjs';
 import { DataService } from 'src/app/service/data.service';
 
 import { Interests } from '../../../data'
@@ -12,11 +13,13 @@ import { Interests } from '../../../data'
   styleUrls: ['./interests-item.component.css']
 })
 export class InterestsItemComponent implements OnInit {
+  // PENDIENTE: SERVICIO QUE DEBE VINCULARSE CON EL LOGUEO
+  flagUserAdmin: boolean = false;
+  flagUserAdmin$: Observable<boolean>;
+
+
+
   @Input() item: Interests;
-
-
-  // PENDIENTE vincular con el logueo
-  @Input() isAdmin: boolean;
 
   @Input() showBtnAction!: boolean;
   @Output() showBtnActionChange = new EventEmitter<boolean>();
@@ -37,6 +40,11 @@ export class InterestsItemComponent implements OnInit {
   constructor( private dataService: DataService, ) { }
 
   ngOnInit(): void {
+ 
+    this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();
+    this.flagUserAdmin$.subscribe(  flagUserAdmin => this.flagUserAdmin = flagUserAdmin)
+    this.flagUserAdmin = this.dataService.getFlagUserAdmin()
+
   }
 
   color:string = 'red';
@@ -56,7 +64,7 @@ export class InterestsItemComponent implements OnInit {
 
   delete(interest: Interests) {
     // llamo al metodo del padre via emit()
-    if (this.isAdmin) {
+    if (this.flagUserAdmin) {
       this.onDelete.emit(interest);
     }
 
