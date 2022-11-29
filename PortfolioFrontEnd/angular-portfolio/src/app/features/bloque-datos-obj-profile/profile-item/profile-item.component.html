@@ -1,10 +1,10 @@
 <span style="background-color:gainsboro">
-  {{item.profile}}
-  <ng-container *ngIf="isAdmin">
+  {{myData.profile}}
+  <ng-container *ngIf="flagUserAdmin">
     <fa-icon 
       [icon]="faTimes"
       [ngStyle] = "{'color':'red','font-weight':'bolder', 'margin':'0 5px'}"
-      (click)="onDelete(item)"
+      (click)="onDelete(myData)"
       >
     </fa-icon>
     <fa-icon 
@@ -15,3 +15,32 @@
 </ng-container>
 </span>
 <br>
+
+
+
+<ng-container *ngIf="myData.profile.length">
+  <div class="table-dark text-left container" >
+                  [item]="item"
+                  
+                  (onDelete)="onDelete(myData)"
+                  [(showBtnAction)]="showBtnAction"
+                  >
+
+
+      </div>
+                  <!-- [showForm]="showForm" -->
+</ng-container>
+
+<ng-container *ngIf="myData.profile.length == 0 ">
+  <button class="btn btn-default btn-sm" 
+  ngClass="faControl fa-ico"
+  (click)="toggleForm()"
+  >
+  <fa-icon
+      ngClass="fa-3x"
+      [icon]="faPlusCircle"
+
+      >
+  </fa-icon>
+  </button>
+</ng-container>

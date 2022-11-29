@@ -33,11 +33,16 @@ export class ModalActionsService {
   modalAction(modalData: any) {
     switch (modalData.name) {
 
+      case "delProfile":
+        modalData.data.profile = ""
+        this.updateData(modalData)
+        break;
+
       case "delInterest":
         this.deleteInterest(modalData);
         break;
       
-        
+      
       default:
         console.log("ALERTA: en modalAction, No se ha encontrado modalData.name")
         break;
@@ -50,4 +55,8 @@ export class ModalActionsService {
     this.dataservice.delInterests(modalData.data).subscribe( )
   }
 
+  private updateData(modalData: any) {
+    console.log(modalData.data)
+    this.dataservice.updateGralData(modalData.data).subscribe()
+  }
 }

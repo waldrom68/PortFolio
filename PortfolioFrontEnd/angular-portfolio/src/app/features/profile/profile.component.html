@@ -1,12 +1,108 @@
 
-<ng-container *ngIf="myData">
+<div *ngIf="myData">
 
-    <app-profile-item 
-        [item]="myData"
-        [isAdmin]="isAdmin"
-        (delete)="delete(myData)"
+    <ng-container *ngIf="myData.profile.length; else agregarProfile">
+        <div class="table-dark text-left container" >
+
+            <ng-container *ngIf="!showForm; else mostrarForm">
+                <p *ngFor="let item of myData.profile.split('\n')">
+                    {{item}}
+                </p>
+
+            </ng-container>
+        </div>
+        
+    </ng-container>
+
+    <div class="col-4 icon-group"
+        *ngIf="flagUserAdmin && showBtnAction && myData.profile.length != 0"
+    >
+        <button class="btn btn-outline-success btn-sm"
+        (click)="toggleForm();"
+            ngClass="faConfirm fa-ico">
+            <fa-icon 
+                [icon]="faPen"
+                
+            >
+        </fa-icon>
+    </button>
+    <button class="btn btn-outline-danger btn-sm"
+            (click)="onDelete(myData)"
+            ngClass="faCancel"
+            >
+            <fa-icon 
+            [icon]="faTrash"
+            >
+        </fa-icon>
+    </button>
+</div>
+
+</div>
+
+<ng-template #mostrarForm >
+    <form class="form-inline my-2 py-2"
+        [formGroup]="form"
+
+        #myForm="ngForm"
+        (ngSubmit)="onEnviar($event);"
     >
 
-    </app-profile-item>
+        <textarea rows="12" 
+            class="input-data"
+            name="profile" 
+            [ngModel]="myData.profile"
+            
+            [ngStyle]="{'width':'100%'}"
+            formControlName="profile"
+            [ngClass] = "{error: (Profile.invalid && Profile.touched)}"
+        > </textarea>
 
-</ng-container>
+        <div class="icon-group my-2">
+
+            <button type="submit" class="btn btn-outline-success btn-sm"
+            ngClass="faConfirm fa-ico"
+            [disabled]="!form.valid"
+            >
+            <fa-icon  [icon]="faCheck"> </fa-icon>
+            </button>
+
+            <button class="btn btn-outline-danger btn-sm"
+            (click)="onCancel();"
+            ngClass="faCancel fa-ico"
+            >
+            <fa-icon [icon]="faTimes"> </fa-icon>
+            </button>
+
+        </div>
+
+    </form>
+    <small class="mensajeError"
+      *ngIf="form.hasError('minlength', 'profile')"> Minimo {{ Profile.errors.minlength.requiredLength }} caracteres
+    </small>
+
+ 
+</ng-template>
+
+
+<ng-template #agregarProfile>
+    <div class="table-dark text-left container"  >
+        <p> Sin registrar el perfil.
+        </p>
+    </div>
+    <br>
+    <button class="btn btn-default btn-sm" 
+    ngClass="faControl fa-ico"
+    (click)="onAgregarProfile()"
+    >
+    <fa-icon
+    ngClass="fa-3x"
+        [icon]="faPlusCircle"
+        
+        >
+    </fa-icon>
+</button>
+</ng-template>
+
+
+
+
