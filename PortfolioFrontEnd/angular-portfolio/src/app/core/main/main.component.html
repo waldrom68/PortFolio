@@ -4,7 +4,7 @@
     <div class="row text-center aling-self-center py-0" id="Init">
         <div class="col-sm-8 aling-self-center order-0"
         >
-
+            <!-- area que muestra las cards -->
             <ng-container *ngIf="statusCards">
                 <section id="" class="row p-0 m-0 justify-content-center">
                     <p class="h4 text-center">{{labelGroup1}}</p>
@@ -51,17 +51,25 @@
                     >
 
                         <!-- <app-stout-item    *ngSwitchCase="'stout'"    [item]="currentItem"></app-stout-item> -->
-                        <div *ngSwitchCase="'Perfil'">Mostrar detalle de Perfil
+                        <div *ngSwitchCase="'Perfil'"
+                            ngClass="basic-container"
+                        > <h3>{{card.name}}</h3>
                             <app-profile></app-profile>
 
                         </div>
-                        <div *ngSwitchCase="'MOCK Objetivo'">Mostrar detalle de Objetivo
+                        <div *ngSwitchCase="'MOCK Objetivo'"
+                            ngClass="basic-container"
+                        >Mostrar detalle de Objetivo
                             <app-objetive></app-objetive>
                         </div>
-                        <div *ngSwitchCase="'Trayectoria'">Mostrar detalle de Trayectoria
+                        <div *ngSwitchCase="'Trayectoria'"
+                            ngClass="basic-container"
+                        >Mostrar detalle de Trayectoria
                             <app-datos-trayectoria></app-datos-trayectoria>
                         </div>
-                        <div *ngSwitchCase="'Formación'">Mostrar detalle de Formación
+                        <div *ngSwitchCase="'Formación'"
+                            ngClass="basic-container"
+                        >Mostrar detalle de Formación
                             <app-datos-formacion>
                         
                             </app-datos-formacion>
@@ -69,15 +77,21 @@
 
 
 
-                        <div *ngSwitchCase="'Habilidades personales'">Muestra las habilidades personales de la base de datos, habilitado el delete
+                        <div *ngSwitchCase="'Habilidades personales'"
+                            ngClass="basic-container"
+                        >Muestra las habilidades personales de la base de datos, habilitado el delete
                             <hr>
                             <app-soft-skills></app-soft-skills>
                         </div>
-                        <div *ngSwitchCase="'Habilidades tecnicas'">Muestra las Habilidades tecnicas de la base de datos, habilitado el delete
+                        <div *ngSwitchCase="'Habilidades tecnicas'"
+                            ngClass="basic-container"
+                        >Muestra las Habilidades tecnicas de la base de datos, habilitado el delete
                             <br>
                             <app-hard-skills></app-hard-skills>
                         </div>
-                        <div *ngSwitchCase="'Proyectos'">Muestra los proyectos de la base de datos, habilitado el delete
+                        <div *ngSwitchCase="'Proyectos'"
+                            ngClass="basic-container"
+                        >Muestra los proyectos de la base de datos, habilitado el delete
                             <hr>
                             <app-projects></app-projects>
 
@@ -97,7 +111,7 @@
             </ng-container>
         </div>
 
-
+<!-- Personal Card , aside -->
         <div class="col-sm-4 g-0 m-auto">
             <section id="nameAndImage" class="col order-5 opacity-75 align-self-center" style="border: 1px solid;">
 
@@ -106,8 +120,6 @@
             </section>
 
         </div>
-
-
 
     </div>
     
