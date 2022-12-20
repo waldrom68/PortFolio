@@ -1,6 +1,6 @@
+// Orden de creacion 1.-
 
 package com.portfolio.SpringBoot.model;
-
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -21,7 +21,7 @@ import lombok.Setter;
 //@Entity
 //public class CreditCard {
 //    @Id
-//    long ccNumber;
+//    long Number;
 //
 //    @OneToMany // unidirectional
 //    @OrderColumn
@@ -39,20 +39,28 @@ public class Person {
     
     @Column(nullable=false, length=45)
     private String name;
+    @Column(nullable=false, length=45)
     private String lastName;
     private String pathFoto;
+    @Column(nullable=false, length=100)
     private String location;
+    @Column(length=100)
     private String profession;
     
     @Column(length = 1000)
     private String profile;
     @Column(length = 500)
     private String objetive;
+    @Column(nullable=false)
     private Year since;
+    @Column(nullable=false, length=45)
     private String email;
+    @Column(nullable=false, length=45)
     private String username;
+    @Column(nullable=false, length=45)
     private String password;
-
+//    @Column(nullable=false) 
+    private long PortfolioSetting_id;
     
     public Person() {
     }

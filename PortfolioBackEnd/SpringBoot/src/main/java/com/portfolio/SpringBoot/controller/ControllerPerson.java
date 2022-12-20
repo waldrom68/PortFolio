@@ -1,3 +1,4 @@
+// Orden de creacion 5.-
 
 package com.portfolio.SpringBoot.Controller;
 
@@ -15,12 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 // Recibe las peticiones y delega el negocio (es el pivot de la aplicacion)
 @RestController
-public class Controller {
+public class ControllerPerson {
 //    List<Person> listaPersonas = new ArrayList();
     
-//    Creamos la dependencia
+//    Creamos la dependencia con el servicio
     @Autowired 
     private IPersonService persoServ;
+    
     
     @PostMapping ("/new/person")
     public void crearPersona (@RequestBody Person pers) {
@@ -50,13 +52,14 @@ public class Controller {
     
     }
     
+
     
-//    
-//    @GetMapping ("/hola")
-//    public String decirHola() {
-//        //localhost:8080/hola
-//        return "<h1>hola mundo</h1>";
-//    }
+    
+    @GetMapping ("/hola")
+    public String decirHola() {
+        //localhost:8080/hola
+        return "<h1>hola mundo</h1>";
+    }
 //    
 //    // pasar parametros via la URL  
 //    @PostMapping ("/chau")
