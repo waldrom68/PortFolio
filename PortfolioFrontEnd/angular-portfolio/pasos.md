@@ -141,6 +141,41 @@ STRUC: En la estructura del proyecto, dicha estructura debiera replicarse en los
 
 - Usar como observable los toggleCards, actualmente lo manejo con @Input() y @Output()
 
+## SQL CONSULTA CON JOINS ANIDADOS, CONDICION DE FILTROS Y QUE MUESTRE ALGUNAS COLUMNAS DE ESE CONJUNTO.
+```sql
+--No se encontró instruccion similar a C.* EXCLUDE (C.id)
+--Consulta de cards activas de un usuario en particular
+--Pero solo traigo todos las columnas de Card,  --Portfoliosetting.theme y User.name
+--Resultado final ordenado por la columnas Card.group y Card.--order
+
+SELECT  C.*, P.theme, U.name
+  FROM portfolio.card AS C
+  LEFT JOIN
+  ( portfolio.portfoliosetting as P 
+    INNER JOIN portfolio.user as U ON P.user_id = U.id)
+  ON C.portfoliosetting_id = P.id
+WHERE U.id = 1 and C.status = 1
+ORDER BY C.group , C.order
+
+
+--Consulta de formacion
+-- 
+
+SELECT S.startDate, S.endDate, S.name as Formacion,  I.name as Institucion, D.name as Nivel FROM portfolio.institution AS I
+RIGHT JOIN 
+(  portfolio.studie AS S
+	INNER JOIN portfolio.degree AS D 
+    ON   (  S.Degree_idDegree = D.idDegree )
+)
+ON  (S.institution_id = I.id)
+
+WHERE S.User_id = 1
+order by S.endDate
+
+
+
+```
+
 ## INVESTIGAR
 ### ngx-cacheable is becoming ts-cacheable
 https://www.npmjs.com/package/ts-cacheable
@@ -286,3 +321,8 @@ https://stackblitz.com/edit/argentinaprograma-intro-formularios-awfgry?file=src%
   Método estático que provee angular
   pattern(): requiere que el valor ingresado coincida con un patrón de expresiones regulares.
   
+
+### Compilando y corriendo un *.ts que no requiere renderizacion
+  desde el prompt se corre
+  >> tsc main.ts  // con esto typescript compila el codigo
+  >> node main.js // con esto se ejecuta el codigo compilado

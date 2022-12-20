@@ -20,8 +20,8 @@ export class InterestsComponent implements OnInit {
 
 
   // PENDIENTE: SERVICIO QUE DEBE VINCULARSE CON EL LOGUEO
-    flagUserAdmin: boolean = false;
-    flagUserAdmin$: Observable<boolean>;
+  flagUserAdmin: boolean = false;
+  flagUserAdmin$: Observable<boolean>;
 
   // intereses: Intereses[] = INTERESES;
   myData: Interests[] = [];
@@ -70,7 +70,7 @@ export class InterestsComponent implements OnInit {
 
     this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();
     this.flagUserAdmin$.subscribe(  flagUserAdmin => this.flagUserAdmin = flagUserAdmin)
-
+    this.flagUserAdmin = this.dataService.getFlagUserAdmin()
 
   }
 
@@ -79,21 +79,6 @@ export class InterestsComponent implements OnInit {
     this.showForm = !this.showForm;
     this.showBtnAction = !this.showBtnAction
   }
-
-  // deleteInterest(interest: Interests ) {
-  //   console.log("emito orden de abrir el modal")
-  //   this.openDeleteModal(interest)
-  //   console.log("estoy despues de abrir el mmodal")
-    // Este codigo acualiza el array Users para que se actualice en 
-    // el frontend, sin necesidad de recargar la pagina
-
-// PENDIENTE HA SIDO COMENTADO TRANSITORIAMENTE PARA VER EL FUNCIONAMIENTO DEL MESSAGE-BOX
-    //  this.dataService.delInterests(interest).subscribe( (tt)=> {
-    //     // despues de ejecutarse el borrado de la DB, la quitamos del listado de myData
-    //     this.myData = this.myData.filter( (t) => { return t.id !== interest.id } )
-    //   }
-    // );
-  // }
 
 
   cancelation(interest: Interests) {
