@@ -20,9 +20,9 @@ import lombok.Setter;
 //    @Id
 //    long Number;
 //
-//    @OneToMany // unidirectional
+//    @ManyToMany // unidirectional?
 //    @OrderColumn
-//    List<CardTransaction> transactionHistory;
+//    ¿List<CardTransaction> transactionHistory;?
 //
 //    // ...
 //}
@@ -31,7 +31,7 @@ import lombok.Setter;
 @Entity
 public class Softskill {
     @Id
-    @GeneratedValue (strategy = GenerationType.AUTO)
+    @GeneratedValue (strategy = GenerationType.SEQUENCE)
     private long id;
     
     @Column(nullable=false, length=45)
@@ -43,7 +43,7 @@ public class Softskill {
     @Column(nullable=false)
     private int order_ = 0 ;
     
-    //    @Column(nullable=false) 
+    //    @Column(nullable=false)
     private Long Person_id;
     
     

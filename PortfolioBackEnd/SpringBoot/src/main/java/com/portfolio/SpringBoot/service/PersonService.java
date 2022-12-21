@@ -18,12 +18,13 @@ public class PersonService implements IPersonService {
     
     @Override
     public List<Person> verPersonas() {
+        System.out.println("Voy a buscar los datos al repositorio");
         return persoRepo.findAll();
     }
 
     @Override
-    public void crearPersona(Person per) {
-        persoRepo.save(per);
+    public Person crearPersona(Person per) {
+        return persoRepo.save(per);
     }
 
     @Override
@@ -35,5 +36,10 @@ public class PersonService implements IPersonService {
     public Person buscarPersona(Long id) {
         return persoRepo.findById(id).orElse(null);
     }
+
+//    @Override
+//    public void editPersona(Person per) {
+//        persoRepo.save(per);
+//    }
      
 }

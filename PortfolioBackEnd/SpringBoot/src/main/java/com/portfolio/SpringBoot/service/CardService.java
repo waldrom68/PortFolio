@@ -1,3 +1,4 @@
+// Orden de creacion 4.-
 
 package com.portfolio.SpringBoot.service;
 
@@ -37,6 +38,11 @@ public class CardService implements ICardService {
         cardRepo.save(card);
         return "Guardado en el repositorio";
         
+    }
+
+    @Override
+    public Long contarCard() {
+        return cardRepo.count();
     }
 
     

@@ -11,3 +11,5 @@ public class Application {
 	}
 
 }
+// ###########################  ATENCION  ##############################
+// VER SI SIRVE IMPLEMENTAR DTO para las consultas de relaciones con ID.

@@ -7,7 +7,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import java.time.Year;
+
 
 import lombok.Getter;
 import lombok.Setter;
@@ -34,7 +37,7 @@ import lombok.Setter;
 @Entity
 public class Person {
     @Id
-    @GeneratedValue (strategy = GenerationType.AUTO)
+    @GeneratedValue (strategy = GenerationType.SEQUENCE)
     private long id;
     
     @Column(nullable=false, length=45)
@@ -59,15 +62,27 @@ public class Person {
     private String username;
     @Column(nullable=false, length=45)
     private String password;
-//    @Column(nullable=false) 
-    private long PortfolioSetting_id;
+    
+    // relaciones one to many
+//    @OneToMany
+//    private List<Phone> listaPhone;
+//    @OneToMany
+//    private List<SocialNetwork> listaSocialNetwork;
+//    @OneToMany
+//    private List<Interest> listaInterest;
+    
+    
+    // relaciones one to one
+    @OneToOne
+    @JoinColumn(name="displaydata_id", referencedColumnName="id")
+    private DisplayData displaydata_id;
+    
+      
     
     public Person() {
     }
 
-    
-    public Person(long id, String name, String lastName, String pathFoto, String location, String profession, String profile, String objetive, Year since, String email, String username, String password) {
-        this.id = id;
+    public Person(String name, String lastName, String pathFoto, String location, String profession, String profile, String objetive, Year since, String email, String username, String password) {
         this.name = name;
         this.lastName = lastName;
         this.pathFoto = pathFoto;
@@ -79,6 +94,19 @@ public class Person {
         this.email = email;
         this.username = username;
         this.password = password;
+
     }
-    
+
+    @Override
+    public String toString() {
+        return "Person{" + "id=" + id + ", name=" + name + ", lastName=" + lastName + ", displaydata_id=" + displaydata_id + '}';
+    }
+
+
+
+
+
+
+
+
 }

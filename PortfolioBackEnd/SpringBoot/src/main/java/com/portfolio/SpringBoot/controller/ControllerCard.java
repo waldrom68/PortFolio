@@ -1,3 +1,4 @@
+// Orden de creacion 5.-
 
 package com.portfolio.SpringBoot.controller;
 import com.portfolio.SpringBoot.model.Card;
@@ -14,9 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class ControllerCard {
+    
+    
     //    Creamos la dependencia
     @Autowired 
     private ICardService cardServ;
+    
     
     @GetMapping ("/list/card")
     public List<Card> verCards() {
@@ -29,7 +33,7 @@ public class ControllerCard {
         // Si se tiene mas de 8 elementos solo se permite la edicion
         // El layout solo permite administrar 8 elementos.
         // Esta restriccion la coloco en el backend.
-        if ( cardServ.buscarCard(card.getId()) != null || cardServ.verCards().size() < 3 ) {
+        if ( cardServ.buscarCard(card.getId()) != null || cardServ.verCards().size() < 8 ) {
             
                 cardServ.editarCard(card);
                 return "Se ha realizado un alta o una modificacion";

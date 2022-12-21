@@ -1,3 +1,4 @@
+// Orden de creacion 1.-
 
 package com.portfolio.SpringBoot.model;
 
@@ -13,7 +14,7 @@ import lombok.Setter;
 @Entity
 public class Card {
     @Id
-    @GeneratedValue (strategy = GenerationType.AUTO)
+    @GeneratedValue (strategy = GenerationType.SEQUENCE)
     private long id;
     @Column(nullable=false, length=45)
     private String name;
@@ -21,20 +22,24 @@ public class Card {
     private String resume;
     @Column(nullable=false)
     private int group_ = 1;
+    
     private int order_ = 0;
+    
     @Column(nullable=false)
     private boolean status = true;
-    private long PortfolioSetting_id;
 
-    public Card(long id, String name, String resume, long PortfolioSetting_id) {
-        this.id = id;
+
+    public Card(String name, String resume) {
+        
         this.name = name;
         this.resume = resume;
-        this.PortfolioSetting_id = PortfolioSetting_id;
+
     }
     
     public Card() {
+        
     }
+
 
     
 }

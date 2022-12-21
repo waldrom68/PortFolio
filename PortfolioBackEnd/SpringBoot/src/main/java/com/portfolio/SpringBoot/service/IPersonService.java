@@ -9,8 +9,9 @@ import java.util.List;
 public interface IPersonService {
     
     public List<Person> verPersonas();
-    public void crearPersona(Person per);
     public void borrarPersona(Long id);
     public Person buscarPersona(Long id);
+    public Person crearPersona(Person per);
+//    public void editPersona(Person per);
     
 }

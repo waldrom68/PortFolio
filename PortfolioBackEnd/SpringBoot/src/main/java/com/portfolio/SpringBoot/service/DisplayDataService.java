@@ -35,4 +35,8 @@ public class DisplayDataService implements IDisplayDataService {
         return displayRepo.findById(id).orElse(null);
     }
     
-}
+    @Override
+    public DisplayData crearForceDisplay(DisplayData display) {
+        return displayRepo.saveAndFlush(display);
+    }
+    }

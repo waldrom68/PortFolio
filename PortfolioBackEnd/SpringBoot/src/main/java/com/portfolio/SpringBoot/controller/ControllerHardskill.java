@@ -17,32 +17,32 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ControllerHardskill {
     
-        //    Creamos la dependencia con el servicio
+    //    Creamos la dependencia con el servicio
     @Autowired
     private IHardskillService hardServ;
     
-    @PostMapping("/new/Hardskill")
+    @PostMapping("/new/hardskill")
     public void crearHard(@RequestBody Hardskill hard) {
     
         hardServ.crearHard(hard);
     
     }
     
-    @GetMapping ("/del/Hardskill")
+    @GetMapping ("/del/hardskill")
     public void borrarHard (@PathVariable Long id) {
     
         hardServ.borrarHard(id);
         
     }
     
-    @PutMapping ("/edit/Hardskill")
+    @PutMapping ("/edit/hardskill")
     public void editarHard(@RequestBody Hardskill hard) {
     
         hardServ.crearHard(hard);
 
     }
            
-    @GetMapping ("/list/Hardskill")
+    @GetMapping ("/list/hardskill")
     public List<Hardskill> verHard() {
     
         return hardServ.verHard();

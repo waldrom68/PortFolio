@@ -7,7 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import java.time.Year;
+import jakarta.persistence.OneToOne;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -30,11 +30,14 @@ import lombok.Setter;
 //    // ...
 //}
 
+// PENDIENTE VINCULAR EL Person_id con el modelo Person e implementar el patron DTO.
+
+
 @Getter @Setter
 @Entity
 public class DisplayData {
     @Id
-    @GeneratedValue (strategy = GenerationType.AUTO)
+    @GeneratedValue (strategy = GenerationType.SEQUENCE)
     private long id;
     
     private boolean name = true;
@@ -44,5 +47,18 @@ public class DisplayData {
     private boolean profession = true;
     private boolean since = true;
     
-    private Long Person_id;
+    @Column(nullable=false, length=45)
+    private String theme = "Dark";
+
+    public DisplayData() {
+    }
+
+    @Override
+    public String toString() {
+        return "DisplayData{" + "id=" + id + ", name=" + name + ", lastName=" + lastName + ", photo=" + photo + ", location=" + location + ", profession=" + profession + ", since=" + since + ", theme=" + theme + '}';
+    }
+
+
+
+   
 }
