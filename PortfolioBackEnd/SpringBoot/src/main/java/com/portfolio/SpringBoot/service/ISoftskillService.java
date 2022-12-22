@@ -2,15 +2,23 @@
 
 package com.portfolio.SpringBoot.service;
 
+
 import com.portfolio.SpringBoot.model.Softskill;
 import java.util.List;
 
 
 public interface ISoftskillService {
     
-    public List<Softskill> verSoft();
-    public void crearSoft(Softskill soft);
+    public boolean crearSoft(Softskill soft);
     public void borrarSoft(Long id);
+    
     public Softskill buscarSoft(Long id);
+    public List<Softskill> verSoft();
+    
+    public List<Softskill> verByPersonId(Long id);
+    
+    public List<Softskill> verByAssesment(int puntaje);
     
 }
+
+

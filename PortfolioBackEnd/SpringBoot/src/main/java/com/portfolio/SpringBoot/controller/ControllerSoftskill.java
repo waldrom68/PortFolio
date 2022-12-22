@@ -23,8 +23,11 @@ public class ControllerSoftskill {
     
     @PostMapping("/new/softskill")
     public void crearSoft(@RequestBody Softskill soft) {
-    
-        softServ.crearSoft(soft);
+
+        boolean operation = softServ.crearSoft(soft);
+        if (!operation)  {
+            throw new UnsupportedOperationException("Not saved data..!, it's correct the Person_id?"); 
+        }
     
     }
     
@@ -43,10 +46,23 @@ public class ControllerSoftskill {
     }
            
     @GetMapping ("/list/softskill")
-    public List<Softskill> verHard() {
+    public List<Softskill> verSoft() {
     
         return softServ.verSoft();
     
     }
     
+    @GetMapping ("/list/softskill/{puntaje}")
+    public List<Softskill> verByAssesment(@PathVariable int puntaje) {
+    
+        return softServ.verByAssesment(puntaje);
+    
+    }
+
+    @GetMapping ("/list/softskillPerson/{id}")
+    public List<Softskill> verByPerson(@PathVariable Long id) {
+    
+        return softServ.verByPersonId(id);
+    
+    }
 }

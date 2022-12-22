@@ -2,11 +2,14 @@
 
 package com.portfolio.SpringBoot.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -41,10 +44,27 @@ public class Softskill {
     private int assessment = 0;
     
     @Column(nullable=false)
-    private int order_ = 0 ;
+    private int orderdeploy = 0 ;
     
-    //    @Column(nullable=false)
-    private Long Person_id;
-    
+    // El Many apunta a esta Entity y el One al modelo de la relacion
+    // Si deja de existir este registro, debe mantener a quien lo contenía.
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name="person")
+    Person person;
+
+    public Softskill() {
+    }
+
+    public Softskill(String name, Person person) {
+        this.name = name;
+        this.person = person;
+    }
+
+    @Override
+    public String toString() {
+        return "Softskill{" + "id=" + id + ", name=" + name + ", assessment=" + assessment + ", orderdeploy=" + orderdeploy + ", person=" + person + '}';
+    }
+
+   
     
 }

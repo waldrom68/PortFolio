@@ -2,6 +2,7 @@
 
 package com.portfolio.SpringBoot.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -63,23 +64,48 @@ public class Person {
     @Column(nullable=false, length=45)
     private String password;
     
-    // relaciones one to many
-//    @OneToMany
-//    private List<Phone> listaPhone;
-//    @OneToMany
-//    private List<SocialNetwork> listaSocialNetwork;
-//    @OneToMany
+//    Relaciones UniDireccionales entre entidades
+//    @<tipo relacion>To<tipo relacion>
+//
+//    El primer elemento del nombre de la anotacion apunta a la entidad de la clase 
+//    que se está definiendo esta Entity y el One al modelo de la relacion.
+//  
+//    @OneToOne
+//    @JoinColumn(name="displaydata_id", referencedColumnName="id")
+//    private DisplayData displaydata_id;
+//    
+//    @ManyToOne  // El Many apunta a esta Entity y el One al modelo de la relacion
+//    @JoinColumn(name="Person_id")
+//    Person Person_id;
+//    
+//    @OneToMany("mappedBy="interest_id")  
 //    private List<Interest> listaInterest;
+//    Recomiendan no usarla, si bien está todo mapeado y es mas facil para programar,
+//    baja la performance de la aplicacion.
+//    
+//    La idea general sería, invertirla definiendo @ManyToOne en la otra entidad.
+//
+//    <tipo relacion>To<tipo relacion>(cascade = CascadeType.REMOVE).
+//      Elimina todas las relaciones que ya no tienen sentido conservar.
+//    <tipo relacion>To<tipo relacion>(cascade = CascadeType.PERSIST).
+//      Solo elimina la instancia, mantiene a quien lo contenia o con quien se 
+//      relacionaba.
     
     
-    // relaciones one to one
-    @OneToOne
+    
+    // Relaciones one to one UniDireccional
+    // Si deja de existir este registro, debe dejar de existir su relacion
+    @OneToOne(cascade = CascadeType.REMOVE) 
     @JoinColumn(name="displaydata_id", referencedColumnName="id")
     private DisplayData displaydata_id;
     
       
     
     public Person() {
+    }
+    
+    public Person(Long id) {
+        this.id = id;
     }
 
     public Person(String name, String lastName, String pathFoto, String location, String profession, String profile, String objetive, Year since, String email, String username, String password) {

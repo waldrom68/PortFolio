@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class DisplayDataService implements IDisplayDataService {
-        // Para la conecion con el JPA : PersonRepository hara de intermediario entre
+    // Para la conecion con el JPA : PersonRepository hara de intermediario entre
     // la DB y nuestros metodos, para ello deberemos inyectar nuestra dependencia
     @Autowired
     public DisplayDataRepository displayRepo;
