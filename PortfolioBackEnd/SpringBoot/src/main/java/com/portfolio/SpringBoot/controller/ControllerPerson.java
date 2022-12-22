@@ -2,6 +2,7 @@
 
 package com.portfolio.SpringBoot.Controller;
 
+import com.portfolio.DTO.DPerson;
 import com.portfolio.SpringBoot.model.DisplayData;
 import com.portfolio.SpringBoot.model.Person;
 import com.portfolio.SpringBoot.service.IDisplayDataService;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -27,6 +29,20 @@ public class ControllerPerson {
     private IDisplayDataService displayServ;
 
   
+    @GetMapping("/mostrar/persona/{id}")
+    @ResponseBody
+    public DPerson mostrarPersona(@PathVariable Long id) {
+        Person persona = persoServ.buscarPersona(id);
+        DPerson personaDTO = new DPerson();
+        
+        personaDTO.setId(persona.getId());
+        personaDTO.setName(persona.getName());
+        personaDTO.setLastName(persona.getLastName());
+        
+        return personaDTO;
+    
+
+    }
     
     
     

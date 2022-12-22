@@ -2,6 +2,7 @@
 
 package com.portfolio.SpringBoot.controller;
 
+import com.portfolio.DTO.DTOSoftskill;
 import com.portfolio.SpringBoot.model.Softskill;
 import com.portfolio.SpringBoot.service.ISoftskillService;
 import java.util.List;
@@ -60,7 +61,7 @@ public class ControllerSoftskill {
     }
 
     @GetMapping ("/list/softskillPerson/{id}")
-    public List<Softskill> verByPerson(@PathVariable Long id) {
+    public List<DTOSoftskill> verByPerson(@PathVariable Long id) {
     
         return softServ.verByPersonId(id);
     

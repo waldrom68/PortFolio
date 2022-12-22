@@ -2,9 +2,11 @@
 
 package com.portfolio.SpringBoot.service;
 
+import com.portfolio.DTO.DTOSoftskill;
 import com.portfolio.SpringBoot.model.Person;
 import com.portfolio.SpringBoot.model.Softskill;
 import com.portfolio.SpringBoot.repository.SoftskillRepository;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -65,9 +67,25 @@ public class SoftskillService implements ISoftskillService {
     }
 
     @Override
-    public List<Softskill> verByPersonId(Long id) {
-        return softRepo.findByPersonId(id);
-//        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public List<DTOSoftskill> verByPersonId(Long id) {
+//        Person pers = persServ.buscarPersona(id);
+        List<Softskill> listsoft = softRepo.findByPersonId(id);
+        List listatemp = new ArrayList();
+        
+        for (Softskill elemento :listsoft) {
+            DTOSoftskill tempDTO = new DTOSoftskill();
+            
+            tempDTO.setId(elemento.getId());
+            tempDTO.setName(elemento.getName());
+            tempDTO.setAssessment(elemento.getAssessment());
+            tempDTO.setOrderdeploy(elemento.getOrderdeploy());
+            
+            listatemp.add(tempDTO);
+        }
+         
+        
+        return listatemp;
+
     }
 
 

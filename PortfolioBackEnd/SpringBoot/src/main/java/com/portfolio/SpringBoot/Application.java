@@ -14,6 +14,7 @@ public class Application {
 // ###########################  ATENCION  ##############################
 // VER SI SIRVE IMPLEMENTAR DTO para las consultas de relaciones con ID.
 // https://www.baeldung.com/entity-to-and-from-dto-for-a-java-spring-application
+// https://stackoverflow.com/questions/68018235/spring-ignore-field-just-in-getall-method
 
 //######  TURING.COM   ######
 //linkedin.com/in/josedlujan/   Turing

@@ -53,7 +53,7 @@ public class PersonService implements IPersonService {
     @Override
     public List<Person> verPersonas() {
         System.out.println("Voy a buscar los datos al repositorio");
-        return persoRepo.findAll(Sort.by("lastname").ascending());
+        return persoRepo.findAll(Sort.by("lastName").ascending());
     }
 
     @Override
