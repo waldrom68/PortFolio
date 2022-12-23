@@ -41,6 +41,11 @@ public class Degree {
     public Degree() {
     }
 
+    public Degree(long id) {
+        this.id = id;
+    }
+
+    
     public Degree(String name) {
         this.name = name;
     }

@@ -96,10 +96,28 @@ OkOk-[url:port]\edit\social
 Ok - [url:port]\edit\social\{id}
 
 ### GET
-- [url:port]\list\social\all
-- [url:port]\lilst\social\{id}
+Ok - [url:port]\list\social\all
+Ok - [url:port]\lilst\social\{id}
 
 
+## STUDIE Entity
+### POST
+OkOk-[url:port]\edit\studie
+- [url:port]\del\studie\{id}
+### GET
+Ok - [url:port]\list\studie\all
+Ok - [url:port]\list\studie\{id}
+
+
+
+##  Entity
+### POST
+- [url:port]
+- [url:port]
+### GET
+- [url:port]
+- [url:port]
+- [url:port]
 
 
 ##  Entity

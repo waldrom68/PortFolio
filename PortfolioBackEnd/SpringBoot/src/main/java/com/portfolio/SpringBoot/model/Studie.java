@@ -2,14 +2,18 @@
 
 package com.portfolio.SpringBoot.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import java.time.Year;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import java.util.Date;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 
 // for reference off general usage view https://jakarta.ee/specifications/persistence/3.0/jakarta-persistence-spec-3.0.html
@@ -28,36 +32,51 @@ import lombok.Setter;
 //
 //    // ...
 //}
-
+@ToString
 @Getter @Setter
 @Entity
 public class Studie {
     @Id
     @GeneratedValue (strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
     
     @Column(nullable=false, length=45)
     private String name;
     
     @Column(nullable=false)
-    private Year startDate;
+    private Date startDate;
     
-    private Year endDate;
+    private Date endDate;
     
-    private Long Persona_id;
-    private Long Onganization_id;
+    @Column(nullable=false)
+    private int orderdeploy = 0;
 
+    
+    // El Many apunta a esta Entity y el One al modelo de la relacion
+    // Si deja de existir este registro, debe mantener a quien lo contenía.
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name="person")
+    Person person;
+    
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name="organization")
+    Organization organization;
+
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name="degree")
+    Degree degree;
+    
     public Studie() {
     }
 
-    public Studie(long id, String name, Year startDate, Year endDate, Long Persona_id, Long Onganization_id) {
-        this.id = id;
+    public Studie(String name, Date startDate, Date endDate, Person person, Organization organization, Degree degree) {
         this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.Persona_id = Persona_id;
-        this.Onganization_id = Onganization_id;
+        this.person = person;
+        this.organization = organization;
+        this.degree = degree;
     }
-    
-    
+
+ 
 }

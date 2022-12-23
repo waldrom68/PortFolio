@@ -48,12 +48,17 @@ public class Organization {
     public Organization() {
     }
 
-    public Organization(String name, String resume, String url) {
+    public Organization(long id) {
         this.id = id;
+    }
+
+    public Organization(String name, String resume, String url) {
         this.name = name;
         this.resume = resume;
         this.url = url;
     }
+
+
     
     
 }

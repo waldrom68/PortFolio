@@ -37,7 +37,7 @@ import lombok.ToString;
 public class Softskill {
     @Id
     @GeneratedValue (strategy = GenerationType.SEQUENCE)
-    private long id;
+    private Long id;
     
     @Column(nullable=false, length=45)
     private String name;

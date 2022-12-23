@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,31 +20,35 @@ public class ControllerStudie {
     private IStudieService studieServ;
     
         
-    @PostMapping ("/new/studie")
+    @PostMapping ("/edit/studie")
     public void crearStudie (@RequestBody Studie studie) {
-    
-        studieServ.crearStudie(studie);
+        boolean operation = studieServ.crearStudie(studie);
+        if (!operation) {
+            throw new UnsupportedOperationException("No data saved...! Are the relationship ids correct?"); 
+        }
     
     }
     
-    @GetMapping ("/del/studie")
+    @PostMapping ("/del/studie/{id}")
     public void borrarStudie (@PathVariable Long id) {
     
         studieServ.borrarStudie(id);
         
     }
     
-    @PutMapping ("/edit/studie")
-    public void editarStudie(@RequestBody Studie studie) {
-    
-        studieServ.crearStudie(studie);
-
-    }
-           
-    @GetMapping ("/list/studie")
+          
+    @GetMapping ("/list/studie/all")
     public List<Studie> verStudie() {
     
         return studieServ.verStudie();
+    
+    }
+    
+              
+    @GetMapping ("/list/studie/{id}")
+    public List<Studie> verByPersonId(@PathVariable Long id) {
+    
+        return studieServ.verByPersonId(id);
     
     }
 }
