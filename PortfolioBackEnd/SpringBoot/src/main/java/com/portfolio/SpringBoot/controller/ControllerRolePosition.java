@@ -22,28 +22,21 @@ public class ControllerRolePosition {
     private IRolePositionService persoServ;
     
     
-    @PostMapping ("/new/roleposition")
+    @PostMapping ("/edit/roleposition")
     public void crearRolePosition (@RequestBody RolePosition post) {
     
         persoServ.crearRolePosition(post);
     
     }
     
-    @GetMapping ("/del/roleposition")
+    @PostMapping ("/del/roleposition/{id}")
     public void borrarPersona (@PathVariable Long id) {
     
         persoServ.borrarRolePosition(id);
         
     }
     
-    @PutMapping ("/edit/roleposition")
-    public void editarRolePosition(@RequestBody RolePosition post) {
-    
-        persoServ.crearRolePosition(post);
-
-    }
-           
-    @GetMapping ("/list/roleposition")
+    @GetMapping ("/list/roleposition/all")
     public List<RolePosition> verRolePosition() {
     
         return persoServ.verRolePosition();

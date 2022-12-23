@@ -71,7 +71,32 @@ Ok - [url:port]\del\organization\{id}
 Ok - [url:port]\list\organization\all // All degree entity
 
 
+##  ROLEPOSITION Entity
+### POST
+OkOk- [url:port]\edit\roleposition
+Ok - [url:port]\del\roleposition\{id}
 
+### GET
+Ok - [url:port]\list\roleposition\all
+
+
+##  PHONE Entity
+### POST
+- [url:port]
+- [url:port]
+### GET
+- [url:port]
+- [url:port]
+- [url:port]
+
+##  SOCIALNETWORK Entity
+### POST
+- [url:port]
+- [url:port]
+### GET
+- [url:port]
+- [url:port]
+- [url:port]
 
 ##  Entity
 ### POST
@@ -81,7 +106,6 @@ Ok - [url:port]\list\organization\all // All degree entity
 - [url:port]
 - [url:port]
 - [url:port]
-
 
 
 #######   JSON DE INICIO   #######
@@ -338,14 +362,12 @@ Studie
       "id": 1,
       "start_date": "09-1993",
       "end_date": "02-2018",
-      "position": "Director",
       "userId": 1
     },
     {
       "id": 2,
       "start_date": "09-1990",
       "end_date": "12-1993",
-      "position": "Programador",
       "userId": 1
     }
 
@@ -363,3 +385,8 @@ Organization
 "organization": "freelance",
 "organization": "ITBA",
 
+
+"roleposition": "Director - RRHH",
+"roleposition": "Ejecutivo - RRHH",
+"roleposition": "Analista Sr. - Administración",
+"roleposition": "Programador Sr.",

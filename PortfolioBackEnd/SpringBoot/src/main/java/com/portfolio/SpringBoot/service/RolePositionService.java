@@ -15,11 +15,6 @@ public class RolePositionService implements IRolePositionService {
     public RolePositionRepository positionRepo;
 
     @Override
-    public List<RolePosition> verRolePosition() {
-        return positionRepo.findAll();
-    }
-
-    @Override
     public void crearRolePosition(RolePosition position) {
         positionRepo.save(position);
     }
@@ -32,5 +27,10 @@ public class RolePositionService implements IRolePositionService {
     @Override
     public RolePosition buscarRolePosition(Long id) {
         return positionRepo.findById(id).orElse(null);
+    }
+    
+    @Override
+    public List<RolePosition> verRolePosition() {
+        return positionRepo.findAll();
     }
 }
