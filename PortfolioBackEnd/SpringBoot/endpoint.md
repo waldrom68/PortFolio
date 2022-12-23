@@ -92,13 +92,12 @@ Ok - [url:port]\list\phone\{id}
 
 ##  SOCIALNETWORK Entity
 ### POST
-- [url:port]
-- [url:port]
+OkOk-[url:port]\edit\social
+Ok - [url:port]\edit\social\{id}
 
 ### GET
-- [url:port]
-- [url:port]
-- [url:port]
+- [url:port]\list\social\all
+- [url:port]\lilst\social\{id}
 
 
 

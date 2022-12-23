@@ -2,6 +2,7 @@
 
 package com.portfolio.SpringBoot.service;
 
+import com.portfolio.DTO.DTOSocialNetwork;
 import com.portfolio.SpringBoot.model.SocialNetwork;
 import java.util.List;
 
@@ -11,8 +12,11 @@ import java.util.List;
  */
 public interface ISocialnetworkService {
     
-    public List<SocialNetwork> verSocial();
-    public void crearSocial(SocialNetwork social);
+    public boolean crearSocial(SocialNetwork social);
     public void borrarSocial(Long id);
     public SocialNetwork buscarSocial(Long id);
+    
+    public List<SocialNetwork> verSocial();
+    public List<DTOSocialNetwork> verByPersonId(Long id);
+    
 }
