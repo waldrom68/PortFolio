@@ -2,11 +2,13 @@
 
 package com.portfolio.SpringBoot.controller;
 
+import com.portfolio.DTO.DTOInterest;
 import com.portfolio.SpringBoot.model.Interest;
 import com.portfolio.SpringBoot.service.IInterestService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,31 +20,31 @@ public class ControllerInterest {
     @Autowired
     private IInterestService interServ;
    
-    @PostMapping("/new/interest")
+    @PostMapping("/edit/interest")
     public void crearInteres(@RequestBody Interest inter) {
     
         interServ.crearInteres(inter);
     
     }
     
-    @GetMapping ("/del/interest")
-    public void borrarInteres(@RequestBody Long id) {
+    @PostMapping ("/del/interest/{id}")
+    public void borrarInteres(@PathVariable Long id) {
     
         interServ.borrarInteres(id);
     
     }
-    
-    @PutMapping ("/edit/interest")
-    public void editarInteres(@RequestBody Interest inter) {
-    
-        interServ.crearInteres(inter);
-    
-    }
-    
-    @GetMapping ("/list/interest")
+
+    @GetMapping ("/list/interest/all")
     public List<Interest> listarInteres() {
     
         return interServ.verIntereses();
+    
+    }
+    
+    @GetMapping ("/list/interest/{id}")
+    public List<DTOInterest> verByPerson(@PathVariable Long id) {
+    
+        return interServ.verByPersonId(id);
     
     }
     
