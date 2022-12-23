@@ -23,28 +23,21 @@ public class ControllerOrganization {
     private IOrganizationService orgaServ;
     
     
-    @PostMapping ("/new/organization")
+    @PostMapping ("/edit/organization")
     public void crearorganization (@RequestBody Organization orga) {
     
         orgaServ.crearOrganizacion(orga);
     
     }
     
-    @GetMapping ("/del/organization")
+    @PostMapping ("/del/organization/{id}")
     public void borrarOrganization (@PathVariable Long id) {
     
         orgaServ.borrarOrganizacion(id);
         
     }
-    
-    @PutMapping ("/edit/organization")
-    public void editarOrganization(@RequestBody Organization orga) {
-    
-        orgaServ.crearOrganizacion(orga);
-
-    }
-           
-    @GetMapping ("/list/organization")
+     
+    @GetMapping ("/list/organization/all")
     public List<Organization> verOrganization() {
     
         return orgaServ.verOrganizacion();

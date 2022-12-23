@@ -9,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 
 // for reference off general usage view https://jakarta.ee/specifications/persistence/3.0/jakarta-persistence-spec-3.0.html
@@ -28,6 +29,7 @@ import lombok.Setter;
 //    // ...
 //}
 
+@ToString
 @Getter @Setter
 @Entity
 public class Organization {
@@ -46,7 +48,7 @@ public class Organization {
     public Organization() {
     }
 
-    public Organization(long id, String name, String resume, String url) {
+    public Organization(String name, String resume, String url) {
         this.id = id;
         this.name = name;
         this.resume = resume;

@@ -62,6 +62,14 @@ Ok - [url:port]\edit\degree\{id}
 ### GET
 - [url:port]\list\degree\all // All degree entity
 
+##  ORGANIZATION Entity
+### POST
+OkOk-[url:port]\edit\organization // edit and create (RequestBody)
+Ok - [url:port]\del\organization\{id}
+
+### GET
+Ok - [url:port]\list\organization\all // All degree entity
+
 
 
 
@@ -295,7 +303,7 @@ localhost:8080\edit\interest
 
 
 
-
+Studie
 
    {
       "id": 4,
@@ -323,16 +331,35 @@ localhost:8080\edit\interest
       "start_date": "2000",
       "end_date": "1996",
       "degree": "Analista Universitario de Sistemas",
-
       "userId": 1
     }      
 
+    {
+      "id": 1,
+      "start_date": "09-1993",
+      "end_date": "02-2018",
+      "position": "Director",
+      "userId": 1
+    },
+    {
+      "id": 2,
+      "start_date": "09-1990",
+      "end_date": "12-1993",
+      "position": "Programador",
+      "userId": 1
+    }
 
+
+Degree
 "level": "Grado",
 "level": "Posgrado",
 "level": "Especialización",
 
-"institution": "Min. de Desarrollo Productivo y CESSI",
-"institution": "EDUCACION IT",
-"institution": "UP",
-"institution": "UCALP",
+Organization
+"organization": "Min. de Desarrollo Productivo y CESSI",
+"organization": "EDUCACION IT",
+"organization": "UP",
+"organization": "UCALP",
+"organization": "freelance",
+"organization": "ITBA",
+

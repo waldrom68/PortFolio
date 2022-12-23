@@ -15,11 +15,6 @@ public class OrganizationService implements IOrganizationService {
     public OrganizationRepository orgaRepo;
     
     @Override
-    public List<Organization> verOrganizacion() {
-        return orgaRepo.findAll();
-    }
-
-    @Override
     public void crearOrganizacion(Organization orga) {
         orgaRepo.save(orga);
     }
@@ -34,4 +29,9 @@ public class OrganizationService implements IOrganizationService {
         return orgaRepo.findById(id).orElse(null);
     }
     
+    @Override
+    public List<Organization> verOrganizacion() {
+        return orgaRepo.findAll();
+    }
+
 }
