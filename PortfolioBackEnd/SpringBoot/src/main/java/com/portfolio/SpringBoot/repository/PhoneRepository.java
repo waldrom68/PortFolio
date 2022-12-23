@@ -1,6 +1,6 @@
 // Orden de creacion 3.-
 
-package com.portfolio.SpringBoot.service;
+package com.portfolio.SpringBoot.repository;
 
 import com.portfolio.SpringBoot.model.Phone;
 import org.springframework.data.jpa.repository.JpaRepository;

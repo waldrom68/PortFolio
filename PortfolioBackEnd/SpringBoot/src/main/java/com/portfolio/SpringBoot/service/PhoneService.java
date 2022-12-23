@@ -2,6 +2,7 @@
 
 package com.portfolio.SpringBoot.service;
 
+import com.portfolio.SpringBoot.repository.PhoneRepository;
 import com.portfolio.SpringBoot.model.Phone;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
