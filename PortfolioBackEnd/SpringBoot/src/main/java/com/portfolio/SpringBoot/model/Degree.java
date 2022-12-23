@@ -37,5 +37,12 @@ public class Degree {
     
     @Column(nullable=false, length=45)
     private String name;
+
+    public Degree() {
+    }
+
+    public Degree(String name) {
+        this.name = name;
+    }
     
 }

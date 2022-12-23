@@ -3,7 +3,7 @@ url:port = localhost:8080
 
 ## PERSON Entity
 ### POST
-OkOk-[url:port]\edit\person // edit and create Person (RequestBody)
+OkOk-[url:port]\edit\person // edit and create (RequestBody)
 Ok - [url:port]\del\person\{id}  (ResponseBody)
 
 ### GET
@@ -20,7 +20,7 @@ Ok - [url:port]\list\card\all // order by "grupo" y "orderdespliegue"
 
 ## SOFTSKILL Entity
 ### POST
-OkOk-[url:port]\edit\softskill // edit and create Person (RequestBody)
+OkOk-[url:port]\edit\softskill // edit and create (RequestBody)
 Ok - [url:port]\del\softskill\{id}
 
 ### GET
@@ -29,7 +29,7 @@ Ok - [url:port]\list\softskill\{id} // DTO Only softskill entity for a person -F
 
 ## HARDSKILL Entity
 ### POST
-OkOk-[url:port]\edit\hardskill // edit and create Person (RequestBody)
+OkOk-[url:port]\edit\hardskill // edit and create (RequestBody)
 Ok - [url:port]\del\hardskill\{id}
 
 ### GET
@@ -38,21 +38,29 @@ Ok - [url:port]\list\hardskill\{id} // DTO Only hardskill entity for a person -F
 
 ##  PROJECT Entity
 ### POST
-OkOk-[url:port]\edit\project // edit and create Person (RequestBody)
+OkOk-[url:port]\edit\project // edit and create (RequestBody)
 Ok - [url:port]\del\project\{id}
 
 ### GET
-Ok - [url:port]\list\project\all // All hardskill entity
+Ok - [url:port]\list\project\all // All project entity
 Ok - [url:port]\list\project\{id} // DTO Only hardskill entity for a person -Flat-
 
 ##  INTEREST Entity
 ### POST
-OkOk- [url:port]\edit\interest // edit and create Person (RequestBody)
+OkOk- [url:port]\edit\interest // edit and create (RequestBody)
 Ok - [url:port]\del\interest\{id}
+
 ### GET
-Ok - [url:port]\list\interest\all // All hardskill entity
+Ok - [url:port]\list\interest\all // All interest entity
 Ok - [url:port]\list\interest\{id} // DTO Only hardskill entity for a person -Flat-
 
+## DEGREE Entity
+### POST
+OkOk-[url:port]\edit\degree // edit and create (RequestBody)
+Ok - [url:port]\edit\degree\{id}
+
+### GET
+- [url:port]\list\degree\all // All degree entity
 
 
 
@@ -284,3 +292,47 @@ localhost:8080\edit\interest
     "orderdeploy":0,
     "person": 1
 }
+
+
+
+
+
+   {
+      "id": 4,
+      "start_date": "2022",
+      "end_date": "..",
+      "degree": "Programador Web full stack Java",
+      "userId": 1
+    },
+    {
+      "id": 3,
+      "start_date": "2021",
+      "end_date": "2022",
+      "degree": "Python Web Developer",
+      "userId": 1
+    },
+    {
+      "id": 2,
+      "start_date": "2007",
+      "end_date": "2012",
+      "degree": "Maestría en Dirección de Empresas",
+      "userId": 1
+    },
+    {
+      "id": 1,
+      "start_date": "2000",
+      "end_date": "1996",
+      "degree": "Analista Universitario de Sistemas",
+
+      "userId": 1
+    }      
+
+
+"level": "Grado",
+"level": "Posgrado",
+"level": "Especialización",
+
+"institution": "Min. de Desarrollo Productivo y CESSI",
+"institution": "EDUCACION IT",
+"institution": "UP",
+"institution": "UCALP",

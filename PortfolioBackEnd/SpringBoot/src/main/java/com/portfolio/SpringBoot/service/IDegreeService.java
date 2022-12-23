@@ -8,9 +8,10 @@ import java.util.List;
 
 public interface IDegreeService {
     
-    public List<Degree> verDegree();
     public void crearDegree(Degree deg);
     public void borrarDegree(Long id);
     public Degree buscarDegree(Long id);
+    
+    public List<Degree> verDegree();
     
 }

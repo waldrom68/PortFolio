@@ -22,14 +22,14 @@ public class ControllerDegree {
     private IDegreeService degreeRepo;
     
         
-    @PostMapping ("/new/degree")
+    @PostMapping ("/edit/degree")
     public void crearDegree (@RequestBody Degree pers) {
     
         degreeRepo.crearDegree(pers);
     
     }
     
-    @GetMapping ("/del/degree")
+    @PostMapping ("/del/degree/{id}")
     public void borrarDegree (@PathVariable Long id) {
     
         degreeRepo.borrarDegree(id);
@@ -43,7 +43,7 @@ public class ControllerDegree {
 
     }
            
-    @GetMapping ("/list/degree")
+    @GetMapping ("/list/degree/all")
     public List<Degree> verDegree() {
     
         return degreeRepo.verDegree();

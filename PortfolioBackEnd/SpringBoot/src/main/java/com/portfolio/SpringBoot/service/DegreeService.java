@@ -17,11 +17,6 @@ public class DegreeService implements IDegreeService {
     public DegreeRepository degreeRepo;
     
     @Override
-    public List<Degree> verDegree() {
-        return degreeRepo.findAll();
-    }
-
-    @Override
     public void crearDegree(Degree deg) {
         degreeRepo.save(deg);
     }
@@ -36,4 +31,8 @@ public class DegreeService implements IDegreeService {
         return degreeRepo.findById(id).orElse(null);
     }
     
+    @Override
+    public List<Degree> verDegree() {
+        return degreeRepo.findAll();
+    }
 }
