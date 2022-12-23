@@ -82,21 +82,26 @@ Ok - [url:port]\list\roleposition\all
 
 ##  PHONE Entity
 ### POST
-- [url:port]
-- [url:port]
+OkOk-[url:port]\edit\phone
+Ok - [url:port]\del\phone\{id}
+
 ### GET
-- [url:port]
-- [url:port]
-- [url:port]
+Ok - [url:port]\list\phone\all
+Ok - [url:port]\list\phone\{id}
+
 
 ##  SOCIALNETWORK Entity
 ### POST
 - [url:port]
 - [url:port]
+
 ### GET
 - [url:port]
 - [url:port]
 - [url:port]
+
+
+
 
 ##  Entity
 ### POST
@@ -107,7 +112,7 @@ Ok - [url:port]\list\roleposition\all
 - [url:port]
 - [url:port]
 
-
++54 9 11 2053-5704
 #######   JSON DE INICIO   #######
 
 localhost:8080\edit\person

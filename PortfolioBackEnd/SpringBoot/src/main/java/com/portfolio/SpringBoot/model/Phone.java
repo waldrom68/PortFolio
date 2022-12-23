@@ -4,11 +4,14 @@ package com.portfolio.SpringBoot.model;
 
 // for reference off general usage view https://jakarta.ee/specifications/persistence/3.0/jakarta-persistence-spec-3.0.html
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -37,22 +40,26 @@ public class Phone {
     
     @Column(nullable=false, length=25)
     private String description;
-    @Column(nullable=false, length=15)
+    @Column(nullable=false, length=20)
     private String number;
+    @Column(nullable=false)
+    private int orderdeploy = 0;
     
-    private int order_ = 0;
-    
-    private long Person_id;
+    // El Many apunta a esta Entity y el One al modelo de la relacion
+    // Si deja de existir este registro, debe mantener a quien lo contenía.
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name="person")
+    Person person;
 
     public Phone() {
     }
 
-    public Phone(long id, String description, String number, long Person_id) {
-        this.id = id;
+    public Phone(String description, String number, Person person) {
         this.description = description;
         this.number = number;
-        this.Person_id = Person_id;
+        this.person = person;
     }
+
     
     
     
