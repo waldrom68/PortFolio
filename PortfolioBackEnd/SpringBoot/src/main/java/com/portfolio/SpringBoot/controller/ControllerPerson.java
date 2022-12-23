@@ -2,7 +2,7 @@
 
 package com.portfolio.SpringBoot.Controller;
 
-import com.portfolio.DTO.DPerson;
+import com.portfolio.DTO.DTOPerson;
 import com.portfolio.SpringBoot.model.DisplayData;
 import com.portfolio.SpringBoot.model.Person;
 import com.portfolio.SpringBoot.service.IDisplayDataService;
@@ -29,24 +29,20 @@ public class ControllerPerson {
     private IDisplayDataService displayServ;
 
   
-    @GetMapping("/mostrar/persona/{id}")
+    @GetMapping("/view/person/{id}")
     @ResponseBody
-    public DPerson mostrarPersona(@PathVariable Long id) {
+    public DTOPerson mostrarPersona(@PathVariable Long id) {
         Person persona = persoServ.buscarPersona(id);
-        DPerson personaDTO = new DPerson();
+        DTOPerson personaDTO = new DTOPerson();
         
         personaDTO.setId(persona.getId());
         personaDTO.setName(persona.getName());
         personaDTO.setLastName(persona.getLastName());
         
         return personaDTO;
-    
-
     }
-    
-    
-    
-    @PostMapping ("/new/person")
+        
+    @PostMapping ("/edit/person")  // edit and create Person
     public void crearPersona (@RequestBody Person pers) {
         System.out.println(pers.toString());
         Person persona = persoServ.buscarPersona(pers.getId());
@@ -79,45 +75,24 @@ public class ControllerPerson {
     @GetMapping ("/del/person/{id}")
     public void borrarPersona (@PathVariable Long id) {
     
-//        persoServ.borrarPersona(id);
-        throw new UnsupportedOperationException("Not allowed yet! sorry.."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        persoServ.borrarPersona(id);
+//        throw new UnsupportedOperationException("Not allowed yet! sorry.."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
         
     }
     
-    @GetMapping ("/list/person")
+    @GetMapping ("/list/person/all")
     public List<Person> verPersonas() {
         System.out.println("Llamo al Servicio");
         return persoServ.verPersonas();
     
     }
-    
-    @GetMapping ("/find/person/{id}")
-    public Person buscarPersona(@PathVariable Long id) {
-        System.out.println("En el servicio, busco una persona");
-        return persoServ.buscarPersona(id);
-    
-    }
-    
-        
-//    @PutMapping ("/edit/person")
-//    public void editarPersona(@RequestBody Person per) {
+
+// Le quito visibilidad, esta funcionalidad es para uso interno.    
+//    @GetMapping ("/find/person/{id}")
+//    public Person buscarPersona(@PathVariable Long id) {
+//        System.out.println("En el servicio, busco una persona");
+//        return persoServ.buscarPersona(id);
 //    
-//        persoServ.editPersona(per);
-//
 //    }
-    
-    @GetMapping ("/hola")
-    public String decirHola() {
-        //localhost:8080/hola
-        return "<h1>hola mundo</h1>";
-    }
-//    
-//    // pasar parametros via la URL  
-//    @PostMapping ("/chau")
-//    public String decirChau(@RequestParam String nombre) {
-//        //localhost:8080/chau?nombre=Walter
-//        return "Chau... chau.." + nombre ;
-//    }
-    
-    
+  
 }

@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,7 +21,7 @@ public class ControllerSoftskill {
     @Autowired
     private ISoftskillService softServ;
     
-    @PostMapping("/new/softskill")
+    @PostMapping("/edit/softskill")  // edit and create
     public void crearSoft(@RequestBody Softskill soft) {
 
         boolean operation = softServ.crearSoft(soft);
@@ -32,38 +31,33 @@ public class ControllerSoftskill {
     
     }
     
-    @GetMapping ("/del/softskill")
+    @PostMapping ("/del/softskill/{id}")
     public void borrarSoft (@PathVariable Long id) {
     
         softServ.borrarSoft(id);
         
     }
     
-    @PutMapping ("/edit/softskill")
-    public void editarSoft(@RequestBody Softskill soft) {
-    
-        softServ.crearSoft(soft);
-
-    }
-           
-    @GetMapping ("/list/softskill")
+    @GetMapping ("/list/softskill/all")
     public List<Softskill> verSoft() {
     
         return softServ.verSoft();
     
     }
     
-    @GetMapping ("/list/softskill/{puntaje}")
-    public List<Softskill> verByAssesment(@PathVariable int puntaje) {
-    
-        return softServ.verByAssesment(puntaje);
-    
-    }
-
-    @GetMapping ("/list/softskillPerson/{id}")
+    @GetMapping ("/list/softskill/{id}")
     public List<DTOSoftskill> verByPerson(@PathVariable Long id) {
     
         return softServ.verByPersonId(id);
     
     }
+
+//    @GetMapping ("/list/softskill/{puntaje}")
+//    public List<Softskill> verByAssesment(@PathVariable int puntaje) {
+//    
+//        return softServ.verByAssesment(puntaje);
+//    
+//    }
+
 }
+

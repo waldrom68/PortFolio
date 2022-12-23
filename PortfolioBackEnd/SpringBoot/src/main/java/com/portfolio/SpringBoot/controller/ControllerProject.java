@@ -2,6 +2,7 @@
 
 package com.portfolio.SpringBoot.controller;
 
+import com.portfolio.DTO.DTOProject;
 import com.portfolio.SpringBoot.model.Project;
 import com.portfolio.SpringBoot.service.IProjectService;
 import java.util.List;
@@ -9,10 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
 
 // Recibe las peticiones y delega el negocio (es el pivot de la aplicacion)
 @RestController
@@ -23,31 +22,34 @@ public class ControllerProject {
     private IProjectService projServ;
     
     
-    @PostMapping ("/new/project")
+    @PostMapping ("/edit/project")  // edit and create
     public void crearProject (@RequestBody Project proj) {
     
-        projServ.crearProject(proj);
-    
+        boolean operation = projServ.crearProject(proj);
+        if (!operation)  {
+            throw new UnsupportedOperationException("Not saved data..!, it's correct the Person_id?"); 
+        }
     }
     
-    @GetMapping ("/del/project")
+    @PostMapping ("/del/project/{id}")
     public void borrarProject (@PathVariable Long id) {
     
         projServ.borrarProject(id);
         
     }
     
-    @PutMapping ("/edit/project")
-    public void editarProject(@RequestBody Project proj) {
-    
-        projServ.crearProject(proj);
-
-    }
-           
-    @GetMapping ("/list/project")
+    @GetMapping ("/list/project/all")
     public List<Project> verProject() {
     
         return projServ.verProject();
     
     }
+
+    @GetMapping ("/list/project/{id}")
+    public List<DTOProject> verByPerson(@PathVariable Long id) {
+    
+        return projServ.verByPersonId(id);
+    
+    }
+
 }

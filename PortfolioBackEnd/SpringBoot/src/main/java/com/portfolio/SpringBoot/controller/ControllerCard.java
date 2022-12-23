@@ -22,13 +22,13 @@ public class ControllerCard {
     private ICardService cardServ;
     
     
-    @GetMapping ("/list/card")
+    @GetMapping ("/list/card/all")
     public List<Card> verCards() {
         return cardServ.verCards();
     
     }
 
-    @PostMapping ("/new/card")
+    @PostMapping ("/edit/card")
     public String crearCard (@RequestBody Card card) {
         // Si se tiene mas de 8 elementos solo se permite la edicion
         // El layout solo permite administrar 8 elementos.

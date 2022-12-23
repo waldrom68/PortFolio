@@ -8,14 +8,14 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class DTOSoftskill implements Serializable {
-    
+public class DTOHardskill implements Serializable {
     private long id;
     private String name;
     private int assessment;
     private int orderdeploy;
 
-    public DTOSoftskill() {
+    public DTOHardskill() {
     }
-
+    
+    
 }

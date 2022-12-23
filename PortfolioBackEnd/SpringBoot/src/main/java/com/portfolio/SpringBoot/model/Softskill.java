@@ -12,6 +12,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 // for reference off general usage view https://jakarta.ee/specifications/persistence/3.0/jakarta-persistence-spec-3.0.html
 // p.ej.: @Column(updatable = false), @ManyToOne, @JoinTable
@@ -30,6 +31,7 @@ import lombok.Setter;
 //    // ...
 //}
 
+@ToString
 @Getter @Setter
 @Entity
 public class Softskill {
@@ -41,7 +43,7 @@ public class Softskill {
     private String name;
     
     @Column(nullable=false)
-    private int assessment = 0;
+    private int assessment;
     
     @Column(nullable=false)
     private int orderdeploy = 0 ;
@@ -55,15 +57,15 @@ public class Softskill {
     public Softskill() {
     }
 
-    public Softskill(String name, Person person) {
+    public Softskill(String name, int assessment, Person person) {
         this.name = name;
+        this.assessment = assessment;
         this.person = person;
     }
 
-    @Override
-    public String toString() {
-        return "Softskill{" + "id=" + id + ", name=" + name + ", assessment=" + assessment + ", orderdeploy=" + orderdeploy + ", person=" + person + '}';
-    }
+
+
+
 
    
     

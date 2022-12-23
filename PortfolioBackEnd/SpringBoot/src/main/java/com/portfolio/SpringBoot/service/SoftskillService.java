@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-
 @Service
 public class SoftskillService implements ISoftskillService {
     
@@ -20,12 +19,6 @@ public class SoftskillService implements ISoftskillService {
     // la DB y nuestros metodos, para ello deberemos inyectar nuestra dependencia
     @Autowired public SoftskillRepository softRepo;
     @Autowired public IPersonService persServ;
-    
-    @Override
-    public List<Softskill> verSoft() {
-        
-        return softRepo.findAll(Sort.by("orderdeploy").ascending());
-    }
 
     @Override
     public boolean crearSoft(Softskill soft) {
@@ -58,12 +51,11 @@ public class SoftskillService implements ISoftskillService {
     public Softskill buscarSoft(Long id) {
         return softRepo.findById(id).orElse(null);
     }
-
-
+    
     @Override
-    public List<Softskill> verByAssesment(int puntaje) {
-        return softRepo.findByAssessment(puntaje);
-//        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public List<Softskill> verSoft() {
+        
+        return softRepo.findAll(Sort.by("orderdeploy").ascending());
     }
 
     @Override
@@ -74,7 +66,7 @@ public class SoftskillService implements ISoftskillService {
         
         for (Softskill elemento :listsoft) {
             DTOSoftskill tempDTO = new DTOSoftskill();
-            
+
             tempDTO.setId(elemento.getId());
             tempDTO.setName(elemento.getName());
             tempDTO.setAssessment(elemento.getAssessment());
@@ -87,10 +79,12 @@ public class SoftskillService implements ISoftskillService {
         return listatemp;
 
     }
-
-
-    
+   
     
 }
 
-// findByFirstname
+// para una prueba
+//    @Override
+//    public List<Softskill> verByAssesment(int puntaje) {
+//        return softRepo.findByAssessment(puntaje);
+//    }

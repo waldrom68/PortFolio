@@ -6,6 +6,7 @@ import com.portfolio.SpringBoot.model.Card;
 import com.portfolio.SpringBoot.repository.CardRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -19,7 +20,7 @@ public class CardService implements ICardService {
 
     @Override
     public List<Card> verCards() {
-        return cardRepo.findAll();
+        return cardRepo.findAll(Sort.by("grupo", "orderdeploy").ascending());
     }
 
     @Override

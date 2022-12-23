@@ -21,9 +21,9 @@ public class Card {
     @Column(length=255)
     private String resume;
     @Column(nullable=false)
-    private int group_ = 1;
+    private int grupo = 1;
     
-    private int order_ = 0;
+    private int orderdeploy = 0;
     
     @Column(nullable=false)
     private boolean status = true;
