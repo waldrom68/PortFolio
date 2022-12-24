@@ -2,11 +2,14 @@
 
 package com.portfolio.SpringBoot.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import java.util.Date;
 
 import lombok.Getter;
@@ -43,17 +46,24 @@ public class ProjectMedia {
     private Date upLoadDate;
     
     private int order_ = 0;
-    private Long Project_id;
 
+    // El Many apunta a esta Entity y el One al modelo de la relacion
+    // Si deja de existir este registro, debe mantener a quien lo contenía.
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name="project")
+    Project project;
+    
+    
     public ProjectMedia() {
     }
 
-    public ProjectMedia(long id, String filePath, Date upLoadDate, Long Project_id) {
-        this.id = id;
+    public ProjectMedia(String filePath, Date upLoadDate, Project project) {
         this.filePath = filePath;
         this.upLoadDate = upLoadDate;
-        this.Project_id = Project_id;
+        this.project = project;
     }
+
+
     
     
     

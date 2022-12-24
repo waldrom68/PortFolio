@@ -2,7 +2,6 @@
 
 package com.portfolio.SpringBoot.model;
 
-// for reference off general usage view https://jakarta.ee/specifications/persistence/3.0/jakarta-persistence-spec-3.0.html
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -15,6 +14,7 @@ import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
 
+// for reference off general usage view https://jakarta.ee/specifications/persistence/3.0/jakarta-persistence-spec-3.0.html
 // p.ej.: @Column(updatable = false), @ManyToOne, @JoinTable
 //     @MapKeyJoinColumn(name="MOVIE", referencedColumnName="ID")
 //     Map<Movie, Integer> videoInventory;

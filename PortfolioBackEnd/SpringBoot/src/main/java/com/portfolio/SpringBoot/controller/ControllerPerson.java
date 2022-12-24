@@ -57,11 +57,11 @@ public class ControllerPerson {
 
             // Vinculo ambas instancias
             // Guardando la instancia con su respectiva relacion OneToOne con DisplayData
-            pers.setDisplaydata_id(guardada);
+            pers.setDisplaydata(guardada);
 
 
         } else {
-            pers.setDisplaydata_id(persona.getDisplaydata_id());
+            pers.setDisplaydata(persona.getDisplaydata());
             
             System.out.println("Existe, asi que estoy modificando");
         }

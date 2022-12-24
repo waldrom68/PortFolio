@@ -97,7 +97,7 @@ public class Person {
     // Si deja de existir este registro, debe dejar de existir su relacion
     @OneToOne(cascade = CascadeType.REMOVE) 
     @JoinColumn(name="displaydata_id", referencedColumnName="id")
-    private DisplayData displaydata_id;
+    private DisplayData displaydata;
     
       
     
@@ -122,17 +122,5 @@ public class Person {
         this.password = password;
 
     }
-
-    @Override
-    public String toString() {
-        return "Person{" + "id=" + id + ", name=" + name + ", lastName=" + lastName + ", displaydata_id=" + displaydata_id + '}';
-    }
-
-
-
-
-
-
-
 
 }

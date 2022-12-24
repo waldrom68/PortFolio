@@ -42,7 +42,7 @@ public class SocialNetwork {
     private String name;
     
     @Column(nullable=false, length=45)
-    private String icon;
+    private String pathIcon;
     
     private String url;
     
@@ -58,12 +58,14 @@ public class SocialNetwork {
     public SocialNetwork() {
     }
 
-    public SocialNetwork(String name, String icon, String url, Person person) {
+    public SocialNetwork(String name, String pathIcon, String url, Person person) {
         this.name = name;
-        this.icon = icon;
+        this.pathIcon = pathIcon;
         this.url = url;
         this.person = person;
     }
+
+
     
     
     

@@ -7,7 +7,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -48,7 +47,7 @@ public class DisplayData {
     private boolean since = true;
     
     @Column(nullable=false, length=45)
-    private String theme = "Dark";
+    private String theme = "Flip";
 
     public DisplayData() {
     }

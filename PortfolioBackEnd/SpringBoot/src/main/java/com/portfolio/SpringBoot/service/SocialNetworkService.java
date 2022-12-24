@@ -62,7 +62,7 @@ public class SocialNetworkService implements ISocialnetworkService {
 
             tempDTO.setId(elemento.getId());
             tempDTO.setName(elemento.getName());
-            tempDTO.setIcon(elemento.getIcon());
+            tempDTO.setPathIcon(elemento.getPathIcon());
             tempDTO.setUrl(elemento.getUrl());
             tempDTO.setOrderdeploy(elemento.getOrderdeploy());
             
