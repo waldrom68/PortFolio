@@ -74,6 +74,7 @@ public class StudieService implements IStudieService {
             tempDTO.setStartDate(elemento.getStartDate());
             tempDTO.setEndDate(elemento.getEndDate());
             tempDTO.setOrderdeploy(elemento.getOrderdeploy());
+            tempDTO.setStatus(elemento.isStatus());
             tempDTO.setOrganization(elemento.getOrganization().getName());
             tempDTO.setOrga_resume(elemento.getOrganization().getResume());
             tempDTO.setDegree(elemento.getDegree().getName());
@@ -85,19 +86,6 @@ public class StudieService implements IStudieService {
 
         return listatemp;
         
-        
-//        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
 }
-//
-//    private Long id;
-//    private String name;
-//    private Date startDate;
-//    private Date endDate;
-//    private int orderdeploy ;
-//    
-//    private String organization;
-//    private String orga_resume;
-//    private String degree;
-//    private String degree_resume;

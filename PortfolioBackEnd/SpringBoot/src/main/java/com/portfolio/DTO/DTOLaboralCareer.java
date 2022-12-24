@@ -10,9 +10,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class DTOStudie  implements Serializable {
+public class DTOLaboralCareer   implements Serializable {
     private Long id;
-    private String name;
+//    private String position;
+    private String resume;
     private Date startDate;
     private Date endDate;
     private int orderdeploy ;
@@ -20,11 +21,11 @@ public class DTOStudie  implements Serializable {
     
     private String organization;
     private String orga_resume;
-    private String degree;
+    private String roleposition;
 
-
-    public DTOStudie() {
+    public DTOLaboralCareer() {
     }
+    
     
 }
 

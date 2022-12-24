@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,31 +21,34 @@ public class ControllerLaboralCareer {
     private ILaboralCareerService laboralServ;
     
     
-    @PostMapping ("/new/laboralcareer")
+    @PostMapping ("/edit/laboralcareer")
     public void crearLaboralCareer (@RequestBody LaboralCareer pers) {
-    
-        laboralServ.crearLaboralCareer(pers);
+        boolean operation = laboralServ.crearLaboralCareer(pers);
+        if (!operation) {
+            throw new UnsupportedOperationException("No data saved...! Are the relationship ids correct?"); 
+        }
     
     }
     
-    @GetMapping ("/del/laboralcareer")
+    @PostMapping ("/del/laboralcareer/{id}")
     public void borrarLaboralCareer (@PathVariable Long id) {
     
         laboralServ.borrarLaboralCareer(id);
         
     }
     
-    @PutMapping ("/edit/laboralcareer")
-    public void editarLaboralCareer(@RequestBody LaboralCareer pers) {
-    
-        laboralServ.crearLaboralCareer(pers);
-
-    }
-           
-    @GetMapping ("/list/laboralcareer")
+    @GetMapping ("/list/laboralcareer/all")
     public List<LaboralCareer> verLaboralCareer() {
     
         return laboralServ.verLaboralCareer();
     
     }
+    
+    @GetMapping ("/list/laboralcareer/{id}")
+    public List<LaboralCareer> verByPersonId(@PathVariable Long id) {
+    
+        return laboralServ.verByPersonId(id);
+    
+    }
+    
 }

@@ -50,6 +50,9 @@ public class Studie {
     
     @Column(nullable=false)
     private int orderdeploy = 0;
+    
+    @Column(nullable=false)
+    private boolean status = true;
 
     
     // El Many apunta a esta Entity y el One al modelo de la relacion
@@ -77,6 +80,7 @@ public class Studie {
         this.organization = organization;
         this.degree = degree;
     }
+
 
  
 }

@@ -36,10 +36,14 @@ public class RolePosition {
     @GeneratedValue (strategy = GenerationType.AUTO)
     private long id;
     
-    @Column(nullable=false, length=65)
+    @Column(nullable=false, length=100)
     private String name;
 
     public RolePosition() {
+    }
+
+    public RolePosition(long id) {
+        this.id = id;
     }
 
     public RolePosition(String name) {

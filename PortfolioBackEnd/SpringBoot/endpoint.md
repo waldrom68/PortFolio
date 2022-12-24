@@ -110,14 +110,14 @@ Ok - [url:port]\list\studie\{id}
 
 
 
-##  Entity
+## LABORALCAREER Entity
 ### POST
-- [url:port]
-- [url:port]
+OkOk-[url:port]\edit\laboralcareer
+Ok - [url:port]\del\laboralcareer\{id}
+
 ### GET
-- [url:port]
-- [url:port]
-- [url:port]
+Ok - [url:port]\list\laboralcareer\all
+Ok - [url:port]\list\laboralcareer\{id}
 
 
 ##  Entity
