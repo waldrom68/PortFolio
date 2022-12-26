@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
 
-import { Person, HardSkill, SoftSkill, Studies, LaboralCareer, Interest, Projects, PortfolioInit, Cards, User } from '../data'
+import { Person, HardSkill, SoftSkill, Studies, LaboralCareer, Interest, Projects, PortfolioInit, Cards, User, Usuario } from '../data'
 
 import { HttpClient, HttpHeaders } from '@angular/common/http'  // Para ejecutar los metodos GET, PUT, POST, ETC
 
@@ -15,20 +15,20 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
+
 export class DataService {
   private apiURL = 'http://localhost:5000'
   private EndPoint:string = ""
 
   // PENDIENTE, vincular con el logging
   private USERID:number = 1; 
-  
-
   private USER: Person;
+
 
   private flagChangeUser: boolean = false;
   private flagChangeUser$ = new Subject<boolean>();
 
-
+  private prueba1: string = "TESTEANDO USER"
 
   constructor(  
         // inicializamos el metodo http
@@ -48,8 +48,6 @@ export class DataService {
   getFlagChangeUser$(): Observable<boolean> {
     return this.flagChangeUser$.asObservable();
   }
-
-
 
   gerUserID() {
     return this.USERID
@@ -72,7 +70,7 @@ export class DataService {
   updateGralData(user:Person): Observable<Person>{
     // Este codigo modifica el valor del usuario en la DB
     const url = `${this.apiURL}/Person/${user.id}`;
-        return this.http.put<Person>(url, user)
+    return this.http.put<Person>(url, user)
   }
 
 

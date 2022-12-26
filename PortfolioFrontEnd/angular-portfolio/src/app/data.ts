@@ -163,3 +163,9 @@ export interface Users {
         userId: number
     }
 
+    export interface Usuario {
+        id:number,
+        name:string,
+        lastName:string,
+    }
+

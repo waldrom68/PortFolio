@@ -2,7 +2,7 @@
 <div *ngIf="myData">
 
     <ng-container *ngIf="myData.profile.length; else agregarProfile">
-        <div class="table-dark text-left container" >
+        <div class="table-dark text-left container py-2" >
 
             <ng-container *ngIf="!showForm; else mostrarForm">
                 <p *ngFor="let item of myData.profile.split('\n')">
@@ -90,17 +90,19 @@
         </p>
     </div>
     <br>
-    <button class="btn btn-default btn-sm" 
-    ngClass="faControl fa-ico"
-    (click)="onAgregarProfile()"
-    >
-    <fa-icon
-    ngClass="fa-3x"
-        [icon]="faPlusCircle"
-        
-        >
-    </fa-icon>
-</button>
+    <ng-container *ngIf="flagUserAdmin">
+        <button class="btn btn-default btn-sm" 
+            ngClass="faControl fa-ico"
+            (click)="onAgregarProfile()"
+            >
+            <fa-icon
+            ngClass="fa-3x"
+                [icon]="faPlusCircle"
+                
+                >
+            </fa-icon>
+        </button>
+    </ng-container>
 </ng-template>
 
 

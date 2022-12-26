@@ -1,9 +1,9 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DataService } from 'src/app/service/data.service';
 
 import { faPen, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
-import { Interest } from '../../data'
+import { Interest, Person } from '../../data'
 // import {INTERESES} from '../../../mock-data'
 
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
@@ -39,7 +39,8 @@ export class InterestsComponent implements OnInit {
   flagBorrado: boolean = false;
   flagBorrado$: Observable<boolean>;
 
- 
+  user: Person;
+
   constructor( 
     private dataService: DataService,
     
@@ -47,18 +48,18 @@ export class InterestsComponent implements OnInit {
     private modalService: ModalActionsService,
     ) {
       this.formData = { id:0, name:"", orderdeploy:0, userId:0 }
+
      }
     
   ngOnInit(): void {
     this.dataService.getInterests().subscribe(interest =>
-      [this.myData = interest]
-    );
+      [this.myData = interest],
+      );
+      this.dataService.getGralData().subscribe(data =>
+        this.user = data
+      ) ;
 
-    // if (this.flagUserAdmin) {
-    //   this.showBtnAction = true 
-    // } else {
-    //   this.showBtnAction = false
-    // }
+
 
     // subscribo y me entero si se cambia el estatus del flag  
     this.flagBorrado$ = this.modalService.getFlagBorrado$();
@@ -104,7 +105,8 @@ export class InterestsComponent implements OnInit {
 
   openDeleteModal(data:any) {
     // Acciones definidas en el modal-action.service.ts
-    const userId = "user01";
+    // PENDIENTE, RECUPERAR EL VALOR DE USER NAME PARA PASARLO AL MSG.
+    const userId = this.user.name;
     const dialogConfig = new MatDialogConfig();
     // The user can't close the dialog by clicking outside its body
     dialogConfig.disableClose = true;
@@ -114,12 +116,12 @@ export class InterestsComponent implements OnInit {
     dialogConfig.data = {
       // atributos generales del message-box
       name: "delInterest",
-      title: `Hi ${userId}, está por eliminiar uno de los intereses ?`,
-      description: `Esto significa que será eliminado "${data.name}", y ya no se podrá acceder a sus datos, ¿está seguro?`,
+      title: `Hi ${userId}, está por eliminar uno de los intereses ?`,
+      description: `¿Estás seguro de eliminar al interés "${data.name}" ?`,
       // por defecto mostrararía Aceptar
       actionButtonText: "Eliminar",
       // por defecto mostraría Cancelar
-      cancelActionText: "",
+      cancelActionText: "Conservar",
       // por defecto utilizará el definido en style.css "mat-dialog-container#modal-component"
       backColor: "",
 

@@ -37,6 +37,11 @@ export class ModalActionsService {
         modalData.data.profile = ""
         this.updateData(modalData)
         break;
+        
+      case "delObjetive":
+          modalData.data.objetive = ""
+          this.updateData(modalData)
+          break;
 
       case "delInterest":
         this.deleteInterest(modalData);

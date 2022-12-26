@@ -59,17 +59,17 @@
                         </div>
                         <div *ngSwitchCase="'Objetivo'"
                             ngClass="basic-container"
-                        >Mostrar detalle de Objetivo
+                        ><h3>{{card.name}}</h3>
                             <app-objetive></app-objetive>
                         </div>
                         <div *ngSwitchCase="'Trayectoria'"
                             ngClass="basic-container"
-                        >Mostrar detalle de Trayectoria
+                        ><h3>{{card.name}}</h3>
                             <app-datos-trayectoria></app-datos-trayectoria>
                         </div>
                         <div *ngSwitchCase="'Formación'"
                             ngClass="basic-container"
-                        >Mostrar detalle de Formación
+                        ><h3>{{card.name}}</h3>
                             <app-datos-formacion>
                         
                             </app-datos-formacion>
@@ -79,19 +79,19 @@
 
                         <div *ngSwitchCase="'Habilidades personales'"
                             ngClass="basic-container"
-                        >Muestra las habilidades personales de la base de datos, habilitado el delete
+                        ><h3>{{card.name}}</h3>
                             <hr>
                             <app-soft-skills></app-soft-skills>
                         </div>
                         <div *ngSwitchCase="'Habilidades tecnicas'"
                             ngClass="basic-container"
-                        >Muestra las Habilidades tecnicas de la base de datos, habilitado el delete
+                        ><h3>{{card.name}}</h3>
                             <br>
                             <app-hard-skills></app-hard-skills>
                         </div>
                         <div *ngSwitchCase="'Proyectos'"
                             ngClass="basic-container"
-                        >Muestra los proyectos de la base de datos, habilitado el delete
+                        ><h3>{{card.name}}</h3>
                             <hr>
                             <app-projects></app-projects>
 

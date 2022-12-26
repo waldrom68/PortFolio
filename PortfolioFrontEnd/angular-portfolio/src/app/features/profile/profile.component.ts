@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { DataService } from 'src/app/service/data.service';
@@ -56,9 +56,6 @@ export class ProfileComponent implements OnInit {
         this.myData = user
       );
 
- 
-
-
   }
     
   ngOnInit(): void {
@@ -77,9 +74,6 @@ export class ProfileComponent implements OnInit {
     this.form = this.formBuilder.group({
       profile:["", [Validators.required, Validators.minLength(35) ]],
       });
-
-
-
 
   }
 
@@ -152,7 +146,7 @@ export class ProfileComponent implements OnInit {
 
   openDeleteModal(data:any) {
     // Acciones definidas en el modal-action.service.ts
-    const userId = "user01";
+    const userId = this.myData.name;
     const dialogConfig = new MatDialogConfig();
     // The user can't close the dialog by clicking outside its body
     dialogConfig.disableClose = true;
@@ -162,7 +156,7 @@ export class ProfileComponent implements OnInit {
     dialogConfig.data = {
       // atributos generales del message-box
       name: "delProfile",
-      title: `Hi ${userId}, está por eliminiar el perfil`,
+      title: `Hi ${userId}, está por eliminar el perfil`,
       description: `¿está seguro?`,
       // por defecto mostrararía Aceptar
       actionButtonText: "Eliminar",

@@ -21,7 +21,7 @@
         {{ modalData.description }}
       </div>
       <div class="modal-footer">
-          <button type="button" class="btn btn-danger" 
+          <button type="button" class="btn btn-primary" 
             (click)="decline()"
           >
             <span *ngIf="modalData.cancelActionText else default">
@@ -33,7 +33,7 @@
           </button>
 
 
-          <button type="button" class="btn btn-primary" 
+          <button type="button" class="btn btn-danger" 
             (click)="accept()"
           >
             <span *ngIf="modalData.actionButtonText else default2">

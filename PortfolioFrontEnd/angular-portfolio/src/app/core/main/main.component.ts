@@ -2,6 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Renderer2, AfterViewInit } from '@angular/core';
 
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { Person, Usuario } from 'src/app/data';
+import { DataService } from 'src/app/service/data.service';
 
 // import { Cards } from 'src/app/data';
 
@@ -31,12 +33,15 @@ export class MainComponent implements OnInit {
   element: object;
   fragment:string = 'Init';
 
+  public user: Usuario;
    
   constructor( 
     private miServicio: UiService,
     private renderer: Renderer2,
 
-    ) { }
+    ) { 
+
+    }
 
 
 

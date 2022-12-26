@@ -43,22 +43,6 @@
       "admin": false
     }
   ],
-  "Users": [
-    {
-      "id": 1,
-      "name": "Walter",
-      "lastName": "Romero",
-      "pathFoto": "../assets/images/ico.svg",
-      "location": "Argentina, Bs.As.",
-      "profession": "Full Stack Developer\nPYTHON - JAVA",
-      "profile": "Ocupé cargos de RRHH y disfruté mejorar procesos, generar tableros de control para la toma de decisiones, y hacer de \"una especie de analista funcional\" para servir de enlace entre áreas de negocio y de tecnología. Ciertamente era un Analista Universitario de Sistemas en un área de recursos humanos.\n\nLuego de 24 años trabajando en la universidad, ahora he vuelto a mi esencia: \"creatividad, innovación, sistemas y tecnología\".\n\nEn resumen, además de contar con criterio empresarial tengo conocimientos y experiencia para sumar valor a cualquier proyecto, y quienes me conocen destacarán mi compromiso para alcanzar objetivos, mi lealtad, integridad y disciplina.",
-      "objetive": "Me atraen los desafíos y aventuras en donde pueda seguir ayudando, creando, innovando, mejorando ...\nPodés contactarme si tenés alguna idea o propuesta y será un plus si es divertida. ja ja",
-      "since": "1968",
-      "email": "waldrom68@gmail.com",
-      "username": "waldrom",
-      "password": "sinclave"
-    }
-  ],
   "Studies": [
     {
       "id": 4,
@@ -197,38 +181,6 @@
       "userId": 1
     }
   ],
-  "Interests": [
-    {
-      "id": 1,
-      "name": "Padle",
-      "userId": 1
-    },
-    {
-      "id": 2,
-      "name": "Viajar",
-      "userId": 1
-    },
-    {
-      "id": 3,
-      "name": "culear",
-      "userId": 1
-    },
-    {
-      "id": 4,
-      "name": "Colaborar y asistirme",
-      "userId": 1
-    },
-    {
-      "id": 5,
-      "name": "Restaurar muebles y objetos",
-      "userId": 1
-    },
-    {
-      "id": 6,
-      "name": "hacer milanesas a la napo",
-      "userId": 1
-    }
-  ],
   "Projects": [
     {
       "id": 1,
@@ -344,6 +296,9 @@
     "since": true,
     "userId": 1
   },
+  "DCO-FRONT-BACK": {
+    "DESDE-AQUI-MISMO-FORMATO-A-API-REST": true
+  },
   "Person": [
     {
       "id": 4,
@@ -436,12 +391,12 @@
     },
     {
       "id": 4,
-      "name": "Colaborar y asistirme",
+      "name": "Colaborar y asistir",
       "orderdeploy": 1
     },
     {
       "id": 5,
-      "name": "Restaurar muebles y objetos",
+      "name": "Restaurar muebles y ojetes",
       "orderdeploy": 1
     },
     {

@@ -7,11 +7,11 @@
     (ngSubmit)="onEnviar($event); myForm.resetForm()"
   >
     <div class="col" style="display: flex ; width:100% ">
-      <input type="text" formControlName="name" name="name" class="input-data"
+      <textarea type="text" formControlName="name" name="name" class="input-data"
       [ngStyle]="{'width':'100%'}"
       formControlName="name"
       [ngClass] = "{error: (Nombre.invalid && Nombre.touched)}"
-      >
+      ></textarea>
 
       <div class="col-4 icon-group"
       >
