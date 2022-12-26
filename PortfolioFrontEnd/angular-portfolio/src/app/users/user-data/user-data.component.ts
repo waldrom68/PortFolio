@@ -12,7 +12,6 @@ import { User } from '../../data'
 
 
 // Esta importacion fue reemplazada por user.service, quien se encargará de la gestion de los datos
-// import { USERS } from '../mock-data';
 @Component({
   selector: 'app-user-data',
   templateUrl: './user-data.component.html',
@@ -101,7 +100,7 @@ export class UserDataComponent implements OnInit {
     }
     
   deleteUser(user: User) {
-    // Este codigo acualiza el array Users para que se actualice en 
+    // Este codigo acualiza el array Person para que se actualice en 
     // el frontend, sin necesidad de recargar la pagina
      this.userService.delUsers(user).subscribe( (tt)=> {
         // despues de ejecutarse el borrado de la DB, la quitamos del listado de myData

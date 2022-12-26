@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { DataService } from 'src/app/service/data.service';
 
-import {Users} from '../../data'
+import {Person} from '../../data'
 // import {DATA} from '../../../mock-data'
 
 
@@ -15,7 +15,7 @@ export class ObjetiveComponent implements OnInit {
   isAdmin = true;
 
   // intereses: Intereses[] = INTERESES;
-  myData: Users;
+  myData: Person;
 
  
   constructor( private dataService: DataService, ) { 
@@ -27,9 +27,9 @@ export class ObjetiveComponent implements OnInit {
     
   }
 
-  update(user: Users) {
+  update(user: Person) {
    
-    // Este codigo acualiza el array Users para que se actualice en 
+    // Este codigo acualiza el array Person para que se actualice en 
     // el frontend, sin necesidad de recargar la pagina
     this.myData.objetive = ""
     this.dataService.updateGralData(user).subscribe()

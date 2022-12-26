@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import {Users} from '../../../data'
+import {Person} from '../../../data'
 
 import { faPen, faTimes, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { DataService } from 'src/app/service/data.service';
@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./profile-item.component.css']
 })
 export class ProfileItemComponent implements OnInit {
-  @Input() myData: Users;
+  @Input() myData: Person;
 
   // PENDIENTE: SERVICIO QUE DEBE VINCULARSE CON EL LOGUEO
   flagUserAdmin: boolean = false;
@@ -21,7 +21,7 @@ export class ProfileItemComponent implements OnInit {
   @Output() showBtnActionChange = new EventEmitter<boolean>();
 
 
-  @Output() delete: EventEmitter<Users> = new EventEmitter()
+  @Output() delete: EventEmitter<Person> = new EventEmitter()
   
   faTimes = faTimes;
   faPen = faPen;
@@ -39,7 +39,7 @@ export class ProfileItemComponent implements OnInit {
 
   }
   
-  onDelete(user: Users) {
+  onDelete(user: Person) {
     // llamo al metodo del padre via emit()
     if (this.flagUserAdmin) {
         this.delete.emit(user);

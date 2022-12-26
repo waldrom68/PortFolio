@@ -22,8 +22,7 @@ export class UiService {
   
   private statusCards:boolean = true;  // Indica si se muestran las Cards en el main
   private cards: Cards[];  // Contiene los datos para Cards/etiquetas que levante de mock-data
-  private cards2: Cards[];
-  
+   
   private visited:string="";  // Nombre de la tarjeta sobre la cual hice click -PENDIENTE
   
   portfolioinit2:PortfolioInit;

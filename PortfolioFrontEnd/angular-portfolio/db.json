@@ -343,7 +343,79 @@
     "profession": true,
     "since": true,
     "userId": 1
-  }
-
-
+  },
+  "Person": [
+    {
+      "id": 4,
+      "name": "Eustaquio",
+      "lastName": "Baranda",
+      "pathFoto": "",
+      "location": "Argentina, Bs.As.",
+      "profession": "Programador Senior\nCOBOL",
+      "profile": "",
+      "objetive": "",
+      "since": "2005",
+      "email": "eustaquib@gmail.com",
+      "username": "sadsadad",
+      "password": "olvidaclave",
+      "displaydata": {
+        "id": 4,
+        "name": true,
+        "lastName": true,
+        "photo": true,
+        "location": true,
+        "profession": true,
+        "since": true,
+        "theme": "Dark"
+      }
+    },
+    {
+      "id": 3,
+      "name": "Persona",
+      "lastName": "De Prueba",
+      "pathFoto": "",
+      "location": "Argentina, Bs.As.",
+      "profession": "Programador Senior\nCOBOL",
+      "profile": "",
+      "objetive": "",
+      "since": "1948",
+      "email": "de-prueba@gmail.com",
+      "username": "persona",
+      "password": "olvidaclave",
+      "displaydata": {
+        "id": 3,
+        "name": true,
+        "lastName": true,
+        "photo": true,
+        "location": true,
+        "profession": true,
+        "since": true,
+        "theme": "Dark"
+      }
+    },
+    {
+      "id": 1,
+      "name": "Walter",
+      "lastName": "Romario",
+      "pathFoto": "../assets/images/ico.svg",
+      "location": "Argentina, Bs.As.",
+      "profession": "Full Stack Developer\nPYTHON - JAVA",
+      "profile": "Ocupé cargos de RRHH y disfruté mejorar procesos, generar tableros de control para la toma de decisiones, y hacer de \"una especie de analista funcional\" para servir de enlace entre áreas de negocio y de tecnología. Ciertamente era un Analista Universitario de Sistemas en un área de recursos humanos.\n\nLuego de 24 años trabajando en la universidad, ahora he vuelto a mi esencia: \"creatividad, innovación, sistemas y tecnología\".\n\nEn resumen, además de contar con criterio empresarial tengo conocimientos y experiencia para sumar valor a cualquier proyecto, y quienes me conocen destacarán mi compromiso para alcanzar objetivos, mi lealtad, integridad y disciplina.",
+      "objetive": "Me atraen los desafíos y aventuras en donde pueda seguir ayudando, creando, innovando, mejorando ...\nPodés contactarme si tenés alguna idea o propuesta y será un plus si es divertida.",
+      "since": "1968",
+      "email": "waldrom68@gmail.com",
+      "username": "waldrom",
+      "password": "sinclave",
+      "displaydata": {
+        "id": 1,
+        "name": false,
+        "lastName": true,
+        "photo": true,
+        "location": true,
+        "profession": true,
+        "since": true,
+        "theme": "Dark"
+      }
+    }
+  ]
 }

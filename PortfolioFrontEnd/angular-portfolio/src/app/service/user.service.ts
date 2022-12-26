@@ -1,4 +1,7 @@
-// Este servicio nos permite obtener los JSON con la informacion y permitirnos modificarla
+// PENDIENTE ELIMINAR ESTE COMPONENTE, PUES ES DE PRUEBA NO PERTENECERÁ 
+// AL PROYECTO FINAL DEL PORTFOLIO, PUES LA IDEA NO ERA AMBL DE USUARIOS
+
+// Este servicio nos permite obtener los JSON con la informacion y modificarla
 // Con esta idea, dejaremos de usar mock-data.ts (creado para tener info a la hora del desarrollo)
 import { Injectable } from '@angular/core';  // 
 import { Observable, of } from 'rxjs';

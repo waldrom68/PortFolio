@@ -5,7 +5,7 @@ import { DataService } from 'src/app/service/data.service';
 import { ModalActionsService } from 'src/app/service/modal-actions.service';
 import { faTrash, faPen, faTimes, faCheck, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
-import {Users} from '../../data'
+import {Person} from '../../data'
 import { MessageBoxComponent } from 'src/app/shared/message-box/message-box.component';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
@@ -23,17 +23,17 @@ export class ProfileComponent implements OnInit {
   flagUserAdmin$: Observable<boolean>;
 
 
-  myData: Users;
+  myData: Person;
 
   form: FormGroup;
-  formData: Users;
+  formData: Person;
   tempValue:string = "";
   showForm: boolean = false;  // flag para mostrar o no el formulario
   
   // flag para mostrar o no los btn's de acciones del usuario
   showBtnAction: boolean = true;
  
-  itemParaBorrar: Users;
+  itemParaBorrar: Person;
   flagBorrado: boolean = false;
   flagBorrado$: Observable<boolean>;
 
@@ -122,8 +122,8 @@ export class ProfileComponent implements OnInit {
 
   }
 
-  onDelete(user: Users) {
-    // Este codigo acualiza el array Users para que se actualice en 
+  onDelete(user: Person) {
+    // Este codigo acualiza el array Person para que se actualice en 
     // el frontend, sin necesidad de recargar la pagina
     this.itemParaBorrar = user;
     this.openDeleteModal(user)

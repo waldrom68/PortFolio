@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
 
-import { Users, HardSkill, SoftSkill, Studies, LaboralCareer, Interests, Projects, PortfolioInit, Cards, User } from '../data'
+import { Person, HardSkill, SoftSkill, Studies, LaboralCareer, Interests, Projects, PortfolioInit, Cards, User } from '../data'
 
 import { HttpClient, HttpHeaders } from '@angular/common/http'  // Para ejecutar los metodos GET, PUT, POST, ETC
 
@@ -23,7 +23,7 @@ export class DataService {
   private USERID:number = 1; 
   
 
-  private USER: Users;
+  private USER: Person;
 
   private flagChangeUser: boolean = false;
   private flagChangeUser$ = new Subject<boolean>();
@@ -65,14 +65,14 @@ export class DataService {
     return this.http.get<Cards[]>(`${this.apiURL}/Cards/?userId=${this.USERID}`)
   }
 
-  getGralData(): Observable<Users> {
-    return this.http.get<Users>(`${this.apiURL}/Users/${this.USERID}`)
+  getGralData(): Observable<Person> {
+    return this.http.get<Person>(`${this.apiURL}/Person/${this.USERID}`)
   }
 
-  updateGralData(user:Users): Observable<Users>{
+  updateGralData(user:Person): Observable<Person>{
     // Este codigo modifica el valor del usuario en la DB
-    const url = `${this.apiURL}/Users/${user.id}`;
-        return this.http.put<Users>(url, user)
+    const url = `${this.apiURL}/Person/${user.id}`;
+        return this.http.put<Person>(url, user)
   }
 
 

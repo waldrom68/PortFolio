@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Users } from '../../../data'
+import { Person, DisplayData } from '../../../data'
 
 import { faTimes, faTrash, faPencil, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
@@ -11,12 +11,12 @@ import { DataService } from 'src/app/service/data.service';
   styleUrls: ['./objetive-item.component.css']
 })
 export class ObjetiveItemComponent implements OnInit {
-  @Input() item: Users;
+  @Input() item: Person;
 
   // PENDIENTE vincular con el logueo
   @Input() isAdmin : boolean;
 
-  @Output() delete: EventEmitter<Users> = new EventEmitter()
+  @Output() delete: EventEmitter<Person> = new EventEmitter()
   
   faTimes = faTimes;
   faTrash = faTrash;
@@ -25,7 +25,7 @@ export class ObjetiveItemComponent implements OnInit {
 
   showAddForm:boolean = false;
   subscriptionAddForm?: Subscription;
-  UserData: Users
+  UserData: Person
 
   constructor( private dataservice: DataService, ) {
     this.UserData = this.item;
@@ -47,7 +47,7 @@ export class ObjetiveItemComponent implements OnInit {
             "since": "",
             "username": "",
             "password": "",
-            "admin": false
+            "displaydata": {"id":1,"name":true,"lastName":true,"photo":true,"location":true,"profession":true,"since":true,"theme":"Dark"}
           }
     }
 
@@ -56,7 +56,7 @@ export class ObjetiveItemComponent implements OnInit {
       this.showAddForm = !this.showAddForm;
     }
 
-    onDelete(user: Users) {
+    onDelete(user: Person) {
       // llamo al metodo del padre via emit()
       if (this.isAdmin) {
           this.delete.emit(user);

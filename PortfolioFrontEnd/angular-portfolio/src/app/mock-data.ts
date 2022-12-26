@@ -1,4 +1,4 @@
-import {Data, Formacion, HardSkill, SoftSkill, Intereses, WorkExperience, User, Cards, DisplayPersonalData} from './data'
+import {Data, Formacion, HardSkill, SoftSkill, Intereses, WorkExperience, User, Cards, DisplayData} from './data'
 
 import { PortfolioInit } from './data'
 
@@ -207,14 +207,14 @@ export const PORTFOLIOINIT: PortfolioInit =
     userId:1,
 }
 
-export const DISPLAYPERSONALDATA: DisplayPersonalData = 
+export const DISPLAYDATA: DisplayData = 
 {
     id:1,
     name: true,
     lastName: true,
-    foto: true,
+    photo: true,
     location: true,
     profession: true,
     since: true,
-    userId: 1
+    theme: "flip"
 }

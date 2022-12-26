@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 
-import {Users} from '../../data'
-// import {DATA} from '../../mock-data'
+import {Person} from '../../data'
+
 
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { DataService } from 'src/app/service/data.service';
@@ -18,7 +18,7 @@ export class PersonalCardComponent implements OnInit {
   isAdmin = true;
 
   // intereses: Intereses[] = INTERESES;
-  myData: Users;
+  myData: Person;
 
   faTimes = faTimes;
   

@@ -130,15 +130,30 @@ export interface Users {
         status:boolean,
     }
 
-    export interface DisplayPersonalData {
+    export interface DisplayData {
         id: number,
         name: boolean,
         lastName: boolean,
-        foto: boolean,
+        photo: boolean,
         location: boolean,
         profession: boolean,
         since: boolean,
-        userId:number,
-        
+        theme:String,
     }
+
+// Modelos del backend
+    export interface Person {
+        id:number,
+        name:string,
+        lastName:string,
+        pathFoto:string, 
+        location:string,
+        profession:string,
+        profile:string, 
+        objetive:string, 
+        since:string,
+        username:string,
+        password:string,
+        displaydata: DisplayData
+        }
 

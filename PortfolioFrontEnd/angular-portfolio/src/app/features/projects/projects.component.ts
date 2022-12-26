@@ -24,7 +24,7 @@ export class ProjectsComponent implements OnInit {
   }
 
   deleteProjects(project: Projects) {
-    // Este codigo acualiza el array Users para que se actualice en 
+    // Este codigo acualiza el array Person para que se actualice en 
     // el frontend, sin necesidad de recargar la pagina
      this.dataService.delProjects(project).subscribe( (tt)=> {
         // despues de ejecutarse el borrado de la DB, la quitamos del listado de myData
