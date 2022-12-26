@@ -47,17 +47,16 @@
     {
       "id": 1,
       "name": "Walter",
-      "last_name": "Romero",
-      "foto": "../assets/images/ico.svg",
-      "since": "1968",
+      "lastName": "Romero",
+      "pathFoto": "../assets/images/ico.svg",
       "location": "Argentina, Bs.As.",
       "profession": "Full Stack Developer\nPYTHON - JAVA",
-      "profile": "Ocupé cargos de RRHH y disfruté mejorar procesos, generar tableros de control para la toma de decisiones, y hacer de 'una especie de analista funcional' para servir de enlace entre áreas de negocio y de tecnología. Ciertamente era un Analista Universitario de Sistemas en un área de recursos humanos.\n\nLuego de 24 años trabajando en la universidad, ahora he vuelto a mi esencia: 'creatividad, innovación, sistemas y tecnología'.\n\nEn resumen, además de contar con criterio empresarial tengo conocimientos y experiencia para sumar valor a cualquier proyecto, y quienes me conocen destacarán mi compromiso para alcanzar objetivos, mi lealtad, integridad y disciplina.",
-      "objetive": "Me atraen los desafíos y aventuras en donde pueda seguir ayudando, creando, innovando, mejorando ...\nPodés contactarme si tenés alguna idea o propuesta y será un plus si es divertida.",
-      "experiencia_resume": "SOY CLARAMENTE EL INDICADO",
+      "profile": "Ocupé cargos de RRHH y disfruté mejorar procesos, generar tableros de control para la toma de decisiones, y hacer de \"una especie de analista funcional\" para servir de enlace entre áreas de negocio y de tecnología. Ciertamente era un Analista Universitario de Sistemas en un área de recursos humanos.\n\nLuego de 24 años trabajando en la universidad, ahora he vuelto a mi esencia: \"creatividad, innovación, sistemas y tecnología\".\n\nEn resumen, además de contar con criterio empresarial tengo conocimientos y experiencia para sumar valor a cualquier proyecto, y quienes me conocen destacarán mi compromiso para alcanzar objetivos, mi lealtad, integridad y disciplina.",
+      "objetive": "Me atraen los desafíos y aventuras en donde pueda seguir ayudando, creando, innovando, mejorando ...\nPodés contactarme si tenés alguna idea o propuesta y será un plus si es divertida. ja ja",
+      "since": "1968",
+      "email": "waldrom68@gmail.com",
       "username": "waldrom",
-      "password": "sinclave",
-      "admin": true
+      "password": "sinclave"
     }
   ],
   "Studies": [
@@ -338,11 +337,13 @@
   "DisplayPersonalData": {
     "id": 1,
     "name": true,
-    "last_name": true,
+    "lastName": false,
     "foto": true,
     "location": true,
     "profession": true,
     "since": true,
     "userId": 1
   }
+
+
 }

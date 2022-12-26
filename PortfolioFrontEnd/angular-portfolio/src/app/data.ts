@@ -1,7 +1,7 @@
 export interface Data {
     id:number,
     name:string,
-    last_name:string,
+    lastname:string,
     foto:string, 
     location:string,
     profession:string[], 
@@ -55,14 +55,13 @@ export interface User {
 export interface Users {
     id:number,
     name:string,
-    last_name:string,
-    foto:string, 
+    lastName:string,
+    pathFoto:string, 
     location:string,
     profession:string,
     profile:string, 
     objetive:string, 
     since:string,
-    experiencia_resume:string,
     username:string,
     password:string,
     admin:boolean
@@ -134,7 +133,7 @@ export interface Users {
     export interface DisplayPersonalData {
         id: number,
         name: boolean,
-        last_name: boolean,
+        lastName: boolean,
         foto: boolean,
         location: boolean,
         profession: boolean,
@@ -142,3 +141,4 @@ export interface Users {
         userId:number,
         
     }
+

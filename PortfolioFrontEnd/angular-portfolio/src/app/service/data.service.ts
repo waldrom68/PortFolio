@@ -22,7 +22,9 @@ export class DataService {
   // PENDIENTE, vincular con el logging
   private USERID:number = 1; 
   
+
   private USER: Users;
+
   private flagChangeUser: boolean = false;
   private flagChangeUser$ = new Subject<boolean>();
 
@@ -33,6 +35,7 @@ export class DataService {
         private http: HttpClient
   ) { }
 
+ 
   getFlagUserAdmin() {
     return this.flagChangeUser
   }

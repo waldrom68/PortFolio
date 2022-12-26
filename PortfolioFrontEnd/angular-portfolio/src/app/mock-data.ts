@@ -16,7 +16,7 @@ export const DATA: Data =
     {
     id: 1,
     name : "Walterio",
-    last_name : "Mock",
+    lastname : "Mock",
     foto: "../assets/images/ico.svg",
     location : "Bernal, Bs.As. Argentina.",
     profession : ["Full Stack Developer","PYTHON - JAVA"],
@@ -129,7 +129,7 @@ export const CARDS: Cards[] = [
     },
     {
         id:2,
-        name: "MOCK Objetivo",
+        name: "Objetivo",
         status: false,
         group: 1,
         data: "",
@@ -211,7 +211,7 @@ export const DISPLAYPERSONALDATA: DisplayPersonalData =
 {
     id:1,
     name: true,
-    last_name: true,
+    lastName: true,
     foto: true,
     location: true,
     profession: true,

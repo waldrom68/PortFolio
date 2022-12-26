@@ -38,14 +38,13 @@ export class ObjetiveItemComponent implements OnInit {
       this.UserData = {
             "id": 0,
             "name": "",
-            "last_name": "",
-            "foto": "",
-            "since": "",
+            "lastName": "",
+            "pathFoto": "",
             "location": "",
             "profession": "",
             "profile": "",
             "objetive": "",
-            "experiencia_resume": "",
+            "since": "",
             "username": "",
             "password": "",
             "admin": false
