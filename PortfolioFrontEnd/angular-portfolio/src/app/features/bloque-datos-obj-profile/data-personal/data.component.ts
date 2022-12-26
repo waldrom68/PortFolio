@@ -11,7 +11,7 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./data.component.css']
 })
 export class DataComponent implements OnInit {
-  data: Data = DATA;
+  // data: Data = Person;
   faTimes = faTimes;
   
   constructor() { }

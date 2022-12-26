@@ -5,7 +5,7 @@ import { faCheck, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Observable } from 'rxjs';
 import { DataService } from 'src/app/service/data.service';
 
-import { Interests } from '../../../data';
+import { Interest } from '../../../data';
 
 @Component({
   selector: 'app-interests-form',
@@ -17,10 +17,10 @@ export class InterestsFormComponent implements OnInit {
   flagUserAdmin: boolean = false;
   flagUserAdmin$: Observable<boolean>;
 
-  @Input() formData: Interests;
+  @Input() formData: Interest;
 
-  @Output() onUpdate: EventEmitter<Interests> = new EventEmitter()
-  @Output() cancel: EventEmitter<Interests> = new EventEmitter()
+  @Output() onUpdate: EventEmitter<Interest> = new EventEmitter()
+  @Output() cancel: EventEmitter<Interest> = new EventEmitter()
 
   faCheck = faCheck;
   faTimes = faTimes;

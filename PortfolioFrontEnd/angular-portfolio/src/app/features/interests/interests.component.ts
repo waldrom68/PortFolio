@@ -3,7 +3,7 @@ import { DataService } from 'src/app/service/data.service';
 
 import { faPen, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
-import { Interests } from '../../data'
+import { Interest } from '../../data'
 // import {INTERESES} from '../../../mock-data'
 
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
@@ -24,8 +24,8 @@ export class InterestsComponent implements OnInit {
   flagUserAdmin$: Observable<boolean>;
 
   // intereses: Intereses[] = INTERESES;
-  myData: Interests[] = [];
-  formData: Interests;  // instancia vacia, para cuando se solicite un alta
+  myData: Interest[] = [];
+  formData: Interest;  // instancia vacia, para cuando se solicite un alta
   
   faPlusCircle = faPlusCircle;
   faPen = faPen;
@@ -35,7 +35,7 @@ export class InterestsComponent implements OnInit {
   
   showBtnAction: boolean= true;  // flag para mostrar o no los btn's de acciones del usuario
  
-  itemParaBorrar: Interests;
+  itemParaBorrar: Interest;
   flagBorrado: boolean = false;
   flagBorrado$: Observable<boolean>;
 
@@ -46,7 +46,7 @@ export class InterestsComponent implements OnInit {
     public matDialog: MatDialog,
     private modalService: ModalActionsService,
     ) {
-      this.formData = { id:0, name:"", userId:0 }
+      this.formData = { id:0, name:"", orderdeploy:0, userId:0 }
      }
     
   ngOnInit(): void {
@@ -81,20 +81,20 @@ export class InterestsComponent implements OnInit {
   }
 
 
-  cancelation(interest: Interests) {
+  cancelation(interest: Interest) {
     this.toggleForm();
   }
 
-  deleteItem(interest: Interests){
+  deleteItem(interest: Interest){
     this.itemParaBorrar = interest;
     this.openDeleteModal(interest)
   }
 
-  upDateInterest(interest: Interests) {
+  upDateInterest(interest: Interest) {
     this.dataService.updateInterest(interest).subscribe();
   }
 
-  addInterest(interest: Interests) {
+  addInterest(interest: Interest) {
     this.dataService.addInterests(interest).subscribe( (tt)=> {
         this.myData.push( tt );
         this.toggleForm();

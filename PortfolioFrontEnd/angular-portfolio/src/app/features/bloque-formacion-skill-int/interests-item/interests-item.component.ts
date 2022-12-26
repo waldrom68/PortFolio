@@ -4,7 +4,7 @@ import { faTrash, faPen, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Observable } from 'rxjs';
 import { DataService } from 'src/app/service/data.service';
 
-import { Interests } from '../../../data'
+import { Interest } from '../../../data'
 
 
 @Component({
@@ -19,14 +19,14 @@ export class InterestsItemComponent implements OnInit {
 
 
 
-  @Input() item: Interests;
+  @Input() item: Interest;
 
   @Input() showBtnAction!: boolean;
   @Output() showBtnActionChange = new EventEmitter<boolean>();
  
-  @Output() onDelete: EventEmitter<Interests> = new EventEmitter()
-  @Output() onUpdate: EventEmitter<Interests> = new EventEmitter()
-  @Output() onToggleForm: EventEmitter<Interests> = new EventEmitter()
+  @Output() onDelete: EventEmitter<Interest> = new EventEmitter()
+  @Output() onUpdate: EventEmitter<Interest> = new EventEmitter()
+  @Output() onToggleForm: EventEmitter<Interest> = new EventEmitter()
   
  
   faTimes = faTimes;
@@ -34,7 +34,7 @@ export class InterestsItemComponent implements OnInit {
   faTrash = faTrash;
 
   showForm: boolean = false;
-  formData: Interests;
+  formData: Interest;
 
   
   constructor( private dataService: DataService, ) { }
@@ -53,7 +53,7 @@ export class InterestsItemComponent implements OnInit {
     this.color = $event.type == 'mouseover' ? 'resaltado' : 'normal';
   }
 
-  toggleForm(interest: Interests) {
+  toggleForm(interest: Interest) {
     this.showForm = !this.showForm;
     // this.ocultarAcciones = !this.ocultarAcciones
     this.formData = interest;
@@ -62,7 +62,7 @@ export class InterestsItemComponent implements OnInit {
     this.showBtnActionChange.emit(this.showBtnAction)
   }
 
-  delete(interest: Interests) {
+  delete(interest: Interest) {
     // llamo al metodo del padre via emit()
     if (this.flagUserAdmin) {
       this.onDelete.emit(interest);
@@ -70,7 +70,7 @@ export class InterestsItemComponent implements OnInit {
 
   }
 
-  update(interest: Interests) {
+  update(interest: Interest) {
     this.dataService.updateInterest(interest).subscribe();
     this.toggleForm(interest);  // cierro el formulario
 
@@ -81,7 +81,7 @@ export class InterestsItemComponent implements OnInit {
   //   this.toggleForm(interest);  // cierro el formulario
   // }
 
-  cancelation(interest: Interests) {
+  cancelation(interest: Interest) {
     this.toggleForm(interest);  // cierro el formulario
   }
   

@@ -28,10 +28,6 @@ import { MatDialogModule } from '@angular/material/dialog';
 
 import { MessageBoxComponent } from './shared/message-box/message-box.component';
 
-
-// import { ProjectsComponent } from './features/projects/projects.component';
-// import { InterestsComponent } from './features/interests/interests.component';
-
 const appRouters: Routes = [
   { path: '', component: AppComponent},
   { path: 'user', component: UserDataComponent},

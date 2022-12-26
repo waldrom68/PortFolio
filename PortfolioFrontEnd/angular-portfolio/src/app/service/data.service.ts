@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
 
-import { Person, HardSkill, SoftSkill, Studies, LaboralCareer, Interests, Projects, PortfolioInit, Cards, User } from '../data'
+import { Person, HardSkill, SoftSkill, Studies, LaboralCareer, Interest, Projects, PortfolioInit, Cards, User } from '../data'
 
 import { HttpClient, HttpHeaders } from '@angular/common/http'  // Para ejecutar los metodos GET, PUT, POST, ETC
 
@@ -86,18 +86,18 @@ export class DataService {
     return this.http.delete<HardSkill>(url)
   }
 
-  // Interests
-  getInterests(): Observable<Interests[]> {
-    this.EndPoint = `${this.apiURL}/Interests?userId=${this.USERID}`
-    return this.http.get<Interests[]>(this.EndPoint )
+  // Interest
+  getInterests(): Observable<Interest[]> {
+    this.EndPoint = `${this.apiURL}/Interest?userId=${this.USERID}`
+    return this.http.get<Interest[]>(this.EndPoint )
   }
-  delInterests(interest:Interests): Observable<Interests>{
-    const url = `${this.apiURL}/Interests/${interest.id}`
-    return this.http.delete<Interests>(url)
+  delInterests(interest:Interest): Observable<Interest>{
+    const url = `${this.apiURL}/Interest/${interest.id}`
+    return this.http.delete<Interest>(url)
   }
-  updateInterest(interest:Interests): Observable<Interests>{
-    const url = `${this.apiURL}/Interests/${interest.id}`;
-    return this.http.put<Interests>(url, interest)
+  updateInterest(interest:Interest): Observable<Interest>{
+    const url = `${this.apiURL}/Interest/${interest.id}`;
+    return this.http.put<Interest>(url, interest)
   }
 
 
@@ -147,18 +147,18 @@ export class DataService {
 
 
   // pendientes de implementar
-  addInterests(interest:Interests): Observable<Interests>{
+  addInterests(interest:Interest): Observable<Interest>{
     console.log("estoy en el metodo del servicio")
     // Este codigo agrega un usuario a la DB 
     interest.userId = this.USERID;
     console.log(interest.constructor.name)
-    return this.http.post<Interests>(`${this.apiURL}/Interests`, interest, httpOptions)
+    return this.http.post<Interest>(`${this.apiURL}/Interest`, interest, httpOptions)
   }
 
-  updateInterests(interest:Interests): Observable<Interests>{
+  updateInterests(interest:Interest): Observable<Interest>{
     // Este codigo modifica el valor del usuario en la DB
-    const url = `${this.apiURL}/Interests/${interest.id}`;
-        return this.http.put<Interests>(url, interest)
+    const url = `${this.apiURL}/Interest/${interest.id}`;
+        return this.http.put<Interest>(url, interest)
   }
 
 

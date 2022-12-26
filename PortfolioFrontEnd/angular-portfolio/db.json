@@ -417,5 +417,37 @@
         "theme": "Dark"
       }
     }
+  ],
+  "Interest": [
+    {
+      "id": 1,
+      "name": "Padle",
+      "orderdeploy": 1
+    },
+    {
+      "id": 2,
+      "name": "Viajar",
+      "orderdeploy": 1
+    },
+    {
+      "id": 3,
+      "name": "culear",
+      "orderdeploy": 1
+    },
+    {
+      "id": 4,
+      "name": "Colaborar y asistirme",
+      "orderdeploy": 1
+    },
+    {
+      "id": 5,
+      "name": "Restaurar muebles y objetos",
+      "orderdeploy": 1
+    },
+    {
+      "id": 6,
+      "name": "hacer milanesas a la maryland",
+      "orderdeploy": 1
+    }
   ]
 }

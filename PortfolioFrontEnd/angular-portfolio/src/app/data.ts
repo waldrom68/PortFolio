@@ -103,7 +103,6 @@ export interface Users {
         id: number,
         name:string,
         userId:number
-
     }
     export interface Projects {
         id: number,
@@ -156,4 +155,11 @@ export interface Users {
         password:string,
         displaydata: DisplayData
         }
+
+    export interface Interest {
+        id: number,
+        name:string,
+        orderdeploy:number,
+        userId: number
+    }
 

@@ -10,7 +10,6 @@ import { MessageBoxComponent } from 'src/app/shared/message-box/message-box.comp
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 
-// import {DATA} from '../../../mock-data'
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
