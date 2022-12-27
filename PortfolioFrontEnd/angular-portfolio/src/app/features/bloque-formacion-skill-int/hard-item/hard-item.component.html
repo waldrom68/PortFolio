@@ -1,16 +1,45 @@
-<span style="background-color:gainsboro">{{item.name}}: {{item.assessment}}/100
-    <!-- <ng-container *ngIf="isAdmin"> -->
-        <fa-icon 
-            [icon]="faTimes"
-            [ngStyle] = "{'color':'red','font-weight':'bolder', 'margin':'0 5px'}"
-            (click)="delete(item)" 
+<ng-container *ngIf="!showForm">
+    <div class="container row py-2"
+    [ngClass]="color" (mouseover)="changeStyle($event)" (mouseout)="changeStyle($event)"
+
+    >
+        <div class="col-8"
+
         >
-        </fa-icon>
-        <fa-icon 
-            [icon]="faPen"
-            [ngStyle] = "{'color':'green','font-weight':'bolder', 'margin':'0 5px'}"
+        <!-- (dblclick)="toggleForm(item);" -->
+            <span>{{item.name}}: {{item.assessment}}/5</span>
+        </div>
+        <div class="col-4 icon-group"
+             *ngIf="flagUserAdmin && showBtnAction"
             >
-        </fa-icon>
-    <!-- </ng-container> -->
-</span>
-<br>
+            <button class="btn btn-outline-success btn-sm"
+                (click)="toggleForm(item);"
+                ngClass="faConfirm fa-ico">
+                <fa-icon 
+                    [icon]="faPen"
+                    
+                >
+                </fa-icon>
+            </button>
+            <button class="btn btn-outline-danger btn-sm"
+                (click)="delete(item)"
+                ngClass="faCancel"
+            >
+                <fa-icon 
+                    [icon]="faTrash"
+                >
+                </fa-icon>
+            </button>
+        </div>
+    </div>
+</ng-container >
+
+<app-hard-form
+    *ngIf="showForm"
+    [ngStyle]="{'width':'100%'}"
+    [formData]="formData"
+    (onUpdate)=" update($event);"
+    (cancel)="cancelation($event)"
+
+    >
+</app-hard-form>

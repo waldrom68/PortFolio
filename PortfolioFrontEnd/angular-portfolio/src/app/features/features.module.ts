@@ -20,6 +20,7 @@ import { HardItemComponent } from './bloque-formacion-skill-int/hard-item/hard-i
 import { ProjectsItemComponent } from './bloque-formacion-skill-int/projects-item/projects-item.component';
 import { SoftItemComponent } from './bloque-formacion-skill-int/soft-item/soft-item.component';
 import { ObjetiveFormComponent } from './bloque-datos-obj-profile/objetive-form/objetive-form.component';
+import { HardFormComponent } from './bloque-formacion-skill-int/hard-form/hard-form.component';
 
 
 // import { SoftSkillsComponent } from './bloque-formacion-skill-int/soft-skills/soft-skills.component';
@@ -39,6 +40,7 @@ import { ObjetiveFormComponent } from './bloque-datos-obj-profile/objetive-form/
     // ProfileComponent,
     // ObjetiveComponent,
     DataComponent,
+    // HardFormComponent,
     // SoftFormComponent,
     // ObjetiveFormComponent,
     // DatosFormacionComponent,

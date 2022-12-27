@@ -7,8 +7,7 @@
 
         >
         <!-- (dblclick)="toggleForm(item);" -->
-            <span 
-            >{{item.name}}  </span>
+            <span>{{item.name}}: {{item.assessment}}/100</span>
         </div>
         <div class="col-4 icon-group"
              *ngIf="flagUserAdmin && showBtnAction"

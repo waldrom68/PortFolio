@@ -1,10 +1,45 @@
-<ng-container *ngIf="myData.length">
+<ng-container *ngIf="myData.length; else agregar">
+    <div class="table-dark text-left container" >
+        <app-hard-item 
+            *ngFor="let item of myData"
+            [item]="item"
 
-    <app-hard-item 
-        *ngFor="let item of myData"
-        [item]="item"
-        [isAdmin]="isAdmin"
-        (onDelete)="delete(item)">
+            (onDelete)="deleteItem(item)"
+            [(showBtnAction)]="showBtnAction"
+        >
 
-    </app-hard-item>
+        </app-hard-item>
+    </div>
+</ng-container>
+<app-hard-form
+    *ngIf="showForm && flagUserAdmin"
+
+    [formData]="formData"
+
+    (showBtnActionChange)="showBtnAction"
+    (onUpdate)=" addItem($event)"
+    (cancel)="cancelation($event)"
+>
+</app-hard-form>
+
+<ng-template #agregar>
+    <div class="table-dark text-left container"  >
+        <p> Sin registrar habilidades.
+        </p>
+    </div>
+</ng-template>
+
+<ng-container *ngIf="flagUserAdmin && showBtnAction">
+    <br>
+    <button class="btn btn-default btn-sm" 
+        ngClass="faControl fa-ico"
+        (click)="toggleForm()"
+        >
+        <fa-icon
+        ngClass="fa-3x"
+            [icon]="faPlusCircle"
+            
+            >
+        </fa-icon>
+    </button>
 </ng-container>
