@@ -89,26 +89,48 @@ export class DataService {
     this.EndPoint = `${this.apiURL}/Interest?userId=${this.USERID}`
     return this.http.get<Interest[]>(this.EndPoint )
   }
+  updateInterest(interest:Interest): Observable<Interest>{
+    // Este codigo modifica el valor del usuario en la DB
+    const url = `${this.apiURL}/Interest/${interest.id}`;
+    return this.http.put<Interest>(url, interest)
+  }
   delInterests(interest:Interest): Observable<Interest>{
     const url = `${this.apiURL}/Interest/${interest.id}`
     return this.http.delete<Interest>(url)
   }
-  updateInterest(interest:Interest): Observable<Interest>{
-    const url = `${this.apiURL}/Interest/${interest.id}`;
-    return this.http.put<Interest>(url, interest)
+  addInterests(interest:Interest): Observable<Interest>{
+    console.log("estoy en el metodo del servicio")
+    // Este codigo agrega un usuario a la DB 
+    interest.userId = this.USERID;
+    console.log(interest.constructor.name)
+    return this.http.post<Interest>(`${this.apiURL}/Interest`, interest, httpOptions)
   }
+
 
 
   // SoftSkills
   getSoftSkill(): Observable<SoftSkill[]> {
-  this.EndPoint = `${this.apiURL}/SoftSkills?userId=${this.USERID}`
+  this.EndPoint = `${this.apiURL}/SoftSkill?userId=${this.USERID}`
   return this.http.get<SoftSkill[]>(this.EndPoint )
   }
-  delSoftSkills(softskill:SoftSkill): Observable<SoftSkill>{
+  updateSoftSkill(softskill:SoftSkill): Observable<SoftSkill>{
+    const url = `${this.apiURL}/SoftSkill/${softskill.id}`;
+    return this.http.put<SoftSkill>(url, softskill)
+  }
+  delSoftSkill(softskill:SoftSkill): Observable<SoftSkill>{
   // Este codigo elimina de la DB al usuario
-  const url = `${this.apiURL}/SoftSkills/${softskill.id}`
+  const url = `${this.apiURL}/SoftSkill/${softskill.id}`
   return this.http.delete<SoftSkill>(url)
   }
+  addSoftskill(softskill:SoftSkill): Observable<SoftSkill>{
+    console.log("estoy en el metodo del servicio")
+    // Este codigo agrega un usuario a la DB 
+    softskill.userId = this.USERID;
+    console.log(softskill.constructor.name)
+    return this.http.post<SoftSkill>(`${this.apiURL}/SoftSkill`, softskill, httpOptions)
+  }
+
+
 
   // Projects
   getProjects(): Observable<Projects[]> {
@@ -145,19 +167,8 @@ export class DataService {
 
 
   // pendientes de implementar
-  addInterests(interest:Interest): Observable<Interest>{
-    console.log("estoy en el metodo del servicio")
-    // Este codigo agrega un usuario a la DB 
-    interest.userId = this.USERID;
-    console.log(interest.constructor.name)
-    return this.http.post<Interest>(`${this.apiURL}/Interest`, interest, httpOptions)
-  }
 
-  updateInterests(interest:Interest): Observable<Interest>{
-    // Este codigo modifica el valor del usuario en la DB
-    const url = `${this.apiURL}/Interest/${interest.id}`;
-        return this.http.put<Interest>(url, interest)
-  }
+
 
 
 

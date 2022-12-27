@@ -1,9 +1,24 @@
 
-<ng-container *ngIf="myData; else statusWait">
+<ng-container *ngIf="myData">
+
 
 <div class="container py-4 p-0 m-0">
     <div class="card"
     >
+    <ng-container *ngIf="flagUserAdmin && showBtnAction">
+        <br>
+        <button class="btn btn-default btn-sm" 
+        ngClass="faControl fa-ico"
+        (click)="toggleForm()"
+        >
+        <fa-icon
+            ngClass="fa-3x"
+            [icon]="faPen"
+    
+            >
+        </fa-icon>
+        </button>
+    </ng-container>
         <ng-container *ngIf="myData">
 
             <div class="ratio ratio-1x1 rounded-circle overflow-hidden" style="width: 50%; height: 50%; margin: auto;">
@@ -29,9 +44,4 @@
 
 </ng-container>
 
-<ng-template #statusWait >
-    <div
-        [ngStyle]="{'background-color': 'red'}">
-        <h6 >ESPERANDO</h6>
-    </div>
-</ng-template>
+

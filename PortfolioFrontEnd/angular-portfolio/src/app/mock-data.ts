@@ -88,18 +88,21 @@ export const SOFTSKILL: SoftSkill[] = [
         id: 1,
         name:"Mock Amabilidad",
         assessment:7,
+        orderdeploy:0,
         userId:1
     },
     {
         id: 2,
         name:"Respeto",
         assessment:6,
+        orderdeploy:0,
         userId:1
     },
     {
         id: 3,
         name:"Integridad",
         assessment:9,
+        orderdeploy:0,
         userId:1
     }
 ] 

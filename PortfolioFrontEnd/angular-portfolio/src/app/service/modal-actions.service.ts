@@ -39,14 +39,17 @@ export class ModalActionsService {
         break;
         
       case "delObjetive":
-          modalData.data.objetive = ""
-          this.updateData(modalData)
-          break;
+        modalData.data.objetive = ""
+        this.updateData(modalData)
+        break;
 
       case "delInterest":
         this.deleteInterest(modalData);
         break;
       
+      case "delSoftSkill":
+        this.deleteSoftskill(modalData);
+        break;
       
       default:
         console.log("ALERTA: en modalAction, No se ha encontrado modalData.name")
@@ -63,5 +66,10 @@ export class ModalActionsService {
   private updateData(modalData: any) {
     console.log(modalData.data)
     this.dataservice.updateGralData(modalData.data).subscribe()
+  }
+
+  private deleteSoftskill(modalData: any) {
+    console.log(modalData.data)
+    this.dataservice.delSoftSkill(modalData.data).subscribe()
   }
 }

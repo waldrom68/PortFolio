@@ -1,43 +1,47 @@
-
-<ng-container *ngIf="myData.length">
+<ng-container *ngIf="myData.length; else agregar">
     <div class="table-dark text-left container" >
-                <app-interests-item
-                    *ngFor="let item of myData"
-                    [item]="item"
-                    
-                    (onDelete)="deleteItem(item)"
-                    [(showBtnAction)]="showBtnAction"
-                    >
-                    
-                </app-interests-item>
-                <!-- [(size)]= "size" -->
-
-                <app-interests-form
-                    *ngIf="showForm && flagUserAdmin"
-
-                    [formData]="formData"
-
-                    (showBtnActionChange)="showBtnAction"
-                    (onUpdate)=" addInterest($event)"
-                    (cancel)="cancelation($event)"
-                    >
-                </app-interests-form>
-        </div>
-                    <!-- [showForm]="showForm" -->
+        <app-interests-item
+            *ngFor="let item of myData"
+            [item]="item"
+            
+            (onDelete)="deleteItem(item)"
+            [(showBtnAction)]="showBtnAction"
+            >
+            
+        </app-interests-item>
+</div>
 </ng-container>
 
-<ng-container *ngIf="myData.length && (flagUserAdmin && showBtnAction)">
+    <app-interests-form
+        *ngIf="showForm && flagUserAdmin"
+
+        [formData]="formData"
+
+        (showBtnActionChange)="showBtnAction"
+        (onUpdate)=" addItem($event)"
+        (cancel)="cancelation($event)"
+    >
+    </app-interests-form>
+                    <!-- [showForm]="showForm" -->
+<ng-template #agregar>
+    <div class="table-dark text-left container"  >
+        <p> Sin registrar intereses.
+        </p>
+    </div>
+</ng-template>
+
+<ng-container *ngIf="flagUserAdmin && showBtnAction">
     <br>
     <button class="btn btn-default btn-sm" 
-    ngClass="faControl fa-ico"
-    (click)="toggleForm()"
-    >
-    <fa-icon
-        ngClass="fa-3x"
-        [icon]="faPlusCircle"
-
+        ngClass="faControl fa-ico"
+        (click)="toggleForm()"
         >
-    </fa-icon>
+        <fa-icon
+        ngClass="fa-3x"
+            [icon]="faPlusCircle"
+            
+            >
+        </fa-icon>
     </button>
 </ng-container>
 

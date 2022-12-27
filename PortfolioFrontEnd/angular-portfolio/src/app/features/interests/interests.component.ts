@@ -18,19 +18,19 @@ import { Observable } from 'rxjs';
 })
 export class InterestsComponent implements OnInit {
 
-
   // PENDIENTE: SERVICIO QUE DEBE VINCULARSE CON EL LOGUEO
   flagUserAdmin: boolean = false;
   flagUserAdmin$: Observable<boolean>;
+
+  showForm: boolean = false;  // flag para mostrar o no el formulario
 
   // intereses: Intereses[] = INTERESES;
   myData: Interest[] = [];
   formData: Interest;  // instancia vacia, para cuando se solicite un alta
   
   faPlusCircle = faPlusCircle;
-  faPen = faPen;
+  // faPen = faPen;
 
-  showForm: boolean = false;  // flag para mostrar o no el formulario
   // ocultarAcciones: boolean = false;
   
   showBtnAction: boolean= true;  // flag para mostrar o no los btn's de acciones del usuario
@@ -48,7 +48,6 @@ export class InterestsComponent implements OnInit {
     private modalService: ModalActionsService,
     ) {
       this.formData = { id:0, name:"", orderdeploy:0, userId:0 }
-
      }
     
   ngOnInit(): void {
@@ -59,9 +58,7 @@ export class InterestsComponent implements OnInit {
         this.user = data
       ) ;
 
-
-
-    // subscribo y me entero si se cambia el estatus del flag  
+    // subscribo y me entero si se cambia el status del flag  
     this.flagBorrado$ = this.modalService.getFlagBorrado$();
     this.flagBorrado$.subscribe( (tt)=> {
       console.log(`Se acepto el borrado del item "${this.itemParaBorrar.name}"`);
@@ -81,7 +78,6 @@ export class InterestsComponent implements OnInit {
     this.showBtnAction = !this.showBtnAction
   }
 
-
   cancelation(interest: Interest) {
     this.toggleForm();
   }
@@ -91,11 +87,11 @@ export class InterestsComponent implements OnInit {
     this.openDeleteModal(interest)
   }
 
-  upDateInterest(interest: Interest) {
+  upDateItem(interest: Interest) {
     this.dataService.updateInterest(interest).subscribe();
   }
 
-  addInterest(interest: Interest) {
+  addItem(interest: Interest) {
     this.dataService.addInterests(interest).subscribe( (tt)=> {
         this.myData.push( tt );
         this.toggleForm();
@@ -116,7 +112,7 @@ export class InterestsComponent implements OnInit {
     dialogConfig.data = {
       // atributos generales del message-box
       name: "delInterest",
-      title: `Hi ${userId}, está por eliminar uno de los intereses ?`,
+      title: `Hi ${userId}, está por eliminar uno de los intereses`,
       description: `¿Estás seguro de eliminar al interés "${data.name}" ?`,
       // por defecto mostrararía Aceptar
       actionButtonText: "Eliminar",

@@ -89,6 +89,7 @@ export interface Users {
         id: number,
         name:string,
         assessment:number,
+        orderdeploy:number,
         userId:number,
     }
     

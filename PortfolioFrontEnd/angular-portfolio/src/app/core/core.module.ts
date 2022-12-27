@@ -32,75 +32,68 @@ import { DatosFormacionComponent } from '../features/datos-formacion/datos-forma
 
 import { InterestsFormComponent } from '../features/bloque-formacion-skill-int/interests-form/interests-form.component';
 import { ObjetiveFormComponent } from '../features/bloque-datos-obj-profile/objetive-form/objetive-form.component';
+import { SoftFormComponent } from "../features/bloque-formacion-skill-int/soft-form/soft-form.component";
 
 
 
 
 @NgModule({
-  declarations: [
-    TopBarComponent,
-    FooterComponent,
-    MainComponent,
-    DataCardComponent,
-    PersonalCardComponent,
-    ProfileComponent,
-    ObjetiveComponent,
-    DatosTrayectoriaComponent,
-    DatosFormacionComponent,
-
-    HardSkillsComponent,
-    SoftSkillsComponent,
-    InterestsComponent,
-    ProjectsComponent,
-
-    InterestsItemComponent,
-    SoftItemComponent,
-    HardItemComponent,
-    ProjectsItemComponent,
-    FormacionItemComponent,
-    CareerItemComponent,
-    ProfileItemComponent,
-    ObjetiveItemComponent,
-
-    ObjetiveFormComponent,
-    InterestsFormComponent,
-    
-  ],
-  imports: [
-    CommonModule,
-    FontAwesomeModule,
-
-    FormsModule, 
-    ReactiveFormsModule,
-    // PersonalCardComponent,
-  ],
-  exports: [
-    TopBarComponent,
-    FooterComponent,
-    MainComponent,
-    DataCardComponent,
-    ProfileComponent,
-    ObjetiveComponent,
-    DatosTrayectoriaComponent,
-    DatosFormacionComponent,
-    FormacionItemComponent,
-    CareerItemComponent,
-    ProfileItemComponent,
-    ObjetiveItemComponent,
-
-    ObjetiveFormComponent,
-    InterestsFormComponent,
-
-    // InterestsComponent,
-    // SoftSkillsComponent,
-
-    // SoftItemComponent,
-    // InterestsItemComponent,
-    // PersonalCardComponent,
-
-    // FontAwesomeModule
-  ]
-
+    declarations: [
+        TopBarComponent,
+        FooterComponent,
+        MainComponent,
+        DataCardComponent,
+        PersonalCardComponent,
+        ProfileComponent,
+        ObjetiveComponent,
+        DatosTrayectoriaComponent,
+        DatosFormacionComponent,
+        HardSkillsComponent,
+        SoftSkillsComponent,
+        InterestsComponent,
+        ProjectsComponent,
+        InterestsItemComponent,
+        SoftItemComponent,
+        HardItemComponent,
+        ProjectsItemComponent,
+        FormacionItemComponent,
+        CareerItemComponent,
+        ProfileItemComponent,
+        ObjetiveItemComponent,
+        ObjetiveFormComponent,
+        InterestsFormComponent,
+        SoftFormComponent
+    ],
+    exports: [
+        TopBarComponent,
+        FooterComponent,
+        MainComponent,
+        DataCardComponent,
+        ProfileComponent,
+        ObjetiveComponent,
+        DatosTrayectoriaComponent,
+        DatosFormacionComponent,
+        FormacionItemComponent,
+        CareerItemComponent,
+        ProfileItemComponent,
+        ObjetiveItemComponent,
+        ObjetiveFormComponent,
+        InterestsFormComponent,
+        SoftFormComponent
+        // InterestsComponent,
+        // SoftSkillsComponent,
+        // SoftItemComponent,
+        // InterestsItemComponent,
+        // PersonalCardComponent,
+        // FontAwesomeModule
+    ],
+    imports: [
+        CommonModule,
+        FontAwesomeModule,
+        FormsModule,
+        ReactiveFormsModule,
+        
+    ]
 })
 
 export class CoreModule { }

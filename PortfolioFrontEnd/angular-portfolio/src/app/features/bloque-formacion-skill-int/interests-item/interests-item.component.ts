@@ -18,7 +18,6 @@ export class InterestsItemComponent implements OnInit {
   flagUserAdmin$: Observable<boolean>;
 
 
-
   @Input() item: Interest;
 
   @Input() showBtnAction!: boolean;
@@ -27,7 +26,6 @@ export class InterestsItemComponent implements OnInit {
   @Output() onDelete: EventEmitter<Interest> = new EventEmitter()
   @Output() onUpdate: EventEmitter<Interest> = new EventEmitter()
   @Output() onToggleForm: EventEmitter<Interest> = new EventEmitter()
-  
  
   faTimes = faTimes;
   faPen = faPen;
@@ -36,15 +34,12 @@ export class InterestsItemComponent implements OnInit {
   showForm: boolean = false;
   formData: Interest;
 
-  
   constructor( private dataService: DataService, ) { }
 
   ngOnInit(): void {
- 
     this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();
     this.flagUserAdmin$.subscribe(  flagUserAdmin => this.flagUserAdmin = flagUserAdmin)
     this.flagUserAdmin = this.dataService.getFlagUserAdmin()
-
   }
 
   color:string = 'red';

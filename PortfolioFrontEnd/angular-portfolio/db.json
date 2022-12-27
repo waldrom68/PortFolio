@@ -99,44 +99,6 @@
       "userId": 1
     }
   ],
-  "SoftSkills": [
-    {
-      "id": 1,
-      "name": "Adaptación al CLIMA jeje",
-      "assessment": 3,
-      "userId": 1
-    },
-    {
-      "id": 2,
-      "name": "Capacidad analítica",
-      "assessment": 4,
-      "userId": 1
-    },
-    {
-      "id": 3,
-      "name": "Gestión del tiempo",
-      "assessment": 4,
-      "userId": 1
-    },
-    {
-      "id": 4,
-      "name": "Inteligencia emocional y social",
-      "assessment": 4,
-      "userId": 1
-    },
-    {
-      "id": 5,
-      "name": "Seguridad personal",
-      "assessment": 3,
-      "userId": 1
-    },
-    {
-      "id": 6,
-      "name": "Trabajo en equipo",
-      "assessment": 3,
-      "userId": 1
-    }
-  ],
   "HardSkills": [
     {
       "id": 1,
@@ -376,33 +338,104 @@
   "Interest": [
     {
       "id": 1,
-      "name": "Padle",
-      "orderdeploy": 1
+      "name": "Adaptabilidad al clima jeje",
+      "orderdeploy": 1,
+      "userId": 1
     },
     {
       "id": 2,
       "name": "Viajar",
-      "orderdeploy": 1
+      "orderdeploy": 1,
+      "userId": 1
     },
     {
       "id": 3,
       "name": "culear",
-      "orderdeploy": 1
+      "orderdeploy": 1,
+      "userId": 1
     },
     {
       "id": 4,
       "name": "Colaborar y asistir",
-      "orderdeploy": 1
-    },
-    {
-      "id": 5,
-      "name": "Restaurar muebles y ojetes",
-      "orderdeploy": 1
+      "orderdeploy": 1,
+      "userId": 1
     },
     {
       "id": 6,
       "name": "hacer milanesas a la maryland",
-      "orderdeploy": 1
+      "orderdeploy": 1,
+      "userId": 1
+    },
+    {
+      "id": 7,
+      "name": "Comer hasta cubrir las necesidades basicas",
+      "orderdeploy": 0,
+      "userId": 3
+    }
+  ],
+  "SoftSkill": [
+    {
+      "id": 1,
+      "name": "Adaptación al CLIMA jeje",
+      "assessment": 1,
+      "orderdeploy": 0,
+      "userId": 1
+    },
+    {
+      "id": 2,
+      "name": "Capacidad analítica",
+      "assessment": 4,
+      "orderdeploy": 0,
+      "userId": 1
+    },
+    {
+      "id": 3,
+      "name": "Gestión del tiempo",
+      "assessment": 4,
+      "orderdeploy": 0,
+      "userId": 1
+    },
+    {
+      "id": 4,
+      "name": "Inteligencia emocional y social",
+      "assessment": 4,
+      "orderdeploy": 0,
+      "userId": 1
+    },
+    {
+      "id": 5,
+      "name": "Seguridad personal",
+      "assessment": 3,
+      "orderdeploy": 0,
+      "userId": 1
+    },
+    {
+      "id": 6,
+      "name": "Trabajo en equipo",
+      "assessment": 3,
+      "orderdeploy": 0,
+      "userId": 1
+    },
+    {
+      "id": 7,
+      "name": "Dibujar hipotenusas en el aire",
+      "assessment": 0,
+      "orderdeploy": 0,
+      "userId": 4
+    },
+    {
+      "id": 8,
+      "name": "Escucha activa",
+      "assessment": 0,
+      "orderdeploy": 0,
+      "userId": 4
+    },
+    {
+      "id": 9,
+      "name": "Ser o no Ser",
+      "assessment": 0,
+      "orderdeploy": 0,
+      "userId": 4
     }
   ]
 }
