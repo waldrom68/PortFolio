@@ -67,18 +67,21 @@ export const HARDSKILL: HardSkill[] = [
     id: 1,
     name:"Mock Python",
     assessment:65,
+    orderdeploy:0,
     userId:1
 },
     {
     id: 2,
     name:"html",
     assessment:50,
+    orderdeploy:0,
     userId:1
 },
     {
     id: 1,
     name:"CSS3",
     assessment:45,
+    orderdeploy:0,
     userId:1
 }
 ]

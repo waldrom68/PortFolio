@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
 
-import { Person, HardSkill, SoftSkill, Studies, LaboralCareer, Interest, Projects, PortfolioInit, Cards, User, Usuario } from '../data'
+import { Person, HardSkill, SoftSkill, Studies, LaboralCareer, Interest, Project, PortfolioInit, Cards, User, Usuario } from '../data'
 
 import { HttpClient, HttpHeaders } from '@angular/common/http'  // Para ejecutar los metodos GET, PUT, POST, ETC
 
@@ -28,8 +28,7 @@ export class DataService {
   private flagChangeUser: boolean = false;
   private flagChangeUser$ = new Subject<boolean>();
 
-  private prueba1: string = "TESTEANDO USER"
-
+ 
   constructor(  
         // inicializamos el metodo http
         private http: HttpClient
@@ -76,12 +75,23 @@ export class DataService {
 
   // HardSkills
   getHardSkill(): Observable<HardSkill[]> {
-    this.EndPoint = `${this.apiURL}/HardSkills?userId=${this.USERID}`
+    this.EndPoint = `${this.apiURL}/HardSkill?userId=${this.USERID}`
     return this.http.get<HardSkill[]>(this.EndPoint )
   }
-  delHardSkills(softskill:HardSkill): Observable<HardSkill>{
-    const url = `${this.apiURL}/HardSkills/${softskill.id}`
+  delHardSkills(hardskill:HardSkill): Observable<HardSkill>{
+    const url = `${this.apiURL}/HardSkill/${hardskill.id}`
     return this.http.delete<HardSkill>(url)
+  }
+  updateHardSkill(hardskill:HardSkill): Observable<HardSkill>{
+    const url = `${this.apiURL}/HardSkill/${hardskill.id}`;
+    return this.http.put<HardSkill>(url, hardskill)
+  }
+  addHardskill(hardskill:HardSkill): Observable<HardSkill>{
+    console.log("estoy en el metodo del servicio")
+    // Este codigo agrega un usuario a la DB 
+    hardskill.userId = this.USERID;
+    console.log(hardskill.constructor.name)
+    return this.http.post<HardSkill>(`${this.apiURL}/Hardskill`, hardskill, httpOptions)
   }
 
   // Interest
@@ -106,21 +116,20 @@ export class DataService {
     return this.http.post<Interest>(`${this.apiURL}/Interest`, interest, httpOptions)
   }
 
-
-
   // SoftSkills
   getSoftSkill(): Observable<SoftSkill[]> {
   this.EndPoint = `${this.apiURL}/SoftSkill?userId=${this.USERID}`
   return this.http.get<SoftSkill[]>(this.EndPoint )
   }
-  updateSoftSkill(softskill:SoftSkill): Observable<SoftSkill>{
-    const url = `${this.apiURL}/SoftSkill/${softskill.id}`;
-    return this.http.put<SoftSkill>(url, softskill)
-  }
+
   delSoftSkill(softskill:SoftSkill): Observable<SoftSkill>{
   // Este codigo elimina de la DB al usuario
   const url = `${this.apiURL}/SoftSkill/${softskill.id}`
   return this.http.delete<SoftSkill>(url)
+  }
+  updateSoftSkill(softskill:SoftSkill): Observable<SoftSkill>{
+  const url = `${this.apiURL}/SoftSkill/${softskill.id}`;
+  return this.http.put<SoftSkill>(url, softskill)
   }
   addSoftskill(softskill:SoftSkill): Observable<SoftSkill>{
     console.log("estoy en el metodo del servicio")
@@ -131,16 +140,32 @@ export class DataService {
   }
 
 
-
   // Projects
-  getProjects(): Observable<Projects[]> {
-    this.EndPoint = `${this.apiURL}/Projects?userId=${this.USERID}`
-    return this.http.get<Projects[]>(this.EndPoint )
+  getProject(): Observable<Project[]> {
+    this.EndPoint = `${this.apiURL}/Project?userId=${this.USERID}`
+    return this.http.get<Project[]>(this.EndPoint )
   }
-  delProjects(projects:Projects): Observable<Projects>{
-    const url = `${this.apiURL}/Projects/${projects.id}`
-    return this.http.delete<Projects>(url)
+  delProject(project:Project): Observable<Project>{
+    const url = `${this.apiURL}/Project/${project.id}`
+    return this.http.delete<Project>(url)
   }
+  updateProject(project:Project): Observable<Project>{
+    const url = `${this.apiURL}/Project/${project.id}`;
+    return this.http.put<Project>(url, project)
+  }
+  addProject(project:Project): Observable<Project>{
+    console.log("estoy en el metodo del servicio")
+    // Este codigo agrega un usuario a la DB 
+    project.userId = this.USERID;
+    console.log(project.constructor.name)
+    return this.http.post<Project>(`${this.apiURL}/Project`, project, httpOptions)
+  }
+
+
+
+
+
+  // pendientes de implementar
 
   // Studies
   getStudies(): Observable<Studies[]> {
@@ -161,13 +186,6 @@ export class DataService {
     const url = `${this.apiURL}/LaboralCareer/${career.id}`
     return this.http.delete<LaboralCareer>(url)
   }
-
-
-
-
-
-  // pendientes de implementar
-
 
 
 

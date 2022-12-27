@@ -51,6 +51,10 @@ export class ModalActionsService {
         this.deleteSoftskill(modalData);
         break;
       
+      case "delHardSkill":
+        this.deleteHardSkills(modalData);
+        break;
+      
       default:
         console.log("ALERTA: en modalAction, No se ha encontrado modalData.name")
         break;
@@ -71,5 +75,9 @@ export class ModalActionsService {
   private deleteSoftskill(modalData: any) {
     console.log(modalData.data)
     this.dataservice.delSoftSkill(modalData.data).subscribe()
+  }
+  private deleteHardSkills(modalData: any) {
+    console.log(modalData.data)
+    this.dataservice.delHardSkills(modalData.data).subscribe()
   }
 }

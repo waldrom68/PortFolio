@@ -99,68 +99,6 @@
       "userId": 1
     }
   ],
-  "HardSkills": [
-    {
-      "id": 1,
-      "name": "CSS",
-      "assessment": 65,
-      "userId": 1
-    },
-    {
-      "id": 2,
-      "name": "Django",
-      "assessment": 35,
-      "userId": 1
-    },
-    {
-      "id": 3,
-      "name": "HTML",
-      "assessment": 70,
-      "userId": 1
-    },
-    {
-      "id": 3,
-      "name": "HTML",
-      "assessment": 70,
-      "userId": 1
-    },
-    {
-      "id": 4,
-      "name": "Javascript",
-      "assessment": 60,
-      "userId": 1
-    },
-    {
-      "id": 5,
-      "name": "MySQL",
-      "assessment": 60,
-      "userId": 1
-    },
-    {
-      "id": 5,
-      "name": "Python",
-      "assessment": 80,
-      "userId": 1
-    }
-  ],
-  "Projects": [
-    {
-      "id": 1,
-      "year": "2022",
-      "name": "CV, static Web Page",
-      "resume": "Elaborado con el Framework Django, Python, JS, HTML y CSS3",
-      "link": "https://waldrom68.pythonanywhere.com/",
-      "userId": 1
-    },
-    {
-      "id": 2,
-      "year": "2022",
-      "name": "Guia audica para eventos",
-      "resume": "Elaborado con el Framework Django, Python, JS, HTML y CSS3",
-      "link": "https://waldrom68.pythonanywhere.com/",
-      "userId": 1
-    }
-  ],
   "PortfolioInit": {
     "id": 1,
     "theme": "Dark",
@@ -293,8 +231,8 @@
       "pathFoto": "",
       "location": "Argentina, Bs.As.",
       "profession": "Programador Senior\nCOBOL",
-      "profile": "",
-      "objetive": "",
+      "profile": "Impresione con el perfil... POR FAVOR",
+      "objetive": "Ser claro con el objetivo. PUEDE SER CLAVE",
       "since": "1948",
       "email": "de-prueba@gmail.com",
       "username": "persona",
@@ -362,13 +300,13 @@
     },
     {
       "id": 6,
-      "name": "hacer milanesas a la maryland",
+      "name": "hacer milanesas a la NAPOLITANA",
       "orderdeploy": 1,
       "userId": 1
     },
     {
-      "id": 7,
-      "name": "Comer hasta cubrir las necesidades basicas",
+      "id": 8,
+      "name": "Realizar compras",
       "orderdeploy": 0,
       "userId": 3
     }
@@ -376,8 +314,8 @@
   "SoftSkill": [
     {
       "id": 1,
-      "name": "Adaptación al CLIMA jeje",
-      "assessment": 1,
+      "name": "CSS3",
+      "assessment": 70,
       "orderdeploy": 0,
       "userId": 1
     },
@@ -436,6 +374,91 @@
       "assessment": 0,
       "orderdeploy": 0,
       "userId": 4
+    },
+    {
+      "id": 11,
+      "name": "Escucha activa",
+      "assessment": 3,
+      "orderdeploy": 0,
+      "userId": 3
+    }
+  ],
+  "HardSkill": [
+    {
+      "id": 1,
+      "name": "CSS 3",
+      "assessment": 70,
+      "orderdeploy": 0,
+      "userId": 1
+    },
+    {
+      "id": 2,
+      "name": "Django",
+      "assessment": 35,
+      "orderdeploy": 0,
+      "userId": 1
+    },
+    {
+      "id": 3,
+      "name": "HTML",
+      "assessment": 70,
+      "orderdeploy": 0,
+      "userId": 1
+    },
+    {
+      "id": 4,
+      "name": "Javascript",
+      "assessment": 60,
+      "orderdeploy": 0,
+      "userId": 1
+    },
+    {
+      "id": 5,
+      "name": "MySQL",
+      "assessment": 60,
+      "orderdeploy": 0,
+      "userId": 1
+    },
+    {
+      "id": 5,
+      "name": "Python",
+      "assessment": 80,
+      "orderdeploy": 0,
+      "userId": 1
+    },
+    {
+      "id": 6,
+      "name": "Java",
+      "assessment": 25,
+      "orderdeploy": 0,
+      "userId": 1
+    },
+    {
+      "id": 7,
+      "name": "Cobol",
+      "assessment": 100,
+      "orderdeploy": 0,
+      "userId": 3
+    }
+  ],
+  "Project": [
+    {
+      "id": 1,
+      "name": "CV, static Web Page",
+      "resume": "Elaborado con el Framework Django, Python, JS, HTML y CSS3",
+      "since": "2022",
+      "url": "https://waldrom68.pythonanywhere.com/",
+      "orderdeploy": 0,
+      "userId": 1
+    },
+    {
+      "id": 2,
+      "name": "Guia audica para eventos",
+      "resume": "Elaborado con el Framework Django, Python, JS, HTML y CSS3",
+      "since": "2022",
+      "url": "https://waldrom68.pythonanywhere.com/",
+      "orderdeploy": 0,
+      "userId": 1
     }
   ]
 }

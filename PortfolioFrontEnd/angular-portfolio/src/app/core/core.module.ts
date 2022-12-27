@@ -33,6 +33,7 @@ import { DatosFormacionComponent } from '../features/datos-formacion/datos-forma
 import { InterestsFormComponent } from '../features/bloque-formacion-skill-int/interests-form/interests-form.component';
 import { ObjetiveFormComponent } from '../features/bloque-datos-obj-profile/objetive-form/objetive-form.component';
 import { SoftFormComponent } from "../features/bloque-formacion-skill-int/soft-form/soft-form.component";
+import { HardFormComponent } from '../features/bloque-formacion-skill-int/hard-form/hard-form.component';
 
 
 
@@ -62,7 +63,8 @@ import { SoftFormComponent } from "../features/bloque-formacion-skill-int/soft-f
         ObjetiveItemComponent,
         ObjetiveFormComponent,
         InterestsFormComponent,
-        SoftFormComponent
+        SoftFormComponent,
+        HardFormComponent,
     ],
     exports: [
         TopBarComponent,
@@ -79,7 +81,8 @@ import { SoftFormComponent } from "../features/bloque-formacion-skill-int/soft-f
         ObjetiveItemComponent,
         ObjetiveFormComponent,
         InterestsFormComponent,
-        SoftFormComponent
+        SoftFormComponent,
+        HardFormComponent,
         // InterestsComponent,
         // SoftSkillsComponent,
         // SoftItemComponent,

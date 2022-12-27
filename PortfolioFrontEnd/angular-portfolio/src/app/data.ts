@@ -84,19 +84,11 @@ export interface Users {
         position:string,
         userId:number,
     }
-    
-    export interface SoftSkill {
-        id: number,
-        name:string,
-        assessment:number,
-        orderdeploy:number,
-        userId:number,
-    }
-    
     export interface HardSkill {
         id: number,
         name:string,
         assessment:number,
+        orderdeploy: number,
         userId:number,
     }
     
@@ -168,5 +160,23 @@ export interface Users {
         id:number,
         name:string,
         lastName:string,
+    }
+    
+    export interface SoftSkill {
+        id: number,
+        name:string,
+        assessment:number,
+        orderdeploy:number,
+        userId:number,
+    }
+
+    export interface Project {
+        id: number,
+        name:string,
+        resume:string,
+        orderdeploy:number,
+        since:Date,
+        url:string,
+        userId:number
     }
 
