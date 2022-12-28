@@ -387,13 +387,13 @@
     {
       "id": 1,
       "name": "CSS 3",
-      "assessment": 70,
+      "assessment": 35,
       "orderdeploy": 0,
       "userId": 1
     },
     {
       "id": 2,
-      "name": "Django",
+      "name": "Django Framework",
       "assessment": 35,
       "orderdeploy": 0,
       "userId": 1
@@ -414,8 +414,8 @@
     },
     {
       "id": 5,
-      "name": "MySQL",
-      "assessment": 60,
+      "name": "Python",
+      "assessment": 80,
       "orderdeploy": 0,
       "userId": 1
     },
@@ -428,26 +428,26 @@
     },
     {
       "id": 6,
-      "name": "Java",
+      "name": "Classic Visual Basic",
       "assessment": 25,
       "orderdeploy": 0,
       "userId": 1
     },
     {
       "id": 7,
-      "name": "Cobol",
+      "name": "Delphi/Object Pascal",
       "assessment": 100,
       "orderdeploy": 0,
-      "userId": 3
+      "userId": 4
     }
   ],
   "Project": [
     {
       "id": 1,
-      "name": "CV, static Web Page",
-      "resume": "Elaborado con el Framework Django, Python, JS, HTML y CSS3",
+      "name": "Curriculum Vitae. -Static Web Page-",
+      "resume": "Elaborado con JS, HTML y CSS",
       "since": "2022",
-      "url": "https://waldrom68.pythonanywhere.com/",
+      "url": "https://waldrom68.github.io/",
       "orderdeploy": 0,
       "userId": 1
     },
@@ -459,6 +459,15 @@
       "url": "https://waldrom68.pythonanywhere.com/",
       "orderdeploy": 0,
       "userId": 1
+    },
+    {
+      "id": 3,
+      "name": "Calculator pro 2000x",
+      "resume": "",
+      "orderdeploy": 0,
+      "since": "2022-12-27T15:50:31.700Z",
+      "url": "",
+      "userId": 4
     }
   ]
 }

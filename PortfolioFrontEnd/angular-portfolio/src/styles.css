@@ -14,6 +14,13 @@
     --metal: #e3e3e3;
     --metallight-shadow: #b5b5b5;
     --metaldark-shadow: #787878;
+    /* ATRIBUTO COMUN, SIRVE PARA RESALTAR ALGO BAJO UN TONO COMÚN, ej: Star */
+    --acento: #00ff00;  /* --progress-color */
+    --acento-bg: #00468b !important;  /* 5 */
+    color: rgb(141, 174, 177);
+    --grosor: 5px;
+    /* --atencion:rgb(199, 199, 45) ; */
+
 }
 
 html, body { height: 100%; }

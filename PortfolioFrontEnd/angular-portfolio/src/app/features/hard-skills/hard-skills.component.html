@@ -1,16 +1,20 @@
-<ng-container *ngIf="myData.length; else agregar">
-    <div class="table-dark text-left container" >
-        <app-hard-item 
-            *ngFor="let item of myData"
-            [item]="item"
+<ng-container *ngIf="myData.length">
+    <div class="table-dark text-center container p-5" style="display: table-row-group;" >
+        <ng-container *ngIf="!showForm">
 
-            (onDelete)="deleteItem(item)"
-            [(showBtnAction)]="showBtnAction"
-        >
+                        <app-hard-item 
+                            *ngFor="let item of myData"
+                            [item]="item"
 
-        </app-hard-item>
-    </div>
+                            (onDelete)="deleteItem(item)"
+                            [(showBtnAction)]="showBtnAction"
+                        >
+
+                        </app-hard-item>
+
+
 </ng-container>
+
 <app-hard-form
     *ngIf="showForm && flagUserAdmin"
 

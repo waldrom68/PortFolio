@@ -11,6 +11,9 @@ import { MessageBoxComponent } from '../../shared/message-box/message-box.compon
 import { ModalActionsService } from 'src/app/service/modal-actions.service';
 import { Observable } from 'rxjs';
 
+
+declare function initAndSetupTheSliders(): void;
+
 @Component({
   selector: 'app-hard-skills',
   templateUrl: './hard-skills.component.html',
@@ -44,7 +47,7 @@ export class HardSkillsComponent implements OnInit {
     public matDialog: MatDialog,
     private modalService: ModalActionsService,
   ) { 
-    this.resetForm()
+    this.resetForm();
   }
 
   ngOnInit(): void {
@@ -67,6 +70,8 @@ export class HardSkillsComponent implements OnInit {
     this.flagUserAdmin = this.dataService.getFlagUserAdmin()
     
   }
+
+
 
   resetForm() {
     this.formData = { id:0, name:"", assessment:0, orderdeploy:0, userId:0 }
@@ -129,5 +134,13 @@ export class HardSkillsComponent implements OnInit {
     // https://material.angular.io/components/dialog/overview
     const modalDialog = this.matDialog.open(MessageBoxComponent, dialogConfig);
 
+  }
+
+  ngAfterViewInit(){
+    initAndSetupTheSliders();
+  }
+
+  ngAfterViewChecked() {
+    initAndSetupTheSliders();
   }
 }

@@ -1,37 +1,73 @@
 <ng-container *ngIf="!showForm">
-    <div class="container row py-2"
+    <!-- <div class="container row py-2"
     [ngClass]="color" (mouseover)="changeStyle($event)" (mouseout)="changeStyle($event)"
 
     >
-        <div class="col-8"
+        <section id="hardskill">
+                <div class="detalle">
+                    <div class="hardskill"> -->
+                        <!-- <div class="special"><hr></div> -->
 
-        >
-        <!-- (dblclick)="toggleForm(item);" -->
-            <span>{{item.name}}: {{item.assessment}}/5</span>
-        </div>
-        <div class="col-4 icon-group"
-             *ngIf="flagUserAdmin && showBtnAction"
-            >
-            <button class="btn btn-outline-success btn-sm"
-                (click)="toggleForm(item);"
-                ngClass="faConfirm fa-ico">
-                <fa-icon 
-                    [icon]="faPen"
-                    
-                >
-                </fa-icon>
-            </button>
-            <button class="btn btn-outline-danger btn-sm"
-                (click)="delete(item)"
-                ngClass="faCancel"
-            >
-                <fa-icon 
-                    [icon]="faTrash"
-                >
-                </fa-icon>
-            </button>
-        </div>
-    </div>
+                    <!-- {{item.name.replace({{regex}},'')}} -->
+                        <div class="container-chart m-2" id="{{item.name.replace(regex,'')}}" attr.aria-label='{{item.name}}' attr.aria-value='{{item.assessment}}'>
+                              
+                            <div class="donut-chart-block block-chart">
+                            <div class="donut-chart">
+                  
+                                <div id="section1-chart" class="clip-chart">
+                                <div class="item-chart"></div>
+                                </div>
+                                <div id="section2-chart" class="clip-chart">
+                                <div class="item-chart"></div>
+                                </div>
+                                <div id="section3-chart" class="clip-chart">
+                                <div class="item-chart"></div>
+                                </div>
+                                
+                                <div class="center-chart">
+                                <span>0%</span>
+                                </div>
+                                <div class="center-label">
+                                <span>duplicate skill</span>
+                                </div>  <!-- center-label-->
+                            </div>  <!-- donut chart-->
+                            </div>  <!-- donut-chart-block -->
+                  
+                            <div class="range-slider" style="display: none;" >
+                            <input type="range" orient="vertical" min="0" max="100"/>
+                            <div class="range-slider__bar"></div>
+                            <div class="range-slider__thumb"></div>
+                            </div>  <!-- range-slider -->
+                    <div class="icon-group"
+                    *ngIf="flagUserAdmin && showBtnAction"
+                    >
+                    <button class="btn btn-outline-success btn-sm"
+                        (click)="toggleForm(item);"
+                        ngClass="faConfirm fa-ico">
+                        <fa-icon 
+                            [icon]="faPen"
+                            
+                        >
+                        </fa-icon>
+                    </button>
+                    <button class="btn btn-outline-danger btn-sm"
+                        (click)="delete(item)"
+                        ngClass="faCancel"
+                    >
+                        <fa-icon 
+                            [icon]="faTrash"
+                        >
+                        </fa-icon>
+                    </button>
+                </div>
+                        </div>  <!-- container-chart -->
+            
+
+        <!-- </div> -->
+
+
+    
+
 </ng-container >
 
 <app-hard-form
@@ -43,3 +79,6 @@
 
     >
 </app-hard-form>
+
+
+

@@ -1,0 +1,45 @@
+
+  <form class="form-inline"
+  style="display: flex ; width:90% "
+  [formGroup]="form"
+
+  #myForm="ngForm"
+  (ngSubmit)="onEnviar($event); myForm.resetForm()"
+>
+  <div class="col" style="display: contents ; width:100% ">
+    <textarea type="text" 
+        formControlName="name" 
+        name="name" 
+        class="input-data"
+        [ngStyle]="{'width':'100%'}"
+        formControlName="name"
+        [ngClass] = "{error: (Nombre.invalid && Nombre.touched)}"
+    ></textarea>
+    <small class="mensajeError"
+        *ngIf="form.hasError('minlength', 'name')"> Minimo {{ Nombre.errors.minlength.requiredLength }} caracteres
+    </small>
+
+    <div class="col-4 icon-group"
+    >
+
+      <button type="submit" class="btn btn-outline-success btn-sm"
+      ngClass="faConfirm fa-ico"
+      [disabled]="!form.valid"
+      >
+        <fa-icon  [icon]="faCheck"> </fa-icon>
+      </button>
+
+      <button class="btn btn-outline-danger btn-sm"
+      (click)="onCancel($event); myForm.resetForm()"
+      ngClass="faCancel fa-ico"
+      >
+        <fa-icon [icon]="faTimes"> </fa-icon>
+      </button>
+
+    </div>
+
+
+  </div>
+
+
+  </form>

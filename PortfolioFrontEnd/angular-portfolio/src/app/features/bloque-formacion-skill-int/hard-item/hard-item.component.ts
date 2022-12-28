@@ -5,6 +5,7 @@ import { faPen, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Observable } from 'rxjs';
 import { DataService } from 'src/app/service/data.service';
 
+
 @Component({
   selector: 'app-hard-item',
   templateUrl: './hard-item.component.html',
@@ -32,7 +33,11 @@ export class HardItemComponent implements OnInit {
   showForm: boolean = false;
   formData: HardSkill;
 
-  constructor( private dataService: DataService, ) { }
+  regex= /[^a-zA-Z]+/g;
+  
+  constructor( private dataService: DataService, ) { 
+
+  }
 
   ngOnInit(): void {
     this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();
@@ -72,4 +77,5 @@ export class HardItemComponent implements OnInit {
 
   }
 
+  // item.name.replace("/[a-zA-Z]+/g","")
 }

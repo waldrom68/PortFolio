@@ -96,7 +96,7 @@ public class Person {
     // Relaciones one to one UniDireccional
     // Si deja de existir este registro, debe dejar de existir su relacion
     @OneToOne(cascade = CascadeType.REMOVE) 
-    @JoinColumn(name="displaydata_id", referencedColumnName="id")
+    @JoinColumn(name="displaydata", referencedColumnName="id")
     private DisplayData displaydata;
     
       

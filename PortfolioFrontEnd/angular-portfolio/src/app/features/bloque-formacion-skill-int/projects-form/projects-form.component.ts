@@ -5,59 +5,49 @@ import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Observable } from 'rxjs';
 import { DataService } from 'src/app/service/data.service';
 
-import { HardSkill } from 'src/app/data';
-
+import { Project } from 'src/app/data';
 
 @Component({
-  selector: 'app-hard-form',
-  templateUrl: './hard-form.component.html',
-  styleUrls: ['./hard-form.component.css']
+  selector: 'app-projects-form',
+  templateUrl: './projects-form.component.html',
+  styleUrls: ['./projects-form.component.css']
 })
-export class HardFormComponent implements OnInit {
-  // PENDIENTE: SERVICIO QUE DEBE VINCULARSE CON EL LOGUEO
-  flagUserAdmin: boolean = false;
-  flagUserAdmin$: Observable<boolean>;
+export class ProjectsFormComponent implements OnInit {
+// PENDIENTE: SERVICIO QUE DEBE VINCULARSE CON EL LOGUEO
+flagUserAdmin: boolean = false;
+flagUserAdmin$: Observable<boolean>;
 
-  @Input() formData: HardSkill;
+@Input() formData: Project;
 
-  @Output() onUpdate: EventEmitter<HardSkill> = new EventEmitter()
-  @Output() cancel: EventEmitter<HardSkill> = new EventEmitter()
+@Output() onUpdate: EventEmitter<Project> = new EventEmitter()
+@Output() cancel: EventEmitter<Project> = new EventEmitter()
 
-  faCheck = faCheck;
-  faTimes = faTimes;
+faCheck = faCheck;
+faTimes = faTimes;
 
-  form: FormGroup;
-  minAssessment:number = 0;
-  maxAssessment:number = 100;
+form: FormGroup;
 
-  constructor( 
-    private formBuilder: FormBuilder,
-    private dataService: DataService, ) { 
-    
-  }
 
-  ngOnInit(): void {
+constructor( 
+  private formBuilder: FormBuilder,
+  private dataService: DataService, ) { 
+  
+}
+
+  ngOnInit() {
     this.form = this.formBuilder.group({
-      name:[this.formData.name, [Validators.required, Validators.minLength(1) ]],
-      assessment:[this.formData.assessment, [Validators.required, Validators.max(this.maxAssessment), Validators.min(this.minAssessment) ]],
+      name:[this.formData.name, [Validators.required, Validators.minLength(1) ]]
     });
     this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();
     this.flagUserAdmin$.subscribe(  flagUserAdmin => this.flagUserAdmin = flagUserAdmin)
     this.flagUserAdmin = this.dataService.getFlagUserAdmin()
-
   }
-
   get Nombre(): any {
     return this.form.get("name")
   }
-
-  get Assessment(): any {
-    return this.form.get("assessment")
-  }
-
   resetForm() {
     this.formData.name = "";
-    this.formData.assessment = 0;
+
   }
   onEnviar(event: Event, ) {
     event.preventDefault;
@@ -71,7 +61,6 @@ export class HardFormComponent implements OnInit {
       if (this.form.valid) {
   
         this.formData.name = this.form.get("name")?.value;
-        this.formData.assessment = this.form.get("assessment")?.value;
         this.onUpdate.emit(this.formData);
   
       } else {
@@ -90,4 +79,5 @@ export class HardFormComponent implements OnInit {
   }
 
 
+  
 }
