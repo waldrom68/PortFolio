@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { SoftSkill } from '../../../data'
 
-import { faPen, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faPen, faTimes, faTrash, faHand } from '@fortawesome/free-solid-svg-icons';
 import { Observable } from 'rxjs';
 import { DataService } from 'src/app/service/data.service';
+
 
 @Component({
   selector: 'app-soft-item',
@@ -28,10 +29,13 @@ export class SoftItemComponent implements OnInit {
   faTimes = faTimes;
   faPen = faPen;
   faTrash = faTrash;
+  faHand = faHand;
 
   showForm: boolean = false;
   formData: SoftSkill;
   
+  regex= /[^a-zA-Z]+/g;
+
   constructor(  private dataService: DataService, ) { }
 
   ngOnInit(): void {

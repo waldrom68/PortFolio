@@ -1,16 +1,59 @@
 <ng-container *ngIf="!showForm">
-    <div class="container row py-2"
-    [ngClass]="color" (mouseover)="changeStyle($event)" (mouseout)="changeStyle($event)"
 
+    <div class="rating" id="{{item.name.replace(regex,'')}}" 
+    attr.mylabel={{item.name}} 
+    attr.myvalue="{{item.assessment}}"
     >
-        <div class="col-8"
-
+        <div class="container-fluid" style="display: inline-block;"
+        [ngClass]="color" (mouseover)="changeStyle($event)" (mouseout)="changeStyle($event)"
         >
-        <!-- (dblclick)="toggleForm(item);" -->
-            <span>{{item.name}}: {{item.assessment}}/100</span>
+            <div class="rtngSide">
+                <span>hability</span>
+            </div>
+            
+            <div class="rtngMiddle">
+                <div class="star-container">
+                <span class="rtngIcoStar disable" >
+                    <fa-icon 
+                    [icon]="faHand"
+                    >
+                    </fa-icon>
+                </span>
+                <span class="rtngIcoStar disable" >
+                    <fa-icon 
+                    [icon]="faHand"
+                    >
+                    </fa-icon>
+                </span>
+                <span class="rtngIcoStar disable" >
+                    <fa-icon 
+                    [icon]="faHand"
+                    >
+                    </fa-icon>
+                </span>
+                <span class="rtngIcoStar disable" >
+                    <fa-icon 
+                    [icon]="faHand"
+                    >
+                    </fa-icon>
+                </span>
+                <span class="rtngIcoStar disable" >
+                    <fa-icon 
+                    [icon]="faHand"
+                    >
+                    </fa-icon>
+                </span>
+                </div>
+            </div>
         </div>
-        <div class="col-4 icon-group"
-             *ngIf="flagUserAdmin && showBtnAction"
+
+        <div class="rtngSide rtngEnd" style="display: none;">
+            <span>{{item.assessment}}</span>
+        </div>
+<!-- ##################### -->
+
+        <div class="icon-group"
+            *ngIf="flagUserAdmin && showBtnAction"
             >
             <button class="btn btn-outline-success btn-sm"
                 (click)="toggleForm(item);"
@@ -31,13 +74,16 @@
                 </fa-icon>
             </button>
         </div>
-    </div>
+
+    </div>  <!-- rating -->
+    
 </ng-container >
 
 <app-soft-form
     *ngIf="showForm"
     [ngStyle]="{'width':'100%'}"
     [formData]="formData"
+    [title]="''"
     (onUpdate)=" update($event);"
     (cancel)="cancelation($event)"
 

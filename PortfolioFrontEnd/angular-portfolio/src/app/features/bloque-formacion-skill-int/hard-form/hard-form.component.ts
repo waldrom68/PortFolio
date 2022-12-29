@@ -19,7 +19,7 @@ export class HardFormComponent implements OnInit {
   flagUserAdmin$: Observable<boolean>;
 
   @Input() formData: HardSkill;
-
+  @Input() title:string;
   @Output() onUpdate: EventEmitter<HardSkill> = new EventEmitter()
   @Output() cancel: EventEmitter<HardSkill> = new EventEmitter()
 
@@ -47,6 +47,12 @@ export class HardFormComponent implements OnInit {
 
   }
 
+  color:string = 'red';
+  
+  changeStyle($event: Event){
+    this.color = $event.type == 'mouseover' ? 'resaltado' : 'normal';
+  }
+
   get Nombre(): any {
     return this.form.get("name")
   }
@@ -59,6 +65,7 @@ export class HardFormComponent implements OnInit {
     this.formData.name = "";
     this.formData.assessment = 0;
   }
+
   onEnviar(event: Event, ) {
     event.preventDefault;
     // Si deja de estar logueado, no registro lo que haya modificado y cierro form.

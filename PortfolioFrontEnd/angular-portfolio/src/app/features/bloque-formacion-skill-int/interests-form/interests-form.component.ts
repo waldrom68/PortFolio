@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
-import { faCheck, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faTimes} from '@fortawesome/free-solid-svg-icons';
 import { Observable } from 'rxjs';
 import { DataService } from 'src/app/service/data.service';
 
@@ -18,7 +18,7 @@ export class InterestsFormComponent implements OnInit {
   flagUserAdmin$: Observable<boolean>;
 
   @Input() formData: Interest;
-
+  @Input() title:string;
   @Output() onUpdate: EventEmitter<Interest> = new EventEmitter()
   @Output() cancel: EventEmitter<Interest> = new EventEmitter()
 

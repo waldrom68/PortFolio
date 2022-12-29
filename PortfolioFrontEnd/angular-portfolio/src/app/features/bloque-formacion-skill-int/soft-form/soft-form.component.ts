@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
-import { faCheck, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faTimes, faHand } from '@fortawesome/free-solid-svg-icons';
 import { Observable } from 'rxjs';
 import { DataService } from 'src/app/service/data.service';
 
@@ -18,12 +18,13 @@ export class SoftFormComponent implements OnInit {
   flagUserAdmin$: Observable<boolean>;
 
   @Input() formData: SoftSkill;
-
+  @Input() title:string;
   @Output() onUpdate: EventEmitter<SoftSkill> = new EventEmitter()
   @Output() cancel: EventEmitter<SoftSkill> = new EventEmitter()
 
   faCheck = faCheck;
   faTimes = faTimes;
+  faHand = faHand;
 
   form: FormGroup;
   minAssessment:number = 0;
@@ -37,13 +38,19 @@ export class SoftFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
-      name:[this.formData.name, [Validators.required, Validators.minLength(5) ]],
+      name:[this.formData.name, [Validators.required, Validators.minLength(3) ]],
       assessment:[this.formData.assessment, [Validators.required, Validators.max(this.maxAssessment), Validators.min(this.minAssessment) ]],
     });
     this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();
     this.flagUserAdmin$.subscribe(  flagUserAdmin => this.flagUserAdmin = flagUserAdmin)
     this.flagUserAdmin = this.dataService.getFlagUserAdmin()
 
+  }
+  
+  color:string = 'red';
+  
+  changeStyle($event: Event){
+    this.color = $event.type == 'mouseover' ? 'resaltado' : 'normal';
   }
 
   get Nombre(): any {

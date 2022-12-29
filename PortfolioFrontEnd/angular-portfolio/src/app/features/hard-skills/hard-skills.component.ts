@@ -136,11 +136,16 @@ export class HardSkillsComponent implements OnInit {
 
   }
 
-  ngAfterViewInit(){
+  // ngAfterViewInit(){
+  //   initAndSetupTheSliders();
+  // }
+
+  ngAfterViewChecked() {
     initAndSetupTheSliders();
   }
 
-  ngAfterViewChecked() {
+  ngAfterContentChecked() {
+    console.log("se termino ngAfterContentChecked")
     initAndSetupTheSliders();
   }
 }

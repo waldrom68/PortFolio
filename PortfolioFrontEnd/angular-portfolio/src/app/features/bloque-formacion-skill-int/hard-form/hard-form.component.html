@@ -1,36 +1,50 @@
 
-  <form class="form-inline"
-  style="display: flex ; width:90% "
+<form class="form-inline m-1"
+  style="display: flex"
   [formGroup]="form"
 
   #myForm="ngForm"
   (ngSubmit)="onEnviar($event); myForm.resetForm()"
 >
   <div class="col" style="display: contents ; width:100% ">
+
+    <h5 class="m-auto p-1">{{formData.name}}{{title}}</h5> 
     <textarea type="text" 
         formControlName="name" 
         name="name" 
-        class="input-data"
+        class="form-control"
         [ngStyle]="{'width':'100%'}"
         formControlName="name"
         [ngClass] = "{error: (Nombre.invalid && Nombre.touched)}"
     ></textarea>
-    <small class="mensajeError"
-        *ngIf="form.hasError('minlength', 'name')"> Minimo {{ Nombre.errors.minlength.requiredLength }} caracteres
-    </small>
 
-    <input type="number" 
-        formControlName="assessment" 
-        name="assessment" 
-        class="input-data"
-        formControlName="assessment"
-        [ngClass] = "{error: (Assessment.invalid && Assessment.touched)}"
-    >    
+    <small class="mensajeError" *ngIf="form.hasError('required', 'name')"> Minimo 1 caracter</small>
+    <small class="mensajeError" *ngIf="form.hasError('minlength', 'name')"> Minimo {{ Nombre.errors.minlength.requiredLength }} caracteres</small>
     <small class="mensajeError" *ngIf="form.hasError('min', 'assessment')"> Minimo {{ minAssessment }} </small>
     <small class="mensajeError" *ngIf="form.hasError('max', 'assessment')"> Máximo {{ maxAssessment }} </small>
 
-    <div class="col-4 icon-group"
+    <div class="m-auto p-1">
+      <b><em>
+        <output id="assessmentOutputId" >{{formData.assessment}}</output>
+        <span>%</span> 
+      </em></b>
+    </div>
+
+    <input type="range" 
+    formControlName="assessment" 
+    name="assessment" 
+    class="form-control"
+    formControlName="assessment"
+    id="assessmentInputId" 
+    value= {{formData.assessment}}
+    min='{{ minAssessment }}'
+    max='{{ maxAssessment }}'
+    step="5" 
+    oninput="assessmentOutputId.value = assessmentInputId.value"
     >
+
+
+    <div class="col-4 icon-group m-2">
 
       <button type="submit" class="btn btn-outline-success btn-sm"
       ngClass="faConfirm fa-ico"
@@ -52,4 +66,4 @@
   </div>
 
 
-  </form>
+</form>

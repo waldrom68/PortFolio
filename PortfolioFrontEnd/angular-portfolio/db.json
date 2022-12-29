@@ -276,7 +276,7 @@
   "Interest": [
     {
       "id": 1,
-      "name": "Adaptabilidad al clima jeje",
+      "name": "Adaptarme al clima",
       "orderdeploy": 1,
       "userId": 1
     },
@@ -314,8 +314,8 @@
   "SoftSkill": [
     {
       "id": 1,
-      "name": "CSS3",
-      "assessment": 70,
+      "name": "Adaptacion al Clima",
+      "assessment": 2,
       "orderdeploy": 0,
       "userId": 1
     },
@@ -336,7 +336,7 @@
     {
       "id": 4,
       "name": "Inteligencia emocional y social",
-      "assessment": 4,
+      "assessment": 3,
       "orderdeploy": 0,
       "userId": 1
     },
@@ -387,7 +387,7 @@
     {
       "id": 1,
       "name": "CSS 3",
-      "assessment": 35,
+      "assessment": 45,
       "orderdeploy": 0,
       "userId": 1
     },
@@ -429,7 +429,7 @@
     {
       "id": 6,
       "name": "Classic Visual Basic",
-      "assessment": 25,
+      "assessment": 45,
       "orderdeploy": 0,
       "userId": 1
     },

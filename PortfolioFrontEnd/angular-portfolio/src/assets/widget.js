@@ -53,25 +53,26 @@ function initNone(set) {
 // </script>  <!-- treeListAction -->
 
 {/* <script id="rating"> */}
-    (function updateProgress() {
+function updateProgress() {
     [].forEach.call(document.querySelectorAll(".rating"), function(el) {
         let valor = el.getAttribute("myvalue");
         el.querySelector(".rtngSide span").innerText = el.getAttribute("mylabel");
         el.querySelector(".rtngSide.rtngEnd span").innerText = valor
 
 
-        let icos = el.querySelectorAll(".star-container svg");
+        let icos = el.querySelectorAll(".star-container span");
 
         let index = 0
         icos.forEach( function(e) {
         if (index < parseInt(valor))  {
             e.classList.toggle('acento')
             e.classList.toggle('disable')
+            // console.log("Colocando la clase", e)
         }
         index ++
         });
     });
-    } ());
+    };
 // </script>  <!-- rating -->
 
 {/* <script id="donuts"> */}

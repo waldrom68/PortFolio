@@ -39,6 +39,7 @@
     *ngIf="showForm"
     [ngStyle]="{'width':'100%'}"
     [formData]="formData"
+    [title]="''"
     (onUpdate)=" update($event);"
     (cancel)="cancelation($event)"
     >

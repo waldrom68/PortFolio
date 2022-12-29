@@ -9,19 +9,20 @@
             >
             
         </app-interests-item>
-</div>
+    </div>
 </ng-container>
 
-    <app-interests-form
-        *ngIf="showForm && flagUserAdmin"
+<app-interests-form
+    *ngIf="showForm && flagUserAdmin"
 
-        [formData]="formData"
+    [formData]="formData"
+    [title]="'Ingrese un interes'"
 
-        (showBtnActionChange)="showBtnAction"
-        (onUpdate)=" addItem($event)"
-        (cancel)="cancelation($event)"
-    >
-    </app-interests-form>
+    (showBtnActionChange)="showBtnAction"
+    (onUpdate)=" addItem($event)"
+    (cancel)="cancelation($event)"
+>
+</app-interests-form>
                     <!-- [showForm]="showForm" -->
 <ng-template #agregar>
     <div class="table-dark text-left container"  >

@@ -11,6 +11,8 @@ import { MessageBoxComponent } from '../../shared/message-box/message-box.compon
 import { ModalActionsService } from 'src/app/service/modal-actions.service';
 import { Observable } from 'rxjs';
 
+
+declare function updateProgress(): void;
 @Component({
   selector: 'app-soft-skills',
   templateUrl: './soft-skills.component.html',
@@ -46,6 +48,7 @@ export class SoftSkillsComponent implements OnInit {
   ) { 
     this.resetForm()
   }
+
 
   ngOnInit(): void {
     this.dataService.getSoftSkill().subscribe(skills =>
@@ -131,5 +134,20 @@ export class SoftSkillsComponent implements OnInit {
     // https://material.angular.io/components/dialog/overview
     const modalDialog = this.matDialog.open(MessageBoxComponent, dialogConfig);
 
+  }
+  
+  // ngAfterViewInit(){
+  //   console.log("se termino ngAfterViewInit")
+  //   updateProgress();
+  // }
+
+  ngAfterViewChecked() {
+    console.log("se termino ngAfterViewChecked")
+    updateProgress();
+  }
+
+  ngAfterContentChecked() {
+    console.log("se termino ngAfterContentChecked")
+    updateProgress();
   }
 }

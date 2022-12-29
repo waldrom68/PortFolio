@@ -5,3 +5,81 @@
 .normal {
     color: inherit;
 }
+
+.acento {
+    color: var(--acento);
+    /* stroke: var(--acento); */
+    background-color: transparent;
+}
+
+.disable fa-icon {
+    color: gray;
+    /* stroke: var(--acento); */
+    background-color: transparent;
+}
+
+
+/* <!-- Place soft skill content --> */
+
+/* Three column layout*/
+.rating {
+    background-color: inherit !important;
+    border-bottom : 2px groove transparent;
+    color: currentColor !important;
+    display: inline-flex;
+    font-weight: bolder;
+    width: 100%;
+    height: auto;
+    margin-bottom: 1em;
+}
+
+/* Place title text for ratings */
+.rtngHeading{
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    display: none;
+}
+
+/* alphanumeric block -start and end- */
+.rtngSide {
+    width: 100%;
+    float: left;
+    word-wrap: break-word;
+    text-align: center;
+}
+
+/* icons block -middle- */
+.rtngMiddle {
+    float: left;
+    width: 100%;
+}
+
+/* The star container */
+.star-container {
+    width: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 10px;
+}
+
+.rtngIcoStar {
+    /* ESTO LO DEBE MANEJAR LA CLASE */
+    /* fill:var(--progress-bg); */
+}
+/* Place text to the right */
+.rtngEnd {
+    float: left;
+    width: auto;
+    margin: 0 5px;
+}
+
+/* Place number to the right */
+.rtngSide.rtngEnd span{
+    text-align: right;
+}
+.rtngSide.rtngEnd span::after{
+    content: "/5";
+}
+  /* </style> */
