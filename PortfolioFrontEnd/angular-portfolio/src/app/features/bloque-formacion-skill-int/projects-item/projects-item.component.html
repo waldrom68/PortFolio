@@ -1,18 +1,22 @@
 <ng-container *ngIf="!showForm">
+
     <div class="container row py-2"
     [ngClass]="color" (mouseover)="changeStyle($event)" (mouseout)="changeStyle($event)"
-
     >
-        <div class="col-8"
+        <div class="container-fluid" style="display: inline-block;"
 
         >
         <!-- (dblclick)="toggleForm(item);" -->
-            <small><a href="{{item.url}}" target="_blank">Visitar -> </a></small>
-            <span>( {{item.since}} )  {{item.name}}</span>
-            <small> {{item.resume}}</small>
+            
+            <h6>( {{item.since}} )  {{item.name}}
+                <a  class="px-3" href="{{item.url}}" target="_blank">-Visitar-</a>
+            </h6>
+            <small class="px-5"><i> {{item.resume}}</i></small>
 
         </div>
-        <div class="col-4 icon-group"
+        <!-- ##################### -->
+        
+        <div class="icon-group"
              *ngIf="flagUserAdmin && showBtnAction"
             >
             <button class="btn btn-outline-success btn-sm"
@@ -35,12 +39,14 @@
             </button>
         </div>
     </div>
+
 </ng-container >
 
 <app-projects-form
     *ngIf="showForm"
     [ngStyle]="{'width':'100%'}"
     [formData]="formData"
+    [title]="''"
     (onUpdate)=" update($event);"
     (cancel)="cancelation($event)"
 

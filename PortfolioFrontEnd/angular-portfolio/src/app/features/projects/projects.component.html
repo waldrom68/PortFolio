@@ -1,33 +1,43 @@
-<ng-container *ngIf="myData.length; else agregar">
-    <div class="table-dark text-left container" >
-        <app-projects-item 
-            *ngFor="let item of myData"
-            [item]="item"
-
-            (onDelete)="deleteItem(item)"
-            [(showBtnAction)]="showBtnAction"
+<div>
+    <ng-container *ngIf="myData.length; else agregar">
+        <div class="table-dark text-left container-fluid p-5" 
+        *ngIf="!showForm"
         >
+            <app-projects-item 
+                *ngFor="let item of myData"
+                [item]="item"
 
-        </app-projects-item>
-    </div>
-</ng-container>
-<app-projects-form
-    *ngIf="showForm && flagUserAdmin"
+                (onDelete)="deleteItem(item)"
+                [(showBtnAction)]="showBtnAction"
+            >
 
-    [formData]="formData"
+            </app-projects-item>
 
-    (showBtnActionChange)="showBtnAction"
-    (onUpdate)=" addItem($event)"
-    (cancel)="cancelation($event)"
->
-</app-projects-form>
 
-<ng-template #agregar>
-    <div class="table-dark text-left container"  >
-        <p> Sin registrar proyectos.
-        </p>
-    </div>
-</ng-template>
+        </div>
+    </ng-container>
+
+    <app-projects-form
+        *ngIf="showForm && flagUserAdmin"
+
+        [formData]="formData"
+        [title]="'Ingrese un proyecto'"
+
+        (showBtnActionChange)="showBtnAction"
+        (onUpdate)=" addItem($event)"
+        (cancel)="cancelation($event)"
+    >
+    </app-projects-form>
+
+    <ng-template #agregar>
+        <div class="table-dark text-left container"  >
+            <p> Sin registrar proyectos.
+            </p>
+        </div>
+    </ng-template>
+</div>
+
+
 
 <ng-container *ngIf="flagUserAdmin && showBtnAction">
     <br>

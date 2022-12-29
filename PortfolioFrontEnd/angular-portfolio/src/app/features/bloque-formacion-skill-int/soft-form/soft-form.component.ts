@@ -65,6 +65,7 @@ export class SoftFormComponent implements OnInit {
     this.formData.name = "";
     this.formData.assessment = 0;
   }
+  
   onEnviar(event: Event, ) {
     event.preventDefault;
     // Si deja de estar logueado, no registro lo que haya modificado y cierro form.

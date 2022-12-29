@@ -5,3 +5,9 @@
 .normal {
     color: inherit;
 }
+
+a:hover {
+    color: white;
+    font-weight: bolder;
+    text-decoration: none;
+}

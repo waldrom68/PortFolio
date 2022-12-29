@@ -1,3 +1,4 @@
+<h5 class="m-auto p-1">{{formData.name}}{{title}}</h5> 
 
 <form class="form-inline m-1"
   style="display: flex"
@@ -8,7 +9,6 @@
 >
   <div class="col" style="display: contents ; width:100% ">
 
-    <h5 class="m-auto p-1">{{formData.name}}{{title}}</h5> 
     <textarea type="text" 
         formControlName="name" 
         name="name" 
@@ -18,7 +18,7 @@
         [ngClass] = "{error: (Nombre.invalid && Nombre.touched)}"
     ></textarea>
 
-    <small class="mensajeError" *ngIf="form.hasError('required', 'name')"> Minimo 1 caracter</small>
+    <small class="mensajeError" *ngIf="form.hasError('required', 'name')"> Dato requerido </small>
     <small class="mensajeError" *ngIf="form.hasError('minlength', 'name')"> Minimo {{ Nombre.errors.minlength.requiredLength }} caracteres</small>
     <small class="mensajeError" *ngIf="form.hasError('min', 'assessment')"> Minimo {{ minAssessment }} </small>
     <small class="mensajeError" *ngIf="form.hasError('max', 'assessment')"> Máximo {{ maxAssessment }} </small>
@@ -31,16 +31,16 @@
     </div>
 
     <input type="range" 
-    formControlName="assessment" 
-    name="assessment" 
-    class="form-control"
-    formControlName="assessment"
-    id="assessmentInputId" 
-    value= {{formData.assessment}}
-    min='{{ minAssessment }}'
-    max='{{ maxAssessment }}'
-    step="5" 
-    oninput="assessmentOutputId.value = assessmentInputId.value"
+      formControlName="assessment" 
+      name="assessment" 
+      class="form-control"
+      formControlName="assessment"
+      id="assessmentInputId" 
+      value= {{formData.assessment}}
+      min='{{ minAssessment }}'
+      max='{{ maxAssessment }}'
+      step="5" 
+      oninput="assessmentOutputId.value = assessmentInputId.value"
     >
 
 

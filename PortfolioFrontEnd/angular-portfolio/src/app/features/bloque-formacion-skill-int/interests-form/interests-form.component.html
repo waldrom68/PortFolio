@@ -1,3 +1,4 @@
+<h5 class="m-auto p-1">{{formData.name}}{{title}}</h5> 
 
 <form class="form-inline"
   style="display: flex ; width:90% "
@@ -8,7 +9,6 @@
 >
   <div class="col" style="display: contents ; width:100% ">
 
-    <h5 class="m-auto p-1">{{formData.name}}{{title}}</h5> 
     <textarea type="text" 
       formControlName="name" 
       name="name" 
@@ -18,6 +18,9 @@
       [ngClass] = "{error: (Nombre.invalid && Nombre.touched)}"
     ></textarea>
 
+    <small class="mensajeError" *ngIf="form.hasError('minlength', 'name')"> Minimo {{ Nombre.errors.minlength.requiredLength }} caracteres </small>
+    <small class="mensajeError" *ngIf="form.hasError('required', 'name')"> Dato requerido  </small>
+  
     <div class="col-4 icon-group m-2"
     >
 
@@ -43,7 +46,4 @@
 
 </form>
 
-  <small class="mensajeError"
-    *ngIf="form.hasError('minlength', 'name')"> Minimo {{ Nombre.errors.minlength.requiredLength }} caracteres
-  </small>
 
