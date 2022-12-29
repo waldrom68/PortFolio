@@ -36,6 +36,10 @@ import { SoftFormComponent } from "../features/bloque-formacion-skill-int/soft-f
 import { HardFormComponent } from '../features/bloque-formacion-skill-int/hard-form/hard-form.component';
 import { ProjectsFormComponent } from '../features/bloque-formacion-skill-int/projects-form/projects-form.component';
 
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+
+
 
 
 
@@ -98,6 +102,9 @@ import { ProjectsFormComponent } from '../features/bloque-formacion-skill-int/pr
         FontAwesomeModule,
         FormsModule,
         ReactiveFormsModule,
+
+        MatDatepickerModule,
+        MatNativeDateModule
         
     ]
 })

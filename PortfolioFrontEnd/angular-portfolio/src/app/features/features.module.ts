@@ -22,7 +22,8 @@ import { SoftItemComponent } from './bloque-formacion-skill-int/soft-item/soft-i
 import { ObjetiveFormComponent } from './bloque-datos-obj-profile/objetive-form/objetive-form.component';
 import { HardFormComponent } from './bloque-formacion-skill-int/hard-form/hard-form.component';
 
-
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 // import { SoftSkillsComponent } from './bloque-formacion-skill-int/soft-skills/soft-skills.component';
 // import { HardSkillsComponent } from './hard-skills/hard-skills.component';
 
@@ -61,6 +62,9 @@ import { HardFormComponent } from './bloque-formacion-skill-int/hard-form/hard-f
     CommonModule,
     FontAwesomeModule,
     SharedModule,
+
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
 
   exports: [
@@ -70,6 +74,7 @@ import { HardFormComponent } from './bloque-formacion-skill-int/hard-form/hard-f
     // SoftItemComponent,
     // PersonalCardComponent,
     // FontAwesomeModule
+    
   ]
 
 })

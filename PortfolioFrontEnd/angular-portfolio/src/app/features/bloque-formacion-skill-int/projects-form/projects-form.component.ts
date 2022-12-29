@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -6,7 +6,9 @@ import { Observable } from 'rxjs';
 import { DataService } from 'src/app/service/data.service';
 
 import { Project } from 'src/app/data';
-import { faYammer } from '@fortawesome/free-brands-svg-icons';
+
+import { MatDatepicker, MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @Component({
   selector: 'app-projects-form',
@@ -28,10 +30,12 @@ faTimes = faTimes;
 
 form: FormGroup;
 
+@ViewChild(MatDatepicker) datepicker: MatDatepicker<Date>;
 
 constructor( 
   private formBuilder: FormBuilder,
-  private dataService: DataService, ) { 
+  private dataService: DataService,
+  ) { 
   
 }
 
