@@ -67,7 +67,7 @@ export class ProjectsComponent implements OnInit {
     this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();
     this.flagUserAdmin$.subscribe(  flagUserAdmin => this.flagUserAdmin = flagUserAdmin)
     this.flagUserAdmin = this.dataService.getFlagUserAdmin()
-    
+
   }
 
   resetForm() {
@@ -76,7 +76,7 @@ export class ProjectsComponent implements OnInit {
       name:"", 
       resume:"",
       orderdeploy:0,
-      since: 0,
+      since: new Date(),
       url:"",
       userId:0 }
   }

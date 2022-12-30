@@ -8,7 +8,7 @@
         >
         <!-- (dblclick)="toggleForm(item);" -->
             
-            <h6>( {{item.since}} )  {{item.name}}
+            <h6>( {{item.since | date:'yyyy'}} )  {{item.name}}
                 <a  class="px-3" href="{{item.url}}" target="_blank">-Visitar-</a>
             </h6>
             <small class="px-5"><i> {{item.resume}}</i></small>

@@ -55,6 +55,10 @@ export class ModalActionsService {
         this.deleteHardSkills(modalData);
         break;
       
+      case "delProject":
+        this.deleteProject(modalData);
+        break;
+
       default:
         console.log("ALERTA: en modalAction, No se ha encontrado modalData.name")
         break;
@@ -66,12 +70,10 @@ export class ModalActionsService {
     // Llamada al metodo de data.service.ts
     this.dataservice.delInterests(modalData.data).subscribe( )
   }
-
   private updateData(modalData: any) {
     console.log(modalData.data)
     this.dataservice.updateGralData(modalData.data).subscribe()
   }
-
   private deleteSoftskill(modalData: any) {
     console.log(modalData.data)
     this.dataservice.delSoftSkill(modalData.data).subscribe()
@@ -79,5 +81,9 @@ export class ModalActionsService {
   private deleteHardSkills(modalData: any) {
     console.log(modalData.data)
     this.dataservice.delHardSkills(modalData.data).subscribe()
+  }
+  private deleteProject(modalData: any) {
+    console.log(modalData.data)
+    this.dataservice.delProject(modalData.data).subscribe()
   }
 }

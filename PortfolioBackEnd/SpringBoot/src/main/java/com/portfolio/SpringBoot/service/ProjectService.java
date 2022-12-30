@@ -12,10 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+
 @Service
 public class ProjectService implements IProjectService {
     // Para la conecion con el JPA : PersonRepository hara de intermediario entre
     // la DB y nuestros metodos, para ello deberemos inyectar nuestra dependencia
+    
+    
+  
     @Autowired public ProjectRepository projRepo;
     @Autowired public IPersonService persServ;
 
@@ -64,7 +68,9 @@ public class ProjectService implements IProjectService {
             tempDTO.setId(elemento.getId());
             tempDTO.setName(elemento.getName());
             tempDTO.setResume(elemento.getResume());
-            tempDTO.setSince(elemento.getSince());
+            String temp = elemento.getSince().toString();
+            
+            tempDTO.setSince(temp);
             tempDTO.setOrderdeploy(elemento.getOrderdeploy());
             tempDTO.setUrl(elemento.getUrl());
             

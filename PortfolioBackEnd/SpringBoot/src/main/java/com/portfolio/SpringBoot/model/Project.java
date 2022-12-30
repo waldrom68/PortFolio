@@ -10,7 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import java.time.Year;
+import java.util.Date;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -48,7 +48,7 @@ public class Project {
     private String resume;
     
     @Column(nullable=false)
-    private Year since;
+    private String since;
     
     private String url;
     private int orderdeploy = 0;
@@ -62,7 +62,7 @@ public class Project {
     public Project() {
     }
 
-    public Project(String name, String resume, Year since, String url, Person person) {
+    public Project(String name, String resume, String since, String url, Person person) {
         this.name = name;
         this.resume = resume;
         this.since = since;
@@ -70,7 +70,7 @@ public class Project {
         this.person = person;
     }
 
-
+    
     
     
     

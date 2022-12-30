@@ -42,46 +42,20 @@
     <small class="mensajeError" *ngIf="form.hasError('maxlength', 'resume')"> Máximo {{ Resume.errors.maxlength.requiredLength }}caracteres</small>
 
 
-
-    <!-- <label class="form-label" for="since">Realizado en:</label>
-    <input type="date" min="2018-03" value="2018-05"
+    <label class="form-label" for="since">Realizado en:</label>
+    <input type="date"
       id="since"
       name="since"
       class="form-control"
       [ngStyle]="{'width':'100%'}"
       formControlName="since"
       [ngClass] = "{error: (Since.invalid && Since.touched)}"
-    > -->
-
-    <!-- <input [(ngModel)]="formData.since" 
-
-    name="since"
-    class="form-control"
-    [ngStyle]="{'width':'100%'}"
-    formControlName="since">
-    <mat-datepicker-toggle [for]="since"></mat-datepicker-toggle>
-    <mat-datepicker #since></mat-datepicker> -->
-
-
-    <input matInput [matDatepicker]="picker"
-      name="since"
-      class="form-control"
-      [ngStyle]="{'width':'50%', 'display':'inline', 'color':'red'}"
-      formControlName="since">
-
-    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker
-      startView="multi-year"
-      (monthSelected)="setMonthAndYear($event, picker)"
-      panelClass="example-month-picker"
-    
-    
-    ></mat-datepicker>
-
-
+    >
     <!-- Datepicker ANGULAR
       https://stackoverflow.com/questions/55721254/how-to-change-mat-datepicker-date-format-to-dd-mm-yyyy-in-simplest-way -->
-      
+    
+
+    
     <div class="icon-group m-2">
 
       <button type="submit" class="btn btn-outline-success btn-sm"

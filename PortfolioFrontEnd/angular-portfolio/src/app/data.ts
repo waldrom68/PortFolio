@@ -163,7 +163,7 @@ export interface Person {
         name:string,
         resume:string,
         orderdeploy:number,
-        since:number,
+        since:Date,
         url:string,
         userId:number
     }
