@@ -27,18 +27,6 @@ export interface Formacion {
     degree:string,
 }
 
-export interface HardSkill {
-    id: number,
-    name:string,
-    assessment:number,
-}
-
-export interface SoftSkill {
-    id: number,
-    name:string,
-    assessment:number,
-}
-
 export interface Intereses {
     id: number,
     name:string,
@@ -84,13 +72,6 @@ export interface Users {
         position:string,
         userId:number,
     }
-    export interface HardSkill {
-        id: number,
-        name:string,
-        assessment:number,
-        orderdeploy: number,
-        userId:number,
-    }
     
     export interface Interests {
         id: number,
@@ -132,9 +113,15 @@ export interface Users {
         since: boolean,
         theme:String,
     }
+    export interface Usuario {
+        id:number,
+        name:string,
+        lastName:string,
+    }
 
 // Modelos del backend
-    export interface Person {
+// PENDIENTE REEMPLAZAR USERID POR PERSON
+export interface Person {
         id:number,
         name:string,
         lastName:string,
@@ -156,17 +143,18 @@ export interface Users {
         userId: number
     }
 
-    export interface Usuario {
-        id:number,
-        name:string,
-        lastName:string,
-    }
-    
     export interface SoftSkill {
         id: number,
         name:string,
         assessment:number,
         orderdeploy:number,
+        userId:number,
+    }
+    export interface HardSkill {
+        id: number,
+        name:string,
+        assessment:number,
+        orderdeploy: number,
         userId:number,
     }
 
@@ -175,7 +163,7 @@ export interface Users {
         name:string,
         resume:string,
         orderdeploy:number,
-        since:Date,
+        since:number,
         url:string,
         userId:number
     }

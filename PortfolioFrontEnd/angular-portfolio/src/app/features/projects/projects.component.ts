@@ -76,7 +76,7 @@ export class ProjectsComponent implements OnInit {
       name:"", 
       resume:"",
       orderdeploy:0,
-      since: new Date(),
+      since: 0,
       url:"",
       userId:0 }
   }

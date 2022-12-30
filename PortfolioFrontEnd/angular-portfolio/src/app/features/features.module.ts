@@ -23,7 +23,7 @@ import { ObjetiveFormComponent } from './bloque-datos-obj-profile/objetive-form/
 import { HardFormComponent } from './bloque-formacion-skill-int/hard-form/hard-form.component';
 
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
 // import { SoftSkillsComponent } from './bloque-formacion-skill-int/soft-skills/soft-skills.component';
 // import { HardSkillsComponent } from './hard-skills/hard-skills.component';
 
@@ -64,7 +64,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     SharedModule,
 
     MatDatepickerModule,
-    MatNativeDateModule,
+    MatMomentDateModule,
   ],
 
   exports: [

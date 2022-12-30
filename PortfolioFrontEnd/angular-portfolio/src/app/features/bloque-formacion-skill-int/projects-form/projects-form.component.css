@@ -5,3 +5,8 @@
   .example-month-picker .mat-calendar-arrow {
     display: none;
   }
+
+  .mat-datepicker-toggle-default-icon {
+    color: red;
+   }
+   
