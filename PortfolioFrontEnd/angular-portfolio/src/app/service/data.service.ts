@@ -53,13 +53,13 @@ export class DataService {
   }
 
   getPortFolioInit(): Observable<PortfolioInit> {
-    return this.http.get<PortfolioInit>(`${this.apiURL}/PortfolioInit/?userId=${this.USERID}`)
+    return this.http.get<PortfolioInit>(`${this.apiURL}/PortfolioInit/?person=${this.USERID}`)
   }
 
   getPortFolioCards(): Observable<Cards[]> {
     
-    console.log(`${this.apiURL}/Cards/?userId=${this.USERID}`)
-    return this.http.get<Cards[]>(`${this.apiURL}/Cards/?userId=${this.USERID}`)
+    console.log(`${this.apiURL}/Cards/?person=${this.USERID}`)
+    return this.http.get<Cards[]>(`${this.apiURL}/Cards/?person=${this.USERID}`)
   }
 
   getGralData(): Observable<Person> {
@@ -75,7 +75,7 @@ export class DataService {
 
   // HardSkills
   getHardSkill(): Observable<HardSkill[]> {
-    this.EndPoint = `${this.apiURL}/HardSkill?userId=${this.USERID}`
+    this.EndPoint = `${this.apiURL}/HardSkill?person=${this.USERID}`
     return this.http.get<HardSkill[]>(this.EndPoint )
   }
   delHardSkills(hardskill:HardSkill): Observable<HardSkill>{
@@ -89,14 +89,14 @@ export class DataService {
   addHardskill(hardskill:HardSkill): Observable<HardSkill>{
     console.log("estoy en el metodo del servicio")
     // Este codigo agrega un usuario a la DB 
-    hardskill.userId = this.USERID;
+    hardskill.person = this.USERID;
     console.log(hardskill.constructor.name)
     return this.http.post<HardSkill>(`${this.apiURL}/Hardskill`, hardskill, httpOptions)
   }
 
   // Interest
   getInterests(): Observable<Interest[]> {
-    this.EndPoint = `${this.apiURL}/Interest?userId=${this.USERID}`
+    this.EndPoint = `${this.apiURL}/Interest?person=${this.USERID}`
     return this.http.get<Interest[]>(this.EndPoint )
   }
   updateInterest(interest:Interest): Observable<Interest>{
@@ -111,14 +111,14 @@ export class DataService {
   addInterests(interest:Interest): Observable<Interest>{
     console.log("estoy en el metodo del servicio")
     // Este codigo agrega un usuario a la DB 
-    interest.userId = this.USERID;
+    interest.person = this.USERID;
     console.log(interest.constructor.name)
     return this.http.post<Interest>(`${this.apiURL}/Interest`, interest, httpOptions)
   }
 
   // SoftSkills
   getSoftSkill(): Observable<SoftSkill[]> {
-  this.EndPoint = `${this.apiURL}/SoftSkill?userId=${this.USERID}`
+  this.EndPoint = `${this.apiURL}/SoftSkill?person=${this.USERID}`
   return this.http.get<SoftSkill[]>(this.EndPoint )
   }
 
@@ -134,7 +134,7 @@ export class DataService {
   addSoftskill(softskill:SoftSkill): Observable<SoftSkill>{
     console.log("estoy en el metodo del servicio")
     // Este codigo agrega un usuario a la DB 
-    softskill.userId = this.USERID;
+    softskill.person = this.USERID;
     console.log(softskill.constructor.name)
     return this.http.post<SoftSkill>(`${this.apiURL}/SoftSkill`, softskill, httpOptions)
   }
@@ -142,7 +142,7 @@ export class DataService {
 
   // Projects
   getProject(): Observable<Project[]> {
-    this.EndPoint = `${this.apiURL}/Project?userId=${this.USERID}`
+    this.EndPoint = `${this.apiURL}/Project?person=${this.USERID}`
     return this.http.get<Project[]>(this.EndPoint )
   }
   delProject(project:Project): Observable<Project>{
@@ -156,7 +156,7 @@ export class DataService {
   addProject(project:Project): Observable<Project>{
     console.log("estoy en el metodo del servicio")
     // Este codigo agrega un usuario a la DB 
-    project.userId = this.USERID;
+    project.person = this.USERID;
     console.log(project.constructor.name)
     return this.http.post<Project>(`${this.apiURL}/Project`, project, httpOptions)
   }
@@ -169,7 +169,7 @@ export class DataService {
 
   // Studies
   getStudies(): Observable<Studies[]> {
-    this.EndPoint = `${this.apiURL}/Studies?userId=${this.USERID}`
+    this.EndPoint = `${this.apiURL}/Studies?person=${this.USERID}`
     return this.http.get<Studies[]>(this.EndPoint )
   }
   delStudies(studie:Studies): Observable<Studies>{
@@ -179,7 +179,7 @@ export class DataService {
 
   // Laboral Career
   getLaboralCareer(): Observable<LaboralCareer[]> {
-    this.EndPoint = `${this.apiURL}/LaboralCareer?userId=${this.USERID}`
+    this.EndPoint = `${this.apiURL}/LaboralCareer?person=${this.USERID}`
     return this.http.get<LaboralCareer[]>(this.EndPoint )
   }
   delLaboralCareers(career:LaboralCareer): Observable<LaboralCareer>{

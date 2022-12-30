@@ -41,14 +41,14 @@ public class Project {
     @GeneratedValue (strategy = GenerationType.AUTO)
     private long id;
     
-    @Column(nullable=false, length = 60)
+    @Column(nullable=false, length = 60, unique = true)
     private String name;
     
     @Column(nullable=false, length = 500)
     private String resume;
     
     @Column(nullable=false)
-    private String since;
+    private Date since;
     
     private String url;
     private int orderdeploy = 0;
@@ -62,7 +62,7 @@ public class Project {
     public Project() {
     }
 
-    public Project(String name, String resume, String since, String url, Person person) {
+    public Project(String name, String resume, Date since, String url, Person person) {
         this.name = name;
         this.resume = resume;
         this.since = since;

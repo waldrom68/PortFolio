@@ -44,7 +44,7 @@ export class ObjetiveItemComponent implements OnInit {
             "profession": "",
             "profile": "",
             "objetive": "",
-            "since": "",
+            "since": new Date(),
             "username": "",
             "password": "",
             "displaydata": {"id":1,"name":true,"lastName":true,"photo":true,"location":true,"profession":true,"since":true,"theme":"Dark"}

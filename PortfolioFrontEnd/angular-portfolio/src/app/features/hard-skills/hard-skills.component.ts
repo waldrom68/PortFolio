@@ -74,7 +74,7 @@ export class HardSkillsComponent implements OnInit {
 
 
   resetForm() {
-    this.formData = { id:0, name:"", assessment:0, orderdeploy:0, userId:0 }
+    this.formData = { id:0, name:"", assessment:0, orderdeploy:0, person:0 }
   }
 
   toggleForm() {

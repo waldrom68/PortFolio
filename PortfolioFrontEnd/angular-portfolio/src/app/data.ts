@@ -130,7 +130,7 @@ export interface Person {
         profession:string,
         profile:string, 
         objetive:string, 
-        since:string,
+        since:Date,
         username:string,
         password:string,
         displaydata: DisplayData
@@ -140,7 +140,7 @@ export interface Person {
         id: number,
         name:string,
         orderdeploy:number,
-        userId: number
+        person: number
     }
 
     export interface SoftSkill {
@@ -148,14 +148,14 @@ export interface Person {
         name:string,
         assessment:number,
         orderdeploy:number,
-        userId:number,
+        person:number,
     }
     export interface HardSkill {
         id: number,
         name:string,
         assessment:number,
         orderdeploy: number,
-        userId:number,
+        person:number,
     }
 
     export interface Project {
@@ -165,6 +165,6 @@ export interface Person {
         orderdeploy:number,
         since:Date,
         url:string,
-        userId:number
+        person:number
     }
 

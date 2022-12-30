@@ -68,21 +68,21 @@ export const HARDSKILL: HardSkill[] = [
     name:"Mock Python",
     assessment:65,
     orderdeploy:0,
-    userId:1
+    person:1
 },
     {
     id: 2,
     name:"html",
     assessment:50,
     orderdeploy:0,
-    userId:1
+    person:1
 },
     {
     id: 1,
     name:"CSS3",
     assessment:45,
     orderdeploy:0,
-    userId:1
+    person:1
 }
 ]
 
@@ -92,21 +92,21 @@ export const SOFTSKILL: SoftSkill[] = [
         name:"Mock Amabilidad",
         assessment:7,
         orderdeploy:0,
-        userId:1
+        person:1
     },
     {
         id: 2,
         name:"Respeto",
         assessment:6,
         orderdeploy:0,
-        userId:1
+        person:1
     },
     {
         id: 3,
         name:"Integridad",
         assessment:9,
         orderdeploy:0,
-        userId:1
+        person:1
     }
 ] 
 

@@ -2,7 +2,6 @@
 
 package com.portfolio.DTO;
 import java.io.Serializable;
-import java.util.Date;
 import lombok.Getter;
 import lombok.Setter;
 

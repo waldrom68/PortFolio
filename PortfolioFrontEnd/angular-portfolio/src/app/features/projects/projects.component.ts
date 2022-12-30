@@ -78,7 +78,7 @@ export class ProjectsComponent implements OnInit {
       orderdeploy:0,
       since: new Date(),
       url:"",
-      userId:0 }
+      person:0 }
   }
 
   toggleForm() {

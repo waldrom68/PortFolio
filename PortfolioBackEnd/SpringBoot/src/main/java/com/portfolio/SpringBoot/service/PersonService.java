@@ -2,11 +2,10 @@
 
 package com.portfolio.SpringBoot.service;
 
+import com.portfolio.DTO.DTOPerson;
 import com.portfolio.SpringBoot.model.Person;
 import com.portfolio.SpringBoot.repository.PersonRepository;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -41,20 +40,8 @@ public class PersonService implements IPersonService {
 //        persoServ.crearPersona(pers);
 //    }
     
+     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    @Override
-    public List<Person> verPersonas() {
-        System.out.println("Voy a buscar los datos al repositorio");
-        return persoRepo.findAll(Sort.by("lastName").ascending());
-    }
 
     @Override
     public Person crearPersona(Person per) {
@@ -75,5 +62,32 @@ public class PersonService implements IPersonService {
 //    public void editPersona(Person per) {
 //        persoRepo.save(per);
 //    }
-     
+         
+    @Override
+    public DTOPerson verPersona(Long id) {
+      //        Person pers = persServ.buscarPersona(id);
+        Person tempper = persoRepo.findById(id).orElse(null);
+
+
+        DTOPerson tempDTO = new DTOPerson();
+
+        tempDTO.setId(tempper.getId());
+        tempDTO.setName(tempper.getName());
+        tempDTO.setLastName(tempper.getLastName());
+        tempDTO.setPathFoto(tempper.getPathFoto());
+        tempDTO.setLocation(tempper.getLocation());
+        tempDTO.setProfession(tempper.getProfession());
+        tempDTO.setProfile(tempper.getProfile());
+        tempDTO.setObjetive(tempper.getObjetive());
+        String temp = tempper.getSince().toString();
+
+        tempDTO.setSince(temp.substring(0, 10));
+        tempDTO.setEmail(tempper.getEmail());
+        tempDTO.setUsername(tempper.getUsername());
+        tempDTO.setDisplaydata(tempper.getDisplaydata());
+
+        
+        return tempDTO;
+
+    }
 }

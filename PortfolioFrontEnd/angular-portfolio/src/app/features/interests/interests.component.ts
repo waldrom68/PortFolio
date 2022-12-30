@@ -47,7 +47,7 @@ export class InterestsComponent implements OnInit {
     public matDialog: MatDialog,
     private modalService: ModalActionsService,
     ) {
-      this.formData = { id:0, name:"", orderdeploy:0, userId:0 }
+      this.formData = { id:0, name:"", orderdeploy:0, person:0 }
      }
     
   ngOnInit(): void {

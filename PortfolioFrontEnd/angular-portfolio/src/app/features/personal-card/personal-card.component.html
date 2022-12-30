@@ -35,7 +35,7 @@
                     *ngFor="let elemento of myData.profession.split('\n')">{{ elemento }}
                 </h6>
                 <hr style="border: 1px solid;">
-                <p>Nacido en {{myData.since}}. {{myData.location}}</p>
+                <p>Nacido en {{myData.since | date:"yyyy"}}. {{myData.location}}</p>
 
             </div>
         </ng-container>

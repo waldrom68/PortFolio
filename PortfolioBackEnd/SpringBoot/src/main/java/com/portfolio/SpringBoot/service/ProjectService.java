@@ -70,7 +70,7 @@ public class ProjectService implements IProjectService {
             tempDTO.setResume(elemento.getResume());
             String temp = elemento.getSince().toString();
             
-            tempDTO.setSince(temp);
+            tempDTO.setSince(temp.substring(0, 10));
             tempDTO.setOrderdeploy(elemento.getOrderdeploy());
             tempDTO.setUrl(elemento.getUrl());
             

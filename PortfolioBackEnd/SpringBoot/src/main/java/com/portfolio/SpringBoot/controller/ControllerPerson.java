@@ -7,14 +7,13 @@ import com.portfolio.SpringBoot.model.DisplayData;
 import com.portfolio.SpringBoot.model.Person;
 import com.portfolio.SpringBoot.service.IDisplayDataService;
 import com.portfolio.SpringBoot.service.IPersonService;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+// import org.springframework.web.bind.annotation.ResponseBody;
 
 
 // Recibe las peticiones y delega el negocio (es el pivot de la aplicacion)
@@ -30,16 +29,8 @@ public class ControllerPerson {
 
   
     @GetMapping("/view/person/{id}")
-    @ResponseBody
     public DTOPerson mostrarPersona(@PathVariable Long id) {
-        Person persona = persoServ.buscarPersona(id);
-        DTOPerson personaDTO = new DTOPerson();
-        
-        personaDTO.setId(persona.getId());
-        personaDTO.setName(persona.getName());
-        personaDTO.setLastName(persona.getLastName());
-        
-        return personaDTO;
+        return persoServ.verPersona(id);
     }
         
     @PostMapping ("/edit/person")  // edit and create Person
@@ -80,13 +71,6 @@ public class ControllerPerson {
         
     }
     
-    @GetMapping ("/list/person/all")
-    public List<Person> verPersonas() {
-        System.out.println("Llamo al Servicio");
-        return persoServ.verPersonas();
-    
-    }
-
 // Le quito visibilidad, esta funcionalidad es para uso interno.    
 //    @GetMapping ("/find/person/{id}")
 //    public Person buscarPersona(@PathVariable Long id) {

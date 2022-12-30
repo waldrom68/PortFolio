@@ -10,7 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
-import java.time.Year;
+import java.util.Date;
 
 
 import lombok.Getter;
@@ -56,10 +56,10 @@ public class Person {
     @Column(length = 500)
     private String objetive;
     @Column(nullable=false)
-    private Year since;
-    @Column(nullable=false, length=45)
+    private Date since;
+    @Column(nullable=false, length=45, unique = true)
     private String email;
-    @Column(nullable=false, length=45)
+    @Column(nullable=false, length=45, unique = true)
     private String username;
     @Column(nullable=false, length=45)
     private String password;
@@ -108,7 +108,7 @@ public class Person {
         this.id = id;
     }
 
-    public Person(String name, String lastName, String pathFoto, String location, String profession, String profile, String objetive, Year since, String email, String username, String password) {
+    public Person(String name, String lastName, String pathFoto, String location, String profession, String profile, String objetive, Date since, String email, String username, String password) {
         this.name = name;
         this.lastName = lastName;
         this.pathFoto = pathFoto;
