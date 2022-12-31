@@ -2,67 +2,84 @@
 <ng-container *ngIf="myData && !showForm">
 
 
-<div class="container py-4 p-0 m-0">
-    <div class="card"
-    >
-    <ng-container *ngIf="flagUserAdmin && showBtnAction">
-        <br>
-        <button class="btn btn-outline-success btn-sm mt-2"
-        (click)="toggleForm();"
-        ngClass="faConfirm fa-ico"
-        [ngStyle]="{'width':'fit-content', 'align-self':'end'}"
-    
+    <div class="container py-4 p-0 m-0">
+        <div class="card"
         >
-        <fa-icon 
-            [icon]="faPen"
-            ngClass="p-2"
-            
-        >
-        </fa-icon>
-         Editar
-        </button>
-    </ng-container>
-
-        <ng-container *ngIf="myData">
-
-            <div class="ratio ratio-1x1 rounded-circle overflow-hidden" style="width: 50%; height: 50%; margin: auto;">
-
-                <img src={{myData.pathFoto}} class="card-img-top img-cover" alt="sin Imagen" >
-            </div>
-
-            <div class="card-body">
-                <h5 class="card-title">
-                    {{ myData.name }} {{ myData.lastName }}
-                </h5>
+        <ng-container *ngIf="flagUserAdmin">
+            <br>
+            <button class="btn btn-outline-success btn-sm mt-2"
+            (click)="toggleForm();"
+            ngClass="faConfirm fa-ico"
+            [ngStyle]="{'width':'fit-content', 'align-self':'end'}"
+        
+            >
+            <fa-icon 
+                [icon]="faPen"
+                ngClass="p-2"
                 
-                <h6 class="card-text" 
-                    *ngFor="let elemento of myData.profession.split('\n')">{{ elemento }}
-                </h6>
-                <hr style="border: 1px solid;">
-                <p>Nacido en {{myData.since | date:"yyyy"}}. {{myData.location}}</p>
-
-            </div>
+            >
+            </fa-icon>
+            Editar
+            </button>
         </ng-container>
+
+            <ng-container *ngIf="myData">
+
+                <div class="ratio ratio-1x1 rounded-circle overflow-hidden" style="width: 50%; height: 50%; margin: auto;">
+
+                    <img src={{myData.pathFoto}} class="card-img-top img-cover" alt="sin Imagen" >
+                </div>
+
+                <div class="card-body">
+                    <h5 class="card-title">
+                        {{ myData.name }} {{ myData.lastName }}
+                    </h5>
+                    
+                    <h6 class="card-text" 
+                        *ngFor="let elemento of myData.profession.split('\n')">{{ elemento }}
+                    </h6>
+                    <hr style="border: 1px solid;">
+                    <p>Nacido en {{myData.since | date:"yyyy"}}.</p>
+                    <p>
+                        <fa-icon 
+                            [icon]="faLocationDot"
+                        >
+                        </fa-icon>
+                  {{myData.location}}</p> 
+
+                </div>
+            </ng-container>
+        </div>
     </div>
-</div>
 
 </ng-container>
 
 
-<ng-container class="container py-4 p-0 m-0"
+<ng-container class="container p-0 py-4 m-0"
 *ngIf="showForm"
 >
     <div class="card">
-  
+        <div class="flex">
+            <button class="btn btn-default btn-sm" 
+            ngClass='faControl faClose'
+            
+            (click)="cancelation()"
+            >
+                <fa-icon 
+                    [icon]="faTimes"
+                    ngClass="faClose fa-2x"
+                    >
+                </fa-icon>
+            </button>
+            
+        </div>
         <app-personal-form
         [formData]="myData"
+        [title]="'Datos básicos'"
+        (onUpdate)=" upDatePerson($event);"
+        (cancel)="cancelation()"
         >
         </app-personal-form>
     </div>
 </ng-container>
 
-<!-- [ngStyle]="{'width':'100%'}"
-[formData]="formData"
-[title]="''"
-(onUpdate)=" update($event);"
-(cancel)="cancelation($event)" -->

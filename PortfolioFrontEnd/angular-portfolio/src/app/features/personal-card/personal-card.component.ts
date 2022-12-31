@@ -3,7 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import {Person} from '../../data'
 
 
-import { faPen, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faPen, faTimes, faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import { DataService } from 'src/app/service/data.service';
 import { Observable } from 'rxjs';
 
@@ -15,21 +15,20 @@ import { Observable } from 'rxjs';
 
 
 export class PersonalCardComponent implements OnInit {
-  // PENDIENTE DEBE VINCULARSE CON EL LOGUEO
-  isAdmin = true;
-
   // PENDIENTE: SERVICIO QUE DEBE VINCULARSE CON EL LOGUEO
   flagUserAdmin: boolean = false;
   flagUserAdmin$: Observable<boolean>;
-  showBtnAction: boolean= true;  // flag para mostrar o no los btn's de acciones del usuario
- 
+  showForm: boolean = false;  // flag para mostrar o no el formulario
+  
   // intereses: Intereses[] = INTERESES;
   myData: Person;
-
+  
   faPen = faPen;
   faTimes = faTimes;
+  faLocationDot = faLocationDot;
 
-  showForm: boolean = false;  // flag para mostrar o no el formulario
+   
+  // showBtnAction: boolean= true;  // flag para mostrar o no los btn's de acciones del usuario
  
   constructor( private dataService: DataService, ) { 
     this.dataService.getGralData().subscribe(user =>
@@ -45,10 +44,17 @@ export class PersonalCardComponent implements OnInit {
   }
 
   toggleForm() {
+    console.log("Muestro el formulario desde el componente")
     this.showForm = !this.showForm;
-    // this.showBtnAction = !this.showBtnAction
   }
 
+  cancelation() {
+    this.toggleForm();
+  }
 
+  upDatePerson(person: Person) {
+    this.dataService.updateGralData(person).subscribe();
+    this.toggleForm();
+  }
 
 }

@@ -21,8 +21,8 @@ export class ProjectsComponent implements OnInit {
   // PENDIENTE: SERVICIO QUE DEBE VINCULARSE CON EL LOGUEO
   flagUserAdmin: boolean = false;
   flagUserAdmin$: Observable<boolean>;
-
   showForm: boolean = false;  // flag para mostrar o no el formulario
+
   // softskill: SoftSkill[] = SOFTSKILL;
   myData: Project[] = [];
   formData: Project;  // instancia vacia, para cuando se solicite un alta

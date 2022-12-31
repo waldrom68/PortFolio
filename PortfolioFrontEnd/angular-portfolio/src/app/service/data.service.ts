@@ -25,7 +25,7 @@ export class DataService {
   private USER: Person;
 
 
-  private flagChangeUser: boolean = false;
+  private flagChangeUser: boolean = true;
   private flagChangeUser$ = new Subject<boolean>();
 
  

@@ -19,11 +19,15 @@ flagUserAdmin$: Observable<boolean>;
 
 @Input() formData: Person;
 @Input() title: string;
+@Input() showBtnAction!: boolean;
+
+@Output() showBtnActionChange = new EventEmitter<boolean>();
 @Output() onUpdate: EventEmitter<Person> = new EventEmitter()
 @Output() cancel: EventEmitter<Person> = new EventEmitter()
 
-faCheck = faCheck;
 faTimes = faTimes;
+
+showForm: boolean = false;
 
 form: FormGroup;
   constructor(
@@ -33,20 +37,23 @@ form: FormGroup;
   ) { }
 
   ngOnInit() {
+    
+    this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();
+    this.flagUserAdmin$.subscribe(  flagUserAdmin => this.flagUserAdmin = flagUserAdmin)
+    this.flagUserAdmin = this.dataService.getFlagUserAdmin()
+
+
     this.form = this.formBuilder.group({
       name:[this.formData.name, [Validators.required, Validators.minLength(2), Validators.maxLength(45)  ]],
       lastName:[this.formData.lastName, [Validators.required, Validators.minLength(2), Validators.maxLength(45) ]],
       location:[this.formData.location, [Validators.required, Validators.minLength(5), Validators.maxLength(45) ]],
       profession:[this.formData.profession, [Validators.required, Validators.minLength(5), Validators.maxLength(45) ]],
-      pathFoto:[this.formData.pathFoto],
-      email:[this.formData.email, [Validators.required, Validators.minLength(2), Validators.maxLength(45) ]],
+      pathFoto:[this.formData.pathFoto, [Validators.required ]],
+      email:[this.formData.email, [Validators.required, Validators.email ]],
       since:[this.formData.since, [Validators.required ]]
 
     });
 
-    this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();
-    this.flagUserAdmin$.subscribe(  flagUserAdmin => this.flagUserAdmin = flagUserAdmin)
-    this.flagUserAdmin = this.dataService.getFlagUserAdmin()
   }
 
   get Name(): any {
@@ -71,11 +78,16 @@ form: FormGroup;
     return this.form.get("since")
   }
 
-
+  toggleForm() {
+    this.showForm = !this.showForm;
+    // this.ocultarAcciones = !this.ocultarAcciones
+    // this.formData = person;
+    // this.resize();  // habilito las acciones de cada item
+    this.showBtnAction = !this.showBtnAction
+    this.showBtnActionChange.emit(this.showBtnAction)
+  }
 
   onEnviar(event: Event, ){
-    console.log("Modificando los datos")
-    console.log(event)
     event.preventDefault;
     // Si deja de estar logueado, no registro lo que haya modificado y cierro form.
     if (!this.flagUserAdmin) {
@@ -84,7 +96,6 @@ form: FormGroup;
 
     } else {
       
-      console.log(this.form.valid, this.form.get("since")?.value)
       if (this.form.valid) {
   
         this.formData.name = this.form.get("name")?.value;
@@ -95,8 +106,9 @@ form: FormGroup;
         this.formData.pathFoto = this.form.get("pathFoto")?.value;
         this.formData.email = this.form.get("email")?.value;
         this.formData.since = this.form.get("since")?.value;
-        this.dataService.updateGralData(this.formData).subscribe();
-        // this.onUpdate.emit(this.formData);
+
+        this.toggleForm();
+        this.onUpdate.emit(this.formData);
   
       } else {
         
@@ -107,6 +119,8 @@ form: FormGroup;
     }
   }
 
-
+  cancelation() {
+    this.cancel.emit();  // cierro el formulario
+  }
 
 }
