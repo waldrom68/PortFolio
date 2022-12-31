@@ -131,6 +131,7 @@ export interface Person {
         profile:string, 
         objetive:string, 
         since:Date,
+        email:string,
         username:string,
         password:string,
         displaydata: DisplayData

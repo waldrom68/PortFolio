@@ -46,7 +46,7 @@ export class PersonalCardComponent implements OnInit {
 
   toggleForm() {
     this.showForm = !this.showForm;
-    this.showBtnAction = !this.showBtnAction
+    // this.showBtnAction = !this.showBtnAction
   }
 
 

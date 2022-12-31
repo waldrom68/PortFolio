@@ -1,0 +1,106 @@
+
+  <!-- style="display: flex ; width:90% " -->
+<form class="m-0 p-2"
+  [formGroup]="form"
+
+  #myForm="ngForm"
+  (ngSubmit)="onEnviar($event)"
+>
+    <!-- <div class="col" style="display: contents ; width:100% "> -->
+
+      <div class="form-group">
+        <label class="form-label" for="name">Nombre:</label>
+        <input type="text" 
+        id="name"
+        formControlName="name" 
+        name="name" 
+        class="form-control"
+        placeholder="Nombre"
+        [ngStyle]="{'width':'100%'}"
+        formControlName="name"
+        [ngClass] = "{error: (Name.invalid && Name.touched)}"
+        >
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="lastName">Apellido:</label>
+        <input type="text" 
+        id="lastName"
+        formControlName="lastName" 
+        name="lastName" 
+        class="form-control"
+        placeholder="Nombre"
+        [ngStyle]="{'width':'100%'}"
+        formControlName="lastName"
+        [ngClass] = "{error: (LastName.invalid && LastName.touched)}"
+        >
+      </div>
+      
+      <div class="form-group">
+        <label class="form-label" for="location">Ubicacion:</label>
+        <input type="text" 
+        id="location"
+        formControlName="location" 
+        name="location" 
+        class="form-control"
+        placeholder="Nombre"
+        [ngStyle]="{'width':'100%'}"
+        formControlName="location"
+        [ngClass] = "{error: (Location.invalid && Location.touched)}"
+        >
+      </div>
+      
+      <div class="form-group">
+        <label class="form-label" for="lastName">Profesion:</label>
+        <textarea type="text" 
+        id="profession"
+        formControlName="profession" 
+        name="profession" 
+        class="form-control"
+        placeholder="Nombre"
+        [ngStyle]="{'width':'100%'}"
+        formControlName="profession"
+        [ngClass] = "{error: (Profession.invalid && Profession.touched)}"
+        ></textarea>
+      </div>
+
+      
+      <div class="form-group">
+      <label class="form-label" for="email">Email:</label>
+        <input type="email" 
+        id="email"
+        formControlName="email" 
+        name="email" 
+        class="form-control"
+        placeholder="Nombre"
+        [ngStyle]="{'width':'100%'}"
+        formControlName="email"
+        [ngClass] = "{error: (Email.invalid && Email.touched)}"
+        >
+      </div>
+      
+      {{formData.pathFoto}}
+      <div class="form-group">
+        <label class="form-label" for="since">Nacido el:</label>
+        <input type="date"
+        id="since"
+        name="since"
+        class="form-control"
+        [ngStyle]="{'width':'100%'}"
+        formControlName="since"
+        [ngClass] = "{error: (Since.invalid && Since.touched)}"
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="pathFoto">Foto:</label>
+        <input type="file" 
+        class="form-control-file" 
+        id="pathFoto"
+        >
+      </div>
+
+    <!-- </div> -->
+    
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

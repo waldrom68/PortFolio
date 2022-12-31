@@ -201,26 +201,26 @@
   },
   "Person": [
     {
-    "id": 4,
-    "name": "Eustaquio",
-    "lastName": "Baranda",
-    "pathFoto": "",
-    "location": "Argentina, Bs.As.",
-    "profession": "Programador Senior\nCOBOL",
-    "profile": "",
-    "objetive": "",
-    "since": "1978-02-15",
-    "email": "eustaquib@gmail.com",
-    "username": "sadsadad",
-    "displaydata": {
       "id": 4,
-      "name": true,
-      "lastName": true,
-      "photo": true,
-      "location": true,
-      "profession": true,
-      "since": true,
-      "theme": "Dark"
+      "name": "Eustaquio",
+      "lastName": "Baranda",
+      "pathFoto": "",
+      "location": "Argentina, Bs.As.",
+      "profession": "Programador Senior\nCOBOL",
+      "profile": "",
+      "objetive": "",
+      "since": "1978-02-15",
+      "email": "eustaquib@gmail.com",
+      "username": "sadsadad",
+      "displaydata": {
+        "id": 4,
+        "name": true,
+        "lastName": true,
+        "photo": true,
+        "location": true,
+        "profession": true,
+        "since": true,
+        "theme": "Dark"
       }
     },
     {
