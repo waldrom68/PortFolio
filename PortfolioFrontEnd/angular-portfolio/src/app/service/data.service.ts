@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
 
-import { Person, HardSkill, SoftSkill, Studies, LaboralCareer, Interest, Project, PortfolioInit, Cards, User, Usuario } from '../data'
+import { Person, HardSkill, SoftSkill, Studies, LaboralCareer, Interest, Project, PortfolioInit, Cards,Organization, Degree } from '../data'
 
 import { HttpClient, HttpHeaders } from '@angular/common/http'  // Para ejecutar los metodos GET, PUT, POST, ETC
 
@@ -161,9 +161,47 @@ export class DataService {
     return this.http.post<Project>(`${this.apiURL}/Project`, project, httpOptions)
   }
 
+  // Organization
+  getOrganization(): Observable<Organization[]> {
+    this.EndPoint = `${this.apiURL}/Organization?person=${this.USERID}`
+    return this.http.get<Organization[]>(this.EndPoint )
+  }
+  delOrganization(organization:Organization): Observable<Organization>{
+    const url = `${this.apiURL}/del/Organization/${organization.id}`
+    return this.http.delete<Organization>(url)
+  }
+  updateOrganization(organization:Organization): Observable<Organization>{
+    const url = `${this.apiURL}/edit/Organization`;
+    return this.http.put<Organization>(url, organization)
+  }
+  addOrganization(organization:Organization): Observable<Organization>{
+    console.log("estoy en el metodo del servicio")
+    // Este codigo agrega un usuario a la DB 
+    // organization.person = this.USERID;
+    console.log(organization.constructor.name)
+    return this.http.post<Organization>(`${this.apiURL}/edit/Organization`, organization, httpOptions)
+  }
 
 
-
+  // Degree
+  getDegree(): Observable<Degree[]> {
+    this.EndPoint = `${this.apiURL}/Degree?person=${this.USERID}`
+    return this.http.get<Degree[]>(this.EndPoint )
+  }
+  delDegree(degree:Degree): Observable<Degree>{
+    const url = `${this.apiURL}/Degree/${degree.id}`
+    return this.http.delete<Degree>(url)
+  }
+  updateDegree(degree:Degree): Observable<Degree>{
+    const url = `${this.apiURL}/Degree/${degree.id}`;
+    return this.http.put<Degree>(url, degree)
+  }
+  addDegree(degree:Degree): Observable<Degree>{
+    console.log("estoy en el metodo del servicio")
+    // Este codigo agrega un usuario a la DB 
+      console.log(degree.constructor.name)
+    return this.http.post<Degree>(`${this.apiURL}/Degree`, degree, httpOptions)
+  }
 
   // pendientes de implementar
 

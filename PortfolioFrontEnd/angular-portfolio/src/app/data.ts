@@ -78,12 +78,12 @@ export interface Users {
         name:string,
         userId:number
     }
-    export interface Projects {
-        id: number,
-        name:string,
-        resume:string,
-        userId:number
-    }
+    // export interface Projects {
+    //     id: number,
+    //     name:string,
+    //     resume:string,
+    //     userId:number
+    // }
 
     export interface Cards {
         id: number,
@@ -169,3 +169,16 @@ export interface Person {
         person:number
     }
 
+    export interface Organization {
+        id: number,
+        name:string,
+        resume:string,
+        url:string,
+        person:number
+    }
+
+    export interface Degree {
+        id: number,
+        name:string,
+        person:number
+    }

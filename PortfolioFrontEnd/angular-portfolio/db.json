@@ -161,7 +161,7 @@
       "status": false,
       "group": 2,
       "data": [],
-      "resume": "Persona integra",
+      "resume": "Un buen tipo",
       "modelTemplate": "lista",
       "userId": 1
     },
@@ -465,6 +465,48 @@
       "since": "1978-05-20",
       "orderdeploy": 0,
       "person": 3
+    }
+  ],
+  "Organization": [
+    {
+      "id": 1,
+      "name": "ITBA",
+      "resume": "Instituto Tecnológico de Buenos Aires, Universidad Privada (CABA)",
+      "url": "https:itba.edu.ar",
+      "person": 1
+    },
+    {
+      "id": 1,
+      "name": "EDUCACION IT",
+      "resume": "",
+      "url": "https://www.educacionit.com/",
+      "person": 1
+    },
+    {
+      "id": 1,
+      "name": "Min. de Desarrollo Productivo y CESSI",
+      "resume": "",
+      "url": "",
+      "person": 1
+    }
+
+
+  ],
+  "Degree": [
+    {
+      "id": 1,
+      "name": "Grado",
+      "person": 1
+    },
+    {
+      "id": 2,
+      "name": "Posgrado",
+      "person": 1
+    },
+    {
+      "id": 3,
+      "name": "Especialización",
+      "person": 1
     }
   ]
 }

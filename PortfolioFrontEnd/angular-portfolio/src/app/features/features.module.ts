@@ -24,6 +24,7 @@ import { HardFormComponent } from './bloque-formacion-skill-int/hard-form/hard-f
 
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
+// import { OrganizationComponent } from './organization/organization.component';
 // import { SoftSkillsComponent } from './bloque-formacion-skill-int/soft-skills/soft-skills.component';
 // import { HardSkillsComponent } from './hard-skills/hard-skills.component';
 
@@ -41,6 +42,7 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
     // ProfileComponent,
     // ObjetiveComponent,
     DataComponent,
+    // OrganizationComponent,
     // HardFormComponent,
     // SoftFormComponent,
     // ObjetiveFormComponent,

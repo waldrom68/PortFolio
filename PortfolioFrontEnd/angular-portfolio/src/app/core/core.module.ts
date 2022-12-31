@@ -39,6 +39,7 @@ import { ProjectsFormComponent } from '../features/bloque-formacion-skill-int/pr
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { PersonalFormComponent } from '../features/personal-form/personal-form.component';
+import { OrganizationComponent } from '../features/organization/organization.component';
 
 
 
@@ -72,7 +73,8 @@ import { PersonalFormComponent } from '../features/personal-form/personal-form.c
         SoftFormComponent,
         HardFormComponent,
         ProjectsFormComponent,
-        PersonalFormComponent
+        PersonalFormComponent,
+        OrganizationComponent
     ],
     exports: [
         TopBarComponent,
@@ -92,7 +94,8 @@ import { PersonalFormComponent } from '../features/personal-form/personal-form.c
         SoftFormComponent,
         HardFormComponent,
         ProjectsFormComponent,
-        PersonalFormComponent
+        PersonalFormComponent,
+        OrganizationComponent
         // InterestsComponent,
         // SoftSkillsComponent,
         // SoftItemComponent,
