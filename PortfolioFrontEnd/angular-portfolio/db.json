@@ -81,24 +81,6 @@
       "userId": 1
     }
   ],
-  "LaboralCareer": [
-    {
-      "id": 1,
-      "start_date": "09-1993",
-      "end_date": "02-2018",
-      "organization": "ITBA",
-      "position": "Director",
-      "userId": 1
-    },
-    {
-      "id": 2,
-      "start_date": "09-1990",
-      "end_date": "12-1993",
-      "organization": "freelance",
-      "position": "Programador",
-      "userId": 1
-    }
-  ],
   "PortfolioInit": {
     "id": 1,
     "theme": "Dark",
@@ -469,7 +451,7 @@
   ],
   "Organization": [
     {
-      "id": 1,
+      "id": 6,
       "name": "ITBA",
       "resume": "Instituto Tecnológico de Buenos Aires, Universidad Privada (CABA)",
       "url": "https:itba.edu.ar",
@@ -489,8 +471,6 @@
       "url": "",
       "person": 1
     }
-
-
   ],
   "Degree": [
     {
@@ -508,5 +488,34 @@
       "name": "Especialización",
       "person": 1
     }
+  ],
+  "LaboralCareer": [
+    {
+      "id": 1,
+      "resume": "Instalacion de Redes, atencion \n\tY mucho mas\n\tSe hacia a mano todo\n\tAprendimos y mejoramos procesos",
+      "startDate": "2004-03-31",
+      "endDate": "2005-11-30",
+      "orderdeploy": 0,
+      "status": true,
+      "organization": {
+        "id": 6,
+        "name": "ITBA",
+        "resume": "Universidad Privada orientada a Ingenierias, en CABA",
+        "url": ""
+      },
+      "roleposition": {
+        "id": 3,
+        "name": "Programador Senior"
+      },
+      "person": 1
+    }
+  ], 
+  "RolePosition": [
+    {        
+      "id": 3,
+      "name": "Programador Senior",
+      "person":1
+    }
   ]
+
 }

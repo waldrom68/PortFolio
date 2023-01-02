@@ -1,78 +1,75 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { LaboralCareer, Organization, RolePosition } from '../../../data'
+import { Organization } from '../../../data'
 
 import { faPen, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Observable } from 'rxjs';
 import { DataService } from 'src/app/service/data.service';
 
 @Component({
-  selector: 'app-career-item',
-  templateUrl: './career-item.component.html',
-  styleUrls: ['./career-item.component.css']
+  selector: 'app-organization-item',
+  templateUrl: './organization-item.component.html',
+  styleUrls: ['./organization-item.component.css']
 })
-export class CareerItemComponent implements OnInit {
+export class OrganizationItemComponent implements OnInit {
   // PENDIENTE: SERVICIO QUE DEBE VINCULARSE CON EL LOGUEO
   flagUserAdmin: boolean = false;
   flagUserAdmin$: Observable<boolean>;
 
 
-  @Input() item: LaboralCareer;
+  @Input() item: Organization;
 
   @Input() showBtnAction!: boolean;
   @Output() showBtnActionChange = new EventEmitter<boolean>();
  
-  @Output() onDelete: EventEmitter<LaboralCareer> = new EventEmitter()
-  @Output() onUpdate: EventEmitter<LaboralCareer> = new EventEmitter()
-  @Output() onToggleForm: EventEmitter<LaboralCareer> = new EventEmitter()
+  @Output() onDelete: EventEmitter<Organization> = new EventEmitter()
+  @Output() onUpdate: EventEmitter<Organization> = new EventEmitter()
+  @Output() onToggleForm: EventEmitter<Organization> = new EventEmitter()
   
   faTimes = faTimes;
   faPen = faPen;
   faTrash = faTrash;
 
   showForm: boolean = false;
-  formData: LaboralCareer;
+  formData: Organization;
 
+  constructor(private dataService: DataService,) { }
 
-
-  constructor( private dataService: DataService, ) { }
-
-  ngOnInit() {
+  ngOnInit(): void {
     this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();
     this.flagUserAdmin$.subscribe(  flagUserAdmin => this.flagUserAdmin = flagUserAdmin)
     this.flagUserAdmin = this.dataService.getFlagUserAdmin()
-
-
   }
-  
+
   color:string = 'red';
 
   changeStyle($event: Event){
     this.color = $event.type == 'mouseover' ? 'resaltado' : 'normal';
   }
 
-  toggleForm(career: LaboralCareer) {
+  toggleForm(organization: Organization) {
     this.showForm = !this.showForm;
     // this.ocultarAcciones = !this.ocultarAcciones
-    this.formData = career;
+    this.formData = organization;
     // this.resize();  // habilito las acciones de cada item
     this.showBtnAction = !this.showBtnAction
     this.showBtnActionChange.emit(this.showBtnAction)
   }
 
-  delete(career: LaboralCareer) {
+  delete(organization: Organization) {
     // llamo al metodo del padre via emit()
     if (this.flagUserAdmin) {
-      this.onDelete.emit(career);
+      this.onDelete.emit(organization);
     }
 
   }
-  cancelation(career: LaboralCareer) {
-    this.toggleForm(career);  // cierro el formulario
+  cancelation(organization: Organization) {
+    this.toggleForm(organization);  // cierro el formulario
   }
 
-  update(career: LaboralCareer) {
-    this.dataService.updateLaboralCareer(career).subscribe();
-    this.toggleForm(career);  // cierro el formulario
+  update(organization: Organization) {
+    this.dataService.updateOrganization(organization).subscribe();
+    this.toggleForm(organization);  // cierro el formulario
 
   }
+
 }

@@ -1,17 +1,54 @@
-<span style="background-color:gainsboro">
-  {{item.start_date}} hasta {{item.end_date}}, {{item.organization}} ({{item.position}}) 
-  <ng-container *ngIf="isAdmin">
-    <fa-icon 
-        [icon]="faTimes"
-        [ngStyle] = "{'color':'red','font-weight':'bolder', 'margin':'0 5px'}"
-        (click)="onDelete(item)"
-    >
-    </fa-icon>
-    <fa-icon 
-        [icon]="faPen"
-        [ngStyle] = "{'color':'green','font-weight':'bolder', 'margin':'0 5px'}"
-        >
-  </fa-icon>
-</ng-container>
-</span>
-<br>
+
+
+<ng-container *ngIf="!showForm">
+
+  <div class="container row py-2"
+  [ngClass]="color" (mouseover)="changeStyle($event)" (mouseout)="changeStyle($event)"
+  >
+      <div class="container-fluid" style="display: inline-block;"
+
+      >
+      <!-- (dblclick)="toggleForm(item);" -->
+          
+      ({{item.startDate | date:'MM-yyyy' }} hasta {{item.endDate | date:'MM-yyyy'}}) {{item.organization.name}}
+      <p>{{item.roleposition.name}}</p>
+          <small class="px-5"><i> {{item.organization.resume}}</i></small>
+      </div>
+      <!-- ##################### -->
+      
+      <div class="icon-group"
+           *ngIf="flagUserAdmin && showBtnAction"
+          >
+          <button class="btn btn-outline-success btn-sm"
+              (click)="toggleForm(item);"
+              ngClass="faConfirm fa-ico">
+              <fa-icon 
+                  [icon]="faPen"
+                  
+              >
+              </fa-icon>
+          </button>
+          <button class="btn btn-outline-danger btn-sm"
+              (click)="delete(item)"
+              ngClass="faCancel"
+          >
+              <fa-icon 
+                  [icon]="faTrash"
+              >
+              </fa-icon>
+          </button>
+      </div>
+  </div>
+
+</ng-container >
+
+<app-career-form
+  *ngIf="showForm"
+  [ngStyle]="{'width':'100%'}"
+  [formData]="formData"
+  [title]="''"
+  (onUpdate)=" update($event);"
+  (cancel)="cancelation($event)"
+
+  >
+</app-career-form>

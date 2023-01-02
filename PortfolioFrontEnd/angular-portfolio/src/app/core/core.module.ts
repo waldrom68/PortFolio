@@ -40,7 +40,9 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { PersonalFormComponent } from '../features/personal-form/personal-form.component';
 import { OrganizationComponent } from '../features/organization/organization.component';
-
+import { OrganizationItemComponent } from '../features/bloque-datos-obj-profile/organization-item/organization-item.component';
+import { OrganizationFormComponent } from '../features/bloque-datos-obj-profile/organization-form/organization-form.component';
+import { CareerFormComponent } from '../features/bloque-datos-obj-profile//career-form/career-form.component';
 
 
 
@@ -74,7 +76,10 @@ import { OrganizationComponent } from '../features/organization/organization.com
         HardFormComponent,
         ProjectsFormComponent,
         PersonalFormComponent,
-        OrganizationComponent
+        OrganizationComponent,
+        OrganizationItemComponent,
+        OrganizationFormComponent,
+        CareerFormComponent
     ],
     exports: [
         TopBarComponent,
@@ -95,7 +100,10 @@ import { OrganizationComponent } from '../features/organization/organization.com
         HardFormComponent,
         ProjectsFormComponent,
         PersonalFormComponent,
-        OrganizationComponent
+        OrganizationComponent,
+        OrganizationItemComponent,
+        OrganizationFormComponent,
+        CareerFormComponent,
         // InterestsComponent,
         // SoftSkillsComponent,
         // SoftItemComponent,

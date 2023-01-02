@@ -40,7 +40,7 @@ public class Organization {
     @Column(nullable=false, length=150)
     private String name;
     
-    @Column(length=100)
+    @Column(length=200)
     private String resume;
     
     private String url;

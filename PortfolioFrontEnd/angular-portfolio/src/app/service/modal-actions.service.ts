@@ -59,6 +59,14 @@ export class ModalActionsService {
         this.deleteProject(modalData);
         break;
 
+      case "delOrganization":
+        this.deleteOrganization(modalData);
+        break;
+
+      case "delLaboralCareer":
+        this.deleteCareer(modalData);
+        break;
+
       default:
         console.log("ALERTA: en modalAction, No se ha encontrado modalData.name")
         break;
@@ -85,5 +93,13 @@ export class ModalActionsService {
   private deleteProject(modalData: any) {
     console.log(modalData.data)
     this.dataservice.delProject(modalData.data).subscribe()
+  }
+  private deleteOrganization(modalData: any) {
+    console.log(modalData.data)
+    this.dataservice.delOrganization(modalData.data).subscribe()
+  }
+  private deleteCareer(modalData: any) {
+    console.log(modalData.data)
+    this.dataservice.delLaboralCareers(modalData.data).subscribe()
   }
 }

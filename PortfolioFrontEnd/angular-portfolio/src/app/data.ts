@@ -64,14 +64,7 @@ export interface Users {
         userId:number,
     }
 
-    export interface LaboralCareer {
-        id: number,
-        start_date:string,
-        end_date:string,
-        organization:string,
-        position:string,
-        userId:number,
-    }
+
     
     export interface Interests {
         id: number,
@@ -180,5 +173,23 @@ export interface Person {
     export interface Degree {
         id: number,
         name:string,
+        person:number
+    }
+    
+    export interface RolePosition {
+        id: number,
+        name:string,
+        person:number
+    }
+    
+    export interface LaboralCareer {
+        id: number,
+        resume:string,
+        startDate:Date,
+        endDate:Date,
+        orderdeploy:number,
+        status:boolean,
+        organization:Organization,
+        roleposition:RolePosition,
         person:number
     }

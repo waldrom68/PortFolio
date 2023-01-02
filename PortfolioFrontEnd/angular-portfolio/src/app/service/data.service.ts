@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
 
-import { Person, HardSkill, SoftSkill, Studies, LaboralCareer, Interest, Project, PortfolioInit, Cards,Organization, Degree } from '../data'
+import { Person, HardSkill, SoftSkill, Studies, LaboralCareer, Interest, Project, PortfolioInit, Cards,Organization, Degree, RolePosition } from '../data'
 
 import { HttpClient, HttpHeaders } from '@angular/common/http'  // Para ejecutar los metodos GET, PUT, POST, ETC
 
@@ -203,6 +203,28 @@ export class DataService {
     return this.http.post<Degree>(`${this.apiURL}/Degree`, degree, httpOptions)
   }
 
+
+  // Laboral Career
+  getLaboralCareer(): Observable<LaboralCareer[]> {
+    this.EndPoint = `${this.apiURL}/LaboralCareer?person=${this.USERID}`
+    return this.http.get<LaboralCareer[]>(this.EndPoint )
+  }
+  delLaboralCareers(career:LaboralCareer): Observable<LaboralCareer>{
+    const url = `${this.apiURL}/LaboralCareer/${career.id}`
+    return this.http.delete<LaboralCareer>(url)
+  }
+  updateLaboralCareer(career:LaboralCareer): Observable<LaboralCareer>{
+    const url = `${this.apiURL}/LaboralCareer/${career.id}`;
+    return this.http.put<LaboralCareer>(url, career)
+  }
+  addLaboralCareer(career:LaboralCareer): Observable<LaboralCareer>{
+    console.log("estoy en el metodo del servicio")
+    // Este codigo agrega un usuario a la DB 
+      console.log(career.constructor.name)
+    return this.http.post<LaboralCareer>(`${this.apiURL}/LaboralCareer`, career, httpOptions)
+  }
+  
+
   // pendientes de implementar
 
   // Studies
@@ -215,18 +237,12 @@ export class DataService {
     return this.http.delete<Studies>(url)
   }
 
-  // Laboral Career
-  getLaboralCareer(): Observable<LaboralCareer[]> {
-    this.EndPoint = `${this.apiURL}/LaboralCareer?person=${this.USERID}`
-    return this.http.get<LaboralCareer[]>(this.EndPoint )
-  }
-  delLaboralCareers(career:LaboralCareer): Observable<LaboralCareer>{
-    const url = `${this.apiURL}/LaboralCareer/${career.id}`
-    return this.http.delete<LaboralCareer>(url)
-  }
 
-
-
+// RolePosition
+getRolePosition(): Observable<RolePosition[]> {
+  this.EndPoint = `${this.apiURL}/RolePosition?person=${this.USERID}`
+  return this.http.get<RolePosition[]>(this.EndPoint )
+}
 
 
 

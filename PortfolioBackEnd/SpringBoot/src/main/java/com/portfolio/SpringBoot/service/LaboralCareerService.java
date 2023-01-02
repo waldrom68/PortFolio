@@ -71,13 +71,19 @@ public class LaboralCareerService implements ILaboralCareerService {
             tempDTO.setId(elemento.getId());
 //            tempDTO.setPosition(elemento.getPosition());
             tempDTO.setResume(elemento.getResume());
-            tempDTO.setStartDate(elemento.getStartDate());
-            tempDTO.setEndDate(elemento.getEndDate());
+            
+            String temp = elemento.getStartDate().toString();
+            tempDTO.setStartDate(temp.substring(0, 10));
+            
+            String temp1 = elemento.getEndDate().toString();
+            tempDTO.setEndDate(temp1.substring(0, 10));
+            
+            
             tempDTO.setOrderdeploy(elemento.getOrderdeploy());
             tempDTO.setStatus(elemento.isStatus());
-            tempDTO.setOrganization(elemento.getOrganization().getName());
-            tempDTO.setOrga_resume(elemento.getOrganization().getResume());
-            tempDTO.setRoleposition(elemento.getRoleposition().getName());
+            tempDTO.setOrganization(elemento.getOrganization());
+//            tempDTO.setOrga_resume(elemento.getOrganization().getResume());
+            tempDTO.setRoleposition(elemento.getRoleposition());
         
             listatemp.add(tempDTO);
         }
