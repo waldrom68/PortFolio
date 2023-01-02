@@ -5,7 +5,7 @@ import { faCheck, faMonument, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { Observable } from 'rxjs';
 import { DataService } from 'src/app/service/data.service';
 
-import { LaboralCareer, Organization, RolePosition } from 'src/app/data';
+import { LaboralCareer, Organization, RolePosition, Person } from 'src/app/data';
 
 @Component({
   selector: 'app-career-form',
@@ -18,50 +18,46 @@ flagUserAdmin: boolean = false;
 flagUserAdmin$: Observable<boolean>;
 
 @Input() formData: LaboralCareer;
+@Input() user: Person;
 @Input() title: string;
-@Output() onUpdate: EventEmitter<LaboralCareer> = new EventEmitter()
-@Output() cancel: EventEmitter<LaboralCareer> = new EventEmitter()
+@Input() myOrganizations: Organization[];
+@Input() myRolePositions: RolePosition[];
+@Output() onUpdate: EventEmitter<LaboralCareer> = new EventEmitter();
+@Output() cancel: EventEmitter<LaboralCareer> = new EventEmitter();
 
 faCheck = faCheck;
 faTimes = faTimes;
 
 form: FormGroup;
-myOrganization: Organization[];
-myRolePosition: RolePosition[];
-seleccionadoOrga: Organization;
-seleccionadoRole: RolePosition;
 
-  constructor(
-    private dataService: DataService,
-
-    private formBuilder: FormBuilder,
+constructor(
+  private dataService: DataService,
+  
+  private formBuilder: FormBuilder,
   ) { 
-    this.dataService.getOrganization().subscribe(data =>
-      this.myOrganization = data
-    );
-    this.dataService.getRolePosition().subscribe(data =>
-      this.myRolePosition = data
-    );
 
   }
-
+  
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       resume:[this.formData.resume, [Validators.required, Validators.minLength(2), Validators.maxLength(500) ]],
       startDate:[this.formData.startDate, [Validators.required ]],
       endDate:[this.formData.endDate, []],
-      organization:[this.formData.organization, []],
-      roleposition:[this.formData.roleposition, []],
-
-
+      organization:[this.formData.organization, [Validators.required]],
+      roleposition:[this.formData.roleposition, [Validators.required]],
+      
+      
     });
-
+    
     this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();
     this.flagUserAdmin$.subscribe(  flagUserAdmin => this.flagUserAdmin = flagUserAdmin)
     this.flagUserAdmin = this.dataService.getFlagUserAdmin()
-    this.seleccionadoOrga = this.formData.organization
-    this.seleccionadoRole = this.formData.roleposition
+
+ 
+ 
+
   }
+
 
   get Resume(): any {
     return this.form.get("resume")
@@ -72,6 +68,19 @@ seleccionadoRole: RolePosition;
   get EndDate(): any {
     return this.form.get("endDate")
   }
+  get Organization(): any {
+    return this.form.get("organization")
+  }
+  get Roleposition(): any {
+    return this.form.get("roleposition")
+  }
+  // get SeleccionadoOrga(): any {
+  //   return this.form.get("organizacion")
+  // }
+  // get SeleccionadoRole(): any {
+  //   return this.form.get("roleposition")
+  // }
+
 
   compararOrganizacion(myOrganization1:Organization, myOrganization2:Organization) {
     if (myOrganization1==null || myOrganization2==null) {
@@ -88,12 +97,6 @@ seleccionadoRole: RolePosition;
     }
   }
 
-  resetForm() {
-    this.formData.resume = "";
-    this.formData.startDate = new Date();
-    this.formData.endDate = new Date();
-  }
-
   
   onEnviar(event: Event, ) {
     event.preventDefault;
@@ -104,12 +107,15 @@ seleccionadoRole: RolePosition;
 
     } else {
       
-      console.log(this.form.valid, this.form.get("since")?.value)
+      console.log(this.form.valid, this.form.get("organizacion")?.value)
       if (this.form.valid) {
   
         this.formData.resume = this.form.get("resume")?.value;
         this.formData.startDate = this.form.get("startDate")?.value;
         this.formData.endDate = this.form.get("endDate")?.value;
+        this.formData.organization = this.form.get("organization")?.value;
+        this.formData.roleposition = this.form.get("roleposition")?.value;
+        this.formData.person = this.user.id 
         this.onUpdate.emit(this.formData);
   
       } else {
@@ -127,5 +133,8 @@ seleccionadoRole: RolePosition;
 
   }
 
+  ngAfterContentChecked() {
+    console.log("se termino ngAfterContentChecked")
+  }
 
 }

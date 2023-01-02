@@ -449,29 +449,6 @@
       "person": 3
     }
   ],
-  "Organization": [
-    {
-      "id": 6,
-      "name": "ITBA",
-      "resume": "Instituto Tecnológico de Buenos Aires, Universidad Privada (CABA)",
-      "url": "https:itba.edu.ar",
-      "person": 1
-    },
-    {
-      "id": 1,
-      "name": "EDUCACION IT",
-      "resume": "",
-      "url": "https://www.educacionit.com/",
-      "person": 1
-    },
-    {
-      "id": 1,
-      "name": "Min. de Desarrollo Productivo y CESSI",
-      "resume": "",
-      "url": "",
-      "person": 1
-    }
-  ],
   "Degree": [
     {
       "id": 1,
@@ -500,22 +477,119 @@
       "organization": {
         "id": 6,
         "name": "ITBA",
-        "resume": "Universidad Privada orientada a Ingenierias, en CABA",
-        "url": ""
+        "resume": "Instituto Tecnológico de Buenos Aires, Universidad Privada (CABA)",
+        "url": "https:itba.edu.ar",
+        "person": 1
       },
       "roleposition": {
         "id": 3,
-        "name": "Programador Senior"
+        "name": "Programador Senior",
+        "person": 1
+      },
+      "person": 1
+    },
+    {
+      "id": 2,
+      "resume": "gfhd",
+      "startDate": "2023-01-04",
+      "endDate": "2022-12-27",
+      "orderdeploy": 0,
+      "status": true,
+      "organization": {
+        "id": 1,
+        "name": "EDUCACION IT",
+        "resume": "",
+        "url": "https://www.educacionit.com/",
+        "person": 1
+      },
+      "roleposition": {
+        "id": 2,
+        "name": "Administrativo de 1ª",
+        "person": 1
+      },
+      "person": 1
+    },
+    {
+      "id": 3,
+      "resume": "uytd",
+      "startDate": "2023-01-02",
+      "endDate": "2023-01-02",
+      "orderdeploy": 0,
+      "status": true,
+      "organization": {
+        "id": 2,
+        "name": "Min. de Desarrollo Productivo y CESSI",
+        "resume": "",
+        "url": "",
+        "person": 1
+      },
+      "roleposition": {
+        "id": 3,
+        "name": "Programador Senior",
+        "person": 1
+      },
+      "person": 1
+    },
+    {
+      "id": 4,
+      "resume": "prueba 525",
+      "startDate": "2022-12-26",
+      "endDate": "2022-12-26",
+      "orderdeploy": 0,
+      "status": true,
+      "organization": {
+        "id": 1,
+        "name": "EDUCACION IT",
+        "resume": "",
+        "url": "https://www.educacionit.com/",
+        "person": 1
+      },
+      "roleposition": {
+        "id": 0,
+        "name": "",
+        "person": 0
       },
       "person": 1
     }
-  ], 
+  ],
+  "Organization": [
+    {
+      "id": 6,
+      "name": "ITBA",
+      "resume": "Instituto Tecnológico de Buenos Aires, Universidad Privada (CABA)",
+      "url": "https:itba.edu.ar",
+      "person": 1
+    },
+    {
+      "id": 1,
+      "name": "EDUCACION IT",
+      "resume": "",
+      "url": "https://www.educacionit.com/",
+      "person": 1
+    },
+    {
+      "id": 2,
+      "name": "Min. de Desarrollo Productivo y CESSI",
+      "resume": "",
+      "url": "",
+      "person": 1
+    }
+  ],
   "RolePosition": [
-    {        
+    {
       "id": 3,
       "name": "Programador Senior",
-      "person":1
+      "person": 1
+    },
+    {
+      "id": 1,
+      "name": "Director",
+      "person": 1
+    },
+    {
+      "id": 2,
+      "name": "Administrativo de 1ª",
+      "person": 1
     }
   ]
-
 }

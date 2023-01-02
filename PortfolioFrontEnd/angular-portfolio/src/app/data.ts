@@ -162,6 +162,11 @@ export interface Person {
         person:number
     }
 
+    export interface Degree {
+        id: number,
+        name:string,
+        person:number
+    }
     export interface Organization {
         id: number,
         name:string,
@@ -169,19 +174,11 @@ export interface Person {
         url:string,
         person:number
     }
-
-    export interface Degree {
-        id: number,
-        name:string,
-        person:number
-    }
-    
     export interface RolePosition {
         id: number,
         name:string,
         person:number
     }
-    
     export interface LaboralCareer {
         id: number,
         resume:string,

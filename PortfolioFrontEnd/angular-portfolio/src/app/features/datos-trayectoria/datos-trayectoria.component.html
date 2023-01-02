@@ -6,7 +6,9 @@
             <app-career-item 
                 *ngFor="let item of myData"
                 [item]="item"
-
+                [user]="user"
+                [myOrganizations]="myOrganizations"
+                [myRolePositions]="myRolePositions"
                 (onDelete)="deleteItem(item)"
                 [(showBtnAction)]="showBtnAction"
             >
@@ -17,21 +19,24 @@
         </div>
     </ng-container>
 
-    <!-- <app-career-form
+    <app-career-form
         *ngIf="showForm && flagUserAdmin"
-
+        [ngStyle]="{'width':'100%'}"
+        [user]="user"
         [formData]="formData"
-        [title]="'Ingrese un proyecto'"
+        [myOrganizations]="myOrganizations"
+        [myRolePositions]="myRolePositions"
+        [title]="'Ingrese un trabajo'"
 
         (showBtnActionChange)="showBtnAction"
         (onUpdate)=" addItem($event)"
         (cancel)="cancelation($event)"
     >
-    </app-career-form> -->
+    </app-career-form>
 
     <ng-template #agregar>
         <div class="table-dark text-left container"  >
-            <p> Sin registrar proyectos.
+            <p> Sin registrar trabajos.
             </p>
         </div>
     </ng-template>

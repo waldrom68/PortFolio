@@ -12,7 +12,7 @@
           
       ({{item.startDate | date:'MM-yyyy' }} hasta {{item.endDate | date:'MM-yyyy'}}) {{item.organization.name}}
       <p>{{item.roleposition.name}}</p>
-          <small class="px-5"><i> {{item.organization.resume}}</i></small>
+          <small class="px-5"><i> {{item.resume}}</i></small>
       </div>
       <!-- ##################### -->
       
@@ -43,10 +43,16 @@
 </ng-container >
 
 <app-career-form
-  *ngIf="showForm"
+  *ngIf="showForm && flagUserAdmin"
   [ngStyle]="{'width':'100%'}"
+
+  [user]="user"
   [formData]="formData"
-  [title]="''"
+  [myOrganizations]="myOrganizations"
+  [myRolePositions]="myRolePositions"
+  [title]="'Agregar un trabajo'"
+
+  (showBtnActionChange)="showBtnAction"
   (onUpdate)=" update($event);"
   (cancel)="cancelation($event)"
 

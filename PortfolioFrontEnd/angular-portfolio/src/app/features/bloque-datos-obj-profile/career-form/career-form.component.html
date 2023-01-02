@@ -1,4 +1,12 @@
-<h5 class="m-auto p-1">{{formData.organization.name }}{{title}}</h5>
+<ng-container class="m-auto p-1" 
+*ngIf="formData.organization.name; else estaVacio"
+  >
+  <h5> {{formData.organization.name }} ({{formData.roleposition.name }}) </h5>
+</ng-container>
+
+<ng-template #estaVacio>
+  <h5 class="m-auto p-1"> {{title}}</h5>
+</ng-template>
 
   <form class="form-inline m-1"
   style="display: flex ; width:100% "
@@ -7,97 +15,102 @@
   #myForm="ngForm"
   (ngSubmit)="onEnviar($event); myForm.resetForm()"
 >
-<div class="form-group">
-    <label for="organization">Organizacion</label>
-
-    <select class="form-control" formControlName="organization" name="organizacion" 
-    [(ngModel)]="seleccionadoOrga"
-    [compareWith]="compararOrganizacion"
-    >
-        <option *ngFor="let elemento of myOrganization" 
-        [ngValue]="elemento"
-        >
-       {{elemento.name}}</option>
-
-    </select>
-<!-- https://www.arquitecturajava.com/angular-select-y-todas-sus-opciones/ -->
-  </div>
-  <div class="form-group">
-    <label for="roleposition">Posicion/Rol</label>
-
-    <select class="form-control" formControlName="roleposition" name="roleposition" 
-    [(ngModel)]="seleccionadoRole"
-    [compareWith]="compararRoles"
-    >
-        <option *ngFor="let elemento of myRolePosition" 
-        [ngValue]="elemento"
-        >
-       {{elemento.name}}</option>
-
-    </select>
-
-  </div>
-
-    <div class="row" style="display: contents ; width:100% ">
-        <label class="form-label" for="resume">Resumen:</label>
-        <textarea type="text" 
-        rows="6"
-        id="resume"
-        formControlName="resume" 
-        name="resume" 
-        class="form-control"
-        placeholder="Resumen"
-        [ngStyle]="{'width':'100%'}"
-        formControlName="resume"
-        [ngClass] = "{error: (Resume.invalid && Resume.touched)}"
-        ></textarea>
-        <small class="mensajeError" *ngIf="form.hasError('required', 'resume')"> Dato requerido </small>
-        <small class="mensajeError" *ngIf="form.hasError('minlength', 'resume')"> Minimo {{ Resume.errors.minlength.requiredLength }} caracteres</small>
-        <small class="mensajeError" *ngIf="form.hasError('maxlength', 'resume')"> Máximo {{ Resume.errors.maxlength.requiredLength }} caracteres</small>
-    </div>
-
-    <div class="row">
-        <div class="col">
-            <label class="form-label" for="startDate">Desde:</label>
-            <input type="date"
-            id="startDate"
-            name="startDate"
-            class="form-control"
-            [ngStyle]="{'width':'100%'}"
-            formControlName="startDate"
-            [ngClass] = "{error: (StartDate.invalid && StartDate.touched)}"
-            >
-        </div>
-        <div class="col">
-            <label class="form-label" for="endDate">Hasta:</label>
-            <input type="date"
-            id="endDate"
-            name="endDate"
-            class="form-control"
-            [ngStyle]="{'width':'100%'}"
-            formControlName="endDate"
-            [ngClass] = "{error: (EndDate.invalid && EndDate.touched)}"
-            >
-        </div>
-    </div>
-
-    <div class="row icon-group m-2">
-
-      <button type="submit" class="btn btn-outline-success btn-sm"
-      ngClass="faConfirm fa-ico"
-      [disabled]="!form.valid"
+  <div class="row" style="display: contents ; width:100% ">
+    <div class="col">
+      <label class="form-label" for="organization">Organizacion</label>
+      <!-- [(ngModel)]="seleccionadoOrga" -->
+      <select class="form-control" formControlName="organization" name="organization" 
+      [compareWith]="compararOrganizacion"
+      [ngClass] = "{error: (Organization.invalid && Organization.touched)}"
       >
-        <fa-icon  [icon]="faCheck"> </fa-icon>
-      </button>
+          <option *ngFor="let elemento of myOrganizations" 
+          [ngValue]="elemento"
+          >
+        {{elemento.name}}</option>
 
-      <button class="btn btn-outline-danger btn-sm"
-      (click)="onCancel($event); myForm.resetForm()"
-      ngClass="faCancel fa-ico"
+      </select>
+  <!-- https://www.arquitecturajava.com/angular-select-y-todas-sus-opciones/ -->
+
+      <label class="form-label" for="roleposition">Posicion/Rol</label>
+      <!-- [(ngModel)]="seleccionadoRole" -->
+      <select class="form-control" formControlName="roleposition" name="roleposition" 
+      [compareWith]="compararRoles"
+      [ngClass] = "{error: (Roleposition.invalid && Roleposition.touched)}"
       >
-        <fa-icon [icon]="faTimes"> </fa-icon>
-      </button>
+          <option *ngFor="let elemento of myRolePositions" 
+          [ngValue]="elemento"
+          >
+        {{elemento.name}}</option>
+
+      </select>
 
     </div>
+
+  </div>
+
+  <div class="row" style="display: contents ; width:100% ">
+    <div class="col-12"> 
+      <label class="form-label" for="resume">Resumen:</label>
+      <textarea type="text" 
+      rows="6"
+      id="resume"
+      formControlName="resume" 
+      name="resume" 
+      class="form-control"
+      placeholder="Resumen"
+      [ngStyle]="{'width':'100%'}"
+      formControlName="resume"
+      [ngClass] = "{error: (Resume.invalid && Resume.touched)}"
+      ></textarea>
+    </div>
+      <small class="mensajeError" *ngIf="form.hasError('required', 'resume')"> Dato requerido </small>
+      <small class="mensajeError" *ngIf="form.hasError('minlength', 'resume')"> Minimo {{ Resume.errors.minlength.requiredLength }} caracteres</small>
+      <small class="mensajeError" *ngIf="form.hasError('maxlength', 'resume')"> Máximo {{ Resume.errors.maxlength.requiredLength }} caracteres</small>
+
+  </div>
+
+  <div class="row">
+      <div class="col">
+          <label class="form-label" for="startDate">Desde:</label>
+          <input type="date"
+          id="startDate"
+          name="startDate"
+          class="form-control"
+          [ngStyle]="{'width':'100%'}"
+          formControlName="startDate"
+          [ngClass] = "{error: (StartDate.invalid && StartDate.touched)}"
+          >
+      </div>
+      <div class="col">
+          <label class="form-label" for="endDate">Hasta:</label>
+          <input type="date"
+          id="endDate"
+          name="endDate"
+          class="form-control"
+          [ngStyle]="{'width':'100%'}"
+          formControlName="endDate"
+          [ngClass] = "{error: (EndDate.invalid && EndDate.touched)}"
+          >
+      </div>
+  </div>
+
+  <div class="row icon-group m-2">
+    {{form.valid}}
+    <button type="submit" class="btn btn-outline-success btn-sm"
+    ngClass="faConfirm fa-ico"
+    [disabled]="!form.valid"
+    >
+      <fa-icon  [icon]="faCheck"> </fa-icon>
+    </button>
+
+    <button class="btn btn-outline-danger btn-sm"
+    (click)="onCancel($event); myForm.resetForm()"
+    ngClass="faCancel fa-ico"
+    >
+      <fa-icon [icon]="faTimes"> </fa-icon>
+    </button>
+
+  </div>
 
 
 

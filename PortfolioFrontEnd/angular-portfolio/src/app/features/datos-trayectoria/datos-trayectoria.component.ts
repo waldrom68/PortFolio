@@ -10,7 +10,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MessageBoxComponent } from '../../shared/message-box/message-box.component';
 import { ModalActionsService } from 'src/app/service/modal-actions.service';
 import { Observable } from 'rxjs';
-import { USERS } from 'src/app/mock-data';
+
 
 // import {WORKEXPERIENCE} from '../../../mock-data'
 
@@ -38,27 +38,39 @@ export class DatosTrayectoriaComponent implements OnInit {
   flagBorrado$: Observable<boolean>;
 
   user: Person;
-  myOrganization: Organization;
-  myRoleposition: RolePosition;
+  myOrganizations: Organization[];
+  myRolePositions: RolePosition[];
 
-  
-
+ 
   constructor( 
     private dataService: DataService, 
 
     public matDialog: MatDialog,
     private modalService: ModalActionsService,
-    ) { }
+    ) {
+
+      this.resetForm()
+
+     }
   
 
   ngOnInit(): void {
-    this.dataService.getLaboralCareer().subscribe(career =>
-      [this.myData = career]
-    );
 
     this.dataService.getGralData().subscribe(data =>
       this.user = data
     ) ;
+    this.dataService.getLaboralCareer().subscribe(data =>
+      this.myData = data
+    );
+    this.dataService.getOrganization().subscribe(data =>
+      this.myOrganizations = data
+
+    );
+    this.dataService.getRolePosition().subscribe(data =>
+      this.myRolePositions = data
+    );
+
+
     // subscribo y me entero si se cambia el status del flag  
     this.flagBorrado$ = this.modalService.getFlagBorrado$();
     this.flagBorrado$.subscribe( (tt)=> {
@@ -69,8 +81,34 @@ export class DatosTrayectoriaComponent implements OnInit {
 
     this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();
     this.flagUserAdmin$.subscribe(  flagUserAdmin => this.flagUserAdmin = flagUserAdmin)
-    this.flagUserAdmin = this.dataService.getFlagUserAdmin()
+    this.flagUserAdmin = this.dataService.getFlagUserAdmin();
 
+  //  console.log(this.user.id)
+
+  }
+
+  resetForm() {
+    this.formData = { 
+      id:0, 
+      resume:"",
+      startDate: new Date(),
+      endDate: new Date(),
+      orderdeploy:0,
+      status:true,
+      organization: {
+        id: 0,
+        name:"",
+        resume:"",
+        url:"",
+        person:0
+    },
+      roleposition:{
+        id: 0,
+        name:"",
+        person:0
+    } ,
+      person: 0
+    }
   }
 
   delete(career: LaboralCareer) {
@@ -83,18 +121,7 @@ export class DatosTrayectoriaComponent implements OnInit {
     );
   }
 
-  resetForm() {
-    this.formData = { 
-      id:0, 
-      resume:"",
-      startDate: new Date(),
-      endDate: new Date(),
-      orderdeploy:0,
-      status:true,
-      organization: this.myOrganization,
-      roleposition:this.myRoleposition,
-      person: this.user.id }
-  }
+
 
   toggleForm() {
     this.showForm = !this.showForm;
@@ -118,9 +145,10 @@ export class DatosTrayectoriaComponent implements OnInit {
     this.dataService.addLaboralCareer(career).subscribe( (tt)=> {
       this.myData.push( tt );
       this.toggleForm();
+      this.resetForm();
     }
     );
-    this.resetForm();
+    // this.resetForm();
 
   }
 
@@ -138,7 +166,7 @@ export class DatosTrayectoriaComponent implements OnInit {
       // atributos generales del message-box
       name: "delLaboralCareer",
       title: `Hi ${userId}, está por eliminar uno de los trabajos`,
-      description: `¿Estás seguro de eliminar el trabajo en "${data.organization}" ?`,
+      description: `¿Estás seguro de eliminar el trabajo en "${data.organization.name} (${data.roleposition.name})" ?`,
       // por defecto mostrararía Aceptar
       actionButtonText: "Eliminar",
       // por defecto mostraría Cancelar

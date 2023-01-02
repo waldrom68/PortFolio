@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { LaboralCareer, Organization, RolePosition } from '../../../data'
+import { LaboralCareer, Organization, Person, RolePosition } from '../../../data'
 
 import { faPen, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Observable } from 'rxjs';
@@ -17,6 +17,9 @@ export class CareerItemComponent implements OnInit {
 
 
   @Input() item: LaboralCareer;
+  @Input() user: Person;
+  @Input() myOrganizations: Organization[];
+  @Input() myRolePositions: RolePosition[];
 
   @Input() showBtnAction!: boolean;
   @Output() showBtnActionChange = new EventEmitter<boolean>();
@@ -41,7 +44,7 @@ export class CareerItemComponent implements OnInit {
     this.flagUserAdmin$.subscribe(  flagUserAdmin => this.flagUserAdmin = flagUserAdmin)
     this.flagUserAdmin = this.dataService.getFlagUserAdmin()
 
-
+    console.log(this.myOrganizations)
   }
   
   color:string = 'red';
