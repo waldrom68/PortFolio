@@ -52,7 +52,7 @@ export class DatosTrayectoriaComponent implements OnInit {
       this.resetForm()
 
      }
-  
+
 
   ngOnInit(): void {
 

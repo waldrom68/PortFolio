@@ -61,8 +61,10 @@ export class OrganizationComponent implements OnInit {
     )
 
     this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();
-    this.flagUserAdmin$.subscribe(  flagUserAdmin => this.flagUserAdmin = flagUserAdmin)
-    this.flagUserAdmin = this.dataService.getFlagUserAdmin()
+    this.flagUserAdmin$.subscribe(  flagUserAdmin => this.flagUserAdmin = flagUserAdmin);
+    this.flagUserAdmin = this.dataService.getFlagUserAdmin();
+
+    this.resetForm();
   }
 
   resetForm() {
@@ -75,8 +77,10 @@ export class OrganizationComponent implements OnInit {
   }
 
   toggleForm() {
+    
     this.showForm = !this.showForm;
     this.showBtnAction = !this.showBtnAction;
+
   }  
   
   cancelation(organization: Organization) {
@@ -114,7 +118,7 @@ export class OrganizationComponent implements OnInit {
     dialogConfig.width = "600px";
     dialogConfig.data = {
       // atributos generales del message-box
-      name: "deOrganization",
+      name: "delOrganization",
       title: `Hi ${userId}, está por eliminar una de las organizaciones`,
       description: `¿Estás seguro de eliminar el organizaciones "${data.name}" ?`,
       // por defecto mostrararía Aceptar

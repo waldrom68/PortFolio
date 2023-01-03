@@ -55,11 +55,14 @@ form: FormGroup;
     return this.form.get("url")
   }
 
+  
   resetForm() {
-    this.formData.name = "";
-    this.formData.resume = "";
-    this.formData.url = "";
-
+    this.formData = { 
+      id:0, 
+      name:"", 
+      resume:"",
+      url:"",
+      person:0 }
   }
 
   onEnviar(event: Event, ) {

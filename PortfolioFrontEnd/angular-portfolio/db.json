@@ -533,8 +533,8 @@
     {
       "id": 4,
       "resume": "prueba 525",
-      "startDate": "2022-12-26",
-      "endDate": "2022-12-26",
+      "startDate": "2020-12-26",
+      "endDate": "2021-12-26",
       "orderdeploy": 0,
       "status": true,
       "organization": {
@@ -545,9 +545,30 @@
         "person": 1
       },
       "roleposition": {
-        "id": 0,
-        "name": "",
-        "person": 0
+        "id": 1,
+        "name": "Director",
+        "person": 1
+      },
+      "person": 1
+    },
+    {
+      "id": 5,
+      "resume": "Director ejecutivo de Administracion de Personal",
+      "startDate": "2004-03-01",
+      "endDate": "2015-02-28",
+      "orderdeploy": 0,
+      "status": true,
+      "organization": {
+        "id": 6,
+        "name": "ITBA",
+        "resume": "Instituto Tecnológico de Buenos Aires, Universidad Privada (CABA)",
+        "url": "https:itba.edu.ar",
+        "person": 1
+      },
+      "roleposition": {
+        "id": 1,
+        "name": "Director",
+        "person": 1
       },
       "person": 1
     }
@@ -563,14 +584,14 @@
     {
       "id": 1,
       "name": "EDUCACION IT",
-      "resume": "",
+      "resume": "Centro de capacitacion tecnológica en CABA",
       "url": "https://www.educacionit.com/",
       "person": 1
     },
     {
       "id": 2,
       "name": "Min. de Desarrollo Productivo y CESSI",
-      "resume": "",
+      "resume": "Breve reseña",
       "url": "",
       "person": 1
     }

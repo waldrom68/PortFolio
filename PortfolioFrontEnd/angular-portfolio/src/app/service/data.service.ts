@@ -167,19 +167,19 @@ export class DataService {
     return this.http.get<Organization[]>(this.EndPoint )
   }
   delOrganization(organization:Organization): Observable<Organization>{
-    const url = `${this.apiURL}/del/Organization/${organization.id}`
+    const url = `${this.apiURL}/Organization/${organization.id}`
     return this.http.delete<Organization>(url)
   }
   updateOrganization(organization:Organization): Observable<Organization>{
-    const url = `${this.apiURL}/edit/Organization`;
-    return this.http.put<Organization>(url, organization)
+    const url = `${this.apiURL}/Organization/${organization.id}`;
+    return this.http.put<Organization>(url, organization, httpOptions)
   }
   addOrganization(organization:Organization): Observable<Organization>{
     console.log("estoy en el metodo del servicio")
     // Este codigo agrega un usuario a la DB 
     // organization.person = this.USERID;
     console.log(organization.constructor.name)
-    return this.http.post<Organization>(`${this.apiURL}/edit/Organization`, organization, httpOptions)
+    return this.http.post<Organization>(`${this.apiURL}/`, organization, httpOptions)
   }
 
 

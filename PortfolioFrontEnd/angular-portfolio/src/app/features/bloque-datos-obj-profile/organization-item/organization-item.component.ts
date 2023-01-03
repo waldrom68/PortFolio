@@ -19,6 +19,7 @@ export class OrganizationItemComponent implements OnInit {
   @Input() item: Organization;
 
   @Input() showBtnAction!: boolean;
+  @Input() formData: Organization;
   @Output() showBtnActionChange = new EventEmitter<boolean>();
  
   @Output() onDelete: EventEmitter<Organization> = new EventEmitter()
@@ -30,7 +31,7 @@ export class OrganizationItemComponent implements OnInit {
   faTrash = faTrash;
 
   showForm: boolean = false;
-  formData: Organization;
+  // formData: Organization;
 
   constructor(private dataService: DataService,) { }
 
