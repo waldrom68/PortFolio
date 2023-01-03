@@ -11,10 +11,11 @@ import java.util.List;
  */
 public interface IRolePositionService {
     
-    public void crearRolePosition(RolePosition position);
+    public boolean crearRolePosition(RolePosition position);
     public void borrarRolePosition(Long id);
     public RolePosition buscarRolePosition(Long id);
   
     public List<RolePosition> verRolePosition();
+    public List<RolePosition> verByPersonId(Long id);
     
 }

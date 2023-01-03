@@ -1,1 +1,50 @@
-<p>degree-item works!</p>
+<ng-container *ngIf="!showForm">
+
+    <div class="container row py-2"
+    [ngClass]="color" (mouseover)="changeStyle($event)" (mouseout)="changeStyle($event)"
+    >
+        <div class="container-fluid" style="display: inline-block;"
+
+        >
+            
+            <h6>{{item.name}}</h6>
+
+        </div>
+        <!-- ##################### -->
+        
+        <div class="icon-group"
+             *ngIf="flagUserAdmin && showBtnAction"
+            >
+            <button class="btn btn-outline-success btn-sm"
+                (click)="toggleForm(item);"
+                ngClass="faConfirm fa-ico">
+                <fa-icon 
+                    [icon]="faPen"
+                    
+                >
+                </fa-icon>
+            </button>
+            <button class="btn btn-outline-danger btn-sm"
+                (click)="delete(item)"
+                ngClass="faCancel"
+            >
+                <fa-icon 
+                    [icon]="faTrash"
+                >
+                </fa-icon>
+            </button>
+        </div>
+    </div>
+
+</ng-container >
+
+<app-degree-form
+    *ngIf="showForm"
+    [ngStyle]="{'width':'100%'}"
+    [formData]="formData"
+    [title]="''"
+    (onUpdate)=" update($event);"
+    (cancel)="cancelation($event)"
+
+    >
+</app-degree-form>

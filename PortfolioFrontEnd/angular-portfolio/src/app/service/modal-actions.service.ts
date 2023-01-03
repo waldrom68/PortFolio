@@ -67,8 +67,12 @@ export class ModalActionsService {
         this.deleteCareer(modalData);
         break;
 
-        case "delRolePosition":
+      case "delRolePosition":
         this.deleteRole(modalData);
+        break;
+
+      case "delDegree":
+        this.deleteDegree(modalData);
         break;
 
       default:
@@ -109,5 +113,9 @@ export class ModalActionsService {
   private deleteRole(modalData: any) {
     console.log(modalData.data)
     this.dataservice.delRolePosition(modalData.data).subscribe()
+  }
+  private deleteDegree(modalData: any) {
+    console.log(modalData.data)
+    this.dataservice.delDegree(modalData.data).subscribe()
   }
 }

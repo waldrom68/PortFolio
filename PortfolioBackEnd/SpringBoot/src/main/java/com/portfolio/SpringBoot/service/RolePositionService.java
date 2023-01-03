@@ -2,6 +2,7 @@
 
 package com.portfolio.SpringBoot.service;
 
+import com.portfolio.SpringBoot.model.Person;
 import com.portfolio.SpringBoot.model.RolePosition;
 import com.portfolio.SpringBoot.repository.RolePositionRepository;
 import java.util.List;
@@ -13,10 +14,19 @@ public class RolePositionService implements IRolePositionService {
     
     @Autowired
     public RolePositionRepository positionRepo;
+    @Autowired public IPersonService persServ;
 
     @Override
-    public void crearRolePosition(RolePosition position) {
-        positionRepo.save(position);
+    public boolean crearRolePosition(RolePosition position) {
+        Long tmp_id = position.getPerson().getId();
+        Person pers = persServ.buscarPersona(tmp_id);
+        if (pers != null ) {
+            position.setPerson(pers);
+            positionRepo.save(position);
+        } else {
+            return false;
+        }
+        return true;
     }
 
     @Override
@@ -32,5 +42,10 @@ public class RolePositionService implements IRolePositionService {
     @Override
     public List<RolePosition> verRolePosition() {
         return positionRepo.findAll();
+    }
+
+    @Override
+    public List<RolePosition> verByPersonId(Long id) {
+        return positionRepo.findByPersonId(id);
     }
 }

@@ -43,4 +43,11 @@ public class ControllerOrganization {
         return orgaServ.verOrganizacion();
     
     }
+    
+    @PostMapping ("/list/organization/{id}")
+    public List<Organization> verByPersonId (@PathVariable Long id) {
+    
+        return orgaServ.verByPersonId(id);
+        
+    }
 }

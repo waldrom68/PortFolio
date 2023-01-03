@@ -200,8 +200,8 @@ export class DataService {
   addDegree(degree:Degree): Observable<Degree>{
     console.log("estoy en el metodo del servicio")
     // Este codigo agrega un usuario a la DB 
-      console.log(degree.constructor.name)
-      degree.person = this.USERID;
+    console.log(degree.constructor.name)
+    degree.person = this.USERID;
     return this.http.post<Degree>(`${this.apiURL}/Degree`, degree, httpOptions)
   }
 
