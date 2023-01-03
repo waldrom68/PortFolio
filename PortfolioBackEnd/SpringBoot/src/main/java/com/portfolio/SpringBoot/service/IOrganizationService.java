@@ -7,9 +7,11 @@ import java.util.List;
 
 
 public interface IOrganizationService {
-    public void crearOrganizacion(Organization orga);
+    
+    public boolean crearOrganizacion(Organization orga);
     public void borrarOrganizacion(Long id);
     public Organization buscarOrganizacion(Long id);
     
     public List<Organization> verOrganizacion();
+    public List<Organization> verByPersonId(Long id);
 }

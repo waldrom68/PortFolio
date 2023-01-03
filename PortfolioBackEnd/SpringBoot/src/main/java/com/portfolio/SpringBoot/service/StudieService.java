@@ -75,9 +75,8 @@ public class StudieService implements IStudieService {
             tempDTO.setEndDate(elemento.getEndDate());
             tempDTO.setOrderdeploy(elemento.getOrderdeploy());
             tempDTO.setStatus(elemento.isStatus());
-            tempDTO.setOrganization(elemento.getOrganization().getName());
-            tempDTO.setOrga_resume(elemento.getOrganization().getResume());
-            tempDTO.setDegree(elemento.getDegree().getName());
+            tempDTO.setOrganization(elemento.getOrganization());
+            tempDTO.setDegree(elemento.getDegree());
         
             listatemp.add(tempDTO);
         

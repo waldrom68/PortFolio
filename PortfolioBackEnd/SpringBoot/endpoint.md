@@ -69,6 +69,7 @@ Ok - [url:port]\del\organization\{id}
 
 ### GET
 Ok - [url:port]\list\organization\all // All degree entity
+Ok - [url:port]\list\organization\{id} // Only hardskill entity for a person -Flat-
 
 
 ##  ROLEPOSITION Entity

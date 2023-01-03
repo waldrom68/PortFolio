@@ -24,6 +24,12 @@ import { HardFormComponent } from './bloque-formacion-skill-int/hard-form/hard-f
 
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
+// import { RolePositionComponent } from './role-position/role-position.component';
+// import { RolepositionFormComponent } from './bloque-datos-obj-profile/roleposition-form/roleposition-form.component';
+// import { RolepositionItemComponent } from './bloque-datos-obj-profile/roleposition-item/roleposition-item.component';
+// import { DegreeComponent } from './degree/degree.component';
+// import { DegreeItemComponent } from './bloque-datos-obj-profile/degree-item/degree-item.component';
+// import { DegreeFormComponent } from './bloque-datos-obj-profile/degree-form/degree-form.component';
 
 // import { OrganizationItemComponent } from './bloque-datos-obj-profile/organization-item/organization-item.component';
 // import { OrganizationFormComponent } from './bloque-datos-obj-profile/organization-form/organization-form.component';
@@ -45,6 +51,12 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
     // ProfileComponent,
     // ObjetiveComponent,
     DataComponent,
+    // RolePositionComponent,
+    // RolepositionFormComponent,
+    // RolepositionItemComponent,
+    // DegreeComponent,
+    // DegreeItemComponent,
+    // DegreeFormComponent,
     // OrganizationItemComponent,
     // OrganizationFormComponent,
     // OrganizationComponent,

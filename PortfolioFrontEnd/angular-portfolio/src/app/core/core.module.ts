@@ -44,7 +44,12 @@ import { OrganizationItemComponent } from '../features/bloque-datos-obj-profile/
 import { OrganizationFormComponent } from '../features/bloque-datos-obj-profile/organization-form/organization-form.component';
 import { CareerFormComponent } from '../features/bloque-datos-obj-profile//career-form/career-form.component';
 
-
+import { DegreeComponent } from '../features/degree/degree.component';
+import { DegreeItemComponent } from '../features/bloque-datos-obj-profile/degree-item/degree-item.component';
+import { DegreeFormComponent } from '../features/bloque-datos-obj-profile/degree-form/degree-form.component';
+import { RolePositionComponent } from '../features/role-position/role-position.component';
+import { RolepositionFormComponent } from '../features/bloque-datos-obj-profile/roleposition-form/roleposition-form.component';
+import { RolepositionItemComponent } from '../features/bloque-datos-obj-profile/roleposition-item/roleposition-item.component';
 
 
 @NgModule({
@@ -79,7 +84,13 @@ import { CareerFormComponent } from '../features/bloque-datos-obj-profile//caree
         OrganizationComponent,
         OrganizationItemComponent,
         OrganizationFormComponent,
-        CareerFormComponent
+        CareerFormComponent,
+        DegreeComponent,
+        DegreeItemComponent,
+        DegreeFormComponent,
+        RolePositionComponent,
+        RolepositionFormComponent,
+        RolepositionItemComponent,
     ],
     exports: [
         TopBarComponent,
@@ -104,6 +115,12 @@ import { CareerFormComponent } from '../features/bloque-datos-obj-profile//caree
         OrganizationItemComponent,
         OrganizationFormComponent,
         CareerFormComponent,
+        DegreeComponent,
+        DegreeItemComponent,
+        DegreeFormComponent,
+        RolePositionComponent,
+        RolepositionFormComponent,
+        RolepositionItemComponent,
         // InterestsComponent,
         // SoftSkillsComponent,
         // SoftItemComponent,

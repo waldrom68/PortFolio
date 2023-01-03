@@ -2,6 +2,8 @@
 
 package com.portfolio.DTO;
 
+import com.portfolio.SpringBoot.model.Degree;
+import com.portfolio.SpringBoot.model.Organization;
 import java.io.Serializable;
 
 import java.util.Date;
@@ -18,9 +20,8 @@ public class DTOStudie  implements Serializable {
     private int orderdeploy ;
     private boolean status;
     
-    private String organization;
-    private String orga_resume;
-    private String degree;
+    private Organization organization;
+    private Degree degree;
 
 
     public DTOStudie() {

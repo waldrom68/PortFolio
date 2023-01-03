@@ -3,7 +3,9 @@
 package com.portfolio.SpringBoot.service;
 
 import com.portfolio.SpringBoot.model.Organization;
+import com.portfolio.SpringBoot.model.Person;
 import com.portfolio.SpringBoot.repository.OrganizationRepository;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,10 +15,19 @@ public class OrganizationService implements IOrganizationService {
 
     @Autowired
     public OrganizationRepository orgaRepo;
+    @Autowired public IPersonService persServ;
     
     @Override
-    public void crearOrganizacion(Organization orga) {
-        orgaRepo.save(orga);
+    public boolean crearOrganizacion(Organization orga) {
+        Long tmp_id = orga.getPerson().getId();
+        Person pers = persServ.buscarPersona(tmp_id);
+        if (pers != null ) {
+            orga.setPerson(pers);
+            orgaRepo.save(orga);
+        } else {
+            return false;
+        }
+        return true;
     }
 
     @Override
@@ -33,5 +44,10 @@ public class OrganizationService implements IOrganizationService {
     public List<Organization> verOrganizacion() {
         return orgaRepo.findAll();
     }
+
+    @Override
+    public List<Organization> verByPersonId(Long id) {
+        return orgaRepo.findByPersonId(id);
+     }
 
 }
