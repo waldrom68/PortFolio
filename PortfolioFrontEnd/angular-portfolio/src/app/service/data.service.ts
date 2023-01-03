@@ -62,6 +62,7 @@ export class DataService {
     return this.http.get<Cards[]>(`${this.apiURL}/Cards/?person=${this.USERID}`)
   }
 
+  // Person - only get and put
   getGralData(): Observable<Person> {
     return this.http.get<Person>(`${this.apiURL}/Person/${this.USERID}`)
   }
@@ -89,8 +90,8 @@ export class DataService {
   addHardskill(hardskill:HardSkill): Observable<HardSkill>{
     console.log("estoy en el metodo del servicio")
     // Este codigo agrega un usuario a la DB 
-    hardskill.person = this.USERID;
     console.log(hardskill.constructor.name)
+    hardskill.person = this.USERID;
     return this.http.post<HardSkill>(`${this.apiURL}/Hardskill`, hardskill, httpOptions)
   }
 
@@ -111,8 +112,8 @@ export class DataService {
   addInterests(interest:Interest): Observable<Interest>{
     console.log("estoy en el metodo del servicio")
     // Este codigo agrega un usuario a la DB 
-    interest.person = this.USERID;
     console.log(interest.constructor.name)
+    interest.person = this.USERID;
     return this.http.post<Interest>(`${this.apiURL}/Interest`, interest, httpOptions)
   }
 
@@ -134,8 +135,8 @@ export class DataService {
   addSoftskill(softskill:SoftSkill): Observable<SoftSkill>{
     console.log("estoy en el metodo del servicio")
     // Este codigo agrega un usuario a la DB 
-    softskill.person = this.USERID;
     console.log(softskill.constructor.name)
+    softskill.person = this.USERID;
     return this.http.post<SoftSkill>(`${this.apiURL}/SoftSkill`, softskill, httpOptions)
   }
 
@@ -156,8 +157,8 @@ export class DataService {
   addProject(project:Project): Observable<Project>{
     console.log("estoy en el metodo del servicio")
     // Este codigo agrega un usuario a la DB 
-    project.person = this.USERID;
     console.log(project.constructor.name)
+    project.person = this.USERID;
     return this.http.post<Project>(`${this.apiURL}/Project`, project, httpOptions)
   }
 
@@ -177,9 +178,9 @@ export class DataService {
   addOrganization(organization:Organization): Observable<Organization>{
     console.log("estoy en el metodo del servicio")
     // Este codigo agrega un usuario a la DB 
-    // organization.person = this.USERID;
+    organization.person = this.USERID;
     console.log(organization.constructor.name)
-    return this.http.post<Organization>(`${this.apiURL}/`, organization, httpOptions)
+    return this.http.post<Organization>(`${this.apiURL}/Organization`, organization, httpOptions)
   }
 
 
@@ -200,6 +201,7 @@ export class DataService {
     console.log("estoy en el metodo del servicio")
     // Este codigo agrega un usuario a la DB 
       console.log(degree.constructor.name)
+      degree.person = this.USERID;
     return this.http.post<Degree>(`${this.apiURL}/Degree`, degree, httpOptions)
   }
 
@@ -220,7 +222,8 @@ export class DataService {
   addLaboralCareer(career:LaboralCareer): Observable<LaboralCareer>{
     console.log("estoy en el metodo del servicio")
     // Este codigo agrega un usuario a la DB 
-      console.log(career.constructor.name)
+    console.log(career.constructor.name)
+    career.person = this.USERID;
     return this.http.post<LaboralCareer>(`${this.apiURL}/LaboralCareer`, career, httpOptions)
   }
   
@@ -242,6 +245,22 @@ export class DataService {
 getRolePosition(): Observable<RolePosition[]> {
   this.EndPoint = `${this.apiURL}/RolePosition?person=${this.USERID}`
   return this.http.get<RolePosition[]>(this.EndPoint )
+}
+delRolePosition(rolePosition:RolePosition): Observable<RolePosition>{
+  const url = `${this.apiURL}/RolePosition/${rolePosition.id}`
+  return this.http.delete<RolePosition>(url)
+}
+updateRolePosition(rolePosition:RolePosition): Observable<RolePosition>{
+  const url = `${this.apiURL}/RolePosition/${rolePosition.id}`;
+  return this.http.put<RolePosition>(url, rolePosition, httpOptions)
+}
+addRolePosition(rolePosition:RolePosition): Observable<RolePosition>{
+  console.log("estoy en el metodo del servicio")
+  // Este codigo agrega un usuario a la DB 
+  rolePosition.person = this.USERID;
+  console.log(rolePosition.constructor.name)
+  return this.http.post<RolePosition>(`${this.apiURL}/RolePosition`, rolePosition, httpOptions)
+  
 }
 
 

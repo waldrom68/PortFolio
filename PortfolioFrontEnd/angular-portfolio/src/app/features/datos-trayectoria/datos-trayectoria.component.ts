@@ -166,7 +166,7 @@ export class DatosTrayectoriaComponent implements OnInit {
       // atributos generales del message-box
       name: "delLaboralCareer",
       title: `Hi ${userId}, está por eliminar uno de los trabajos`,
-      description: `¿Estás seguro de eliminar el trabajo en "${data.organization.name} (${data.roleposition.name})" ?`,
+      description: `¿Estás seguro de eliminar "${data.organization.name} (${data.roleposition.name})" ?`,
       // por defecto mostrararía Aceptar
       actionButtonText: "Eliminar",
       // por defecto mostraría Cancelar

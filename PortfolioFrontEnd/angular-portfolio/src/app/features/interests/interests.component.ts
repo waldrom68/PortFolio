@@ -113,7 +113,7 @@ export class InterestsComponent implements OnInit {
       // atributos generales del message-box
       name: "delInterest",
       title: `Hi ${userId}, está por eliminar uno de los intereses`,
-      description: `¿Estás seguro de eliminar al interés "${data.name}" ?`,
+      description: `¿Estás seguro de eliminar "${data.name}" ?`,
       // por defecto mostrararía Aceptar
       actionButtonText: "Eliminar",
       // por defecto mostraría Cancelar

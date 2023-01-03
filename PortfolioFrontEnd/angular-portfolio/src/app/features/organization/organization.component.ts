@@ -120,7 +120,7 @@ export class OrganizationComponent implements OnInit {
       // atributos generales del message-box
       name: "delOrganization",
       title: `Hi ${userId}, está por eliminar una de las organizaciones`,
-      description: `¿Estás seguro de eliminar el organizaciones "${data.name}" ?`,
+      description: `¿Estás seguro de eliminar a "${data.name}" ?`,
       // por defecto mostrararía Aceptar
       actionButtonText: "Eliminar",
       // por defecto mostraría Cancelar

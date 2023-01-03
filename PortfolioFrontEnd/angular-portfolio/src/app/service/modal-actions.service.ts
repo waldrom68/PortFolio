@@ -67,6 +67,10 @@ export class ModalActionsService {
         this.deleteCareer(modalData);
         break;
 
+        case "delRolePosition":
+        this.deleteRole(modalData);
+        break;
+
       default:
         console.log("ALERTA: en modalAction, No se ha encontrado modalData.name")
         break;
@@ -101,5 +105,9 @@ export class ModalActionsService {
   private deleteCareer(modalData: any) {
     console.log(modalData.data)
     this.dataservice.delLaboralCareers(modalData.data).subscribe()
+  }
+  private deleteRole(modalData: any) {
+    console.log(modalData.data)
+    this.dataservice.delRolePosition(modalData.data).subscribe()
   }
 }

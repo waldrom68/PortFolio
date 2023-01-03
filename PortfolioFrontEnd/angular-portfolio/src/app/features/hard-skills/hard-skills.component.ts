@@ -119,7 +119,7 @@ export class HardSkillsComponent implements OnInit {
       // atributos generales del message-box
       name: "delHardSkill",
       title: `Hi ${userId}, está por eliminar una de las habilidades técnicas`,
-      description: `¿Estás seguro de eliminar la habilidad "${data.name}" ?`,
+      description: `¿Estás seguro de eliminar "${data.name}" ?`,
       // por defecto mostrararía Aceptar
       actionButtonText: "Eliminar",
       // por defecto mostraría Cancelar

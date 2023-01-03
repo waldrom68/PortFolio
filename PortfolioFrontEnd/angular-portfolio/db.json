@@ -604,12 +604,17 @@
     },
     {
       "id": 1,
-      "name": "Director",
+      "name": "Director Ejecutivo",
       "person": 1
     },
     {
       "id": 2,
       "name": "Administrativo de 1ª",
+      "person": 1
+    },
+    {
+      "id": 4,
+      "name": "Peon negro",
       "person": 1
     }
   ]

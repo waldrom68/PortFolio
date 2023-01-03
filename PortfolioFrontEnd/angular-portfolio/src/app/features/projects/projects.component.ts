@@ -123,7 +123,7 @@ export class ProjectsComponent implements OnInit {
       // atributos generales del message-box
       name: "delProject",
       title: `Hi ${userId}, está por eliminar uno de los proyectos`,
-      description: `¿Estás seguro de eliminar el proyecto "${data.name}" ?`,
+      description: `¿Estás seguro de eliminar "${data.name}" ?`,
       // por defecto mostrararía Aceptar
       actionButtonText: "Eliminar",
       // por defecto mostraría Cancelar
