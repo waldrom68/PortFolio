@@ -1,16 +1,61 @@
-<app-organization>
-    
-</app-organization>
+<div>
+    <ng-container *ngIf="myData.length; else agregar">
+        <div class="table-dark text-left container-fluid p-5" 
+        *ngIf="!showForm"
+        >
+            <app-studie-item 
+                *ngFor="let item of myData"
+                [item]="item"
+                [user]="user"
+                [myOrganizations]="myOrganizations"
+                [myDegrees]="myDegrees"
+                (onDelete)="deleteItem(item)"
+                [(showBtnAction)]="showBtnAction"
+            >
 
-<ng-container *ngIf="myData.length">
+            </app-studie-item>
 
-    <app-formacion-item 
-        *ngFor="let item of myData"
-        [item]="item"
-        [isAdmin]="isAdmin"
-        (delete)="delete(item)"
+
+        </div>
+    </ng-container>
+
+    <app-studie-form
+        *ngIf="showForm && flagUserAdmin"
+        [ngStyle]="{'width':'100%'}"
+        [user]="user"
+        [formData]="formData"
+        [myOrganizations]="myOrganizations"
+        [myDegrees]="myDegrees"
+        [title]="'Agregar un estudio'"
+
+        (showBtnActionChange)="showBtnAction"
+        (onUpdate)=" addItem($event)"
+        (cancel)="cancelation($event)"
     >
+    </app-studie-form>
 
-    </app-formacion-item>
+    <ng-template #agregar>
+        <div class="table-dark text-left container"  >
+            <p> Sin registrar estudios/formacion.
+            </p>
+        </div>
+    </ng-template>
+</div>
 
+
+
+<ng-container *ngIf="flagUserAdmin && showBtnAction">
+    <br>
+    <button class="btn btn-default btn-sm" 
+        ngClass="faControl fa-ico"
+        (click)="toggleForm()"
+        >
+        <fa-icon
+        ngClass="fa-3x text-primary"
+            [icon]="faPlusCircle"
+            
+            >
+        </fa-icon>
+    </button>
 </ng-container>
+

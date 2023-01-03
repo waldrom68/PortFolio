@@ -1,21 +1,27 @@
+
 <ng-container *ngIf="!showForm">
 
     <div class="container row py-2"
     [ngClass]="color" (mouseover)="changeStyle($event)" (mouseout)="changeStyle($event)"
     >
         <div class="container-fluid" style="display: inline-block;"
-
+  
         >
-        <!-- (dblclick)="toggleForm(item);" -->
-            
-            <h6>( {{item.since | date:'MM-yyyy'}} )  {{item.name}}
-                <a  class="px-3" href="{{item.url}}" target="_blank">-Visitar-</a>
-            </h6>
+            <!-- (dblclick)="toggleForm(item);" -->
+            <h6>{{item.degree.name}}</h6>
 
-            <p *ngFor="let elemento of item.resume.split('\n')"> 
+            <div *ngIf="item.endDate; else elseBlock">
+                <h6>({{item.startDate | date:'MM-yyyy' }} hasta {{item.endDate | date:'MM-yyyy'}})  {{item.organization.name}}</h6>
+
+            </div>
+            <ng-template #elseBlock>
+                <h6>(Desde {{item.startDate | date:'MM-yyyy' }}) {{item.organization.name}}</h6>
+            </ng-template>
+    
+            <p *ngFor="let elemento of item.name.split('\n')"> 
                 <small class="px-5"><i> {{elemento}}</i></small>
             </p>
-            
+
         </div>
         <!-- ##################### -->
         
@@ -27,7 +33,6 @@
                 ngClass="faConfirm fa-ico">
                 <fa-icon 
                     [icon]="faPen"
-                    
                 >
                 </fa-icon>
             </button>
@@ -42,16 +47,22 @@
             </button>
         </div>
     </div>
-
+  
 </ng-container >
-
-<app-projects-form
-    *ngIf="showForm"
+  
+  <app-studie-form
+    *ngIf="showForm && flagUserAdmin"
     [ngStyle]="{'width':'100%'}"
+  
+    [user]="user"
     [formData]="formData"
-    [title]="''"
+    [myOrganizations]="myOrganizations"
+    [myDegrees]="myDegrees"
+    [title]="'Agregar un estudio'"
+  
+    (showBtnActionChange)="showBtnAction"
     (onUpdate)=" update($event);"
     (cancel)="cancelation($event)"
-
+  
     >
-</app-projects-form>
+  </app-studie-form>

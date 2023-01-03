@@ -26,7 +26,7 @@
         [formData]="formData"
         [myOrganizations]="myOrganizations"
         [myRolePositions]="myRolePositions"
-        [title]="'Ingrese un trabajo'"
+        [title]="'Agregar un trabajo'"
 
         (showBtnActionChange)="showBtnAction"
         (onUpdate)=" addItem($event)"
@@ -51,7 +51,7 @@
         (click)="toggleForm()"
         >
         <fa-icon
-        ngClass="fa-3x"
+        ngClass="fa-3x text-primary"
             [icon]="faPlusCircle"
             
             >

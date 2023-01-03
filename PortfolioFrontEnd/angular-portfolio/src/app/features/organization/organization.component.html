@@ -21,7 +21,7 @@
         *ngIf="showForm && flagUserAdmin"
 
         [formData]="formData"
-        [title]="'Ingrese un proyecto'"
+        [title]="'Ingrese una Organizacion'"
 
         (showBtnActionChange)="showBtnAction"
         (onUpdate)=" addItem($event)"
@@ -46,7 +46,7 @@
         (click)="toggleForm()"
         >
         <fa-icon
-        ngClass="fa-3x"
+        ngClass="fa-3x text-primary"
             [icon]="faPlusCircle"
             
             >

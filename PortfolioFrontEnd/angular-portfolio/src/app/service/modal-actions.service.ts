@@ -75,6 +75,10 @@ export class ModalActionsService {
         this.deleteDegree(modalData);
         break;
 
+      case "delStudie":
+        this.deleteStudie(modalData);
+        break;
+
       default:
         console.log("ALERTA: en modalAction, No se ha encontrado modalData.name")
         break;
@@ -117,5 +121,9 @@ export class ModalActionsService {
   private deleteDegree(modalData: any) {
     console.log(modalData.data)
     this.dataservice.delDegree(modalData.data).subscribe()
+  }
+  private deleteStudie(modalData: any) {
+    console.log(modalData.data)
+    this.dataservice.delStudie(modalData.data).subscribe()
   }
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
 
-import { Person, HardSkill, SoftSkill, Studies, LaboralCareer, Interest, Project, PortfolioInit, Cards,Organization, Degree, RolePosition } from '../data'
+import { Person, HardSkill, SoftSkill, LaboralCareer, Interest, Project, PortfolioInit, Cards,Organization, Degree, RolePosition, Studie } from '../data'
 
 import { HttpClient, HttpHeaders } from '@angular/common/http'  // Para ejecutar los metodos GET, PUT, POST, ETC
 
@@ -228,20 +228,7 @@ export class DataService {
   }
   
 
-  // pendientes de implementar
-
-  // Studies
-  getStudies(): Observable<Studies[]> {
-    this.EndPoint = `${this.apiURL}/Studies?person=${this.USERID}`
-    return this.http.get<Studies[]>(this.EndPoint )
-  }
-  delStudies(studie:Studies): Observable<Studies>{
-    const url = `${this.apiURL}/Studies/${studie.id}`
-    return this.http.delete<Studies>(url)
-  }
-
-
-// RolePosition
+  // RolePosition
 getRolePosition(): Observable<RolePosition[]> {
   this.EndPoint = `${this.apiURL}/RolePosition?person=${this.USERID}`
   return this.http.get<RolePosition[]>(this.EndPoint )
@@ -260,8 +247,32 @@ addRolePosition(rolePosition:RolePosition): Observable<RolePosition>{
   rolePosition.person = this.USERID;
   console.log(rolePosition.constructor.name)
   return this.http.post<RolePosition>(`${this.apiURL}/RolePosition`, rolePosition, httpOptions)
-  
 }
+
+  // pendientes de implementar
+
+  // Studie
+  getStudie(): Observable<Studie[]> {
+    this.EndPoint = `${this.apiURL}/Studie?person=${this.USERID}`
+    return this.http.get<Studie[]>(this.EndPoint )
+  }
+  delStudie(studie:Studie): Observable<Studie>{
+    const url = `${this.apiURL}/Studie/${studie.id}`
+    return this.http.delete<Studie>(url)
+  }
+  updateStudie(studie:Studie): Observable<Studie>{
+    const url = `${this.apiURL}/Studie/${studie.id}`;
+    return this.http.put<Studie>(url, studie, httpOptions)
+  }
+  addStudie(studie:Studie): Observable<Studie>{
+    console.log("estoy en el metodo del servicio")
+    // Este codigo agrega un usuario a la DB 
+    studie.person = this.USERID;
+    console.log(studie.constructor.name)
+    return this.http.post<Studie>(`${this.apiURL}/Studie`, studie, httpOptions)
+  }
+
+
 
 
 

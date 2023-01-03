@@ -11,9 +11,6 @@ import { MessageBoxComponent } from '../../shared/message-box/message-box.compon
 import { ModalActionsService } from 'src/app/service/modal-actions.service';
 import { Observable } from 'rxjs';
 
-
-// import {WORKEXPERIENCE} from '../../../mock-data'
-
 @Component({
   selector: 'app-datos-trayectoria',
   templateUrl: './datos-trayectoria.component.html',

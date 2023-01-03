@@ -190,3 +190,15 @@ export interface Person {
         roleposition:RolePosition,
         person:number
     }
+
+    export interface Studie {
+        id: number,
+        name: string,
+        startDate:Date,
+        endDate:Date,
+        orderdeploy:number,
+        status:boolean,
+        organization:Organization,
+        degree:Degree,
+        person:number,
+    }

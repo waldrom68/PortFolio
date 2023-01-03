@@ -50,6 +50,8 @@ import { DegreeFormComponent } from '../features/bloque-datos-obj-profile/degree
 import { RolePositionComponent } from '../features/role-position/role-position.component';
 import { RolepositionFormComponent } from '../features/bloque-datos-obj-profile/roleposition-form/roleposition-form.component';
 import { RolepositionItemComponent } from '../features/bloque-datos-obj-profile/roleposition-item/roleposition-item.component';
+import { StudieItemComponent } from '../features/bloque-datos-obj-profile/studie-item/studie-item.component';
+import { StudieFormComponent } from '../features/bloque-datos-obj-profile/studie-form/studie-form.component';
 
 
 @NgModule({
@@ -91,6 +93,8 @@ import { RolepositionItemComponent } from '../features/bloque-datos-obj-profile/
         RolePositionComponent,
         RolepositionFormComponent,
         RolepositionItemComponent,
+        StudieItemComponent,
+        StudieFormComponent,
     ],
     exports: [
         TopBarComponent,
@@ -121,6 +125,8 @@ import { RolepositionItemComponent } from '../features/bloque-datos-obj-profile/
         RolePositionComponent,
         RolepositionFormComponent,
         RolepositionItemComponent,
+        StudieItemComponent,
+        StudieFormComponent,
         // InterestsComponent,
         // SoftSkillsComponent,
         // SoftItemComponent,

@@ -433,7 +433,7 @@
     {
       "id": 153,
       "name": "Guia audica para eventos",
-      "resume": "Elaborado con el Framework Django, Python, JS, HTML y CSS3",
+      "resume": "Elaborado con Framework Django.\nPython, JS, HTML y CSS3",
       "url": "https://waldrom68.pythonanywhere.com/",
       "since": "2023-06-07",
       "orderdeploy": 0,
@@ -515,7 +515,7 @@
     },
     {
       "id": 4,
-      "resume": "prueba 525",
+      "resume": "Toma de apuntes, \nrecepcion de reclamos de alumnos, \nregistros on-line",
       "startDate": "2020-12-26",
       "endDate": "2021-12-26",
       "orderdeploy": 0,
@@ -528,15 +528,15 @@
         "person": 1
       },
       "roleposition": {
-        "id": 1,
-        "name": "Director",
+        "id": 2,
+        "name": "Administrativo de 1ª",
         "person": 1
       },
       "person": 1
     },
     {
       "id": 5,
-      "resume": "Director ejecutivo de Administracion de Personal",
+      "resume": "Relaciones Laborales.:\n\tmUCHO GUSTO\nCompensaciones y Legales",
       "startDate": "2004-03-01",
       "endDate": "2015-02-28",
       "orderdeploy": 0,
@@ -550,7 +550,7 @@
       },
       "roleposition": {
         "id": 1,
-        "name": "Director",
+        "name": "Director Ejecutivo",
         "person": 1
       },
       "person": 1
@@ -615,6 +615,71 @@
     {
       "id": 4,
       "name": "Peon negro",
+      "person": 1
+    }
+  ],
+  "Studie": [
+    {
+      "id": 4,
+      "name": "Full stack Java",
+      "startDate": "2022-03-01",
+      "endDate": "",
+      "orderdeploy": 0,
+      "status": true,
+      "organization": {
+        "id": 1,
+        "name": "EDUCACION IT",
+        "resume": "Centro de capacitacion tecnológica en CABA",
+        "url": "https://www.educacionit.com/",
+        "person": 1
+      },
+      "degree": {
+        "id": 3,
+        "name": "Especialización",
+        "person": 1
+      },
+      "person": 1
+    },
+    {
+      "id": 3,
+      "name": "Full stack Python",
+      "startDate": "2021-08-12",
+      "endDate": "2022-11-30",
+      "orderdeploy": 0,
+      "status": true,
+      "organization": {
+        "id": 2,
+        "name": "Min. de Desarrollo Productivo y CESSI",
+        "resume": "Breve reseña",
+        "url": "",
+        "person": 1
+      },
+      "degree": {
+        "id": 3,
+        "name": "Especialización",
+        "person": 1
+      },
+      "person": 1
+    },
+    {
+      "id": 5,
+      "name": "Ingenieria Electrolítica",
+      "startDate": "2000-03-01",
+      "endDate": "2006-03-31",
+      "orderdeploy": 0,
+      "status": true,
+      "organization": {
+        "id": 6,
+        "name": "ITBA",
+        "resume": "Instituto Tecnológico de Buenos Aires, Universidad Privada (CABA)",
+        "url": "https:itba.edu.ar",
+        "person": 1
+      },
+      "degree": {
+        "id": 1,
+        "name": "Grado",
+        "person": 1
+      },
       "person": 1
     }
   ]

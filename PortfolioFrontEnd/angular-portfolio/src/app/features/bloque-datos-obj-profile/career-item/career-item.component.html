@@ -1,44 +1,48 @@
 
-
 <ng-container *ngIf="!showForm">
 
-  <div class="container row py-2"
-  [ngClass]="color" (mouseover)="changeStyle($event)" (mouseout)="changeStyle($event)"
-  >
-      <div class="container-fluid" style="display: inline-block;"
+    <div class="container row py-2"
+    [ngClass]="color" (mouseover)="changeStyle($event)" (mouseout)="changeStyle($event)"
+    >
+        <div class="container-fluid" style="display: inline-block;"
+        >
 
-      >
-      <!-- (dblclick)="toggleForm(item);" -->
-          
-      ({{item.startDate | date:'MM-yyyy' }} hasta {{item.endDate | date:'MM-yyyy'}}) {{item.organization.name}}
-      <p>{{item.roleposition.name}}</p>
-          <small class="px-5"><i> {{item.resume}}</i></small>
-      </div>
-      <!-- ##################### -->
-      
-      <div class="icon-group"
-           *ngIf="flagUserAdmin && showBtnAction"
-          >
-          <button class="btn btn-outline-success btn-sm"
-              (click)="toggleForm(item);"
-              ngClass="faConfirm fa-ico">
-              <fa-icon 
-                  [icon]="faPen"
-                  
-              >
-              </fa-icon>
-          </button>
-          <button class="btn btn-outline-danger btn-sm"
-              (click)="delete(item)"
-              ngClass="faCancel"
-          >
-              <fa-icon 
-                  [icon]="faTrash"
-              >
-              </fa-icon>
-          </button>
-      </div>
-  </div>
+
+            <div *ngIf="item.endDate; else elseBlock">
+                <h6>({{item.startDate | date:'MM-yyyy' }} hasta {{item.endDate | date:'MM-yyyy'}})  {{item.organization.name}} -{{item.roleposition.name}}-</h6>
+            </div>
+            <ng-template #elseBlock>
+                <h6>(Desde {{item.startDate | date:'MM-yyyy' }}) {{item.organization.name}} -{{item.roleposition.name}}-</h6>
+            </ng-template>
+
+            <p *ngFor="let elemento of item.resume.split('\n')"> 
+                <small class="px-5"><i> {{elemento}}</i></small>
+            </p>
+        </div>
+
+        <div class="icon-group"
+            *ngIf="flagUserAdmin && showBtnAction"
+            >
+            <button class="btn btn-outline-success btn-sm"
+                (click)="toggleForm(item);"
+                ngClass="faConfirm fa-ico">
+                <fa-icon 
+                    [icon]="faPen"
+                    
+                >
+                </fa-icon>
+            </button>
+            <button class="btn btn-outline-danger btn-sm"
+                (click)="delete(item)"
+                ngClass="faCancel"
+            >
+                <fa-icon 
+                    [icon]="faTrash"
+                >
+                </fa-icon>
+            </button>
+        </div>
+    </div>
 
 </ng-container >
 
