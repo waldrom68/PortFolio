@@ -2,8 +2,6 @@
 
 package com.portfolio.DTO;
 
-import com.portfolio.SpringBoot.model.Organization;
-import com.portfolio.SpringBoot.model.RolePosition;
 import java.io.Serializable;
 
 import lombok.Getter;
@@ -20,9 +18,8 @@ public class DTOLaboralCareer   implements Serializable {
     private int orderdeploy ;
     private boolean status;
     
-    private Organization organization;
-//    private String orga_resume;
-    private RolePosition roleposition;
+    private Long organization;
+    private Long roleposition;
 
     public DTOLaboralCareer() {
     }

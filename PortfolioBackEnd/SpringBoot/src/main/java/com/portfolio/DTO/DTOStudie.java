@@ -2,11 +2,9 @@
 
 package com.portfolio.DTO;
 
-import com.portfolio.SpringBoot.model.Degree;
-import com.portfolio.SpringBoot.model.Organization;
 import java.io.Serializable;
 
-import java.util.Date;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,13 +13,13 @@ import lombok.Setter;
 public class DTOStudie  implements Serializable {
     private Long id;
     private String name;
-    private Date startDate;
-    private Date endDate;
+    private String startDate;
+    private String endDate;
     private int orderdeploy ;
     private boolean status;
     
-    private Organization organization;
-    private Degree degree;
+    private Long organization;
+    private Long degree;
 
 
     public DTOStudie() {

@@ -67,7 +67,7 @@ public class ControllerPerson {
     public void borrarPersona (@PathVariable Long id) {
     
         persoServ.borrarPersona(id);
-//        throw new UnsupportedOperationException("Not allowed yet! sorry.."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+
         
     }
     

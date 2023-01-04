@@ -2,9 +2,11 @@
 
 package com.portfolio.SpringBoot.service;
 
+import com.portfolio.DTO.DTODegree;
 import com.portfolio.SpringBoot.model.Degree;
 import com.portfolio.SpringBoot.model.Person;
 import com.portfolio.SpringBoot.repository.DegreeRepository;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,6 +50,19 @@ public class DegreeService implements IDegreeService {
 
     @Override
     public List<Degree> verByPersonId(Long id) {
-        return degreeRepo.findByPersonId(id);
+        List<Degree> liststudie = degreeRepo.findByPersonId(id);
+        List listatemp = new ArrayList();
+        
+        for (Degree elemento :liststudie) {
+            DTODegree tempDTO = new DTODegree();
+            
+            tempDTO.setId(elemento.getId());
+            tempDTO.setName(elemento.getName());
+        
+            listatemp.add(tempDTO);
+        
+        }
+
+        return listatemp;
     }
 }

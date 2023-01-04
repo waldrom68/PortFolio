@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+
+
+.column {
+	transition: transform 0.2s ease-out;
+}
+
+.column.over {
+	border: 2px dashed #000;
+}
+
+.column.moving {
+	opacity: 0.25;
+	transform: scale(0.8);
+}
+
+.column .count {
+	font-weight: bold;
+	padding-top: 15px;
+	text-shadow: #fff 0 1px;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+	<h1 class="page-header">Native HTML5 Drag and Drop <small>Full Demo</small></h1>
+	<ul id="columns-full" >
+		<li class="column" draggable="true"><header>8</header></li>
+		<li class="column" draggable="true"><header>10</header></li>
+		<li class="column" draggable="true"><header>35</header></li>
+		<li class="column" draggable="true"><header>14</header></li>
+	</ul>
+<button onclick="newOrder()">Sacar por consola el nuevo orden</button>
+</div>
+
+
+<script>
+// Full example
+(function() {
+	var id_ = 'columns-full';
+	var cols_ = document.querySelectorAll('#' + id_ + ' .column');
+	var dragSrcEl_ = null;
+
+	this.handleDragStart = function(e) {
+		e.dataTransfer.effectAllowed = 'move';
+		e.dataTransfer.setData('text/html', this.innerHTML);
+
+		dragSrcEl_ = this;
+
+		// this/e.target is the source node.
+		this.classList.add('moving');
+	};
+
+	this.handleDragOver = function(e) {
+		if (e.preventDefault) {
+			e.preventDefault(); // Allows us to drop.
+		}
+
+		e.dataTransfer.dropEffect = 'move';
+
+		return false;
+	};
+
+	this.handleDragEnter = function(e) {
+		this.classList.add('over');
+	};
+
+	this.handleDragLeave = function(e) {
+		// this/e.target is previous target element.
+		this.classList.remove('over');
+	};
+
+	this.handleDrop = function(e) {
+		// this/e.target is current target element.
+
+		if (e.stopPropagation) {
+			e.stopPropagation(); // stops the browser from redirecting.
+		}
+
+		// Don't do anything if we're dropping on the same column we're dragging.
+		if (dragSrcEl_ != this) {
+			dragSrcEl_.innerHTML = this.innerHTML;
+			this.innerHTML = e.dataTransfer.getData('text/html');
+
+			// Set number of times the column has been moved.
+			// var count = this.querySelector('.count');
+			// var newCount = parseInt(count.getAttribute('data-col-moves')) + 1;
+			// count.setAttribute('data-col-moves', newCount);
+			// count.textContent = 'moves: ' + newCount;
+		}
+
+		return false;
+	};
+
+	this.handleDragEnd = function(e) {
+		// this/e.target is the source node.
+		[].forEach.call(cols_, function(col) {
+			col.classList.remove('over');
+			col.classList.remove('moving');
+		});
+	};
+
+	[].forEach.call(cols_, function(col) {
+		col.setAttribute('draggable', 'true'); // Enable columns to be draggable.
+		col.addEventListener('dragstart', this.handleDragStart, false);
+		col.addEventListener('dragenter', this.handleDragEnter, false);
+		col.addEventListener('dragover', this.handleDragOver, false);
+		col.addEventListener('dragleave', this.handleDragLeave, false);
+		col.addEventListener('drop', this.handleDrop, false);
+		col.addEventListener('dragend', this.handleDragEnd, false);
+	});
+})();
+
+function newOrder() {
+    temp = document.querySelectorAll("li")
+    for (var i = 0; i < temp.length; i++)  { console.log(temp[i].innerText)}  
+}
+</script>
+
+</body>
+</html>

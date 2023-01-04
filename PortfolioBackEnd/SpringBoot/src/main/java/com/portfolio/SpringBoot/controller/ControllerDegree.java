@@ -50,7 +50,7 @@ public class ControllerDegree {
     
     }
     
-    @PostMapping ("/list/organization/{id}")
+    @GetMapping ("/list/degree/{id}")
     public List<Degree> verByPersonId (@PathVariable Long id) {
     
         return degreeRepo.verByPersonId(id);

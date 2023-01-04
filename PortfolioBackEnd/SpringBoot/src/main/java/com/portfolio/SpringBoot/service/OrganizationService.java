@@ -2,6 +2,7 @@
 
 package com.portfolio.SpringBoot.service;
 
+import com.portfolio.DTO.DTOOrganization;
 import com.portfolio.SpringBoot.model.Organization;
 import com.portfolio.SpringBoot.model.Person;
 import com.portfolio.SpringBoot.repository.OrganizationRepository;
@@ -47,7 +48,23 @@ public class OrganizationService implements IOrganizationService {
 
     @Override
     public List<Organization> verByPersonId(Long id) {
-        return orgaRepo.findByPersonId(id);
+        List<Organization> listorga = orgaRepo.findByPersonId(id);
+        List listatemp = new ArrayList();
+        
+        for (Organization elemento: listorga) {
+            DTOOrganization tempDTO = new DTOOrganization();
+            
+            tempDTO.setId(elemento.getId());
+            tempDTO.setName(elemento.getName());
+            tempDTO.setResume(elemento.getResume());
+            tempDTO.setUrl(elemento.getUrl());
+            
+            listatemp.add(tempDTO);
+        
+                   
+        }
+        
+        return listatemp;
      }
 
 }

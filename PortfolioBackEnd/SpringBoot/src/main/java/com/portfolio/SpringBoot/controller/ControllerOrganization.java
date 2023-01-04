@@ -44,7 +44,7 @@ public class ControllerOrganization {
     
     }
     
-    @PostMapping ("/list/organization/{id}")
+    @GetMapping ("/list/organization/{id}")
     public List<Organization> verByPersonId (@PathVariable Long id) {
     
         return orgaServ.verByPersonId(id);

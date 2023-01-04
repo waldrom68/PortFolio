@@ -560,23 +560,23 @@
     {
       "id": 6,
       "name": "ITBA",
-      "resume": "Instituto Tecnológico de Buenos Aires, Universidad Privada (CABA)",
-      "url": "https:itba.edu.ar",
-      "person": 1
-    },
-    {
-      "id": 1,
-      "name": "EDUCACION IT",
-      "resume": "Centro de capacitacion tecnológica en CABA",
-      "url": "https://www.educacionit.com/",
-      "person": 1
-    },
-    {
-      "id": 2,
-      "name": "Min. de Desarrollo Productivo y CESSI",
-      "resume": "Breve reseña",
+      "resume": "Universidad Privada orientada a Ingenierias, en CABA",
       "url": "",
-      "person": 1
+      "person":1
+    },
+    {
+      "id": 7,
+      "name": "Freelance",
+      "resume": "Te todo un poco, incluso cursos",
+      "url": "",
+      "person":1
+    },
+    {
+      "id": 52,
+      "name": "Banco de la Nacion Argentina",
+      "resume": "En su nacion su BANCO",
+      "url": "",
+      "person":1
     }
   ],
   "Degree": [

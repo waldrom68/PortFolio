@@ -2,9 +2,11 @@
 
 package com.portfolio.SpringBoot.service;
 
+import com.portfolio.DTO.DTORolePosition;
 import com.portfolio.SpringBoot.model.Person;
 import com.portfolio.SpringBoot.model.RolePosition;
 import com.portfolio.SpringBoot.repository.RolePositionRepository;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,6 +48,18 @@ public class RolePositionService implements IRolePositionService {
 
     @Override
     public List<RolePosition> verByPersonId(Long id) {
-        return positionRepo.findByPersonId(id);
+        List<RolePosition> listrole = positionRepo.findByPersonId(id);
+        List listatemp = new ArrayList();
+        
+        for (RolePosition elemento : listrole) {
+            DTORolePosition tempDTO = new DTORolePosition();
+       
+            tempDTO.setId(elemento.getId());
+            tempDTO.setName(elemento.getName());
+            
+            listatemp.add(tempDTO);
+        }
+        
+        return listatemp;
     }
 }

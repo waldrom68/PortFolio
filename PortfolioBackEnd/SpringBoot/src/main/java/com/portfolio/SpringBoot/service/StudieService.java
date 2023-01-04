@@ -71,12 +71,19 @@ public class StudieService implements IStudieService {
             
             tempDTO.setId(elemento.getId());
             tempDTO.setName(elemento.getName());
-            tempDTO.setStartDate(elemento.getStartDate());
-            tempDTO.setEndDate(elemento.getEndDate());
+            
+            String temp = elemento.getStartDate().toString();
+            tempDTO.setStartDate(temp.substring(0, 10));
+//            tempDTO.setStartDate(elemento.getStartDate());
+            
+            String temp2 = elemento.getEndDate().toString();
+            tempDTO.setEndDate(temp2.substring(0, 10));
+//            tempDTO.setEndDate(elemento.getEndDate());
+            
             tempDTO.setOrderdeploy(elemento.getOrderdeploy());
             tempDTO.setStatus(elemento.isStatus());
-            tempDTO.setOrganization(elemento.getOrganization());
-            tempDTO.setDegree(elemento.getDegree());
+            tempDTO.setOrganization(elemento.getOrganization().getId());
+            tempDTO.setDegree(elemento.getDegree().getId());
         
             listatemp.add(tempDTO);
         

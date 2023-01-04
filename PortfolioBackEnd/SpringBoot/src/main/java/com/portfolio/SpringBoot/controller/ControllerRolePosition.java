@@ -43,7 +43,7 @@ public class ControllerRolePosition {
     
     }
     
-    @PostMapping ("/list/organization/{id}")
+    @GetMapping ("/list/roleposition/{id}")
     public List<RolePosition> verByPersonId (@PathVariable Long id) {
     
         return persoServ.verByPersonId(id);
