@@ -35,17 +35,18 @@ form: FormGroup;
   
     private formBuilder: FormBuilder,
 
-  ) { }
-
-  ngOnInit(): void {
+  ) {    
     this.form = this.formBuilder.group({
       name:[this.formData.name, [Validators.required, Validators.minLength(2), Validators.maxLength(500) ]],
       startDate:[this.formData.startDate, [Validators.required ]],
       endDate:[this.formData.endDate, []],
       organization:[this.formData.organization, [Validators.required]],
       degree:[this.formData.degree, [Validators.required]],
-      
-    });
+    }); 
+  }
+
+  ngOnInit(): void {
+
     
     this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();
     this.flagUserAdmin$.subscribe(  flagUserAdmin => this.flagUserAdmin = flagUserAdmin)
