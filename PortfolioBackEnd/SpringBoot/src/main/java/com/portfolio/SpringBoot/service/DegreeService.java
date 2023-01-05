@@ -22,8 +22,12 @@ public class DegreeService implements IDegreeService {
     
     @Override
     public boolean crearDegree(Degree deg) {
+        System.out.println("Estoy aqui " + deg.getPerson());
+        
         Long tmp_id = deg.getPerson().getId();
         Person pers = persServ.buscarPersona(tmp_id);
+        
+        
         if (pers != null ) {
             deg.setPerson(pers);
             degreeRepo.save(deg);

@@ -288,6 +288,12 @@
       "name": "Realizar compras",
       "orderdeploy": 0,
       "person": 3
+    },
+    {
+      "id": 9,
+      "name": "Pintar tortugas en el cielo",
+      "orderdeploy": 0,
+      "person": 1
     }
   ],
   "SoftSkill": [
@@ -353,13 +359,6 @@
       "assessment": 2,
       "orderdeploy": 0,
       "person": 4
-    },
-    {
-      "id": 11,
-      "name": "Escucha activa",
-      "assessment": 3,
-      "orderdeploy": 0,
-      "person": 3
     }
   ],
   "HardSkill": [
@@ -562,21 +561,21 @@
       "name": "ITBA",
       "resume": "Universidad Privada orientada a Ingenierias, en CABA",
       "url": "",
-      "person":1
+      "person": 1
     },
     {
       "id": 7,
       "name": "Freelance",
       "resume": "Te todo un poco, incluso cursos",
       "url": "",
-      "person":1
+      "person": 1
     },
     {
       "id": 52,
       "name": "Banco de la Nacion Argentina",
       "resume": "En su nacion su BANCO",
       "url": "",
-      "person":1
+      "person": 1
     }
   ],
   "Degree": [
@@ -587,12 +586,17 @@
     },
     {
       "id": 2,
-      "name": "Postgrado",
+      "name": "Posgrado",
       "person": 1
     },
     {
       "id": 3,
       "name": "Especialización",
+      "person": 1
+    },
+    {
+      "id": 4,
+      "name": "Secundario",
       "person": 1
     }
   ],

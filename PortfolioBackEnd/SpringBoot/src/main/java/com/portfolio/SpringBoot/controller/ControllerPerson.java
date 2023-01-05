@@ -8,6 +8,7 @@ import com.portfolio.SpringBoot.model.Person;
 import com.portfolio.SpringBoot.service.IDisplayDataService;
 import com.portfolio.SpringBoot.service.IPersonService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,7 +33,8 @@ public class ControllerPerson {
     public DTOPerson mostrarPersona(@PathVariable Long id) {
         return persoServ.verPersona(id);
     }
-        
+     
+    @CrossOrigin
     @PostMapping ("/edit/person")  // edit and create Person
     public void crearPersona (@RequestBody Person pers) {
         System.out.println(pers.toString());
@@ -45,16 +47,17 @@ public class ControllerPerson {
             DisplayData temp = new DisplayData();
             // Fuerzo su guardado en el repositorio para obtener el id asignado
             DisplayData guardada = displayServ.crearForceDisplay(temp);
-
             // Vinculo ambas instancias
             // Guardando la instancia con su respectiva relacion OneToOne con DisplayData
             pers.setDisplaydata(guardada);
 
 
         } else {
+
+            pers.setPassword(persona.getPassword());
             pers.setDisplaydata(persona.getDisplaydata());
-            
-            System.out.println("Existe, asi que estoy modificando");
+            System.out.println("Existe, asi que estoy modificando todos los atributos menos la clave, la cual no viaja en el body");
+           
         }
         
         persoServ.crearPersona(pers);
@@ -63,13 +66,14 @@ public class ControllerPerson {
     
     }
     
-    @GetMapping ("/del/person/{id}")
-    public void borrarPersona (@PathVariable Long id) {
     
-        persoServ.borrarPersona(id);
-
-        
-    }
+// Le quito esta funcionalidad, no va a dar altas ni bajas desde el frontEnd.
+//    @GetMapping ("/del/person/{id}")
+//    public void borrarPersona (@PathVariable Long id) {
+//    
+//        persoServ.borrarPersona(id);
+//
+//    }
     
 // Le quito visibilidad, esta funcionalidad es para uso interno.    
 //    @GetMapping ("/find/person/{id}")

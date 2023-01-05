@@ -23,9 +23,8 @@ public class ControllerDegree {
     
         
     @PostMapping ("/edit/degree")
-    public void crearDegree (@RequestBody Degree pers) {
-    
-        degreeRepo.crearDegree(pers);
+    public void crearDegree (@RequestBody Degree degree) {
+        degreeRepo.crearDegree(degree);
     
     }
     
@@ -36,19 +35,19 @@ public class ControllerDegree {
         
     }
     
-    @PutMapping ("/edit/degree")
-    public void editarDegree(@RequestBody Degree pers) {
-    
-        degreeRepo.crearDegree(pers);
-
-    }
+//    @PutMapping ("/edit/degree")
+//    public void editarDegree(@RequestBody Degree pers) {
+//    
+//        degreeRepo.crearDegree(pers);
+//
+//    }
            
-    @GetMapping ("/list/degree/all")
-    public List<Degree> verDegree() {
-    
-        return degreeRepo.verDegree();
-    
-    }
+//    @GetMapping ("/list/degree/all")
+//    public List<Degree> verDegree() {
+//    
+//        return degreeRepo.verDegree();
+//    
+//    }
     
     @GetMapping ("/list/degree/{id}")
     public List<Degree> verByPersonId (@PathVariable Long id) {

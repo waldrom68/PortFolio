@@ -61,6 +61,7 @@ Ok - [url:port]\edit\degree\{id}
 
 ### GET
 - [url:port]\list\degree\all // All degree entity
+- [url:port]\list\degree\{id} // entity for a person -Flat-
 
 ##  ORGANIZATION Entity
 ### POST

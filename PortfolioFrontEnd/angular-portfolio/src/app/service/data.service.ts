@@ -9,8 +9,11 @@ import { HttpClient, HttpHeaders } from '@angular/common/http'  // Para ejecutar
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json',
+    // 'Access-Control-Allow-Origin':'*',
+    // 'Authorization':'authkey',
   })
 }
+
 
 @Injectable({
   providedIn: 'root'
@@ -18,10 +21,11 @@ const httpOptions = {
 
 export class DataService {
   private apiURL = 'http://localhost:5000'
+  private LOCALHOST_API = 'http://localhost:8080'
   private EndPoint:string = ""
 
   // PENDIENTE, vincular con el logging
-  private USERID:number = 1; 
+  private USERID:number = 3; 
   private USER: Person;
 
 
@@ -62,83 +66,91 @@ export class DataService {
     return this.http.get<Cards[]>(`${this.apiURL}/Cards/?person=${this.USERID}`)
   }
 
-  // Person - only get and put
+  // Person APIREST ########################################################
   getGralData(): Observable<Person> {
-    return this.http.get<Person>(`${this.apiURL}/Person/${this.USERID}`)
+    console.log("El servicio va a buscar en Person API")
+    return this.http.get<Person>(`${this.LOCALHOST_API}/view/person/${this.USERID}`)
+    // return this.http.get<Person>("http://localhost:8080/view/person/1")
   }
-
   updateGralData(user:Person): Observable<Person>{
     // Este codigo modifica el valor del usuario en la DB
-    const url = `${this.apiURL}/Person/${user.id}`;
-    return this.http.put<Person>(url, user)
+    console.log("El servicio va a modificar los datos en Person API")
+    return this.http.post<Person>(`${this.LOCALHOST_API}/edit/person`, user, httpOptions)
+    // const url = `http://localhost:8080/edit/person`;
+    // return this.http.post<Person>(url, user, httpOptions)
   }
 
+  // Interest APIREST ###################################################
+  getInterests(): Observable<Interest[]> {
+    this.EndPoint = `${this.LOCALHOST_API}/list/interest/${this.USERID}`
+    return this.http.get<Interest[]>(this.EndPoint )
+  }
+  updateInterest(interest:Interest): Observable<Interest>{
+    // Este codigo modifica el valor del usuario en la DB
+    interest.person = this.USERID;
+    const url = `${this.LOCALHOST_API}/edit/interest`;
+    return this.http.post<Interest>(url, interest, httpOptions)
+  }
+  addInterests(interest:Interest): Observable<Interest>{
+    console.log("estoy en el metodo del servicio")
+    // Este codigo agrega un usuario a la DB 
+    // console.log(interest.constructor.name)
+    interest.person = this.USERID;
+    const url = `${this.LOCALHOST_API}/edit/interest`
+    return this.http.post<Interest>(url, interest, httpOptions)
+  }
+  delInterests(interest:Interest): Observable<Interest>{
+    const url = `${this.LOCALHOST_API}/del/interest/${interest.id}`
+    return this.http.delete<Interest>(url, httpOptions)
+  }
 
-  // HardSkills
+  // HardSkills APIREST ###################################################
   getHardSkill(): Observable<HardSkill[]> {
-    this.EndPoint = `${this.apiURL}/HardSkill?person=${this.USERID}`
+    this.EndPoint = `${this.LOCALHOST_API}/list/hardskill/${this.USERID}`
     return this.http.get<HardSkill[]>(this.EndPoint )
   }
-  delHardSkills(hardskill:HardSkill): Observable<HardSkill>{
-    const url = `${this.apiURL}/HardSkill/${hardskill.id}`
-    return this.http.delete<HardSkill>(url)
-  }
   updateHardSkill(hardskill:HardSkill): Observable<HardSkill>{
-    const url = `${this.apiURL}/HardSkill/${hardskill.id}`;
-    return this.http.put<HardSkill>(url, hardskill)
+    hardskill.person = this.USERID;
+    const url = `${this.LOCALHOST_API}/edit/hardskill`;
+    return this.http.post<HardSkill>(url, hardskill, httpOptions)
   }
   addHardskill(hardskill:HardSkill): Observable<HardSkill>{
     console.log("estoy en el metodo del servicio")
     // Este codigo agrega un usuario a la DB 
     console.log(hardskill.constructor.name)
     hardskill.person = this.USERID;
-    return this.http.post<HardSkill>(`${this.apiURL}/Hardskill`, hardskill, httpOptions)
+    return this.http.post<HardSkill>(`${this.LOCALHOST_API}/edit/hardskill`, hardskill, httpOptions)
+  }
+  delHardSkills(hardskill:HardSkill): Observable<HardSkill>{
+    const url = `${this.LOCALHOST_API}/del/hardskill/${hardskill.id}`
+    return this.http.delete<HardSkill>(url, httpOptions)
   }
 
-  // Interest
-  getInterests(): Observable<Interest[]> {
-    this.EndPoint = `${this.apiURL}/Interest?person=${this.USERID}`
-    return this.http.get<Interest[]>(this.EndPoint )
-  }
-  updateInterest(interest:Interest): Observable<Interest>{
-    // Este codigo modifica el valor del usuario en la DB
-    const url = `${this.apiURL}/Interest/${interest.id}`;
-    return this.http.put<Interest>(url, interest)
-  }
-  delInterests(interest:Interest): Observable<Interest>{
-    const url = `${this.apiURL}/Interest/${interest.id}`
-    return this.http.delete<Interest>(url)
-  }
-  addInterests(interest:Interest): Observable<Interest>{
-    console.log("estoy en el metodo del servicio")
-    // Este codigo agrega un usuario a la DB 
-    console.log(interest.constructor.name)
-    interest.person = this.USERID;
-    return this.http.post<Interest>(`${this.apiURL}/Interest`, interest, httpOptions)
-  }
 
-  // SoftSkills
+  // SoftSkills  APIREST ###################################################
   getSoftSkill(): Observable<SoftSkill[]> {
-  this.EndPoint = `${this.apiURL}/SoftSkill?person=${this.USERID}`
+  this.EndPoint = `${this.LOCALHOST_API}/list/softskill/${this.USERID}`
   return this.http.get<SoftSkill[]>(this.EndPoint )
   }
-
-  delSoftSkill(softskill:SoftSkill): Observable<SoftSkill>{
-  // Este codigo elimina de la DB al usuario
-  const url = `${this.apiURL}/SoftSkill/${softskill.id}`
-  return this.http.delete<SoftSkill>(url)
-  }
   updateSoftSkill(softskill:SoftSkill): Observable<SoftSkill>{
-  const url = `${this.apiURL}/SoftSkill/${softskill.id}`;
-  return this.http.put<SoftSkill>(url, softskill)
+  const url = `${this.LOCALHOST_API}/edit/softskill`;
+  softskill.person = this.USERID;
+  return this.http.post<SoftSkill>(url, softskill, httpOptions)
   }
   addSoftskill(softskill:SoftSkill): Observable<SoftSkill>{
     console.log("estoy en el metodo del servicio")
     // Este codigo agrega un usuario a la DB 
     console.log(softskill.constructor.name)
     softskill.person = this.USERID;
-    return this.http.post<SoftSkill>(`${this.apiURL}/SoftSkill`, softskill, httpOptions)
+    return this.http.post<SoftSkill>(`${this.LOCALHOST_API}/edit/softskill`, softskill, httpOptions)
   }
+  delSoftSkill(softskill:SoftSkill): Observable<SoftSkill>{
+  // Este codigo elimina de la DB al usuario
+  const url = `${this.LOCALHOST_API}/del/softskill/${softskill.id}`
+  return this.http.delete<SoftSkill>(url, httpOptions)
+  }
+
+
 
 
   // Projects
@@ -186,23 +198,23 @@ export class DataService {
 
   // Degree
   getDegree(): Observable<Degree[]> {
-    this.EndPoint = `${this.apiURL}/Degree?person=${this.USERID}`
+    this.EndPoint = `${this.LOCALHOST_API}/list/degree/${this.USERID}`
     return this.http.get<Degree[]>(this.EndPoint )
   }
   delDegree(degree:Degree): Observable<Degree>{
-    const url = `${this.apiURL}/Degree/${degree.id}`
+    const url = `${this.LOCALHOST_API}/del/degree/${degree.id}`
     return this.http.delete<Degree>(url)
   }
   updateDegree(degree:Degree): Observable<Degree>{
-    const url = `${this.apiURL}/Degree/${degree.id}`;
-    return this.http.put<Degree>(url, degree)
+    const url = `${this.LOCALHOST_API}/edit/degree`;
+    return this.http.post<Degree>(url, degree, httpOptions)
   }
   addDegree(degree:Degree): Observable<Degree>{
     console.log("estoy en el metodo del servicio")
     // Este codigo agrega un usuario a la DB 
     console.log(degree.constructor.name)
     degree.person = this.USERID;
-    return this.http.post<Degree>(`${this.apiURL}/Degree`, degree, httpOptions)
+    return this.http.post<Degree>(`${this.LOCALHOST_API}/edit/degree`, degree, httpOptions)
   }
 
 

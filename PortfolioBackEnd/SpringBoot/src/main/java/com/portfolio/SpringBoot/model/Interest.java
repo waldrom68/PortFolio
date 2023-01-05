@@ -55,6 +55,11 @@ public class Interest {
         this.name = name;
         this.person = person;
     }
+
+    @Override
+    public String toString() {
+        return "Interest{" + "id=" + id + ", name=" + name + ", orderdeploy=" + orderdeploy + ", person=" + person + '}';
+    }
     
     
     

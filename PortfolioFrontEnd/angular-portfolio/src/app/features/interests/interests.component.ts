@@ -61,8 +61,10 @@ export class InterestsComponent implements OnInit {
     // subscribo y me entero si se cambia el status del flag  
     this.flagBorrado$ = this.modalService.getFlagBorrado$();
     this.flagBorrado$.subscribe( (tt)=> {
-      console.log(`Se acepto el borrado del item "${this.itemParaBorrar.name}"`);
-      this.myData = this.myData.filter( (t) => { return t.id !== this.itemParaBorrar.id } )
+      if (this.itemParaBorrar) {
+        console.log(`Se acepto el borrado del item "${this.itemParaBorrar.name}"`);
+        this.myData = this.myData.filter( (t) => { return t.id !== this.itemParaBorrar.id } )
+      }
     }
     )
 

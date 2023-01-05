@@ -102,7 +102,7 @@ export class HardSkillsComponent implements OnInit {
     }
     );
     this.resetForm();
-    
+   
   }
 
   openDeleteModal(data:any) {
@@ -140,10 +140,11 @@ export class HardSkillsComponent implements OnInit {
   //   initAndSetupTheSliders();
   // }
 
-  ngAfterViewChecked() {
-    initAndSetupTheSliders();
-  }
+  // ngAfterViewChecked() {
+  //   initAndSetupTheSliders();
+  // }
 
+  // creo que esta misma funcion de JS debiera ir en item-component
   ngAfterContentChecked() {
     console.log("se termino ngAfterContentChecked")
     initAndSetupTheSliders();

@@ -7,6 +7,7 @@ import com.portfolio.SpringBoot.model.Softskill;
 import com.portfolio.SpringBoot.service.ISoftskillService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,19 +32,19 @@ public class ControllerSoftskill {
     
     }
     
-    @PostMapping ("/del/softskill/{id}")
+    @DeleteMapping ("/del/softskill/{id}")
     public void borrarSoft (@PathVariable Long id) {
     
         softServ.borrarSoft(id);
         
     }
     
-    @GetMapping ("/list/softskill/all")
-    public List<Softskill> verSoft() {
-    
-        return softServ.verSoft();
-    
-    }
+//    @GetMapping ("/list/softskill/all")
+//    public List<Softskill> verSoft() {
+//    
+//        return softServ.verSoft();
+//    
+//    }
     
     @GetMapping ("/list/softskill/{id}")
     public List<DTOSoftskill> verByPerson(@PathVariable Long id) {
