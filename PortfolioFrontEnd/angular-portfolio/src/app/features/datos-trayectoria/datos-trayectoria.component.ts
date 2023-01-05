@@ -45,28 +45,25 @@ export class DatosTrayectoriaComponent implements OnInit {
     public matDialog: MatDialog,
     private modalService: ModalActionsService,
     ) {
-
-      this.resetForm()
-
+      this.dataService.getGralData().subscribe(data =>
+        this.user = data
+        ) ;
+        this.dataService.getOrganization().subscribe(data =>
+          this.myOrganizations = data
+    
+        );
+        this.dataService.getRolePosition().subscribe(data =>
+          this.myRolePositions = data
+        );
+        this.dataService.getLaboralCareer().subscribe(data =>
+          this.myData = data
+        );
+        this.resetForm()
+        
      }
 
 
   ngOnInit(): void {
-
-    this.dataService.getGralData().subscribe(data =>
-      this.user = data
-    ) ;
-    this.dataService.getLaboralCareer().subscribe(data =>
-      this.myData = data
-    );
-    this.dataService.getOrganization().subscribe(data =>
-      this.myOrganizations = data
-
-    );
-    this.dataService.getRolePosition().subscribe(data =>
-      this.myRolePositions = data
-    );
-
 
     // subscribo y me entero si se cambia el status del flag  
     this.flagBorrado$ = this.modalService.getFlagBorrado$();
@@ -80,9 +77,7 @@ export class DatosTrayectoriaComponent implements OnInit {
     this.flagUserAdmin$.subscribe(  flagUserAdmin => this.flagUserAdmin = flagUserAdmin)
     this.flagUserAdmin = this.dataService.getFlagUserAdmin();
 
-  //  console.log(this.user.id)
-
-  }
+   }
 
   resetForm() {
     this.formData = { 

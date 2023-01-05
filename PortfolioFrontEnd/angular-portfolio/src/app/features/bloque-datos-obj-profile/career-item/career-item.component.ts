@@ -18,6 +18,7 @@ export class CareerItemComponent implements OnInit {
 
   @Input() item: LaboralCareer;
   @Input() user: Person;
+  @Input() formData: LaboralCareer;
   @Input() myOrganizations: Organization[];
   @Input() myRolePositions: RolePosition[];
 
@@ -33,8 +34,6 @@ export class CareerItemComponent implements OnInit {
   faTrash = faTrash;
 
   showForm: boolean = false;
-  formData: LaboralCareer;
-
 
 
   constructor( private dataService: DataService, ) { }
@@ -44,7 +43,6 @@ export class CareerItemComponent implements OnInit {
     this.flagUserAdmin$.subscribe(  flagUserAdmin => this.flagUserAdmin = flagUserAdmin)
     this.flagUserAdmin = this.dataService.getFlagUserAdmin()
 
-    console.log(this.myOrganizations)
   }
   
   color:string = 'red';

@@ -32,7 +32,7 @@
       </select>
   <!-- https://www.arquitecturajava.com/angular-select-y-todas-sus-opciones/ -->
 
-      <label class="form-label" for="degree">Grado - nivel</label>
+      <label class="form-label" for="degree">Grado/Nivel</label>
       <!-- [(ngModel)]="seleccionadoRole" -->
       <select class="form-control" formControlName="degree" name="degree" 
       [compareWith]="compararDegree"
@@ -58,7 +58,7 @@
       formControlName="name" 
       name="name" 
       class="form-control"
-      placeholder="Resumen"
+      placeholder="Nombre del estudio"
       [ngStyle]="{'width':'100%'}"
       formControlName="name"
       [ngClass] = "{error: (Name.invalid && Name.touched)}"
@@ -96,7 +96,7 @@
   </div>
 
   <div class="row icon-group m-2">
-    {{form.valid}}
+
     <button type="submit" class="btn btn-outline-success btn-sm"
     ngClass="faConfirm fa-ico"
     [disabled]="!form.valid"
@@ -112,9 +112,6 @@
     </button>
 
   </div>
-
-
-
 
 
   </form>

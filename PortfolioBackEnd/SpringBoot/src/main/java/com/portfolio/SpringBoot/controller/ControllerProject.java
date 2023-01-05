@@ -7,6 +7,7 @@ import com.portfolio.SpringBoot.model.Project;
 import com.portfolio.SpringBoot.service.IProjectService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,19 +32,19 @@ public class ControllerProject {
         }
     }
     
-    @PostMapping ("/del/project/{id}")
+    @DeleteMapping ("/del/project/{id}")
     public void borrarProject (@PathVariable Long id) {
     
         projServ.borrarProject(id);
         
     }
     
-    @GetMapping ("/list/project/all")
-    public List<Project> verProject() {
-    
-        return projServ.verProject();
-    
-    }
+//    @GetMapping ("/list/project/all")
+//    public List<Project> verProject() {
+//    
+//        return projServ.verProject();
+//    
+//    }
 
     @GetMapping ("/list/project/{id}")
     public List<DTOProject> verByPerson(@PathVariable Long id) {

@@ -6,6 +6,7 @@ import com.portfolio.SpringBoot.model.LaboralCareer;
 import com.portfolio.SpringBoot.service.ILaboralCareerService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,19 +31,19 @@ public class ControllerLaboralCareer {
     
     }
     
-    @PostMapping ("/del/laboralcareer/{id}")
+    @DeleteMapping ("/del/laboralcareer/{id}")
     public void borrarLaboralCareer (@PathVariable Long id) {
     
         laboralServ.borrarLaboralCareer(id);
         
     }
     
-    @GetMapping ("/list/laboralcareer/all")
-    public List<LaboralCareer> verLaboralCareer() {
-    
-        return laboralServ.verLaboralCareer();
-    
-    }
+//    @GetMapping ("/list/laboralcareer/all")
+//    public List<LaboralCareer> verLaboralCareer() {
+//    
+//        return laboralServ.verLaboralCareer();
+//    
+//    }
     
     @GetMapping ("/list/laboralcareer/{id}")
     public List<LaboralCareer> verByPersonId(@PathVariable Long id) {

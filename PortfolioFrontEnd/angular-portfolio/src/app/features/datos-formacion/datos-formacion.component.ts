@@ -45,23 +45,24 @@ export class DatosFormacionComponent implements OnInit {
     public matDialog: MatDialog,
     private modalService: ModalActionsService,
     ) {
+      this.dataService.getGralData().subscribe(data =>
+        this.user = data
+        ) ;
+        this.dataService.getOrganization().subscribe(data =>
+          this.myOrganizations = data
+    
+        );
+        this.dataService.getDegree().subscribe(data =>
+          this.myDegrees = data
+        );
+        this.dataService.getStudie().subscribe(data =>
+          this.myData = data
+        );
       this.resetForm()
     }
 
 
   ngOnInit(): void {
-    this.dataService.getGralData().subscribe(data =>
-      this.user = data
-    ) ;
-    this.dataService.getStudie().subscribe(studie =>
-      [this.myData = studie]
-    );
-    this.dataService.getOrganization().subscribe(data =>
-      this.myOrganizations = data
-    );
-    this.dataService.getDegree().subscribe(data =>
-      this.myDegrees = data
-    );
 
     // subscribo y me entero si se cambia el status del flag  
     this.flagBorrado$ = this.modalService.getFlagBorrado$();
@@ -158,7 +159,7 @@ export class DatosFormacionComponent implements OnInit {
       // atributos generales del message-box
       name: "delStudie",
       title: `Hi ${userId}, está por eliminar uno de los estudios`,
-      description: `¿Estás seguro de eliminar "${data.organization.name} (${data.studie.name})" ?`,
+      description: `¿Estás seguro de eliminar "${data.organization.name} (${data.name})" ?`,
       // por defecto mostrararía Aceptar
       actionButtonText: "Eliminar",
       // por defecto mostraría Cancelar

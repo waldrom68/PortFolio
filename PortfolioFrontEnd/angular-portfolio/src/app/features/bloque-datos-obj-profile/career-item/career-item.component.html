@@ -6,8 +6,6 @@
     >
         <div class="container-fluid" style="display: inline-block;"
         >
-
-
             <div *ngIf="item.endDate; else elseBlock">
                 <h6>({{item.startDate | date:'MM-yyyy' }} hasta {{item.endDate | date:'MM-yyyy'}})  {{item.organization.name}} -{{item.roleposition.name}}-</h6>
             </div>

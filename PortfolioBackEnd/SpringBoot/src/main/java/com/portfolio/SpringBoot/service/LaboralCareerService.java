@@ -81,10 +81,18 @@ public class LaboralCareerService implements ILaboralCareerService {
             
             tempDTO.setOrderdeploy(elemento.getOrderdeploy());
             tempDTO.setStatus(elemento.isStatus());
-            tempDTO.setOrganization(elemento.getOrganization().getId());
+            
+            Organization tempOrga = elemento.getOrganization();
+            tempOrga.setPerson(null);
+            tempDTO.setOrganization(tempOrga);
+            
 //            tempDTO.setOrga_resume(elemento.getOrganization().getResume());
-            tempDTO.setRoleposition(elemento.getRoleposition().getId());
+            RolePosition tempRole = elemento.getRoleposition();
+            tempRole.setPerson(null); // para que no envie estos datos
+            tempDTO.setRoleposition(tempRole);
         
+            tempOrga.setPerson(null);
+            
             listatemp.add(tempDTO);
         }
         

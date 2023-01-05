@@ -7,10 +7,11 @@
                 *ngFor="let item of myData"
                 [item]="item"
                 [user]="user"
+                [formData]="formData"
                 [myOrganizations]="myOrganizations"
                 [myRolePositions]="myRolePositions"
-                (onDelete)="deleteItem(item)"
                 [(showBtnAction)]="showBtnAction"
+                (onDelete)="deleteItem(item)"
             >
 
             </app-career-item>

@@ -6,6 +6,7 @@ import com.portfolio.SpringBoot.model.RolePosition;
 import com.portfolio.SpringBoot.service.IRolePositionService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,19 +30,19 @@ public class ControllerRolePosition {
     
     }
     
-    @PostMapping ("/del/roleposition/{id}")
+    @DeleteMapping ("/del/roleposition/{id}")
     public void borrarPersona (@PathVariable Long id) {
     
         persoServ.borrarRolePosition(id);
         
     }
     
-    @GetMapping ("/list/roleposition/all")
-    public List<RolePosition> verRolePosition() {
-    
-        return persoServ.verRolePosition();
-    
-    }
+//    @GetMapping ("/list/roleposition/all")
+//    public List<RolePosition> verRolePosition() {
+//    
+//        return persoServ.verRolePosition();
+//    
+//    }
     
     @GetMapping ("/list/roleposition/{id}")
     public List<RolePosition> verByPersonId (@PathVariable Long id) {

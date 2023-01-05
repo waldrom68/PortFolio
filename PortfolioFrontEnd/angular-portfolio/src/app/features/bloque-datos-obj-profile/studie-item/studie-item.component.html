@@ -7,15 +7,11 @@
         <div class="container-fluid" style="display: inline-block;"
   
         >
-            <!-- (dblclick)="toggleForm(item);" -->
-            <h6>{{item.degree.name}}</h6>
-
             <div *ngIf="item.endDate; else elseBlock">
-                <h6>({{item.startDate | date:'MM-yyyy' }} hasta {{item.endDate | date:'MM-yyyy'}})  {{item.organization.name}}</h6>
-
+                <h6>({{item.startDate | date:'MM-yyyy' }} hasta {{item.endDate | date:'MM-yyyy'}})  {{item.organization.name}} -{{item.degree.name}}-</h6>
             </div>
             <ng-template #elseBlock>
-                <h6>(Desde {{item.startDate | date:'MM-yyyy' }}) {{item.organization.name}}</h6>
+                <h6>(Desde {{item.startDate | date:'MM-yyyy' }}) {{item.organization.name}} -{{item.degree.name}}-</h6>
             </ng-template>
     
             <p *ngFor="let elemento of item.name.split('\n')"> 

@@ -53,8 +53,10 @@ constructor(
     this.flagUserAdmin$.subscribe(  flagUserAdmin => this.flagUserAdmin = flagUserAdmin)
     this.flagUserAdmin = this.dataService.getFlagUserAdmin()
 
- 
- 
+    this.formData.organization = this.myOrganizations[0] 
+    this.formData.roleposition = this.myRolePositions[0] 
+
+    console.log(this.formData)
 
   }
 
@@ -93,7 +95,7 @@ constructor(
     if (myRolePosition1==null || myRolePosition2==null) {
       return false;
     } else {
-      return myRolePosition1.name === myRolePosition2.name;
+      return myRolePosition1.name == myRolePosition2.name;
     }
   }
 
@@ -115,6 +117,7 @@ constructor(
         this.formData.endDate = this.form.get("endDate")?.value;
         this.formData.organization = this.form.get("organization")?.value;
         this.formData.roleposition = this.form.get("roleposition")?.value;
+        this.formData.status = true;
         this.formData.person = this.user.id 
         this.onUpdate.emit(this.formData);
   
@@ -135,6 +138,7 @@ constructor(
 
   ngAfterContentChecked() {
     console.log("se termino ngAfterContentChecked")
+
   }
 
 }

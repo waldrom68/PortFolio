@@ -18,6 +18,7 @@ export class StudieItemComponent implements OnInit {
 
   @Input() item: Studie;
   @Input() user: Person;
+  @Input() formData: Studie;
   @Input() myOrganizations: Organization[];
   @Input() myDegrees: Degree[];
 
@@ -33,7 +34,6 @@ export class StudieItemComponent implements OnInit {
   faTrash = faTrash;
 
   showForm: boolean = false;
-  formData: Studie;
 
 
   constructor(private dataService: DataService,) { }
@@ -63,6 +63,7 @@ export class StudieItemComponent implements OnInit {
   delete(studie: Studie) {
     // llamo al metodo del padre via emit()
     if (this.flagUserAdmin) {
+      console.log(studie)
       this.onDelete.emit(studie);
     }
 
