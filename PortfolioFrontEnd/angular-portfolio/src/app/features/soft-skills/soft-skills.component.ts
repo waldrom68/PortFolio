@@ -12,14 +12,18 @@ import { ModalActionsService } from 'src/app/service/modal-actions.service';
 import { Observable } from 'rxjs';
 
 
+
 declare function updateProgress(): void;
 @Component({
   selector: 'app-soft-skills',
   templateUrl: './soft-skills.component.html',
   styleUrls: ['./soft-skills.component.css']
 })
-export class SoftSkillsComponent implements OnInit {
 
+
+
+export class SoftSkillsComponent implements OnInit {
+  public itemParaBorrar: SoftSkill;
   // PENDIENTE: SERVICIO QUE DEBE VINCULARSE CON EL LOGUEO
   flagUserAdmin: boolean = false;
   flagUserAdmin$: Observable<boolean>;
@@ -33,7 +37,7 @@ export class SoftSkillsComponent implements OnInit {
 
   showBtnAction: boolean= true;  // flag para mostrar o no los btn's de acciones del usuario
  
-  itemParaBorrar: SoftSkill;
+
   flagBorrado: boolean = false;
   flagBorrado$: Observable<boolean>;
 
@@ -61,7 +65,7 @@ export class SoftSkillsComponent implements OnInit {
     // subscribo y me entero si se cambia el status del flag  
     this.flagBorrado$ = this.modalService.getFlagBorrado$();
     this.flagBorrado$.subscribe( (tt)=> {
-      console.log(`Se acepto el borrado del item "${this.itemParaBorrar.name}"`);
+      console.log(`Se acepto el borrado del item "${this.itemParaBorrar.name}"`)
       this.myData = this.myData.filter( (t) => { return t.id !== this.itemParaBorrar.id } )
     }
     )
@@ -141,10 +145,10 @@ export class SoftSkillsComponent implements OnInit {
   //   updateProgress();
   // }
 
-  ngAfterViewChecked() {
-    console.log("se termino ngAfterViewChecked")
-    updateProgress();
-  }
+  // ngAfterViewChecked() {
+  //   console.log("se termino ngAfterViewChecked")
+  //   updateProgress();
+  // }
 
   ngAfterContentChecked() {
     console.log("se termino ngAfterContentChecked")
