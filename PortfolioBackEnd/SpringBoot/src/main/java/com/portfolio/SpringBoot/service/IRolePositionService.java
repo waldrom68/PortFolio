@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface IRolePositionService {
     
-    public boolean crearRolePosition(RolePosition position);
+    public RolePosition crearRolePosition(RolePosition position);
     public void borrarRolePosition(Long id);
     public RolePosition buscarRolePosition(Long id);
   

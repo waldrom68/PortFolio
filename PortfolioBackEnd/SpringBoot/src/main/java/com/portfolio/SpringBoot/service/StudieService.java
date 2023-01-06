@@ -26,7 +26,7 @@ public class StudieService implements IStudieService {
     
 
     @Override
-    public boolean crearStudie(Studie studie) {
+    public Studie crearStudie(Studie studie) {
 
         Person pers = persServ.buscarPersona(studie.getPerson().getId());
         Organization orga = orgaServ.buscarOrganizacion(studie.getOrganization().getId());
@@ -36,14 +36,12 @@ public class StudieService implements IStudieService {
             studie.setPerson(pers);
             studie.setOrganization(orga);
             studie.setDegree(degree);
-            studieRepo.save(studie);
             
-        } else {
-            
-            return false;
         }
         
-        return true;
+        return studieRepo.save(studie);
+        
+
     }
 
     @Override

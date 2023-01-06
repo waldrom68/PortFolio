@@ -8,7 +8,7 @@ import java.util.List;
 public interface IProjectMediaService {
         
     public List<ProjectMedia> verProjectMedia();
-    public void crearProjectMedia(ProjectMedia per);
+    public ProjectMedia crearProjectMedia(ProjectMedia per);
     public void borrarProjectMedia(Long id);
     public ProjectMedia buscarProjectMedia(Long id);
 }

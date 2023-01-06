@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface IHardskillService {
     
-    public boolean crearHard(Hardskill soft);
+    public Hardskill crearHard(Hardskill soft);
     public void borrarHard(Long id);
     public Hardskill buscarHard(Long id);
     

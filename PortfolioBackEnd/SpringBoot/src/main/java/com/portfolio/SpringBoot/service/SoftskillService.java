@@ -21,7 +21,7 @@ public class SoftskillService implements ISoftskillService {
     @Autowired public IPersonService persServ;
 
     @Override
-    public boolean crearSoft(Softskill soft) {
+    public Softskill crearSoft(Softskill soft) {
         // recupero del JSON el id del modelo person como un Long
         // como tengo creado un constructor Person(Long id), obtengo un 
         // objeto persona con sólo el id, así puedo buscarlo en el repository
@@ -32,13 +32,10 @@ public class SoftskillService implements ISoftskillService {
         
         if (pers != null) {
             soft.setPerson(pers);
-            softRepo.save(soft);
 
-        } else {
-            return false;
-        }
+        } 
         
-        return true;
+        return softRepo.save(soft);
 
     }
 

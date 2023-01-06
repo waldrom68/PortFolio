@@ -22,19 +22,16 @@ public class SocialNetworkService implements ISocialnetworkService {
 
 
     @Override
-    public boolean crearSocial(SocialNetwork social) {
+    public SocialNetwork crearSocial(SocialNetwork social) {
         Long tmp_id = social.getPerson().getId();
         Person pers = persServ.buscarPersona(tmp_id);
         
         if (pers != null) {
             social.setPerson(pers);
-            socialRepo.save(social);
         
-        } else {
-            return false;
         }
         
-        return true;
+        return socialRepo.save(social);
     }
 
     @Override

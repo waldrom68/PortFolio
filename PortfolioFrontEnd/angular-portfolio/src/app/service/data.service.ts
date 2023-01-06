@@ -254,7 +254,6 @@ export class DataService {
   addLaboralCareer(career:LaboralCareer): Observable<LaboralCareer>{
     console.log("estoy en el metodo del servicio")
     // Este codigo agrega un usuario a la DB 
-    console.log(career.constructor.name)
     console.log("estoy aqui", career)
     career.person = this.USERID;
     return this.http.post<LaboralCareer>(`${this.LOCALHOST_API}/edit/laboralcareer`, career, httpOptions)

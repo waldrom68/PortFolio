@@ -6,6 +6,7 @@ import com.portfolio.SpringBoot.model.ProjectMedia;
 import com.portfolio.SpringBoot.service.IProjectMediaService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,25 +24,25 @@ public class ControllerProjectMedia {
     
     
     @PostMapping ("/new/projectmedia")
-    public void crearProjectMedia (@RequestBody ProjectMedia pers) {
+    public ProjectMedia crearProjectMedia (@RequestBody ProjectMedia pers) {
     
-        persoServ.crearProjectMedia(pers);
+        return persoServ.crearProjectMedia(pers);
     
     }
     
-    @GetMapping ("/del/projectmedia")
+    @DeleteMapping ("/del/projectmedia")
     public void borrarProjectMedia (@PathVariable Long id) {
     
         persoServ.borrarProjectMedia(id);
         
     }
     
-    @PutMapping ("/edit/projectmedia")
-    public void editarProjectMedia(@RequestBody ProjectMedia pers) {
-    
-        persoServ.crearProjectMedia(pers);
-
-    }
+//    @PutMapping ("/edit/projectmedia")
+//    public void editarProjectMedia(@RequestBody ProjectMedia pers) {
+//    
+//        persoServ.crearProjectMedia(pers);
+//
+//    }
            
     @GetMapping ("/list/projectmedia")
     public List<ProjectMedia> verProjectMedia() {
@@ -49,5 +50,5 @@ public class ControllerProjectMedia {
         return persoServ.verProjectMedia();
     
     }
-    
+//    PENDIENTE BUSCAR SOLO LOS QUE PERTENENCEN AL ID DEL PROYECTO
 }

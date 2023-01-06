@@ -22,9 +22,9 @@ public class ControllerInterest {
     private IInterestService interServ;
    
     @PostMapping("/edit/interest")
-    public void crearInteres(@RequestBody Interest inter) {
+    public Interest crearInteres(@RequestBody Interest inter) {
     
-        interServ.crearInteres(inter);
+        return interServ.crearInteres(inter);
     
     }
     

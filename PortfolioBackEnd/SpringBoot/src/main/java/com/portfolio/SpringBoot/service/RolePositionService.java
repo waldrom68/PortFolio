@@ -19,16 +19,14 @@ public class RolePositionService implements IRolePositionService {
     @Autowired public IPersonService persServ;
 
     @Override
-    public boolean crearRolePosition(RolePosition position) {
+    public RolePosition crearRolePosition(RolePosition position) {
         Long tmp_id = position.getPerson().getId();
         Person pers = persServ.buscarPersona(tmp_id);
         if (pers != null ) {
             position.setPerson(pers);
             positionRepo.save(position);
-        } else {
-            return false;
-        }
-        return true;
+        } 
+        return positionRepo.save(position);
     }
 
     @Override

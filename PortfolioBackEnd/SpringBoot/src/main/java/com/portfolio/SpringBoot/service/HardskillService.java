@@ -22,19 +22,15 @@ public class HardskillService implements IHardskillService {
     @Autowired public IPersonService persServ;
 
     @Override
-    public boolean crearHard(Hardskill hard) {
+    public Hardskill crearHard(Hardskill hard) {
         Long tmp_id = hard.getPerson().getId();
         Person pers = persServ.buscarPersona(tmp_id);
         
         if (pers != null) {
             hard.setPerson(pers);
-            hardRepo.save(hard);
-
-        } else {
-            return false;
-        }
+        } 
         
-        return true;
+        return hardRepo.save(hard);
     }
 
     @Override

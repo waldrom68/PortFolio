@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface IDegreeService {
     
-    public boolean crearDegree(Degree deg);
+    public Degree crearDegree(Degree deg);
     public void borrarDegree(Long id);
     public Degree buscarDegree(Long id);
     

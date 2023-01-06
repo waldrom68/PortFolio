@@ -12,7 +12,7 @@ import java.util.List;
  */
 public interface ISocialnetworkService {
     
-    public boolean crearSocial(SocialNetwork social);
+    public SocialNetwork crearSocial(SocialNetwork social);
     public void borrarSocial(Long id);
     public SocialNetwork buscarSocial(Long id);
     

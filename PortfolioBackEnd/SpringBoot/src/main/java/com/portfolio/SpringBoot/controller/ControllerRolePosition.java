@@ -24,9 +24,9 @@ public class ControllerRolePosition {
     
     
     @PostMapping ("/edit/roleposition")
-    public void crearRolePosition (@RequestBody RolePosition post) {
+    public RolePosition crearRolePosition (@RequestBody RolePosition post) {
     
-        persoServ.crearRolePosition(post);
+        return persoServ.crearRolePosition(post);
     
     }
     

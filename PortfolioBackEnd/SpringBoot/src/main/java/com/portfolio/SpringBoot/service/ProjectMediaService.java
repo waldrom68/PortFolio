@@ -23,8 +23,8 @@ public class ProjectMediaService implements IProjectMediaService {
     }
 
     @Override
-    public void crearProjectMedia(ProjectMedia media) {
-        projMediaRepo.save(media);
+    public ProjectMedia crearProjectMedia(ProjectMedia media) {
+        return projMediaRepo.save(media);
     }
 
     @Override

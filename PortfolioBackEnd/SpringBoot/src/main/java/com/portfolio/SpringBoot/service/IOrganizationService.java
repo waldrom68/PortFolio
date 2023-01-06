@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface IOrganizationService {
     
-    public boolean crearOrganizacion(Organization orga);
+    public Organization crearOrganizacion(Organization orga);
     public void borrarOrganizacion(Long id);
     public Organization buscarOrganizacion(Long id);
     

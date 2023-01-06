@@ -23,20 +23,15 @@ public class PhoneService implements IPhoneService {
     
 
     @Override
-    public boolean crearPhone(Phone phone) {
+    public Phone crearPhone(Phone phone) {
         Long tmp_id = phone.getPerson().getId();
         Person pers = persServ.buscarPersona(tmp_id);
         
         if (pers != null) {
             phone.setPerson(pers);
-            phoneRepo.save(phone);
-            
-        } else {
-            
-            return false;
         }
         
-        return true;
+        return phoneRepo.save(phone);
     }
 
     @Override

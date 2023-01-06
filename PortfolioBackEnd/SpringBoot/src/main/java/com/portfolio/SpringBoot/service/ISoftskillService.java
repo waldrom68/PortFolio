@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface ISoftskillService {
     
-    public boolean crearSoft(Softskill soft);
+    public Softskill crearSoft(Softskill soft);
     public void borrarSoft(Long id);
     public Softskill buscarSoft(Long id);
     

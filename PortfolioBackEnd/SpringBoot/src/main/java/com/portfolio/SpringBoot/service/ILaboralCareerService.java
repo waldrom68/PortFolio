@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ILaboralCareerService {
     
-    public boolean crearLaboralCareer(LaboralCareer labor);
+    public LaboralCareer crearLaboralCareer(LaboralCareer labor);
     public void borrarLaboralCareer(Long id);
     public LaboralCareer buscarLaboralCareer(Long id);
     

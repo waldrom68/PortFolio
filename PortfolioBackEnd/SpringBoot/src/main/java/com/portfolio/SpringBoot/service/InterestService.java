@@ -21,20 +21,15 @@ public class InterestService implements IInterestService {
     @Autowired public IPersonService persServ;
 
     @Override
-    public boolean crearInteres(Interest inter) {
+    public Interest crearInteres(Interest inter) {
         Long tmp_id = inter.getPerson().getId();
         Person pers = persServ.buscarPersona(tmp_id);
         
         if (pers != null) {
             inter.setPerson(pers);
-            interestRepo.save(inter);
-        
-        } else {
-            
-            return false;
-        }
-        
-        return true;
+        } 
+       
+        return interestRepo.save(inter);
  
     }
 

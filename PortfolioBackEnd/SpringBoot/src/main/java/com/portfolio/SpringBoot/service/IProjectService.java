@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface IProjectService {
     
-    public boolean crearProject(Project proy);
+    public Project crearProject(Project proy);
     public void borrarProject(Long id);
     public Project buscarProject(Long id);
     

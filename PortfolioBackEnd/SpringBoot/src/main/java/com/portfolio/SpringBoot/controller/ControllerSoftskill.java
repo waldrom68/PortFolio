@@ -23,12 +23,9 @@ public class ControllerSoftskill {
     private ISoftskillService softServ;
     
     @PostMapping("/edit/softskill")  // edit and create
-    public void crearSoft(@RequestBody Softskill soft) {
+    public Softskill crearSoft(@RequestBody Softskill soft) {
 
-        boolean operation = softServ.crearSoft(soft);
-        if (!operation)  {
-            throw new UnsupportedOperationException("Not saved data..!, it's correct the Person_id?"); 
-        }
+        return softServ.crearSoft(soft);
     
     }
     

@@ -21,7 +21,7 @@ public class DegreeService implements IDegreeService {
     @Autowired public IPersonService persServ;
     
     @Override
-    public boolean crearDegree(Degree deg) {
+    public Degree crearDegree(Degree deg) {
         System.out.println("Estoy aqui " + deg.getPerson());
         
         Long tmp_id = deg.getPerson().getId();
@@ -30,11 +30,9 @@ public class DegreeService implements IDegreeService {
         
         if (pers != null ) {
             deg.setPerson(pers);
-            degreeRepo.save(deg);
-        } else {
-            return false;
-        }
-        return true;
+            
+        } 
+        return degreeRepo.save(deg);
     }
 
     @Override

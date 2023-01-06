@@ -25,19 +25,15 @@ public class ProjectService implements IProjectService {
 
 
     @Override
-    public boolean crearProject(Project proy) {
+    public Project crearProject(Project proy) {
         Long tmp_id = proy.getPerson().getId();
         Person pers = persServ.buscarPersona(tmp_id);
         
         if (pers != null) {
             proy.setPerson(pers);
-            projRepo.save(proy);
-
-        } else {
-            return false;
-        }
+        } 
         
-        return true;
+        return projRepo.save(proy);
 
     }
 

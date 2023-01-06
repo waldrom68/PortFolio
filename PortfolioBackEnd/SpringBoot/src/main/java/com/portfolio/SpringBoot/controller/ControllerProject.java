@@ -24,12 +24,10 @@ public class ControllerProject {
     
     
     @PostMapping ("/edit/project")  // edit and create
-    public void crearProject (@RequestBody Project proj) {
+    public Project crearProject (@RequestBody Project proj) {
     
-        boolean operation = projServ.crearProject(proj);
-        if (!operation)  {
-            throw new UnsupportedOperationException("Not saved data..!, it's correct the Person_id?"); 
-        }
+        return projServ.crearProject(proj);
+
     }
     
     @DeleteMapping ("/del/project/{id}")

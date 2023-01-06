@@ -26,7 +26,7 @@ public class LaboralCareerService implements ILaboralCareerService {
     
 
     @Override
-    public boolean crearLaboralCareer(LaboralCareer laboral) {
+    public LaboralCareer crearLaboralCareer(LaboralCareer laboral) {
         
         Person pers = persServ.buscarPersona(laboral.getPerson().getId());
         Organization orga = orgaServ.buscarOrganizacion(laboral.getOrganization().getId());
@@ -36,13 +36,9 @@ public class LaboralCareerService implements ILaboralCareerService {
             laboral.setPerson(pers);
             laboral.setOrganization(orga);
             laboral.setRoleposition(role);
-            laboralRepo.save(laboral);
-            
-        } else {
-            return false;
-        }
+          }
+        return laboralRepo.save(laboral);
         
-        return true;
     }
 
     @Override

@@ -7,6 +7,7 @@ import com.portfolio.SpringBoot.model.SocialNetwork;
 import com.portfolio.SpringBoot.service.ISocialnetworkService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,25 +24,25 @@ public class ControllerSocialNetwork {
     private ISocialnetworkService socialServ;
     
     @PostMapping("/edit/social")
-    public void crearSocial(@RequestBody SocialNetwork social) {
+    public SocialNetwork crearSocial(@RequestBody SocialNetwork social) {
     
-        socialServ.crearSocial(social);
+        return socialServ.crearSocial(social);
     
     }
     
-    @PostMapping ("/del/social/{id}")
+    @DeleteMapping ("/del/social/{id}")
     public void borrarSocial (@PathVariable Long id) {
     
         socialServ.borrarSocial(id);
         
     }
     
-    @GetMapping ("/list/social/all")
-    public List<SocialNetwork> verSocial() {
-    
-    return socialServ.verSocial();
-        
-    }
+//    @GetMapping ("/list/social/all")
+//    public List<SocialNetwork> verSocial() {
+//    
+//    return socialServ.verSocial();
+//        
+//    }
     
     @GetMapping ("/list/social/{id}")
     public List<DTOSocialNetwork> verByPerson(@PathVariable Long id){

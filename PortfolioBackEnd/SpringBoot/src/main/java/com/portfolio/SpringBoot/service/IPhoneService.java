@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface IPhoneService {
     
-    public boolean crearPhone(Phone phone);
+    public Phone crearPhone(Phone phone);
     public void borrarPhone(Long id);
     public Phone buscarPhone(Long id);
     

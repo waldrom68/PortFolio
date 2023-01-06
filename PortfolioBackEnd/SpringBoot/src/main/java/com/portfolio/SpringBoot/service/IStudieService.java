@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface IStudieService {
     
-    public boolean crearStudie(Studie studie);
+    public Studie crearStudie(Studie studie);
     public void borrarStudie(Long id);
     public Studie buscarStudie(Long id);
     

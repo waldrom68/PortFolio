@@ -23,12 +23,10 @@ public class ControllerHardskill {
     private IHardskillService hardServ;
     
     @PostMapping("/edit/hardskill")  // edit and create
-    public void crearHard(@RequestBody Hardskill hard) {
+    public Hardskill crearHard(@RequestBody Hardskill hard) {
     
-        boolean operation = hardServ.crearHard(hard);
-        if (!operation)  {
-            throw new UnsupportedOperationException("Not saved data..!, it's correct the Person_id?"); 
-        }
+        return hardServ.crearHard(hard);
+
         
     }
     

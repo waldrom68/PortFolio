@@ -24,11 +24,9 @@ public class ControllerPhone {
     
        
     @PostMapping ("/edit/phone")
-    public void crearPhone (@RequestBody Phone phone) {
-        boolean operation = phoneServ.crearPhone(phone);
-        if (!operation)  {
-            throw new UnsupportedOperationException("Not saved data..!, it's correct the Person_id?"); 
-        }
+    public Phone crearPhone (@RequestBody Phone phone) {
+        return phoneServ.crearPhone(phone);
+
     }
     
    

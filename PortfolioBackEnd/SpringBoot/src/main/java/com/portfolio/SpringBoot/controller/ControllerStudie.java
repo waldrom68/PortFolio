@@ -22,11 +22,9 @@ public class ControllerStudie {
     
         
     @PostMapping ("/edit/studie")
-    public void crearStudie (@RequestBody Studie studie) {
-        boolean operation = studieServ.crearStudie(studie);
-        if (!operation) {
-            throw new UnsupportedOperationException("No data saved...! Are the relationship ids correct?"); 
-        }
+    public Studie crearStudie (@RequestBody Studie studie) {
+        return studieServ.crearStudie(studie);
+
     
     }
     

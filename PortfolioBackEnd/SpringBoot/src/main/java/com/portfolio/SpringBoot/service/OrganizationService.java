@@ -19,16 +19,15 @@ public class OrganizationService implements IOrganizationService {
     @Autowired public IPersonService persServ;
     
     @Override
-    public boolean crearOrganizacion(Organization orga) {
+    public Organization crearOrganizacion(Organization orga) {
         Long tmp_id = orga.getPerson().getId();
         Person pers = persServ.buscarPersona(tmp_id);
         if (pers != null ) {
             orga.setPerson(pers);
-            orgaRepo.save(orga);
-        } else {
-            return false;
-        }
-        return true;
+            
+        } 
+
+        return orgaRepo.save(orga);
     }
 
     @Override

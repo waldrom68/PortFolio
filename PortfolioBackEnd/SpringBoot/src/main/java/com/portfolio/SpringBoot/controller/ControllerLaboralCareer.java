@@ -23,11 +23,8 @@ public class ControllerLaboralCareer {
     
     
     @PostMapping ("/edit/laboralcareer")
-    public void crearLaboralCareer (@RequestBody LaboralCareer pers) {
-        boolean operation = laboralServ.crearLaboralCareer(pers);
-        if (!operation) {
-            throw new UnsupportedOperationException("No data saved...! Are the relationship ids correct?"); 
-        }
+    public LaboralCareer crearLaboralCareer (@RequestBody LaboralCareer pers) {
+        return laboralServ.crearLaboralCareer(pers);
     
     }
     
