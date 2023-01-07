@@ -4,6 +4,7 @@
  */
 package com.portfolio.SpringBoot;
 
+import java.util.Date;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -24,6 +25,8 @@ public class WebConfig implements WebMvcConfigurer {
 //            .allowedHeaders("*");
 
         System.out.println("###### WebConfig class ######");
+        Date date = new Date();
+        System.out.println(date);
     }
     
 }

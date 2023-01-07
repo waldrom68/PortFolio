@@ -53,6 +53,8 @@ import { RolepositionItemComponent } from '../features/bloque-datos-obj-profile/
 import { StudieItemComponent } from '../features/bloque-datos-obj-profile/studie-item/studie-item.component';
 import { StudieFormComponent } from '../features/bloque-datos-obj-profile/studie-form/studie-form.component';
 
+import { IniciarSesionComponent } from './iniciar-sesion/iniciar-sesion.component';
+
 
 @NgModule({
     declarations: [
@@ -95,6 +97,7 @@ import { StudieFormComponent } from '../features/bloque-datos-obj-profile/studie
         RolepositionItemComponent,
         StudieItemComponent,
         StudieFormComponent,
+        IniciarSesionComponent,
     ],
     exports: [
         TopBarComponent,

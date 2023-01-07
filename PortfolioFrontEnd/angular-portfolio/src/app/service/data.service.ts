@@ -25,7 +25,7 @@ export class DataService {
   private EndPoint:string = ""
 
   // PENDIENTE, vincular con el logging
-  private USERID:number = 4; 
+  private USERID:number = 1; 
   private USER: Person;
 
 
