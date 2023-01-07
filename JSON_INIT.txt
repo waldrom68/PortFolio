@@ -119,3 +119,303 @@ localhost:8080/list/softskill/{User_id}
       "assessment": 3,
       "userId": 1
     }
+
+Jan 7 02:37:50 PM  ==> Cloning from https://github.com/waldrom68/PortFolio...
+Jan 7 02:37:53 PM  ==> Checking out commit f98af4041abcc759d1aed5c7114fa7c179fe9da9 in branch main
+Jan 7 02:37:56 PM  #1 [internal] load .dockerignore
+Jan 7 02:37:56 PM  #1 transferring context: 2B done
+Jan 7 02:37:56 PM  #1 DONE 0.0s
+Jan 7 02:37:56 PM  
+Jan 7 02:37:56 PM  #2 [internal] load build definition from Dockerfile
+Jan 7 02:37:56 PM  #2 transferring dockerfile: 228B done
+Jan 7 02:37:56 PM  #2 DONE 0.0s
+Jan 7 02:37:56 PM  
+Jan 7 02:37:56 PM  #3 [internal] load metadata for docker.io/library/amazoncorretto:19-alpine-jdk
+Jan 7 02:37:56 PM  #3 ...
+Jan 7 02:37:56 PM  
+Jan 7 02:37:56 PM  #4 [auth] library/amazoncorretto:pull token for registry-1.docker.io
+Jan 7 02:37:56 PM  #4 DONE 0.0s
+Jan 7 02:37:56 PM  
+Jan 7 02:37:56 PM  #3 [internal] load metadata for docker.io/library/amazoncorretto:19-alpine-jdk
+Jan 7 02:37:57 PM  #3 DONE 0.9s
+Jan 7 02:37:57 PM  
+Jan 7 02:37:57 PM  #5 [1/2] FROM docker.io/library/amazoncorretto:19-alpine-jdk@sha256:46be4d85ae0f45ee7144fcb0d785907b960ee273f6e3d759b6e0c39bf03e5387
+Jan 7 02:37:57 PM  #5 resolve docker.io/library/amazoncorretto:19-alpine-jdk@sha256:46be4d85ae0f45ee7144fcb0d785907b960ee273f6e3d759b6e0c39bf03e5387 done
+Jan 7 02:37:57 PM  #5 extracting sha256:ca7dd9ec2225f2385955c43b2379305acd51543c28cf1d4e94522b3d94cce3ce
+Jan 7 02:37:58 PM  #5 extracting sha256:ca7dd9ec2225f2385955c43b2379305acd51543c28cf1d4e94522b3d94cce3ce 0.6s done
+Jan 7 02:37:58 PM  #5 ...
+Jan 7 02:37:58 PM  
+Jan 7 02:37:58 PM  #6 [internal] load build context
+Jan 7 02:37:58 PM  #6 transferring context: 44.67MB 1.8s done
+Jan 7 02:37:58 PM  #6 DONE 1.8s
+Jan 7 02:37:58 PM  
+Jan 7 02:37:58 PM  #5 [1/2] FROM docker.io/library/amazoncorretto:19-alpine-jdk@sha256:46be4d85ae0f45ee7144fcb0d785907b960ee273f6e3d759b6e0c39bf03e5387
+Jan 7 02:38:00 PM  #5 extracting sha256:b953496144a820faf3b5884ddfc542a98cc07f6a24635f26015e7c8d0ef19efe
+Jan 7 02:38:02 PM  #5 extracting sha256:b953496144a820faf3b5884ddfc542a98cc07f6a24635f26015e7c8d0ef19efe 3.0s done
+Jan 7 02:38:02 PM  #5 DONE 5.9s
+Jan 7 02:38:03 PM  
+Jan 7 02:38:03 PM  #7 [2/2] COPY target/SpringBoot-0.0.1-SNAPSHOT.jar SpringBoot-0.0.1-SNAPSHOT.jar
+Jan 7 02:38:03 PM  #7 DONE 0.1s
+Jan 7 02:38:03 PM  
+Jan 7 02:38:03 PM  #8 exporting to oci image format
+Jan 7 02:38:03 PM  #8 exporting layers
+Jan 7 02:38:05 PM  #8 exporting layers 2.1s done
+Jan 7 02:38:05 PM  #8 exporting manifest sha256:96479b61200ce5402394cdaa50a8d6b9f1d5776f138048ce6a5db83431328e13 done
+Jan 7 02:38:05 PM  #8 exporting config sha256:31c3782b34531ea5541e7bc3352aa1fd71def1bbfdbdbc206f7ec8780ccb3e54 done
+Jan 7 02:38:14 PM  #8 DONE 11.2s
+Jan 7 02:38:14 PM  
+Jan 7 02:38:14 PM  #9 exporting cache
+Jan 7 02:38:21 PM  #9 DONE 7.0s
+Jan 7 02:38:22 PM  Pushing image to registry...
+Jan 7 02:38:26 PM  Upload succeeded
+Jan 7 02:38:26 PM  DONE
+Jan 7 02:39:06 PM  
+Jan 7 02:39:06 PM    .   ____          _            __ _ _
+Jan 7 02:39:06 PM   /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+Jan 7 02:39:06 PM  ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+Jan 7 02:39:06 PM   \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+Jan 7 02:39:06 PM    '  |____| .__|_| |_|_| |_\__, | / / / /
+Jan 7 02:39:06 PM   =========|_|==============|___/=/_/_/_/
+Jan 7 02:39:06 PM   :: Spring Boot ::                (v3.0.0)
+Jan 7 02:39:06 PM  
+Jan 7 02:39:08 PM  2023-01-07T17:39:08.698Z  INFO 1 --- [           main] com.portfolio.SpringBoot.Application     : Starting Application v0.0.1-SNAPSHOT using Java 19.0.1 with PID 1 (/SpringBoot-0.0.1-SNAPSHOT.jar started by root in /)
+Jan 7 02:39:08 PM  2023-01-07T17:39:08.704Z  INFO 1 --- [           main] com.portfolio.SpringBoot.Application     : No active profile set, falling back to 1 default profile: "default"
+Jan 7 02:39:14 PM  2023-01-07T17:39:14.495Z  WARN 1 --- [           main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanDefinitionStoreException: Failed to parse configuration class [com.portfolio.SpringBoot.Application]
+Jan 7 02:39:16 PM  2023-01-07T17:39:16.591Z ERROR 1 --- [           main] o.s.boot.SpringApplication               : Application run failed
+Jan 7 02:39:16 PM  
+Jan 7 02:39:16 PM  org.springframework.beans.factory.BeanDefinitionStoreException: Failed to parse configuration class [com.portfolio.SpringBoot.Application]
+Jan 7 02:39:16 PM       at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:179) ~[spring-context-6.0.2.jar!/:6.0.2]
+Jan 7 02:39:16 PM       at org.springframework.context.annotation.ConfigurationClassPostProcessor.processConfigBeanDefinitions(ConfigurationClassPostProcessor.java:397) ~[spring-context-6.0.2.jar!/:6.0.2]
+Jan 7 02:39:16 PM       at org.springframework.context.annotation.ConfigurationClassPostProcessor.postProcessBeanDefinitionRegistry(ConfigurationClassPostProcessor.java:283) ~[spring-context-6.0.2.jar!/:6.0.2]
+Jan 7 02:39:16 PM       at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanDefinitionRegistryPostProcessors(PostProcessorRegistrationDelegate.java:344) ~[spring-context-6.0.2.jar!/:6.0.2]
+Jan 7 02:39:16 PM       at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:115) ~[spring-context-6.0.2.jar!/:6.0.2]
+Jan 7 02:39:16 PM       at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:745) ~[spring-context-6.0.2.jar!/:6.0.2]
+Jan 7 02:39:16 PM       at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:565) ~[spring-context-6.0.2.jar!/:6.0.2]
+Jan 7 02:39:16 PM       at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.0.0.jar!/:3.0.0]
+Jan 7 02:39:16 PM       at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:730) ~[spring-boot-3.0.0.jar!/:3.0.0]
+Jan 7 02:39:16 PM       at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:432) ~[spring-boot-3.0.0.jar!/:3.0.0]
+Jan 7 02:39:16 PM       at org.springframework.boot.SpringApplication.run(SpringApplication.java:308) ~[spring-boot-3.0.0.jar!/:3.0.0]
+Jan 7 02:39:16 PM       at org.springframework.boot.SpringApplication.run(SpringApplication.java:1302) ~[spring-boot-3.0.0.jar!/:3.0.0]
+Jan 7 02:39:16 PM       at org.springframework.boot.SpringApplication.run(SpringApplication.java:1291) ~[spring-boot-3.0.0.jar!/:3.0.0]
+Jan 7 02:39:16 PM       at com.portfolio.SpringBoot.Application.main(Application.java:10) ~[classes!/:0.0.1-SNAPSHOT]
+Jan 7 02:39:16 PM       at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104) ~[na:na]
+Jan 7 02:39:16 PM       at java.base/java.lang.reflect.Method.invoke(Method.java:578) ~[na:na]
+Jan 7 02:39:16 PM       at org.springframework.boot.loader.MainMethodRunner.run(MainMethodRunner.java:49) ~[SpringBoot-0.0.1-SNAPSHOT.jar:0.0.1-SNAPSHOT]
+Jan 7 02:39:16 PM       at org.springframework.boot.loader.Launcher.launch(Launcher.java:95) ~[SpringBoot-0.0.1-SNAPSHOT.jar:0.0.1-SNAPSHOT]
+Jan 7 02:39:16 PM       at org.springframework.boot.loader.Launcher.launch(Launcher.java:58) ~[SpringBoot-0.0.1-SNAPSHOT.jar:0.0.1-SNAPSHOT]
+Jan 7 02:39:16 PM       at org.springframework.boot.loader.JarLauncher.main(JarLauncher.java:65) ~[SpringBoot-0.0.1-SNAPSHOT.jar:0.0.1-SNAPSHOT]
+Jan 7 02:39:16 PM  Caused by: java.io.FileNotFoundException: class path resource [com/portfolio/SpringBoot/controller/ControllerCard.class] cannot be opened because it does not exist
+Jan 7 02:39:16 PM       at org.springframework.core.io.ClassPathResource.getInputStream(ClassPathResource.java:211) ~[spring-core-6.0.2.jar!/:6.0.2]
+Jan 7 02:39:16 PM       at org.springframework.core.type.classreading.SimpleMetadataReader.getClassReader(SimpleMetadataReader.java:54) ~[spring-core-6.0.2.jar!/:6.0.2]
+Jan 7 02:39:16 PM       at org.springframework.core.type.classreading.SimpleMetadataReader.<init>(SimpleMetadataReader.java:48) ~[spring-core-6.0.2.jar!/:6.0.2]
+Jan 7 02:39:16 PM       at org.springframework.core.type.classreading.SimpleMetadataReaderFactory.getMetadataReader(SimpleMetadataReaderFactory.java:103) ~[spring-core-6.0.2.jar!/:6.0.2]
+Jan 7 02:39:16 PM       at org.springframework.boot.type.classreading.ConcurrentReferenceCachingMetadataReaderFactory.createMetadataReader(ConcurrentReferenceCachingMetadataReaderFactory.java:86) ~[spring-boot-3.0.0.jar!/:3.0.0]
+Jan 7 02:39:16 PM       at org.springframework.boot.type.classreading.ConcurrentReferenceCachingMetadataReaderFactory.getMetadataReader(ConcurrentReferenceCachingMetadataReaderFactory.java:73) ~[spring-boot-3.0.0.jar!/:3.0.0]
+Jan 7 02:39:16 PM       at org.springframework.core.type.classreading.SimpleMetadataReaderFactory.getMetadataReader(SimpleMetadataReaderFactory.java:81) ~[spring-core-6.0.2.jar!/:6.0.2]
+Jan 7 02:39:16 PM       at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:188) ~[spring-context-6.0.2.jar!/:6.0.2]
+Jan 7 02:39:16 PM       at org.springframework.context.annotation.ConfigurationClassParser.doProcessConfigurationClass(ConfigurationClassParser.java:298) ~[spring-context-6.0.2.jar!/:6.0.2]
+Jan 7 02:39:16 PM       at org.springframework.context.annotation.ConfigurationClassParser.processConfigurationClass(ConfigurationClassParser.java:244) ~[spring-context-6.0.2.jar!/:6.0.2]
+Jan 7 02:39:16 PM       at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:197) ~[spring-context-6.0.2.jar!/:6.0.2]
+Jan 7 02:39:16 PM       at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:165) ~[spring-context-6.0.2.jar!/:6.0.2]
+Jan 7 02:39:16 PM       ... 19 common frames omitted
+Jan 7 02:39:16 PM  
+Jan 7 02:39:49 PM  
+Jan 7 02:39:49 PM    .   ____          _            __ _ _
+Jan 7 02:39:49 PM   /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+Jan 7 02:39:49 PM  ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+Jan 7 02:39:49 PM   \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+Jan 7 02:39:49 PM    '  |____| .__|_| |_|_| |_\__, | / / / /
+Jan 7 02:39:49 PM   =========|_|==============|___/=/_/_/_/
+Jan 7 02:39:49 PM   :: Spring Boot ::                (v3.0.0)
+Jan 7 02:39:49 PM  
+Jan 7 02:39:51 PM  2023-01-07T17:39:51.832Z  INFO 1 --- [           main] com.portfolio.SpringBoot.Application     : Starting Application v0.0.1-SNAPSHOT using Java 19.0.1 with PID 1 (/SpringBoot-0.0.1-SNAPSHOT.jar started by root in /)
+Jan 7 02:39:51 PM  2023-01-07T17:39:51.917Z  INFO 1 --- [           main] com.portfolio.SpringBoot.Application     : No active profile set, falling back to 1 default profile: "default"
+Jan 7 02:39:58 PM  2023-01-07T17:39:58.014Z  WARN 1 --- [           main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanDefinitionStoreException: Failed to parse configuration class [com.portfolio.SpringBoot.Application]
+Jan 7 02:40:00 PM  2023-01-07T17:40:00.094Z ERROR 1 --- [           main] o.s.boot.SpringApplication               : Application run failed
+Jan 7 02:40:00 PM  
+Jan 7 02:40:00 PM  org.springframework.beans.factory.BeanDefinitionStoreException: Failed to parse configuration class [com.portfolio.SpringBoot.Application]
+Jan 7 02:40:00 PM       at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:179) ~[spring-context-6.0.2.jar!/:6.0.2]
+Jan 7 02:40:00 PM       at org.springframework.context.annotation.ConfigurationClassPostProcessor.processConfigBeanDefinitions(ConfigurationClassPostProcessor.java:397) ~[spring-context-6.0.2.jar!/:6.0.2]
+Jan 7 02:40:00 PM       at org.springframework.context.annotation.ConfigurationClassPostProcessor.postProcessBeanDefinitionRegistry(ConfigurationClassPostProcessor.java:283) ~[spring-context-6.0.2.jar!/:6.0.2]
+Jan 7 02:40:00 PM       at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanDefinitionRegistryPostProcessors(PostProcessorRegistrationDelegate.java:344) ~[spring-context-6.0.2.jar!/:6.0.2]
+Jan 7 02:40:00 PM       at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:115) ~[spring-context-6.0.2.jar!/:6.0.2]
+Jan 7 02:40:00 PM       at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:745) ~[spring-context-6.0.2.jar!/:6.0.2]
+Jan 7 02:40:00 PM       at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:565) ~[spring-context-6.0.2.jar!/:6.0.2]
+Jan 7 02:40:00 PM       at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.0.0.jar!/:3.0.0]
+Jan 7 02:40:00 PM       at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:730) ~[spring-boot-3.0.0.jar!/:3.0.0]
+Jan 7 02:40:00 PM       at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:432) ~[spring-boot-3.0.0.jar!/:3.0.0]
+Jan 7 02:40:00 PM       at org.springframework.boot.SpringApplication.run(SpringApplication.java:308) ~[spring-boot-3.0.0.jar!/:3.0.0]
+Jan 7 02:40:00 PM       at org.springframework.boot.SpringApplication.run(SpringApplication.java:1302) ~[spring-boot-3.0.0.jar!/:3.0.0]
+Jan 7 02:40:00 PM       at org.springframework.boot.SpringApplication.run(SpringApplication.java:1291) ~[spring-boot-3.0.0.jar!/:3.0.0]
+Jan 7 02:40:00 PM       at com.portfolio.SpringBoot.Application.main(Application.java:10) ~[classes!/:0.0.1-SNAPSHOT]
+Jan 7 02:40:00 PM       at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104) ~[na:na]
+Jan 7 02:40:00 PM       at java.base/java.lang.reflect.Method.invoke(Method.java:578) ~[na:na]
+Jan 7 02:40:00 PM       at org.springframework.boot.loader.MainMethodRunner.run(MainMethodRunner.java:49) ~[SpringBoot-0.0.1-SNAPSHOT.jar:0.0.1-SNAPSHOT]
+Jan 7 02:40:00 PM       at org.springframework.boot.loader.Launcher.launch(Launcher.java:95) ~[SpringBoot-0.0.1-SNAPSHOT.jar:0.0.1-SNAPSHOT]
+Jan 7 02:40:00 PM       at org.springframework.boot.loader.Launcher.launch(Launcher.java:58) ~[SpringBoot-0.0.1-SNAPSHOT.jar:0.0.1-SNAPSHOT]
+Jan 7 02:40:00 PM       at org.springframework.boot.loader.JarLauncher.main(JarLauncher.java:65) ~[SpringBoot-0.0.1-SNAPSHOT.jar:0.0.1-SNAPSHOT]
+Jan 7 02:40:00 PM  Caused by: java.io.FileNotFoundException: class path resource [com/portfolio/SpringBoot/controller/ControllerCard.class] cannot be opened because it does not exist
+Jan 7 02:40:00 PM       at org.springframework.core.io.ClassPathResource.getInputStream(ClassPathResource.java:211) ~[spring-core-6.0.2.jar!/:6.0.2]
+Jan 7 02:40:00 PM       at org.springframework.core.type.classreading.SimpleMetadataReader.getClassReader(SimpleMetadataReader.java:54) ~[spring-core-6.0.2.jar!/:6.0.2]
+Jan 7 02:40:00 PM       at org.springframework.core.type.classreading.SimpleMetadataReader.<init>(SimpleMetadataReader.java:48) ~[spring-core-6.0.2.jar!/:6.0.2]
+Jan 7 02:40:00 PM       at org.springframework.core.type.classreading.SimpleMetadataReaderFactory.getMetadataReader(SimpleMetadataReaderFactory.java:103) ~[spring-core-6.0.2.jar!/:6.0.2]
+Jan 7 02:40:00 PM       at org.springframework.boot.type.classreading.ConcurrentReferenceCachingMetadataReaderFactory.createMetadataReader(ConcurrentReferenceCachingMetadataReaderFactory.java:86) ~[spring-boot-3.0.0.jar!/:3.0.0]
+Jan 7 02:40:00 PM       at org.springframework.boot.type.classreading.ConcurrentReferenceCachingMetadataReaderFactory.getMetadataReader(ConcurrentReferenceCachingMetadataReaderFactory.java:73) ~[spring-boot-3.0.0.jar!/:3.0.0]
+Jan 7 02:40:00 PM       at org.springframework.core.type.classreading.SimpleMetadataReaderFactory.getMetadataReader(SimpleMetadataReaderFactory.java:81) ~[spring-core-6.0.2.jar!/:6.0.2]
+Jan 7 02:40:00 PM       at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:188) ~[spring-context-6.0.2.jar!/:6.0.2]
+Jan 7 02:40:00 PM       at org.springframework.context.annotation.ConfigurationClassParser.doProcessConfigurationClass(ConfigurationClassParser.java:298) ~[spring-context-6.0.2.jar!/:6.0.2]
+Jan 7 02:40:00 PM       at org.springframework.context.annotation.ConfigurationClassParser.processConfigurationClass(ConfigurationClassParser.java:244) ~[spring-context-6.0.2.jar!/:6.0.2]
+Jan 7 02:40:00 PM       at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:197) ~[spring-context-6.0.2.jar!/:6.0.2]
+Jan 7 02:40:00 PM       at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:165) ~[spring-context-6.0.2.jar!/:6.0.2]
+Jan 7 02:40:00 PM       ... 19 common frames omitted
+Jan 7 02:40:00 PM  
+Jan 7 02:40:44 PM  
+Jan 7 02:40:44 PM    .   ____          _            __ _ _
+Jan 7 02:40:44 PM   /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+Jan 7 02:40:44 PM  ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+Jan 7 02:40:44 PM   \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+Jan 7 02:40:44 PM    '  |____| .__|_| |_|_| |_\__, | / / / /
+Jan 7 02:40:44 PM   =========|_|==============|___/=/_/_/_/
+Jan 7 02:40:44 PM   :: Spring Boot ::                (v3.0.0)
+Jan 7 02:40:44 PM  
+Jan 7 02:40:46 PM  2023-01-07T17:40:46.608Z  INFO 1 --- [           main] com.portfolio.SpringBoot.Application     : Starting Application v0.0.1-SNAPSHOT using Java 19.0.1 with PID 1 (/SpringBoot-0.0.1-SNAPSHOT.jar started by root in /)
+Jan 7 02:40:46 PM  2023-01-07T17:40:46.716Z  INFO 1 --- [           main] com.portfolio.SpringBoot.Application     : No active profile set, falling back to 1 default profile: "default"
+Jan 7 02:40:52 PM  2023-01-07T17:40:52.927Z  WARN 1 --- [           main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanDefinitionStoreException: Failed to parse configuration class [com.portfolio.SpringBoot.Application]
+Jan 7 02:40:54 PM  2023-01-07T17:40:54.620Z ERROR 1 --- [           main] o.s.boot.SpringApplication               : Application run failed
+Jan 7 02:40:54 PM  
+Jan 7 02:40:54 PM  org.springframework.beans.factory.BeanDefinitionStoreException: Failed to parse configuration class [com.portfolio.SpringBoot.Application]
+Jan 7 02:40:54 PM       at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:179) ~[spring-context-6.0.2.jar!/:6.0.2]
+Jan 7 02:40:54 PM       at org.springframework.context.annotation.ConfigurationClassPostProcessor.processConfigBeanDefinitions(ConfigurationClassPostProcessor.java:397) ~[spring-context-6.0.2.jar!/:6.0.2]
+Jan 7 02:40:54 PM       at org.springframework.context.annotation.ConfigurationClassPostProcessor.postProcessBeanDefinitionRegistry(ConfigurationClassPostProcessor.java:283) ~[spring-context-6.0.2.jar!/:6.0.2]
+Jan 7 02:40:54 PM       at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanDefinitionRegistryPostProcessors(PostProcessorRegistrationDelegate.java:344) ~[spring-context-6.0.2.jar!/:6.0.2]
+Jan 7 02:40:54 PM       at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:115) ~[spring-context-6.0.2.jar!/:6.0.2]
+Jan 7 02:40:54 PM       at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:745) ~[spring-context-6.0.2.jar!/:6.0.2]
+Jan 7 02:40:54 PM       at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:565) ~[spring-context-6.0.2.jar!/:6.0.2]
+Jan 7 02:40:54 PM       at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.0.0.jar!/:3.0.0]
+Jan 7 02:40:54 PM       at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:730) ~[spring-boot-3.0.0.jar!/:3.0.0]
+Jan 7 02:40:54 PM       at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:432) ~[spring-boot-3.0.0.jar!/:3.0.0]
+Jan 7 02:40:54 PM       at org.springframework.boot.SpringApplication.run(SpringApplication.java:308) ~[spring-boot-3.0.0.jar!/:3.0.0]
+Jan 7 02:40:54 PM       at org.springframework.boot.SpringApplication.run(SpringApplication.java:1302) ~[spring-boot-3.0.0.jar!/:3.0.0]
+Jan 7 02:40:54 PM       at org.springframework.boot.SpringApplication.run(SpringApplication.java:1291) ~[spring-boot-3.0.0.jar!/:3.0.0]
+Jan 7 02:40:54 PM       at com.portfolio.SpringBoot.Application.main(Application.java:10) ~[classes!/:0.0.1-SNAPSHOT]
+Jan 7 02:40:54 PM       at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104) ~[na:na]
+Jan 7 02:40:54 PM       at java.base/java.lang.reflect.Method.invoke(Method.java:578) ~[na:na]
+Jan 7 02:40:54 PM       at org.springframework.boot.loader.MainMethodRunner.run(MainMethodRunner.java:49) ~[SpringBoot-0.0.1-SNAPSHOT.jar:0.0.1-SNAPSHOT]
+Jan 7 02:40:54 PM       at org.springframework.boot.loader.Launcher.launch(Launcher.java:95) ~[SpringBoot-0.0.1-SNAPSHOT.jar:0.0.1-SNAPSHOT]
+Jan 7 02:40:54 PM       at org.springframework.boot.loader.Launcher.launch(Launcher.java:58) ~[SpringBoot-0.0.1-SNAPSHOT.jar:0.0.1-SNAPSHOT]
+Jan 7 02:40:54 PM       at org.springframework.boot.loader.JarLauncher.main(JarLauncher.java:65) ~[SpringBoot-0.0.1-SNAPSHOT.jar:0.0.1-SNAPSHOT]
+Jan 7 02:40:54 PM  Caused by: java.io.FileNotFoundException: class path resource [com/portfolio/SpringBoot/controller/ControllerCard.class] cannot be opened because it does not exist
+Jan 7 02:40:54 PM       at org.springframework.core.io.ClassPathResource.getInputStream(ClassPathResource.java:211) ~[spring-core-6.0.2.jar!/:6.0.2]
+Jan 7 02:40:54 PM       at org.springframework.core.type.classreading.SimpleMetadataReader.getClassReader(SimpleMetadataReader.java:54) ~[spring-core-6.0.2.jar!/:6.0.2]
+Jan 7 02:40:54 PM       at org.springframework.core.type.classreading.SimpleMetadataReader.<init>(SimpleMetadataReader.java:48) ~[spring-core-6.0.2.jar!/:6.0.2]
+Jan 7 02:40:54 PM       at org.springframework.core.type.classreading.SimpleMetadataReaderFactory.getMetadataReader(SimpleMetadataReaderFactory.java:103) ~[spring-core-6.0.2.jar!/:6.0.2]
+Jan 7 02:40:54 PM       at org.springframework.boot.type.classreading.ConcurrentReferenceCachingMetadataReaderFactory.createMetadataReader(ConcurrentReferenceCachingMetadataReaderFactory.java:86) ~[spring-boot-3.0.0.jar!/:3.0.0]
+Jan 7 02:40:54 PM       at org.springframework.boot.type.classreading.ConcurrentReferenceCachingMetadataReaderFactory.getMetadataReader(ConcurrentReferenceCachingMetadataReaderFactory.java:73) ~[spring-boot-3.0.0.jar!/:3.0.0]
+Jan 7 02:40:54 PM       at org.springframework.core.type.classreading.SimpleMetadataReaderFactory.getMetadataReader(SimpleMetadataReaderFactory.java:81) ~[spring-core-6.0.2.jar!/:6.0.2]
+Jan 7 02:40:54 PM       at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:188) ~[spring-context-6.0.2.jar!/:6.0.2]
+Jan 7 02:40:54 PM       at org.springframework.context.annotation.ConfigurationClassParser.doProcessConfigurationClass(ConfigurationClassParser.java:298) ~[spring-context-6.0.2.jar!/:6.0.2]
+Jan 7 02:40:54 PM       at org.springframework.context.annotation.ConfigurationClassParser.processConfigurationClass(ConfigurationClassParser.java:244) ~[spring-context-6.0.2.jar!/:6.0.2]
+Jan 7 02:40:54 PM       at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:197) ~[spring-context-6.0.2.jar!/:6.0.2]
+Jan 7 02:40:54 PM       at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:165) ~[spring-context-6.0.2.jar!/:6.0.2]
+Jan 7 02:40:54 PM       ... 19 common frames omitted
+Jan 7 02:40:54 PM  
+Jan 7 02:41:55 PM  
+Jan 7 02:41:55 PM    .   ____          _            __ _ _
+Jan 7 02:41:55 PM   /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+Jan 7 02:41:55 PM  ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+Jan 7 02:41:55 PM   \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+Jan 7 02:41:55 PM    '  |____| .__|_| |_|_| |_\__, | / / / /
+Jan 7 02:41:55 PM   =========|_|==============|___/=/_/_/_/
+Jan 7 02:41:55 PM   :: Spring Boot ::                (v3.0.0)
+Jan 7 02:41:55 PM  
+Jan 7 02:41:57 PM  2023-01-07T17:41:57.601Z  INFO 1 --- [           main] com.portfolio.SpringBoot.Application     : Starting Application v0.0.1-SNAPSHOT using Java 19.0.1 with PID 1 (/SpringBoot-0.0.1-SNAPSHOT.jar started by root in /)
+Jan 7 02:41:57 PM  2023-01-07T17:41:57.710Z  INFO 1 --- [           main] com.portfolio.SpringBoot.Application     : No active profile set, falling back to 1 default profile: "default"
+Jan 7 02:42:03 PM  2023-01-07T17:42:03.397Z  WARN 1 --- [           main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanDefinitionStoreException: Failed to parse configuration class [com.portfolio.SpringBoot.Application]
+Jan 7 02:42:05 PM  2023-01-07T17:42:05.393Z ERROR 1 --- [           main] o.s.boot.SpringApplication               : Application run failed
+Jan 7 02:42:05 PM  
+Jan 7 02:42:05 PM  org.springframework.beans.factory.BeanDefinitionStoreException: Failed to parse configuration class [com.portfolio.SpringBoot.Application]
+Jan 7 02:42:05 PM       at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:179) ~[spring-context-6.0.2.jar!/:6.0.2]
+Jan 7 02:42:05 PM       at org.springframework.context.annotation.ConfigurationClassPostProcessor.processConfigBeanDefinitions(ConfigurationClassPostProcessor.java:397) ~[spring-context-6.0.2.jar!/:6.0.2]
+Jan 7 02:42:05 PM       at org.springframework.context.annotation.ConfigurationClassPostProcessor.postProcessBeanDefinitionRegistry(ConfigurationClassPostProcessor.java:283) ~[spring-context-6.0.2.jar!/:6.0.2]
+Jan 7 02:42:05 PM       at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanDefinitionRegistryPostProcessors(PostProcessorRegistrationDelegate.java:344) ~[spring-context-6.0.2.jar!/:6.0.2]
+Jan 7 02:42:05 PM       at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:115) ~[spring-context-6.0.2.jar!/:6.0.2]
+Jan 7 02:42:05 PM       at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:745) ~[spring-context-6.0.2.jar!/:6.0.2]
+Jan 7 02:42:05 PM       at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:565) ~[spring-context-6.0.2.jar!/:6.0.2]
+Jan 7 02:42:05 PM       at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.0.0.jar!/:3.0.0]
+Jan 7 02:42:05 PM       at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:730) ~[spring-boot-3.0.0.jar!/:3.0.0]
+Jan 7 02:42:05 PM       at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:432) ~[spring-boot-3.0.0.jar!/:3.0.0]
+Jan 7 02:42:05 PM       at org.springframework.boot.SpringApplication.run(SpringApplication.java:308) ~[spring-boot-3.0.0.jar!/:3.0.0]
+Jan 7 02:42:05 PM       at org.springframework.boot.SpringApplication.run(SpringApplication.java:1302) ~[spring-boot-3.0.0.jar!/:3.0.0]
+Jan 7 02:42:05 PM       at org.springframework.boot.SpringApplication.run(SpringApplication.java:1291) ~[spring-boot-3.0.0.jar!/:3.0.0]
+Jan 7 02:42:05 PM       at com.portfolio.SpringBoot.Application.main(Application.java:10) ~[classes!/:0.0.1-SNAPSHOT]
+Jan 7 02:42:05 PM       at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104) ~[na:na]
+Jan 7 02:42:05 PM       at java.base/java.lang.reflect.Method.invoke(Method.java:578) ~[na:na]
+Jan 7 02:42:05 PM       at org.springframework.boot.loader.MainMethodRunner.run(MainMethodRunner.java:49) ~[SpringBoot-0.0.1-SNAPSHOT.jar:0.0.1-SNAPSHOT]
+Jan 7 02:42:05 PM       at org.springframework.boot.loader.Launcher.launch(Launcher.java:95) ~[SpringBoot-0.0.1-SNAPSHOT.jar:0.0.1-SNAPSHOT]
+Jan 7 02:42:05 PM       at org.springframework.boot.loader.Launcher.launch(Launcher.java:58) ~[SpringBoot-0.0.1-SNAPSHOT.jar:0.0.1-SNAPSHOT]
+Jan 7 02:42:05 PM       at org.springframework.boot.loader.JarLauncher.main(JarLauncher.java:65) ~[SpringBoot-0.0.1-SNAPSHOT.jar:0.0.1-SNAPSHOT]
+Jan 7 02:42:05 PM  Caused by: java.io.FileNotFoundException: class path resource [com/portfolio/SpringBoot/controller/ControllerCard.class] cannot be opened because it does not exist
+Jan 7 02:42:05 PM       at org.springframework.core.io.ClassPathResource.getInputStream(ClassPathResource.java:211) ~[spring-core-6.0.2.jar!/:6.0.2]
+Jan 7 02:42:05 PM       at org.springframework.core.type.classreading.SimpleMetadataReader.getClassReader(SimpleMetadataReader.java:54) ~[spring-core-6.0.2.jar!/:6.0.2]
+Jan 7 02:42:05 PM       at org.springframework.core.type.classreading.SimpleMetadataReader.<init>(SimpleMetadataReader.java:48) ~[spring-core-6.0.2.jar!/:6.0.2]
+Jan 7 02:42:05 PM       at org.springframework.core.type.classreading.SimpleMetadataReaderFactory.getMetadataReader(SimpleMetadataReaderFactory.java:103) ~[spring-core-6.0.2.jar!/:6.0.2]
+Jan 7 02:42:05 PM       at org.springframework.boot.type.classreading.ConcurrentReferenceCachingMetadataReaderFactory.createMetadataReader(ConcurrentReferenceCachingMetadataReaderFactory.java:86) ~[spring-boot-3.0.0.jar!/:3.0.0]
+Jan 7 02:42:05 PM       at org.springframework.boot.type.classreading.ConcurrentReferenceCachingMetadataReaderFactory.getMetadataReader(ConcurrentReferenceCachingMetadataReaderFactory.java:73) ~[spring-boot-3.0.0.jar!/:3.0.0]
+Jan 7 02:42:05 PM       at org.springframework.core.type.classreading.SimpleMetadataReaderFactory.getMetadataReader(SimpleMetadataReaderFactory.java:81) ~[spring-core-6.0.2.jar!/:6.0.2]
+Jan 7 02:42:05 PM       at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:188) ~[spring-context-6.0.2.jar!/:6.0.2]
+Jan 7 02:42:05 PM       at org.springframework.context.annotation.ConfigurationClassParser.doProcessConfigurationClass(ConfigurationClassParser.java:298) ~[spring-context-6.0.2.jar!/:6.0.2]
+Jan 7 02:42:05 PM       at org.springframework.context.annotation.ConfigurationClassParser.processConfigurationClass(ConfigurationClassParser.java:244) ~[spring-context-6.0.2.jar!/:6.0.2]
+Jan 7 02:42:05 PM       at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:197) ~[spring-context-6.0.2.jar!/:6.0.2]
+Jan 7 02:42:05 PM       at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:165) ~[spring-context-6.0.2.jar!/:6.0.2]
+Jan 7 02:42:05 PM       ... 19 common frames omitted
+Jan 7 02:42:05 PM  
+Jan 7 02:43:24 PM  
+Jan 7 02:43:24 PM    .   ____          _            __ _ _
+Jan 7 02:43:24 PM   /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+Jan 7 02:43:24 PM  ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+Jan 7 02:43:24 PM   \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+Jan 7 02:43:24 PM    '  |____| .__|_| |_|_| |_\__, | / / / /
+Jan 7 02:43:24 PM   =========|_|==============|___/=/_/_/_/
+Jan 7 02:43:24 PM   :: Spring Boot ::                (v3.0.0)
+Jan 7 02:43:24 PM  
+Jan 7 02:43:27 PM  2023-01-07T17:43:26.916Z  INFO 1 --- [           main] com.portfolio.SpringBoot.Application     : Starting Application v0.0.1-SNAPSHOT using Java 19.0.1 with PID 1 (/SpringBoot-0.0.1-SNAPSHOT.jar started by root in /)
+Jan 7 02:43:27 PM  2023-01-07T17:43:27.000Z  INFO 1 --- [           main] com.portfolio.SpringBoot.Application     : No active profile set, falling back to 1 default profile: "default"
+Jan 7 02:43:33 PM  2023-01-07T17:43:33.294Z  WARN 1 --- [           main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanDefinitionStoreException: Failed to parse configuration class [com.portfolio.SpringBoot.Application]
+Jan 7 02:43:35 PM  2023-01-07T17:43:35.022Z ERROR 1 --- [           main] o.s.boot.SpringApplication               : Application run failed
+Jan 7 02:43:35 PM  
+Jan 7 02:43:35 PM  org.springframework.beans.factory.BeanDefinitionStoreException: Failed to parse configuration class [com.portfolio.SpringBoot.Application]
+Jan 7 02:43:35 PM       at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:179) ~[spring-context-6.0.2.jar!/:6.0.2]
+Jan 7 02:43:35 PM       at org.springframework.context.annotation.ConfigurationClassPostProcessor.processConfigBeanDefinitions(ConfigurationClassPostProcessor.java:397) ~[spring-context-6.0.2.jar!/:6.0.2]
+Jan 7 02:43:35 PM       at org.springframework.context.annotation.ConfigurationClassPostProcessor.postProcessBeanDefinitionRegistry(ConfigurationClassPostProcessor.java:283) ~[spring-context-6.0.2.jar!/:6.0.2]
+Jan 7 02:43:35 PM       at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanDefinitionRegistryPostProcessors(PostProcessorRegistrationDelegate.java:344) ~[spring-context-6.0.2.jar!/:6.0.2]
+Jan 7 02:43:35 PM       at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:115) ~[spring-context-6.0.2.jar!/:6.0.2]
+Jan 7 02:43:35 PM       at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:745) ~[spring-context-6.0.2.jar!/:6.0.2]
+Jan 7 02:43:35 PM       at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:565) ~[spring-context-6.0.2.jar!/:6.0.2]
+Jan 7 02:43:35 PM       at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.0.0.jar!/:3.0.0]
+Jan 7 02:43:35 PM       at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:730) ~[spring-boot-3.0.0.jar!/:3.0.0]
+Jan 7 02:43:35 PM       at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:432) ~[spring-boot-3.0.0.jar!/:3.0.0]
+Jan 7 02:43:35 PM       at org.springframework.boot.SpringApplication.run(SpringApplication.java:308) ~[spring-boot-3.0.0.jar!/:3.0.0]
+Jan 7 02:43:35 PM       at org.springframework.boot.SpringApplication.run(SpringApplication.java:1302) ~[spring-boot-3.0.0.jar!/:3.0.0]
+Jan 7 02:43:35 PM       at org.springframework.boot.SpringApplication.run(SpringApplication.java:1291) ~[spring-boot-3.0.0.jar!/:3.0.0]
+Jan 7 02:43:35 PM       at com.portfolio.SpringBoot.Application.main(Application.java:10) ~[classes!/:0.0.1-SNAPSHOT]
+Jan 7 02:43:35 PM       at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104) ~[na:na]
+Jan 7 02:43:35 PM       at java.base/java.lang.reflect.Method.invoke(Method.java:578) ~[na:na]
+Jan 7 02:43:35 PM       at org.springframework.boot.loader.MainMethodRunner.run(MainMethodRunner.java:49) ~[SpringBoot-0.0.1-SNAPSHOT.jar:0.0.1-SNAPSHOT]
+Jan 7 02:43:35 PM       at org.springframework.boot.loader.Launcher.launch(Launcher.java:95) ~[SpringBoot-0.0.1-SNAPSHOT.jar:0.0.1-SNAPSHOT]
+Jan 7 02:43:35 PM       at org.springframework.boot.loader.Launcher.launch(Launcher.java:58) ~[SpringBoot-0.0.1-SNAPSHOT.jar:0.0.1-SNAPSHOT]
+Jan 7 02:43:35 PM       at org.springframework.boot.loader.JarLauncher.main(JarLauncher.java:65) ~[SpringBoot-0.0.1-SNAPSHOT.jar:0.0.1-SNAPSHOT]
+Jan 7 02:43:35 PM  Caused by: java.io.FileNotFoundException: class path resource [com/portfolio/SpringBoot/controller/ControllerCard.class] cannot be opened because it does not exist
+Jan 7 02:43:35 PM       at org.springframework.core.io.ClassPathResource.getInputStream(ClassPathResource.java:211) ~[spring-core-6.0.2.jar!/:6.0.2]
+Jan 7 02:43:35 PM       at org.springframework.core.type.classreading.SimpleMetadataReader.getClassReader(SimpleMetadataReader.java:54) ~[spring-core-6.0.2.jar!/:6.0.2]
+Jan 7 02:43:35 PM       at org.springframework.core.type.classreading.SimpleMetadataReader.<init>(SimpleMetadataReader.java:48) ~[spring-core-6.0.2.jar!/:6.0.2]
+Jan 7 02:43:35 PM       at org.springframework.core.type.classreading.SimpleMetadataReaderFactory.getMetadataReader(SimpleMetadataReaderFactory.java:103) ~[spring-core-6.0.2.jar!/:6.0.2]
+Jan 7 02:43:35 PM       at org.springframework.boot.type.classreading.ConcurrentReferenceCachingMetadataReaderFactory.createMetadataReader(ConcurrentReferenceCachingMetadataReaderFactory.java:86) ~[spring-boot-3.0.0.jar!/:3.0.0]
+Jan 7 02:43:35 PM       at org.springframework.boot.type.classreading.ConcurrentReferenceCachingMetadataReaderFactory.getMetadataReader(ConcurrentReferenceCachingMetadataReaderFactory.java:73) ~[spring-boot-3.0.0.jar!/:3.0.0]
+Jan 7 02:43:35 PM       at org.springframework.core.type.classreading.SimpleMetadataReaderFactory.getMetadataReader(SimpleMetadataReaderFactory.java:81) ~[spring-core-6.0.2.jar!/:6.0.2]
+Jan 7 02:43:35 PM       at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:188) ~[spring-context-6.0.2.jar!/:6.0.2]
+Jan 7 02:43:35 PM       at org.springframework.context.annotation.ConfigurationClassParser.doProcessConfigurationClass(ConfigurationClassParser.java:298) ~[spring-context-6.0.2.jar!/:6.0.2]
+Jan 7 02:43:35 PM       at org.springframework.context.annotation.ConfigurationClassParser.processConfigurationClass(ConfigurationClassParser.java:244) ~[spring-context-6.0.2.jar!/:6.0.2]
+Jan 7 02:43:35 PM       at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:197) ~[spring-context-6.0.2.jar!/:6.0.2]
+Jan 7 02:43:35 PM       at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:165) ~[spring-context-6.0.2.jar!/:6.0.2]
+Jan 7 02:43:35 PM       ... 19 common frames omitted
+Jan 7 02:43:35 PM  
