@@ -77,7 +77,14 @@ instance/
 docs/_build/
 
 # PyBuilder
-target/
+# Este archivo de configuracion es leido cuando estoy en:
+#       C:\PortFolioWeb\Portfolio\PortfolioFrontEnd
+# y tambien estando en:
+#       C:\PortFolioWeb\Portfolio\PortfolioBackEnd
+# y tambien estando en:
+#       C:\PortFolioWeb\Portfolio\
+
+# target/
 
 # Jupyter Notebook
 .ipynb_checkpoints
@@ -129,3 +136,9 @@ development.py
 
 # Carpetas de documentos de estudio
 yoProgramo/
+
+### CONFIGURACION DB ###
+!**/src/main/resources/application.properties
+.properties
+PortfolioBackEnd/SpringBoot/src/main/resources/application.properties
+src/resources/application.properties

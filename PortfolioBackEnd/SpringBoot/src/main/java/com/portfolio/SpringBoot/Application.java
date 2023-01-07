@@ -12,9 +12,9 @@ public class Application {
 
 }
 // ###########################  ATENCION  ##############################
-// VER SI SIRVE IMPLEMENTAR DTO para las consultas de relaciones con ID.
-// https://www.baeldung.com/entity-to-and-from-dto-for-a-java-spring-application
-// https://stackoverflow.com/questions/68018235/spring-ignore-field-just-in-getall-method
+// VER SI TRAS COMPILAR ARROJA ERROR "no main manifest attribute in [nombre_archivo].jar
+//
+// https://parzibyte.me/blog/2022/03/23/compilar-proyecto-java-netbeans-maven-crear-jar/
 
 //######  TURING.COM   ######
 //linkedin.com/in/josedlujan/   Turing
