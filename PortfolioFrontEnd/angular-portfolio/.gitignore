@@ -40,3 +40,8 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+
+### CONFIGURACION DB ###
+!**/src/main/resources/application.properties
+*.properties

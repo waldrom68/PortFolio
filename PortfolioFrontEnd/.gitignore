@@ -1,0 +1,4 @@
+### CONFIGURACION DB ###
+!**/src/main/resources/
+.properties
+src/resources/
