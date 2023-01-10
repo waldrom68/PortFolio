@@ -16,10 +16,6 @@ public class Application {
 //
 // https://parzibyte.me/blog/2022/03/23/compilar-proyecto-java-netbeans-maven-crear-jar/
 
-//######  TURING.COM   ######
-//linkedin.com/in/josedlujan/   Turing
-//t.me/+VCSZc0ipLJX51KzF   telegram comunidad de programadores de america latina
-//
 // PRACTICAS PREVIAS, CURSOS, BLOGS, ETC. MATERIAL DE ESTUDIO
 //
 // Coursera - coursera.org/learn/algorithmic-thinking-1
