@@ -199,7 +199,7 @@ https://medium.com/swlh/how-to-create-a-modal-dialog-component-in-angular-8-8802
 
 https://levelup.gitconnected.com/how-to-create-a-reusable-modal-dialog-component-in-angular-8-241cc738d260
 
-https://stackblitz.com/edit/ng-reusable-modal?file=src%2Fapp%2Fapp.module.ts,angular.json
+https://medium.com/swlh/how-to-create-a-modal-dialog-component-in-angular-8-88028d909be0
 
 
 ### Splash Screen for Loading all the Data at Startup
