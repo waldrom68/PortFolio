@@ -1,10 +1,10 @@
+<div class="row text-center aling-self-center py-0" id="Init" >
+    <ng-container  *ngIf="detailCards && myData; else statusWait">
 
-<ng-container *ngIf="detailCards; else statusWait">
 
-    <div class="row text-center aling-self-center py-0" id="Init">
         <div class="col-sm-8 aling-self-center order-0"
         >
-            <!-- area que muestra las cards -->
+            <!-- area que muestra las Tarjetas por un lado, su etiqueta frontal-->
             <ng-container *ngIf="statusCards">
                 <section id="" class="row p-0 m-0 justify-content-center">
                     <p class="h4 text-center">{{labelGroup1}}</p>
@@ -25,7 +25,7 @@
                 </section>
             </ng-container>
 
-            <!-- zona para mostrar los detalles de cada Card -->
+            <!-- zona para mostrar los detalles de las tarjetas, visibles cuando selecciona -->
             <ng-container *ngIf = "statusCards == false">
                 <div class="flex">
                     <button class="btn btn-default btn-sm" 
@@ -40,66 +40,86 @@
                         </fa-icon>
                     </button>
                 </div>
+
+                
                 <div 
                     *ngFor="let card of detailCards"
                     ngClass="mx-auto"
                 >
                     <ng-container *ngIf="card.status"
-                        
                         [ngSwitch]="card.name"
                         style="border: 1px solid"
                     >
 
-                        <!-- <app-stout-item    *ngSwitchCase="'stout'"    [item]="currentItem"></app-stout-item> -->
                         <div *ngSwitchCase="'Perfil'"
                             ngClass="basic-container"
-                        > <h3>{{card.name}}</h3>
+                        > 
+                            <h3>{{card.name}}</h3>
+
                             <app-profile></app-profile>
 
                         </div>
+
                         <div *ngSwitchCase="'Objetivo'"
                             ngClass="basic-container"
-                        ><h3>{{card.name}}</h3>
+                        >
+                            <h3>{{card.name}}</h3>
+
                             <app-objetive></app-objetive>
-                        </div>
-                        <div *ngSwitchCase="'Trayectoria'"
-                            ngClass="basic-container"
-                        ><h3>{{card.name}}</h3>
-                            <app-datos-trayectoria></app-datos-trayectoria>
-                        </div>
-                        <div *ngSwitchCase="'Formación'"
-                            ngClass="basic-container"
-                        ><h3>{{card.name}}</h3>
-                            <app-datos-formacion>
-                        
-                            </app-datos-formacion>
+
                         </div>
 
+                        <div *ngSwitchCase="'Trayectoria'"
+                            ngClass="basic-container"
+                        >
+                            <h3>{{card.name}}</h3>
+
+                            <app-datos-trayectoria></app-datos-trayectoria>
+
+                        </div>
+
+                        <div *ngSwitchCase="'Formación'"
+                            ngClass="basic-container"
+                        >
+                            <h3>{{card.name}}</h3>
+                            
+                            <app-datos-formacion> </app-datos-formacion>
+
+                        </div>
 
 
                         <div *ngSwitchCase="'Habilidades personales'"
                             ngClass="basic-container"
-                        ><h3>{{card.name}}</h3>
-                            <hr>
+                        >
+                            <h3>{{card.name}}</h3>
+
                             <app-soft-skills></app-soft-skills>
+
                         </div>
+
                         <div *ngSwitchCase="'Habilidades tecnicas'"
                             ngClass="basic-container"
-                        ><h3>{{card.name}}</h3>
-                            <br>
+                        >
+                            <h3>{{card.name}}</h3>
+
                             <app-hard-skills></app-hard-skills>
+
                         </div>
+
                         <div *ngSwitchCase="'Proyectos'"
                             ngClass="basic-container"
-                        ><h3>{{card.name}}</h3>
-                            <hr>
+                        >
+                            <h3>{{card.name}}</h3>
+
                             <app-projects></app-projects>
 
                         </div>
+
                         <div *ngSwitchCase="'Intereses'"
                             ngClass="basic-container"
-                        > <h3>{{card.name}}</h3>
-                            <hr>
+                        > 
+                            <h3>{{card.name}}</h3>
+
                             <app-interests></app-interests>
 
                         </div>
@@ -109,9 +129,10 @@
                     </ng-container>
                 </div>
             </ng-container>
+
         </div>
 
-<!-- Personal Card , aside -->
+    <!-- Personal Card , aside -->
         <div class="col-sm-4 g-0 m-auto p-2">
             <section id="nameAndImage" class="col order-5 opacity-75 align-self-center" style="border: 1px solid;">
 
@@ -121,7 +142,7 @@
 
         </div>
 
-    </div>
+
 
     <!-- <h4>Degree</h4>
     <app-degree></app-degree> -->
@@ -133,14 +154,27 @@
     <app-organization></app-organization> -->
     
 
+    </ng-container>
 
-</ng-container>
+</div>
+
+
 
 
 <ng-template #statusWait >
-    <div
-        [ngStyle]="{'background-color': 'red'}">
-        <h1 >ESPERANDO</h1>
-    </div>
+
+    <!-- <div 
+        class="container-fluid"
+        id="wait"
+        [ngStyle]="{'background-color': 'transparent'}">
+        <h4>Iniciando conexion al servidor
+        <div class="loader"></div></h4>
+
+
+    </div> -->
+    
+    <div class="loader">Iniciando
+        <span></span>
+      </div>
 </ng-template>
 

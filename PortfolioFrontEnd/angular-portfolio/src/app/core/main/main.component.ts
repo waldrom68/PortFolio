@@ -1,8 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Renderer2, AfterViewInit } from '@angular/core';
 
+
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Person, Usuario } from 'src/app/data';
+
 import { DataService } from 'src/app/service/data.service';
 
 // import { Cards } from 'src/app/data';
@@ -33,14 +35,22 @@ export class MainComponent implements OnInit {
   element: object;
   fragment:string = 'Init';
 
-  public user: Usuario;
-   
+  myData: Person;
+
+    
+  // Inyectando servicios en el contructor
   constructor( 
     private miServicio: UiService,
-    private renderer: Renderer2,
+    private dataService: DataService,
+
+    private renderer: Renderer2,  // PENDIENTE, VER QUE ES LO QUE HACE Y PORQUE ESTÁ AQUI
+  
 
     ) { 
-
+    this.dataService.getGralData().subscribe(user =>
+      this.myData = user
+    );
+    
     }
 
 
@@ -67,10 +77,10 @@ export class MainComponent implements OnInit {
 
     }
 
-  ngAfterViewInit(): void {
-    let element = this.renderer.selectRootElement(`#${this.fragment}`, true);
-    element.scrollIntoView({ behavior: 'smooth' });
-  }
+    ngAfterViewInit(): void {
+      let element = this.renderer.selectRootElement(`#${this.fragment}`, true);
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
 
 
 
@@ -80,6 +90,8 @@ export class MainComponent implements OnInit {
       this.miServicio.toggleStatusCards();
       this.statusCards = this.miServicio.getStatusCards()
     }
+
+
 
 
 }

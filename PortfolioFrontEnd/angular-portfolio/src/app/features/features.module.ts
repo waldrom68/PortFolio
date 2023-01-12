@@ -53,6 +53,7 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
     // ProfileComponent,
     // ObjetiveComponent,
     DataComponent,
+    // CourseDialogComponent,
     // StudieItemComponent,
     // StudieFormComponent,
     // RolePositionComponent,

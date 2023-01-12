@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 
 import {Person} from '../../data'
 
@@ -6,6 +7,7 @@ import {Person} from '../../data'
 import { faPen, faTimes, faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import { DataService } from 'src/app/service/data.service';
 import { Observable } from 'rxjs';
+import { PersonalFormComponent } from '../personal-form/personal-form.component';
 
 @Component({
   selector: 'app-personal-card',
@@ -22,6 +24,7 @@ export class PersonalCardComponent implements OnInit {
   
   // intereses: Intereses[] = INTERESES;
   myData: Person;
+  formData: Person;
   
   faPen = faPen;
   faTimes = faTimes;
@@ -30,11 +33,19 @@ export class PersonalCardComponent implements OnInit {
    
   // showBtnAction: boolean= true;  // flag para mostrar o no los btn's de acciones del usuario
  
-  constructor( private dataService: DataService, ) { 
+  constructor( 
+    private dataService: DataService,
+    public matDialog: MatDialog,
+    // public dialogRef: MatDialogRef<PersonalFormComponent>,
+    
+    
+    
+    ) { 
     this.dataService.getGralData().subscribe(user =>
       this.myData = user
 
     );
+    this.formData = this.myData;
   }
   
   ngOnInit(): void {
@@ -46,6 +57,7 @@ export class PersonalCardComponent implements OnInit {
   toggleForm() {
     console.log("Muestro el formulario desde el componente")
     this.showForm = !this.showForm;
+    this.openModal(this.formData );
   }
 
   cancelation() {
@@ -57,4 +69,15 @@ export class PersonalCardComponent implements OnInit {
     this.toggleForm();
   }
 
+  openModal(data:any) {
+    const dialogConfig = new MatDialogConfig();
+    // The user can't close the dialog by clicking outside its body
+    dialogConfig.disableClose = true;
+    dialogConfig.id = "modal-component";
+    dialogConfig.height = "350px";
+    dialogConfig.width = "600px";
+    dialogConfig.data = data;
+    // https://material.angular.io/components/dialog/overview
+    const modalDialog = this.matDialog.open(PersonalFormComponent, dialogConfig);
+  }
 }

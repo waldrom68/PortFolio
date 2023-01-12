@@ -98,6 +98,7 @@ import { IniciarSesionComponent } from './iniciar-sesion/iniciar-sesion.componen
         StudieItemComponent,
         StudieFormComponent,
         IniciarSesionComponent,
+
     ],
     exports: [
         TopBarComponent,

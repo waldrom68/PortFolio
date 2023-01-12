@@ -1,7 +1,12 @@
 import { Component } from '@angular/core';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+
+
+
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 import { UiService } from 'src/app/service/ui.service';  // para escuchar el botton de mostrar formulario de alta
+import { MatAlertComponent } from './shared/mat-alert/mat-alert.component';
 
 
 
@@ -24,6 +29,7 @@ export class AppComponent  {
 constructor(
   // Inicializamos los servicios del modulo User
         private uiService:UiService,  // defino el servicio para el botton de mostrar form
+        private dialog: MatDialog
   ) { }
 
 
@@ -46,5 +52,12 @@ constructor(
     this.uiService.toggleComponent(value)
   }
 
+  alertDialog() {
+    const dialogRef = this.dialog.open(MatAlertComponent, {
+      data: {
+        message: 'Hello World from app.component.ts',
+      },
+    });
+  }
 
 }

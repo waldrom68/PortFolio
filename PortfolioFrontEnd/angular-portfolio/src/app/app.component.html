@@ -7,17 +7,16 @@
         <app-main></app-main>
 
 
-
 <app-footer></app-footer>
 
+<!-- CODIGOS DE PRUEBAS -->
 
-
-<mat-toolbar color="primary" class="container-fluid">
+<!-- <mat-toolbar color="primary" class="container-fluid">
     <span>Usuarios</span>
 </mat-toolbar>
     
     <div class="container row justify-content-end">
-        <app-btn-display
+        <app-btn-displayiniciando
             textBtnAdd = "{{ showListUsers ? 'Cerrar listado' : 'Ver usuarios' }}"
             BGcolor = "{{ showListUsers ? 'azure' : 'cadetblue' }}"
             FGcolor = 'black'
@@ -30,5 +29,22 @@
     <app-user-data
         *ngIf='showListUsers'
     >
-    </app-user-data> 
+    </app-user-data>  -->
 
+<!-- FIN CODIGOS DE PRUEBAS -->
+
+<section class="mat-button-container">
+    <!-- https://edupala.com/how-to-implement-angular-material-dialog/ -->
+  <h2>Angular Material dialog</h2>
+  <div class="example-button-row">
+    <button mat-raised-button (click)="alertDialog()">
+      Angular Material Alert
+    </button>
+    <!-- <button mat-raised-button color="primary" (click)="confirmDialog()">
+      Confirm
+    </button>
+    <button mat-raised-button color="accent" (click)="showPrompt()">
+      Prompt Input
+    </button> -->
+  </div>
+</section>

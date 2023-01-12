@@ -7,8 +7,9 @@
         >
         <ng-container *ngIf="flagUserAdmin">
             <br>
+            <!-- (click)="toggleForm();" -->
             <button class="btn btn-outline-success btn-sm mt-2"
-            (click)="toggleForm();"
+            (click)="openModal(myData);"
             ngClass="faConfirm fa-ico"
             [ngStyle]="{'width':'fit-content', 'align-self':'end'}"
         
@@ -83,3 +84,4 @@
     </div>
 </ng-container>
 
+<!-- <button mat-raised-button id="logout-button" (click)="openModal(myData)">Editar</button> -->
