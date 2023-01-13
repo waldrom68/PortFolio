@@ -131,6 +131,7 @@ import { IniciarSesionComponent } from './iniciar-sesion/iniciar-sesion.componen
         RolepositionItemComponent,
         StudieItemComponent,
         StudieFormComponent,
+        ReactiveFormsModule,
         // InterestsComponent,
         // SoftSkillsComponent,
         // SoftItemComponent,

@@ -191,6 +191,15 @@ SoftSkill
 HardSkill
 Interests
 
+### videos a grabar (win alt G)
+https://argentinaprograma.inti.gob.ar/mod/page/view.php?id=2032
+https://argentinaprograma.inti.gob.ar/mod/page/view.php?id=2082
+
+O verlos en youtube:
+https://www.youtube.com/@salvadoracuna473/videos
+
+### implementacion de todos los componentes de angular material
+https://edupala.com/how-to-implement-angular-material-dialog/
 
 ### Modal
 https://material.angular.io/guide/getting-started

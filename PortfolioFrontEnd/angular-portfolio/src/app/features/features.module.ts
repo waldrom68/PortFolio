@@ -24,6 +24,7 @@ import { DataComponent } from './bloque-datos-obj-profile/data-personal/data.com
 
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { ReactiveFormsModule } from '@angular/forms';
 // import { StudieItemComponent } from './bloque-datos-obj-profile/studie-item/studie-item.component';
 // import { StudieFormComponent } from './bloque-datos-obj-profile/studie-form/studie-form.component';
 // import { RolePositionComponent } from './role-position/role-position.component';
@@ -86,7 +87,7 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
     CommonModule,
     FontAwesomeModule,
     SharedModule,
-
+    ReactiveFormsModule,
     MatDatepickerModule,
     MatMomentDateModule,
   ],
@@ -94,6 +95,7 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
   exports: [
     BloqueDatosObjProfileComponent,
     BloqueFormacionSkillIntComponent,
+    ReactiveFormsModule,
     // ObjetiveFormComponent,
     // SoftItemComponent,
     // PersonalCardComponent,

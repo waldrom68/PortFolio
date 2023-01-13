@@ -6,6 +6,8 @@ import { MessageBoxComponent } from './message-box/message-box.component';
 
 import { BtnDisplayComponent } from './btn-display/btn-display.component';
 // import {MatDialogModule} from "@angular/material";
+import { ReactiveFormsModule } from '@angular/forms';
+
 import { AppComponent } from '../app.component';
 import { MatAlertComponent } from './mat-alert/mat-alert.component';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -42,6 +44,7 @@ const MaterialModules = [
   imports: [
     CommonModule,
     FontAwesomeModule,
+    ReactiveFormsModule,
     MaterialModules
   ],
   exports: [

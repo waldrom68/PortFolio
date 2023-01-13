@@ -27,6 +27,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 
 import { MessageBoxComponent } from './shared/message-box/message-box.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -61,6 +62,8 @@ const appRouters: Routes = [
     MatButtonModule,
     MatDialogModule,
     MatToolbarModule,
+
+    ReactiveFormsModule,
   ],
   exports: [
     SharedModule,

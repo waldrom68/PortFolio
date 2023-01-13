@@ -1,1 +1,49 @@
-<p>mat-input-prompt works!</p>
+<div class="">
+    <div class="modal-header">
+        <button type="button" class="close" aria-label="Close" 
+          (click)="dialogRef.close(false)"
+          >
+          <span aria-hidden="false">&times;</span>
+        </button>
+      </div>
+      <div class="modal-header">
+        <h2 mat-dialog-title>
+            Angular material dialog prompt
+            <p>{{message}}</p>
+        </h2>
+    </div>
+
+    <mat-dialog-content class="modal-body">
+        <form *ngIf="form" [formGroup]="form">
+            <mat-form-field appearance="standard">
+                <mat-label>Name</mat-label>
+                <input matInput placeholder="Enter your name" formControlName="name">
+            </mat-form-field>
+
+            <mat-form-field appearance="standard">
+                <mat-label>Address</mat-label>
+                <textarea matInput placeholder="Address" formControlName="address"></textarea>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" hintLabel="Country name required">
+                <mat-label>Country</mat-label>
+                <mat-select matNativeControl name="country" formControlName="country">
+                    <mat-option value="india">India</mat-option>
+                    <mat-option value="france">France</mat-option>
+                    <mat-option value="germany">Germany</mat-option>
+                    <mat-option value="japan">Japan</mat-option>
+                    <mat-option value="Mongolia">Mongolia</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </form>
+
+    </mat-dialog-content>
+    <mat-dialog-actions class="modal-footer" >
+        <button mat-raised-button class="btn btn-danger" (click)="dialogRef.close(false)" >
+            Close
+        </button>
+        <button mat-raised-button class="btn btn-primary" (click)="submit(form.value)">
+            Submit
+        </button>
+    </mat-dialog-actions>
+</div>

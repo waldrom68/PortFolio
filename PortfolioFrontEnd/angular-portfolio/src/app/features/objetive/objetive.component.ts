@@ -151,7 +151,7 @@ export class ObjetiveComponent implements OnInit {
       // atributos generales del message-box
       name: "delObjetive",
       title: `Hi ${userId}, está por eliminar el objetivo`,
-      description: `¿está seguro?`,
+      description: `¿ es correcto ?`,
       // por defecto mostrararía Aceptar
       actionButtonText: "Eliminar",
       // por defecto mostraría Cancelar

@@ -12,6 +12,7 @@ export class MatAlertComponent {
   constructor(private dialogRef: MatDialogRef<MatAlertComponent>,
     @Inject(MAT_DIALOG_DATA) data: { message: string }) {
     this.message = data ? data.message : '';
+    
   }
 
   closeAlert() {

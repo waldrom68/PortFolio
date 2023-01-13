@@ -1,13 +1,12 @@
 import { Component } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-
-
+import { UiService } from 'src/app/service/ui.service';  // para escuchar el botton de mostrar formulario de alta
 
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
-import { UiService } from 'src/app/service/ui.service';  // para escuchar el botton de mostrar formulario de alta
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatAlertComponent } from './shared/mat-alert/mat-alert.component';
-
+import { MatInputPromptComponent } from './shared/mat-input-prompt/mat-input-prompt.component';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 
 @Component({
@@ -24,17 +23,34 @@ export class AppComponent  {
 
   showListUsers: boolean = false;
   showDatos: boolean = false;
+
+  dataFromDialog : any;
   
+  // codigo probando el modal
+  form: FormGroup; 
+
+
 
 constructor(
   // Inicializamos los servicios del modulo User
         private uiService:UiService,  // defino el servicio para el botton de mostrar form
-        private dialog: MatDialog
-  ) { }
+        private dialog: MatDialog,
+
+        private fb: FormBuilder,
+  ) {
+
+    this.form = this.fb.group(
+      {
+        name: ['Origen datos', Validators.required],
+        address: ['componente de llamada', Validators.required],
+        country: ['']
+      }
+    )
+
+   }
 
 
   ngOnInit() {
-
   }
 
 // Eventos recibidos desde: add-button-user.component.html
@@ -54,9 +70,39 @@ constructor(
 
   alertDialog() {
     const dialogRef = this.dialog.open(MatAlertComponent, {
+      width: '100%', height: 'auto',
       data: {
-        message: 'Hello World from app.component.ts',
+        message: 'Aqui va el texto desde donde se llama al modal',
       },
+    });
+  }
+
+
+  showPrompt(): void {
+
+
+    const dialogRef = this.dialog.open(MatInputPromptComponent,
+      { 
+        width: '100%', height: '400px',
+        disableClose: true,
+        restoreFocus: true,
+        // Puedo pasar los datos necesarios del formulario aqui, con el diccionario
+        // data: {message:string, form: formGroup}, sino lo puedo crear en el .ts 
+        // del componente que lo renderiza.
+        // +info en https://edupala.com/how-to-implement-angular-material-dialog/
+        data: { 
+            message: "Aquí va al string desde donde se abre el modal",
+            form: this.form,
+          },
+      });
+
+
+    dialogRef.afterClosed().subscribe((data) => {
+
+      this.dataFromDialog = data.form;
+      if (data.clicked === 'submit') {
+        console.log('Sumbit button clicked, mostrando datos del formulario:', data)
+      }
     });
   }
 

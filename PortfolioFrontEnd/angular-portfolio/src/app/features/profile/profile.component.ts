@@ -157,7 +157,7 @@ export class ProfileComponent implements OnInit {
       // atributos generales del message-box
       name: "delProfile",
       title: `Hi ${userId}, está por eliminar el perfil`,
-      description: `¿está seguro?`,
+      description: `¿ es correcto ?`,
       // por defecto mostrararía Aceptar
       actionButtonText: "Eliminar",
       // por defecto mostraría Cancelar
