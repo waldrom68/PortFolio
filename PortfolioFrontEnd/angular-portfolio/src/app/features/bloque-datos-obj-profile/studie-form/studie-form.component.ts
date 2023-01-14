@@ -30,6 +30,10 @@ faTimes = faTimes;
 
 form: FormGroup;
 
+showOrgaForm: boolean = false;
+showDegreeForm: boolean = false;
+showPrimaryForm: boolean = true;
+
   constructor(
     private dataService: DataService,
   
@@ -69,6 +73,33 @@ form: FormGroup;
   }
   get Degree(): any {
     return this.form.get("degree")
+  }
+
+  togglePrimaryForm() {
+    this.showPrimaryForm = !this.showPrimaryForm;
+    // this.showOrgaForm = !this.showOrgaForm;
+    // this.showDegreeForm = !this.showDegreeForm;
+  }
+
+  toggleOrgaForm() {
+    this.togglePrimaryForm();
+
+    this.dataService.getOrganization().subscribe(organization =>
+      [this.myOrganizations = organization]
+    );
+    this.formData.organization = this.myOrganizations[0] 
+    this.showOrgaForm = !this.showOrgaForm;
+  }
+
+  toggleDegreeForm() {
+    this.togglePrimaryForm();
+
+    this.dataService.getDegree().subscribe(degree =>
+      [this.myDegrees = degree]
+      );
+      this.formData.degree = this.myDegrees[0]
+      this.showDegreeForm = !this.showDegreeForm;
+
   }
 
   compararOrganizacion(myOrganization1:Organization, myOrganization2:Organization) {

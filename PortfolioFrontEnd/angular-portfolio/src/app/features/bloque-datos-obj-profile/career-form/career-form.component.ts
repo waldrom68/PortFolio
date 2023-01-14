@@ -30,6 +30,10 @@ faTimes = faTimes;
 
 form: FormGroup;
 
+showOrgaForm: boolean = false;
+showRoleForm: boolean = false;
+showPrimaryForm: boolean = true;
+
 constructor(
   private dataService: DataService,
   
@@ -39,6 +43,12 @@ constructor(
   }
   
   ngOnInit(): void {
+    // PENDIENTE, creo que esto está de más
+    if (!this.formData.organization) {
+      this.showOrgaForm = true;
+    }
+
+
     this.form = this.formBuilder.group({
       resume:[this.formData.resume, [Validators.required, Validators.minLength(2), Validators.maxLength(500) ]],
       startDate:[this.formData.startDate, [Validators.required ]],
@@ -46,17 +56,12 @@ constructor(
       organization:[this.formData.organization, [Validators.required]],
       roleposition:[this.formData.roleposition, [Validators.required]],
       
-      
     });
     
     this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();
     this.flagUserAdmin$.subscribe(  flagUserAdmin => this.flagUserAdmin = flagUserAdmin)
     this.flagUserAdmin = this.dataService.getFlagUserAdmin()
 
-    this.formData.organization = this.myOrganizations[0] 
-    this.formData.roleposition = this.myRolePositions[0] 
-
-    console.log(this.formData)
 
   }
 
@@ -83,6 +88,29 @@ constructor(
   //   return this.form.get("roleposition")
   // }
 
+  togglePrimaryForm() {
+    this.showPrimaryForm = !this.showPrimaryForm;
+  }
+
+  toggleOrgaForm() {
+    this.togglePrimaryForm();
+
+    this.dataService.getOrganization().subscribe(organization =>
+      [this.myOrganizations = organization]
+    );
+    this.formData.organization = this.myOrganizations[0] 
+    this.showOrgaForm = !this.showOrgaForm;
+  }
+  
+  toggleRoleForm() {
+    this.togglePrimaryForm();
+
+    this.dataService.getRolePosition().subscribe(role =>
+      [this.myRolePositions = role]
+      );
+      this.formData.roleposition = this.myRolePositions[0]
+      this.showRoleForm = !this.showRoleForm;
+  }
 
   compararOrganizacion(myOrganization1:Organization, myOrganization2:Organization) {
     if (myOrganization1==null || myOrganization2==null) {

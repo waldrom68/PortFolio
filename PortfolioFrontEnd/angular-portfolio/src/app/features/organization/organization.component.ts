@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DataService } from 'src/app/service/data.service';
-import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { faPlusCircle, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 import {Person, Organization} from '../../data'
 
@@ -15,6 +15,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./organization.component.css']
 })
 export class OrganizationComponent implements OnInit {
+ 
 
   // PENDIENTE: SERVICIO QUE DEBE VINCULARSE CON EL LOGUEO
   flagUserAdmin: boolean = false;
@@ -26,10 +27,13 @@ export class OrganizationComponent implements OnInit {
   formData: Organization;  // instancia vacia, para cuando se solicite un alta
 
   faPlusCircle = faPlusCircle;
+  faTimes = faTimes;
 
-  showBtnAction: boolean= true;  // flag para mostrar o no los btn's de acciones del usuario
- 
-  itemParaBorrar: Organization;
+  @Input() showBtnAction: boolean= true;  // flag para mostrar o no los btn's de acciones del usuario
+  @Output() showBtnActionChange = new EventEmitter<boolean>();
+  showOrga: boolean= true;
+
+  private itemParaBorrar: Organization;
   flagBorrado: boolean = false;
   flagBorrado$: Observable<boolean>;
 
@@ -77,14 +81,21 @@ export class OrganizationComponent implements OnInit {
   }
 
   toggleForm() {
-    
     this.showForm = !this.showForm;
     this.showBtnAction = !this.showBtnAction;
 
   }  
   
+  closeOrga() {
+    this.showOrga = !this.showOrga;
+    this.showBtnAction = true;
+    this.showBtnActionChange.emit(this.showBtnAction)
+
+  }
+
   cancelation(organization: Organization) {
     this.toggleForm();
+    
   }
 
   deleteItem(organization: Organization){

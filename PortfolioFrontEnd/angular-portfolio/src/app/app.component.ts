@@ -79,8 +79,6 @@ constructor(
 
 
   showPrompt(): void {
-
-
     const dialogRef = this.dialog.open(MatInputPromptComponent,
       { 
         width: '100%', height: '400px',
@@ -102,6 +100,7 @@ constructor(
       this.dataFromDialog = data.form;
       if (data.clicked === 'submit') {
         console.log('Sumbit button clicked, mostrando datos del formulario:', data)
+        console.log("El formData", this.form)
       }
     });
   }

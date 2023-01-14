@@ -47,10 +47,11 @@
 
 <ng-container *ngIf="flagUserAdmin && showBtnAction">
     <br>
+
     <button class="btn btn-default btn-sm" 
         ngClass="faControl fa-ico"
         (click)="toggleForm()"
-        >
+        >formacion
         <fa-icon
         ngClass="fa-3x text-primary"
             [icon]="faPlusCircle"
@@ -59,4 +60,5 @@
         </fa-icon>
     </button>
 </ng-container>
+{{showBtnAction}}
 
