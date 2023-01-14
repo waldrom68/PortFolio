@@ -2,7 +2,7 @@
 
 package com.portfolio.SpringBoot.service;
 
-import com.portfolio.DTO.DTOStudie;
+import com.portfolio.SpringBoot.DTO.DTOStudie;
 import com.portfolio.SpringBoot.model.Degree;
 import com.portfolio.SpringBoot.model.Organization;
 import com.portfolio.SpringBoot.model.Person;

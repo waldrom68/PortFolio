@@ -2,7 +2,7 @@
 
 package com.portfolio.SpringBoot.service;
 
-import com.portfolio.DTO.DTOPhone;
+import com.portfolio.SpringBoot.DTO.DTOPhone;
 import com.portfolio.SpringBoot.model.Phone;
 import java.util.List;
 

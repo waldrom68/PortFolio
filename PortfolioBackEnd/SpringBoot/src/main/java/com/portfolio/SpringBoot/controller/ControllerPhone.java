@@ -4,7 +4,7 @@ package com.portfolio.SpringBoot.controller;
 
 // Recibe las peticiones y delega el negocio (es el pivot de la aplicacion)
 
-import com.portfolio.DTO.DTOPhone;
+import com.portfolio.SpringBoot.DTO.DTOPhone;
 import com.portfolio.SpringBoot.model.Phone;
 import com.portfolio.SpringBoot.service.IPhoneService;
 import java.util.List;

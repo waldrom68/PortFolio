@@ -2,7 +2,7 @@
 
 package com.portfolio.SpringBoot.controller;
 
-import com.portfolio.DTO.DTOHardskill;
+import com.portfolio.SpringBoot.DTO.DTOHardskill;
 import com.portfolio.SpringBoot.model.Hardskill;
 import com.portfolio.SpringBoot.service.IHardskillService;
 import java.util.List;

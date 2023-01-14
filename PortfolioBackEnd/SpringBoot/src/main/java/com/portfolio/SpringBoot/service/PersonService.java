@@ -2,7 +2,7 @@
 
 package com.portfolio.SpringBoot.service;
 
-import com.portfolio.DTO.DTOPerson;
+import com.portfolio.SpringBoot.DTO.DTOPerson;
 import com.portfolio.SpringBoot.model.Person;
 import com.portfolio.SpringBoot.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;

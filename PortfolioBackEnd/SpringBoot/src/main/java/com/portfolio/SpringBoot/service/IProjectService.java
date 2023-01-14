@@ -2,7 +2,7 @@
 
 package com.portfolio.SpringBoot.service;
 
-import com.portfolio.DTO.DTOProject;
+import com.portfolio.SpringBoot.DTO.DTOProject;
 import com.portfolio.SpringBoot.model.Project;
 import java.util.List;
 

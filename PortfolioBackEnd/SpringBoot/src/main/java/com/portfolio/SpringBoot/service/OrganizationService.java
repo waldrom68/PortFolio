@@ -2,7 +2,7 @@
 
 package com.portfolio.SpringBoot.service;
 
-import com.portfolio.DTO.DTOOrganization;
+import com.portfolio.SpringBoot.DTO.DTOOrganization;
 import com.portfolio.SpringBoot.model.Organization;
 import com.portfolio.SpringBoot.model.Person;
 import com.portfolio.SpringBoot.repository.OrganizationRepository;

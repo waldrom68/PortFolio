@@ -2,7 +2,7 @@
 
 package com.portfolio.SpringBoot.controller;
 
-import com.portfolio.DTO.DTOSocialNetwork;
+import com.portfolio.SpringBoot.DTO.DTOSocialNetwork;
 import com.portfolio.SpringBoot.model.SocialNetwork;
 import com.portfolio.SpringBoot.service.ISocialnetworkService;
 import java.util.List;

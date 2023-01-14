@@ -2,7 +2,7 @@
 
 package com.portfolio.SpringBoot.service;
 
-import com.portfolio.DTO.DTORolePosition;
+import com.portfolio.SpringBoot.DTO.DTORolePosition;
 import com.portfolio.SpringBoot.model.Person;
 import com.portfolio.SpringBoot.model.RolePosition;
 import com.portfolio.SpringBoot.repository.RolePositionRepository;

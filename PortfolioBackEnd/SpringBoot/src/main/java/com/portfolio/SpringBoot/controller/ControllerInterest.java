@@ -2,7 +2,7 @@
 
 package com.portfolio.SpringBoot.controller;
 
-import com.portfolio.DTO.DTOInterest;
+import com.portfolio.SpringBoot.DTO.DTOInterest;
 import com.portfolio.SpringBoot.model.Interest;
 import com.portfolio.SpringBoot.service.IInterestService;
 import java.util.List;

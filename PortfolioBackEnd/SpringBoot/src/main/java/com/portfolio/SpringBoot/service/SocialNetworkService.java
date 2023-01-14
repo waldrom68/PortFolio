@@ -2,7 +2,7 @@
 
 package com.portfolio.SpringBoot.service;
 
-import com.portfolio.DTO.DTOSocialNetwork;
+import com.portfolio.SpringBoot.DTO.DTOSocialNetwork;
 import com.portfolio.SpringBoot.model.Person;
 import com.portfolio.SpringBoot.model.SocialNetwork;
 import com.portfolio.SpringBoot.repository.SocialNetworkRepository;

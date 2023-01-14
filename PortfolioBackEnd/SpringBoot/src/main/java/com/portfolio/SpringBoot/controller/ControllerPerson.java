@@ -2,7 +2,7 @@
 
 package com.portfolio.SpringBoot.Controller;
 
-import com.portfolio.DTO.DTOPerson;
+import com.portfolio.SpringBoot.DTO.DTOPerson;
 import com.portfolio.SpringBoot.model.DisplayData;
 import com.portfolio.SpringBoot.model.Person;
 import com.portfolio.SpringBoot.service.IDisplayDataService;

@@ -2,7 +2,7 @@
 
 package com.portfolio.SpringBoot.service;
 
-import com.portfolio.DTO.DTOSoftskill;
+import com.portfolio.SpringBoot.DTO.DTOSoftskill;
 import com.portfolio.SpringBoot.model.Person;
 import com.portfolio.SpringBoot.model.Softskill;
 import com.portfolio.SpringBoot.repository.SoftskillRepository;

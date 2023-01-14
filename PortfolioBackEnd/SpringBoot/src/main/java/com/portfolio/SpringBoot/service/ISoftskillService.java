@@ -3,7 +3,7 @@
 package com.portfolio.SpringBoot.service;
 
 
-import com.portfolio.DTO.DTOSoftskill;
+import com.portfolio.SpringBoot.DTO.DTOSoftskill;
 import com.portfolio.SpringBoot.model.Softskill;
 import java.util.List;
 
