@@ -44,9 +44,6 @@ constructor(
   
   ngOnInit(): void {
     // PENDIENTE, creo que esto está de más
-    if (!this.formData.organization) {
-      this.showOrgaForm = true;
-    }
 
 
     this.form = this.formBuilder.group({
@@ -98,8 +95,7 @@ constructor(
     this.dataService.getOrganization().subscribe(organization =>
       [this.myOrganizations = organization]
     );
-    this.formData.organization = this.myOrganizations[0] 
-    this.showOrgaForm = !this.showOrgaForm;
+    
   }
   
   toggleRoleForm() {

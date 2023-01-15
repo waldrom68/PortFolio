@@ -1,10 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, Inject, } from '@angular/core';
 import { DataService } from 'src/app/service/data.service';
 import { faPlusCircle, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 import {Person, Organization} from '../../data'
 
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+
 import { MessageBoxComponent } from '../../shared/message-box/message-box.component';
 import { ModalActionsService } from 'src/app/service/modal-actions.service';
 import { Observable } from 'rxjs';
@@ -31,22 +33,32 @@ export class OrganizationComponent implements OnInit {
 
   @Input() showBtnAction: boolean= true;  // flag para mostrar o no los btn's de acciones del usuario
   @Output() showBtnActionChange = new EventEmitter<boolean>();
-  showOrga: boolean= true;
+
+  @Input() myOrganizations: Organization[];
+  @Output() myOrganizationsChange = new EventEmitter<Organization[]>();
+
+
 
   private itemParaBorrar: Organization;
   flagBorrado: boolean = false;
   flagBorrado$: Observable<boolean>;
 
   user: Person;
-
+ 
+  message: string;
   
   constructor(
     private dataService: DataService,
-    
-     
     public matDialog: MatDialog,
+
+    
+    @Inject(MAT_DIALOG_DATA) public data: { message: string,},
+    public dialogRef: MatDialogRef<OrganizationComponent>, //OrganizationModal
+
     private modalService: ModalActionsService
-  ) { }
+  ) {
+      this.message = data ? data.message :"prueba";
+   }
 
   ngOnInit(): void {
     this.dataService.getOrganization().subscribe(organization =>
@@ -87,10 +99,16 @@ export class OrganizationComponent implements OnInit {
   }  
   
   closeOrga() {
-    this.showOrga = !this.showOrga;
-    this.showBtnAction = true;
-    this.showBtnActionChange.emit(this.showBtnAction)
+    // this.showBtnAction = true;
+    // this.showBtnActionChange.emit(true)
+    // this.toggleForm();
 
+  }
+
+  prueba(data:any) {
+    this.myData = data;
+    console.log("Prueba function in orga-compoment", this.myData)
+    this.myOrganizationsChange.emit(this.myData);
   }
 
   cancelation(organization: Organization) {

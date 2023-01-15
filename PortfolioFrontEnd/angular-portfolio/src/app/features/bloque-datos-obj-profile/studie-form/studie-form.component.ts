@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { faCheck, faMonument, faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -6,6 +6,10 @@ import { Observable } from 'rxjs';
 import { DataService } from 'src/app/service/data.service';
 
 import { Studie, Organization, Degree, Person } from 'src/app/data';
+
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { OrganizationComponent } from '../../organization/organization.component';
 
 @Component({
   selector: 'app-studie-form',
@@ -21,7 +25,14 @@ flagUserAdmin$: Observable<boolean>;
 @Input() user: Person;
 @Input() title: string;
 @Input() myOrganizations: Organization[];
+@Output() myOrganizationChange: EventEmitter<Organization[]> = new EventEmitter;
+
 @Input() myDegrees: Degree[];
+
+@Input() showBtnAction: boolean;
+
+@Output() showBtnActionChange = new EventEmitter<boolean>();
+
 @Output() onUpdate: EventEmitter<Studie> = new EventEmitter();
 @Output() cancel: EventEmitter<Studie> = new EventEmitter();
 
@@ -39,6 +50,8 @@ showPrimaryForm: boolean = true;
   
     private formBuilder: FormBuilder,
 
+    private dialog: MatDialog,  // DeleteModal
+    
   ) {    
 
   }
@@ -75,11 +88,48 @@ showPrimaryForm: boolean = true;
     return this.form.get("degree")
   }
 
+  openOrganization() {
+    const dialogConfig = new MatDialogConfig();
+    // The user can't close the dialog by clicking outside its body
+    dialogConfig.disableClose = true;
+    dialogConfig.id = "modal-organization";
+    // dialogConfig.panelClass = "modal-component";
+    // dialogConfig.backdropClass = "modal-component"
+
+    dialogConfig.height = "80%";
+    dialogConfig.width = "90%";
+    dialogConfig.data = {message: "Administración de Organizaciones"}
+
+    const modalDialog =  this.dialog.open(OrganizationComponent, dialogConfig);
+
+    modalDialog.afterClosed().subscribe(result => {
+      console.log("Esto esta en afterClosed()")
+      console.log("Se cierra el modal de Organization", result)
+
+      console.log("Esto estaba en afterClosed()")
+      this.myOrganizations = result;
+      this.myOrganizationChange.emit(this.myOrganizations);
+      // Debo verificar si se editó la organizacion que tenia registrado en el formulario
+      this.myOrganizations.forEach( (e) => {
+        if (e.id == this.formData.organization.id) {
+          console.log("se actualizo -> ", e)
+          this.formData.organization = e;
+        }
+      })
+      
+    })
+
+  }
+
+
+
   togglePrimaryForm() {
     this.showPrimaryForm = !this.showPrimaryForm;
-    // this.showOrgaForm = !this.showOrgaForm;
-    // this.showDegreeForm = !this.showDegreeForm;
+    this.showBtnAction = !this.showBtnAction;
+    this.showBtnActionChange.emit(this.showBtnAction);
+
   }
+
 
   toggleOrgaForm() {
     this.togglePrimaryForm();
@@ -87,7 +137,7 @@ showPrimaryForm: boolean = true;
     this.dataService.getOrganization().subscribe(organization =>
       [this.myOrganizations = organization]
     );
-    this.formData.organization = this.myOrganizations[0] 
+    // this.formData.organization = this.myOrganizations[0] 
     this.showOrgaForm = !this.showOrgaForm;
   }
 

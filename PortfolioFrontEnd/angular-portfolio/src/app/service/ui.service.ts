@@ -27,14 +27,15 @@ export class UiService {
   
   portfolioinit2:PortfolioInit;
 
+  private flagAction: boolean=true;
+  private flagAction$ = new Subject<boolean>();
+
   constructor(
     private dataService: DataService,
    ) {
     this.cards = CARDS
     this.portfolioinit = PORTFOLIOINIT;
    }
-
-
 
 
   // Pendiente, esto debe vincularse con el logueo
@@ -73,6 +74,7 @@ export class UiService {
     // console.log("En servicio el statusCards esta en", this.statusCards)
     this.statusCards = !this.statusCards;
   }
+
 
 
   

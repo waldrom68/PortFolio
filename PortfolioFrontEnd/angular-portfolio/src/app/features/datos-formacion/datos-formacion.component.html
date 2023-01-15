@@ -8,9 +8,12 @@
                 [item]="item"
                 [user]="user"
                 [formData]="formData"
-                [myOrganizations]="myOrganizations"
                 [myDegrees]="myDegrees"
                 (onDelete)="deleteItem(item)"
+                
+                [myOrganizations]="myOrganizations"
+                (myOrganizationsChange)="myOrganizations"
+
                 [(showBtnAction)]="showBtnAction"
             >
 
@@ -25,11 +28,14 @@
         [ngStyle]="{'width':'100%'}"
         [user]="user"
         [formData]="formData"
-        [myOrganizations]="myOrganizations"
         [myDegrees]="myDegrees"
         [title]="'Agregar un estudio'"
-
+        
         (showBtnActionChange)="showBtnAction"
+        
+        [myOrganizations]="myOrganizations"
+        (myOrganizationsChange)="myOrganizations"
+        
         (onUpdate)=" addItem($event)"
         (cancel)="cancelation($event)"
     >
@@ -51,7 +57,9 @@
     <button class="btn btn-default btn-sm" 
         ngClass="faControl fa-ico"
         (click)="toggleForm()"
-        >formacion
+        >
+        <br>formacion
+        <br>showBtnAction -> {{showBtnAction}}
         <fa-icon
         ngClass="fa-3x text-primary"
             [icon]="faPlusCircle"
@@ -60,5 +68,4 @@
         </fa-icon>
     </button>
 </ng-container>
-{{showBtnAction}}
 

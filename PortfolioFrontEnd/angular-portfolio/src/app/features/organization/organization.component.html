@@ -1,71 +1,89 @@
 
-<div *ngIf="showOrga">
-    <ng-container *ngIf="myData.length; else agregar">
+<div
+    tabindex="-1" 
+    role="dialog" 
+>
+    <div class="modal-header">
+        <h4 class="modal-title">
+            {{ message }}
+          </h4>
+        <button type="button" class="close" aria-label="Close" 
+          (click)="dialogRef.close(myData); prueba(myData)"
+          >
+          <span aria-hidden="false">&times;</span>
+        </button>
+    </div>
 
-        <div class="flex">
-            <button class="btn btn-default btn-sm" 
-            ngClass='faControl faClose'
-            (click)="closeOrga()"
+    <div class="modal-body">
+        <ng-container *ngIf="myData.length; else agregar">
+
+            <!-- <div class="flex">
+                <button class="btn btn-default btn-sm" 
+                ngClass='faControl faClose'
+                (click)="closeOrga()"
+                >
+                    <fa-icon 
+                        [icon]="faTimes"
+                        ngClass="faClose fa-2x"
+                        >
+                    </fa-icon>
+                </button>
+            </div> -->
+
+            <div class="table-dark text-left container-fluid p-5" 
+            *ngIf="!showForm"
             >
-                <fa-icon 
-                    [icon]="faTimes"
-                    ngClass="faClose fa-2x"
+                <app-organization-item 
+                    *ngFor="let item of myData"
+                    [item]="item"
+
+                    (onDelete)="deleteItem(item)"
+                    [(showBtnAction)]="showBtnAction"
+                >
+
+                </app-organization-item>
+
+
+            </div>
+        </ng-container>
+
+        <app-organization-form
+            *ngIf="showForm && flagUserAdmin"
+
+            [formData]="formData"
+            [title]="'Ingrese una Organizacion'"
+
+            (showBtnActionChange)="showBtnAction"
+            (onUpdate)=" addItem($event)"
+            (cancel)="cancelation($event)"
+        >
+        </app-organization-form>
+
+        <ng-template #agregar>
+            <div class="table-dark text-left container"  >
+                <p> Sin registrar organizaciones.
+                </p>
+            </div>
+        </ng-template>
+
+    </div>
+
+    <div class="modal-footer">
+        <!-- Agregar organizaciones -->
+        <ng-container *ngIf="flagUserAdmin && showBtnAction">
+            <br>
+            <button class="btn btn-default btn-sm" 
+                ngClass="faControl fa-ico"
+                (click)="toggleForm()"
+                >
+                <fa-icon
+                ngClass="fa-3x text-primary"
+                    [icon]="faPlusCircle"
+                    
                     >
                 </fa-icon>
             </button>
-        </div>
-
-        <div class="table-dark text-left container-fluid p-5" 
-        *ngIf="!showForm"
-        >
-            <app-organization-item 
-                *ngFor="let item of myData"
-                [item]="item"
-
-                (onDelete)="deleteItem(item)"
-                [(showBtnAction)]="showBtnAction"
-            >
-
-            </app-organization-item>
-
-
-        </div>
-    </ng-container>
-
-    <app-organization-form
-        *ngIf="showForm && flagUserAdmin"
-
-        [formData]="formData"
-        [title]="'Ingrese una Organizacion'"
-
-        (showBtnActionChange)="showBtnAction"
-        (onUpdate)=" addItem($event)"
-        (cancel)="cancelation($event)"
-    >
-    </app-organization-form>
-
-    <ng-template #agregar>
-        <div class="table-dark text-left container"  >
-            <p> Sin registrar organizaciones.
-            </p>
-        </div>
-    </ng-template>
-
-
-
-<ng-container *ngIf="flagUserAdmin && showBtnAction">
-    <br>
-    <button class="btn btn-default btn-sm" 
-        ngClass="faControl fa-ico"
-        (click)="toggleForm()"
-        >organizacion
-        <fa-icon
-        ngClass="fa-3x text-primary"
-            [icon]="faPlusCircle"
-            
-            >
-        </fa-icon>
-    </button>
-</ng-container>
+        </ng-container>
+    </div>
 
 </div>

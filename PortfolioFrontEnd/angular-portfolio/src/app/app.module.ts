@@ -70,7 +70,7 @@ const appRouters: Routes = [
     FontAwesomeModule,
    ],
 
-  providers: [ModalActionsService, DataService, UiService ],
+  providers: [ModalActionsService, DataService, UiService, ],
 
   bootstrap: [AppComponent],
   entryComponents: [MessageBoxComponent]

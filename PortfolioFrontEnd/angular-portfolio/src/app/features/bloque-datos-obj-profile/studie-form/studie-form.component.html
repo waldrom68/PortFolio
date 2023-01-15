@@ -5,7 +5,7 @@
 
   <ng-container *ngIf="!showOrgaForm && !showDegreeForm">
       <h5>Administrar</h5>
-      <button  class="btn btn-primary mx-2" (click)="toggleOrgaForm()">
+      <button  class="btn btn-primary mx-2" (click)="openOrganization()">
         Organizaciones
       </button>
       <button  class="btn btn-primary mx-2" (click)="toggleDegreeForm()"
@@ -144,8 +144,14 @@
 </ng-template>
 
 <ng-container *ngIf="showOrgaForm && !showDegreeForm">
-    <app-organization 
+  <!-- (click)="toggleOrgaForm() -->
+    <app-organization
+    [(showBtnAction)]="showBtnAction"
+    (showBtnActionChange)="showBtnAction"
+    [myOrganizations]="myOrganizations"
+    (myOrganizationsChange)="myOrganizations"
     ></app-organization>
+    <!-- [(showOrga)]="showOrga"-->
 </ng-container>
 
 <ng-container *ngIf="showDegreeForm && !showOrgaForm">

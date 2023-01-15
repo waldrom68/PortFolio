@@ -17,9 +17,9 @@ export class OrganizationItemComponent implements OnInit {
 
 
   @Input() item: Organization;
+  @Input() formData: Organization;
 
   @Input() showBtnAction!: boolean;
-  @Input() formData: Organization;
   @Output() showBtnActionChange = new EventEmitter<boolean>();
  
   @Output() onDelete: EventEmitter<Organization> = new EventEmitter()
@@ -52,7 +52,7 @@ export class OrganizationItemComponent implements OnInit {
     // this.ocultarAcciones = !this.ocultarAcciones
     this.formData = organization;
     // this.resize();  // habilito las acciones de cada item
-    this.showBtnAction = !this.showBtnAction
+    this.showBtnAction = true;
     this.showBtnActionChange.emit(this.showBtnAction)
   }
 

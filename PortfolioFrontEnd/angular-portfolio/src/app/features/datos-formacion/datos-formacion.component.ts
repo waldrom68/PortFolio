@@ -132,6 +132,7 @@ export class DatosFormacionComponent implements OnInit {
 
   upDateItem(studie: Studie) {
     this.dataService.updateStudie(studie).subscribe();
+    console.log("Actualizando un estudio", this.myOrganizations)
   }
   
   addItem(studie: Studie) {
