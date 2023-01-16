@@ -47,8 +47,10 @@ export class MainComponent implements OnInit {
   
 
     ) { 
-    this.dataService.getGralData().subscribe(user =>
-      this.myData = user
+    this.dataService.getGralData().subscribe(user => {
+        this.myData = user,
+        this.dataService.setUSER(user)
+      }
     );
     
     }

@@ -52,9 +52,11 @@ export class ProfileComponent implements OnInit {
     private modalService: ModalActionsService,
     ) { 
 
-      this.dataService.getGralData().subscribe(user => 
-        this.myData = user
-      );
+      // this.dataService.getGralData().subscribe(user => 
+      //   this.myData = user
+      // );
+      // Este servicio debiera pasarse a un Observable
+      this.myData = this.dataService.getUSER();
 
   }
     

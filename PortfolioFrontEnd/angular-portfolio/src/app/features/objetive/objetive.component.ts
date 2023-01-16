@@ -49,9 +49,12 @@ export class ObjetiveComponent implements OnInit {
     private modalService: ModalActionsService,
     ) {
 
-      this.dataService.getGralData().subscribe(user =>
-      this.myData = user
-    );
+    //   this.dataService.getGralData().subscribe(user =>
+    //   this.myData = user
+    // );
+    // Este servicio debiera pasarse a un Observable
+    this.myData = this.dataService.getUSER();
+
   }
   ngOnInit(): void {
     this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();

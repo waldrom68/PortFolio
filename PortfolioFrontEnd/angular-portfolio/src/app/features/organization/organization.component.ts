@@ -64,9 +64,11 @@ export class OrganizationComponent implements OnInit {
     this.dataService.getOrganization().subscribe(organization =>
       [this.myData = organization]
     );
-    this.dataService.getGralData().subscribe(data =>
-      this.user = data
-    ) ;
+    // this.dataService.getGralData().subscribe(data =>
+    //   this.user = data
+    // ) ;
+    // Este servicio debiera pasarse a un Observable
+    this.user = this.dataService.getUSER();
 
     // subscribo y me entero si se cambia el status del flag  
     this.flagBorrado$ = this.modalService.getFlagBorrado$();

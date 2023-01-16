@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, Subject } from 'rxjs';
+import { Observable, throwError, Subject } from 'rxjs';
+import { catchError, retry } from 'rxjs/operators';
 
 import { Person, HardSkill, SoftSkill, LaboralCareer, Interest, Project, PortfolioInit, Cards,Organization, Degree, RolePosition, Studie } from '../data'
 
-import { HttpClient, HttpHeaders } from '@angular/common/http'  // Para ejecutar los metodos GET, PUT, POST, ETC
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http'  // Para ejecutar los metodos GET, PUT, POST, ETC
 
 
 const httpOptions = {
@@ -32,12 +33,33 @@ export class DataService {
   private flagChangeUser: boolean = true;
   private flagChangeUser$ = new Subject<boolean>();
 
+  private handleError(error: HttpErrorResponse) {
+    if (error.status === 0) {
+      // A client-side or network error occurred. Handle it accordingly.
+      console.error('An error occurred:', error.error);
+    } else {
+      // The backend returned an unsuccessful response code.
+      // The response body may contain clues as to what went wrong.
+      console.error(
+        `Backend returned code ${error.status}, body was: `, error.error);
+    }
+    // Return an observable with a user-facing error message.
+    return throwError(() => new Error('Something bad happened; please try again later.'));
+  }
  
   constructor(  
         // inicializamos el metodo http
         private http: HttpClient
   ) { }
 
+  setUSER(user:Person) {
+    this.USER = user
+  }
+  
+  // Este debiera pasarse a un Observable
+  getUSER() {
+    return this.USER;
+  }
  
   getFlagUserAdmin() {
     return this.flagChangeUser
@@ -69,7 +91,9 @@ export class DataService {
   // Person APIREST ########################################################
   getGralData(): Observable<Person> {
     console.log("El servicio va a buscar en Person API")
-    return this.http.get<Person>(`${this.LOCALHOST_API}/view/person/${this.USERID}`)
+    const response = this.http.get<Person>(`${this.LOCALHOST_API}/view/person/${this.USERID}`).pipe(catchError(this.handleError) )    ;
+
+      return response;
     // return this.http.get<Person>("http://localhost:8080/view/person/1")
   }
   updateGralData(user:Person): Observable<Person>{

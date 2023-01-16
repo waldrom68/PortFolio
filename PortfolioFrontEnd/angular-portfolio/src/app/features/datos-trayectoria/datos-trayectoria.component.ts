@@ -45,9 +45,12 @@ export class DatosTrayectoriaComponent implements OnInit {
     public matDialog: MatDialog,
     private modalService: ModalActionsService,
     ) {
-      this.dataService.getGralData().subscribe(data =>
-        this.user = data
-        ) ;
+      // this.dataService.getGralData().subscribe(data =>
+      //   this.user = data
+      //   ) ;
+
+      this.user = this.dataService.getUSER();
+
         this.dataService.getOrganization().subscribe(data =>
           this.myOrganizations = data
     

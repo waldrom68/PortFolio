@@ -58,9 +58,11 @@ export class SoftSkillsComponent implements OnInit {
     this.dataService.getSoftSkill().subscribe(skills =>
       [this.myData = skills]
     );
-    this.dataService.getGralData().subscribe(data =>
-      this.user = data
-    ) ;
+    // this.dataService.getGralData().subscribe(data =>
+    //   this.user = data
+    // ) ;
+    // Este servicio debiera pasarse a un Observable
+    this.user = this.dataService.getUSER();
 
     // subscribo y me entero si se cambia el status del flag  
     this.flagBorrado$ = this.modalService.getFlagBorrado$();
