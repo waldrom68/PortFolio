@@ -1,0 +1,19 @@
+// Orden de creacion 2.-
+
+package com.portfolio.service;
+
+import com.portfolio.DTO.DTOHardskill;
+import com.portfolio.model.Hardskill;
+import java.util.List;
+
+
+public interface IHardskillService {
+    
+    public Hardskill crearHard(Hardskill soft);
+    public void borrarHard(Long id);
+    public Hardskill buscarHard(Long id);
+    
+    public List<Hardskill> verHard();
+    public List<DTOHardskill> verByPersonId(Long id);
+    
+}
