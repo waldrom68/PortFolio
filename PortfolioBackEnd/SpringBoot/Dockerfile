@@ -1,4 +1,4 @@
-FROM amazoncorretto:19
+FROM amazoncorretto:9-alpine-jdk
 
 MAINTAINER WALDROM68
 
