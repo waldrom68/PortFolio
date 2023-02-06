@@ -45,7 +45,7 @@ Generate para descargar el proyecto en un archivo zip. Todo su contenido lo desc
 
 NetBeans, abrimos el proyecto descargado.
 
-(configuramos los parametros para la conexion a la base de datos)
+(configuramos los parametros para la conexion a la base de datos, ya sea local o la de un servicio de DB en la nube)
 Abrimos el archivo -> C:\PortfolioBackEnd\src\main\resources\application.properties
 
 
