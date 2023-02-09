@@ -48,4 +48,15 @@ NetBeans, abrimos el proyecto descargado.
 (configuramos los parametros para la conexion a la base de datos, ya sea local o la de un servicio de DB en la nube)
 Abrimos el archivo -> C:\PortfolioBackEnd\src\main\resources\application.properties
 
+Para crear crear un nuevo .jar pero reinstalando todas sus dependencias desde consola:
+    mvnw clean
+    mvnw install
+    mvnw compile
+    mvnw package
+
+Luego para actualizarlo en el despliegue, si este está vinculado a la cuenta de github:
+    git add .
+    git commit
+    git push
+
 
