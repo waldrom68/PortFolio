@@ -22,7 +22,7 @@ const httpOptions = {
 
 export class DataService {
   private apiURL = 'http://localhost:5000'
-  private LOCALHOST_API = 'http://localhost:8080'
+  private LOCALHOST_API = 'http://localhost:10000'
   private EndPoint:string = ""
 
   // PENDIENTE, vincular con el logging

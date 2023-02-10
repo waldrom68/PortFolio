@@ -1,3 +1,8 @@
+BASE de DATOS: MySQL
+Alojamiento:
+    https://app.koyeb.com/
+
+
 BackEnd - Spring Boot
 
 Inicializar proyecto:
@@ -60,3 +65,35 @@ Luego para actualizarlo en el despliegue, si este está vinculado a la cuenta de
     git push
 
 
+Para Correr el servicio backend en el localhost:
+    java -jar c:/portfoliobackend/target/wdr-0.0.1-SNAPSHOT.jar
+
+Alojamiento:
+    https://app.koyeb.com/
+
+Para verificar el funcionamiento del proyecto desplegado en el hosting:
+    https://yoprogramo-waldrom68.koyeb.app/view/person/1
+
+
+
+FrontEnd
+Pasos para implementar en firebase, se debe instalar el paquete Firebase tools, para el transpilado del proyecto
+
+    Se realiza una instalacion global de Firebase, la cual servirá para la instalacion de cuanto proyecto angular realice: 
+        Desde el root del proyecto angular -> npm install -g firebase-tools
+
+    Preparando entorno para el despliegue:
+    Teniendo la cuenta en firebase, debo proceder al compilado del proyecto:
+        ng build  // esto creará o actulizará la carpeta dist
+        firebase init // para subir/vincular proyecto de la nube con el del VSC
+        firebase deploy // hace el despliegue en la nube.
+
+
+
+Para correr el servidor frontend en localhost:
+    cd C:\PortFolioWeb\Portfolio\PortfolioFrontEnd\angular-portfolio
+    ng serve -o
+
+Para correr la aplicacion frontend en localhost:
+    cd C:\PortFolioWeb\Portfolio\PortfolioFrontEnd\angular-portfolio
+    npm run server
