@@ -5,6 +5,7 @@ import { catchError, retry } from 'rxjs/operators';
 import { Person, HardSkill, SoftSkill, LaboralCareer, Interest, Project, PortfolioInit, Cards,Organization, Degree, RolePosition, Studie } from '../data'
 
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http'  // Para ejecutar los metodos GET, PUT, POST, ETC
+import { environment } from 'src/environments/environment';
 
 
 const httpOptions = {
@@ -22,11 +23,11 @@ const httpOptions = {
 
 export class DataService {
   private apiURL = 'http://localhost:5000'
-  private LOCALHOST_API = 'http://localhost:10000'
+  private LOCALHOST_API = environment.apiURL
   private EndPoint:string = ""
 
   // PENDIENTE, vincular con el logging
-  private USERID:number = 1; 
+  private USERID:number = environment.idPersona; 
   private USER: Person;
 
 

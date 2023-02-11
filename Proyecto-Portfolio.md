@@ -84,8 +84,20 @@ Pasos para implementar en firebase, se debe instalar el paquete Firebase tools, 
 
     Preparando entorno para el despliegue:
     Teniendo la cuenta en firebase, debo proceder al compilado del proyecto:
-        ng build  // esto creará o actulizará la carpeta dist
+        <!-- ng build  // esto creará o actulizará la carpeta dist -->
+
+        ng build --configuration=production
+
         firebase init // para subir/vincular proyecto de la nube con el del VSC
+            opciones:
+            ? Which Firebase features do you want to set up for this directory? Press Space to select features, then Enter to confirm your choices. Hosting: Configure files for Firebase Hosting and (optionally) set up GitHub Action deploys
+            ? What do you want to use as your public directory? dist/angular-portfolio
+            - 
+            ? Configure as a single-page app (rewrite all urls to /index.html)? No
+            ? Set up automatic builds and deploys with GitHub? No
+            +  Wrote dist/angular-portfolio/404.html
+            ? File dist/angular-portfolio/index.html already exists. Overwrite? No
+
         firebase deploy // hace el despliegue en la nube.
 
 
@@ -97,3 +109,11 @@ Para correr el servidor frontend en localhost:
 Para correr la aplicacion frontend en localhost:
     cd C:\PortFolioWeb\Portfolio\PortfolioFrontEnd\angular-portfolio
     npm run server
+
+
+<!-- Para investigar cambiar los parametros de configuracion segun las etapas: Dev, Prod, Test, etc.
+    Build Targets For Local, Dev, Stage and Prod
+
+    https://benracicot.medium.com/customize-angulars-build-system-for-local-dev-stage-and-prod-53516c8bc311
+
+-->
