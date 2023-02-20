@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { Cards, PortfolioInit} from '../data';
+import { Cards, PortfolioInit} from '../models';
 
 import { CARDS, PORTFOLIOINIT } from '../mock-data';
 

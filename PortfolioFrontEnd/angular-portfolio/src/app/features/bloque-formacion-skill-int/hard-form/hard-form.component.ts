@@ -5,7 +5,7 @@ import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Observable } from 'rxjs';
 import { DataService } from 'src/app/service/data.service';
 
-import { HardSkill } from 'src/app/data';
+import { HardSkill } from 'src/app/models';
 
 
 @Component({

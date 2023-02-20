@@ -3,7 +3,7 @@ import { DataService } from 'src/app/service/data.service';
 
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
-import {Person, LaboralCareer, Organization, RolePosition} from '../../data'
+import {Person, LaboralCareer, Organization, RolePosition} from '../../models'
 
 
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';

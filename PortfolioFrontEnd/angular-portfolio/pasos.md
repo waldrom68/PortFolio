@@ -210,7 +210,8 @@ https://levelup.gitconnected.com/how-to-create-a-reusable-modal-dialog-component
 
 https://medium.com/swlh/how-to-create-a-modal-dialog-component-in-angular-8-88028d909be0
 
-
+### Manejo excepciones, login y redirect 
+Video modulo 8, minuto 30 y minuto 50.
 ### Splash Screen for Loading all the Data at Startup
 https://plainenglish.io/blog/creating-a-splash-screen-in-angular-for-loading-all-the-data-at-startup-b0b91d9d9f93
 

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { SoftSkill } from '../../../data'
+import { SoftSkill } from '../../../models'
 
 import { faPen, faTimes, faTrash, faHand } from '@fortawesome/free-solid-svg-icons';
 import { Observable } from 'rxjs';

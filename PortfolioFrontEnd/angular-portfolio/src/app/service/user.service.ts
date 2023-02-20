@@ -7,7 +7,7 @@ import { Injectable } from '@angular/core';  //
 import { Observable, of } from 'rxjs';
 
 
-import { User } from '../data'
+import { User } from '../models'
 // Esto era para leer los datos del script mock, pero este servicio es reemplazado por un
 // servidor de base de datos, actualmente respaldada por un json
 // import { USERS } from '../mock-data';

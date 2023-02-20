@@ -4,7 +4,7 @@ import { faTrash, faPen, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Observable } from 'rxjs';
 import { DataService } from 'src/app/service/data.service';
 
-import { Interest } from '../../../data'
+import { Interest } from '../../../models'
 
 
 @Component({
@@ -33,10 +33,15 @@ export class InterestsItemComponent implements OnInit {
 
   showForm: boolean = false;
   formData: Interest;
+  oldData: Interest;
 
   constructor( private dataService: DataService, ) { }
 
   ngOnInit(): void {
+    // this.oldData = this.item;
+    // Clono el objeto, uso assign por no tener atributos compuesto por otros objetos
+    this.oldData = Object.assign({} , this.item)
+
     this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();
     this.flagUserAdmin$.subscribe(  flagUserAdmin => this.flagUserAdmin = flagUserAdmin)
     this.flagUserAdmin = this.dataService.getFlagUserAdmin()
@@ -50,31 +55,40 @@ export class InterestsItemComponent implements OnInit {
 
   toggleForm(interest: Interest) {
     this.showForm = !this.showForm;
-    // this.ocultarAcciones = !this.ocultarAcciones
-    this.formData = interest;
-    // this.resize();  // habilito las acciones de cada item
+     this.formData = interest;
+
+    // habilito las acciones de cada item
     this.showBtnAction = !this.showBtnAction
     this.showBtnActionChange.emit(this.showBtnAction)
   }
 
   delete(interest: Interest) {
-    // llamo al metodo del padre via emit()
+    // llamo al metodo del padre via emit() que lo enlaza con openModalDelete(item)
     if (this.flagUserAdmin) {
+      console.log("paso por delete() de interest-item")
       this.onDelete.emit(interest);
     }
 
   }
 
   update(interest: Interest) {
-    this.dataService.updateInterest(interest).subscribe();
+    // Actualizacion de Interest
+    console.log("Ejecuto this.upDateItem()");
+
+    this.dataService.updateInterest(interest).subscribe( {
+      next: (v) => console.log("Interes guardado correctamente: ", v),
+      error: (e) => {
+        alert("Response Error (" + e.status + ") en el metodo upDateItem()" + "\n" + e.message);
+        console.log("Se quizo modificar sin exito a: " + this.oldData.name);
+        // Restauro valor original
+        this.formData.name = this.oldData.name;
+      },
+      complete: () => console.log("Completada la actualizacion del interes")
+    } );
+
     this.toggleForm(interest);  // cierro el formulario
 
   }
-
-  // addInterest(interest: Interests) {
-  //   this.dataService.updateInterest(interest).subscribe();
-  //   this.toggleForm(interest);  // cierro el formulario
-  // }
 
   cancelation(interest: Interest) {
     this.toggleForm(interest);  // cierro el formulario

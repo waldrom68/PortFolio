@@ -1,5 +1,6 @@
 import { Injectable, Output } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
+import { Interest } from '../models';
 
 import { DataService } from '../service/data.service'
 
@@ -11,7 +12,7 @@ export class ModalActionsService {
   // Si el message-box se acepta la accion, este flag cambiará su estado
   private flagBorrado: boolean = false;
   private flagBorrado$ = new Subject<boolean>();
-
+  private oldData: any;
 
   constructor(
     private dataservice: DataService, 
@@ -19,8 +20,8 @@ export class ModalActionsService {
     ) { }
     
   // Hago el cambio de status en un subject bajo observacion.
-  toggleFlagBorrado() {
-    this.flagBorrado = true;
+  toggleFlagBorrado(value:boolean) {
+    this.flagBorrado = value;
     this.flagBorrado$.next(this.flagBorrado);
   }
   
@@ -31,22 +32,21 @@ export class ModalActionsService {
 
 
   modalAction(modalData: any) {
+    // Clono el objeto, uso assign por no tener atributos compuestos por otros objetos
+    // this.oldData = Object.assign({} , modalData.data)
+
     switch (modalData.name) {
 
-      case "delProfile":
-        modalData.data.profile = ""
-        this.updateData(modalData)
+      // Confirma que eliminará un objeto relacionado con Person entity, 
+      // El flag de confirmacion de borrado es observable en [entity].component.ts
+      case "eliminar":
+        this.toggleFlagBorrado(true);
         break;
-        
-      case "delObjetive":
-        modalData.data.objetive = ""
-        this.updateData(modalData)
-        break;
+          
+      // case "delInterest":
+      //   this.deleteInterest(modalData, this.oldData);
+      //   break;
 
-      case "delInterest":
-        this.deleteInterest(modalData);
-        break;
-      
       case "delSoftSkill":
         this.deleteSoftskill(modalData);
         break;
@@ -78,6 +78,18 @@ export class ModalActionsService {
       case "delStudie":
         this.deleteStudie(modalData);
         break;
+      
+      // Modifica atributos de Person entity
+      case "delProfile":
+        modalData.data.profile = ""
+        this.updateData(modalData)
+        break;
+        
+      case "delObjetive":
+        modalData.data.objetive = ""
+        this.updateData(modalData)
+        break;
+        
 
       default:
         console.log("ALERTA: en modalAction, No se ha encontrado modalData.name")
@@ -86,14 +98,25 @@ export class ModalActionsService {
   }
 
 
-  private deleteInterest(modalData: any) {
-    // Llamada al metodo de data.service.ts
-    this.dataservice.delInterests(modalData.data).subscribe( )
-  }
-  private updateData(modalData: any) {
-    console.log(modalData.data)
-    this.dataservice.updateGralData(modalData.data).subscribe()
-  }
+  // private deleteInterest(modalData: any, interest: Interest) {
+  //   console.log("Se abre el modal de deleteInterest del modal-action, para eliminar a: ", this.oldData)
+  //   // Llamada al metodo de data.service.ts
+  //   this.dataservice.delInterests(modalData.data).subscribe( {
+  //     next: (v) => {
+  //       console.log("Se ha eliminado exitosamente a: ", interest);
+  //       this.toggleFlagBorrado(true);
+  //     },
+  //     error: (e) => {
+  //       alert("Response Error (" + e.status + ") en el metodo upDateItem()" + "\n" + e.message);
+  //       console.log("Se quizo eliminar sin exito a: ", modalData.data);
+  //       modalData.data = this.oldData;
+  //       this.toggleFlagBorrado(false);
+        
+  //     },
+  //     complete: () => console.log("Completada la actualizacion del interes")
+  //   } );
+  // }
+
   private deleteSoftskill(modalData: any) {
     console.log(modalData.data)
     this.dataservice.delSoftSkill(modalData.data).subscribe()
@@ -125,5 +148,11 @@ export class ModalActionsService {
   private deleteStudie(modalData: any) {
     console.log(modalData.data)
     this.dataservice.delStudie(modalData.data).subscribe()
+  }
+
+  
+  private updateData(modalData: any) {
+    console.log(modalData.data)
+    this.dataservice.updateGralData(modalData.data).subscribe()
   }
 }

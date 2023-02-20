@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import {Studies} from '../../../data'
+import {Studie} from '../../../models'
 
 import { faPen, faTimes } from '@fortawesome/free-solid-svg-icons';
 
@@ -9,12 +9,12 @@ import { faPen, faTimes } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./formacion-item.component.css']
 })
 export class FormacionItemComponent implements OnInit {
-  @Input() item: Studies;
+  @Input() item: Studie;
 
   // PENDIENTE vincular con el logueo
   @Input() isAdmin : boolean;
 
-  @Output() delete: EventEmitter<Studies> = new EventEmitter()
+  @Output() delete: EventEmitter<Studie> = new EventEmitter()
   
   faTimes = faTimes;
   faPen = faPen;
@@ -23,7 +23,7 @@ export class FormacionItemComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onDelete(studie: Studies) {
+  onDelete(studie: Studie) {
     // llamo al metodo del padre via emit()
     if (this.isAdmin) {
       this.delete.emit(studie);

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { Cards } from 'src/app/data';
+import { Cards } from 'src/app/models';
 
 import { UiService } from 'src/app/service/ui.service';
 

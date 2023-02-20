@@ -1,6 +1,6 @@
-import {Data, Formacion, HardSkill, SoftSkill, Intereses, WorkExperience, User, Cards, DisplayData} from './data'
+import {Data, Formacion, HardSkill, SoftSkill, Intereses, WorkExperience, User, Cards, DisplayData} from './models'
 
-import { PortfolioInit } from './data'
+import { PortfolioInit } from './models'
 
 export const USERS: User[] = [
     {

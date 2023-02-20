@@ -5,7 +5,7 @@ import { faCheck, faTimes, faHand } from '@fortawesome/free-solid-svg-icons';
 import { Observable } from 'rxjs';
 import { DataService } from 'src/app/service/data.service';
 
-import { SoftSkill } from 'src/app/data';
+import { SoftSkill } from 'src/app/models';
 
 @Component({
   selector: 'app-soft-form',

@@ -5,7 +5,7 @@ import { faCheck, faMonument, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { Observable } from 'rxjs';
 import { DataService } from 'src/app/service/data.service';
 
-import { LaboralCareer, Organization, RolePosition, Person } from 'src/app/data';
+import { LaboralCareer, Organization, RolePosition, Person } from 'src/app/models';
 
 @Component({
   selector: 'app-career-form',

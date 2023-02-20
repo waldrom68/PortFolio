@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output, Inject, } from '@angula
 import { DataService } from 'src/app/service/data.service';
 import { faPlusCircle, faTimes } from '@fortawesome/free-solid-svg-icons';
 
-import {Person, Organization} from '../../data'
+import {Person, Organization} from '../../models'
 
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';

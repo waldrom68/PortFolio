@@ -1,6 +1,6 @@
 <div class="row text-center aling-self-center py-0" id="Init" >
-    <ng-container  *ngIf="detailCards && myData; else statusWait">
-
+    <ng-container  *ngIf="detailCards && DATAPORTFOLIO; else statusWait">
+        
 
         <div class="col-sm-8 aling-self-center order-0"
         >
@@ -142,18 +142,14 @@
 
         </div>
 
+    </ng-container>
 
-
-    <!-- <h4>Degree</h4>
-    <app-degree></app-degree> -->
-
-    <!-- <h4>Role/Position</h4>
-    <app-role-position></app-role-position> -->
-
-    <!-- <h4>Organization</h4>
-    <app-organization></app-organization> -->
-    
-
+    <ng-container *ngIf="DATAPORTFOLIO">
+        <ul>
+            <li *ngFor="let data of DATAPORTFOLIO.interest">
+                ({{data.id}}) - {{data.name}}
+            </li>
+        </ul>
     </ng-container>
 
 </div>

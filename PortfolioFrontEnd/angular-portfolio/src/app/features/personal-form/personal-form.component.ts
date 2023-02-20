@@ -5,7 +5,7 @@ import { faCheck, faMonument, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { Observable } from 'rxjs';
 import { DataService } from 'src/app/service/data.service';
 
-import { Person } from 'src/app/data';
+import { Person } from 'src/app/models';
 
 @Component({
   selector: 'app-personal-form',

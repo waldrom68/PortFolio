@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Studie, Organization, Person, Degree } from '../../../data'
+import { Studie, Organization, Person, Degree, FullPersonDTO } from '../../../models'
 
 import { faPen, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Observable } from 'rxjs';
@@ -17,7 +17,7 @@ export class StudieItemComponent implements OnInit {
 
 
   @Input() item: Studie;
-  @Input() user: Person;
+  @Input() user: FullPersonDTO;
   @Input() formData: Studie;
   @Input() myOrganizations: Organization[];
   @Input() myDegrees: Degree[];

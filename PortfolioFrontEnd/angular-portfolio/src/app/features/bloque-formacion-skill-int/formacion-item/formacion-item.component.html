@@ -1,5 +1,5 @@
     <span style="background-color:gainsboro">
-            {{item.start_date}} hasta {{item.end_date}}, {{item.degree}} ({{item.institution}}) 
+            {{item.startDate}} hasta {{item.endDate}}, {{item.degree}} ({{item.organization.name}}) 
             <ng-container *ngIf="isAdmin">
             <fa-icon 
                 [icon]="faTimes"

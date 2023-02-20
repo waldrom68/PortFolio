@@ -5,7 +5,7 @@ import { DataService } from 'src/app/service/data.service';
 import { ModalActionsService } from 'src/app/service/modal-actions.service';
 import { faTrash, faPen, faTimes, faCheck, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
-import {Person} from '../../data'
+import {Person} from '../../models'
 import { MessageBoxComponent } from 'src/app/shared/message-box/message-box.component';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 

@@ -3,7 +3,7 @@ import { DataService } from 'src/app/service/data.service';
 
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
-import {Person, SoftSkill} from '../../data'
+import {Person, SoftSkill} from '../../models'
 // import {SOFTSKILL} from '../../../mock-data'
 
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';

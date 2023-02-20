@@ -8,7 +8,7 @@ import { UserService } from '../../service/user.service';  // para traer los dat
 
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
-import { User } from '../../data'
+import { User } from '../../models'
 
 
 // Esta importacion fue reemplazada por user.service, quien se encargará de la gestion de los datos

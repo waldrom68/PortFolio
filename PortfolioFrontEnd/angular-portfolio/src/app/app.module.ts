@@ -28,6 +28,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 
 import { MessageBoxComponent } from './shared/message-box/message-box.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { interceptorProvider } from './service/interceptor-service';
+
 
 
 
@@ -70,7 +72,7 @@ const appRouters: Routes = [
     FontAwesomeModule,
    ],
 
-  providers: [ModalActionsService, DataService, UiService, ],
+  providers: [ModalActionsService, DataService, UiService, interceptorProvider ],
 
   bootstrap: [AppComponent],
   entryComponents: [MessageBoxComponent]

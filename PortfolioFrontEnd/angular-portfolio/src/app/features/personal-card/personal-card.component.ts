@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 
-import {Person} from '../../data'
+import {Person} from '../../models'
 
 
 import { faPen, faTimes, faLocationDot } from '@fortawesome/free-solid-svg-icons';

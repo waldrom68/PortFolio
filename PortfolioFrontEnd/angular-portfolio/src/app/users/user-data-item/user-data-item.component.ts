@@ -5,7 +5,7 @@ import { faTimes, faPen } from '@fortawesome/free-solid-svg-icons';
 // import { Subscription } from 'rxjs'
 
 
-import { User } from '../../data'
+import { User } from '../../models'
 
 @Component({
   selector: 'app-user-data-item',

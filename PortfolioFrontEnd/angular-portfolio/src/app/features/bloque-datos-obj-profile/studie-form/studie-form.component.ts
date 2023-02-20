@@ -5,7 +5,7 @@ import { faCheck, faMonument, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { Observable } from 'rxjs';
 import { DataService } from 'src/app/service/data.service';
 
-import { Studie, Organization, Degree, Person } from 'src/app/data';
+import { Studie, Organization, Degree, Person, FullPersonDTO } from 'src/app/models';
 
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
@@ -22,7 +22,7 @@ flagUserAdmin: boolean = false;
 flagUserAdmin$: Observable<boolean>;
 
 @Input() formData: Studie;
-@Input() user: Person;
+@Input() user: FullPersonDTO;
 @Input() title: string;
 @Input() myOrganizations: Organization[];
 @Output() myOrganizationChange: EventEmitter<Organization[]> = new EventEmitter;

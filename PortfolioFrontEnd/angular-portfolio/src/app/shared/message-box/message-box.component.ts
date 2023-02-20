@@ -34,7 +34,7 @@ export class MessageBoxComponent implements OnInit {
     // Delego al servicio las acciones a seguir.
     this.modalService.modalAction(this.modalData);
     // Genero un cambio en el Flag del servicio, al ser observable, quien lo llamó se entera del cambio de estado
-    this.modalService.toggleFlagBorrado()
+    // this.modalService.toggleFlagBorrado()
     this.closeModal()
   }
 

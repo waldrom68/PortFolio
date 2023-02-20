@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from 'src/app/service/data.service';
 
-import { faPen, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
-import { Interest, Person } from '../../data'
-// import {INTERESES} from '../../../mock-data'
+import { FullPersonDTO, Interest } from '../../models'
 
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MessageBoxComponent } from '../../shared/message-box/message-box.component';
@@ -16,6 +15,8 @@ import { Observable } from 'rxjs';
   templateUrl: './interests.component.html',
   styleUrls: ['./interests.component.css']
 })
+
+
 export class InterestsComponent implements OnInit {
 
   // PENDIENTE: SERVICIO QUE DEBE VINCULARSE CON EL LOGUEO
@@ -24,61 +25,53 @@ export class InterestsComponent implements OnInit {
 
   showForm: boolean = false;  // flag para mostrar o no el formulario
 
-  // intereses: Intereses[] = INTERESES;
   myData: Interest[] = [];
   formData: Interest;  // instancia vacia, para cuando se solicite un alta
-  
-  faPlusCircle = faPlusCircle;
-  // faPen = faPen;
 
-  // ocultarAcciones: boolean = false;
-  
-  showBtnAction: boolean= true;  // flag para mostrar o no los btn's de acciones del usuario
- 
+  faPlusCircle = faPlusCircle;
+
+  showBtnAction: boolean = true;  // flag para mostrar o no los btn's de acciones del usuario
+
   itemParaBorrar: Interest;
   flagBorrado: boolean = false;
   flagBorrado$: Observable<boolean>;
 
-  user: Person;
+  // user: Person;
 
-  constructor( 
+  DATAPORTFOLIO: FullPersonDTO;
+
+  constructor(
     private dataService: DataService,
-    
+
     public matDialog: MatDialog,
     private modalService: ModalActionsService,
-    ) {
-      this.formData = { id:0, name:"", orderdeploy:0, person:0 }
-     }
-    
-  ngOnInit(): void {
-    this.dataService.getInterests().subscribe(interest =>
-      [this.myData = interest],
-      );
-      // this.dataService.getGralData().subscribe(data =>
-      //   this.user = data
-      // ) ;
+  ) {
+    this.formData = { id: 0, name: "", orderdeploy: 0, person: 0 }
+  }
 
-    // Este servicio debiera pasarse a un Observable
-    this.user = this.dataService.getUSER();
+  ngOnInit(): void {
+
+    this.DATAPORTFOLIO = this.dataService.getData();
+    this.myData = this.DATAPORTFOLIO.interest;
 
     // subscribo y me entero si se cambia el status del flag  
     this.flagBorrado$ = this.modalService.getFlagBorrado$();
-    this.flagBorrado$.subscribe( (tt)=> {
-      if (this.itemParaBorrar) {
-        console.log(`Se acepto el borrado del item "${this.itemParaBorrar.name}"`);
-        this.myData = this.myData.filter( (t) => { return t.id !== this.itemParaBorrar.id } )
+
+    this.flagBorrado$.subscribe((tt) => {
+        this.delItem();
       }
-    }
     )
 
+    // Verifica si está logueado como ADMIN
     this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();
-    this.flagUserAdmin$.subscribe(  flagUserAdmin => this.flagUserAdmin = flagUserAdmin)
+    this.flagUserAdmin$.subscribe(flagUserAdmin => this.flagUserAdmin = flagUserAdmin)
     this.flagUserAdmin = this.dataService.getFlagUserAdmin()
 
   }
 
 
   toggleForm() {
+    // Cierra el formulario de edicion o creacion de Intereses
     this.showForm = !this.showForm;
     this.showBtnAction = !this.showBtnAction
   }
@@ -87,27 +80,56 @@ export class InterestsComponent implements OnInit {
     this.toggleForm();
   }
 
-  deleteItem(interest: Interest){
+  openModalDelete(interest: Interest) {
+    // Llamo al modal, si se confirma el borrado -> this.flagBorrado pasa a ser true.
+    // al volver, en ngOnInit se procede a intentar eliminarlo de la DB
     this.itemParaBorrar = interest;
-    this.openDeleteModal(interest)
+    this.openDeleteModal(interest);
   }
 
-  upDateItem(interest: Interest) {
-    this.dataService.updateInterest(interest).subscribe();
+  delItem() {
+    if (this.itemParaBorrar) {
+      // console.log(`Se acepto el borrado del item "${this.itemParaBorrar.name}"`);
+      this.dataService.delInterests(this.itemParaBorrar).subscribe( {
+        next: (v) => {
+          console.log("Se ha eliminado exitosamente a: ", this.itemParaBorrar);
+          this.myData = this.myData.filter((t) => { return t !== this.itemParaBorrar })
+          // Actualizo la informacion en el origen
+          this.DATAPORTFOLIO.interest = this.myData
+        },
+        error: (e) => {
+          alert("Response Error (" + e.status + ") en interest.component" + "\n" + e.message);
+          console.log("Se quizo eliminar sin exito a: " + this.itemParaBorrar.name);
+        },
+        complete: () => console.log("Completada la actualizacion del interes")
+      }
+      );
+   }
+
   }
 
   addItem(interest: Interest) {
-    this.dataService.addInterests(interest).subscribe( (tt)=> {
-        this.myData.push( tt );
-        this.toggleForm();
-      }
+    // console.log("Ejecuto this addItem()")
+    this.dataService.addInterests(interest).subscribe({
+      next: (v) => {
+        console.log("Interes guardado correctamente: ", v);
+        v.person = this.DATAPORTFOLIO.id;
+        this.myData.push(v);
+      },
+      error: (e) => {
+        alert("Response Error (" + e.status + ") en el metodo addItem()" + "\n" + e.message);
+        console.log("Se quizo agregar sin exito a: " + interest.name);
+      },
+      complete: () => console.log("Completado el alta del interes")
+    }
     );
+    this.toggleForm();
   }
 
-  openDeleteModal(data:any) {
+
+  openDeleteModal(data: any) {
     // Acciones definidas en el modal-action.service.ts
-    // PENDIENTE, RECUPERAR EL VALOR DE USER NAME PARA PASARLO AL MSG.
-    const userId = this.user.name;
+    const userId = this.DATAPORTFOLIO.name;
     const dialogConfig = new MatDialogConfig();
     // The user can't close the dialog by clicking outside its body
     dialogConfig.disableClose = true;
@@ -116,7 +138,7 @@ export class InterestsComponent implements OnInit {
     dialogConfig.width = "600px";
     dialogConfig.data = {
       // atributos generales del message-box
-      name: "delInterest",
+      name: "eliminar",
       title: `Hi ${userId}, está por eliminar uno de los intereses`,
       description: `¿Estás seguro de eliminar "${data.name}" ?`,
       // por defecto mostrararía Aceptar

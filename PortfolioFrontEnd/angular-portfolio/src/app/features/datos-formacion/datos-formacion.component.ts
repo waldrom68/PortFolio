@@ -3,7 +3,7 @@ import { DataService } from 'src/app/service/data.service';
 
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
-import {Person, Studie, Organization, Degree} from '../../data'
+import {Person, Studie, Organization, Degree, FullPersonDTO} from '../../models'
 
 
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
@@ -34,7 +34,7 @@ export class DatosFormacionComponent implements OnInit {
   flagBorrado: boolean = false;
   flagBorrado$: Observable<boolean>;
 
-  user: Person;
+  user: FullPersonDTO;
   myOrganizations: Organization[];
   myDegrees: Degree[];
 
@@ -45,9 +45,9 @@ export class DatosFormacionComponent implements OnInit {
     public matDialog: MatDialog,
     private modalService: ModalActionsService,
     ) {
-      this.dataService.getGralData().subscribe(data =>
-        this.user = data
-        ) ;
+      // this.dataService.getGralData().subscribe(data =>
+      //   this.user = data
+      //   ) ;
         this.dataService.getOrganization().subscribe(data =>
           this.myOrganizations = data
     

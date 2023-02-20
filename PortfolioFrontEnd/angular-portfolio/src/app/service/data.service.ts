@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError, Subject } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 
-import { Person, HardSkill, SoftSkill, LaboralCareer, Interest, Project, PortfolioInit, Cards,Organization, Degree, RolePosition, Studie } from '../data'
+import { Person, HardSkill, SoftSkill, LaboralCareer, Interest, Project, Organization, Degree, RolePosition, Studie, FullPersonDTO } from '../models'
 
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http'  // Para ejecutar los metodos GET, PUT, POST, ETC
 import { environment } from 'src/environments/environment';
@@ -22,22 +22,24 @@ const httpOptions = {
 })
 
 export class DataService {
-  private apiURL = 'http://localhost:5000'
+  // private apiURL = 'http://localhost:5000'
   private LOCALHOST_API = environment.apiURL
-  private EndPoint:string = ""
+  private EndPoint: string = ""
 
   // PENDIENTE, vincular con el logging
-  private USERID:number = environment.idPersona; 
+  private USERID: number = environment.idPersona;
   private USER: Person;
 
 
-  private flagChangeUser: boolean = true;
+  private flagChangeUser: boolean = false;
   private flagChangeUser$ = new Subject<boolean>();
 
+  // PENDIENTE, no se está usando, validar necesidad de existencia
   private handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
       // A client-side or network error occurred. Handle it accordingly.
-      console.error('An error occurred:', error.error);
+      // PENDIENTE redirigir a una pagina de error en servidor
+      console.error('OJO, An error occurred:', error.error);
     } else {
       // The backend returned an unsuccessful response code.
       // The response body may contain clues as to what went wrong.
@@ -47,106 +49,148 @@ export class DataService {
     // Return an observable with a user-facing error message.
     return throwError(() => new Error('Something bad happened; please try again later.'));
   }
- 
-  constructor(  
-        // inicializamos el metodo http
-        private http: HttpClient
+
+  constructor(
+    // inicializamos el metodo http
+    private http: HttpClient,
   ) { }
 
-  setUSER(user:Person) {
+  //################PENDIENTE  Metodos en evaluacion, deben ser ereemplazados
+  setUSER(user: Person) {
     this.USER = user
   }
-  
-  // Este debiera pasarse a un Observable
   getUSER() {
     return this.USER;
   }
- 
-  getFlagUserAdmin() {
-    return this.flagChangeUser
-  }
-  
-  changeUser() {
-    this.flagChangeUser = !this.flagChangeUser;
-    this.flagChangeUser$.next( this.flagChangeUser);
-  }
-
-  getFlagChangeUser$(): Observable<boolean> {
-    return this.flagChangeUser$.asObservable();
-  }
-
   gerUserID() {
     return this.USERID
   }
 
-  getPortFolioInit(): Observable<PortfolioInit> {
-    return this.http.get<PortfolioInit>(`${this.apiURL}/PortfolioInit/?person=${this.USERID}`)
+  getData() {
+    return this.gralData;
   }
 
-  getPortFolioCards(): Observable<Cards[]> {
-    
-    console.log(`${this.apiURL}/Cards/?person=${this.USERID}`)
-    return this.http.get<Cards[]>(`${this.apiURL}/Cards/?person=${this.USERID}`)
+  changeUser() {
+    this.flagChangeUser = !this.flagChangeUser;
+    this.flagChangeUser$.next(this.flagChangeUser);
+  }
+  changeGralData(data: FullPersonDTO) {
+    this.gralData = data;
+    this.gralData$.next(this.gralData);
   }
 
-  // Person APIREST ########################################################
-  getGralData(): Observable<Person> {
-    console.log("El servicio va a buscar en Person API")
-    const response = this.http.get<Person>(`${this.LOCALHOST_API}/view/person/${this.USERID}`).pipe(catchError(this.handleError) )    ;
-
-      return response;
-    // return this.http.get<Person>("http://localhost:8080/view/person/1")
-  }
-  updateGralData(user:Person): Observable<Person>{
+  updateGralData(user: Person): Observable<Person> {
     // Este codigo modifica el valor del usuario en la DB
     console.log("El servicio va a modificar los datos en Person API")
-    return this.http.post<Person>(`${this.LOCALHOST_API}/edit/person`, user, httpOptions)
+    return this.http.post<Person>(`${this.LOCALHOST_API}/person/edit`, user, httpOptions)
     // const url = `http://localhost:8080/edit/person`;
     // return this.http.post<Person>(url, user, httpOptions)
   }
 
-  // Interest APIREST ###################################################
-  getInterests(): Observable<Interest[]> {
-    this.EndPoint = `${this.LOCALHOST_API}/list/interest/${this.USERID}`
-    return this.http.get<Interest[]>(this.EndPoint )
+
+  
+  // getPortFolioInit(): Observable<PortfolioInit> {
+
+  //   return this.http.get<PortfolioInit>(`${this.apiURL}/PortfolioInit/?person=${this.USERID}`)
+  // }
+
+  // getPortFolioCards(): Observable<Cards[]> {
+
+  //   console.log(`${this.apiURL}/Cards/?person=${this.USERID}`)
+  //   return this.http.get<Cards[]>(`${this.apiURL}/Cards/?person=${this.USERID}`)
+  // }
+  //########### FIN PENDIENTE  Metodos en evaluacion, deben ser ereemplazados
+
+  // Person APIREST ########################################################
+  // getGralData(): Observable<Person> {
+  //   console.log("El servicio va a buscar en Person API")
+  //   const response = this.http.get<Person>(`${this.LOCALHOST_API}/person/view/${this.USERID}`).pipe(catchError(this.handleError));
+
+  //   return response;
+  //   // return this.http.get<Person>("http://localhost:8080/view/person/1")
+  // }
+
+
+  // #### Nuevos metodos, con la implementacion del control de acceso  ###
+  getFlagUserAdmin() {
+    return this.flagChangeUser
   }
-  updateInterest(interest:Interest): Observable<Interest>{
+  getFlagChangeUser$(): Observable<boolean> {
+    return this.flagChangeUser$.asObservable();
+  }
+  hasCredentials(value:boolean) {
+    this.flagChangeUser = value;
+    this.flagChangeUser$.next(this.flagChangeUser);
+  }
+
+  // #### Nuevo metodo de acceso general a los datos del backend
+  private gralData: FullPersonDTO;
+  private gralData$ = new Subject<FullPersonDTO>();
+
+  getPortFolioData(): Observable<FullPersonDTO> {
+    const endPoint = `${this.LOCALHOST_API}/fullperson/view/${this.USERID}`
+    const response = this.http.get<FullPersonDTO>(endPoint)
+      .pipe(catchError(this.handleError));
+    return response;
+  }
+  getPortFolioData$(): Observable<FullPersonDTO> {
+    return this.gralData$.asObservable();
+  }
+
+
+
+
+  // getInterests(): Interest[] {
+  //   return this.gralData.interest;
+  // }
+
+
+
+  // ## Fin Nuevos metodos, con la implementacion del control de acceso ##
+
+  // Interest APIREST ###################################################
+  // getInterests(): Observable<Interest[]> {
+  //   this.EndPoint = `${this.LOCALHOST_API}/interest/list/${this.USERID}`
+  //   return this.http.get<Interest[]>(this.EndPoint)
+  // }
+  updateInterest(interest: Interest): Observable<Interest> {
+    console.log("estoy en el metodo updateInteres del servicio")
     // Este codigo modifica el valor del usuario en la DB
     interest.person = this.USERID;
-    const url = `${this.LOCALHOST_API}/edit/interest`;
+    console.log("recibo: ", interest)
+    const url = `${this.LOCALHOST_API}/interest/edit`;
     return this.http.post<Interest>(url, interest, httpOptions)
   }
-  addInterests(interest:Interest): Observable<Interest>{
-    console.log("estoy en el metodo del servicio")
+  addInterests(interest: Interest): Observable<Interest> {
+    console.log("estoy en el metodo addInteres del servicio")
     // Este codigo agrega un usuario a la DB 
-    // console.log(interest.constructor.name)
     interest.person = this.USERID;
-    const url = `${this.LOCALHOST_API}/edit/interest`
-    return this.http.post<Interest>(url, interest, httpOptions)
+    const url = `${this.LOCALHOST_API}/interest/new`;
+    return this.http.put<Interest>(url, interest, httpOptions)
   }
-  delInterests(interest:Interest): Observable<Interest>{
-    const url = `${this.LOCALHOST_API}/del/interest/${interest.id}`
+  delInterests(interest: Interest): Observable<Interest> {
+    const url = `${this.LOCALHOST_API}/interest/del/${interest.id}`
     return this.http.delete<Interest>(url, httpOptions)
   }
 
   // HardSkills APIREST ###################################################
   getHardSkill(): Observable<HardSkill[]> {
-    this.EndPoint = `${this.LOCALHOST_API}/list/hardskill/${this.USERID}`
-    return this.http.get<HardSkill[]>(this.EndPoint )
+    this.EndPoint = `${this.LOCALHOST_API}/hardskill/list/${this.USERID}`
+    return this.http.get<HardSkill[]>(this.EndPoint)
   }
-  updateHardSkill(hardskill:HardSkill): Observable<HardSkill>{
+  updateHardSkill(hardskill: HardSkill): Observable<HardSkill> {
     hardskill.person = this.USERID;
     const url = `${this.LOCALHOST_API}/edit/hardskill`;
     return this.http.post<HardSkill>(url, hardskill, httpOptions)
   }
-  addHardskill(hardskill:HardSkill): Observable<HardSkill>{
+  addHardskill(hardskill: HardSkill): Observable<HardSkill> {
     console.log("estoy en el metodo del servicio")
     // Este codigo agrega un usuario a la DB 
     console.log(hardskill.constructor.name)
     hardskill.person = this.USERID;
     return this.http.post<HardSkill>(`${this.LOCALHOST_API}/edit/hardskill`, hardskill, httpOptions)
   }
-  delHardSkills(hardskill:HardSkill): Observable<HardSkill>{
+  delHardSkills(hardskill: HardSkill): Observable<HardSkill> {
     const url = `${this.LOCALHOST_API}/del/hardskill/${hardskill.id}`
     return this.http.delete<HardSkill>(url, httpOptions)
   }
@@ -154,46 +198,46 @@ export class DataService {
 
   // SoftSkills  APIREST ###################################################
   getSoftSkill(): Observable<SoftSkill[]> {
-  this.EndPoint = `${this.LOCALHOST_API}/list/softskill/${this.USERID}`
-  return this.http.get<SoftSkill[]>(this.EndPoint )
+    this.EndPoint = `${this.LOCALHOST_API}/softskill/list/${this.USERID}`
+    return this.http.get<SoftSkill[]>(this.EndPoint)
   }
-  updateSoftSkill(softskill:SoftSkill): Observable<SoftSkill>{
-  const url = `${this.LOCALHOST_API}/edit/softskill`;
-  softskill.person = this.USERID;
-  return this.http.post<SoftSkill>(url, softskill, httpOptions)
+  updateSoftSkill(softskill: SoftSkill): Observable<SoftSkill> {
+    const url = `${this.LOCALHOST_API}/edit/softskill`;
+    softskill.person = this.USERID;
+    return this.http.post<SoftSkill>(url, softskill, httpOptions)
   }
-  addSoftskill(softskill:SoftSkill): Observable<SoftSkill>{
+  addSoftskill(softskill: SoftSkill): Observable<SoftSkill> {
     console.log("estoy en el metodo del servicio")
     // Este codigo agrega un usuario a la DB 
     console.log(softskill.constructor.name)
     softskill.person = this.USERID;
     return this.http.post<SoftSkill>(`${this.LOCALHOST_API}/edit/softskill`, softskill, httpOptions)
   }
-  delSoftSkill(softskill:SoftSkill): Observable<SoftSkill>{
-  // Este codigo elimina de la DB al usuario
-  const url = `${this.LOCALHOST_API}/del/softskill/${softskill.id}`
-  return this.http.delete<SoftSkill>(url, httpOptions)
+  delSoftSkill(softskill: SoftSkill): Observable<SoftSkill> {
+    // Este codigo elimina de la DB al usuario
+    const url = `${this.LOCALHOST_API}/del/softskill/${softskill.id}`
+    return this.http.delete<SoftSkill>(url, httpOptions)
   }
 
 
   // Projects  APIREST ###################################################
   getProject(): Observable<Project[]> {
-    this.EndPoint = `${this.LOCALHOST_API}/list/project/${this.USERID}`
-    return this.http.get<Project[]>(this.EndPoint )
+    this.EndPoint = `${this.LOCALHOST_API}/project/list/${this.USERID}`
+    return this.http.get<Project[]>(this.EndPoint)
   }
-  addProject(project:Project): Observable<Project>{
+  addProject(project: Project): Observable<Project> {
     console.log("estoy en el metodo del servicio")
     // Este codigo agrega un usuario a la DB 
     console.log(project.constructor.name)
     project.person = this.USERID;
     return this.http.post<Project>(`${this.LOCALHOST_API}/edit/project`, project, httpOptions)
   }
-  updateProject(project:Project): Observable<Project>{
+  updateProject(project: Project): Observable<Project> {
     const url = `${this.LOCALHOST_API}/edit/project`;
     project.person = this.USERID;
     return this.http.post<Project>(url, project, httpOptions)
   }
-  delProject(project:Project): Observable<Project>{
+  delProject(project: Project): Observable<Project> {
     const url = `${this.LOCALHOST_API}/del/project/${project.id}`
     return this.http.delete<Project>(url, httpOptions)
   }
@@ -201,44 +245,44 @@ export class DataService {
 
   // Organization  APIREST ###################################################
   getOrganization(): Observable<Organization[]> {
-    this.EndPoint = `${this.LOCALHOST_API}/list/organization/${this.USERID}`
-    return this.http.get<Organization[]>(this.EndPoint )
+    this.EndPoint = `${this.LOCALHOST_API}/organization/list/${this.USERID}`
+    return this.http.get<Organization[]>(this.EndPoint)
   }
-  updateOrganization(organization:Organization): Observable<Organization>{
+  updateOrganization(organization: Organization): Observable<Organization> {
     const url = `${this.LOCALHOST_API}/edit/organization`;
     organization.person = this.USERID;
     return this.http.post<Organization>(url, organization, httpOptions)
   }
-  addOrganization(organization:Organization): Observable<Organization>{
+  addOrganization(organization: Organization): Observable<Organization> {
     console.log("estoy en el metodo del servicio")
     // Este codigo agrega un usuario a la DB 
     organization.person = this.USERID;
     console.log(organization.constructor.name)
     return this.http.post<Organization>(`${this.LOCALHOST_API}/edit/organization`, organization, httpOptions)
   }
-  delOrganization(organization:Organization): Observable<Organization>{
+  delOrganization(organization: Organization): Observable<Organization> {
     const url = `${this.LOCALHOST_API}/del/organization/${organization.id}`
     return this.http.delete<Organization>(url)
   }
 
   // RolePosition  APIREST ###################################################
   getRolePosition(): Observable<RolePosition[]> {
-    this.EndPoint = `${this.LOCALHOST_API}/list/roleposition/${this.USERID}`
-    return this.http.get<RolePosition[]>(this.EndPoint )
+    this.EndPoint = `${this.LOCALHOST_API}/roleposition/list/${this.USERID}`
+    return this.http.get<RolePosition[]>(this.EndPoint)
   }
-  updateRolePosition(rolePosition:RolePosition): Observable<RolePosition>{
+  updateRolePosition(rolePosition: RolePosition): Observable<RolePosition> {
     const url = `${this.LOCALHOST_API}/edit/roleposition`;
     rolePosition.person = this.USERID;
     return this.http.post<RolePosition>(url, rolePosition, httpOptions)
   }
-  addRolePosition(rolePosition:RolePosition): Observable<RolePosition>{
+  addRolePosition(rolePosition: RolePosition): Observable<RolePosition> {
     console.log("estoy en el metodo del servicio")
     // Este codigo agrega un usuario a la DB 
     console.log(rolePosition.constructor.name)
     rolePosition.person = this.USERID;
     return this.http.post<RolePosition>(`${this.LOCALHOST_API}/edit/roleposition`, rolePosition, httpOptions)
   }
-  delRolePosition(rolePosition:RolePosition): Observable<RolePosition>{
+  delRolePosition(rolePosition: RolePosition): Observable<RolePosition> {
     const url = `${this.LOCALHOST_API}/del/roleposition/${rolePosition.id}`
     return this.http.delete<RolePosition>(url, httpOptions)
   }
@@ -246,44 +290,44 @@ export class DataService {
 
   // Degree  APIREST ###################################################
   getDegree(): Observable<Degree[]> {
-    this.EndPoint = `${this.LOCALHOST_API}/list/degree/${this.USERID}`
-    return this.http.get<Degree[]>(this.EndPoint )
+    this.EndPoint = `${this.LOCALHOST_API}/degree/list/${this.USERID}`
+    return this.http.get<Degree[]>(this.EndPoint)
   }
-  updateDegree(degree:Degree): Observable<Degree>{
+  updateDegree(degree: Degree): Observable<Degree> {
     const url = `${this.LOCALHOST_API}/edit/degree`;
     degree.person = this.USERID;
     return this.http.post<Degree>(url, degree, httpOptions)
   }
-  addDegree(degree:Degree): Observable<Degree>{
+  addDegree(degree: Degree): Observable<Degree> {
     console.log("estoy en el metodo del servicio")
     // Este codigo agrega un usuario a la DB 
     console.log(degree.constructor.name)
     degree.person = this.USERID;
     return this.http.post<Degree>(`${this.LOCALHOST_API}/edit/degree`, degree, httpOptions)
   }
-  delDegree(degree:Degree): Observable<Degree>{
+  delDegree(degree: Degree): Observable<Degree> {
     const url = `${this.LOCALHOST_API}/del/degree/${degree.id}`
     return this.http.delete<Degree>(url, httpOptions)
   }
 
   // Laboral Career  APIREST ###################################################
   getLaboralCareer(): Observable<LaboralCareer[]> {
-    this.EndPoint = `${this.LOCALHOST_API}/list/laboralcareer/${this.USERID}`
-    return this.http.get<LaboralCareer[]>(this.EndPoint )
+    this.EndPoint = `${this.LOCALHOST_API}/laboralcareer/list/${this.USERID}`
+    return this.http.get<LaboralCareer[]>(this.EndPoint)
   }
-  updateLaboralCareer(career:LaboralCareer): Observable<LaboralCareer>{
+  updateLaboralCareer(career: LaboralCareer): Observable<LaboralCareer> {
     const url = `${this.LOCALHOST_API}/edit/laboralcareer`;
     career.person = this.USERID;
     return this.http.post<LaboralCareer>(url, career, httpOptions)
   }
-  addLaboralCareer(career:LaboralCareer): Observable<LaboralCareer>{
+  addLaboralCareer(career: LaboralCareer): Observable<LaboralCareer> {
     console.log("estoy en el metodo del servicio")
     // Este codigo agrega un usuario a la DB 
     console.log("estoy aqui", career)
     career.person = this.USERID;
     return this.http.post<LaboralCareer>(`${this.LOCALHOST_API}/edit/laboralcareer`, career, httpOptions)
   }
-    delLaboralCareers(career:LaboralCareer): Observable<LaboralCareer>{
+  delLaboralCareers(career: LaboralCareer): Observable<LaboralCareer> {
     const url = `${this.LOCALHOST_API}/del/laboralcareer/${career.id}`
     return this.http.delete<LaboralCareer>(url, httpOptions)
   }
@@ -292,22 +336,22 @@ export class DataService {
 
   // Studie
   getStudie(): Observable<Studie[]> {
-    this.EndPoint = `${this.LOCALHOST_API}/list/studie/${this.USERID}`
-    return this.http.get<Studie[]>(this.EndPoint )
+    this.EndPoint = `${this.LOCALHOST_API}/studie/list/${this.USERID}`
+    return this.http.get<Studie[]>(this.EndPoint)
   }
-  updateStudie(studie:Studie): Observable<Studie>{
+  updateStudie(studie: Studie): Observable<Studie> {
     const url = `${this.LOCALHOST_API}/edit/studie`;
     studie.person = this.USERID;
     return this.http.post<Studie>(url, studie, httpOptions)
   }
-  addStudie(studie:Studie): Observable<Studie>{
+  addStudie(studie: Studie): Observable<Studie> {
     console.log("estoy en el metodo del servicio")
     // Este codigo agrega un usuario a la DB 
     studie.person = this.USERID;
     console.log(studie.constructor.name)
     return this.http.post<Studie>(`${this.LOCALHOST_API}/edit/studie`, studie, httpOptions)
   }
-  delStudie(studie:Studie): Observable<Studie>{
+  delStudie(studie: Studie): Observable<Studie> {
     const url = `${this.LOCALHOST_API}/del/studie/${studie.id}`
     return this.http.delete<Studie>(url, httpOptions)
   }
@@ -315,7 +359,7 @@ export class DataService {
 
 
 
- 
+
 
 
 

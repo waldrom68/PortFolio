@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import {Data} from '../../../data'
+import {Data} from '../../../models'
 import {DATA} from '../../../mock-data'
 
 import { faTimes } from '@fortawesome/free-solid-svg-icons';

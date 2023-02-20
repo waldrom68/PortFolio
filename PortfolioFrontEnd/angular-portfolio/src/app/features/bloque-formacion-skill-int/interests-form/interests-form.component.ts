@@ -5,7 +5,7 @@ import { faCheck, faTimes} from '@fortawesome/free-solid-svg-icons';
 import { Observable } from 'rxjs';
 import { DataService } from 'src/app/service/data.service';
 
-import { Interest } from '../../../data';
+import { Interest } from '../../../models';
 
 @Component({
   selector: 'app-interests-form',
@@ -62,7 +62,7 @@ export class InterestsFormComponent implements OnInit {
       
       if (this.form.valid) {
   
-        this.formData.name = this.form.get("name")?.value
+        this.formData.name = this.form.get("name")?.value.trim();
         this.onUpdate.emit(this.formData)
   
       } else {

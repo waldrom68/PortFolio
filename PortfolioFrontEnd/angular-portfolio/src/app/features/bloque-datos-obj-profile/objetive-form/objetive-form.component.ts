@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
-import { Person } from '../../../data'
+import { Person } from '../../../models'
 
 @Component({
   selector: 'app-objetive-form',

@@ -1,19 +1,20 @@
+<!-- <form [formGroup]="form"  (ngSubmit)="onLogin()" -->
   <form [formGroup]="form"  (ngSubmit)="onEnviar($event)"
     class="form-group"
     >    
         <div class="form-group">
         <div>
-            <label for="mail" class="form-label" style="color: azure;">Email: </label>                          
-            <input type="email"  class="form-control" formControlName="mail" name="mail" placeholder="Ingrese email"
+            <label for="nombreUsuario" class="form-label" style="color: azure;">Nombre usuario: </label>                          
+            <input type="text"  class="form-control" formControlName="nombreUsuario" name="nombreUsuario" placeholder="Ingrese nombre de usuario"
             >
         </div>
         <!-- Gracias al getter que configuramos en el controlador -->
-        <div *ngIf="Mail?.errors  && Mail?.touched">    
-            <p *ngIf="Mail?.hasError('required')" class="mensajeError">
-                El email es requerido.
+        <div *ngIf="NombreUsuario?.errors  && NombreUsuario?.touched">    
+            <p *ngIf="NombreUsuario?.hasError('required')" class="mensajeError">
+                El nombre de usuario es requerido.
             </p>
-            <p *ngIf="Mail?.hasError('email')" class="mensajeError">
-                El formato del email debe ser válido.
+            <p *ngIf="NombreUsuario?.hasError('nombreUsuario')" class="mensajeError">
+                El nombre de usuario debe ser válido.
             </p>
         </div>
 
@@ -21,7 +22,8 @@
     <div class="form-group">
         <div>
             <label for="exampleInputPassword1" class="form-label" style="color: azure;">Contraseña: </label>
-            <input type="password" name="password" formControlName="password"  class="form-control" [class.border-danger]="MailValid" placeholder="Contraseña">
+            <input type="password" name="password" formControlName="password"  class="form-control" 
+                [class.border-danger]="PasswordValid" placeholder="Contraseña">
         </div>
         <!-- Gracias al getter que configuramos en el controlador -->
         <div *ngIf="Password?.errors  && Password?.touched">
@@ -29,18 +31,22 @@
             El password es requerido.
             </p>
             <p *ngIf="form.hasError('minlength', 'password')" class="mensajeError">
-            El password debe tener al menos 8 caracteres.
+            El password debe tener al menos 3 caracteres.
             </p>
         </div>
     </div>
-
+    
+    
     <div>
-        <button type="submit" class="btn btn-primary">Enviar</button>
+        <button type="submit" class="btn btn-primary"
+        data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation" 
+        
+        >Enviar</button>
     </div>
 </form>
 
 <div>
-  <p>Un debuger para mostrar que es posible hacer un biding directo al formulario <strong>{{form.value.mail}} </strong><strong>{{form.value.password}} </strong><p> 
-<br>
+    <br>
+    <p>Un debuger para mostrar que es posible hacer un biding directo al formulario <strong>{{form.value.nombreUsuario}} - {{form.value.password}} </strong></p>
 
 </div>

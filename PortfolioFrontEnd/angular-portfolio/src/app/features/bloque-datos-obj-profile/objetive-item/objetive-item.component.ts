@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Person, DisplayData } from '../../../data'
+import { Person, DisplayData } from '../../../models'
 
 import { faTimes, faTrash, faPencil, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
@@ -46,8 +46,8 @@ export class ObjetiveItemComponent implements OnInit {
             "objetive": "",
             "since": new Date(),
             "email": "",
-            "username": "",
-            "password": "",
+            // "username": "",
+            // "password": "",
             "displaydata": {"id":1,"name":true,"lastName":true,"photo":true,"location":true,"profession":true,"since":true,"theme":"Dark"}
           }
     }

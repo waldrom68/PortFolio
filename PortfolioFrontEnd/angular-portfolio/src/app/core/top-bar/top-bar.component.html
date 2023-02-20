@@ -7,7 +7,10 @@
     <div class="container-fluid">
       <img class="navbar-brand" src="../../../assets/images/logo-argentina-programa.png" alt="">
 
-      <button class="navbar-toggler d-flex" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler d-flex" type="button" 
+        data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" 
+        aria-expanded="false" aria-label="Toggle navigation">
+        
         <span class="navbar-toggler-icon"></span>
       </button>
     </div>
@@ -21,16 +24,40 @@
       <h6 
           [ngStyle] = "{'color':'blue','font-weight':'bolder', 'margin':'1em', 'float':'right'}"
       >
-      Usuario autenticado -> {{flagUserAdmin}}</h6>
+      Administrador autenticado -> {{flagUserAdmin}}</h6>
       <!-- <span class="text-muted btn" -->
-      <button class="navbar-toggler btn btn-primary btn-sm" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation" 
-        (click)="loggin()"
-      >
-        Ingresar como administrador
         
-      </button>
+      <ng-container *ngIf="!flagUserAdmin">
 
-      <app-iniciar-sesion></app-iniciar-sesion>
+          <!-- <button class="navbar-toggler btn btn-primary btn-sm" type="button" 
+            data-toggle="collapse" data-target="#navbarToggleExternalContent" 
+            aria-controls="navbarToggleExternalContent" aria-expanded="false" 
+            aria-label="Toggle navigation" 
+            (click)="loggin()"
+          >
+            Ingresar como administrador
+            
+          </button> -->
+          
+      <!-- (toggleLoggin)="toggleLoggin()" -->
+        <app-iniciar-sesion
+        ></app-iniciar-sesion>
+
+      </ng-container>
+
+      <ng-container *ngIf="flagUserAdmin">
+          <button 
+            class="navbar-toggler btn btn-primary btn-sm" type="button" 
+            data-toggle="collapse" data-target="#navbarToggleExternalContent" 
+            aria-controls="navbarToggleExternalContent" aria-expanded="false" 
+            aria-label="Toggle navigation" 
+            (click)="onLogOut()"
+          > Cerrar sesion
+
+          </button>
+      </ng-container>
+
+
 
     </div>
   </div>

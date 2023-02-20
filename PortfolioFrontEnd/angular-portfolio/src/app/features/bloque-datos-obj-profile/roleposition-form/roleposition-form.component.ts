@@ -5,7 +5,7 @@ import { faCheck, faMonument, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { Observable } from 'rxjs';
 import { DataService } from 'src/app/service/data.service';
 
-import { RolePosition } from 'src/app/data';
+import { RolePosition } from 'src/app/models';
 @Component({
   selector: 'app-roleposition-form',
   templateUrl: './roleposition-form.component.html',

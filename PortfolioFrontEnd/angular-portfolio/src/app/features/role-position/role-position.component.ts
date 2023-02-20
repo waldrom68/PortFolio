@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DataService } from 'src/app/service/data.service';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
-import {Person, RolePosition} from '../../data'
+import {Person, RolePosition} from '../../models'
 
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MessageBoxComponent } from '../../shared/message-box/message-box.component';

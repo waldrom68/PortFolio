@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import {Person} from '../../../data'
+import {Person} from '../../../models'
 
 import { faPen, faTimes, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { DataService } from 'src/app/service/data.service';
