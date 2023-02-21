@@ -19,7 +19,7 @@ import { Observable } from 'rxjs';
 
 export class InterestsComponent implements OnInit {
 
-  // PENDIENTE: SERVICIO QUE DEBE VINCULARSE CON EL LOGUEO
+  // SERVICIO QUE ESTÁ VINCULADO CON EL LOGUEO
   flagUserAdmin: boolean = false;
   flagUserAdmin$: Observable<boolean>;
 
@@ -32,7 +32,7 @@ export class InterestsComponent implements OnInit {
 
   showBtnAction: boolean = true;  // flag para mostrar o no los btn's de acciones del usuario
 
-  itemParaBorrar: Interest;
+  itemParaBorrar: Interest;  // objeto que se está por borrar, sirve para reestablecer si cancela borrado
   flagBorrado: boolean = false;
   flagBorrado$: Observable<boolean>;
 
@@ -46,7 +46,7 @@ export class InterestsComponent implements OnInit {
     public matDialog: MatDialog,
     private modalService: ModalActionsService,
   ) {
-    this.formData = { id: 0, name: "", orderdeploy: 0, person: 0 }
+    this.resetForm();
   }
 
   ngOnInit(): void {
@@ -54,7 +54,7 @@ export class InterestsComponent implements OnInit {
     this.DATAPORTFOLIO = this.dataService.getData();
     this.myData = this.DATAPORTFOLIO.interest;
 
-    // subscribo y me entero si se cambia el status del flag  
+    // subscribo y me entero si en el modal se eligió Eliminar
     this.flagBorrado$ = this.modalService.getFlagBorrado$();
 
     this.flagBorrado$.subscribe((tt) => {
@@ -69,14 +69,16 @@ export class InterestsComponent implements OnInit {
 
   }
 
-
+  resetForm() {
+    this.formData = { id: 0, name: "", orderdeploy: 0, person: 0 }
+  }
   toggleForm() {
-    // Cierra el formulario de edicion o creacion de Intereses
+    // Cierra el formulario de edicion o creacion
     this.showForm = !this.showForm;
     this.showBtnAction = !this.showBtnAction
   }
 
-  cancelation(interest: Interest) {
+  cancelation() {
     this.toggleForm();
   }
 
@@ -98,7 +100,7 @@ export class InterestsComponent implements OnInit {
           this.DATAPORTFOLIO.interest = this.myData
         },
         error: (e) => {
-          alert("Response Error (" + e.status + ") en interest.component" + "\n" + e.message);
+          alert("Response Error (" + e.status + ")" + "\n" + e.message);
           console.log("Se quizo eliminar sin exito a: " + this.itemParaBorrar.name);
         },
         complete: () => console.log("Completada la actualizacion del interes")
@@ -123,13 +125,14 @@ export class InterestsComponent implements OnInit {
       complete: () => console.log("Completado el alta del interes")
     }
     );
+    this.resetForm();
     this.toggleForm();
   }
 
 
   openDeleteModal(data: any) {
     // Acciones definidas en el modal-action.service.ts
-    const userId = this.DATAPORTFOLIO.name;
+    const user = this.DATAPORTFOLIO.name;
     const dialogConfig = new MatDialogConfig();
     // The user can't close the dialog by clicking outside its body
     dialogConfig.disableClose = true;
@@ -139,7 +142,7 @@ export class InterestsComponent implements OnInit {
     dialogConfig.data = {
       // atributos generales del message-box
       name: "eliminar",
-      title: `Hi ${userId}, está por eliminar uno de los intereses`,
+      title: `Hola, está por eliminar uno de los intereses`,
       description: `¿Estás seguro de eliminar "${data.name}" ?`,
       // por defecto mostrararía Aceptar
       actionButtonText: "Eliminar",

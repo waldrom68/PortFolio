@@ -19,7 +19,7 @@
       [ngClass] = "{error: (Nombre.invalid && Nombre.touched)}"
     ></textarea>
 
-    <small class="mensajeError" *ngIf="form.hasError('minlength', 'name')"> Minimo {{ Nombre.errors.minlength.requiredLength }} caracteres </small>
+    <small class="mensajeError" *ngIf="form.hasError('minlength', 'name')"> Mínimo {{ Nombre.errors.minlength.requiredLength }} caracteres </small>
     <small class="mensajeError" *ngIf="form.hasError('required', 'name')"> Dato requerido  </small>
   
     <div class="col-4 icon-group m-2"

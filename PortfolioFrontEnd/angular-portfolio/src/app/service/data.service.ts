@@ -35,20 +35,20 @@ export class DataService {
   private flagChangeUser$ = new Subject<boolean>();
 
   // PENDIENTE, no se está usando, validar necesidad de existencia
-  private handleError(error: HttpErrorResponse) {
-    if (error.status === 0) {
-      // A client-side or network error occurred. Handle it accordingly.
-      // PENDIENTE redirigir a una pagina de error en servidor
-      console.error('OJO, An error occurred:', error.error);
-    } else {
-      // The backend returned an unsuccessful response code.
-      // The response body may contain clues as to what went wrong.
-      console.error(
-        `Backend returned code ${error.status}, body was: `, error.error);
-    }
-    // Return an observable with a user-facing error message.
-    return throwError(() => new Error('Something bad happened; please try again later.'));
-  }
+  // private handleError(error: HttpErrorResponse) {
+  //   if (error.status === 0) {
+  //     // A client-side or network error occurred. Handle it accordingly.
+  //     // PENDIENTE redirigir a una pagina de error en servidor
+  //     console.error('OJO, An error occurred:', error.error);
+  //   } else {
+  //     // The backend returned an unsuccessful response code.
+  //     // The response body may contain clues as to what went wrong.
+  //     console.error(
+  //       `Backend returned code ${error.status}, body was: `, error.error);
+  //   }
+  //   // Return an observable with a user-facing error message.
+  //   return throwError(() => new Error('Something bad happened; please try again later.'));
+  // }
 
   constructor(
     // inicializamos el metodo http
@@ -130,7 +130,7 @@ export class DataService {
   getPortFolioData(): Observable<FullPersonDTO> {
     const endPoint = `${this.LOCALHOST_API}/fullperson/view/${this.USERID}`
     const response = this.http.get<FullPersonDTO>(endPoint)
-      .pipe(catchError(this.handleError));
+      // .pipe(catchError(this.handleError));
     return response;
   }
   getPortFolioData$(): Observable<FullPersonDTO> {
@@ -174,13 +174,13 @@ export class DataService {
   }
 
   // HardSkills APIREST ###################################################
-  getHardSkill(): Observable<HardSkill[]> {
-    this.EndPoint = `${this.LOCALHOST_API}/hardskill/list/${this.USERID}`
-    return this.http.get<HardSkill[]>(this.EndPoint)
-  }
+  // getHardSkill(): Observable<HardSkill[]> {
+  //   this.EndPoint = `${this.LOCALHOST_API}/hardskill/list/${this.USERID}`
+  //   return this.http.get<HardSkill[]>(this.EndPoint)
+  // }
   updateHardSkill(hardskill: HardSkill): Observable<HardSkill> {
     hardskill.person = this.USERID;
-    const url = `${this.LOCALHOST_API}/edit/hardskill`;
+    const url = `${this.LOCALHOST_API}/hardskill/edit`;
     return this.http.post<HardSkill>(url, hardskill, httpOptions)
   }
   addHardskill(hardskill: HardSkill): Observable<HardSkill> {
@@ -188,10 +188,10 @@ export class DataService {
     // Este codigo agrega un usuario a la DB 
     console.log(hardskill.constructor.name)
     hardskill.person = this.USERID;
-    return this.http.post<HardSkill>(`${this.LOCALHOST_API}/edit/hardskill`, hardskill, httpOptions)
+    return this.http.put<HardSkill>(`${this.LOCALHOST_API}/hardskill/new`, hardskill, httpOptions)
   }
   delHardSkills(hardskill: HardSkill): Observable<HardSkill> {
-    const url = `${this.LOCALHOST_API}/del/hardskill/${hardskill.id}`
+    const url = `${this.LOCALHOST_API}/hardskill/del/${hardskill.id}`
     return this.http.delete<HardSkill>(url, httpOptions)
   }
 

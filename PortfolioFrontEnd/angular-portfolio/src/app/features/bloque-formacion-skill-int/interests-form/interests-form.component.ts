@@ -13,7 +13,7 @@ import { Interest } from '../../../models';
   styleUrls: ['./interests-form.component.css']
 })
 export class InterestsFormComponent implements OnInit {
-  // PENDIENTE: SERVICIO QUE DEBE VINCULARSE CON EL LOGUEO
+  // SERVICIO VINCULADO CON EL LOGUEO
   flagUserAdmin: boolean = false;
   flagUserAdmin$: Observable<boolean>;
 
@@ -51,6 +51,7 @@ export class InterestsFormComponent implements OnInit {
   resetForm() {
     this.formData.name = ""
   }
+  
   onEnviar(event: Event, ) {
     event.preventDefault;
     // Si deja de estar logueado, no registro lo que haya modificado y cierro form.

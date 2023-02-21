@@ -51,9 +51,9 @@ export class ModalActionsService {
         this.deleteSoftskill(modalData);
         break;
       
-      case "delHardSkill":
-        this.deleteHardSkills(modalData);
-        break;
+      // case "delHardSkill":
+      //   this.deleteHardSkills(modalData);
+      //   break;
       
       case "delProject":
         this.deleteProject(modalData);

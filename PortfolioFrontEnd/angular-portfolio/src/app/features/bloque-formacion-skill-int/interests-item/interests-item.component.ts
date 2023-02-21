@@ -13,7 +13,7 @@ import { Interest } from '../../../models'
   styleUrls: ['./interests-item.component.css']
 })
 export class InterestsItemComponent implements OnInit {
-  // PENDIENTE: SERVICIO QUE DEBE VINCULARSE CON EL LOGUEO
+  // VINCULADO CON EL LOGUEO
   flagUserAdmin: boolean = false;
   flagUserAdmin$: Observable<boolean>;
 
@@ -65,7 +65,7 @@ export class InterestsItemComponent implements OnInit {
   delete(interest: Interest) {
     // llamo al metodo del padre via emit() que lo enlaza con openModalDelete(item)
     if (this.flagUserAdmin) {
-      console.log("paso por delete() de interest-item")
+      // console.log("paso por delete() de interest-item")
       this.onDelete.emit(interest);
     }
 

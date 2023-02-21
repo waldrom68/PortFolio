@@ -59,36 +59,32 @@ export class MainComponent implements OnInit {
   
 
     ) { 
-    // Traigo todos los datos del Portfolio
-    // this.dataService.getGralData().subscribe(user => {
-    //     this.myData = user,
-    //     this.dataService.setUSER(user)
-    //   });
+      // Traigo todos los datos del Portfolio
+      this.dataService.getPortFolioData().subscribe( {
+        next: (gralData) => {
+          this.DATAPORTFOLIO = gralData;
+          this.dataService.changeGralData(gralData);
+        },
+        error: (e) => {
+          // e.status = 0, error del servidor
+          // e.status = 400, e.statusText= OK, error en el pedido al servidor
+          alert("Response Error (" + e.status + ") en iniciar.sesion.component" + "\n" + e.message);
+          console.log("Se quizo obtener los datos sin exito; ", e)
+        },
+        complete: () => {console.log("Finalizado el proceso de obtener los datos")}
+      });
     }
 
-  ngOnInit(
-    
-    
-  ): void {
+  ngOnInit(): void {
     this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();
     this.flagUserAdmin$.subscribe(  flagUserAdmin => this.flagUserAdmin = flagUserAdmin)
 
-    // NUEVA IMPLEMENTACION TRAS LA INCORPORACION DEL AUTHENTICATION
-    this.dataService.getPortFolioData().subscribe(
-      gralData => {
-      this.DATAPORTFOLIO = gralData;
-      this.dataService.changeGralData(gralData);
 
-    } )
-    , (err: string) => console.error('Observer got an error: ' + err)
-    , () => console.log('Observer got a complete notification');
-  
 
     // AQUI DEBO INICIALIZAR EL FLAG IS ADMIN DE ACUERDO SI EL TOKEN ES VALIDO COMO ADMINISTRADOR
     if (this.tokenService.isValidAdmin()) {
       this.dataService.hasCredentials(true);
     }
-
 
 
     this.detailCards = this.miServicio.getCards();

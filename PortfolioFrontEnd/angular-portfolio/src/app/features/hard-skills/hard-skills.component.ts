@@ -3,15 +3,14 @@ import { DataService } from 'src/app/service/data.service';
 
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
-import {Person, HardSkill} from '../../models'
+import {Person, HardSkill, FullPersonDTO} from '../../models'
 
-// import {HARDSKILL} from '../../mock-data'
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MessageBoxComponent } from '../../shared/message-box/message-box.component';
 import { ModalActionsService } from 'src/app/service/modal-actions.service';
 import { Observable } from 'rxjs';
 
-
+// Declaro la funcion que debe levantarse de \src\assets\widget.js
 declare function initAndSetupTheSliders(): void;
 
 @Component({
@@ -21,12 +20,12 @@ declare function initAndSetupTheSliders(): void;
 })
 export class HardSkillsComponent implements OnInit {
 
-  // PENDIENTE: SERVICIO QUE DEBE VINCULARSE CON EL LOGUEO
+  // SERVICIO QUE ESTÁ VINCULADO CON EL LOGUEO
   flagUserAdmin: boolean = false;
   flagUserAdmin$: Observable<boolean>;
 
   showForm: boolean = false;  // flag para mostrar o no el formulario
-  // softskill: SoftSkill[] = SOFTSKILL;
+ 
   myData: HardSkill[] = [];
   formData: HardSkill;  // instancia vacia, para cuando se solicite un alta
 
@@ -34,12 +33,13 @@ export class HardSkillsComponent implements OnInit {
 
   showBtnAction: boolean= true;  // flag para mostrar o no los btn's de acciones del usuario
  
-  itemParaBorrar: HardSkill;
+  itemParaBorrar: HardSkill;  // objeto que se está por borrar, sirve para reestablecer si cancela borrado
   flagBorrado: boolean = false;
   flagBorrado$: Observable<boolean>;
 
-  user: Person;
+  // user: Person;
 
+  DATAPORTFOLIO: FullPersonDTO;
   
   constructor(
     private dataService: DataService,
@@ -51,69 +51,88 @@ export class HardSkillsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.dataService.getHardSkill().subscribe(hardskill =>
-      [this.myData = hardskill]
-    );
+    this.DATAPORTFOLIO = this.dataService.getData();
+    this.myData = this.DATAPORTFOLIO.hardskill;
 
-    // this.dataService.getGralData().subscribe(data =>
-    //   this.user = data
-    // ) ;
-    // Este servicio debiera pasarse a un Observable
-    this.user = this.dataService.getUSER();
-
-    
-    // subscribo y me entero si se cambia el status del flag  
+    // subscribo y me entero si en el modal se eligió Eliminar  
     this.flagBorrado$ = this.modalService.getFlagBorrado$();
+
     this.flagBorrado$.subscribe( (tt)=> {
-      console.log(`Se acepto el borrado del item "${this.itemParaBorrar.name}"`);
-      this.myData = this.myData.filter( (t) => { return t.id !== this.itemParaBorrar.id } )
+      this.delItem();
     }
     )
 
+    // Verifica si está logueado como ADMIN
     this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();
     this.flagUserAdmin$.subscribe(  flagUserAdmin => this.flagUserAdmin = flagUserAdmin)
     this.flagUserAdmin = this.dataService.getFlagUserAdmin()
     
   }
 
-
-
   resetForm() {
     this.formData = { id:0, name:"", assessment:0, orderdeploy:0, person:0 }
   }
 
   toggleForm() {
+    // Cierra el formulario de edicion o creacion
     this.showForm = !this.showForm;
     this.showBtnAction = !this.showBtnAction;
   }  
   
-  cancelation(hardSkill: HardSkill) {
+  cancelation() {
     this.toggleForm();
   }
 
-  deleteItem(hardSkill: HardSkill){
+  openModalDelete(hardSkill: HardSkill) {
+    // Llamo al modal, si se confirma el borrado -> this.flagBorrado pasa a ser true.
+    // al volver, en ngOnInit se procede a intentar eliminarlo de la DB
     this.itemParaBorrar = hardSkill;
-    this.openDeleteModal(hardSkill)
+    this.openDeleteModal(hardSkill);
   }
 
-  upDateItem(hardSkill: HardSkill) {
-    this.dataService.updateHardSkill(hardSkill).subscribe();
+  delItem(){
+    if (this.itemParaBorrar) {
+      this.dataService.delHardSkills(this.itemParaBorrar).subscribe( {
+        next: (v) => {
+          console.log("Se ha eliminado exitosamente a: ", this.itemParaBorrar);
+          this.myData = this.myData.filter((t) => { return t !== this.itemParaBorrar })
+          // Actualizo la informacion en el origen
+          this.DATAPORTFOLIO.hardskill = this.myData
+        },
+        error: (e) => {
+          alert("Response Error (" + e.status + ")" + "\n" + e.message);
+          console.log("Se quizo eliminar sin exito a: " + this.itemParaBorrar.name);
+        },
+        complete: () => console.log("Completada la actualizacion del hardSkill")
+
+      });
+    }
   }
+
+  // upDateItem(hardSkill: HardSkill) {
+  //   this.dataService.updateHardSkill(hardSkill).subscribe();
+  // }
   
   addItem(hardSkill: HardSkill) {
-    this.dataService.addHardskill(hardSkill).subscribe( (tt)=> {
-      this.myData.push( tt );
-      this.toggleForm();
-    }
-    );
+    this.dataService.addHardskill(hardSkill).subscribe( {
+      next: (v) => {
+        console.log("Interes guardado correctamente: ", v);
+        v.person = this.DATAPORTFOLIO.id;
+        this.myData.push(v);
+      },
+      error: (e) => {
+        alert("Response Error (" + e.status + ") en el metodo addItem()" + "\n" + e.message);
+        console.log("Se quizo agregar sin exito a: " + hardSkill.name);
+      },
+      complete: () => console.log("Completado el alta del hardSkill")
+    });
     this.resetForm();
-   
+    this.toggleForm();
   }
 
   openDeleteModal(data:any) {
     // Acciones definidas en el modal-action.service.ts
     // PENDIENTE, RECUPERAR EL VALOR DE USER NAME PARA PASARLO AL MSG.
-    const userId = this.user.name;
     const dialogConfig = new MatDialogConfig();
     // The user can't close the dialog by clicking outside its body
     dialogConfig.disableClose = true;
@@ -122,8 +141,8 @@ export class HardSkillsComponent implements OnInit {
     dialogConfig.width = "600px";
     dialogConfig.data = {
       // atributos generales del message-box
-      name: "delHardSkill",
-      title: `Hi ${userId}, está por eliminar una de las habilidades técnicas`,
+      name: "eliminar",
+      title: `Hola, está por eliminar una de las habilidades técnicas`,
       description: `¿Estás seguro de eliminar "${data.name}" ?`,
       // por defecto mostrararía Aceptar
       actionButtonText: "Eliminar",
