@@ -13,7 +13,7 @@ import { SoftSkill } from 'src/app/models';
   styleUrls: ['./soft-form.component.css']
 })
 export class SoftFormComponent implements OnInit {
-  // PENDIENTE: SERVICIO QUE DEBE VINCULARSE CON EL LOGUEO
+  // SERVICIO VINCULADO CON EL LOGUEO
   flagUserAdmin: boolean = false;
   flagUserAdmin$: Observable<boolean>;
 
@@ -27,7 +27,7 @@ export class SoftFormComponent implements OnInit {
   faHand = faHand;
 
   form: FormGroup;
-  minAssessment:number = 0;
+  minAssessment:number = 1;
   maxAssessment:number = 5;
 
   constructor( 
@@ -77,7 +77,7 @@ export class SoftFormComponent implements OnInit {
       
       if (this.form.valid) {
   
-        this.formData.name = this.form.get("name")?.value;
+        this.formData.name = this.form.get("name")?.value.trim();
         this.formData.assessment = this.form.get("assessment")?.value;
         this.onUpdate.emit(this.formData);
   

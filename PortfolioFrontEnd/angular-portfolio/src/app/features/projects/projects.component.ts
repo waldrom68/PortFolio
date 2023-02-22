@@ -3,12 +3,11 @@ import { DataService } from 'src/app/service/data.service';
 
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
-import {Person, Project} from '../../models'
-
+import {Project, FullPersonDTO} from '../../models'
 
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MessageBoxComponent } from '../../shared/message-box/message-box.component';
-import { ModalActionsService } from 'src/app/service/modal-actions.service';
+
 import { Observable } from 'rxjs';
 
 @Component({
@@ -18,9 +17,10 @@ import { Observable } from 'rxjs';
 })
 export class ProjectsComponent implements OnInit {
 
-  // PENDIENTE: SERVICIO QUE DEBE VINCULARSE CON EL LOGUEO
+  // SERVICIO QUE ESTÁ VINCULADO CON EL LOGUEO
   flagUserAdmin: boolean = false;
   flagUserAdmin$: Observable<boolean>;
+
   showForm: boolean = false;  // flag para mostrar o no el formulario
 
   // softskill: SoftSkill[] = SOFTSKILL;
@@ -31,47 +31,30 @@ export class ProjectsComponent implements OnInit {
 
   showBtnAction: boolean= true;  // flag para mostrar o no los btn's de acciones del usuario
  
-  itemParaBorrar: Project;
-  flagBorrado: boolean = false;
-  flagBorrado$: Observable<boolean>;
+  itemParaBorrar: any;
 
-  user: Person;
 
-  
+  // user: Person;
+
+  DATAPORTFOLIO: FullPersonDTO;
 
   constructor( 
     private dataService: DataService,
-    
      
     public matDialog: MatDialog,
-    private modalService: ModalActionsService,
+
     ) {
       this.resetForm()
      }
 
   ngOnInit(): void {
-    this.dataService.getProject().subscribe(project =>
-      [this.myData = project]
-    );
-    // this.dataService.getGralData().subscribe(data =>
-    //   this.user = data
-    // ) ;
-    // Este servicio debiera pasarse a un Observable
-    this.user = this.dataService.getUSER();
+    this.DATAPORTFOLIO = this.dataService.getData();
+    this.myData = this.DATAPORTFOLIO.project;
 
-
-    // subscribo y me entero si se cambia el status del flag  
-    this.flagBorrado$ = this.modalService.getFlagBorrado$();
-    this.flagBorrado$.subscribe( (tt)=> {
-      console.log(`Se acepto el borrado del item "${this.itemParaBorrar.name}"`);
-      this.myData = this.myData.filter( (t) => { return t.id !== this.itemParaBorrar.id } )
-    }
-    )
-
+    // Verifica si está logueado como ADMIN
     this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();
     this.flagUserAdmin$.subscribe(  flagUserAdmin => this.flagUserAdmin = flagUserAdmin)
     this.flagUserAdmin = this.dataService.getFlagUserAdmin()
-
   }
 
   resetForm() {
@@ -86,37 +69,60 @@ export class ProjectsComponent implements OnInit {
   }
 
   toggleForm() {
+    // Cierra el formulario de edicion o creacion
     this.showForm = !this.showForm;
     this.showBtnAction = !this.showBtnAction;
   }  
   
-  cancelation(project: Project) {
+  cancelation() {
     this.toggleForm();
   }
 
-  deleteItem(project: Project){
+  openModalDelete(project: Project){
+    // Llamo al modal, si se confirma el borrado.
+    // almaceno el item en cuestion en itemParaBorrar
     this.itemParaBorrar = project;
     this.openDeleteModal(project)
   }
 
-  upDateItem(project: Project) {
-    this.dataService.updateProject(project).subscribe();
+  delItem(){
+    if (this.itemParaBorrar) {
+      this.dataService.delProject(this.itemParaBorrar).subscribe( {
+        next: (v) => {
+          console.log("Se ha eliminado exitosamente a: ", this.itemParaBorrar);
+          this.myData = this.myData.filter((t) => { return t !== this.itemParaBorrar })
+          // Actualizo la informacion en el origen
+          this.DATAPORTFOLIO.project = this.myData
+          this.itemParaBorrar = null;
+        },
+        error: (e) => {
+          alert("Response Error (" + e.status + ")" + "\n" + e.message);
+          console.log("Se quizo eliminar sin exito a: " , this.itemParaBorrar);
+        },
+        complete: () => console.log("Completada la actualizacion del proyecto")
+
+      });
+    }
   }
   
   addItem(project: Project) {
-    this.dataService.addProject(project).subscribe( (tt)=> {
-      this.myData.push( tt );
-      this.toggleForm();
-    }
-    );
+    this.dataService.addProject(project).subscribe( {
+      next: (v) => {
+        console.log("Interes guardado correctamente: ", v);
+        v.person = this.DATAPORTFOLIO.id;
+        this.myData.push(v);
+      },
+      error: (e) => {
+        alert("Response Error (" + e.status + ") en el metodo addItem()" + "\n" + e.message);
+        console.log("Se quizo agregar sin exito a: " + project.name);
+      },
+      complete: () => console.log("Completado el alta del project")
+    });
     this.resetForm();
-    
+    this.toggleForm();
   }
 
   openDeleteModal(data:any) {
-    // Acciones definidas en el modal-action.service.ts
-    // PENDIENTE, RECUPERAR EL VALOR DE USER NAME PARA PASARLO AL MSG.
-    const userId = this.user.name;
     const dialogConfig = new MatDialogConfig();
     // The user can't close the dialog by clicking outside its body
     dialogConfig.disableClose = true;
@@ -125,8 +131,8 @@ export class ProjectsComponent implements OnInit {
     dialogConfig.width = "600px";
     dialogConfig.data = {
       // atributos generales del message-box
-      name: "delProject",
-      title: `Hi ${userId}, está por eliminar uno de los proyectos`,
+      name: "eliminar",
+      title: `Hola, está por eliminar uno de los proyectos`,
       description: `¿Estás seguro de eliminar "${data.name}" ?`,
       // por defecto mostrararía Aceptar
       actionButtonText: "Eliminar",
@@ -142,5 +148,12 @@ export class ProjectsComponent implements OnInit {
     // https://material.angular.io/components/dialog/overview
     const modalDialog = this.matDialog.open(MessageBoxComponent, dialogConfig);
 
+    modalDialog.afterClosed().subscribe(
+      data => {
+        console.log("Dialogo output: ", data);
+        if (data) {this.delItem() }
+      }
+
+    )
   }
 }

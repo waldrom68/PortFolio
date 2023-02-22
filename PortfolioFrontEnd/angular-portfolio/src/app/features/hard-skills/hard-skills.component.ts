@@ -3,11 +3,11 @@ import { DataService } from 'src/app/service/data.service';
 
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
-import {Person, HardSkill, FullPersonDTO} from '../../models'
+import { HardSkill, FullPersonDTO} from '../../models'
 
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MessageBoxComponent } from '../../shared/message-box/message-box.component';
-import { ModalActionsService } from 'src/app/service/modal-actions.service';
+
 import { Observable } from 'rxjs';
 
 // Declaro la funcion que debe levantarse de \src\assets\widget.js
@@ -33,9 +33,8 @@ export class HardSkillsComponent implements OnInit {
 
   showBtnAction: boolean= true;  // flag para mostrar o no los btn's de acciones del usuario
  
-  itemParaBorrar: HardSkill;  // objeto que se está por borrar, sirve para reestablecer si cancela borrado
-  flagBorrado: boolean = false;
-  flagBorrado$: Observable<boolean>;
+  itemParaBorrar: any;  // objeto que se está por borrar, sirve para reestablecer si cancela borrado
+
 
   // user: Person;
 
@@ -45,7 +44,6 @@ export class HardSkillsComponent implements OnInit {
     private dataService: DataService,
  
     public matDialog: MatDialog,
-    private modalService: ModalActionsService,
   ) { 
     this.resetForm();
   }
@@ -53,14 +51,6 @@ export class HardSkillsComponent implements OnInit {
   ngOnInit(): void {
     this.DATAPORTFOLIO = this.dataService.getData();
     this.myData = this.DATAPORTFOLIO.hardskill;
-
-    // subscribo y me entero si en el modal se eligió Eliminar  
-    this.flagBorrado$ = this.modalService.getFlagBorrado$();
-
-    this.flagBorrado$.subscribe( (tt)=> {
-      this.delItem();
-    }
-    )
 
     // Verifica si está logueado como ADMIN
     this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();
@@ -84,26 +74,27 @@ export class HardSkillsComponent implements OnInit {
   }
 
   openModalDelete(hardSkill: HardSkill) {
-    // Llamo al modal, si se confirma el borrado -> this.flagBorrado pasa a ser true.
-    // al volver, en ngOnInit se procede a intentar eliminarlo de la DB
+    // Llamo al modal, si se confirma el borrado.
+    // almaceno el item en cuestion en itemParaBorrar
     this.itemParaBorrar = hardSkill;
     this.openDeleteModal(hardSkill);
   }
 
   delItem(){
     if (this.itemParaBorrar) {
-      this.dataService.delHardSkills(this.itemParaBorrar).subscribe( {
+      this.dataService.delHardSkill(this.itemParaBorrar).subscribe( {
         next: (v) => {
           console.log("Se ha eliminado exitosamente a: ", this.itemParaBorrar);
           this.myData = this.myData.filter((t) => { return t !== this.itemParaBorrar })
           // Actualizo la informacion en el origen
-          this.DATAPORTFOLIO.hardskill = this.myData
+          this.DATAPORTFOLIO.hardskill = this.myData;
+          this.itemParaBorrar = null;
         },
         error: (e) => {
           alert("Response Error (" + e.status + ")" + "\n" + e.message);
-          console.log("Se quizo eliminar sin exito a: " + this.itemParaBorrar.name);
+          console.log("Se quizo eliminar sin exito a: " , this.itemParaBorrar);
         },
-        complete: () => console.log("Completada la actualizacion del hardSkill")
+        complete: () => {console.log("Completada la actualizacion del hardSkill");}
 
       });
     }
@@ -131,8 +122,6 @@ export class HardSkillsComponent implements OnInit {
   }
 
   openDeleteModal(data:any) {
-    // Acciones definidas en el modal-action.service.ts
-    // PENDIENTE, RECUPERAR EL VALOR DE USER NAME PARA PASARLO AL MSG.
     const dialogConfig = new MatDialogConfig();
     // The user can't close the dialog by clicking outside its body
     dialogConfig.disableClose = true;
@@ -158,19 +147,26 @@ export class HardSkillsComponent implements OnInit {
     // https://material.angular.io/components/dialog/overview
     const modalDialog = this.matDialog.open(MessageBoxComponent, dialogConfig);
 
+    modalDialog.afterClosed().subscribe(
+      data => {
+        console.log("Dialogo output: ", data);
+        if (data) {this.delItem() }
+      }
+
+    )
   }
 
   // ngAfterViewInit(){
   //   initAndSetupTheSliders();
   // }
 
-  // ngAfterViewChecked() {
-  //   initAndSetupTheSliders();
-  // }
+  ngAfterViewChecked() {
+    initAndSetupTheSliders();
+  }
 
   // creo que esta misma funcion de JS debiera ir en item-component
   ngAfterContentChecked() {
-    console.log("se termino ngAfterContentChecked")
+    // console.log("se termino ngAfterContentChecked")
     initAndSetupTheSliders();
   }
 }

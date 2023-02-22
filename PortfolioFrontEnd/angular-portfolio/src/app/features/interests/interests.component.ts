@@ -7,7 +7,7 @@ import { FullPersonDTO, Interest } from '../../models'
 
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MessageBoxComponent } from '../../shared/message-box/message-box.component';
-import { ModalActionsService } from 'src/app/service/modal-actions.service';
+
 import { Observable } from 'rxjs';
 
 @Component({
@@ -32,9 +32,7 @@ export class InterestsComponent implements OnInit {
 
   showBtnAction: boolean = true;  // flag para mostrar o no los btn's de acciones del usuario
 
-  itemParaBorrar: Interest;  // objeto que se está por borrar, sirve para reestablecer si cancela borrado
-  flagBorrado: boolean = false;
-  flagBorrado$: Observable<boolean>;
+  itemParaBorrar: any;  // objeto que se está por borrar, sirve para reestablecer si cancela borrado
 
   // user: Person;
 
@@ -44,7 +42,7 @@ export class InterestsComponent implements OnInit {
     private dataService: DataService,
 
     public matDialog: MatDialog,
-    private modalService: ModalActionsService,
+
   ) {
     this.resetForm();
   }
@@ -53,14 +51,6 @@ export class InterestsComponent implements OnInit {
 
     this.DATAPORTFOLIO = this.dataService.getData();
     this.myData = this.DATAPORTFOLIO.interest;
-
-    // subscribo y me entero si en el modal se eligió Eliminar
-    this.flagBorrado$ = this.modalService.getFlagBorrado$();
-
-    this.flagBorrado$.subscribe((tt) => {
-        this.delItem();
-      }
-    )
 
     // Verifica si está logueado como ADMIN
     this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();
@@ -83,8 +73,8 @@ export class InterestsComponent implements OnInit {
   }
 
   openModalDelete(interest: Interest) {
-    // Llamo al modal, si se confirma el borrado -> this.flagBorrado pasa a ser true.
-    // al volver, en ngOnInit se procede a intentar eliminarlo de la DB
+    // Llamo al modal, si se confirma el borrado.
+    // almaceno el item en cuestion en itemParaBorrar
     this.itemParaBorrar = interest;
     this.openDeleteModal(interest);
   }
@@ -92,16 +82,18 @@ export class InterestsComponent implements OnInit {
   delItem() {
     if (this.itemParaBorrar) {
       // console.log(`Se acepto el borrado del item "${this.itemParaBorrar.name}"`);
-      this.dataService.delInterests(this.itemParaBorrar).subscribe( {
+      this.dataService.delInterest(this.itemParaBorrar).subscribe( {
         next: (v) => {
           console.log("Se ha eliminado exitosamente a: ", this.itemParaBorrar);
           this.myData = this.myData.filter((t) => { return t !== this.itemParaBorrar })
           // Actualizo la informacion en el origen
-          this.DATAPORTFOLIO.interest = this.myData
+          this.DATAPORTFOLIO.interest = this.myData;
+          this.itemParaBorrar = null;
+
         },
         error: (e) => {
           alert("Response Error (" + e.status + ")" + "\n" + e.message);
-          console.log("Se quizo eliminar sin exito a: " + this.itemParaBorrar.name);
+          console.log("Se quizo eliminar sin exito a: " , this.itemParaBorrar);
         },
         complete: () => console.log("Completada la actualizacion del interes")
       }
@@ -112,9 +104,10 @@ export class InterestsComponent implements OnInit {
 
   addItem(interest: Interest) {
     // console.log("Ejecuto this addItem()")
-    this.dataService.addInterests(interest).subscribe({
+    this.dataService.addInterest(interest).subscribe({
       next: (v) => {
         console.log("Interes guardado correctamente: ", v);
+        interest.id = v.id;
         v.person = this.DATAPORTFOLIO.id;
         this.myData.push(v);
       },
@@ -131,8 +124,6 @@ export class InterestsComponent implements OnInit {
 
 
   openDeleteModal(data: any) {
-    // Acciones definidas en el modal-action.service.ts
-    const user = this.DATAPORTFOLIO.name;
     const dialogConfig = new MatDialogConfig();
     // The user can't close the dialog by clicking outside its body
     dialogConfig.disableClose = true;
@@ -157,7 +148,14 @@ export class InterestsComponent implements OnInit {
 
     // https://material.angular.io/components/dialog/overview
     const modalDialog = this.matDialog.open(MessageBoxComponent, dialogConfig);
+    
+    modalDialog.afterClosed().subscribe(
+      data => {
+        console.log("Dialogo output: ", data);
+        if (data) {this.delItem() }
+      }
 
+    )
   }
 
 }

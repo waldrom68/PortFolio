@@ -1,4 +1,3 @@
-<div>
     <ng-container *ngIf="myData.length; else agregar">
         <div class="table-dark text-left container-fluid p-5" 
         *ngIf="!showForm"
@@ -7,7 +6,7 @@
                 *ngFor="let item of myData"
                 [item]="item"
 
-                (onDelete)="deleteItem(item)"
+                (onDelete)="openModalDelete(item)"
                 [(showBtnAction)]="showBtnAction"
             >
 
@@ -25,7 +24,7 @@
 
         (showBtnActionChange)="showBtnAction"
         (onUpdate)=" addItem($event)"
-        (cancel)="cancelation($event)"
+        (cancel)="cancelation()"
     >
     </app-projects-form>
 
@@ -35,7 +34,7 @@
             </p>
         </div>
     </ng-template>
-</div>
+
 
 
 

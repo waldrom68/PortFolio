@@ -1,41 +1,40 @@
-<div>
-    <ng-container *ngIf="myData.length; else agregar">
-        <div class="table-dark text-center container-fluid p-5"
-        *ngIf="!showForm"
+<ng-container *ngIf="myData.length; else agregar">
+    <div class="table-dark text-center container-fluid p-5"
+    *ngIf="!showForm"
+    >
+            
+        <app-soft-item 
+            *ngFor="let item of myData"
+            [item]="item"
+
+            (onDelete)="openModalDelete(item)"
+            [(showBtnAction)]="showBtnAction"
         >
-               
-            <app-soft-item 
-                *ngFor="let item of myData"
-                [item]="item"
-
-                (onDelete)="deleteItem(item)"
-                [(showBtnAction)]="showBtnAction"
-            >
-            </app-soft-item>
+        </app-soft-item>
 
 
-        </div>
-    </ng-container>
+    </div>
+</ng-container>
+
+<app-soft-form
+    *ngIf="showForm && flagUserAdmin"
     
-    <app-soft-form
-        *ngIf="showForm && flagUserAdmin"
-        
-        [formData]="formData"
-        [title]="'Ingrese una habilidad'"
-        
-        (showBtnActionChange)="showBtnAction"
-        (onUpdate)=" addItem($event)"
-        (cancel)="cancelation($event)"
-        >
-    </app-soft-form>
+    [formData]="formData"
+    [title]="'Ingrese una habilidad'"
+    
+    (showBtnActionChange)="showBtnAction"
+    (onUpdate)=" addItem($event)"
+    (cancel)="cancelation()"
+    >
+</app-soft-form>
 
-    <ng-template #agregar>
-        <div class="table-dark text-left container"  >
-            <p> Sin registrar habilidades.
-            </p>
-        </div>
-    </ng-template>
-</div>
+<ng-template #agregar>
+    <div class="table-dark text-left container"  >
+        <p> Sin registrar habilidades.
+        </p>
+    </div>
+</ng-template>
+
 
 
 

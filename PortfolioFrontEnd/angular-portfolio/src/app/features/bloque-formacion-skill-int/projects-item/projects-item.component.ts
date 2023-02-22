@@ -11,9 +11,10 @@ import { DataService } from 'src/app/service/data.service';
   styleUrls: ['./projects-item.component.css']
 })
 export class ProjectsItemComponent implements OnInit {
-  // PENDIENTE: SERVICIO QUE DEBE VINCULARSE CON EL LOGUEO
+  // VINCULADO CON EL LOGUEO
   flagUserAdmin: boolean = false;
   flagUserAdmin$: Observable<boolean>;
+
 
 
   @Input() item: Project;
@@ -31,10 +32,15 @@ export class ProjectsItemComponent implements OnInit {
 
   showForm: boolean = false;
   formData: Project;
+  oldData: Project;
 
   constructor( private dataService: DataService, ) { }
 
   ngOnInit(): void {
+    // this.oldData = this.item;
+    // Clono el objeto, uso assign por no tener atributos compuesto por otros objetos
+    this.oldData = Object.assign({} , this.item)
+
     this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();
     this.flagUserAdmin$.subscribe(  flagUserAdmin => this.flagUserAdmin = flagUserAdmin)
     this.flagUserAdmin = this.dataService.getFlagUserAdmin()
@@ -49,15 +55,15 @@ export class ProjectsItemComponent implements OnInit {
 
   toggleForm(project: Project) {
     this.showForm = !this.showForm;
-    // this.ocultarAcciones = !this.ocultarAcciones
     this.formData = project;
-    // this.resize();  // habilito las acciones de cada item
+
+    // habilito las acciones de cada item
     this.showBtnAction = !this.showBtnAction
     this.showBtnActionChange.emit(this.showBtnAction)
   }
 
   delete(project: Project) {
-    // llamo al metodo del padre via emit()
+    // llamo al metodo del padre via emit() que lo enlaza con openModalDelete(item)
     if (this.flagUserAdmin) {
       this.onDelete.emit(project);
     }
@@ -68,7 +74,18 @@ export class ProjectsItemComponent implements OnInit {
   }
 
   update(project: Project) {
-    this.dataService.updateProject(project).subscribe();
+    // Actualizacion 
+    this.dataService.updateProject(project).subscribe( {
+      next: (v) => console.log("Proyecto guardado correctamente: ", v),
+      error: (e) => {
+        alert("Response Error (" + e.status + ") en el metodo upDateItem()" + "\n" + e.message);
+        console.log("Se quizo modificar sin exito a: " + this.oldData.name);
+        // Restauro valor original
+        this.formData.name = this.oldData.name;
+      },
+      complete: () => console.log("Completada la actualizacion del proyecto")
+    } );
+
     this.toggleForm(project);  // cierro el formulario
 
   }

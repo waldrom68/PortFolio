@@ -222,7 +222,7 @@ export class FullPersonDTO{
     profession: string;
     profile: string;
     objetive: string;
-    since: string;
+    since: Date;
     email: string;
     username: string;
     displaydata: DisplayData;

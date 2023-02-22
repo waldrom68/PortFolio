@@ -25,27 +25,27 @@ export class MessageBoxComponent implements OnInit {
   }
 
 
-  closeModal() {
+  closeModal(opcion: boolean) {
     // Cierro el modal, no existen otras acciones para realizar;
-    this.dialogRef.close();
+    this.dialogRef.close(opcion);
   }
 
   public accept() {
     // Delego al servicio las acciones a seguir.
-    this.modalService.modalAction(this.modalData);
+    // this.modalService.modalAction(this.modalData);
     // Genero un cambio en el Flag del servicio, al ser observable, quien lo llamó se entera del cambio de estado
     // this.modalService.toggleFlagBorrado()
-    this.closeModal()
+    this.closeModal(true);
   }
 
   public decline() {
     // Cerro el cuadro de dialogo;
-    this.closeModal()
+    this.closeModal(false)
   }
 
   public dismiss() {
     // Rechazó las acciones a seguir.
-    this.closeModal()
+    this.closeModal(false)
   }
 
  

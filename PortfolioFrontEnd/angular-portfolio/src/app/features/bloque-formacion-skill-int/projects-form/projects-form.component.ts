@@ -8,26 +8,13 @@ import { DataService } from 'src/app/service/data.service';
 import { Project } from 'src/app/models';
 
 
-
 @Component({
   selector: 'app-projects-form',
   templateUrl: './projects-form.component.html',
   styleUrls: ['./projects-form.component.css'],
-  // providers: [
-  //   // `MomentDateAdapter` can be automatically provided by importing `MomentDateModule` in your
-  //   // application's root module. We provide it at the component level here, due to limitations of
-  //   // our example generation script.
-  //   {
-  //     provide: DateAdapter,
-  //     useClass: MomentDateAdapter,
-  //     deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
-  //   },
-
-  //   {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
-  // ],
 })
 export class ProjectsFormComponent implements OnInit {
-// PENDIENTE: SERVICIO QUE DEBE VINCULARSE CON EL LOGUEO
+// SERVICIO VINCULADO CON EL LOGUEO
 flagUserAdmin: boolean = false;
 flagUserAdmin$: Observable<boolean>;
 
@@ -40,19 +27,13 @@ faCheck = faCheck;
 faTimes = faTimes;
 
 form: FormGroup;
-
-
-// @ViewChild(MatDatepicker) datepicker: MatDatepicker<Date>;
-
 minSince:string = '2018/03/1';
-maxSince:string = '2020/05/1';
-
+maxSince:string = '2030/05/1';
 
 constructor( 
   private formBuilder: FormBuilder,
   private dataService: DataService,
   ) { 
-    
 
 }
 
@@ -67,6 +48,12 @@ constructor(
     this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();
     this.flagUserAdmin$.subscribe(  flagUserAdmin => this.flagUserAdmin = flagUserAdmin)
     this.flagUserAdmin = this.dataService.getFlagUserAdmin()
+  }
+
+  color:string = 'red';
+  
+  changeStyle($event: Event){
+    this.color = $event.type == 'mouseover' ? 'resaltado' : 'normal';
   }
 
   get Nombre(): any {
@@ -98,8 +85,8 @@ constructor(
       console.log(this.form.valid, this.form.get("since")?.value)
       if (this.form.valid) {
   
-        this.formData.name = this.form.get("name")?.value;
-        this.formData.resume = this.form.get("resume")?.value;
+        this.formData.name = this.form.get("name")?.value.trim();
+        this.formData.resume = this.form.get("resume")?.value.trim();
         this.formData.since = this.form.get("since")?.value;
         this.onUpdate.emit(this.formData);
   

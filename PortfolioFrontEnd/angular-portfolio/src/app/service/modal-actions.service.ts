@@ -20,6 +20,12 @@ export class ModalActionsService {
     ) { }
     
   // Hago el cambio de status en un subject bajo observacion.
+  // PENDIENTE, REPENSAR ESTE OBSERVABLE, DERROCHA RECURSOS
+  // NO SE REQUIERE QUE SEA OBSERVABLE
+  // DEBE SER UN FLAG PARA CADA ENTIDAD, SINO SE EJECUTA EN
+  // TODAS LAS ENTIDADES, CUANDO SE ACEPTA EL BORRARO DE ALGUNA
+  // IMPLEMENTE SOLUCION DE COMPROMISO, PONIENDOLE DOBLE CONDICION
+  // EN CADA COMPONENTE Y BLANQUEANDO LA VARIABLE ITEMPARABORRAR
   toggleFlagBorrado(value:boolean) {
     this.flagBorrado = value;
     this.flagBorrado$.next(this.flagBorrado);
@@ -47,17 +53,17 @@ export class ModalActionsService {
       //   this.deleteInterest(modalData, this.oldData);
       //   break;
 
-      case "delSoftSkill":
-        this.deleteSoftskill(modalData);
-        break;
+      // case "delSoftSkill":
+      //   this.deleteSoftskill(modalData);
+      //   break;
       
       // case "delHardSkill":
       //   this.deleteHardSkills(modalData);
       //   break;
       
-      case "delProject":
-        this.deleteProject(modalData);
-        break;
+      // case "delProject":
+      //   this.deleteProject(modalData);
+      //   break;
 
       case "delOrganization":
         this.deleteOrganization(modalData);
@@ -95,6 +101,7 @@ export class ModalActionsService {
         console.log("ALERTA: en modalAction, No se ha encontrado modalData.name")
         break;
     }
+
   }
 
 
@@ -117,18 +124,18 @@ export class ModalActionsService {
   //   } );
   // }
 
-  private deleteSoftskill(modalData: any) {
-    console.log(modalData.data)
-    this.dataservice.delSoftSkill(modalData.data).subscribe()
-  }
-  private deleteHardSkills(modalData: any) {
-    console.log(modalData.data)
-    this.dataservice.delHardSkills(modalData.data).subscribe()
-  }
-  private deleteProject(modalData: any) {
-    console.log(modalData.data)
-    this.dataservice.delProject(modalData.data).subscribe()
-  }
+  // private deleteSoftskill(modalData: any) {
+  //   console.log(modalData.data)
+  //   this.dataservice.delSoftSkill(modalData.data).subscribe()
+  // }
+  // private deleteHardSkills(modalData: any) {
+  //   console.log(modalData.data)
+  //   this.dataservice.delHardSkills(modalData.data).subscribe()
+  // }
+  // private deleteProject(modalData: any) {
+  //   console.log(modalData.data)
+  //   this.dataservice.delProject(modalData.data).subscribe()
+  // }
   private deleteOrganization(modalData: any) {
     console.log(modalData.data)
     this.dataservice.delOrganization(modalData.data).subscribe()
