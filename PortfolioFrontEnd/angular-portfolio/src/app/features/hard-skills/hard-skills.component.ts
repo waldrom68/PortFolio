@@ -45,7 +45,7 @@ export class HardSkillsComponent implements OnInit {
  
     public matDialog: MatDialog,
   ) { 
-    this.resetForm();
+    
   }
 
   ngOnInit(): void {
@@ -57,6 +57,7 @@ export class HardSkillsComponent implements OnInit {
     this.flagUserAdmin$.subscribe(  flagUserAdmin => this.flagUserAdmin = flagUserAdmin)
     this.flagUserAdmin = this.dataService.getFlagUserAdmin()
     
+    this.resetForm();
   }
 
   resetForm() {

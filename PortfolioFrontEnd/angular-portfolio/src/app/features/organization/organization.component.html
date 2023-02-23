@@ -37,7 +37,7 @@
                     *ngFor="let item of myData"
                     [item]="item"
 
-                    (onDelete)="deleteItem(item)"
+                    (onDelete)="openDeleteModal(item)"
                     [(showBtnAction)]="showBtnAction"
                 >
 

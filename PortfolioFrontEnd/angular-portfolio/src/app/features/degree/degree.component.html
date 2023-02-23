@@ -7,7 +7,7 @@
                 *ngFor="let item of myData"
                 [item]="item"
 
-                (onDelete)="deleteItem(item)"
+                (onDelete)="openModalDelete(item)"
                 [(showBtnAction)]="showBtnAction"
             >
 
@@ -25,7 +25,7 @@
 
         (showBtnActionChange)="showBtnAction"
         (onUpdate)=" addItem($event)"
-        (cancel)="cancelation($event)"
+        (cancel)="cancelation()"
     >
     </app-degree-form>
 

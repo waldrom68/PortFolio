@@ -17,7 +17,7 @@ export class StudieItemComponent implements OnInit {
 
 
   @Input() item: Studie;
-  @Input() user: FullPersonDTO;
+  // @Input() user: FullPersonDTO;
   @Input() formData: Studie;
   @Input() myOrganizations: Organization[];
   @Input() myDegrees: Degree[];

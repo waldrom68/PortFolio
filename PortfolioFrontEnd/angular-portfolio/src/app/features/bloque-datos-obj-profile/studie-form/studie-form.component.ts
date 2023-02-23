@@ -17,12 +17,13 @@ import { OrganizationComponent } from '../../organization/organization.component
   styleUrls: ['./studie-form.component.css']
 })
 export class StudieFormComponent implements OnInit {
-// PENDIENTE: SERVICIO QUE DEBE VINCULARSE CON EL LOGUEO
-flagUserAdmin: boolean = false;
-flagUserAdmin$: Observable<boolean>;
+
+  // SERVICIO QUE ESTÁ VINCULADO CON EL LOGUEO
+  flagUserAdmin: boolean = false;
+  flagUserAdmin$: Observable<boolean>;
 
 @Input() formData: Studie;
-@Input() user: FullPersonDTO;
+
 @Input() title: string;
 @Input() myOrganizations: Organization[];
 @Output() myOrganizationChange: EventEmitter<Organization[]> = new EventEmitter;
@@ -41,6 +42,8 @@ faTimes = faTimes;
 
 form: FormGroup;
 
+DATAPORTFOLIO: FullPersonDTO;
+
 showOrgaForm: boolean = false;
 showDegreeForm: boolean = false;
 showPrimaryForm: boolean = true;
@@ -57,8 +60,10 @@ showPrimaryForm: boolean = true;
   }
 
   ngOnInit(): void {
+    this.DATAPORTFOLIO = this.dataService.getData();
+
     this.form = this.formBuilder.group({
-      name:[this.formData.name, [Validators.required, Validators.minLength(2), Validators.maxLength(500) ]],
+      name:[this.formData.name, [Validators.required, Validators.minLength(2), Validators.maxLength(100) ]],
       startDate:[this.formData.startDate, [Validators.required ]],
       endDate:[this.formData.endDate, []],
       organization:[this.formData.organization, [Validators.required]],
@@ -179,13 +184,13 @@ showPrimaryForm: boolean = true;
       console.log(this.form.valid, this.form.get("organizacion")?.value)
       if (this.form.valid) {
   
-        this.formData.name = this.form.get("name")?.value;
+        this.formData.name = this.form.get("name")?.value.trim();
         this.formData.startDate = this.form.get("startDate")?.value;
         this.formData.endDate = this.form.get("endDate")?.value;
         this.formData.organization = this.form.get("organization")?.value;
         this.formData.degree = this.form.get("degree")?.value;
         this.formData.status = true;
-        this.formData.person = this.user.id 
+        this.formData.person = this.DATAPORTFOLIO.id 
         this.onUpdate.emit(this.formData);
   
       } else {

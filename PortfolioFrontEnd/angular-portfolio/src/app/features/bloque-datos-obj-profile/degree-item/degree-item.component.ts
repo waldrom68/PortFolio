@@ -12,7 +12,7 @@ import { DataService } from 'src/app/service/data.service';
   styleUrls: ['./degree-item.component.css']
 })
 export class DegreeItemComponent implements OnInit {
-  // PENDIENTE: SERVICIO QUE DEBE VINCULARSE CON EL LOGUEO
+  // VINCULADO CON EL LOGUEO
   flagUserAdmin: boolean = false;
   flagUserAdmin$: Observable<boolean>;
 
@@ -32,11 +32,15 @@ export class DegreeItemComponent implements OnInit {
   faTrash = faTrash;
 
   showForm: boolean = false;
-  // formData: Organization;
+  // formData: Degree; // Viene por un input
+  oldData: Degree;
 
   constructor(private dataService: DataService,) { }
 
   ngOnInit(): void {
+    // Clono el objeto, uso assign por no tener atributos compuesto por otros objetos
+    this.oldData = Object.assign({} , this.item)
+
     this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();
     this.flagUserAdmin$.subscribe(  flagUserAdmin => this.flagUserAdmin = flagUserAdmin)
     this.flagUserAdmin = this.dataService.getFlagUserAdmin()
@@ -48,30 +52,40 @@ export class DegreeItemComponent implements OnInit {
     this.color = $event.type == 'mouseover' ? 'resaltado' : 'normal';
   }
 
-  toggleForm(organization: Degree) {
+  toggleForm(degree: Degree) {
     this.showForm = !this.showForm;
-    // this.ocultarAcciones = !this.ocultarAcciones
-    this.formData = organization;
-    // this.resize();  // habilito las acciones de cada item
+    this.formData = degree;
+    // habilito las acciones de cada item
     this.showBtnAction = !this.showBtnAction
     this.showBtnActionChange.emit(this.showBtnAction)
   }
 
   delete(degree: Degree) {
-    // llamo al metodo del padre via emit()
+    // llamo al metodo del padre via emit() que lo enlaza con openModalDelete(item)
     if (this.flagUserAdmin) {
       this.onDelete.emit(degree);
     }
 
   }
+  
+  update(degree: Degree) {
+    this.dataService.updateDegree(degree).subscribe( {
+      next: (v) => console.log("Degree guardado correctamente: ", v),
+      error: (e) => {
+        alert("Response Error (" + e.status + ") en el metodo upDateItem()" + "\n" + e.message);
+        console.log("Se quizo modificar sin exito a: " + this.oldData.name);
+        // Restauro valor original
+        this.formData.name = this.oldData.name;
+      },
+      complete: () => console.log("Completada la actualizacion del Degree")
+    } );
+    
+    this.toggleForm(degree);  // cierro el formulario
+    
+  }
+  
   cancelation(degree: Degree) {
     this.toggleForm(degree);  // cierro el formulario
-  }
-
-  update(degree: Degree) {
-    this.dataService.updateDegree(degree).subscribe();
-    this.toggleForm(degree);  // cierro el formulario
-
   }
 
 }

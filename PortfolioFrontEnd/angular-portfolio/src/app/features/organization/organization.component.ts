@@ -18,13 +18,12 @@ import { Observable } from 'rxjs';
 })
 export class OrganizationComponent implements OnInit {
  
-
-  // PENDIENTE: SERVICIO QUE DEBE VINCULARSE CON EL LOGUEO
+  // SERVICIO QUE ESTÁ VINCULADO CON EL LOGUEO
   flagUserAdmin: boolean = false;
   flagUserAdmin$: Observable<boolean>;
+
   showForm: boolean = false;  // flag para mostrar o no el formulario
 
-  // softskill: SoftSkill[] = SOFTSKILL;
   myData: Organization[] = [];
   formData: Organization;  // instancia vacia, para cuando se solicite un alta
 
@@ -37,13 +36,9 @@ export class OrganizationComponent implements OnInit {
   @Input() myOrganizations: Organization[];
   @Output() myOrganizationsChange = new EventEmitter<Organization[]>();
 
+  private itemParaBorrar: any;
 
-
-  private itemParaBorrar: Organization;
-  flagBorrado: boolean = false;
-  flagBorrado$: Observable<boolean>;
-
-  user: Person;
+  // user: Person;
  
   message: string;
   
@@ -61,23 +56,19 @@ export class OrganizationComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.dataService.getOrganization().subscribe(organization =>
-      [this.myData = organization]
-    );
-    // this.dataService.getGralData().subscribe(data =>
-    //   this.user = data
-    // ) ;
-    // Este servicio debiera pasarse a un Observable
-    this.user = this.dataService.getUSER();
-
-    // subscribo y me entero si se cambia el status del flag  
-    this.flagBorrado$ = this.modalService.getFlagBorrado$();
-    this.flagBorrado$.subscribe( (tt)=> {
-      console.log(`Se acepto el borrado del item "${this.itemParaBorrar.name}"`);
-      this.myData = this.myData.filter( (t) => { return t.id !== this.itemParaBorrar.id } )
-    }
-    )
-
+    this.dataService.getOrganization().subscribe( {
+      next: (v) => {
+        this.myData = v;
+      },
+      error: (e) => {
+        alert("Response Error (" + e.status + ")" + "\n" + e.message);
+        console.log("Se quizo obtener Organizaciones sin exito " );
+      },
+      complete: () => {console.log("Completada la actualizacion de Organizaciones");}
+      });
+    
+    
+    // Verifica si está logueado como ADMIN
     this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();
     this.flagUserAdmin$.subscribe(  flagUserAdmin => this.flagUserAdmin = flagUserAdmin);
     this.flagUserAdmin = this.dataService.getFlagUserAdmin();
@@ -95,18 +86,12 @@ export class OrganizationComponent implements OnInit {
   }
 
   toggleForm() {
+    // Cierra el formulario de edicion o creacion
     this.showForm = !this.showForm;
     this.showBtnAction = !this.showBtnAction;
 
   }  
   
-  closeOrga() {
-    // this.showBtnAction = true;
-    // this.showBtnActionChange.emit(true)
-    // this.toggleForm();
-
-  }
-
   prueba(data:any) {
     this.myData = data;
     console.log("Prueba function in orga-compoment", this.myData)
@@ -118,14 +103,37 @@ export class OrganizationComponent implements OnInit {
     
   }
 
-  deleteItem(organization: Organization){
+  openModalDelete(organization: Organization){
+    // Llamo al modal, si se confirma el borrado.
+    // almaceno el item en cuestion en itemParaBorrar
     this.itemParaBorrar = organization;
     this.openDeleteModal(organization)
   }
 
-  upDateItem(organization: Organization) {
-    this.dataService.updateOrganization(organization).subscribe();
+  
+  delItem(){
+    if (this.itemParaBorrar) {
+      this.dataService.delOrganization(this.itemParaBorrar).subscribe( {
+        next: (v) => {
+          console.log("Se ha eliminado exitosamente a: ", this.itemParaBorrar);
+          this.myData = this.myData.filter((t) => { return t !== this.itemParaBorrar })
+          // Actualizo la informacion en el origen
+          this.itemParaBorrar = null;
+        },
+        error: (e) => {
+          alert("Response Error (" + e.status + ")" + "\n" + e.message);
+          console.log("Se quizo eliminar sin exito a: " , this.itemParaBorrar);
+        },
+        complete: () => {console.log("Completada la actualizacion del Organization");}
+
+      });
+    }
   }
+
+
+  // upDateItem(organization: Organization) {
+  //   this.dataService.updateOrganization(organization).subscribe();
+  // }
   
   addItem(organization: Organization) {
     this.dataService.addOrganization(organization).subscribe( (tt)=> {
@@ -138,9 +146,6 @@ export class OrganizationComponent implements OnInit {
   }
 
   openDeleteModal(data:any) {
-    // Acciones definidas en el modal-action.service.ts
-    // PENDIENTE, RECUPERAR EL VALOR DE USER NAME PARA PASARLO AL MSG.
-    const userId = this.user.name;
     const dialogConfig = new MatDialogConfig();
     // The user can't close the dialog by clicking outside its body
     dialogConfig.disableClose = true;
@@ -149,8 +154,8 @@ export class OrganizationComponent implements OnInit {
     dialogConfig.width = "600px";
     dialogConfig.data = {
       // atributos generales del message-box
-      name: "delOrganization",
-      title: `Hi ${userId}, está por eliminar una de las organizaciones`,
+      name: "eliminar",
+      title: `Hola, está por eliminar una de las organizaciones`,
       description: `¿Estás seguro de eliminar a "${data.name}" ?`,
       // por defecto mostrararía Aceptar
       actionButtonText: "Eliminar",
@@ -166,6 +171,13 @@ export class OrganizationComponent implements OnInit {
     // https://material.angular.io/components/dialog/overview
     const modalDialog = this.matDialog.open(MessageBoxComponent, dialogConfig);
 
+    modalDialog.afterClosed().subscribe(
+      data => {
+        console.log("Dialogo output: ", data);
+        if (data) {this.delItem() }
+      }
+
+    )
   }
 
 

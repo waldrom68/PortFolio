@@ -3,7 +3,7 @@ import { DataService } from 'src/app/service/data.service';
 
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
-import {Person, Studie, Organization, Degree, FullPersonDTO} from '../../models'
+import { Studie, Organization, Degree, FullPersonDTO} from '../../models'
 
 
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
@@ -17,9 +17,11 @@ import { Observable } from 'rxjs';
   styleUrls: ['./datos-formacion.component.css']
 })
 export class DatosFormacionComponent implements OnInit {
-  // PENDIENTE: SERVICIO QUE DEBE VINCULARSE CON EL LOGUEO
+
+  // SERVICIO QUE ESTÁ VINCULADO CON EL LOGUEO
   flagUserAdmin: boolean = false;
   flagUserAdmin$: Observable<boolean>;
+
   showForm: boolean = false;  // flag para mostrar o no el formulario
 
   // softskill: SoftSkill[] = SOFTSKILL;
@@ -30,11 +32,10 @@ export class DatosFormacionComponent implements OnInit {
 
   showBtnAction: boolean= true;  // flag para mostrar o no los btn's de acciones del usuario
  
-  itemParaBorrar: Studie;
-  flagBorrado: boolean = false;
-  flagBorrado$: Observable<boolean>;
+  itemParaBorrar: any;
 
-  user: FullPersonDTO;
+  DATAPORTFOLIO: FullPersonDTO;
+
   myOrganizations: Organization[];
   myDegrees: Degree[];
 
@@ -43,41 +44,49 @@ export class DatosFormacionComponent implements OnInit {
     private dataService: DataService,
 
     public matDialog: MatDialog,
-    private modalService: ModalActionsService,
-    ) {
-      // this.dataService.getGralData().subscribe(data =>
-      //   this.user = data
-      //   ) ;
-        this.dataService.getOrganization().subscribe(data =>
-          this.myOrganizations = data
-    
-        );
-        this.dataService.getDegree().subscribe(data =>
-          this.myDegrees = data
-        );
-        this.dataService.getStudie().subscribe(data =>
-          this.myData = data
-        );
-      this.resetForm()
-    }
+
+    ) {  }
 
 
   ngOnInit(): void {
+    this.DATAPORTFOLIO = this.dataService.getData();
+    this.myData = this.DATAPORTFOLIO.studie;
 
-    // subscribo y me entero si se cambia el status del flag  
-    this.flagBorrado$ = this.modalService.getFlagBorrado$();
-    this.flagBorrado$.subscribe( (tt)=> {
-      console.log(`Se acepto el borrado del item "${this.itemParaBorrar.organization}"`);
-      this.myData = this.myData.filter( (t) => { return t.id !== this.itemParaBorrar.id } )
-    }
-    )
+    // this.myOrganizations = this.DATAPORTFOLIO.organization;
+    // this.myDegrees = this.DATAPORTFOLIO.Degree;
 
+    this.dataService.getOrganization().subscribe( {
+      next: (v) => {
+        this.myOrganizations = v;
+      },
+      error: (e) => {
+        alert("Response Error (" + e.status + ")" + "\n" + e.message);
+        console.log("Se quizo obtener Organizaciones sin exito " );
+      },
+      complete: () => {console.log("Completada la actualizacion de Organizaciones");}
+      });
+
+      this.dataService.getDegree().subscribe( {
+        next: (v) => { this.myDegrees = v},
+        error: (e) => {
+          alert("Response Error (" + e.status + ")" + "\n" + e.message);
+          console.log("Se quizo obtener los datos Degree sin exito; ", e );
+        },
+        complete: () => {console.log("Finalizado el proceso de obtener los datos Degree");}
+      });
+
+      
+
+    
+
+
+
+    // Verifica si está logueado como ADMIN
     this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();
     this.flagUserAdmin$.subscribe(  flagUserAdmin => this.flagUserAdmin = flagUserAdmin)
     this.flagUserAdmin = this.dataService.getFlagUserAdmin();
 
-    //  console.log(this.user.id)
-
+    this.resetForm()
   }
   
   resetForm() {
@@ -103,52 +112,69 @@ export class DatosFormacionComponent implements OnInit {
       person: 0
     }
   }
-  delete(studie: Studie) {
-    // Este codigo acualiza el array Person para que se actualice en 
-    // el frontend, sin necesidad de recargar la pagina
-     this.dataService.delStudie(studie).subscribe( (tt)=> {
-        // despues de ejecutarse el borrado de la DB, la quitamos del listado de myData
-        this.myData = this.myData.filter( (t) => { return t.id !== studie.id } )
-      }
-      );
-
-  }
-
-
 
   toggleForm() {
     this.showForm = !this.showForm;
     this.showBtnAction = !this.showBtnAction;
   }  
   
-  cancelation(studie: Studie) {
+  cancelation() {
     this.toggleForm();
   }
 
-  deleteItem(studie: Studie){
+  openModalDelete(studie: Studie){
+    // Llamo al modal, si se confirma el borrado.
+    // almaceno el item en cuestion en itemParaBorrar
     this.itemParaBorrar = studie;
-    this.openDeleteModal(studie)
+    this.openDeleteModal(studie);
   }
 
-  upDateItem(studie: Studie) {
-    this.dataService.updateStudie(studie).subscribe();
+
+  delItem() {
+    if (this.itemParaBorrar) {
+      this.dataService.delStudie(this.itemParaBorrar).subscribe( {
+        next: (v) => {
+          console.log("Se ha eliminado exitosamente a: ", this.itemParaBorrar);
+          this.myData = this.myData.filter((t) => { return t !== this.itemParaBorrar })
+          // Actualizo la informacion en el origen
+          this.itemParaBorrar = null;
+        },
+        error: (e) => {
+          alert("Response Error (" + e.status + ")" + "\n" + e.message);
+          console.log("Se quizo eliminar sin exito a: " , this.itemParaBorrar);
+        },
+        complete: () => {console.log("Completada la actualizacion del Estudio");}
+
+      });
+    }
   }
+
+
+
+
+
+  // upDateItem(studie: Studie) {
+  //   this.dataService.updateStudie(studie).subscribe();
+  // }
   
   addItem(studie: Studie) {
-    this.dataService.addStudie(studie).subscribe( (tt)=> {
-      this.myData.push( tt );
-      this.toggleForm();
-      this.resetForm();
-    }
-    );
-    // this.resetForm();
-
+    this.dataService.addStudie(studie).subscribe(  {
+      next: (v) => {
+        console.log("Interes guardado correctamente: ", v);
+        v.person = this.DATAPORTFOLIO.id;
+        this.myData.push(v);
+      },
+      error: (e) => {
+        alert("Response Error (" + e.status + ") en el metodo addItem()" + "\n" + e.message);
+        console.log("Se quizo agregar sin exito a: " + studie.name);
+      },
+      complete: () => console.log("Completado el alta del Estudie")
+    });
+    this.resetForm();
+    this.toggleForm();
   }
 
   openDeleteModal(data:any) {
-    // Acciones definidas en el modal-action.service.ts
-    // PENDIENTE, RECUPERAR EL VALOR DE USER NAME PARA PASARLO AL MSG.
-    const userId = this.user.name;
     const dialogConfig = new MatDialogConfig();
     // The user can't close the dialog by clicking outside its body
     dialogConfig.disableClose = true;
@@ -157,8 +183,8 @@ export class DatosFormacionComponent implements OnInit {
     dialogConfig.width = "600px";
     dialogConfig.data = {
       // atributos generales del message-box
-      name: "delStudie",
-      title: `Hi ${userId}, está por eliminar uno de los estudios`,
+      name: "eliminar",
+      title: `Hola, está por eliminar uno de los estudios`,
       description: `¿Estás seguro de eliminar "${data.organization.name} (${data.name})" ?`,
       // por defecto mostrararía Aceptar
       actionButtonText: "Eliminar",
@@ -174,6 +200,12 @@ export class DatosFormacionComponent implements OnInit {
     // https://material.angular.io/components/dialog/overview
     const modalDialog = this.matDialog.open(MessageBoxComponent, dialogConfig);
 
+    modalDialog.afterClosed().subscribe(
+      data => {
+        console.log("Dialogo output: ", data);
+        if (data) {this.delItem() }
+      }
+
+    )
   }
 }
-

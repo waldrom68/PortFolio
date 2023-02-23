@@ -6,10 +6,9 @@
             <app-studie-item 
                 *ngFor="let item of myData"
                 [item]="item"
-                [user]="user"
                 [formData]="formData"
                 [myDegrees]="myDegrees"
-                (onDelete)="deleteItem(item)"
+                (onDelete)="openModalDelete(item)"
                 
                 [myOrganizations]="myOrganizations"
                 (myOrganizationsChange)="myOrganizations"
@@ -26,7 +25,6 @@
     <app-studie-form
         *ngIf="showForm && flagUserAdmin"
         [ngStyle]="{'width':'100%'}"
-        [user]="user"
         [formData]="formData"
         [myDegrees]="myDegrees"
         [title]="'Agregar un estudio'"
@@ -37,7 +35,7 @@
         (myOrganizationsChange)="myOrganizations"
         
         (onUpdate)=" addItem($event)"
-        (cancel)="cancelation($event)"
+        (cancel)="cancelation()"
     >
     </app-studie-form>
 

@@ -13,7 +13,7 @@ import { Organization } from 'src/app/models';
   styleUrls: ['./organization-form.component.css']
 })
 export class OrganizationFormComponent implements OnInit {
-// PENDIENTE: SERVICIO QUE DEBE VINCULARSE CON EL LOGUEO
+// SERVICIO VINCULADO CON EL LOGUEO
 flagUserAdmin: boolean = false;
 flagUserAdmin$: Observable<boolean>;
 
@@ -76,9 +76,9 @@ form: FormGroup;
       
       if (this.form.valid) {
   
-        this.formData.name = this.form.get("name")?.value;
-        this.formData.resume = this.form.get("resume")?.value;
-        this.formData.url = this.form.get("url")?.value;
+        this.formData.name = this.form.get("name")?.value.trim();
+        this.formData.resume = this.form.get("resume")?.value.trim();
+        this.formData.url = this.form.get("url")?.value.trim();
         this.onUpdate.emit(this.formData);
   
       } else {

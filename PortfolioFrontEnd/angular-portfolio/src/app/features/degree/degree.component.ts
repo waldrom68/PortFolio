@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { DataService } from 'src/app/service/data.service';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
-import {Person, Degree} from '../../models'
+import { Degree } from '../../models'
 
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MessageBoxComponent } from '../../shared/message-box/message-box.component';
-import { ModalActionsService } from 'src/app/service/modal-actions.service';
+
 import { Observable } from 'rxjs';
 
 @Component({
@@ -16,12 +16,13 @@ import { Observable } from 'rxjs';
 })
 export class DegreeComponent implements OnInit {
 
-  // PENDIENTE: SERVICIO QUE DEBE VINCULARSE CON EL LOGUEO
+  // SERVICIO QUE ESTÁ VINCULADO CON EL LOGUEO
   flagUserAdmin: boolean = false;
   flagUserAdmin$: Observable<boolean>;
+
   showForm: boolean = false;  // flag para mostrar o no el formulario
 
-  // softskill: SoftSkill[] = SOFTSKILL;
+
   myData: Degree[] = [];
   formData: Degree;  // instancia vacia, para cuando se solicite un alta
 
@@ -29,39 +30,26 @@ export class DegreeComponent implements OnInit {
 
   showBtnAction: boolean= true;  // flag para mostrar o no los btn's de acciones del usuario
  
-  itemParaBorrar: Degree;
-  flagBorrado: boolean = false;
-  flagBorrado$: Observable<boolean>;
+  itemParaBorrar: any;
 
-  user: Person;
+
+  // user: Person;
+
+  // DATAPORTFOLIO: FullPersonDTO;
 
   constructor(
     private dataService: DataService,
     
      
     public matDialog: MatDialog,
-    private modalService: ModalActionsService
+
   ) { }
 
   ngOnInit(): void {
-    this.dataService.getDegree().subscribe(degree =>
-      [this.myData = degree]
-    );
-    // this.dataService.getGralData().subscribe(data =>
-    //   this.user = data
-    // ) ;
+    this.loadDegree();
 
-    // Este servicio debiera pasarse a un Observable
-    this.user = this.dataService.getUSER();
-
-    // subscribo y me entero si se cambia el status del flag  
-    this.flagBorrado$ = this.modalService.getFlagBorrado$();
-    this.flagBorrado$.subscribe( (tt)=> {
-      console.log(`Se acepto el borrado del item "${this.itemParaBorrar.name}"`);
-      this.myData = this.myData.filter( (t) => { return t.id !== this.itemParaBorrar.id } )
-    }
-    )
-
+    console.log("Entrando para leer los datos")
+    
     this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();
     this.flagUserAdmin$.subscribe(  flagUserAdmin => this.flagUserAdmin = flagUserAdmin);
     this.flagUserAdmin = this.dataService.getFlagUserAdmin();
@@ -76,7 +64,17 @@ export class DegreeComponent implements OnInit {
       person:0 }
   }
 
-
+  loadDegree() {
+    
+    this.dataService.getDegree().subscribe( {
+      next: (v) => { this.myData = v},
+      error: (e) => {
+        alert("Response Error (" + e.status + ")" + "\n" + e.message);
+        console.log("Se quizo obtener los datos Degree sin exito; ", e );
+      },
+      complete: () => {console.log("Finalizado el proceso de obtener los datos Degree");}
+    });
+  }
   toggleForm() {
     
     this.showForm = !this.showForm;
@@ -84,33 +82,55 @@ export class DegreeComponent implements OnInit {
 
   }  
   
-  cancelation(degree: Degree) {
+  cancelation() {
     this.toggleForm();
   }
 
-  deleteItem(degree: Degree){
+  openModalDelete(degree: Degree){
+    // Llamo al modal, si se confirma el borrado.
+    // almaceno el item en cuestion en itemParaBorrar
     this.itemParaBorrar = degree;
     this.openDeleteModal(degree)
   }
 
-  upDateItem(degree: Degree) {
-    this.dataService.updateDegree(degree).subscribe();
+  delItem(){
+    if (this.itemParaBorrar) {
+      this.dataService.delDegree(this.itemParaBorrar).subscribe( {
+        next: (v) => {
+          console.log("Se ha eliminado exitosamente a: ", this.itemParaBorrar);
+          this.myData = this.myData.filter((t) => { return t !== this.itemParaBorrar })
+          // Actualizo la informacion en el origen
+          this.itemParaBorrar = null;
+        },
+        error: (e) => {
+          alert("Response Error (" + e.status + ")" + "\n" + e.message);
+          console.log("Se quizo eliminar sin exito a: " , this.itemParaBorrar);
+        },
+        complete: () => {console.log("Completada la actualizacion del degree");}
+
+      });
+    }
   }
+
+  // upDateItem(degree: Degree) {
+  //   this.dataService.updateDegree(degree).subscribe();
+  // }
   
   addItem(degree: Degree) {
-    this.dataService.addDegree(degree).subscribe( (tt)=> {
-      this.myData.push( tt );
-      this.toggleForm();
-    }
-    );
+    this.dataService.addDegree(degree).subscribe( {
+      next: (v) => {this.myData.push( v )},
+      error: (e) => {
+        alert("Response Error (" + e.status + ") en el metodo addItem()" + "\n" + e.message);
+        console.log("Se quizo agregar sin exito a: " + degree.name);
+      },
+      complete: () => console.log("Completado el alta del degree")
+    });
+    this.toggleForm();
     this.resetForm();
     
   }
 
   openDeleteModal(data:any) {
-    // Acciones definidas en el modal-action.service.ts
-    // PENDIENTE, RECUPERAR EL VALOR DE USER NAME PARA PASARLO AL MSG.
-    const userId = this.user.name;
     const dialogConfig = new MatDialogConfig();
     // The user can't close the dialog by clicking outside its body
     dialogConfig.disableClose = true;
@@ -119,8 +139,8 @@ export class DegreeComponent implements OnInit {
     dialogConfig.width = "600px";
     dialogConfig.data = {
       // atributos generales del message-box
-      name: "delDegree",
-      title: `Hi ${userId}, está por eliminar una de las niveles de carreras`,
+      name: "eliminar",
+      title: `Hola, está por eliminar una de las niveles de carreras`,
       description: `¿Estás seguro de eliminar a "${data.name}" ?`,
       // por defecto mostrararía Aceptar
       actionButtonText: "Eliminar",
@@ -136,6 +156,12 @@ export class DegreeComponent implements OnInit {
     // https://material.angular.io/components/dialog/overview
     const modalDialog = this.matDialog.open(MessageBoxComponent, dialogConfig);
 
-  }
+    modalDialog.afterClosed().subscribe(
+      data => {
+        console.log("Dialogo output: ", data);
+        if (data) {this.delItem() }
+      }
 
+    )
+  }
 }

@@ -13,19 +13,19 @@ import { Degree } from 'src/app/models';
   styleUrls: ['./degree-form.component.css']
 })
 export class DegreeFormComponent implements OnInit {
-// PENDIENTE: SERVICIO QUE DEBE VINCULARSE CON EL LOGUEO
-flagUserAdmin: boolean = false;
-flagUserAdmin$: Observable<boolean>;
+  // SERVICIO VINCULADO CON EL LOGUEO
+  flagUserAdmin: boolean = false;
+  flagUserAdmin$: Observable<boolean>;
 
-@Input() formData: Degree;
-@Input() title: string;
-@Output() onUpdate: EventEmitter<Degree> = new EventEmitter()
-@Output() cancel: EventEmitter<Degree> = new EventEmitter()
+  @Input() formData: Degree;
+  @Input() title: string;
+  @Output() onUpdate: EventEmitter<Degree> = new EventEmitter()
+  @Output() cancel: EventEmitter<Degree> = new EventEmitter()
 
-faCheck = faCheck;
-faTimes = faTimes;
+  faCheck = faCheck;
+  faTimes = faTimes;
 
-form: FormGroup;
+  form: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -43,12 +43,15 @@ form: FormGroup;
     this.flagUserAdmin = this.dataService.getFlagUserAdmin()
   }
 
+  color:string = 'red';
+  
+  changeStyle($event: Event){
+    this.color = $event.type == 'mouseover' ? 'resaltado' : 'normal';
+  }
   get Nombre(): any {
     return this.form.get("name")
   }
 
-
-  
   resetForm() {
     this.formData = { 
       id:0, 
@@ -68,7 +71,7 @@ form: FormGroup;
       
       if (this.form.valid) {
   
-        this.formData.name = this.form.get("name")?.value;
+        this.formData.name = this.form.get("name")?.value.trim();
         this.onUpdate.emit(this.formData);
   
       } else {
