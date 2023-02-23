@@ -171,7 +171,7 @@ EndPoint's information:
 
 - Si bien la estructura de la DB y el backend lo contempla, como el FrontEnd por el momento solo adminitra el PortFolio de una sóla persona, no se debiera utilizar aún las altas/bajas de los objetos Person.
 
-- Los objetos Card tienen informacion para la visibilidad de objetos del PortFolio y/o layout, estos tendrán los mismos atributos para todos los Objetos Person. 
+- Los objetos Card tienen informacion para la visibilidad de objetos del PortFolio y/o layout, por ahora estos tendrán los mismos atributos para todos los Objetos Person. 
 
 
 ## Investigar: Manejo de excepciones para API Rest
@@ -205,13 +205,19 @@ Pasos para implementar en firebase, se debe instalar el paquete Firebase tools, 
 
 
 
-Para correr el servidor frontend en localhost:
-    cd C:\PortFolioWeb\Portfolio\PortfolioFrontEnd\angular-portfolio
-    ng serve -o
-
 Para correr la aplicacion frontend en localhost:
     cd C:\PortFolioWeb\Portfolio\PortfolioFrontEnd\angular-portfolio
+    ng serve -o
+    o
+    ng serve --configuration=development
+
+Para correr el servidor frontend en localhost:
+    cd C:\PortFolioWeb\Portfolio\PortfolioFrontEnd\angular-portfolio
     npm run server
+
+Para correr el frontend desplegado en firebase:
+https://portfolio-frontend-wdr.web.app/
+
 
 
 
