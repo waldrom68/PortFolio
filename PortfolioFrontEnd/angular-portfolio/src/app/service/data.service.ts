@@ -203,10 +203,10 @@ export class DataService {
   
   // pendientes de implementar
     // Degree  APIREST ###################################################
-    getDegree(): Observable<Degree[]> {
-      this.EndPoint = `${this.LOCALHOST_API}/degree/list/${this.USERID}`
-      return this.http.get<Degree[]>(this.EndPoint)
-    }
+    // getDegree(): Observable<Degree[]> {
+    //   this.EndPoint = `${this.LOCALHOST_API}/degree/list/${this.USERID}`
+    //   return this.http.get<Degree[]>(this.EndPoint)
+    // }
     updateDegree(degree: Degree): Observable<Degree> {
       const url = `${this.LOCALHOST_API}/degree/edit`;
       degree.person = this.USERID;
@@ -224,10 +224,10 @@ export class DataService {
     }
 
   // Organization  APIREST ###################################################
-  getOrganization(): Observable<Organization[]> {
-    this.EndPoint = `${this.LOCALHOST_API}/organization/list/${this.USERID}`
-    return this.http.get<Organization[]>(this.EndPoint)
-  }
+  // getOrganization(): Observable<Organization[]> {
+  //   this.EndPoint = `${this.LOCALHOST_API}/organization/list/${this.USERID}`
+  //   return this.http.get<Organization[]>(this.EndPoint)
+  // }
   updateOrganization(organization: Organization): Observable<Organization> {
     const url = `${this.LOCALHOST_API}/organization/edit`;
     organization.person = this.USERID;
@@ -241,16 +241,17 @@ export class DataService {
   }
   delOrganization(organization: Organization): Observable<Organization> {
     const url = `${this.LOCALHOST_API}/organization/del/${organization.id}`
-    return this.http.delete<Organization>(url)
+    console.log(url)
+    return this.http.delete<Organization>(url, httpOptions);
   }
 
   // RolePosition  APIREST ###################################################
-  getRolePosition(): Observable<RolePosition[]> {
-    this.EndPoint = `${this.LOCALHOST_API}/roleposition/list/${this.USERID}`
-    return this.http.get<RolePosition[]>(this.EndPoint)
-  }
+  // getRolePosition(): Observable<RolePosition[]> {
+  //   this.EndPoint = `${this.LOCALHOST_API}/roleposition/list/${this.USERID}`
+  //   return this.http.get<RolePosition[]>(this.EndPoint)
+  // }
   updateRolePosition(rolePosition: RolePosition): Observable<RolePosition> {
-    const url = `${this.LOCALHOST_API}/edit/roleposition`;
+    const url = `${this.LOCALHOST_API}/roleposition/edit`;
     rolePosition.person = this.USERID;
     return this.http.post<RolePosition>(url, rolePosition, httpOptions)
   }
@@ -259,10 +260,10 @@ export class DataService {
     // Este codigo agrega un usuario a la DB 
     console.log(rolePosition.constructor.name)
     rolePosition.person = this.USERID;
-    return this.http.post<RolePosition>(`${this.LOCALHOST_API}/edit/roleposition`, rolePosition, httpOptions)
+    return this.http.put<RolePosition>(`${this.LOCALHOST_API}/roleposition/new`, rolePosition, httpOptions)
   }
   delRolePosition(rolePosition: RolePosition): Observable<RolePosition> {
-    const url = `${this.LOCALHOST_API}/del/roleposition/${rolePosition.id}`
+    const url = `${this.LOCALHOST_API}/roleposition/del/${rolePosition.id}`
     return this.http.delete<RolePosition>(url, httpOptions)
   }
 
@@ -270,12 +271,12 @@ export class DataService {
 
 
   // Laboral Career  APIREST ###################################################
-  getLaboralCareer(): Observable<LaboralCareer[]> {
-    this.EndPoint = `${this.LOCALHOST_API}/laboralcareer/list/${this.USERID}`
-    return this.http.get<LaboralCareer[]>(this.EndPoint)
-  }
+  // getLaboralCareer(): Observable<LaboralCareer[]> {
+  //   this.EndPoint = `${this.LOCALHOST_API}/laboralcareer/list/${this.USERID}`
+  //   return this.http.get<LaboralCareer[]>(this.EndPoint)
+  // }
   updateLaboralCareer(career: LaboralCareer): Observable<LaboralCareer> {
-    const url = `${this.LOCALHOST_API}/edit/laboralcareer`;
+    const url = `${this.LOCALHOST_API}/laboralcareer/edit`;
     career.person = this.USERID;
     return this.http.post<LaboralCareer>(url, career, httpOptions)
   }
@@ -284,10 +285,10 @@ export class DataService {
     // Este codigo agrega un usuario a la DB 
     console.log("estoy aqui", career)
     career.person = this.USERID;
-    return this.http.post<LaboralCareer>(`${this.LOCALHOST_API}/edit/laboralcareer`, career, httpOptions)
+    return this.http.put<LaboralCareer>(`${this.LOCALHOST_API}/laboralcareer/new`, career, httpOptions)
   }
-  delLaboralCareers(career: LaboralCareer): Observable<LaboralCareer> {
-    const url = `${this.LOCALHOST_API}/del/laboralcareer/${career.id}`
+  delLaboralCareer(career: LaboralCareer): Observable<LaboralCareer> {
+    const url = `${this.LOCALHOST_API}/laboralcareer/del/${career.id}`
     return this.http.delete<LaboralCareer>(url, httpOptions)
   }
 
@@ -308,7 +309,7 @@ export class DataService {
     return this.http.put<Studie>(`${this.LOCALHOST_API}/studie/new`, studie, httpOptions)
   }
   delStudie(studie: Studie): Observable<Studie> {
-    const url = `${this.LOCALHOST_API}/studie/del${studie.id}`
+    const url = `${this.LOCALHOST_API}/studie/del/${studie.id}`
     return this.http.delete<Studie>(url, httpOptions)
   }
 

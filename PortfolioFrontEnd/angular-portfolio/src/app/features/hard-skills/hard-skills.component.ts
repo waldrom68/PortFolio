@@ -108,7 +108,7 @@ export class HardSkillsComponent implements OnInit {
   addItem(hardSkill: HardSkill) {
     this.dataService.addHardskill(hardSkill).subscribe( {
       next: (v) => {
-        console.log("Interes guardado correctamente: ", v);
+        console.log("Guardado correctamente: ", v);
         v.person = this.DATAPORTFOLIO.id;
         this.myData.push(v);
       },
@@ -126,7 +126,7 @@ export class HardSkillsComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     // The user can't close the dialog by clicking outside its body
     dialogConfig.disableClose = true;
-    dialogConfig.id = "modal-component";
+    dialogConfig.id = "modal-delete";
     dialogConfig.height = "350px";
     dialogConfig.width = "600px";
     dialogConfig.data = {

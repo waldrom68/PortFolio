@@ -108,7 +108,7 @@ export class ProjectsComponent implements OnInit {
   addItem(project: Project) {
     this.dataService.addProject(project).subscribe( {
       next: (v) => {
-        console.log("Interes guardado correctamente: ", v);
+        console.log("Guardado correctamente: ", v);
         v.person = this.DATAPORTFOLIO.id;
         this.myData.push(v);
       },
@@ -116,7 +116,7 @@ export class ProjectsComponent implements OnInit {
         alert("Response Error (" + e.status + ") en el metodo addItem()" + "\n" + e.message);
         console.log("Se quizo agregar sin exito a: " + project.name);
       },
-      complete: () => console.log("Completado el alta del project")
+      complete: () => console.log("Completado el alta del Proyecto")
     });
     this.resetForm();
     this.toggleForm();
@@ -126,7 +126,7 @@ export class ProjectsComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     // The user can't close the dialog by clicking outside its body
     dialogConfig.disableClose = true;
-    dialogConfig.id = "modal-component";
+    dialogConfig.id = "modal-delete";
     dialogConfig.height = "350px";
     dialogConfig.width = "600px";
     dialogConfig.data = {

@@ -3,7 +3,7 @@
 
 @font-face {
     font-family: 'Julius-Sans-One';
-    font-style: normal;  /* light */                       
+    font-style: light;  /* light */                       
     src: local('Julius Sans One'), local('Julius-Sans-One'), url(./assets/fonts/JuliusSansOne-Regular.ttf);
     unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
 }
@@ -30,12 +30,23 @@ body {
     background-image: linear-gradient(90deg, var(--metaldark-shadow) 0%, var(--metallight-shadow) 25%, var(--metal) 50%, var(--metallight-shadow) 75%, var(--metaldark-shadow) 100% ) !important;
 }
 
-mat-dialog-container#modal-component, mat-dialog-container#modal-organization {
+/* MODAL STYLE */
+mat-dialog-container#modal-component, mat-dialog-container#modal-delete {
     border: 3px solid #262626 !important;
     border-radius: 11px !important;
     background-color: #1a1a1a !important;
     color: white !important;
 }
+    .close > span {
+        padding: 0px 15px;
+        font-size: 2rem;
+        color: var(--danger);
+    }
+        .close > span:hover {
+            /* padding: 0px 15px; */
+            color:white;
+            background-color: var(--danger);
+        }
 
 .init {
 
@@ -73,17 +84,7 @@ button.fa-ico {
         color:white;
         background-color: var(--danger);
     }
-/* MODALES */
-.close > span {
-    padding: 0px 15px;
-    font-size: 2rem;
-    color: var(--danger);
-}
-    .close > span:hover {
-        /* padding: 0px 15px; */
-        color:white;
-        background-color: var(--danger);
-    }
+
     
 
 

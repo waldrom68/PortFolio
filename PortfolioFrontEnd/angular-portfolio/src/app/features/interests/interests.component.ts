@@ -106,7 +106,7 @@ export class InterestsComponent implements OnInit {
     // console.log("Ejecuto this addItem()")
     this.dataService.addInterest(interest).subscribe({
       next: (v) => {
-        console.log("Interes guardado correctamente: ", v);
+        console.log("Guardado correctamente: ", v);
         interest.id = v.id;
         v.person = this.DATAPORTFOLIO.id;
         this.myData.push(v);
@@ -127,7 +127,7 @@ export class InterestsComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     // The user can't close the dialog by clicking outside its body
     dialogConfig.disableClose = true;
-    dialogConfig.id = "modal-component";
+    dialogConfig.id = "modal-delete";
     dialogConfig.height = "350px";
     dialogConfig.width = "600px";
     dialogConfig.data = {

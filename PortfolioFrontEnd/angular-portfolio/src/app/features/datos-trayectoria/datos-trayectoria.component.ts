@@ -108,7 +108,7 @@ export class DatosTrayectoriaComponent implements OnInit {
 
   delItem() {
     if (this.itemParaBorrar) {
-      this.dataService.delStudie(this.itemParaBorrar).subscribe( {
+      this.dataService.delLaboralCareer(this.itemParaBorrar).subscribe( {
         next: (v) => {
           console.log("Se ha eliminado exitosamente a: ", this.itemParaBorrar);
           this.myData = this.myData.filter((t) => { return t !== this.itemParaBorrar })
@@ -134,9 +134,13 @@ export class DatosTrayectoriaComponent implements OnInit {
   addItem(laboralCareer: LaboralCareer) {
     this.dataService.addLaboralCareer(laboralCareer).subscribe( {
       next: (v) => {
-        console.log("Interes guardado correctamente: ", v);
-        v.person = this.DATAPORTFOLIO.id;
+        console.log("Guardado correctamente: ", v);
+        // v.organization = this.formData.organization;
+        // v.roleposition = this.formData.roleposition;
+        // v.person = this.DATAPORTFOLIO.id;
         this.myData.push(v);
+        this.DATAPORTFOLIO.laboralCareer = this.myData;
+        console.log("Esto estoy guardando en myData", this.myData)
       },
       error: (e) => {
         alert("Response Error (" + e.status + ") en el metodo addItem()" + "\n" + e.message);
@@ -152,7 +156,7 @@ export class DatosTrayectoriaComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     // The user can't close the dialog by clicking outside its body
     dialogConfig.disableClose = true;
-    dialogConfig.id = "modal-component";
+    dialogConfig.id = "modal-delete";
     dialogConfig.height = "350px";
     dialogConfig.width = "600px";
     dialogConfig.data = {

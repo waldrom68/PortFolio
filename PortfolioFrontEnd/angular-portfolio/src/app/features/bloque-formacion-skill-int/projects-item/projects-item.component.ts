@@ -76,7 +76,7 @@ export class ProjectsItemComponent implements OnInit {
   update(project: Project) {
     // Actualizacion 
     this.dataService.updateProject(project).subscribe( {
-      next: (v) => console.log("Proyecto guardado correctamente: ", v),
+      next: (v) => console.log("Guardado correctamente: ", v),
       error: (e) => {
         alert("Response Error (" + e.status + ") en el metodo upDateItem()" + "\n" + e.message);
         console.log("Se quizo modificar sin exito a: " + this.oldData.name);

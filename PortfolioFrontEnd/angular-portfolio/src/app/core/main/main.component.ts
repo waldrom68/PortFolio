@@ -3,6 +3,7 @@ import { Renderer2, AfterViewInit } from '@angular/core';
 
 
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { now } from 'moment';
 import { Observable } from 'rxjs';
 import { FullPersonDTO, Person, Usuario } from 'src/app/models';
 
@@ -47,6 +48,11 @@ export class MainComponent implements OnInit {
 
   // myData: Person;
   // testData: any;
+
+  // PENDIENTE ELIMINAR VAR DE PRUEBA
+  fecha: Date;
+
+
     
   DATAPORTFOLIO: FullPersonDTO;
 
@@ -76,12 +82,16 @@ export class MainComponent implements OnInit {
     }
 
   ngOnInit(): void {
+
     this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();
     this.flagUserAdmin$.subscribe(  flagUserAdmin => this.flagUserAdmin = flagUserAdmin)
 
 
 
+    // PENDIENTE
     // AQUI DEBO INICIALIZAR EL FLAG IS ADMIN DE ACUERDO SI EL TOKEN ES VALIDO COMO ADMINISTRADOR
+
+    this.fecha = new Date(now())
     if (this.tokenService.isValidAdmin()) {
       this.dataService.hasCredentials(true);
     }

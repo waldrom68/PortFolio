@@ -17,7 +17,6 @@ import { Observable } from 'rxjs';
   styleUrls: ['./datos-formacion.component.css']
 })
 export class DatosFormacionComponent implements OnInit {
-
   // SERVICIO QUE ESTÁ VINCULADO CON EL LOGUEO
   flagUserAdmin: boolean = false;
   flagUserAdmin$: Observable<boolean>;
@@ -117,7 +116,7 @@ export class DatosFormacionComponent implements OnInit {
           alert("Response Error (" + e.status + ")" + "\n" + e.message);
           console.log("Se quizo eliminar sin exito a: " , this.itemParaBorrar);
         },
-        complete: () => {console.log("Completada la eliminacion del Estudio");}
+        complete: () => {console.log("Completada la eliminacion de la Formación");}
 
       });
     }
@@ -130,15 +129,19 @@ export class DatosFormacionComponent implements OnInit {
   addItem(studie: Studie) {
     this.dataService.addStudie(studie).subscribe(  {
       next: (v) => {
-        console.log("Interes guardado correctamente: ", v);
-        v.person = this.DATAPORTFOLIO.id;
+        console.log("Guardado correctamente: ", v);
+        // v.person = this.DATAPORTFOLIO.id;
+        // v.degree = this.formData.degree;
+        // v.organization = this.formData.organization;
         this.myData.push(v);
+        this.DATAPORTFOLIO.studie = this.myData;
+        console.log("Esto estoy guardando en myData", this.myData)
       },
       error: (e) => {
         alert("Response Error (" + e.status + ") en el metodo addItem()" + "\n" + e.message);
         console.log("Se quizo agregar sin exito a: " + studie.name);
       },
-      complete: () => console.log("Completado el alta del Estudie")
+      complete: () => console.log("Completado el alta de la Formación")
     });
     this.resetForm();
     this.toggleForm();
@@ -148,7 +151,7 @@ export class DatosFormacionComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     // The user can't close the dialog by clicking outside its body
     dialogConfig.disableClose = true;
-    dialogConfig.id = "modal-component";
+    dialogConfig.id = "modal-delete";
     dialogConfig.height = "350px";
     dialogConfig.width = "600px";
     dialogConfig.data = {

@@ -104,7 +104,7 @@ export class ModalActionsService {
 
   }
 
-
+// PENDIENTE ELIMINAR METODOS O DIRECTAMENTE EL SERVICIO
   // private deleteInterest(modalData: any, interest: Interest) {
   //   console.log("Se abre el modal de deleteInterest del modal-action, para eliminar a: ", this.oldData)
   //   // Llamada al metodo de data.service.ts
@@ -142,7 +142,7 @@ export class ModalActionsService {
   }
   private deleteCareer(modalData: any) {
     console.log(modalData.data)
-    this.dataservice.delLaboralCareers(modalData.data).subscribe()
+    this.dataservice.delLaboralCareer(modalData.data).subscribe()
   }
   private deleteRole(modalData: any) {
     console.log(modalData.data)

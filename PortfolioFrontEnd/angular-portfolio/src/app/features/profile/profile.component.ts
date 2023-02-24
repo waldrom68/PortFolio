@@ -152,7 +152,7 @@ export class ProfileComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     // The user can't close the dialog by clicking outside its body
     dialogConfig.disableClose = true;
-    dialogConfig.id = "modal-component";
+    dialogConfig.id = "modal-delete";
     dialogConfig.height = "250px";
     dialogConfig.width = "600px";
     dialogConfig.data = {

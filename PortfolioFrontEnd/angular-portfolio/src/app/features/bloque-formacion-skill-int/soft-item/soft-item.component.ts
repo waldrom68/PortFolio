@@ -77,7 +77,7 @@ export class SoftItemComponent implements OnInit {
 
   update(softskill: SoftSkill) {
     this.dataService.updateSoftSkill(softskill).subscribe({
-      next: (v) => console.log("Softskill guardado correctamente: ", v),
+      next: (v) => console.log("Guardado correctamente: ", v),
       error: (e) => {
         alert("Response Error (" + e.status + ") en el metodo upDateItem()" + "\n" + e.message);
         console.log("Se quizo modificar sin exito a: " + this.oldData.name);

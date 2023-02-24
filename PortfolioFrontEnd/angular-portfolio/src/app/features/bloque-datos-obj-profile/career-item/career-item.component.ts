@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { LaboralCareer, Organization, RolePosition } from '../../../models'
+import { FullPersonDTO, LaboralCareer, Organization, RolePosition } from '../../../models'
 
 import { faPen, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Observable } from 'rxjs';
@@ -11,7 +11,7 @@ import { DataService } from 'src/app/service/data.service';
   styleUrls: ['./career-item.component.css']
 })
 export class CareerItemComponent implements OnInit {
-  // PENDIENTE: SERVICIO QUE DEBE VINCULARSE CON EL LOGUEO
+  // SERVICIO QUE ESTÁ VINCULADO CON EL LOGUEO
   flagUserAdmin: boolean = false;
   flagUserAdmin$: Observable<boolean>;
 
@@ -35,10 +35,13 @@ export class CareerItemComponent implements OnInit {
 
   showForm: boolean = false;
 
+  DATAPORTFOLIO: FullPersonDTO;
 
   constructor( private dataService: DataService, ) { }
 
   ngOnInit() {
+    this.DATAPORTFOLIO = this.dataService.getData();
+
     this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();
     this.flagUserAdmin$.subscribe(  flagUserAdmin => this.flagUserAdmin = flagUserAdmin)
     this.flagUserAdmin = this.dataService.getFlagUserAdmin()
@@ -51,29 +54,44 @@ export class CareerItemComponent implements OnInit {
     this.color = $event.type == 'mouseover' ? 'resaltado' : 'normal';
   }
 
-  toggleForm(career: LaboralCareer) {
+  toggleForm(laboralCareer: LaboralCareer) {
     this.showForm = !this.showForm;
-    this.formData = career;
+    this.formData = laboralCareer;
 
     this.showBtnAction = !this.showBtnAction
     this.showBtnActionChange.emit(this.showBtnAction)
   }
 
-  delete(career: LaboralCareer) {
+  delete(laboralCareer: LaboralCareer) {
     // llamo al metodo del padre via emit()
     if (this.flagUserAdmin) {
-      this.onDelete.emit(career);
+      this.onDelete.emit(laboralCareer);
     }
 
   }
-  cancelation(career: LaboralCareer) {
-    this.toggleForm(career);  // cierro el formulario
+  cancelation(laboralCareer: LaboralCareer) {
+    this.toggleForm(laboralCareer);  // cierro el formulario
   }
 
-  update(career: LaboralCareer) {
-    // PENDIENTE CAPTURAR EXCEPCIONES
-    this.dataService.updateLaboralCareer(career).subscribe();
-    this.toggleForm(career);  // cierro el formulario
+  update(laboralCareer: LaboralCareer) {
+
+    this.dataService.updateLaboralCareer(laboralCareer).subscribe( {
+      next: (v) => {
+        console.log("Guardado correctamente: ", v);
+        console.log("Creo que aqui está el error", laboralCareer)
+        // v.person = this.DATAPORTFOLIO.id;
+        // this.myData.push(v);
+      },
+      error: (e) => {
+        alert("Response Error (" + e.status + ") en el metodo addItem()" + "\n" + e.message);
+        console.log("Se quizo agregar sin exito a: " + laboralCareer.resume);
+      },
+      complete: () => console.log("Completado el alta en Trayectoria Laboral")
+    });
+
+
+
+    this.toggleForm(laboralCareer);  // cierro el formulario
 
   }
 }

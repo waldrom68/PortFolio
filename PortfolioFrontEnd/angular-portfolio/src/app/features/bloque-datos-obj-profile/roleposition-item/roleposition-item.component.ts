@@ -31,11 +31,15 @@ export class RolepositionItemComponent implements OnInit {
   faTrash = faTrash;
 
   showForm: boolean = false;
-  // formData: Organization;
+ // formData: Degree; // Viene por un input
+  oldData: RolePosition;
   
   constructor(private dataService: DataService,) { }
 
   ngOnInit(): void {
+    // Clono el objeto, uso assign por no tener atributos compuesto por otros objetos
+    this.oldData = Object.assign({} , this.item)
+
     this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();
     this.flagUserAdmin$.subscribe(  flagUserAdmin => this.flagUserAdmin = flagUserAdmin)
     this.flagUserAdmin = this.dataService.getFlagUserAdmin()
@@ -69,7 +73,20 @@ export class RolepositionItemComponent implements OnInit {
   }
 
   update(rolePosition: RolePosition) {
-    this.dataService.updateRolePosition(rolePosition).subscribe();
+    this.dataService.updateRolePosition(rolePosition).subscribe({
+      next: (v) => {
+        console.log("Guardado correctamente: ", v);
+        // this.myData.push(v);
+      },
+      error: (e) => {
+        alert("Response Error (" + e.status + ") en el metodo addItem()" + "\n" + e.message);
+        console.log("Se quizo modificar sin exito a: " + rolePosition.name);
+        // Restauro valor original
+        this.formData.name = this.oldData.name;
+      },
+      complete: () => console.log("Completado la actualizacion en Roles y Posiciones")
+    });
+
     this.toggleForm(rolePosition);  // cierro el formulario
 
   }

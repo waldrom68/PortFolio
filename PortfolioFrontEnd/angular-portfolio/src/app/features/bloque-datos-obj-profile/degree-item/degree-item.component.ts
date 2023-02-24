@@ -70,14 +70,14 @@ export class DegreeItemComponent implements OnInit {
   
   update(degree: Degree) {
     this.dataService.updateDegree(degree).subscribe( {
-      next: (v) => console.log("Degree guardado correctamente: ", v),
+      next: (v) => console.log("Guardado correctamente: ", v),
       error: (e) => {
         alert("Response Error (" + e.status + ") en el metodo upDateItem()" + "\n" + e.message);
         console.log("Se quizo modificar sin exito a: " + this.oldData.name);
         // Restauro valor original
         this.formData.name = this.oldData.name;
       },
-      complete: () => console.log("Completada la actualizacion del Degree")
+      complete: () => console.log("Completada la actualizacion del Nivel de Formacion")
     } );
     
     this.toggleForm(degree);  // cierro el formulario

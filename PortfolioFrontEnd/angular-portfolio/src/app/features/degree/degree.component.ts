@@ -108,7 +108,7 @@ export class DegreeComponent implements OnInit {
           alert("Response Error (" + e.status + ")" + "\n" + e.message);
           console.log("Se quizo eliminar sin exito a: " , this.itemParaBorrar);
         },
-        complete: () => {console.log("Completada la actualizacion del Titulo");}
+        complete: () => {console.log("Completada la actualizacion de la Formación");}
 
       });
     }
@@ -125,7 +125,7 @@ export class DegreeComponent implements OnInit {
         alert("Response Error (" + e.status + ") en el metodo addItem()" + "\n" + e.message);
         console.log("Se quizo agregar sin exito a: " + degree.name);
       },
-      complete: () => console.log("Completado el alta del Titulo")
+      complete: () => console.log("Completado el alta de la Formación")
     });
     this.toggleForm();
     this.resetForm();
@@ -136,7 +136,7 @@ export class DegreeComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     // The user can't close the dialog by clicking outside its body
     dialogConfig.disableClose = true;
-    dialogConfig.id = "modal-component";
+    dialogConfig.id = "modal-delete";
     dialogConfig.height = "350px";
     dialogConfig.width = "600px";
     dialogConfig.data = {

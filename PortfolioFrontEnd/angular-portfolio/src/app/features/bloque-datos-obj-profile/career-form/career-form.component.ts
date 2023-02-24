@@ -105,6 +105,8 @@ export class CareerFormComponent implements OnInit {
     // this.dataService.getOrganization().subscribe(organization =>
     //   [this.myOrganizations = organization]
     // );
+    this.formData.organization = this.myOrganizations[0]
+    this.showOrgaForm = !this.showOrgaForm;
 
   }
 
@@ -122,7 +124,7 @@ export class CareerFormComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     // The user can't close the dialog by clicking outside its body
     dialogConfig.disableClose = true;
-    dialogConfig.id = "modal-organization";
+    dialogConfig.id = "modal-component";
     // dialogConfig.panelClass = "modal-component";
     // dialogConfig.backdropClass = "modal-component"
 
@@ -157,7 +159,7 @@ export class CareerFormComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     // The user can't close the dialog by clicking outside its body
     dialogConfig.disableClose = true;
-    dialogConfig.id = "modal-organization";
+    dialogConfig.id = "modal-component";
     // dialogConfig.panelClass = "modal-component";
     // dialogConfig.backdropClass = "modal-component"
 
@@ -225,7 +227,7 @@ export class CareerFormComponent implements OnInit {
 
       } else {
 
-        console.log("no es valido el valor ingresado")
+        console.log("no es valido el valor ingresado", this.form)
         this.form.markAllAsTouched();
 
       }

@@ -100,7 +100,7 @@ export class RolePositionComponent implements OnInit {
 
   delItem(){
     if (this.itemParaBorrar) {
-      this.dataService.delDegree(this.itemParaBorrar).subscribe( {
+      this.dataService.delRolePosition(this.itemParaBorrar).subscribe( {
         next: (v) => {
           console.log("Se ha eliminado exitosamente a: ", this.itemParaBorrar);
           this.myData = this.myData.filter((t) => { return t !== this.itemParaBorrar })
@@ -139,7 +139,7 @@ export class RolePositionComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     // The user can't close the dialog by clicking outside its body
     dialogConfig.disableClose = true;
-    dialogConfig.id = "modal-component";
+    dialogConfig.id = "modal-delete";
     dialogConfig.height = "350px";
     dialogConfig.width = "600px";
     dialogConfig.data = {

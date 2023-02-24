@@ -117,7 +117,7 @@ export class OrganizationComponent implements OnInit {
           alert("Response Error (" + e.status + ")" + "\n" + e.message);
           console.log("Se quizo eliminar sin exito a: " , this.itemParaBorrar);
         },
-        complete: () => {console.log("Completada la actualizacion del Organization");}
+        complete: () => {console.log("Completada la eliminacion de la Organization");}
 
       });
     }
@@ -131,7 +131,7 @@ export class OrganizationComponent implements OnInit {
   addItem(organization: Organization) {
     this.dataService.addOrganization(organization).subscribe({
       next: (v) => {
-        console.log("Interes guardado correctamente: ", v);
+        console.log("Organizacion guardada correctamente: ", v);
         v.person = this.DATAPORTFOLIO.id;
         this.myData.push(v);
         // Actualizo la informacion en el origen
@@ -142,7 +142,7 @@ export class OrganizationComponent implements OnInit {
         alert("Response Error (" + e.status + ") en el metodo addItem()" + "\n" + e.message);
         console.log("Se quizo agregar sin exito a: " + organization.name);
       },
-      complete: () => console.log("Completado el alta del hardSkill")
+      complete: () => console.log("Completado el alta de la Organizacion")
     }
     );
     this.resetForm();
@@ -154,7 +154,7 @@ export class OrganizationComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     // The user can't close the dialog by clicking outside its body
     dialogConfig.disableClose = true;
-    dialogConfig.id = "modal-component";
+    dialogConfig.id = "modal-delete";
     dialogConfig.height = "350px";
     dialogConfig.width = "600px";
     dialogConfig.data = {

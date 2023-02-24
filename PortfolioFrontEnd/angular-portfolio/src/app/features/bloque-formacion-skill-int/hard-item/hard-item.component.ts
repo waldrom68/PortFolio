@@ -79,7 +79,7 @@ export class HardItemComponent implements OnInit {
   update(hardskill: HardSkill) {
     // Actualizacion de hardskill
     this.dataService.updateHardSkill(hardskill).subscribe( {
-      next: (v) => console.log("Hardskill guardado correctamente: ", v),
+      next: (v) => console.log("Guardado correctamente: ", v),
       error: (e) => {
         alert("Response Error (" + e.status + ") en el metodo upDateItem()" + "\n" + e.message);
         console.log("Se quizo modificar sin exito a: " + this.oldData.name);

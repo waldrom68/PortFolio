@@ -111,7 +111,7 @@ export class SoftSkillsComponent implements OnInit {
   addItem(softskill: SoftSkill) {
     this.dataService.addSoftskill(softskill).subscribe({
       next: (v) => {
-        console.log("Interes guardado correctamente: ", v);
+        console.log("Guardado correctamente: ", v);
         v.person = this.DATAPORTFOLIO.id;
         softskill.id = v.id;
         this.myData.push(v);
@@ -130,7 +130,7 @@ export class SoftSkillsComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     // The user can't close the dialog by clicking outside its body
     dialogConfig.disableClose = true;
-    dialogConfig.id = "modal-component";
+    dialogConfig.id = "modal-delete";
     dialogConfig.height = "350px";
     dialogConfig.width = "600px";
     dialogConfig.data = {

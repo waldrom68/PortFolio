@@ -37,7 +37,6 @@ export class OrganizationItemComponent implements OnInit {
   constructor(private dataService: DataService,) { }
 
   ngOnInit(): void {
-    // this.oldData = this.item;
     // Clono el objeto, uso assign por no tener atributos compuesto por otros objetos
     this.oldData = Object.assign({} , this.item)
 
@@ -79,7 +78,7 @@ export class OrganizationItemComponent implements OnInit {
           // Restauro valor original
           this.formData.name = this.oldData.name;
         },
-        complete: () => console.log("Completada la actualizacion del Organization")
+        complete: () => console.log("Completada la actualizacion de la Organization")
       } );
     this.toggleForm(organization);  // cierro el formulario
 

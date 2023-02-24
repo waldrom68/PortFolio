@@ -35,10 +35,13 @@ export class StudieItemComponent implements OnInit {
 
   showForm: boolean = false;
 
+  DATAPORTFOLIO: FullPersonDTO;
 
   constructor(private dataService: DataService,) { }
 
   ngOnInit(): void {
+    this.DATAPORTFOLIO = this.dataService.getData();
+
     this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();
     this.flagUserAdmin$.subscribe(  flagUserAdmin => this.flagUserAdmin = flagUserAdmin)
     this.flagUserAdmin = this.dataService.getFlagUserAdmin()
@@ -73,7 +76,21 @@ export class StudieItemComponent implements OnInit {
 
   update(studie: Studie) {
     // PENDIENTE CAPTURAR EXCEPCIONES
-    this.dataService.updateStudie(studie).subscribe();
+    this.dataService.updateStudie(studie).subscribe( {
+      next: (v) => {
+        console.log("Guardado correctamente: ", v);
+        // v.person = this.DATAPORTFOLIO.id;
+        // this.myData.push(v);
+      },
+      error: (e) => {
+        alert("Response Error (" + e.status + ") en el metodo addItem()" + "\n" + e.message);
+        console.log("Se quizo agregar sin exito a: " + studie.name);
+      },
+      complete: () => console.log("Completado el alta en Formación")
+    });
+
+
+
     this.toggleForm(studie);  // cierro el formulario
 
   }
