@@ -17,6 +17,7 @@
                 <small class="px-5"><i> {{elemento}}</i></small>
             </p>
         </div>
+        <!-- ##################### -->
 
         <div class="icon-group"
             *ngIf="flagUserAdmin && showBtnAction"
@@ -47,12 +48,14 @@
 <app-career-form
   *ngIf="showForm && flagUserAdmin"
   [ngStyle]="{'width':'100%'}"
-
-  [user]="user"
+  
   [formData]="formData"
-  [myOrganizations]="myOrganizations"
-  [myRolePositions]="myRolePositions"
   [title]="'Agregar un trabajo'"
+
+  [myOrganizations]="myOrganizations"
+  (myOrganizationsChange)="myOrganizations"
+  [myRolePositions]="myRolePositions"
+  (myRolePositionsChange)="myRolePositions"
 
   (showBtnActionChange)="showBtnAction"
   (onUpdate)=" update($event);"

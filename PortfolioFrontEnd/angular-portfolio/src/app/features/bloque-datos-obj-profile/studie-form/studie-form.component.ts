@@ -10,6 +10,7 @@ import { Studie, Organization, Degree, Person, FullPersonDTO } from 'src/app/mod
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { OrganizationComponent } from '../../organization/organization.component';
+import { DegreeComponent } from '../../degree/degree.component';
 
 @Component({
   selector: 'app-studie-form',
@@ -22,40 +23,40 @@ export class StudieFormComponent implements OnInit {
   flagUserAdmin: boolean = false;
   flagUserAdmin$: Observable<boolean>;
 
-@Input() formData: Studie;
+  @Input() formData: Studie;
 
-@Input() title: string;
-@Input() myOrganizations: Organization[];
-@Output() myOrganizationChange: EventEmitter<Organization[]> = new EventEmitter;
+  @Input() title: string;
+  @Input() myOrganizations: Organization[];
+  @Output() myOrganizationChange: EventEmitter<Organization[]> = new EventEmitter;
 
-@Input() myDegrees: Degree[];
+  @Input() myDegrees: Degree[];
+  @Output() myDegreesChange: EventEmitter<Degree[]> = new EventEmitter;
 
-@Input() showBtnAction: boolean;
+  @Input() showBtnAction: boolean;
+  @Output() showBtnActionChange = new EventEmitter<boolean>();
 
-@Output() showBtnActionChange = new EventEmitter<boolean>();
+  @Output() onUpdate: EventEmitter<Studie> = new EventEmitter();
+  @Output() cancel: EventEmitter<Studie> = new EventEmitter();
 
-@Output() onUpdate: EventEmitter<Studie> = new EventEmitter();
-@Output() cancel: EventEmitter<Studie> = new EventEmitter();
+  faCheck = faCheck;
+  faTimes = faTimes;
 
-faCheck = faCheck;
-faTimes = faTimes;
+  form: FormGroup;
 
-form: FormGroup;
+  DATAPORTFOLIO: FullPersonDTO;
 
-DATAPORTFOLIO: FullPersonDTO;
-
-showOrgaForm: boolean = false;
-showDegreeForm: boolean = false;
-showPrimaryForm: boolean = true;
+  showOrgaForm: boolean = false;
+  showDegreeForm: boolean = false;
+  showPrimaryForm: boolean = true;
 
   constructor(
     private dataService: DataService,
-  
+
     private formBuilder: FormBuilder,
 
     private dialog: MatDialog,  // DeleteModal
-    
-  ) {    
+
+  ) {
 
   }
 
@@ -63,19 +64,19 @@ showPrimaryForm: boolean = true;
     this.DATAPORTFOLIO = this.dataService.getData();
 
     this.form = this.formBuilder.group({
-      name:[this.formData.name, [Validators.required, Validators.minLength(2), Validators.maxLength(100) ]],
-      startDate:[this.formData.startDate, [Validators.required ]],
-      endDate:[this.formData.endDate, []],
-      organization:[this.formData.organization, [Validators.required]],
-      degree:[this.formData.degree, [Validators.required]],
-    }); 
-    
+      name: [this.formData.name, [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
+      startDate: [this.formData.startDate, [Validators.required]],
+      endDate: [this.formData.endDate, []],
+      organization: [this.formData.organization, [Validators.required]],
+      degree: [this.formData.degree, [Validators.required]],
+    });
+
     this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();
-    this.flagUserAdmin$.subscribe(  flagUserAdmin => this.flagUserAdmin = flagUserAdmin)
+    this.flagUserAdmin$.subscribe(flagUserAdmin => this.flagUserAdmin = flagUserAdmin)
     this.flagUserAdmin = this.dataService.getFlagUserAdmin()
 
   }
-  
+
   get Name(): any {
     return this.form.get("name")
   }
@@ -85,12 +86,38 @@ showPrimaryForm: boolean = true;
   get EndDate(): any {
     return this.form.get("endDate")
   }
-
   get Organization(): any {
     return this.form.get("organization")
   }
   get Degree(): any {
     return this.form.get("degree")
+  }
+
+
+  togglePrimaryForm() {
+    this.showPrimaryForm = !this.showPrimaryForm;
+    this.showBtnAction = !this.showBtnAction;
+    this.showBtnActionChange.emit(this.showBtnAction);
+  }
+
+  toggleOrgaForm() {
+    this.togglePrimaryForm();
+
+    // this.dataService.getOrganization().subscribe(organization =>
+    //   [this.myOrganizations = organization]
+    // );
+    this.formData.organization = this.myOrganizations[0]
+    this.showOrgaForm = !this.showOrgaForm;
+  }
+
+  toggleDegreeForm() {
+    this.togglePrimaryForm();
+
+    // this.dataService.getDegree().subscribe(degree =>
+    //   [this.myDegrees = degree]
+    //   );
+    this.formData.degree = this.myDegrees[0]
+    this.showDegreeForm = !this.showDegreeForm;
   }
 
   openOrganization() {
@@ -103,76 +130,83 @@ showPrimaryForm: boolean = true;
 
     dialogConfig.height = "80%";
     dialogConfig.width = "90%";
-    dialogConfig.data = {message: "Administración de Organizaciones"}
+    dialogConfig.data = { message: "Organizaciones" }
 
-    const modalDialog =  this.dialog.open(OrganizationComponent, dialogConfig);
+    const modalDialog = this.dialog.open(OrganizationComponent, dialogConfig);
 
     modalDialog.afterClosed().subscribe(result => {
       console.log("Esto esta en afterClosed()")
-      console.log("Se cierra el modal de Organization", result)
+      console.log("Hubo cambios?", this.myOrganizations != result)
 
+      if (this.myOrganizations != result) {
+        this.myOrganizations = result;
+        this.myOrganizationChange.emit(this.myOrganizations);
+        // Debo verificar si se editó la organizacion que tenia registrado en el formulario
+        this.myOrganizations.forEach(
+          (e) => {
+            if (e.id == this.formData.organization.id) {
+              console.log("se actualizo -> ", e)
+              this.formData.organization = e;
+            }
+          })
+      }
       console.log("Esto estaba en afterClosed()")
-      this.myOrganizations = result;
-      this.myOrganizationChange.emit(this.myOrganizations);
-      // Debo verificar si se editó la organizacion que tenia registrado en el formulario
-      this.myOrganizations.forEach( (e) => {
-        if (e.id == this.formData.organization.id) {
-          console.log("se actualizo -> ", e)
-          this.formData.organization = e;
-        }
-      })
-      
     })
 
   }
 
+  openDegree() {
+    const dialogConfig = new MatDialogConfig();
+    // The user can't close the dialog by clicking outside its body
+    dialogConfig.disableClose = true;
+    dialogConfig.id = "modal-organization";
+    // dialogConfig.panelClass = "modal-component";
+    // dialogConfig.backdropClass = "modal-component"
 
+    dialogConfig.height = "80%";
+    dialogConfig.width = "90%";
+    dialogConfig.data = { message: "Niveles de Formación" }
 
-  togglePrimaryForm() {
-    this.showPrimaryForm = !this.showPrimaryForm;
-    this.showBtnAction = !this.showBtnAction;
-    this.showBtnActionChange.emit(this.showBtnAction);
+    const modalDialog = this.dialog.open(DegreeComponent, dialogConfig);
+
+    modalDialog.afterClosed().subscribe(result => {
+      console.log("Esto esta en afterClosed()")
+      console.log("Hubo cambios?", this.myDegrees != result)
+
+      if (this.myDegrees != result) {
+
+        this.myDegrees = result;
+        this.myDegreesChange.emit(this.myDegrees);
+        // Debo verificar si se editó la organizacion que tenia registrado en el formulario
+        this.myDegrees.forEach(
+          (e) => {
+            if (e.id == this.formData.degree.id) {
+              console.log("se actualizo -> ", e)
+              this.formData.degree = e;
+            }
+          })
+      }
+      console.log("Esto estaba en afterClosed()")
+    })
 
   }
 
-
-  toggleOrgaForm() {
-    this.togglePrimaryForm();
-
-    this.dataService.getOrganization().subscribe(organization =>
-      [this.myOrganizations = organization]
-    );
-    // this.formData.organization = this.myOrganizations[0] 
-    this.showOrgaForm = !this.showOrgaForm;
-  }
-
-  toggleDegreeForm() {
-    this.togglePrimaryForm();
-
-    this.dataService.getDegree().subscribe(degree =>
-      [this.myDegrees = degree]
-      );
-      this.formData.degree = this.myDegrees[0]
-      this.showDegreeForm = !this.showDegreeForm;
-
-  }
-
-  compararOrganizacion(myOrganization1:Organization, myOrganization2:Organization) {
-    if (myOrganization1==null || myOrganization2==null) {
+  compararOrganizacion(myOrganization1: Organization, myOrganization2: Organization) {
+    if (myOrganization1 == null || myOrganization2 == null) {
       return false;
     } else {
       return myOrganization1.name === myOrganization2.name;
     }
   }
-  compararDegree(myDegree1:Degree, myDegree2:Degree) {
-    if (myDegree1==null || myDegree2==null) {
+  compararDegree(myDegree1: Degree, myDegree2: Degree) {
+    if (myDegree1 == null || myDegree2 == null) {
       return false;
     } else {
       return myDegree1.name === myDegree2.name;
     }
   }
 
-  onEnviar(event: Event, ) {
+  onEnviar(event: Event,) {
     event.preventDefault;
     // Si deja de estar logueado, no registro lo que haya modificado y cierro form.
     if (!this.flagUserAdmin) {
@@ -180,32 +214,31 @@ showPrimaryForm: boolean = true;
       this.cancel.emit();
 
     } else {
-      
+
       console.log(this.form.valid, this.form.get("organizacion")?.value)
       if (this.form.valid) {
-  
+
         this.formData.name = this.form.get("name")?.value.trim();
         this.formData.startDate = this.form.get("startDate")?.value;
         this.formData.endDate = this.form.get("endDate")?.value;
         this.formData.organization = this.form.get("organization")?.value;
         this.formData.degree = this.form.get("degree")?.value;
         this.formData.status = true;
-        this.formData.person = this.DATAPORTFOLIO.id 
+        this.formData.person = this.DATAPORTFOLIO.id
         this.onUpdate.emit(this.formData);
-  
+
       } else {
-        
+
         console.log("no es valido el valor ingresado")
         this.form.markAllAsTouched();
-  
+
       }
     }
 
   }
 
-  onCancel(event: Event, ) {
+  onCancel(event: Event,) {
     this.cancel.emit();
-
   }
 
   ngAfterContentChecked() {

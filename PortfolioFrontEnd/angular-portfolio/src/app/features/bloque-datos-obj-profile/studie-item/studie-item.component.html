@@ -51,11 +51,13 @@
     [ngStyle]="{'width':'100%'}"
   
     [formData]="formData"
-    [myOrganizations]="myOrganizations"
-    [myDegrees]="myDegrees"
     [title]="'Agregar un estudio'"
-  
+    
+    [myOrganizations]="myOrganizations"
     (myOrganizationsChange)="myOrganizations"
+    [myDegrees]="myDegrees"
+    (myDegreesChange)="myDegrees"
+
     (showBtnActionChange)="showBtnAction"
     (onUpdate)=" update($event);"
     (cancel)="cancelation($event)"

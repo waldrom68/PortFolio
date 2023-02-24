@@ -17,7 +17,7 @@ export class StudieItemComponent implements OnInit {
 
 
   @Input() item: Studie;
-  // @Input() user: FullPersonDTO;
+
   @Input() formData: Studie;
   @Input() myOrganizations: Organization[];
   @Input() myDegrees: Degree[];
@@ -53,9 +53,8 @@ export class StudieItemComponent implements OnInit {
 
   toggleForm(studie: Studie) {
     this.showForm = !this.showForm;
-    // this.ocultarAcciones = !this.ocultarAcciones
     this.formData = studie;
-    // this.resize();  // habilito las acciones de cada item
+ 
     this.showBtnAction = !this.showBtnAction
     this.showBtnActionChange.emit(this.showBtnAction)
   }
@@ -73,6 +72,7 @@ export class StudieItemComponent implements OnInit {
   }
 
   update(studie: Studie) {
+    // PENDIENTE CAPTURAR EXCEPCIONES
     this.dataService.updateStudie(studie).subscribe();
     this.toggleForm(studie);  // cierro el formulario
 

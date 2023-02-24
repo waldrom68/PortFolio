@@ -7,11 +7,12 @@
                 *ngFor="let item of myData"
                 [item]="item"
                 [formData]="formData"
-                [myDegrees]="myDegrees"
                 (onDelete)="openModalDelete(item)"
                 
                 [myOrganizations]="myOrganizations"
                 (myOrganizationsChange)="myOrganizations"
+                [myDegrees]="myDegrees"
+                (myDegreesChange)="myDegrees"
 
                 [(showBtnAction)]="showBtnAction"
             >
@@ -26,14 +27,15 @@
         *ngIf="showForm && flagUserAdmin"
         [ngStyle]="{'width':'100%'}"
         [formData]="formData"
-        [myDegrees]="myDegrees"
         [title]="'Agregar un estudio'"
-        
-        (showBtnActionChange)="showBtnAction"
         
         [myOrganizations]="myOrganizations"
         (myOrganizationsChange)="myOrganizations"
         
+        [myDegrees]="myDegrees"
+        (myDegreesChange)="myDegrees"
+        
+        (showBtnActionChange)="showBtnAction"
         (onUpdate)=" addItem($event)"
         (cancel)="cancelation()"
     >
@@ -56,12 +58,10 @@
         ngClass="faControl fa-ico"
         (click)="toggleForm()"
         >
-        <br>formacion
-        <br>showBtnAction -> {{showBtnAction}}
         <fa-icon
         ngClass="fa-3x text-primary"
-            [icon]="faPlusCircle"
-            
+        [icon]="faPlusCircle"
+        
             >
         </fa-icon>
     </button>

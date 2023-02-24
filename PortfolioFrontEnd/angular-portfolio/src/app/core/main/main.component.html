@@ -146,6 +146,27 @@
 
     <ng-container *ngIf="DATAPORTFOLIO">
         <ul>
+            <li *ngFor="let data of DATAPORTFOLIO.degree">
+                ({{data.id}}) - {{data.name}}
+            </li>
+        </ul>
+    </ng-container>
+    <ng-container *ngIf="DATAPORTFOLIO">
+        <ul>
+            <li *ngFor="let data of DATAPORTFOLIO.organization">
+                ({{data.id}}) - {{data.name}}
+            </li>
+        </ul>
+    </ng-container>
+    <ng-container *ngIf="DATAPORTFOLIO">
+        <ul>
+            <li *ngFor="let data of DATAPORTFOLIO.roleposition">
+                ({{data.id}}) - {{data.name}}
+            </li>
+        </ul>
+    </ng-container>
+    <ng-container *ngIf="DATAPORTFOLIO">
+        <ul>
             <li *ngFor="let data of DATAPORTFOLIO.hardskill">
                 ({{data.id}}) - {{data.name}}
             </li>

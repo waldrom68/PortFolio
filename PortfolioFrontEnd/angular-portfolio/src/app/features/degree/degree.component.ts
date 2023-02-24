@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
 import { DataService } from 'src/app/service/data.service';
-import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { faPlusCircle, faTimes } from '@fortawesome/free-solid-svg-icons';
 
-import { Degree } from '../../models'
+import { Degree, FullPersonDTO } from '../../models'
 
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MessageBoxComponent } from '../../shared/message-box/message-box.component';
+import { ModalActionsService } from 'src/app/service/modal-actions.service';
 
 import { Observable } from 'rxjs';
 
@@ -22,33 +23,39 @@ export class DegreeComponent implements OnInit {
 
   showForm: boolean = false;  // flag para mostrar o no el formulario
 
-
   myData: Degree[] = [];
   formData: Degree;  // instancia vacia, para cuando se solicite un alta
 
   faPlusCircle = faPlusCircle;
+  faTimes = faTimes;
 
-  showBtnAction: boolean= true;  // flag para mostrar o no los btn's de acciones del usuario
+  @Input() showBtnAction: boolean= true;  // flag para mostrar o no los btn's de acciones del usuario
+  @Output() showBtnActionChange = new EventEmitter<boolean>();
  
+  @Input() myDegrees: Degree[];
+  @Output() myDegreesChange = new EventEmitter<Degree[]>();
+  
   itemParaBorrar: any;
 
-
+  DATAPORTFOLIO: FullPersonDTO;
   // user: Person;
 
-  // DATAPORTFOLIO: FullPersonDTO;
+  message: string;
 
   constructor(
     private dataService: DataService,
-    
-     
     public matDialog: MatDialog,
 
+    @Inject(MAT_DIALOG_DATA) public data: { message: string,},
+    public dialogRef: MatDialogRef<DegreeComponent>, //DegreeModal
+
+    private modalService: ModalActionsService
+    
   ) { }
 
   ngOnInit(): void {
-    this.loadDegree();
-
-    console.log("Entrando para leer los datos")
+    this.DATAPORTFOLIO = this.dataService.getData();
+    this.myData = this.DATAPORTFOLIO.degree;
     
     this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();
     this.flagUserAdmin$.subscribe(  flagUserAdmin => this.flagUserAdmin = flagUserAdmin);
@@ -64,25 +71,20 @@ export class DegreeComponent implements OnInit {
       person:0 }
   }
 
-  loadDegree() {
-    
-    this.dataService.getDegree().subscribe( {
-      next: (v) => { this.myData = v},
-      error: (e) => {
-        alert("Response Error (" + e.status + ")" + "\n" + e.message);
-        console.log("Se quizo obtener los datos Degree sin exito; ", e );
-      },
-      complete: () => {console.log("Finalizado el proceso de obtener los datos Degree");}
-    });
-  }
+  
   toggleForm() {
-    
+    // Cierra el formulario de edicion o creacion
     this.showForm = !this.showForm;
     this.showBtnAction = !this.showBtnAction;
-
   }  
-  
-  cancelation() {
+
+  prueba(data:any) {
+    this.myData = data;
+    console.log("Prueba function in degree-compoment", this.myData)
+    this.myDegreesChange.emit(this.myData);
+  }
+
+  cancelation(degree: Degree) {
     this.toggleForm();
   }
 
@@ -106,7 +108,7 @@ export class DegreeComponent implements OnInit {
           alert("Response Error (" + e.status + ")" + "\n" + e.message);
           console.log("Se quizo eliminar sin exito a: " , this.itemParaBorrar);
         },
-        complete: () => {console.log("Completada la actualizacion del degree");}
+        complete: () => {console.log("Completada la actualizacion del Titulo");}
 
       });
     }
@@ -123,7 +125,7 @@ export class DegreeComponent implements OnInit {
         alert("Response Error (" + e.status + ") en el metodo addItem()" + "\n" + e.message);
         console.log("Se quizo agregar sin exito a: " + degree.name);
       },
-      complete: () => console.log("Completado el alta del degree")
+      complete: () => console.log("Completado el alta del Titulo")
     });
     this.toggleForm();
     this.resetForm();
@@ -164,4 +166,5 @@ export class DegreeComponent implements OnInit {
 
     )
   }
+  
 }

@@ -6,14 +6,16 @@
             <app-career-item 
                 *ngFor="let item of myData"
                 [item]="item"
-                [user]="user"
                 [formData]="formData"
+                (onDelete)="openModalDelete(item)"
+                
                 [myOrganizations]="myOrganizations"
+                (myOrganizationsChange)="myOrganizations"
                 [myRolePositions]="myRolePositions"
-                [(showBtnAction)]="showBtnAction"
-                (onDelete)="deleteItem(item)"
-            >
+                (myRolePositionsChange)="myRolePositions"
 
+                [(showBtnAction)]="showBtnAction"
+            >
             </app-career-item>
 
 
@@ -23,12 +25,15 @@
     <app-career-form
         *ngIf="showForm && flagUserAdmin"
         [ngStyle]="{'width':'100%'}"
-        [user]="user"
         [formData]="formData"
-        [myOrganizations]="myOrganizations"
-        [myRolePositions]="myRolePositions"
         [title]="'Agregar un trabajo'"
+        
+        [myOrganizations]="myOrganizations"
+        (myOrganizationsChange)="myOrganizations"
 
+        [myRolePositions]="myRolePositions"
+        (myRolePositionsChange)="myRolePositions"
+        
         (showBtnActionChange)="showBtnAction"
         (onUpdate)=" addItem($event)"
         (cancel)="cancelation($event)"

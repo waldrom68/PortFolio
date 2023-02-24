@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output, Inject, } from '@angula
 import { DataService } from 'src/app/service/data.service';
 import { faPlusCircle, faTimes } from '@fortawesome/free-solid-svg-icons';
 
-import {Person, Organization} from '../../models'
+import { Organization, FullPersonDTO} from '../../models'
 
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
@@ -38,6 +38,7 @@ export class OrganizationComponent implements OnInit {
 
   private itemParaBorrar: any;
 
+  DATAPORTFOLIO: FullPersonDTO;
   // user: Person;
  
   message: string;
@@ -56,17 +57,8 @@ export class OrganizationComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.dataService.getOrganization().subscribe( {
-      next: (v) => {
-        this.myData = v;
-      },
-      error: (e) => {
-        alert("Response Error (" + e.status + ")" + "\n" + e.message);
-        console.log("Se quizo obtener Organizaciones sin exito " );
-      },
-      complete: () => {console.log("Completada la actualizacion de Organizaciones");}
-      });
-    
+    this.DATAPORTFOLIO = this.dataService.getData();
+    this.myData = this.DATAPORTFOLIO.organization
     
     // Verifica si está logueado como ADMIN
     this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();
@@ -118,6 +110,7 @@ export class OrganizationComponent implements OnInit {
           console.log("Se ha eliminado exitosamente a: ", this.itemParaBorrar);
           this.myData = this.myData.filter((t) => { return t !== this.itemParaBorrar })
           // Actualizo la informacion en el origen
+          this.DATAPORTFOLIO.organization = this.myData;
           this.itemParaBorrar = null;
         },
         error: (e) => {
@@ -136,12 +129,24 @@ export class OrganizationComponent implements OnInit {
   // }
   
   addItem(organization: Organization) {
-    this.dataService.addOrganization(organization).subscribe( (tt)=> {
-      this.myData.push( tt );
-      this.toggleForm();
+    this.dataService.addOrganization(organization).subscribe({
+      next: (v) => {
+        console.log("Interes guardado correctamente: ", v);
+        v.person = this.DATAPORTFOLIO.id;
+        this.myData.push(v);
+        // Actualizo la informacion en el origen
+        this.DATAPORTFOLIO.organization = this.myData;
+
+      },
+      error: (e) => {
+        alert("Response Error (" + e.status + ") en el metodo addItem()" + "\n" + e.message);
+        console.log("Se quizo agregar sin exito a: " + organization.name);
+      },
+      complete: () => console.log("Completado el alta del hardSkill")
     }
     );
     this.resetForm();
+    this.toggleForm();
     
   }
 
@@ -179,7 +184,5 @@ export class OrganizationComponent implements OnInit {
 
     )
   }
-
-
 
 }

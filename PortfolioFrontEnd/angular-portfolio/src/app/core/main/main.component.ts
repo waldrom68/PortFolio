@@ -71,7 +71,7 @@ export class MainComponent implements OnInit {
           alert("Response Error (" + e.status + ") en iniciar.sesion.component" + "\n" + e.message);
           console.log("Se quizo obtener los datos sin exito; ", e)
         },
-        complete: () => {console.log("Finalizado el proceso de obtener los datos")}
+        complete: () => {console.log("Finalizado el proceso de obtener los datos del PortFolio")}
       });
     }
 

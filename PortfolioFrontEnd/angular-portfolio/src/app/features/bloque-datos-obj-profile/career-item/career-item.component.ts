@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { LaboralCareer, Organization, Person, RolePosition } from '../../../models'
+import { LaboralCareer, Organization, RolePosition } from '../../../models'
 
 import { faPen, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Observable } from 'rxjs';
@@ -17,7 +17,7 @@ export class CareerItemComponent implements OnInit {
 
 
   @Input() item: LaboralCareer;
-  @Input() user: Person;
+
   @Input() formData: LaboralCareer;
   @Input() myOrganizations: Organization[];
   @Input() myRolePositions: RolePosition[];
@@ -53,9 +53,8 @@ export class CareerItemComponent implements OnInit {
 
   toggleForm(career: LaboralCareer) {
     this.showForm = !this.showForm;
-    // this.ocultarAcciones = !this.ocultarAcciones
     this.formData = career;
-    // this.resize();  // habilito las acciones de cada item
+
     this.showBtnAction = !this.showBtnAction
     this.showBtnActionChange.emit(this.showBtnAction)
   }
@@ -72,6 +71,7 @@ export class CareerItemComponent implements OnInit {
   }
 
   update(career: LaboralCareer) {
+    // PENDIENTE CAPTURAR EXCEPCIONES
     this.dataService.updateLaboralCareer(career).subscribe();
     this.toggleForm(career);  // cierro el formulario
 

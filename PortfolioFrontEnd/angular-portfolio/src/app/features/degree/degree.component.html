@@ -1,55 +1,72 @@
-<div>
-    <ng-container *ngIf="myData.length; else agregar">
-        <div class="table-dark text-left container-fluid p-5" 
-        *ngIf="!showForm"
-        >
-            <app-degree-item 
-                *ngFor="let item of myData"
-                [item]="item"
-
-                (onDelete)="openModalDelete(item)"
-                [(showBtnAction)]="showBtnAction"
-            >
-
-            </app-degree-item>
-
-
-        </div>
-    </ng-container>
-
-    <app-degree-form
-        *ngIf="showForm && flagUserAdmin"
-
-        [formData]="formData"
-        [title]="'Ingrese un nivel de estudio'"
-
-        (showBtnActionChange)="showBtnAction"
-        (onUpdate)=" addItem($event)"
-        (cancel)="cancelation()"
+<div
+    tabindex="-1" 
+    role="dialog" 
     >
-    </app-degree-form>
-
-    <ng-template #agregar>
-        <div class="table-dark text-left container"  >
-            <p> Sin registrar Grados/niveles.
-            </p>
-        </div>
-    </ng-template>
-</div>
-
-
-
-<ng-container *ngIf="flagUserAdmin && showBtnAction">
-    <br>
-    <button class="btn btn-default btn-sm" 
-        ngClass="faControl fa-ico"
-        (click)="toggleForm()"
+    <div class="modal-header">
+        <h4 class="modal-title">
+            {{ message }}Niveles de Formación
+        </h4>
+        <button type="button" class="close" aria-label="Close" 
+        (click)="dialogRef.close(myData); prueba(myData)"
         >
-        <fa-icon
-        ngClass="fa-3x text-primary"
-            [icon]="faPlusCircle"
-            
+        <span aria-hidden="false">&times;</span>
+        </button>
+    </div>
+
+    <div class="modal-body">
+        <ng-container *ngIf="myData.length; else agregar">
+            <div class="table-dark text-left container-fluid p-5" 
+            *ngIf="!showForm"
             >
-        </fa-icon>
-    </button>
-</ng-container>
+                <app-degree-item 
+                    *ngFor="let item of myData"
+                    [item]="item"
+
+                    (onDelete)="openModalDelete(item)"
+                    [(showBtnAction)]="showBtnAction"
+                >
+
+                </app-degree-item>
+
+
+            </div>
+        </ng-container>
+
+        <app-degree-form
+            *ngIf="showForm && flagUserAdmin"
+
+            [formData]="formData"
+            [title]="'Ingrese un nivel de formación'"
+
+            (showBtnActionChange)="showBtnAction"
+            (onUpdate)=" addItem($event)"
+            (cancel)="cancelation($event)"
+        >
+        </app-degree-form>
+
+        <ng-template #agregar>
+            <div class="table-dark text-left container"  >
+                <p> Sin registrar Niveles de Formación.
+                </p>
+            </div>
+        </ng-template>
+    </div>
+
+    <div class="modal-footer">
+        <ng-container *ngIf="flagUserAdmin && showBtnAction">
+            <br>
+            <button class="btn btn-default btn-sm" 
+                ngClass="faControl fa-ico"
+                (click)="toggleForm()"
+                >
+                <fa-icon
+                ngClass="fa-3x text-primary"
+                    [icon]="faPlusCircle"
+                    
+                    >
+                </fa-icon>
+            </button>
+        </ng-container>
+    </div>
+
+</div>

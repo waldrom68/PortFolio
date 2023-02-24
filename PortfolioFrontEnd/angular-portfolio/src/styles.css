@@ -73,6 +73,17 @@ button.fa-ico {
         color:white;
         background-color: var(--danger);
     }
+/* MODALES */
+.close > span {
+    padding: 0px 15px;
+    font-size: 2rem;
+    color: var(--danger);
+}
+    .close > span:hover {
+        /* padding: 0px 15px; */
+        color:white;
+        background-color: var(--danger);
+    }
     
 
 
@@ -128,3 +139,5 @@ button.fa-ico {
     font-size:x-small ;
     padding: 5px;
     }
+
+

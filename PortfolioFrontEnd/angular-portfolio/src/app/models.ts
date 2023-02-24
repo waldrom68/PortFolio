@@ -229,6 +229,9 @@ export class FullPersonDTO{
     hardskill: HardSkill[];
     softskill: SoftSkill[];
     interest: Interest[];
+    organization: Organization[];
+    degree: Degree[];
+    roleposition: RolePosition[];
     laboralCareer: LaboralCareer[];
     studie: Studie[];
     phone: Phone[];

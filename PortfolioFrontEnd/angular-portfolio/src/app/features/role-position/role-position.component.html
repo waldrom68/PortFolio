@@ -1,55 +1,74 @@
-<div>
-    <ng-container *ngIf="myData.length; else agregar">
-        <div class="table-dark text-left container-fluid p-5" 
-        *ngIf="!showForm"
-        >
-            <app-roleposition-item 
-                *ngFor="let item of myData"
-                [item]="item"
-
-                (onDelete)="deleteItem(item)"
-                [(showBtnAction)]="showBtnAction"
-            >
-
-            </app-roleposition-item>
-
-
-        </div>
-    </ng-container>
-
-    <app-roleposition-form
-        *ngIf="showForm && flagUserAdmin"
-
-        [formData]="formData"
-        [title]="'Ingrese un rol/posicion'"
-
-        (showBtnActionChange)="showBtnAction"
-        (onUpdate)=" addItem($event)"
-        (cancel)="cancelation($event)"
+<!-- class="table-dark text-left container-fluid p-5" -->
+<div
+    tabindex="-1" 
+    role="dialog" 
     >
-    </app-roleposition-form>
-
-    <ng-template #agregar>
-        <div class="table-dark text-left container"  >
-            <p> Sin registrar posiciones/roles.
-            </p>
-        </div>
-    </ng-template>
-</div>
-
-
-
-<ng-container *ngIf="flagUserAdmin && showBtnAction">
-    <br>
-    <button class="btn btn-default btn-sm" 
-        ngClass="faControl fa-ico"
-        (click)="toggleForm()"
+    <div class="modal-header">
+        <h4 class="modal-title">
+            {{ message }}Posiciones / Roles
+        </h4>
+        <button type="button" class="close" aria-label="Close" 
+        (click)="dialogRef.close(myData); prueba(myData)"
         >
-        <fa-icon
-        ngClass="fa-3x text-primary"
-            [icon]="faPlusCircle"
-            
+        <span aria-hidden="false">&times;</span>
+        </button>
+    </div>
+
+    <div class="modal-body">
+        <ng-container *ngIf="myData.length; else agregar">
+            <div class="table-dark text-left container-fluid p-5" 
+            *ngIf="!showForm"
             >
-        </fa-icon>
-    </button>
-</ng-container>
+                <app-roleposition-item 
+                    *ngFor="let item of myData"
+                    [item]="item"
+
+                    (onDelete)="openModalDelete(item)"
+                    [(showBtnAction)]="showBtnAction"
+                >
+
+                </app-roleposition-item>
+
+
+            </div>
+        </ng-container>
+
+        <app-roleposition-form
+            *ngIf="showForm && flagUserAdmin"
+
+            [formData]="formData"
+            [title]="'Ingrese un rol/posicion'"
+
+            (showBtnActionChange)="showBtnAction"
+            (onUpdate)=" addItem($event)"
+            (cancel)="cancelation($event)"
+        >
+        </app-roleposition-form>
+
+        <ng-template #agregar>
+            <div class="table-dark text-left container"  >
+                <p> Sin registrar posiciones/roles.
+                </p>
+            </div>
+        </ng-template>
+    </div>
+
+
+    <div class="modal-footer">
+        <ng-container *ngIf="flagUserAdmin && showBtnAction">
+            <br>
+            <button class="btn btn-default btn-sm" 
+                ngClass="faControl fa-ico"
+                (click)="toggleForm()"
+                >
+                <fa-icon
+                ngClass="fa-3x text-primary"
+                    [icon]="faPlusCircle"
+                    
+                    >
+                </fa-icon>
+            </button>
+        </ng-container>
+    </div>
+
+</div>

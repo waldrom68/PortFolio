@@ -8,7 +8,7 @@
       <button  class="btn btn-primary mx-2" (click)="openOrganization()">
         Organizaciones
       </button>
-      <button  class="btn btn-primary mx-2" (click)="toggleDegreeForm()"
+      <button  class="btn btn-primary mx-2" (click)="openDegree()"
       ngClass = "{btn-warning: (!formData.degree) }"
       >
         Niveles
@@ -144,16 +144,26 @@
 </ng-template>
 
 <ng-container *ngIf="showOrgaForm && !showDegreeForm">
-  <!-- (click)="toggleOrgaForm() -->
+
     <app-organization
-    [(showBtnAction)]="showBtnAction"
-    (showBtnActionChange)="showBtnAction"
-    [myOrganizations]="myOrganizations"
-    (myOrganizationsChange)="myOrganizations"
+      [(showBtnAction)]="showBtnAction"
+      (showBtnActionChange)="showBtnAction"
+
+      [myOrganizations]="myOrganizations"
+      (myOrganizationsChange)="myOrganizations"
     ></app-organization>
-    <!-- [(showOrga)]="showOrga"-->
+
 </ng-container>
 
+
 <ng-container *ngIf="showDegreeForm && !showOrgaForm">
-    <app-degree></app-degree>
+
+    <app-degree
+      [(showBtnAction)]="showBtnAction"
+      (showBtnActionChange)="showBtnAction"
+
+      [myDegrees]="myDegrees"
+      (myDegreesChange)="myDegrees"
+    ></app-degree>
+
 </ng-container>

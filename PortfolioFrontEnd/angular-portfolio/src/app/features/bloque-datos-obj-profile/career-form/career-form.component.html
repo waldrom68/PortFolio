@@ -1,19 +1,17 @@
 <ng-container class="m-auto p-1" 
 *ngIf="myOrganizations.length > 0  && myRolePositions.length > 0; else estaVacio"
   >
-  <ng-container >
+  <ng-container *ngIf="!showOrgaForm && !showRoleForm">
     <h5>Administrar</h5>
-    <button  class="btn btn-primary mx-2" (click)="toggleOrgaForm()">
+    <button  class="btn btn-primary mx-2" (click)="openOrganization()">
       Organizaciones
     </button>
-    <button  class="btn btn-primary mx-2" (click)="toggleRoleForm()">
+    <button  class="btn btn-primary mx-2" (click)="openRolePosition()">
       Posiciones
     </button>
     <hr>
   </ng-container>
 
-  <!-- <h5> {{formData.organization.name }} ({{formData.roleposition.name }}) </h5>
-  <h5 class="m-auto p-1"> {{title}}</h5> -->
   <form class="form-inline m-1"
     style="display: flex ; width:100% "
     *ngIf="showPrimaryForm"
@@ -143,13 +141,25 @@
 
 </ng-template>
 
-<ng-container>
+<ng-container *ngIf="showOrgaForm && !showRoleForm">
+  <!-- (click)="toggleOrgaForm() -->
     <app-organization
-
+    [(showBtnAction)]="showBtnAction"
+    (showBtnActionChange)="showBtnAction"
     
+    [myOrganizations]="myOrganizations"
+    (myOrganizationsChange)="myOrganizations"
     ></app-organization>
+    <!-- [(showOrga)]="showOrga"-->
 </ng-container>
 
-<ng-container *ngIf="showRoleForm">
-    <app-role-position></app-role-position>
+<ng-container *ngIf="showRoleForm && !showOrgaForm">
+    <app-role-position
+    [(showBtnAction)]="showBtnAction"
+    (showBtnActionChange)="showBtnAction"
+    
+    [myRolePositions]="myRolePositions"
+    (myRolePositionsChange)="myRolePositions"
+    >
+    </app-role-position>
 </ng-container>

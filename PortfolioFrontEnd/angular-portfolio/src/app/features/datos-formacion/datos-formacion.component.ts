@@ -24,10 +24,6 @@ export class DatosFormacionComponent implements OnInit {
 
   showForm: boolean = false;  // flag para mostrar o no el formulario
 
-  // softskill: SoftSkill[] = SOFTSKILL;
-  myData: Studie[] = [];
-  formData: Studie;  // instancia vacia, para cuando se solicite un alta
-
   faPlusCircle = faPlusCircle;
 
   showBtnAction: boolean= true;  // flag para mostrar o no los btn's de acciones del usuario
@@ -35,6 +31,9 @@ export class DatosFormacionComponent implements OnInit {
   itemParaBorrar: any;
 
   DATAPORTFOLIO: FullPersonDTO;
+
+  myData: Studie[] = [];
+  formData: Studie;  // instancia vacia, para cuando se solicite un alta
 
   myOrganizations: Organization[];
   myDegrees: Degree[];
@@ -51,34 +50,8 @@ export class DatosFormacionComponent implements OnInit {
   ngOnInit(): void {
     this.DATAPORTFOLIO = this.dataService.getData();
     this.myData = this.DATAPORTFOLIO.studie;
-
-    // this.myOrganizations = this.DATAPORTFOLIO.organization;
-    // this.myDegrees = this.DATAPORTFOLIO.Degree;
-
-    this.dataService.getOrganization().subscribe( {
-      next: (v) => {
-        this.myOrganizations = v;
-      },
-      error: (e) => {
-        alert("Response Error (" + e.status + ")" + "\n" + e.message);
-        console.log("Se quizo obtener Organizaciones sin exito " );
-      },
-      complete: () => {console.log("Completada la actualizacion de Organizaciones");}
-      });
-
-      this.dataService.getDegree().subscribe( {
-        next: (v) => { this.myDegrees = v},
-        error: (e) => {
-          alert("Response Error (" + e.status + ")" + "\n" + e.message);
-          console.log("Se quizo obtener los datos Degree sin exito; ", e );
-        },
-        complete: () => {console.log("Finalizado el proceso de obtener los datos Degree");}
-      });
-
-      
-
-    
-
+    this.myOrganizations = this.DATAPORTFOLIO.organization;
+    this.myDegrees = this.DATAPORTFOLIO.degree;
 
 
     // Verifica si está logueado como ADMIN
@@ -137,21 +110,18 @@ export class DatosFormacionComponent implements OnInit {
           console.log("Se ha eliminado exitosamente a: ", this.itemParaBorrar);
           this.myData = this.myData.filter((t) => { return t !== this.itemParaBorrar })
           // Actualizo la informacion en el origen
+          this.DATAPORTFOLIO.studie = this.myData;
           this.itemParaBorrar = null;
         },
         error: (e) => {
           alert("Response Error (" + e.status + ")" + "\n" + e.message);
           console.log("Se quizo eliminar sin exito a: " , this.itemParaBorrar);
         },
-        complete: () => {console.log("Completada la actualizacion del Estudio");}
+        complete: () => {console.log("Completada la eliminacion del Estudio");}
 
       });
     }
   }
-
-
-
-
 
   // upDateItem(studie: Studie) {
   //   this.dataService.updateStudie(studie).subscribe();

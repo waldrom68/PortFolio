@@ -3,7 +3,7 @@ import { DataService } from 'src/app/service/data.service';
 
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
-import {Person, LaboralCareer, Organization, RolePosition} from '../../models'
+import {LaboralCareer, Organization, RolePosition, FullPersonDTO} from '../../models'
 
 
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
@@ -17,24 +17,26 @@ import { Observable } from 'rxjs';
   styleUrls: ['./datos-trayectoria.component.css']
 })
 export class DatosTrayectoriaComponent implements OnInit {
-  // PENDIENTE: SERVICIO QUE DEBE VINCULARSE CON EL LOGUEO
+
+  // SERVICIO QUE ESTÁ VINCULADO CON EL LOGUEO
   flagUserAdmin: boolean = false;
   flagUserAdmin$: Observable<boolean>;
-  showForm: boolean = false;  // flag para mostrar o no el formulario
 
-  // softskill: SoftSkill[] = SOFTSKILL;
-  myData: LaboralCareer[] = [];
-  formData: LaboralCareer;  // instancia vacia, para cuando se solicite un alta
+  showForm: boolean = false;  // flag para mostrar o no el formulario
 
   faPlusCircle = faPlusCircle;
 
   showBtnAction: boolean= true;  // flag para mostrar o no los btn's de acciones del usuario
  
-  itemParaBorrar: LaboralCareer;
-  flagBorrado: boolean = false;
-  flagBorrado$: Observable<boolean>;
+  itemParaBorrar: any;
 
-  user: Person;
+  DATAPORTFOLIO: FullPersonDTO;
+  
+  myData: LaboralCareer[] = [];
+  formData: LaboralCareer;  // instancia vacia, para cuando se solicite un alta
+
+
+  // user: Person;
   myOrganizations: Organization[];
   myRolePositions: RolePosition[];
 
@@ -43,42 +45,23 @@ export class DatosTrayectoriaComponent implements OnInit {
     private dataService: DataService, 
 
     public matDialog: MatDialog,
-    private modalService: ModalActionsService,
-    ) {
-      // this.dataService.getGralData().subscribe(data =>
-      //   this.user = data
-      //   ) ;
 
-      this.user = this.dataService.getUSER();
-
-        this.dataService.getOrganization().subscribe(data =>
-          this.myOrganizations = data
-    
-        );
-        this.dataService.getRolePosition().subscribe(data =>
-          this.myRolePositions = data
-        );
-        this.dataService.getLaboralCareer().subscribe(data =>
-          this.myData = data
-        );
-        this.resetForm()
-        
-     }
+    ) {  }
 
 
   ngOnInit(): void {
+    this.DATAPORTFOLIO = this.dataService.getData();
+    this.myData = this.DATAPORTFOLIO.laboralCareer;
+    this.myOrganizations = this.DATAPORTFOLIO.organization;
+    this.myRolePositions = this.DATAPORTFOLIO.roleposition;
 
-    // subscribo y me entero si se cambia el status del flag  
-    this.flagBorrado$ = this.modalService.getFlagBorrado$();
-    this.flagBorrado$.subscribe( (tt)=> {
-      console.log(`Se acepto el borrado del item "${this.itemParaBorrar.organization}"`);
-      this.myData = this.myData.filter( (t) => { return t.id !== this.itemParaBorrar.id } )
-    }
-    )
 
+    // Verifica si está logueado como ADMIN
     this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();
     this.flagUserAdmin$.subscribe(  flagUserAdmin => this.flagUserAdmin = flagUserAdmin)
     this.flagUserAdmin = this.dataService.getFlagUserAdmin();
+
+    this.resetForm()
 
    }
 
@@ -106,18 +89,7 @@ export class DatosTrayectoriaComponent implements OnInit {
     }
   }
 
-  delete(career: LaboralCareer) {
-    // Este codigo acualiza el array Person para que se actualice en 
-    // el frontend, sin necesidad de recargar la pagina
-     this.dataService.delLaboralCareers(career).subscribe( (tt)=> {
-        // despues de ejecutarse el borrado de la DB, la quitamos del listado de myData
-        this.myData = this.myData.filter( (t) => { return t.id !== career.id } )
-      }
-    );
-  }
-
-
-
+  
   toggleForm() {
     this.showForm = !this.showForm;
     this.showBtnAction = !this.showBtnAction;
@@ -127,30 +99,56 @@ export class DatosTrayectoriaComponent implements OnInit {
     this.toggleForm();
   }
 
-  deleteItem(career: LaboralCareer){
-    this.itemParaBorrar = career;
-    this.openDeleteModal(career)
+  openModalDelete(laboralCareer: LaboralCareer){
+    // Llamo al modal, si se confirma el borrado.
+    // almaceno el item en cuestion en itemParaBorrar
+    this.itemParaBorrar = laboralCareer;
+    this.openDeleteModal(laboralCareer)
   }
 
-  upDateItem(career: LaboralCareer) {
-    this.dataService.updateLaboralCareer(career).subscribe();
-  }
-  
-  addItem(career: LaboralCareer) {
-    this.dataService.addLaboralCareer(career).subscribe( (tt)=> {
-      this.myData.push( tt );
-      this.toggleForm();
-      this.resetForm();
+  delItem() {
+    if (this.itemParaBorrar) {
+      this.dataService.delStudie(this.itemParaBorrar).subscribe( {
+        next: (v) => {
+          console.log("Se ha eliminado exitosamente a: ", this.itemParaBorrar);
+          this.myData = this.myData.filter((t) => { return t !== this.itemParaBorrar })
+          // Actualizo la informacion en el origen
+          this.DATAPORTFOLIO.laboralCareer = this.myData;
+          this.itemParaBorrar = null;
+        },
+        error: (e) => {
+          alert("Response Error (" + e.status + ")" + "\n" + e.message);
+          console.log("Se quizo eliminar sin exito a: " , this.itemParaBorrar);
+        },
+        complete: () => {console.log("Completada la eliminacion en la Trayectoria Laboral");}
+
+      });
     }
-    );
-    // this.resetForm();
+  }
 
+
+  // upDateItem(career: LaboralCareer) {
+  //   this.dataService.updateLaboralCareer(career).subscribe();
+  // }
+  
+  addItem(laboralCareer: LaboralCareer) {
+    this.dataService.addLaboralCareer(laboralCareer).subscribe( {
+      next: (v) => {
+        console.log("Interes guardado correctamente: ", v);
+        v.person = this.DATAPORTFOLIO.id;
+        this.myData.push(v);
+      },
+      error: (e) => {
+        alert("Response Error (" + e.status + ") en el metodo addItem()" + "\n" + e.message);
+        console.log("Se quizo agregar sin exito a: " + laboralCareer.resume);
+      },
+      complete: () => console.log("Completado el alta en Trayectoria Laboral")
+    });
+    this.resetForm();
+    this.toggleForm();
   }
 
   openDeleteModal(data:any) {
-    // Acciones definidas en el modal-action.service.ts
-    // PENDIENTE, RECUPERAR EL VALOR DE USER NAME PARA PASARLO AL MSG.
-    const userId = this.user.name;
     const dialogConfig = new MatDialogConfig();
     // The user can't close the dialog by clicking outside its body
     dialogConfig.disableClose = true;
@@ -159,8 +157,8 @@ export class DatosTrayectoriaComponent implements OnInit {
     dialogConfig.width = "600px";
     dialogConfig.data = {
       // atributos generales del message-box
-      name: "delLaboralCareer",
-      title: `Hi ${userId}, está por eliminar uno de los trabajos`,
+      name: "eliminar",
+      title: `Hola, está por eliminar uno de los trabajos`,
       description: `¿Estás seguro de eliminar "${data.organization.name} (${data.roleposition.name})" ?`,
       // por defecto mostrararía Aceptar
       actionButtonText: "Eliminar",
@@ -176,5 +174,12 @@ export class DatosTrayectoriaComponent implements OnInit {
     // https://material.angular.io/components/dialog/overview
     const modalDialog = this.matDialog.open(MessageBoxComponent, dialogConfig);
 
+    modalDialog.afterClosed().subscribe(
+      data => {
+        console.log("Dialogo output: ", data);
+        if (data) {this.delItem() }
+      }
+
+    )
   }
 }
