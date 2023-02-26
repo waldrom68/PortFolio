@@ -156,6 +156,7 @@ export interface Person {
     // username:string,
     // password:string,
     displaydata: DisplayData
+    
 }
 export interface Phone {
     id: number;

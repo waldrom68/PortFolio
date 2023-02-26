@@ -111,6 +111,8 @@
     npm run server
 
 - ng add @angular/material
+- npm install moment --save
+- npm i @angular/material-moment-adapter
 
 ## ERRORES 
 Eliminar carpeta node_modules

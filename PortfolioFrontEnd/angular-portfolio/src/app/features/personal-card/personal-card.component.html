@@ -1,5 +1,5 @@
 
-<ng-container *ngIf="myData && !showForm">
+<ng-container *ngIf="myData">
 
 
     <div class="container py-4 p-0 m-0">
@@ -9,7 +9,7 @@
             <br>
             <!-- (click)="toggleForm();" -->
             <button class="btn btn-outline-success btn-sm mt-2"
-            (click)="toggleForm();"
+            (click)="showPrompt();"
             ngClass="faConfirm fa-ico"
             [ngStyle]="{'width':'fit-content', 'align-self':'end'}"
         
@@ -24,7 +24,7 @@
             </button>
         </ng-container>
 
-            <ng-container *ngIf="myData">
+            <ng-container>
 
                 <div class="ratio ratio-1x1 rounded-circle overflow-hidden" style="width: 50%; height: 50%; margin: auto;">
 
@@ -56,7 +56,7 @@
 </ng-container>
 
 
-<ng-container class="container p-0 py-4 m-0"
+<!-- <ng-container class="container p-0 py-4 m-0"
 *ngIf="showForm"
 >
     <div class="card">
@@ -82,6 +82,6 @@
         >
         </app-personal-form>
     </div>
-</ng-container>
+</ng-container> -->
 
 <!-- <button mat-raised-button id="logout-button" (click)="openModal(myData)">Editar</button> -->

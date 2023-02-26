@@ -126,6 +126,10 @@ export class DataService {
   // #### Nuevo metodo de acceso general a los datos del backend
   private gralData: FullPersonDTO;
   private gralData$ = new Subject<FullPersonDTO>();
+  
+  private personData: Person;
+
+
 
   getPortFolioData(): Observable<FullPersonDTO> {
     const endPoint = `${this.LOCALHOST_API}/fullperson/view/${this.USERID}`
@@ -136,6 +140,10 @@ export class DataService {
   getPortFolioData$(): Observable<FullPersonDTO> {
     return this.gralData$.asObservable();
   }
+
+ 
+
+
 // Interest APIREST ###################################################
   updateInterest(interest: Interest): Observable<Interest> {
     interest.person = this.USERID;

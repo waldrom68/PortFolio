@@ -1,59 +1,69 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, EventEmitter, Inject, Input, OnInit, Output, ViewChild } from '@angular/core';
 
 import { faCheck, faMonument, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Observable } from 'rxjs';
 import { DataService } from 'src/app/service/data.service';
 
-import { Person } from 'src/app/models';
+// import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
+// import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
+import { FullPersonDTO } from 'src/app/models';
 
 @Component({
   selector: 'app-personal-form',
   templateUrl: './personal-form.component.html',
   styleUrls: ['./personal-form.component.css']
 })
-export class PersonalFormComponent implements OnInit {
-// PENDIENTE: SERVICIO QUE DEBE VINCULARSE CON EL LOGUEO
+export class PersonalFormComponent  implements OnInit {
+
+// SERVICIO QUE ESTÁ VINCULADO CON EL LOGUEO
 flagUserAdmin: boolean = false;
 flagUserAdmin$: Observable<boolean>;
 
-@Input() formData: Person;
-@Input() title: string;
-@Input() showBtnAction!: boolean;
-
-@Output() showBtnActionChange = new EventEmitter<boolean>();
-@Output() onUpdate: EventEmitter<Person> = new EventEmitter()
-@Output() cancel: EventEmitter<Person> = new EventEmitter()
-
+faCheck = faCheck;
 faTimes = faTimes;
 
-showForm: boolean = false;
-
 form: FormGroup;
-  constructor(
-    private formBuilder: FormBuilder,
-    private dataService: DataService,
+oldForm: FormGroup;
+myData: FullPersonDTO;
+message: String;
 
-  ) { }
+constructor(    
+  private fb: FormBuilder,
+  private dataService: DataService,
+  private matDialog: MatDialog,
+  
+  @Inject(MAT_DIALOG_DATA) data: { message: string, form:FormGroup },
 
-  ngOnInit() {
-    
+  public dialogRef: MatDialogRef<PersonalFormComponent>) 
+  {
+    this.message = data ? data.message :"Falta definir el Titulo";
+    this.myData = this.dataService.getData();
+
+    this.form = this.fb.group(
+      {
+        name:[this.myData.name, [Validators.required, Validators.minLength(2), Validators.maxLength(45)  ]],
+        lastName:[this.myData.lastName, [Validators.required, Validators.minLength(2), Validators.maxLength(45) ]],
+        location:[this.myData.location, [Validators.required, Validators.minLength(5), Validators.maxLength(45) ]],
+        profession:[this.myData.profession, [Validators.required, Validators.minLength(5), Validators.maxLength(45) ]],
+        pathFoto:[this.myData.pathFoto, [Validators.required ]],
+        email:[this.myData.email, [Validators.required, Validators.email ]],
+        since:[new Date(this.myData.since), [Validators.required ]]
+      }
+    )
+    // Clono el objeto, uso assign por no tener atributos compuesto por otros objetos
+    this.oldForm = Object.assign({} , this.form)
+
+  }
+
+  ngOnInit(): void {
+    // this.myData = this.dataService.getData();
+
+    // Verifica si está logueado como ADMIN
     this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();
     this.flagUserAdmin$.subscribe(  flagUserAdmin => this.flagUserAdmin = flagUserAdmin)
     this.flagUserAdmin = this.dataService.getFlagUserAdmin()
-
-
-    this.form = this.formBuilder.group({
-      name:[this.formData.name, [Validators.required, Validators.minLength(2), Validators.maxLength(45)  ]],
-      lastName:[this.formData.lastName, [Validators.required, Validators.minLength(2), Validators.maxLength(45) ]],
-      location:[this.formData.location, [Validators.required, Validators.minLength(5), Validators.maxLength(45) ]],
-      profession:[this.formData.profession, [Validators.required, Validators.minLength(5), Validators.maxLength(45) ]],
-      pathFoto:[this.formData.pathFoto, [Validators.required ]],
-      email:[this.formData.email, [Validators.required, Validators.email ]],
-      since:[this.formData.since, [Validators.required ]]
-
-    });
-
   }
 
   get Name(): any {
@@ -78,39 +88,38 @@ form: FormGroup;
     return this.form.get("since")
   }
 
-  toggleForm() {
-    this.showForm = !this.showForm;
-    // this.ocultarAcciones = !this.ocultarAcciones
-    // this.formData = person;
-    // this.resize();  // habilito las acciones de cada item
-    this.showBtnAction = !this.showBtnAction
-    this.showBtnActionChange.emit(this.showBtnAction)
-  }
+  submit(form: NgForm) {
+    console.log("estoy cerrando el formulario")
+    console.log( "Valores del formulario original", this.oldForm )
 
-  onEnviar(event: Event, ){
-    event.preventDefault;
+    this.dialogRef.close({
+      clicked: 'submit',
+      form: form
+    });
+
     // Si deja de estar logueado, no registro lo que haya modificado y cierro form.
-    if (!this.flagUserAdmin) {
+    
+    console.log("this.flagUserAdmin", this.flagUserAdmin)
+    console.log("this.form.valid", this.form.valid)
+    console.log("this.oldForm.value == this.form.value", this.oldForm.value == this.form.value)
+    if (this.flagUserAdmin) {
 
-      this.cancel.emit();
-
-    } else {
-      
       if (this.form.valid) {
   
-        this.formData.name = this.form.get("name")?.value;
-        this.formData.lastName = this.form.get("lastName")?.value;
-        this.formData.since = this.form.get("since")?.value;
-        this.formData.location = this.form.get("location")?.value;
-        this.formData.profession = this.form.get("profession")?.value;
-        this.formData.pathFoto = this.form.get("pathFoto")?.value;
-        this.formData.email = this.form.get("email")?.value;
-        this.formData.since = this.form.get("since")?.value;
+        this.myData.name = this.form.get("name")?.value.trim();
+        this.myData.lastName = this.form.get("lastName")?.value.trim();
 
-        this.toggleForm();
-        this.onUpdate.emit(this.formData);
+        this.myData.location = this.form.get("location")?.value.trim();
+        this.myData.profession = this.form.get("profession")?.value.trim();
+        this.myData.pathFoto = this.form.get("pathFoto")?.value;
+        this.myData.email = this.form.get("email")?.value.trim();
+        this.myData.since = this.form.get("since")?.value;
+        console.log( "Valores del formulario devuelto", this.form )
+        // this.toggleForm();
+        // this.onUpdate.emit(this.myData);
   
-      } else {
+      }
+       else {
         
         console.log("no es valido el valor ingresado")
         this.form.markAllAsTouched();
@@ -119,11 +128,44 @@ form: FormGroup;
     }
   }
 
-  cancelation() {
-    this.cancel.emit();  // cierro el formulario
-  }
+  // onSubmit(event: Event, ){
+  //   event.preventDefault;
+  //   // Si deja de estar logueado, no registro lo que haya modificado y cierro form.
+  //   console.log("Debiera volver y cerrar el formulario modal VERIFICANDO cambios")
+  //   if (!this.flagUserAdmin) {
+
+  //     this.cancel.emit();
+
+  //   } else {
+      
+  //     if (this.form.valid) {
+  
+  //       this.formData.name = this.form.get("name")?.value.trim();
+  //       this.formData.lastName = this.form.get("lastName")?.value.trim();
+
+  //       this.formData.location = this.form.get("location")?.value.trim();
+  //       this.formData.profession = this.form.get("profession")?.value.trim();
+  //       this.formData.pathFoto = this.form.get("pathFoto")?.value;
+  //       this.formData.email = this.form.get("email")?.value.trim();
+  //       this.formData.since = this.form.get("since")?.value;
+
+  //       this.toggleForm();
+  //       this.onUpdate.emit(this.formData);
+  
+  //     } else {
+        
+  //       console.log("no es valido el valor ingresado")
+  //       this.form.markAllAsTouched();
+  
+  //     }
+  //   }
+  // }
+
+  // cancelation(event: Event, ) {
+  //   console.log("Debiera volver y cerrar el formulario modal sin hacer cambios")
+  //   this.cancel.emit();  // cierro el formulario
+  // }
 
 }
 
 
-// https://stackoverflow.com/questions/61435588/i-am-new-to-angular-i-want-to-show-modal-with-form-details-for-confirmation-befo
