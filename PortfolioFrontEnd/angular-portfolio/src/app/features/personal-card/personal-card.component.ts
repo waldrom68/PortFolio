@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 
 import {FullPersonDTO, Person} from '../../models'
@@ -41,6 +41,8 @@ export class PersonalCardComponent implements OnInit {
   constructor( 
     private dataService: DataService,
     private matDialog: MatDialog,
+
+    private changeDetectionRef: ChangeDetectorRef,
 
     // private fb: FormBuilder,
     
@@ -110,6 +112,7 @@ export class PersonalCardComponent implements OnInit {
           console.log("El formData", this.dataFromDialog )
 
         }
+        console.log(this.changeDetectionRef.detectChanges());
       });
     }
 

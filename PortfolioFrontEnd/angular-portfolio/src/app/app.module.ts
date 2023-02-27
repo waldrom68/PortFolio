@@ -29,6 +29,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MessageBoxComponent } from './shared/message-box/message-box.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { interceptorProvider } from './service/interceptor-service';
+import { MatDatepickerComponent } from './shared/mat-datepicker/mat-datepicker.component';
 
 
 
@@ -64,7 +65,7 @@ const appRouters: Routes = [
     MatButtonModule,
     MatDialogModule,
     MatToolbarModule,
-
+  
     ReactiveFormsModule,
   ],
   exports: [

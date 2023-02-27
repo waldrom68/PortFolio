@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { DataService } from 'src/app/service/data.service';
 
 import { Project } from 'src/app/models';
+import { formatDate } from '@angular/common';
 
 
 @Component({
@@ -42,7 +43,7 @@ constructor(
     this.form = this.formBuilder.group({
       name:[this.formData.name, [Validators.required, Validators.minLength(1) ]],
       resume:[this.formData.resume, [Validators.required, Validators.minLength(2), Validators.maxLength(500) ]],
-      since:[this.formData.since, [Validators.required ]]
+      since:[formatDate(this.formData.since, 'yyyy-MM-dd', 'en'), [Validators.required ]]
 
     });
     this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();

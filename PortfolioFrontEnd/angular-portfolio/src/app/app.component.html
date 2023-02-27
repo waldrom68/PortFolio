@@ -50,3 +50,33 @@
   <!-- Aqui veo el doble binding de la variable form -->
   {{form.value.name}}
 </section>
+
+<div class="container">
+  <h2>Angular material date switcher</h2>
+  <form [formGroup]="formDate" (ngSubmit)="onSubmit()">
+
+    <mat-form-field color="pink" appearance="outline">
+      <mat-label>Datepicker example</mat-label>
+        <input matInput [min]="dateMinDate"  [max]="dateMaxDate"   
+          [matDatepicker]="matDatePicker" formControlName="date"
+           />
+        <mat-hint>DD/MM/YYYY</mat-hint>
+        <mat-datepicker-toggle matSuffix [for]="matDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #matDatePicker [opened]="false"></mat-datepicker>
+      
+    </mat-form-field>
+    
+    <app-mat-datepicker
+      [fecha]="prueba"
+      [theform]="formDate"
+      (update)="onDateUpdate($event)"
+    ></app-mat-datepicker>
+
+     
+    <button mat-raised-button color="primary" type="submit">
+      Submit
+    </button>
+    
+  </form>
+ 
+</div>

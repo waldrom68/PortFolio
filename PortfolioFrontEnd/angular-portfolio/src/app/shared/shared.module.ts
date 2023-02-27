@@ -18,17 +18,26 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatInputPromptComponent } from './mat-input-prompt/mat-input-prompt.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { MAT_DATE_FORMATS } from '@angular/material/core';
+import { CUSTOM_DATE_FORMATS } from './mat-datepicker/custom-date-formats';
+import { MatDatepickerComponent } from './mat-datepicker/mat-datepicker.component';
+
 
 
 
 const MaterialModules = [
-  MatDialogModule,
+  
   MatButtonModule,
+  MatButtonModule,
+  MatCheckboxModule,
+  MatDatepickerModule,
   MatFormFieldModule,
-  MatInputModule,
   MatIconModule,
+  MatInputModule,
   MatSelectModule,
-  MatCheckboxModule
+  
 ];
 
 @NgModule({
@@ -37,23 +46,29 @@ const MaterialModules = [
     BtnDisplayComponent,
     MatAlertComponent,
     MatInputPromptComponent,
+    MatDatepickerComponent,
     // CourseDialogComponent,
-
-
+    
+    
   ],
   imports: [
     CommonModule,
     FontAwesomeModule,
+    MatDialogModule,
     ReactiveFormsModule,
+    MatMomentDateModule,
     MaterialModules
   ],
   exports: [
     // MessageBoxComponent,
     BtnDisplayComponent,
+    MatDatepickerComponent,
     FontAwesomeModule,
     MaterialModules
 
   ],
+  providers: [
+    { provide: MAT_DATE_FORMATS, useValue: CUSTOM_DATE_FORMATS }],
   bootstrap: [AppComponent],
   entryComponents: []
 })

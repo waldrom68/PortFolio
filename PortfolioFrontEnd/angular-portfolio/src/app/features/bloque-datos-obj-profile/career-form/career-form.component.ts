@@ -10,6 +10,7 @@ import { LaboralCareer, Organization, RolePosition, Person, FullPersonDTO } from
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { OrganizationComponent } from '../../organization/organization.component';
 import { RolePositionComponent } from '../../role-position/role-position.component';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-career-form',
@@ -54,6 +55,7 @@ export class CareerFormComponent implements OnInit {
     private formBuilder: FormBuilder,
 
     private dialog: MatDialog,  // DeleteModal
+    
   ) {
 
   }
@@ -63,8 +65,8 @@ export class CareerFormComponent implements OnInit {
 
     this.form = this.formBuilder.group({
       resume: [this.formData.resume, [Validators.required, Validators.minLength(2), Validators.maxLength(500)]],
-      startDate: [this.formData.startDate, [Validators.required]],
-      endDate: [this.formData.endDate, []],
+      startDate: [formatDate(this.formData.startDate, 'yyyy-MM-dd', 'en'), [Validators.required]],
+      endDate: [formatDate(this.formData.endDate, 'yyyy-MM-dd', 'en'),[]],
       organization: [this.formData.organization, [Validators.required]],
       roleposition: [this.formData.roleposition, [Validators.required]],
     });

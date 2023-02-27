@@ -89,6 +89,7 @@
               formControlName="startDate"
               [ngClass] = "{error: (StartDate.invalid && StartDate.touched)}"
               >
+              <small class="mensajeError" *ngIf="form.hasError('required', 'startDate')"> Dato requerido </small>
           </div>
           <div class="col">
               <label class="form-label" for="endDate">Hasta:</label>
@@ -101,6 +102,7 @@
               [ngClass] = "{error: (EndDate.invalid && EndDate.touched)}"
               >
           </div>
+          
       </div>
 
       <div class="row icon-group m-2">

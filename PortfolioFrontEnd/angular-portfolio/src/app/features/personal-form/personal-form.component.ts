@@ -6,9 +6,11 @@ import { DataService } from 'src/app/service/data.service';
 
 // import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
 // import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, NgForm, FormControl } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { FullPersonDTO } from 'src/app/models';
+
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-personal-form',
@@ -49,7 +51,7 @@ constructor(
         profession:[this.myData.profession, [Validators.required, Validators.minLength(5), Validators.maxLength(45) ]],
         pathFoto:[this.myData.pathFoto, [Validators.required ]],
         email:[this.myData.email, [Validators.required, Validators.email ]],
-        since:[new Date(this.myData.since), [Validators.required ]]
+        since: [formatDate(this.myData.since, 'yyyy-MM-dd', 'en'), [Validators.required ]],
       }
     )
     // Clono el objeto, uso assign por no tener atributos compuesto por otros objetos

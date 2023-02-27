@@ -6,7 +6,13 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatAlertComponent } from './shared/mat-alert/mat-alert.component';
 import { MatInputPromptComponent } from './shared/mat-input-prompt/mat-input-prompt.component';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+
+import * as moment from 'moment';
+import { DateAdapter } from '@angular/material/core';
+import { MatDatepickerComponent } from './shared/mat-datepicker/mat-datepicker.component';
+
+
 
 
 @Component({
@@ -29,7 +35,13 @@ export class AppComponent  {
   // codigo probando el modal
   form: FormGroup; 
 
+// codigo para probar el datepicker
+dateMinDate = new Date(2019, 0, 1);
+dateMaxDate = new Date(moment.now());
+formDate: FormGroup = new FormGroup({});
 
+prueba = new Date(1968, 4, 20)
+shortdate: FormControl;
 
 constructor(
   // Inicializamos los servicios del modulo User
@@ -37,20 +49,49 @@ constructor(
         private dialog: MatDialog,
 
         private fb: FormBuilder,
-  ) {
 
-    this.form = this.fb.group(
-      {
-        name: ['Origen datos', Validators.required],
-        address: ['componente de llamada', Validators.required],
-        country: ['']
-      }
-    )
+        private dateAdapter: DateAdapter<Date>,
 
-   }
+  )
+    {
+
+      this.form = this.fb.group(
+        {
+          name: ['Origen datos', Validators.required],
+          address: ['componente de llamada', Validators.required],
+          country: ['']
+        }
+      )
+
+      // prueba del datepicker
+      this.dateAdapter.setLocale('es');
+      this.formDate = this.fb.group({
+        date: new FormControl(new Date()),
+        shortdate: new FormControl(this.prueba),
+      });
+
+    }
 
 
   ngOnInit() {
+      // prueba del datepicker
+      this.dateAdapter.setLocale('es');
+      this.formDate = this.fb.group({
+        date: new FormControl(new Date()),
+        shortdate: new FormControl(this.prueba),
+      });
+
+  }
+
+  // Pruebas del DatePicker
+  onSubmit(): void {
+    console.log("Hice click en el datepicker", this.formDate)
+  }
+
+  onDateUpdate(date: FormControl) {
+    console.log("INPUT:", date.value._i==date.value._d);
+    this.formDate.value.shortdate = date.value._d;
+    
   }
 
 // Eventos recibidos desde: add-button-user.component.html
@@ -76,6 +117,7 @@ constructor(
       },
     });
   }
+
 
 
   showPrompt(): void {

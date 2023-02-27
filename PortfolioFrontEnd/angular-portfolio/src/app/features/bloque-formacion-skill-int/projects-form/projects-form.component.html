@@ -7,7 +7,7 @@
   #myForm="ngForm"
   (ngSubmit)="onEnviar($event); myForm.resetForm()"
 >
-  <div class="col" style="display: contents ; width:100% ">
+  <div class="row" style="display: contents ; width:100% ">
 
     <label class="form-label" for="name">Nombre:</label>
     <textarea type="text" 
@@ -24,8 +24,8 @@
     <small class="mensajeError" *ngIf="form.hasError('required', 'name')"> Dato requerido </small>
     <small class="mensajeError" *ngIf="form.hasError('minlength', 'name')"> Mínimo {{ Nombre.errors.minlength.requiredLength }} caracteres</small>
     <small class="mensajeError" *ngIf="form.hasError('maxlength', 'name')"> Máximo {{ Nombre.errors.maxlength.requiredLength }} caracteres</small>
-
-
+</div>
+<div class="row" style="display: contents ; width:100% ">
     <label class="form-label" for="resume">Resumen:</label>
     <textarea type="text" 
       id="resume"
@@ -41,7 +41,8 @@
     <small class="mensajeError" *ngIf="form.hasError('minlength', 'resume')"> Mínimo {{ Resume.errors.minlength.requiredLength }} caracteres</small>
     <small class="mensajeError" *ngIf="form.hasError('maxlength', 'resume')"> Máximo {{ Resume.errors.maxlength.requiredLength }} caracteres</small>
 
-
+</div>
+<div class="row" style="display: contents ; width:100% ">
     <label class="form-label" for="since">Realizado en:</label>
     <input type="date"
       id="since"
@@ -51,12 +52,14 @@
       formControlName="since"
       [ngClass] = "{error: (Since.invalid && Since.touched)}"
     >
+    <small class="mensajeError" *ngIf="form.hasError('required', 'since')"> Dato requerido </small>
+    
     <!-- Datepicker ANGULAR
       https://stackoverflow.com/questions/55721254/how-to-change-mat-datepicker-date-format-to-dd-mm-yyyy-in-simplest-way -->
     
+</div>
 
-    
-    <div class="icon-group m-2">
+    <div class="icon-group row m-2">
 
       <button type="submit" class="btn btn-outline-success btn-sm"
       ngClass="faConfirm fa-ico"
@@ -75,7 +78,7 @@
     </div>
 
 
-  </div>
+
 
 
   </form>

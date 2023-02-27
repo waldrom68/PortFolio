@@ -11,6 +11,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { OrganizationComponent } from '../../organization/organization.component';
 import { DegreeComponent } from '../../degree/degree.component';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-studie-form',
@@ -65,8 +66,8 @@ export class StudieFormComponent implements OnInit {
 
     this.form = this.formBuilder.group({
       name: [this.formData.name, [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
-      startDate: [this.formData.startDate, [Validators.required]],
-      endDate: [this.formData.endDate, []],
+      startDate: [formatDate(this.formData.startDate, 'yyyy-MM-dd', 'en'), [Validators.required]],
+      endDate: [formatDate(this.formData.endDate, 'yyyy-MM-dd', 'en'),[]],
       organization: [this.formData.organization, [Validators.required]],
       degree: [this.formData.degree, [Validators.required]],
     });
