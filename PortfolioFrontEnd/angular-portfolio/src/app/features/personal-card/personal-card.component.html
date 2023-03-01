@@ -1,5 +1,5 @@
 
-<ng-container *ngIf="myData">
+<ng-container *ngIf="DATAPORTFOLIO">
 
 
     <div class="container py-4 p-0 m-0">
@@ -9,7 +9,7 @@
             <br>
             <!-- (click)="toggleForm();" -->
             <button class="btn btn-outline-success btn-sm mt-2"
-            (click)="showPrompt();"
+            (click)="openPersonModal();"
             ngClass="faConfirm fa-ico"
             [ngStyle]="{'width':'fit-content', 'align-self':'end'}"
         
@@ -28,25 +28,25 @@
 
                 <div class="ratio ratio-1x1 rounded-circle overflow-hidden" style="width: 50%; height: 50%; margin: auto;">
 
-                    <img src={{myData.pathFoto}} class="card-img-top img-cover" alt="sin Imagen" >
+                    <img src={{DATAPORTFOLIO.pathFoto}} class="card-img-top img-cover" alt="sin Imagen" >
                 </div>
 
                 <div class="card-body">
                     <h5 class="card-title">
-                        {{ myData.name }} {{ myData.lastName }}
+                        {{ DATAPORTFOLIO.name }} {{ DATAPORTFOLIO.lastName }}
                     </h5>
                     
                     <h6 class="card-text" 
-                        *ngFor="let elemento of myData.profession.split('\n')">{{ elemento }}
+                        *ngFor="let elemento of DATAPORTFOLIO.profession.split('\n')">{{ elemento }}
                     </h6>
                     <hr style="border: 1px solid;">
-                    <p>Nacido en {{myData.since | date:"yyyy"}}.</p>
+                    <p>Nacido en {{DATAPORTFOLIO.since | date:"yyyy"}}.</p>
                     <p>
                         <fa-icon 
                             [icon]="faLocationDot"
                         >
                         </fa-icon>
-                  {{myData.location}}</p> 
+                  {{DATAPORTFOLIO.location}}</p> 
 
                 </div>
             </ng-container>

@@ -30,6 +30,9 @@ import { MessageBoxComponent } from './shared/message-box/message-box.component'
 import { ReactiveFormsModule } from '@angular/forms';
 import { interceptorProvider } from './service/interceptor-service';
 import { MatDatepickerComponent } from './shared/mat-datepicker/mat-datepicker.component';
+import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+import { environment } from '../environments/environment';
+import { provideStorage,getStorage } from '@angular/fire/storage';
 
 
 
@@ -67,6 +70,8 @@ const appRouters: Routes = [
     MatToolbarModule,
   
     ReactiveFormsModule,
+        provideFirebaseApp(() => initializeApp(environment.firebase)),
+        provideStorage(() => getStorage()),
   ],
   exports: [
     SharedModule,

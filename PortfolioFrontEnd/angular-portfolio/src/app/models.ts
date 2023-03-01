@@ -1,6 +1,8 @@
 // ### PENDIENTE VERIFICAR EL USO DE
 // ESTAS INTERFACES ANTES DE ELIMINAR
 
+import { last } from "rxjs"
+
 export interface User {
     id: number,
     username: string,
@@ -142,20 +144,43 @@ export interface Organization {
     url:string,
     person:number
 }
-export interface Person {
-    id:number,
-    name:string,
-    lastName:string,
-    pathFoto:string, 
-    location:string,
-    profession:string,
-    profile:string, 
-    objetive:string, 
-    since:Date,
-    email:string,
-    // username:string,
-    // password:string,
+export class Person {
+    id:number;
+    name:string;
+    lastName:string;
+    pathFoto:string; 
+    location:string;
+    profession:string;
+    profile:string; 
+    objetive:string; 
+    since:Date;
+    email:string;
     displaydata: DisplayData
+
+    constructor(    
+        id:number,
+        name:string,
+        lastName:string,
+        pathFoto:string, 
+        location:string,
+        profession:string,
+        profile:string, 
+        objetive:string, 
+        since:Date,
+        email:string, 
+        displaydata: DisplayData ) {
+            this.id = id;
+            this.name = name;
+            this.lastName = lastName;
+            this.pathFoto = pathFoto;
+            this.location = location;
+            this.profession = profession;
+            this.profile = profile;
+            this.objetive = objetive;
+            this.since = since;
+            this.email = email;
+            this.displaydata = displaydata;
+        }
     
 }
 export interface Phone {

@@ -45,3 +45,7 @@ Thumbs.db
 ### CONFIGURACION DB ###
 !**/src/main/resources/application.properties
 *.properties
+# Firebase
+.firebase
+*-debug.log
+.runtimeconfig.json

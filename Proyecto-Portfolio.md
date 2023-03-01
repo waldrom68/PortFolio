@@ -203,6 +203,19 @@ Pasos para implementar en firebase, se debe instalar el paquete Firebase tools, 
 
         firebase deploy // hace el despliegue en la nube.
 
+    Preparando libreria para el file storage en firebase.
+    Primero habilitarlo en el proyecto del hosting - storage / en principio modo prueba. Eligiendo el servidor.
+
+        Instalar la libreria:
+            ng add @angular/fire
+            opciones:
+            ? Cloud Storage
+            ? Cuenta
+            ? Project
+            ? Combre de la aplicacion
+
+    firebase token "1//0hd8OOZYNvzb7CgYIARAAGBESNwF-L9Ir9z4SexHz4eppEH6cwysP2v_33PsFaH7Fbu1lgkOInYJOmo_8bAv0DdBUN09lTp8AyZ4"
+    firebase deploy --token "$FIREBASE_TOKEN"
 
 
 Para correr la aplicacion frontend en localhost:
@@ -232,3 +245,40 @@ Video hasta 2 horas 28 minutos.
     https://benracicot.medium.com/customize-angulars-build-system-for-local-dev-stage-and-prod-53516c8bc311
 
 -->
+## Complementos instalados
+- npm i bootstrap jquery popper.js --save
+- ng add @fortawesome/angular-fontawesome@
+  https://www.npmjs.com/package/@fortawesome/angular-fontawesome
+
+- npm install -g json-server --devDependencies
+  API REST falsa completa sin codificación para desarrolladores front-end que necesitan un back-end rápido para crear prototipos y simulacros
+  - agregar al package.json:
+    "server": "json-server --watch db.json --port 5000"
+  
+  - Poner el servidor de json para ver nuestros datos
+    npm run server
+
+- ng add @angular/material
+- npm install moment --save
+- npm i @angular/material-moment-adapter
+
+Para el arreglo de packeges con vulnerabilidades, ejecutrar:
+- npm update  // reinstala los packages y reescribe el packages.json.
+
+si falla podra ejecurtar otro comando que lo que hará será actualiza las versiones de parche de los paquetes con problemas.
+- npm audit fix 
+
+
+## ERRORES 
+Eliminar carpeta node_modules
+Borrar archivo package-lock.json
+Limpiar cache con -> npm cache clean --force
+Reinstalar -> npm install
+
+ó 
+
+Para el arreglo de packeges con vulnerabilidades, ejecutrar:
+- npm update  // reinstala los packages y reescribe el packages.json.
+
+si falla podra ejecurtar otro comando que lo que hará será actualiza las versiones de parche de los paquetes con problemas.
+- npm audit fix 

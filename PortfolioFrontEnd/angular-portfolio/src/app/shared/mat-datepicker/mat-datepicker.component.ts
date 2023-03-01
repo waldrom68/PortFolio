@@ -72,7 +72,7 @@ export class MatDatepickerComponent {
   // console.log("Fecha valida:", ctrlValue.isValid())
 
   ngOnInit() {
-    console.log("Recibo esta fecha", this.fecha)
+    // console.log("Recibo esta fecha", this.fecha)
     this.shortdate = new FormControl(moment(this.fecha))
   }
 

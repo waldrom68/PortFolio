@@ -9,6 +9,7 @@ import { DataService } from 'src/app/service/data.service';
 import { Observable } from 'rxjs';
 import { PersonalFormComponent } from '../personal-form/personal-form.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UploadMediaService } from 'src/app/service/upload-media.service';
 
 @Component({
   selector: 'app-personal-card',
@@ -26,7 +27,8 @@ export class PersonalCardComponent implements OnInit {
   showBtnAction: boolean = true;  // flag para mostrar o no los btn's de acciones del usuario
 
   
-  myData: FullPersonDTO;
+  // myData: FullPersonDTO;
+  DATAPORTFOLIO: FullPersonDTO;
   
   faPen = faPen;
   faTimes = faTimes;
@@ -41,31 +43,18 @@ export class PersonalCardComponent implements OnInit {
   constructor( 
     private dataService: DataService,
     private matDialog: MatDialog,
-
     private changeDetectionRef: ChangeDetectorRef,
 
     // private fb: FormBuilder,
     
     
     ) { 
-      this.myData = this.dataService.getData();
-
-      // this.form = this.fb.group(
-      //   {
-      //     name:[this.myData.name, [Validators.required, Validators.minLength(2), Validators.maxLength(45)  ]],
-      //     lastName:[this.myData.lastName, [Validators.required, Validators.minLength(2), Validators.maxLength(45) ]],
-      //     location:[this.myData.location, [Validators.required, Validators.minLength(5), Validators.maxLength(45) ]],
-      //     profession:[this.myData.profession, [Validators.required, Validators.minLength(5), Validators.maxLength(45) ]],
-      //     pathFoto:[this.myData.pathFoto, [Validators.required ]],
-      //     email:[this.myData.email, [Validators.required, Validators.email ]],
-      //     since:[this.myData.since, [Validators.required ]]
-      //   }
-      // )
+      // this.DATAPORTFOLIO = this.dataService.getData();
     } 
   
   
     ngOnInit(): void {
-      this.myData = this.dataService.getData();
+      this.DATAPORTFOLIO = this.dataService.getData();
 
       // Verifica si está logueado como ADMIN
       this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();
@@ -86,34 +75,60 @@ export class PersonalCardComponent implements OnInit {
     //   this.toggleForm();
     // }
 
-    showPrompt(): void {
+    gralDataToPerson(data:FullPersonDTO): Person {
+      return new Person(
+        data.id,
+        data.name,
+        data.lastName,
+        data.pathFoto,
+        data.location,
+        data.profession,
+        data.profile,
+        data.objetive,
+        data.since,
+        data.email,
+        data.displaydata
+      )
+    }
+
+    openPersonModal(): void {
       const dialogConfig = new MatDialogConfig();
       // The user can't close the dialog by clicking outside its body
       dialogConfig.disableClose = true;
       dialogConfig.restoreFocus = true;
       dialogConfig.id = "modal-component";
-      // dialogConfig.panelClass = "modal-component";
-      // dialogConfig.backdropClass = "modal-component"
-  
+
       dialogConfig.height = "80%";
       dialogConfig.width = "90%";
 
       dialogConfig.data = { message: "Datos generales", }
 
-
       const dialogRef = this.matDialog.open( PersonalFormComponent, dialogConfig );
   
       dialogRef.afterClosed().subscribe((data) => {
-  
-        this.dataFromDialog = data.form;
-        if (data.clicked === 'submit') {
 
-          console.log('Sumbit button clicked, mostrando datos del formulario:', data)
-          console.log("El formData", this.dataFromDialog )
+      if (data.clicked === 'update') {
 
-        }
-        console.log(this.changeDetectionRef.detectChanges());
-      });
-    }
+        // Obtengo nuevo objeto para actualizar en la base de datos
+        const person = this.gralDataToPerson(data.newData);
+
+        // Actualizo los datos via dataService
+        this.dataService.updateGralData(person).subscribe( {
+          next: (v) => {
+            console.log("Guardado correctamente: ", v);
+            // Actualizo la variable observada por el resto de los componentes
+            this.dataService.changeGralData(data.newData);
+          },
+          error: (e) => {
+            alert("Response Error (" + e.status + ") en el metodo addItem()" + "\n" + e.message);
+            console.log("Se quizo modificar sin exito a: " + person.lastName);
+          },
+          complete: () => console.log("Completado la actualizacion de datos")
+        });
+
+      }  // cierro la condicion si action es update
+    });  // cierro el afterclosed()
+  }  // fin openPersonModal()
+
 
 }

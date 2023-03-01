@@ -35,6 +35,7 @@ export class DataService {
   private flagChangeUser$ = new Subject<boolean>();
 
   // PENDIENTE, no se está usando, validar necesidad de existencia
+  // SEGURO PODRIA SERVIR PARA VALIDAR LA OBTENCION DE GRALDATA AL INICIAR
   // private handleError(error: HttpErrorResponse) {
   //   if (error.status === 0) {
   //     // A client-side or network error occurred. Handle it accordingly.
@@ -65,7 +66,7 @@ export class DataService {
   gerUserID() {
     return this.USERID
   }
-
+// 
   getData() {
     return this.gralData;
   }
@@ -79,10 +80,10 @@ export class DataService {
     this.gralData$.next(this.gralData);
   }
 
-  updateGralData(user: Person): Observable<Person> {
+  updateGralData(persona: Person): Observable<Person> {
     // Este codigo modifica el valor del usuario en la DB
     console.log("El servicio va a modificar los datos en Person API")
-    return this.http.post<Person>(`${this.LOCALHOST_API}/person/edit`, user, httpOptions)
+    return this.http.post<Person>(`${this.LOCALHOST_API}/person/edit`, persona, httpOptions)
     // const url = `http://localhost:8080/edit/person`;
     // return this.http.post<Person>(url, user, httpOptions)
   }
@@ -123,7 +124,7 @@ export class DataService {
     this.flagChangeUser$.next(this.flagChangeUser);
   }
 
-  // #### Nuevo metodo de acceso general a los datos del backend
+  // #### Nuevo metodo de acceso general a todos los datos del backend
   private gralData: FullPersonDTO;
   private gralData$ = new Subject<FullPersonDTO>();
   

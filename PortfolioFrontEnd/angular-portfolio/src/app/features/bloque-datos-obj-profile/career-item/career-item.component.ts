@@ -78,7 +78,6 @@ export class CareerItemComponent implements OnInit {
     this.dataService.updateLaboralCareer(laboralCareer).subscribe( {
       next: (v) => {
         console.log("Guardado correctamente: ", v);
-        console.log("Creo que aqui está el error", laboralCareer)
         // v.person = this.DATAPORTFOLIO.id;
         // this.myData.push(v);
       },

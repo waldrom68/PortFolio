@@ -114,6 +114,13 @@
 - npm install moment --save
 - npm i @angular/material-moment-adapter
 
+Para el arreglo de packeges con vulnerabilidades, ejecutrar:
+- npm update  // reinstala los packages y reescribe el packages.json.
+
+si falla podra ejecurtar otro comando que lo que hará será actualiza las versiones de parche de los paquetes con problemas.
+- npm audit fix 
+
+
 ## ERRORES 
 Eliminar carpeta node_modules
 Borrar archivo package-lock.json
@@ -338,3 +345,110 @@ https://stackblitz.com/edit/argentinaprograma-intro-formularios-awfgry?file=src%
   desde el prompt se corre
   >> tsc main.ts  // con esto typescript compila el codigo
   >> node main.js // con esto se ejecuta el codigo compilado
+
+
+https://firebasestorage.googleapis.com/v0/b/portfolio-frontend-wdr.appspot.com/o/image%2F1%2FfotoPerfil?alt=media&token=b7e26d43-9ee2-4a5d-8252-89989541cbc3
+
+https://[ref][_service][_host]/v0/b/[metadata.bucket]/o/image%2F1%2FfotoPerfil?alt=media&token=b7e26d43-9ee2-4a5d-8252-89989541cbc3
+
+  {
+  "metadata": {
+    "type": "file",
+    "bucket": "portfolio-frontend-wdr.appspot.com",
+    "generation": "1677640178041381",
+    "metageneration": "1",
+    "fullPath": "image/1/fotoPerfil",
+    "name": "fotoPerfil",
+    "size": 768010,
+    "timeCreated": "2023-03-01T03:09:38.044Z",
+    "updated": "2023-03-01T03:09:38.044Z",
+    "md5Hash": "LL/caW4u4jq2C6PsqfsbUQ==",
+    "contentDisposition": "inline; filename*=utf-8''fotoPerfil",
+    "contentEncoding": "identity",
+    "contentType": "image/png"
+  },
+  "ref": {
+    "_service": {
+      "app": {
+        "_isDeleted": false,
+        "_options": {
+          "projectId": "portfolio-frontend-wdr",
+          "appId": "1:303985749883:web:307a4d9093a6bc550e57de",
+          "storageBucket": "portfolio-frontend-wdr.appspot.com",
+          "locationId": "southamerica-east1",
+          "apiKey": "AIzaSyCQ8_LyFv4JuSW_9lsWTy5muwCRg7g2EhA",
+          "authDomain": "portfolio-frontend-wdr.firebaseapp.com",
+          "messagingSenderId": "303985749883",
+          "measurementId": "G-Z292YC8H9F"
+        },
+        "_config": {
+          "name": "[DEFAULT]",
+          "automaticDataCollectionEnabled": false
+        },
+        "_name": "[DEFAULT]",
+        "_automaticDataCollectionEnabled": false,
+        "_container": {
+          "name": "[DEFAULT]",
+          "providers": {}
+        }
+      },
+      "_authProvider": {
+        "name": "auth-internal",
+        "container": {
+          "name": "[DEFAULT]",
+          "providers": {}
+        },
+        "component": {
+          "name": "auth-internal",
+          "type": "PRIVATE",
+          "multipleInstances": false,
+          "serviceProps": {},
+          "instantiationMode": "EXPLICIT",
+          "onInstanceCreated": null
+        },
+        "instances": {},
+        "instancesDeferred": {},
+        "instancesOptions": {},
+        "onInitCallbacks": {}
+      },
+      "_appCheckProvider": {
+        "name": "app-check-internal",
+        "container": {
+          "name": "[DEFAULT]",
+          "providers": {}
+        },
+        "component": {
+          "name": "app-check-internal",
+          "type": "PUBLIC",
+          "multipleInstances": false,
+          "serviceProps": {},
+          "instantiationMode": "EXPLICIT",
+          "onInstanceCreated": null
+        },
+        "instances": {},
+        "instancesDeferred": {},
+        "instancesOptions": {},
+        "onInitCallbacks": {}
+      },
+      "_firebaseVersion": "9.17.1",
+      "_bucket": {
+        "bucket": "portfolio-frontend-wdr.appspot.com",
+        "path_": ""
+      },
+      "_host": "firebasestorage.googleapis.com",
+      "_protocol": "https",
+      "_appId": null,
+      "_deleted": false,
+      "_maxOperationRetryTime": 120000,
+      "_maxUploadRetryTime": 600000,
+      "_requests": {}
+    },
+    "_location": {
+      "bucket": "portfolio-frontend-wdr.appspot.com",
+      "path_": "image/1/fotoPerfil"
+    }
+  }
+}
+
+bucket = "portfolio-frontend-wdr.appspot.com"
+fullPath = "image/1/fotoPerfil"

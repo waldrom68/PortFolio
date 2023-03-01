@@ -6,11 +6,12 @@ import { DataService } from 'src/app/service/data.service';
 
 // import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
 // import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { FormGroup, FormBuilder, Validators, NgForm, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, NgForm, FormControl, AbstractControl } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
-import { FullPersonDTO } from 'src/app/models';
+import { FullPersonDTO, Person } from 'src/app/models';
 
 import { formatDate } from '@angular/common';
+import { UploadMediaService } from 'src/app/service/upload-media.service';
 
 @Component({
   selector: 'app-personal-form',
@@ -28,30 +29,35 @@ faTimes = faTimes;
 
 form: FormGroup;
 oldForm: FormGroup;
-myData: FullPersonDTO;
+
+DATAPORTFOLIO: FullPersonDTO;
 message: String;
+gralData: Person;
 
 constructor(    
   private fb: FormBuilder,
   private dataService: DataService,
+  private uploadMediaService: UploadMediaService,
+  
   private matDialog: MatDialog,
   
   @Inject(MAT_DIALOG_DATA) data: { message: string, form:FormGroup },
 
   public dialogRef: MatDialogRef<PersonalFormComponent>) 
   {
+    this.DATAPORTFOLIO = this.dataService.getData();
+
     this.message = data ? data.message :"Falta definir el Titulo";
-    this.myData = this.dataService.getData();
 
     this.form = this.fb.group(
       {
-        name:[this.myData.name, [Validators.required, Validators.minLength(2), Validators.maxLength(45)  ]],
-        lastName:[this.myData.lastName, [Validators.required, Validators.minLength(2), Validators.maxLength(45) ]],
-        location:[this.myData.location, [Validators.required, Validators.minLength(5), Validators.maxLength(45) ]],
-        profession:[this.myData.profession, [Validators.required, Validators.minLength(5), Validators.maxLength(45) ]],
-        pathFoto:[this.myData.pathFoto, [Validators.required ]],
-        email:[this.myData.email, [Validators.required, Validators.email ]],
-        since: [formatDate(this.myData.since, 'yyyy-MM-dd', 'en'), [Validators.required ]],
+        name:[this.DATAPORTFOLIO.name, [Validators.required, Validators.minLength(2), Validators.maxLength(45)  ]],
+        lastName:[this.DATAPORTFOLIO.lastName, [Validators.required, Validators.minLength(2), Validators.maxLength(45) ]],
+        location:[this.DATAPORTFOLIO.location, [Validators.required, Validators.minLength(5), Validators.maxLength(45) ]],
+        profession:[this.DATAPORTFOLIO.profession, [Validators.required, Validators.minLength(5), Validators.maxLength(45) ]],
+        pathFoto:[this.DATAPORTFOLIO.pathFoto, [Validators.required ]],
+        email:[this.DATAPORTFOLIO.email, [Validators.required, Validators.email ]],
+        since: [formatDate(this.DATAPORTFOLIO.since, 'yyyy-MM-dd', 'en'), [Validators.required ]],
       }
     )
     // Clono el objeto, uso assign por no tener atributos compuesto por otros objetos
@@ -90,84 +96,85 @@ constructor(
     return this.form.get("since")
   }
 
-  submit(form: NgForm) {
-    console.log("estoy cerrando el formulario")
-    console.log( "Valores del formulario original", this.oldForm )
 
-    this.dialogRef.close({
-      clicked: 'submit',
-      form: form
+  realChange(form1:FormGroup, form2:FormGroup): any {
+    let verifique = 0;
+    let cambios = new Array();
+    let clave: any;
+    Object.keys(this.form.controls).forEach((control: string) => {
+      const typedControl: AbstractControl = this.form.controls[control];
+      if (typedControl.value != this.oldForm.value[control]) {
+        clave = control;
+        cambios[clave] = {key:control, "newValue": typedControl.value }
+      }
+      // should log the form controls value and be typed correctly
     });
-
-    // Si deja de estar logueado, no registro lo que haya modificado y cierro form.
+    console.log(`Hubo concretamente ${Object.keys(cambios).length} cambios`);
+    console.log(cambios);
     
-    console.log("this.flagUserAdmin", this.flagUserAdmin)
-    console.log("this.form.valid", this.form.valid)
-    console.log("this.oldForm.value == this.form.value", this.oldForm.value == this.form.value)
-    if (this.flagUserAdmin) {
 
-      if (this.form.valid) {
-  
-        this.myData.name = this.form.get("name")?.value.trim();
-        this.myData.lastName = this.form.get("lastName")?.value.trim();
-
-        this.myData.location = this.form.get("location")?.value.trim();
-        this.myData.profession = this.form.get("profession")?.value.trim();
-        this.myData.pathFoto = this.form.get("pathFoto")?.value;
-        this.myData.email = this.form.get("email")?.value.trim();
-        this.myData.since = this.form.get("since")?.value;
-        console.log( "Valores del formulario devuelto", this.form )
-        // this.toggleForm();
-        // this.onUpdate.emit(this.myData);
-  
-      }
-       else {
-        
-        console.log("no es valido el valor ingresado")
-        this.form.markAllAsTouched();
-  
-      }
-    }
+    return Object.keys(cambios).length > 0 ? cambios : null;
   }
 
-  // onSubmit(event: Event, ){
-  //   event.preventDefault;
-  //   // Si deja de estar logueado, no registro lo que haya modificado y cierro form.
-  //   console.log("Debiera volver y cerrar el formulario modal VERIFICANDO cambios")
-  //   if (!this.flagUserAdmin) {
+  upLoadFile(evento: Event) {
+    evento.preventDefault;
+    // PENDIENTE INHABILITAR EL BOTON DE SUBMIT MIENTRAS REALIZA EL PROCESO DE SUBIDA
+    // actualizar la imagen al cerrar el form.
+    // verificar que detecte que la imagen cambio
+    // no mostrar el input, mostrar un boton, actualizar el input al obtener la URL
 
-  //     this.cancel.emit();
+    // Solo se puede tener una foto de perfil.
+    const path = "image/" + this.DATAPORTFOLIO.id;
+    const name =  "/fotoPerfil"
+    // this.uploadMediaService.upLoadFile(evento, path, name);
+    this.uploadMediaService.upLoadFile(evento, path, name);
 
-  //   } else {
-      
-  //     if (this.form.valid) {
+    // .subscribe({
+    //   next: (v) => {
+    //     console.log("Guardado correctamente: ", v);
+    //     // Actualizo la variable observada por el resto de los componentes
+    //   },
+    //   error: (e) => {
+    //     alert("Response Error (" + e.status + ") en el metodo addItem()" + "\n" + e.message);
+    //     console.log("Se quizo subit un archivo sin exito ");
+    //   },
+    //   complete: () => console.log("Completado la actualizacion de datos")
+    // });
+  }
+
+  onSubmit(form: NgForm) {
+    // Si esta logueado como Admin, el formulario valido y realmente hubo cambios preparo info
+    // para actualizar datos.
+    let action = "cancel";
+    let data = null;
+    const url: string = this.uploadMediaService.url;
   
-  //       this.formData.name = this.form.get("name")?.value.trim();
-  //       this.formData.lastName = this.form.get("lastName")?.value.trim();
+    // PENDIENTE no estoy capturando error de subida del archivo, ni que se arrepeienta de la imagen que subio antes de confirmar.
+    if (this.flagUserAdmin && this.form.valid) {
 
-  //       this.formData.location = this.form.get("location")?.value.trim();
-  //       this.formData.profession = this.form.get("profession")?.value.trim();
-  //       this.formData.pathFoto = this.form.get("pathFoto")?.value;
-  //       this.formData.email = this.form.get("email")?.value.trim();
-  //       this.formData.since = this.form.get("since")?.value;
-
-  //       this.toggleForm();
-  //       this.onUpdate.emit(this.formData);
-  
-  //     } else {
+      if (this.realChange(this.form, this.oldForm) != null && url != this.DATAPORTFOLIO.pathFoto) {
+        this.DATAPORTFOLIO.name = this.form.get("name")?.value.trim();
+        this.DATAPORTFOLIO.lastName = this.form.get("lastName")?.value.trim();
         
-  //       console.log("no es valido el valor ingresado")
-  //       this.form.markAllAsTouched();
-  
-  //     }
-  //   }
-  // }
+        this.DATAPORTFOLIO.location = this.form.get("location")?.value.trim();
+        this.DATAPORTFOLIO.profession = this.form.get("profession")?.value.trim();
+        // this.DATAPORTFOLIO.pathFoto = this.form.get("pathFoto")?.value.trim();
+        this.DATAPORTFOLIO.email = this.form.get("email")?.value.trim();
+        this.DATAPORTFOLIO.since = this.form.get("since")?.value;
+        this.DATAPORTFOLIO.pathFoto = url;
+        console.log("Archivo en la nube: ", url)
+        action = "update";
+        data = this.DATAPORTFOLIO;
 
-  // cancelation(event: Event, ) {
-  //   console.log("Debiera volver y cerrar el formulario modal sin hacer cambios")
-  //   this.cancel.emit();  // cierro el formulario
-  // }
+      } 
+
+    } 
+
+    // Cierro el modal y paso los datos a personalCardComponent
+    this.dialogRef.close({
+      clicked: action,
+      newData: data
+    });
+  }
 
 }
-
-
