@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { AuthService } from 'src/app/service/auth.service';
 import { DataService } from 'src/app/service/data.service';
 // import { TokenService } from 'src/app/service/token.service';
@@ -14,32 +14,45 @@ import { DataService } from 'src/app/service/data.service';
 
 
 export class TopBarComponent implements OnInit {
+
+  faTimes = faTimes;
+  isLoggin: boolean;
+
   flagUserAdmin: boolean = false;
   flagUserAdmin$: Observable<boolean>;
 
- 
-  faTimes = faTimes;
-  isLoggin: boolean;
+  // PENDIENTE, ESTÁ VINCULADO A LA PRACTICA DE OBSERVER
+  colorSubscription: Subscription;
+  color: string;
+  color$: Observable<string>;
+  // FIN A LA PRACTICA DE OBSERVER 
 
   constructor(
     private dataService: DataService,
     // private tokenService: TokenService,
     private authService: AuthService,
+
+
   ) { }
 
-  ngOnInit ( ): void {
-    this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();
-    this.flagUserAdmin$.subscribe(  flagUserAdmin => this.flagUserAdmin = flagUserAdmin)
-    
+  ngOnInit(): void {
+    // PENDIENTE, ESTÁ VINCULADO A LA PRACTICA DE OBSERVER
+    this.color$ = this.dataService.getColor$();
+    this.color$.subscribe(color => this.color = color);
+    // FIN A LA PRACTICA DE OBSERVER 
 
-    console.log("flagUserAdmin IS ", this.flagUserAdmin )
-    // if (this.tokenService.getToken()){
-    //   this.isLoggin = true;
-    // } else {
-    //   this.isLoggin = false;
-    // }
-   }
-  
+    this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();
+    this.flagUserAdmin$.subscribe(flagUserAdmin => this.flagUserAdmin = flagUserAdmin)
+
+  }
+
+  // PENDIENTE, ESTÁ VINCULADO A LA PRACTICA DE OBSERVER
+  ngOnDestroy() {
+    this.colorSubscription.unsubscribe();
+  }
+  // FIN A LA PRACTICA DE OBSERVER 
+
+
   onLogOut() {
     // this.dataService.changeUser();
     // this.isLoggin = false;
@@ -50,7 +63,7 @@ export class TopBarComponent implements OnInit {
   //   // this.dataService.changeUser();
   //   this.dataService.hasCredentials(true);
   // }
-  
+
   // toggleLoggin() {
   //   // this.isLoggin = true;
   // }

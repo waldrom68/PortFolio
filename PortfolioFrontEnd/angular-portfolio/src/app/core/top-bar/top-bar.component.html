@@ -1,9 +1,12 @@
 <!-- componente, mobile menu -->
-<section id="menu" class="pos-f-t">
+<section id="menu" class="pos-f-t"
+>
 
 
 
-  <nav class="navbar navbar-dark bg-dark justify-content-end">
+  <nav class="navbar navbar-dark bg-dark justify-content-end"
+
+  >
     <div class="container-fluid">
       <img class="navbar-brand" src="../../../assets/images/logo-argentina-programa.png" alt="">
 
@@ -14,10 +17,16 @@
         <span class="navbar-toggler-icon"></span>
       </button>
     </div>
+    <span 
+    [style]= "{'color':color, 'background-color':'white'  }"
+    >
+    {{color$ | async }} -> color$ | async  / {{color}} -> color</span> 
   </nav>
-  <div class="collapse" id="navbarToggleExternalContent">
-
-
+  <div class="collapse" id="navbarToggleExternalContent"
+  
+  >
+    
+    
     
     <div class="bg-dark p-4">
       <h4 class="text-white">User logging</h4>

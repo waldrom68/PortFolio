@@ -11,6 +11,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import * as moment from 'moment';
 import { DateAdapter } from '@angular/material/core';
 import { MatDatepickerComponent } from './shared/mat-datepicker/mat-datepicker.component';
+import { DataService } from './service/data.service';
 
 
 
@@ -43,6 +44,11 @@ formDate: FormGroup = new FormGroup({});
 prueba = new Date(1968, 4, 20)
 shortdate: FormControl;
 
+// PENDIENTE, ESTÁ VINCULADO A LA PRACTICA DE OBSERVER
+color: string;
+// FIN A LA PRACTICA DE OBSERVER 
+
+
 constructor(
   // Inicializamos los servicios del modulo User
         private uiService:UiService,  // defino el servicio para el botton de mostrar form
@@ -51,6 +57,10 @@ constructor(
         private fb: FormBuilder,
 
         private dateAdapter: DateAdapter<Date>,
+
+        // PENDIENTE, ESTÁ VINCULADO A LA PRACTICA DE OBSERVER
+        private dataService: DataService,
+        // FIN A LA PRACTICA DE OBSERVER 
 
   )
     {
@@ -81,8 +91,17 @@ constructor(
         shortdate: new FormControl(this.prueba),
       });
 
+
+
   }
 
+  // PENDIENTE, ESTÁ VINCULADO A LA PRACTICA DE OBSERVER
+  setcolor() {
+    this.dataService.setColor("lightblue"); 
+  }
+  // FIN A LA PRACTICA DE OBSERVER 
+
+  
   // Pruebas del DatePicker
   onSubmit(): void {
     console.log("Hice click en el datepicker", this.formDate)

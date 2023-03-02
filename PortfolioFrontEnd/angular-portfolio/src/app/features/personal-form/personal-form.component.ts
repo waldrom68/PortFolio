@@ -24,11 +24,13 @@ export class PersonalFormComponent  implements OnInit {
 flagUserAdmin: boolean = false;
 flagUserAdmin$: Observable<boolean>;
 
+
 faCheck = faCheck;
 faTimes = faTimes;
 
 form: FormGroup;
 oldForm: FormGroup;
+
 
 DATAPORTFOLIO: FullPersonDTO;
 message: String;
@@ -37,7 +39,7 @@ gralData: Person;
 constructor(    
   private fb: FormBuilder,
   private dataService: DataService,
-  private uploadMediaService: UploadMediaService,
+  // private uploadMediaService: UploadMediaService,
   
   private matDialog: MatDialog,
   
@@ -55,7 +57,7 @@ constructor(
         lastName:[this.DATAPORTFOLIO.lastName, [Validators.required, Validators.minLength(2), Validators.maxLength(45) ]],
         location:[this.DATAPORTFOLIO.location, [Validators.required, Validators.minLength(5), Validators.maxLength(45) ]],
         profession:[this.DATAPORTFOLIO.profession, [Validators.required, Validators.minLength(5), Validators.maxLength(45) ]],
-        pathFoto:[this.DATAPORTFOLIO.pathFoto, [Validators.required ]],
+        // pathFoto:[this.DATAPORTFOLIO.pathFoto, [Validators.required ]],
         email:[this.DATAPORTFOLIO.email, [Validators.required, Validators.email ]],
         since: [formatDate(this.DATAPORTFOLIO.since, 'yyyy-MM-dd', 'en'), [Validators.required ]],
       }
@@ -86,16 +88,15 @@ constructor(
   get Profession(): any {
     return this.form.get("profession")
   }
-  get PathFoto(): any {
-    return this.form.get("pathFoto")
-  }
+  // get PathFoto(): any {
+  //   return this.form.get("pathFoto")
+  // }
   get Email(): any {
     return this.form.get("email")
   }
   get Since(): any {
     return this.form.get("since")
   }
-
 
   realChange(form1:FormGroup, form2:FormGroup): any {
     let verifique = 0;
@@ -116,43 +117,19 @@ constructor(
     return Object.keys(cambios).length > 0 ? cambios : null;
   }
 
-  upLoadFile(evento: Event) {
-    evento.preventDefault;
-    // PENDIENTE INHABILITAR EL BOTON DE SUBMIT MIENTRAS REALIZA EL PROCESO DE SUBIDA
-    // actualizar la imagen al cerrar el form.
-    // verificar que detecte que la imagen cambio
-    // no mostrar el input, mostrar un boton, actualizar el input al obtener la URL
 
-    // Solo se puede tener una foto de perfil.
-    const path = "image/" + this.DATAPORTFOLIO.id;
-    const name =  "/fotoPerfil"
-    // this.uploadMediaService.upLoadFile(evento, path, name);
-    this.uploadMediaService.upLoadFile(evento, path, name);
-
-    // .subscribe({
-    //   next: (v) => {
-    //     console.log("Guardado correctamente: ", v);
-    //     // Actualizo la variable observada por el resto de los componentes
-    //   },
-    //   error: (e) => {
-    //     alert("Response Error (" + e.status + ") en el metodo addItem()" + "\n" + e.message);
-    //     console.log("Se quizo subit un archivo sin exito ");
-    //   },
-    //   complete: () => console.log("Completado la actualizacion de datos")
-    // });
-  }
 
   onSubmit(form: NgForm) {
     // Si esta logueado como Admin, el formulario valido y realmente hubo cambios preparo info
     // para actualizar datos.
     let action = "cancel";
     let data = null;
-    const url: string = this.uploadMediaService.url;
+    
   
     // PENDIENTE no estoy capturando error de subida del archivo, ni que se arrepeienta de la imagen que subio antes de confirmar.
     if (this.flagUserAdmin && this.form.valid) {
 
-      if (this.realChange(this.form, this.oldForm) != null && url != this.DATAPORTFOLIO.pathFoto) {
+      if (this.realChange(this.form, this.oldForm) != null) {
         this.DATAPORTFOLIO.name = this.form.get("name")?.value.trim();
         this.DATAPORTFOLIO.lastName = this.form.get("lastName")?.value.trim();
         
@@ -161,8 +138,7 @@ constructor(
         // this.DATAPORTFOLIO.pathFoto = this.form.get("pathFoto")?.value.trim();
         this.DATAPORTFOLIO.email = this.form.get("email")?.value.trim();
         this.DATAPORTFOLIO.since = this.form.get("since")?.value;
-        this.DATAPORTFOLIO.pathFoto = url;
-        console.log("Archivo en la nube: ", url)
+
         action = "update";
         data = this.DATAPORTFOLIO;
 

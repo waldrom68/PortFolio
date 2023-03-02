@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { getDownloadURL, getStorage, list, ref, Storage, uploadBytes, uploadBytesResumable } from '@angular/fire/storage';
+import { FullPersonDTO } from '../models';
+import { DataService } from './data.service';
 
 
 @Injectable({
@@ -11,9 +13,15 @@ import { getDownloadURL, getStorage, list, ref, Storage, uploadBytes, uploadByte
 // upLoadFile()
 export class UploadMediaService {
   url: string = "";
+  DATAPORTFOLIO: FullPersonDTO;
+
+
+
   constructor(
     private storage: Storage,
-  ) { }
+    private dataService: DataService,
+  ) { this.DATAPORTFOLIO = this.dataService.getData();
+  }
 
 
 
@@ -35,26 +43,27 @@ export class UploadMediaService {
   // }
 
 
-  getUrlFile() {
-    const imageRef = ref(this.storage, "image/1");
+  // getUrlFile() {
+  //   const imageRef = ref(this.storage, "image/1");
     
     
-    list(imageRef)
-    .then(async r => {
-      console.log(r);
+  //   list(imageRef)
+  //   .then(async r => {
+  //     console.log(r);
 
-      for(let file of r.items) {
-        console.log("Encontrado a " + file);
-        if (file.name == "fotoPerfil") {
-          this.url = await getDownloadURL(file);
-          console.log("URL COINCIDENTE-> " + this.url);
-        }
-      }
-    })
-    .catch(e  => console.log("Error al obtener URL de descarga"))
+  //     for(let file of r.items) {
+  //       console.log("Encontrado a " + file);
+  //       if (file.name == "fotoPerfil") {
+  //         this.url = await getDownloadURL(file);
+  //         console.log("URL COINCIDENTE-> " + this.url);
+  //       }
+  //     }
+  //   })
+  //   .catch(e  => console.log("Error al obtener URL de descarga"))
 
-  }
+  // }
 
+  
   // Fuente: https://firebase.google.com/docs/storage/web/upload-files?hl=es-419
   upLoadFile(evento: any, path: string, name: string) {
     // PENDIENTE MOSTRAR BARRA DE PROGRESO.
@@ -108,6 +117,10 @@ export class UploadMediaService {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           console.log('File available at -> ', downloadURL);
           this.url = downloadURL;
+          this.DATAPORTFOLIO.pathFoto = this.url;
+          this.dataService.changeGralData(this.DATAPORTFOLIO);
+          console.log(this.dataService.getData().pathFoto)
+
         });
       }
     );

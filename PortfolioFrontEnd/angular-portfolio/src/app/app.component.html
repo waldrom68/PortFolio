@@ -3,6 +3,11 @@
 
 <app-top-bar></app-top-bar>
 
+    <button mat-raised-button color="danger" type="button"
+    (click)="setcolor();"
+    >
+      setear lightblue
+    </button>
 
         <app-main></app-main>
 
@@ -72,11 +77,12 @@
       (update)="onDateUpdate($event)"
     ></app-mat-datepicker>
 
-     
     <button mat-raised-button color="primary" type="submit">
       Submit
     </button>
     
+    
   </form>
- 
+  
 </div>
+

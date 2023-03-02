@@ -34,6 +34,76 @@ export class DataService {
   private flagChangeUser: boolean = false;
   private flagChangeUser$ = new Subject<boolean>();
 
+  // ################################################
+  // PENDIENTE DE ELIMINAR ESTA PRACTCA CON OBSERVER
+  // ################################################
+  // Primero crear el almacen del dato color, el que será observado
+  private color: string;
+  // Segundo el subject será un elemento del servicio
+  private color$: Subject<string> = new Subject<string>();
+  // Tercero el metodo que realizará la emision del evento de 
+  // actualizacion del dato color
+  setColor(color: string) {
+    console.log("en setcolor() recibo ", color)
+    this.color = color;
+    this.color$.next(this.color);
+  }
+  // Por último, la generación del observer, entregará a todos 
+  // aquellos componentes que quieran observar cambios en color
+  // Este observable es capaz de vigilar el dato color
+  getColor$(): Observable<string> {
+    console.log("el observable getColor() this.color$ -> ", this.color$);
+    
+    return this.color$.asObservable();
+  }
+  // Ahora, en cualquier componente que necesitemos estar 
+  // atentos a los cambios del almacén de datos, podemos 
+  // usar el observable que nos ofrece el servicio.
+  // Primero se lo declara:
+  //    colorSubscription: Subscription;  // esto es para poderlo eliminar
+  //    color: string;  // el atributo que tendrá el valor actualizado
+  //    color$: Observable<string>;
+  // 
+  // Segundo se inyecta en el constructor el servicio
+  // 
+  //    private dataService: DataService,
+  // 
+  // Tercero paso es crear la suscripcion a los eventos que 
+  // nos estregará el observable. Dentro del ngOnInit()
+  //    Aqui se accede al observable, que escucha los eventos:
+  // 
+  //        this.color$ = this.[servicename].getColor$();  
+  // 
+  //    Con la suscripción se logra que cada vez que cambia el
+  //    el valor de color (en el servicio), actualiza la propiedad 
+  //    del componente al nuevo valor del dato color. 
+  // 
+  //        this.color$.subscribe(color => this.color = color);
+  // 
+  //  Para terminar, no se recomienda dejar en memoria suscripciones
+  //  (optimizacion de recursos)
+  //  Dentro del método ngOnDestroy() -se ejecuta cuando un componente
+  //  deja de existir, es decir lo contrario a ngOnInit().
+  //  
+  //    ngOnDestroy() {
+  //      this.colorSubscription.unsubscribe();
+  //    }
+  // 
+  // En el template:
+  // {{color$ | async }} ó {{color}} 
+
+
+
+  // ################################################
+
+
+
+
+
+
+
+
+
   // PENDIENTE, no se está usando, validar necesidad de existencia
   // SEGURO PODRIA SERVIR PARA VALIDAR LA OBTENCION DE GRALDATA AL INICIAR
   // private handleError(error: HttpErrorResponse) {
@@ -57,39 +127,47 @@ export class DataService {
   ) { }
 
   //################PENDIENTE  Metodos en evaluacion, deben ser ereemplazados
+  // PENDIENTE DE ELIMINAR, TRAS ELIMINAR COMPONENTE USER
+  // Lo usa el componente USER que fue una prueba
   setUSER(user: Person) {
     this.USER = user
   }
+  // PENDIENTE DE ELIMINAR, TRAS ADECUACION A NUEVA VERSION
+  // USANDO UNA SUBSCRIPCION A DATAPORTFOLIO.
+  // Objetive.component y profile.component
   getUSER() {
     return this.USER;
   }
-  gerUserID() {
-    return this.USERID
-  }
-// 
+  // gerUserID() {
+  //   return this.USERID
+  // }
+  //   
+  // changeUser() {
+  //   this.flagChangeUser = !this.flagChangeUser;
+  //   this.flagChangeUser$.next(this.flagChangeUser);
+  // }
+
   getData() {
+    // Lo usan todos los componentes para tomar los
+    // datos de DATAPORTFOLIO.
     return this.gralData;
   }
 
-  changeUser() {
-    this.flagChangeUser = !this.flagChangeUser;
-    this.flagChangeUser$.next(this.flagChangeUser);
-  }
   changeGralData(data: FullPersonDTO) {
+    // Metodo que actualiza con nuevos valores para DATAPORTFOLIO
     this.gralData = data;
     this.gralData$.next(this.gralData);
   }
 
   updateGralData(persona: Person): Observable<Person> {
-    // Este codigo modifica el valor del usuario en la DB
+    // Este codigo modifica los valores de person en la DB, si la actualizacion
+    // en DB es exitosa, debiera ejecutarse el metodo changeGralData(nuewData)
     console.log("El servicio va a modificar los datos en Person API")
     return this.http.post<Person>(`${this.LOCALHOST_API}/person/edit`, persona, httpOptions)
-    // const url = `http://localhost:8080/edit/person`;
-    // return this.http.post<Person>(url, user, httpOptions)
   }
 
 
-  
+
   // getPortFolioInit(): Observable<PortfolioInit> {
 
   //   return this.http.get<PortfolioInit>(`${this.apiURL}/PortfolioInit/?person=${this.USERID}`)
@@ -119,7 +197,7 @@ export class DataService {
   getFlagChangeUser$(): Observable<boolean> {
     return this.flagChangeUser$.asObservable();
   }
-  hasCredentials(value:boolean) {
+  hasCredentials(value: boolean) {
     this.flagChangeUser = value;
     this.flagChangeUser$.next(this.flagChangeUser);
   }
@@ -127,25 +205,24 @@ export class DataService {
   // #### Nuevo metodo de acceso general a todos los datos del backend
   private gralData: FullPersonDTO;
   private gralData$ = new Subject<FullPersonDTO>();
-  
-  private personData: Person;
+
 
 
 
   getPortFolioData(): Observable<FullPersonDTO> {
     const endPoint = `${this.LOCALHOST_API}/fullperson/view/${this.USERID}`
     const response = this.http.get<FullPersonDTO>(endPoint)
-      // .pipe(catchError(this.handleError));
+    // .pipe(catchError(this.handleError));
     return response;
   }
   getPortFolioData$(): Observable<FullPersonDTO> {
     return this.gralData$.asObservable();
   }
 
- 
 
 
-// Interest APIREST ###################################################
+
+  // Interest APIREST ###################################################
   updateInterest(interest: Interest): Observable<Interest> {
     interest.person = this.USERID;
     const url = `${this.LOCALHOST_API}/interest/edit`;
@@ -209,28 +286,28 @@ export class DataService {
     return this.http.delete<Project>(url, httpOptions)
   }
 
-  
+
   // pendientes de implementar
-    // Degree  APIREST ###################################################
-    // getDegree(): Observable<Degree[]> {
-    //   this.EndPoint = `${this.LOCALHOST_API}/degree/list/${this.USERID}`
-    //   return this.http.get<Degree[]>(this.EndPoint)
-    // }
-    updateDegree(degree: Degree): Observable<Degree> {
-      const url = `${this.LOCALHOST_API}/degree/edit`;
-      degree.person = this.USERID;
-      return this.http.post<Degree>(url, degree, httpOptions)
-    }
-    addDegree(degree: Degree): Observable<Degree> {
-      // Este codigo agrega un usuario a la DB 
-      console.log(degree.constructor.name)
-      degree.person = this.USERID;
-      return this.http.put<Degree>(`${this.LOCALHOST_API}/degree/new`, degree, httpOptions)
-    }
-    delDegree(degree: Degree): Observable<Degree> {
-      const url = `${this.LOCALHOST_API}/degree/del/${degree.id}`
-      return this.http.delete<Degree>(url, httpOptions)
-    }
+  // Degree  APIREST ###################################################
+  // getDegree(): Observable<Degree[]> {
+  //   this.EndPoint = `${this.LOCALHOST_API}/degree/list/${this.USERID}`
+  //   return this.http.get<Degree[]>(this.EndPoint)
+  // }
+  updateDegree(degree: Degree): Observable<Degree> {
+    const url = `${this.LOCALHOST_API}/degree/edit`;
+    degree.person = this.USERID;
+    return this.http.post<Degree>(url, degree, httpOptions)
+  }
+  addDegree(degree: Degree): Observable<Degree> {
+    // Este codigo agrega un usuario a la DB 
+    console.log(degree.constructor.name)
+    degree.person = this.USERID;
+    return this.http.put<Degree>(`${this.LOCALHOST_API}/degree/new`, degree, httpOptions)
+  }
+  delDegree(degree: Degree): Observable<Degree> {
+    const url = `${this.LOCALHOST_API}/degree/del/${degree.id}`
+    return this.http.delete<Degree>(url, httpOptions)
+  }
 
   // Organization  APIREST ###################################################
   // getOrganization(): Observable<Organization[]> {
