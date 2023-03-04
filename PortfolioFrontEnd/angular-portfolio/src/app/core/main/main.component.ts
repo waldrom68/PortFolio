@@ -32,12 +32,6 @@ export class MainComponent implements OnInit, OnDestroy {
   //                                                  this.toggleCards.emit();
   statusCards: boolean;  // Muestra las Cards/Etiquetas
 
-  // flagUserAdmin: boolean = false;
-  // flagUserAdmin$: Observable<boolean>;
-
-  // isAdminSubscription: Subscription;  // esto es para poderlo eliminar
-  // isAdmin: boolean;  // el atributo que tendrá el valor actualizado
-  // isAdmin$: Observable<boolean>;
 
 
 
@@ -79,26 +73,11 @@ private adminService: AdminService,
 
 
   ) {
-    // // Traigo todos los datos del Portfolio
-    // this.dataService.getPortFolioData().subscribe({
-    //   next: (gralData) => {
-    //     this.DATAPORTFOLIO = gralData;
-    //     this.dataService.changeGralData(gralData);
-    //   },
-    //   error: (e) => {
-    //     // e.status = 0, error del servidor
-    //     // e.status = 400, e.statusText= OK, error en el pedido al servidor
-    //     alert("Response Error (" + e.status + ") en iniciar.sesion.component" + "\n" + e.message);
-    //     console.log("Se quizo obtener los datos sin exito; ", e)
-    //   },
-    //   complete: () => { console.log("Finalizado el proceso de obtener los datos del PortFolio") }
-    // });
+
   }
 
   ngOnInit(): void {
-    // this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();
-    // this.flagUserAdmin$.subscribe(flagUserAdmin => this.flagUserAdmin = flagUserAdmin)
-
+  
     // Traigo todos los datos del Portfolio
     this.dataService.getPortFolioData().subscribe({
       next: (gralData) => {

@@ -1,9 +1,9 @@
-import { Component, EventEmitter, Input, OnInit, Output, Inject } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, Inject, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { faCheck, faMonument, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { Observable } from 'rxjs';
-import { DataService } from 'src/app/service/data.service';
+import { Observable, Subscription } from 'rxjs';
+import { AdminService, DataService } from 'src/app/service/data.service';
 
 import { Studie, Organization, Degree, Person, FullPersonDTO } from 'src/app/models';
 
@@ -18,11 +18,7 @@ import { formatDate } from '@angular/common';
   templateUrl: './studie-form.component.html',
   styleUrls: ['./studie-form.component.css']
 })
-export class StudieFormComponent implements OnInit {
-
-  // SERVICIO QUE ESTÁ VINCULADO CON EL LOGUEO
-  flagUserAdmin: boolean = false;
-  flagUserAdmin$: Observable<boolean>;
+export class StudieFormComponent implements OnInit, OnDestroy {
 
   @Input() formData: Studie;
 
@@ -50,12 +46,18 @@ export class StudieFormComponent implements OnInit {
   showDegreeForm: boolean = false;
   showPrimaryForm: boolean = true;
 
+    // Validacion Admin STATUS
+    esAdmin: boolean;
+    private AdminServiceSubscription: Subscription | undefined;
+   
+
+
   constructor(
     private dataService: DataService,
-
     private formBuilder: FormBuilder,
-
     private dialog: MatDialog,  // DeleteModal
+
+    private adminService: AdminService,
 
   ) {
 
@@ -72,10 +74,16 @@ export class StudieFormComponent implements OnInit {
       degree: [this.formData.degree, [Validators.required]],
     });
 
-    this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();
-    this.flagUserAdmin$.subscribe(flagUserAdmin => this.flagUserAdmin = flagUserAdmin)
-    this.flagUserAdmin = this.dataService.getFlagUserAdmin()
+    this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
+      currentAdmin => {
+        this.esAdmin = currentAdmin;
+      }
+    );
 
+  }
+
+  ngOnDestroy() {
+    this.AdminServiceSubscription?.unsubscribe();
   }
 
   get Name(): any {
@@ -104,9 +112,6 @@ export class StudieFormComponent implements OnInit {
   toggleOrgaForm() {
     this.togglePrimaryForm();
 
-    // this.dataService.getOrganization().subscribe(organization =>
-    //   [this.myOrganizations = organization]
-    // );
     this.formData.organization = this.myOrganizations[0]
     this.showOrgaForm = !this.showOrgaForm;
   }
@@ -114,9 +119,6 @@ export class StudieFormComponent implements OnInit {
   toggleDegreeForm() {
     this.togglePrimaryForm();
 
-    // this.dataService.getDegree().subscribe(degree =>
-    //   [this.myDegrees = degree]
-    //   );
     this.formData.degree = this.myDegrees[0]
     this.showDegreeForm = !this.showDegreeForm;
   }
@@ -210,7 +212,7 @@ export class StudieFormComponent implements OnInit {
   onEnviar(event: Event,) {
     event.preventDefault;
     // Si deja de estar logueado, no registro lo que haya modificado y cierro form.
-    if (!this.flagUserAdmin) {
+    if (!this.esAdmin) {
 
       this.cancel.emit();
 

@@ -1,9 +1,9 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { faCheck, faTimes} from '@fortawesome/free-solid-svg-icons';
-import { Observable } from 'rxjs';
-import { DataService } from 'src/app/service/data.service';
+import { Observable, Subscription } from 'rxjs';
+import { AdminService, DataService } from 'src/app/service/data.service';
 
 import { Interest } from '../../../models';
 
@@ -12,10 +12,7 @@ import { Interest } from '../../../models';
   templateUrl: './interests-form.component.html',
   styleUrls: ['./interests-form.component.css']
 })
-export class InterestsFormComponent implements OnInit {
-  // SERVICIO VINCULADO CON EL LOGUEO
-  flagUserAdmin: boolean = false;
-  flagUserAdmin$: Observable<boolean>;
+export class InterestsFormComponent implements OnInit, OnDestroy {
 
   @Input() formData: Interest;
   @Input() title:string;
@@ -27,9 +24,16 @@ export class InterestsFormComponent implements OnInit {
 
   form: FormGroup;
 
+  // Validacion Admin STATUS
+  esAdmin: boolean;
+  private AdminServiceSubscription: Subscription | undefined;
+ 
+
   constructor( 
     private formBuilder: FormBuilder,
-    private dataService: DataService, ) { 
+    private dataService: DataService,
+    private adminService: AdminService,
+    ) { 
     
   }
 
@@ -38,10 +42,17 @@ export class InterestsFormComponent implements OnInit {
       name:[this.formData.name, [Validators.required,
         Validators.minLength(5) ]],
     });
-    this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();
-    this.flagUserAdmin$.subscribe(  flagUserAdmin => this.flagUserAdmin = flagUserAdmin)
-    this.flagUserAdmin = this.dataService.getFlagUserAdmin()
 
+    this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
+      currentAdmin => {
+        this.esAdmin = currentAdmin;
+      }
+    );
+
+  }
+
+  ngOnDestroy() {
+    this.AdminServiceSubscription?.unsubscribe();
   }
 
   get Nombre(): any {
@@ -55,7 +66,7 @@ export class InterestsFormComponent implements OnInit {
   onEnviar(event: Event, ) {
     event.preventDefault;
     // Si deja de estar logueado, no registro lo que haya modificado y cierro form.
-    if (!this.flagUserAdmin) {
+    if (!this.esAdmin) {
 
       this.cancel.emit();
 

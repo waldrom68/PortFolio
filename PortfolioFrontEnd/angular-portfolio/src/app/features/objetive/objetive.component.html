@@ -18,7 +18,7 @@
     </ng-container>
 
     <div class="col-4 icon-group"
-        *ngIf="flagUserAdmin && showBtnAction && myData.objetive.length != 0"
+        *ngIf="esAdmin && showBtnAction && myData.objetive.length != 0"
     >
         <button class="btn btn-outline-success btn-sm"
         (click)="toggleForm();"
@@ -93,7 +93,7 @@
         </p>
     </div>
     <br>
-    <ng-container *ngIf="flagUserAdmin">
+    <ng-container *ngIf="esAdmin">
         <button class="btn btn-default btn-sm" 
             ngClass="faControl fa-ico"
             (click)="onAgregarObjetive()"

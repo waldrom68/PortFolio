@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { DataService } from 'src/app/service/data.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AdminService, DataService } from 'src/app/service/data.service';
 
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
@@ -8,7 +8,7 @@ import { FullPersonDTO, Interest } from '../../models'
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MessageBoxComponent } from '../../shared/message-box/message-box.component';
 
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-interests',
@@ -17,11 +17,7 @@ import { Observable } from 'rxjs';
 })
 
 
-export class InterestsComponent implements OnInit {
-
-  // SERVICIO QUE ESTÁ VINCULADO CON EL LOGUEO
-  flagUserAdmin: boolean = false;
-  flagUserAdmin$: Observable<boolean>;
+export class InterestsComponent implements OnInit, OnDestroy {
 
   showForm: boolean = false;  // flag para mostrar o no el formulario
 
@@ -34,14 +30,18 @@ export class InterestsComponent implements OnInit {
 
   itemParaBorrar: any;  // objeto que se está por borrar, sirve para reestablecer si cancela borrado
 
-  // user: Person;
-
   DATAPORTFOLIO: FullPersonDTO;
+
+    // Validacion Admin STATUS
+    esAdmin: boolean;
+    private AdminServiceSubscription: Subscription | undefined;
+   
 
   constructor(
     private dataService: DataService,
-
     public matDialog: MatDialog,
+
+    private adminService: AdminService,
 
   ) {
     this.resetForm();
@@ -52,16 +52,22 @@ export class InterestsComponent implements OnInit {
     this.DATAPORTFOLIO = this.dataService.getData();
     this.myData = this.DATAPORTFOLIO.interest;
 
-    // Verifica si está logueado como ADMIN
-    this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();
-    this.flagUserAdmin$.subscribe(flagUserAdmin => this.flagUserAdmin = flagUserAdmin)
-    this.flagUserAdmin = this.dataService.getFlagUserAdmin()
+    this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
+      currentAdmin => {
+        this.esAdmin = currentAdmin;
+      }
+    );
 
+  }
+
+  ngOnDestroy() {
+    this.AdminServiceSubscription?.unsubscribe();
   }
 
   resetForm() {
     this.formData = { id: 0, name: "", orderdeploy: 0, person: 0 }
   }
+  
   toggleForm() {
     // Cierra el formulario de edicion o creacion
     this.showForm = !this.showForm;

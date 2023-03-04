@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { DataService } from 'src/app/service/data.service';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { AdminService, DataService } from 'src/app/service/data.service';
 
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
@@ -9,18 +9,14 @@ import {LaboralCareer, Organization, RolePosition, FullPersonDTO} from '../../mo
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MessageBoxComponent } from '../../shared/message-box/message-box.component';
 import { ModalActionsService } from 'src/app/service/modal-actions.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-datos-trayectoria',
   templateUrl: './datos-trayectoria.component.html',
   styleUrls: ['./datos-trayectoria.component.css']
 })
-export class DatosTrayectoriaComponent implements OnInit {
-
-  // SERVICIO QUE ESTÁ VINCULADO CON EL LOGUEO
-  flagUserAdmin: boolean = false;
-  flagUserAdmin$: Observable<boolean>;
+export class DatosTrayectoriaComponent implements OnInit, OnDestroy {
 
   showForm: boolean = false;  // flag para mostrar o no el formulario
 
@@ -35,17 +31,19 @@ export class DatosTrayectoriaComponent implements OnInit {
   myData: LaboralCareer[] = [];
   formData: LaboralCareer;  // instancia vacia, para cuando se solicite un alta
 
-
-  // user: Person;
   myOrganizations: Organization[];
   myRolePositions: RolePosition[];
 
- 
+   // Validacion Admin STATUS
+   esAdmin: boolean;
+   private AdminServiceSubscription: Subscription | undefined;
+  
   constructor( 
     private dataService: DataService, 
 
     public matDialog: MatDialog,
 
+    private adminService: AdminService,
     ) {  }
 
 
@@ -55,15 +53,19 @@ export class DatosTrayectoriaComponent implements OnInit {
     this.myOrganizations = this.DATAPORTFOLIO.organization;
     this.myRolePositions = this.DATAPORTFOLIO.roleposition;
 
-
-    // Verifica si está logueado como ADMIN
-    this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();
-    this.flagUserAdmin$.subscribe(  flagUserAdmin => this.flagUserAdmin = flagUserAdmin)
-    this.flagUserAdmin = this.dataService.getFlagUserAdmin();
+    this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
+      currentAdmin => {
+        this.esAdmin = currentAdmin;
+      }
+    );
 
     this.resetForm()
 
    }
+
+   ngOnDestroy() {
+    this.AdminServiceSubscription?.unsubscribe();
+  }
 
   resetForm() {
     this.formData = { 
@@ -127,10 +129,6 @@ export class DatosTrayectoriaComponent implements OnInit {
   }
 
 
-  // upDateItem(career: LaboralCareer) {
-  //   this.dataService.updateLaboralCareer(career).subscribe();
-  // }
-  
   addItem(laboralCareer: LaboralCareer) {
     this.dataService.addLaboralCareer(laboralCareer).subscribe( {
       next: (v) => {

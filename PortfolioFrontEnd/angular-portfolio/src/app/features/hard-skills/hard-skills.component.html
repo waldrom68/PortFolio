@@ -17,7 +17,7 @@
 
 
 <app-hard-form
-    *ngIf="showForm && flagUserAdmin"
+    *ngIf="showForm && esAdmin"
 
     [formData]="formData"
     [title]="'Ingrese una habilidad'"
@@ -35,7 +35,7 @@
     </div>
 </ng-template>
 
-<ng-container *ngIf="flagUserAdmin && showBtnAction"
+<ng-container *ngIf="esAdmin && showBtnAction"
 >
     <br>
     <button class="btn btn-default btn-sm" 

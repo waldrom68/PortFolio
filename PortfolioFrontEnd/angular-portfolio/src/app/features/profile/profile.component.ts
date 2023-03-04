@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { Observable } from 'rxjs';
-import { DataService } from 'src/app/service/data.service';
+import { Observable, Subscription } from 'rxjs';
+import { AdminService, DataService } from 'src/app/service/data.service';
 import { ModalActionsService } from 'src/app/service/modal-actions.service';
 import { faTrash, faPen, faTimes, faCheck, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
@@ -16,12 +16,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
   styleUrls: ['./profile.component.css']
 })
 
-export class ProfileComponent implements OnInit {
-  // PENDIENTE: SERVICIO QUE DEBE VINCULARSE CON EL LOGUEO
-  flagUserAdmin: boolean = true;
-  flagUserAdmin$: Observable<boolean>;
-
-
+export class ProfileComponent implements OnInit, OnDestroy {
   myData: Person;
 
   form: FormGroup;
@@ -42,14 +37,18 @@ export class ProfileComponent implements OnInit {
   faCheck = faCheck;
   faPlusCircle = faPlusCircle;
 
-
+  // Validacion Admin STATUS
+  esAdmin: boolean;
+  private AdminServiceSubscription: Subscription | undefined;
+ 
 
   constructor( 
     private formBuilder: FormBuilder,
     private dataService: DataService, 
-
     public matDialog: MatDialog,
     private modalService: ModalActionsService,
+
+    private adminService: AdminService,
     ) { 
 
       // this.dataService.getGralData().subscribe(user => 
@@ -62,9 +61,11 @@ export class ProfileComponent implements OnInit {
     
   ngOnInit(): void {
       
-    this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();
-    this.flagUserAdmin$.subscribe(  flagUserAdmin => this.flagUserAdmin = flagUserAdmin);
-    this.flagUserAdmin = this.dataService.getFlagUserAdmin();
+    this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
+      currentAdmin => {
+        this.esAdmin = currentAdmin;
+      }
+    );
 
     // subscribo y me entero si se cambia el estatus del flag  
     this.flagBorrado$ = this.modalService.getFlagBorrado$();
@@ -79,6 +80,9 @@ export class ProfileComponent implements OnInit {
 
   }
 
+  ngOnDestroy() {
+    this.AdminServiceSubscription?.unsubscribe();
+  }
 
   get Profile(): any {
     return this.form.get("profile")
@@ -87,7 +91,7 @@ export class ProfileComponent implements OnInit {
   onEnviar(event:Event) {
     event.preventDefault;
 
-    if (!this.flagUserAdmin) {
+    if (!this.esAdmin) {
 
       this.onCancel()
 

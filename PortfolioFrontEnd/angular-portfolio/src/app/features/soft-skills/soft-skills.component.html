@@ -17,7 +17,7 @@
 </ng-container>
 
 <app-soft-form
-    *ngIf="showForm && flagUserAdmin"
+    *ngIf="showForm && esAdmin"
     
     [formData]="formData"
     [title]="'Ingrese una habilidad'"
@@ -38,7 +38,7 @@
 
 
 
-<ng-container *ngIf="flagUserAdmin && showBtnAction">
+<ng-container *ngIf="esAdmin && showBtnAction">
     <br>
     <button class="btn btn-default btn-sm" 
         ngClass="faControl fa-ico"

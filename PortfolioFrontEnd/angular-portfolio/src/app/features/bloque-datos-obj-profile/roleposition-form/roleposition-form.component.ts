@@ -1,9 +1,9 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { faCheck, faMonument, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { Observable } from 'rxjs';
-import { DataService } from 'src/app/service/data.service';
+import { Observable, Subscription } from 'rxjs';
+import { AdminService, DataService } from 'src/app/service/data.service';
 
 import { RolePosition } from 'src/app/models';
 @Component({
@@ -11,10 +11,7 @@ import { RolePosition } from 'src/app/models';
   templateUrl: './roleposition-form.component.html',
   styleUrls: ['./roleposition-form.component.css']
 })
-export class RolepositionFormComponent implements OnInit {
-// PENDIENTE: SERVICIO QUE DEBE VINCULARSE CON EL LOGUEO
-flagUserAdmin: boolean = false;
-flagUserAdmin$: Observable<boolean>;
+export class RolepositionFormComponent implements OnInit, OnDestroy {
 
 @Input() formData: RolePosition;
 @Input() title: string;
@@ -26,10 +23,16 @@ faTimes = faTimes;
 
 form: FormGroup;
 
+  // Validacion Admin STATUS
+  esAdmin: boolean;
+  private AdminServiceSubscription: Subscription | undefined;
+ 
 
   constructor(
     private formBuilder: FormBuilder,
     private dataService: DataService,
+
+    private adminService: AdminService,
   ) { }
 
   ngOnInit(): void {
@@ -37,9 +40,17 @@ form: FormGroup;
       name:[this.formData.name, [Validators.required, Validators.minLength(3),Validators.maxLength(100) ]],
 
     });
-    this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();
-    this.flagUserAdmin$.subscribe(  flagUserAdmin => this.flagUserAdmin = flagUserAdmin)
-    this.flagUserAdmin = this.dataService.getFlagUserAdmin()
+
+    this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
+      currentAdmin => {
+        this.esAdmin = currentAdmin;
+      }
+    );
+
+  }
+
+  ngOnDestroy() {
+    this.AdminServiceSubscription?.unsubscribe();
   }
 
   get Nombre(): any {
@@ -57,7 +68,7 @@ form: FormGroup;
   onEnviar(event: Event, ) {
     event.preventDefault;
     // Si deja de estar logueado, no registro lo que haya modificado y cierro form.
-    if (!this.flagUserAdmin) {
+    if (!this.esAdmin) {
 
       this.cancel.emit();
 

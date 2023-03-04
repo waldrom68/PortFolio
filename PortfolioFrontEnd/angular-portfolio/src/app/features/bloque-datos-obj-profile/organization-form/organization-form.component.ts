@@ -2,8 +2,8 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angu
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { faCheck, faMonument, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { Observable } from 'rxjs';
-import { DataService } from 'src/app/service/data.service';
+import { Observable, Subscription } from 'rxjs';
+import { AdminService, DataService } from 'src/app/service/data.service';
 
 import { Organization } from 'src/app/models';
 
@@ -13,9 +13,6 @@ import { Organization } from 'src/app/models';
   styleUrls: ['./organization-form.component.css']
 })
 export class OrganizationFormComponent implements OnInit {
-// SERVICIO VINCULADO CON EL LOGUEO
-flagUserAdmin: boolean = false;
-flagUserAdmin$: Observable<boolean>;
 
 @Input() formData: Organization;
 @Input() title: string;
@@ -27,10 +24,14 @@ faTimes = faTimes;
 
 form: FormGroup;
 
-
+  // Validacion Admin STATUS
+  esAdmin: boolean;
+  private AdminServiceSubscription: Subscription | undefined;
+ 
   constructor(
     private formBuilder: FormBuilder,
-    private dataService: DataService,
+
+    private adminService: AdminService,
   ) {
     
   }
@@ -42,11 +43,18 @@ form: FormGroup;
       url:[this.formData.url, []]
 
     });
-    this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();
-    this.flagUserAdmin$.subscribe(  flagUserAdmin => this.flagUserAdmin = flagUserAdmin)
-    this.flagUserAdmin = this.dataService.getFlagUserAdmin()
+
+    this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
+      currentAdmin => {
+        this.esAdmin = currentAdmin;
+      }
+    );
   }
 
+  ngOnDestroy() {
+
+    this.AdminServiceSubscription?.unsubscribe();
+  }
   get Nombre(): any {
     return this.form.get("name")
   }
@@ -70,7 +78,7 @@ form: FormGroup;
   onEnviar(event: Event, ) {
     event.preventDefault;
     // Si deja de estar logueado, no registro lo que haya modificado y cierro form.
-    if (!this.flagUserAdmin) {
+    if (!this.esAdmin) {
 
       this.cancel.emit();
 

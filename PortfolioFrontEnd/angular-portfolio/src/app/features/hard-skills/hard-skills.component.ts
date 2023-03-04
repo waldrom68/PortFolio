@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { DataService } from 'src/app/service/data.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AdminService, DataService } from 'src/app/service/data.service';
 
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
@@ -8,7 +8,7 @@ import { HardSkill, FullPersonDTO} from '../../models'
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MessageBoxComponent } from '../../shared/message-box/message-box.component';
 
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 // Declaro la funcion que debe levantarse de \src\assets\widget.js
 declare function initAndSetupTheSliders(): void;
@@ -18,11 +18,7 @@ declare function initAndSetupTheSliders(): void;
   templateUrl: './hard-skills.component.html',
   styleUrls: ['./hard-skills.component.css']
 })
-export class HardSkillsComponent implements OnInit {
-
-  // SERVICIO QUE ESTÁ VINCULADO CON EL LOGUEO
-  flagUserAdmin: boolean = false;
-  flagUserAdmin$: Observable<boolean>;
+export class HardSkillsComponent implements OnInit, OnDestroy {
 
   showForm: boolean = false;  // flag para mostrar o no el formulario
  
@@ -35,15 +31,19 @@ export class HardSkillsComponent implements OnInit {
  
   itemParaBorrar: any;  // objeto que se está por borrar, sirve para reestablecer si cancela borrado
 
-
-  // user: Person;
-
   DATAPORTFOLIO: FullPersonDTO;
+
+  // Validacion Admin STATUS
+  esAdmin: boolean;
+  private AdminServiceSubscription: Subscription | undefined;
+ 
+
   
   constructor(
     private dataService: DataService,
- 
     public matDialog: MatDialog,
+ 
+    private adminService: AdminService,
   ) { 
     
   }
@@ -52,12 +52,17 @@ export class HardSkillsComponent implements OnInit {
     this.DATAPORTFOLIO = this.dataService.getData();
     this.myData = this.DATAPORTFOLIO.hardskill;
 
-    // Verifica si está logueado como ADMIN
-    this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();
-    this.flagUserAdmin$.subscribe(  flagUserAdmin => this.flagUserAdmin = flagUserAdmin)
-    this.flagUserAdmin = this.dataService.getFlagUserAdmin()
+    this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
+      currentAdmin => {
+        this.esAdmin = currentAdmin;
+      }
+    );
     
     this.resetForm();
+  }
+
+  ngOnDestroy() {
+    this.AdminServiceSubscription?.unsubscribe();
   }
 
   resetForm() {
@@ -101,9 +106,6 @@ export class HardSkillsComponent implements OnInit {
     }
   }
 
-  // upDateItem(hardSkill: HardSkill) {
-  //   this.dataService.updateHardSkill(hardSkill).subscribe();
-  // }
   
   addItem(hardSkill: HardSkill) {
     this.dataService.addHardskill(hardSkill).subscribe( {
@@ -157,10 +159,7 @@ export class HardSkillsComponent implements OnInit {
     )
   }
 
-  // ngAfterViewInit(){
-  //   initAndSetupTheSliders();
-  // }
-
+  
   ngAfterViewChecked() {
     initAndSetupTheSliders();
   }

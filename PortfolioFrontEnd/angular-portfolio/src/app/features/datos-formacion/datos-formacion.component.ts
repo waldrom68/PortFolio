@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { DataService } from 'src/app/service/data.service';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { AdminService, DataService } from 'src/app/service/data.service';
 
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
@@ -9,17 +9,14 @@ import { Studie, Organization, Degree, FullPersonDTO} from '../../models'
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MessageBoxComponent } from '../../shared/message-box/message-box.component';
 import { ModalActionsService } from 'src/app/service/modal-actions.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-datos-formacion',
   templateUrl: './datos-formacion.component.html',
   styleUrls: ['./datos-formacion.component.css']
 })
-export class DatosFormacionComponent implements OnInit {
-  // SERVICIO QUE ESTÁ VINCULADO CON EL LOGUEO
-  flagUserAdmin: boolean = false;
-  flagUserAdmin$: Observable<boolean>;
+export class DatosFormacionComponent implements OnInit, OnDestroy {
 
   showForm: boolean = false;  // flag para mostrar o no el formulario
 
@@ -37,12 +34,16 @@ export class DatosFormacionComponent implements OnInit {
   myOrganizations: Organization[];
   myDegrees: Degree[];
 
+   // Validacion Admin STATUS
+   esAdmin: boolean;
+   private AdminServiceSubscription: Subscription | undefined;
+  
  
   constructor( 
     private dataService: DataService,
-
     public matDialog: MatDialog,
 
+    private adminService: AdminService,
     ) {  }
 
 
@@ -53,14 +54,19 @@ export class DatosFormacionComponent implements OnInit {
     this.myDegrees = this.DATAPORTFOLIO.degree;
 
 
-    // Verifica si está logueado como ADMIN
-    this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();
-    this.flagUserAdmin$.subscribe(  flagUserAdmin => this.flagUserAdmin = flagUserAdmin)
-    this.flagUserAdmin = this.dataService.getFlagUserAdmin();
+    this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
+      currentAdmin => {
+        this.esAdmin = currentAdmin;
+      }
+    );
 
     this.resetForm()
   }
   
+  ngOnDestroy() {
+    this.AdminServiceSubscription?.unsubscribe();
+  }
+
   resetForm() {
     this.formData = { 
       id:0, 
@@ -122,9 +128,6 @@ export class DatosFormacionComponent implements OnInit {
     }
   }
 
-  // upDateItem(studie: Studie) {
-  //   this.dataService.updateStudie(studie).subscribe();
-  // }
   
   addItem(studie: Studie) {
     this.dataService.addStudie(studie).subscribe(  {

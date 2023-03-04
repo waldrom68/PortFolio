@@ -23,7 +23,7 @@
     </ng-container>
 
     <app-career-form
-        *ngIf="showForm && flagUserAdmin"
+        *ngIf="showForm && esAdmin"
         [ngStyle]="{'width':'100%'}"
         [formData]="formData"
         [title]="'Agregar un trabajo'"
@@ -50,7 +50,7 @@
 
 
 
-<ng-container *ngIf="flagUserAdmin && showBtnAction">
+<ng-container *ngIf="esAdmin && showBtnAction">
     <br>
     <button class="btn btn-default btn-sm" 
         ngClass="faControl fa-ico"

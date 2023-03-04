@@ -1,21 +1,17 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import {Person} from '../../../models'
 
 import { faPen, faTimes, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
-import { DataService } from 'src/app/service/data.service';
-import { Observable } from 'rxjs';
+import { AdminService, DataService } from 'src/app/service/data.service';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-profile-item',
   templateUrl: './profile-item.component.html',
   styleUrls: ['./profile-item.component.css']
 })
-export class ProfileItemComponent implements OnInit {
+export class ProfileItemComponent implements OnInit, OnDestroy {
   @Input() myData: Person;
-
-  // PENDIENTE: SERVICIO QUE DEBE VINCULARSE CON EL LOGUEO
-  flagUserAdmin: boolean = false;
-  flagUserAdmin$: Observable<boolean>;
 
   @Input() showBtnAction!: boolean;
   @Output() showBtnActionChange = new EventEmitter<boolean>();
@@ -29,19 +25,33 @@ export class ProfileItemComponent implements OnInit {
 
   showForm: boolean = false;
 
-  constructor(private dataService: DataService) { }
+    // Validacion Admin STATUS
+    esAdmin: boolean;
+    private AdminServiceSubscription: Subscription | undefined;
+   
+
+    
+  constructor(
+    private dataService: DataService,
+    private adminService: AdminService,
+    ) { }
 
   ngOnInit() {
-     
-    this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();
-    this.flagUserAdmin$.subscribe(  flagUserAdmin => this.flagUserAdmin = flagUserAdmin)
-    this.flagUserAdmin = this.dataService.getFlagUserAdmin()
 
+    this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
+      currentAdmin => {
+        this.esAdmin = currentAdmin;
+      }
+    );
   }
   
+  ngOnDestroy() {
+    this.AdminServiceSubscription?.unsubscribe();
+  }
+
   onDelete(user: Person) {
     // llamo al metodo del padre via emit()
-    if (this.flagUserAdmin) {
+    if (this.esAdmin) {
         this.delete.emit(user);
     }
 

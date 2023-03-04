@@ -1,8 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 
 import { faTrash, faPen, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { Observable } from 'rxjs';
-import { DataService } from 'src/app/service/data.service';
+import { Observable, Subscription } from 'rxjs';
+import { AdminService, DataService } from 'src/app/service/data.service';
 
 import { Interest } from '../../../models'
 
@@ -12,12 +12,7 @@ import { Interest } from '../../../models'
   templateUrl: './interests-item.component.html',
   styleUrls: ['./interests-item.component.css']
 })
-export class InterestsItemComponent implements OnInit {
-  // VINCULADO CON EL LOGUEO
-  flagUserAdmin: boolean = false;
-  flagUserAdmin$: Observable<boolean>;
-
-
+export class InterestsItemComponent implements OnInit, OnDestroy {
   @Input() item: Interest;
 
   @Input() showBtnAction!: boolean;
@@ -35,16 +30,32 @@ export class InterestsItemComponent implements OnInit {
   formData: Interest;
   oldData: Interest;
 
-  constructor( private dataService: DataService, ) { }
+  // Validacion Admin STATUS
+  esAdmin: boolean;
+  private AdminServiceSubscription: Subscription | undefined;
+ 
+
+
+  constructor( 
+    private dataService: DataService,
+    private adminService: AdminService,
+    ) { }
 
   ngOnInit(): void {
     // this.oldData = this.item;
     // Clono el objeto, uso assign por no tener atributos compuesto por otros objetos
     this.oldData = Object.assign({} , this.item)
+    
+    this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
+      currentAdmin => {
+        this.esAdmin = currentAdmin;
+      }
+    );
 
-    this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();
-    this.flagUserAdmin$.subscribe(  flagUserAdmin => this.flagUserAdmin = flagUserAdmin)
-    this.flagUserAdmin = this.dataService.getFlagUserAdmin()
+  }
+
+  ngOnDestroy() {
+    this.AdminServiceSubscription?.unsubscribe();
   }
 
   color:string = 'red';
@@ -64,7 +75,7 @@ export class InterestsItemComponent implements OnInit {
 
   delete(interest: Interest) {
     // llamo al metodo del padre via emit() que lo enlaza con openModalDelete(item)
-    if (this.flagUserAdmin) {
+    if (this.esAdmin) {
       // console.log("paso por delete() de interest-item")
       this.onDelete.emit(interest);
     }

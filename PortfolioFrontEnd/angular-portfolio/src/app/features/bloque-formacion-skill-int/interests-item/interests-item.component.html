@@ -11,7 +11,7 @@
                 >{{item.name}}  </span>
             </div>
         <div class="col-4 icon-group"
-             *ngIf="flagUserAdmin && showBtnAction"
+             *ngIf="esAdmin && showBtnAction"
             >
             <button class="btn btn-outline-success btn-sm"
                 (click)="toggleForm(item);"

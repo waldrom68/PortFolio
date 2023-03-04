@@ -8,7 +8,7 @@
             {{ message }}Posiciones / Roles
         </h4>
         <button type="button" class="close" aria-label="Close" 
-        (click)="dialogRef.close(myData); prueba(myData)"
+        (click)="dialogRef.close(myData)"
         >
         <span aria-hidden="false">&times;</span>
         </button>
@@ -34,7 +34,7 @@
         </ng-container>
 
         <app-roleposition-form
-            *ngIf="showForm && flagUserAdmin"
+            *ngIf="showForm && esAdmin"
 
             [formData]="formData"
             [title]="'Ingrese un rol/posicion'"
@@ -55,7 +55,7 @@
 
 
     <div class="modal-footer">
-        <ng-container *ngIf="flagUserAdmin && showBtnAction">
+        <ng-container *ngIf="esAdmin && showBtnAction">
             <br>
             <button class="btn btn-default btn-sm" 
                 ngClass="faControl fa-ico"

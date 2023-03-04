@@ -22,7 +22,7 @@
         <!-- ##################### -->
         
         <div class="icon-group"
-             *ngIf="flagUserAdmin && showBtnAction"
+             *ngIf="esAdmin && showBtnAction"
             >
             <button class="btn btn-outline-success btn-sm"
                 (click)="toggleForm(item);"
@@ -47,7 +47,7 @@
 </ng-container >
   
   <app-studie-form
-    *ngIf="showForm && flagUserAdmin"
+    *ngIf="showForm && esAdmin"
     [ngStyle]="{'width':'100%'}"
   
     [formData]="formData"

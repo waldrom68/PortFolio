@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
-import { DataService } from 'src/app/service/data.service';
+import { Component, EventEmitter, Inject, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { AdminService, DataService } from 'src/app/service/data.service';
 import { faPlusCircle, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 import {FullPersonDTO, Person, RolePosition} from '../../models'
@@ -7,18 +7,14 @@ import {FullPersonDTO, Person, RolePosition} from '../../models'
 import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MessageBoxComponent } from '../../shared/message-box/message-box.component';
 import { ModalActionsService } from 'src/app/service/modal-actions.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 @Component({
   selector: 'app-role-position',
   templateUrl: './role-position.component.html',
   styleUrls: ['./role-position.component.css']
 })
 
-export class RolePositionComponent implements OnInit {
-
-  // SERVICIO QUE ESTÁ VINCULADO CON EL LOGUEO
-  flagUserAdmin: boolean = false;
-  flagUserAdmin$: Observable<boolean>
+export class RolePositionComponent implements OnInit, OnDestroy {
 
   showForm: boolean = false;  // flag para mostrar o no el formulario
 
@@ -39,13 +35,16 @@ export class RolePositionComponent implements OnInit {
   itemParaBorrar: any;
 
   message: string;
-  // user: Person;
+    // Validacion Admin STATUS
+    esAdmin: boolean;
+    private AdminServiceSubscription: Subscription | undefined;
+   
 
   constructor(
     private dataService: DataService,
-    
-     
     public matDialog: MatDialog,
+    
+    private adminService: AdminService, 
     
     @Inject(MAT_DIALOG_DATA) public data: { message: string },
     public dialogRef: MatDialogRef<RolePositionComponent>, //OrganizationModal
@@ -58,11 +57,17 @@ export class RolePositionComponent implements OnInit {
     this.DATAPORTFOLIO = this.dataService.getData();
     this.myData = this.DATAPORTFOLIO.roleposition
 
-    this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();
-    this.flagUserAdmin$.subscribe(  flagUserAdmin => this.flagUserAdmin = flagUserAdmin);
-    this.flagUserAdmin = this.dataService.getFlagUserAdmin();
-
+    this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
+      currentAdmin => {
+        this.esAdmin = currentAdmin;
+      }
+    );
     this.resetForm();
+  }
+
+  ngOnDestroy() {
+
+    this.AdminServiceSubscription?.unsubscribe();
   }
 
   resetForm() {
@@ -80,12 +85,6 @@ export class RolePositionComponent implements OnInit {
 
   }  
   
-  
-  prueba(data:any) {
-    this.myData = data;
-    console.log("Prueba function in degree-compoment", this.myData)
-    this.myRolePositionsChange.emit(this.myData)
-  }
 
   cancelation(rolePosition: RolePosition) {
     this.toggleForm();
@@ -117,9 +116,6 @@ export class RolePositionComponent implements OnInit {
     }
   }
 
-  // upDateItem(rolePosition: RolePosition) {
-  //   this.dataService.updateRolePosition(rolePosition).subscribe();
-  // }
   
   addItem(rolePosition: RolePosition) {
     this.dataService.addRolePosition(rolePosition).subscribe(  {

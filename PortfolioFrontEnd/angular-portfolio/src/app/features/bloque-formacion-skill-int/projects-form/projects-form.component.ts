@@ -1,9 +1,9 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { faCheck, faMonument, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { Observable } from 'rxjs';
-import { DataService } from 'src/app/service/data.service';
+import { Observable, Subscription } from 'rxjs';
+import { AdminService, DataService } from 'src/app/service/data.service';
 
 import { Project } from 'src/app/models';
 import { formatDate } from '@angular/common';
@@ -14,10 +14,7 @@ import { formatDate } from '@angular/common';
   templateUrl: './projects-form.component.html',
   styleUrls: ['./projects-form.component.css'],
 })
-export class ProjectsFormComponent implements OnInit {
-// SERVICIO VINCULADO CON EL LOGUEO
-flagUserAdmin: boolean = false;
-flagUserAdmin$: Observable<boolean>;
+export class ProjectsFormComponent implements OnInit, OnDestroy {
 
 @Input() formData: Project;
 @Input() title: string;
@@ -31,9 +28,15 @@ form: FormGroup;
 minSince:string = '2018/03/1';
 maxSince:string = '2030/05/1';
 
+  // Validacion Admin STATUS
+  esAdmin: boolean;
+  private AdminServiceSubscription: Subscription | undefined;
+ 
+
 constructor( 
   private formBuilder: FormBuilder,
   private dataService: DataService,
+  private adminService: AdminService,
   ) { 
 
 }
@@ -46,10 +49,19 @@ constructor(
       since:[formatDate(this.formData.since, 'yyyy-MM-dd', 'en'), [Validators.required ]]
 
     });
-    this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();
-    this.flagUserAdmin$.subscribe(  flagUserAdmin => this.flagUserAdmin = flagUserAdmin)
-    this.flagUserAdmin = this.dataService.getFlagUserAdmin()
+
+    this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
+      currentAdmin => {
+        this.esAdmin = currentAdmin;
+      }
+    );
+
   }
+
+  ngOnDestroy() {
+    this.AdminServiceSubscription?.unsubscribe();
+  }
+
 
   color:string = 'red';
   
@@ -77,7 +89,7 @@ constructor(
   onEnviar(event: Event, ) {
     event.preventDefault;
     // Si deja de estar logueado, no registro lo que haya modificado y cierro form.
-    if (!this.flagUserAdmin) {
+    if (!this.esAdmin) {
 
       this.cancel.emit();
 

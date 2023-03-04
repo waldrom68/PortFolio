@@ -31,8 +31,8 @@ export class TopBarComponent implements OnInit, OnDestroy {
     // PENDIENTE MODO PRUEBA
     private dataService: DataService,
     // FIN MODO PRUEBA
-
     private authService: AuthService,
+
     private adminService: AdminService,
 
 
@@ -52,6 +52,13 @@ export class TopBarComponent implements OnInit, OnDestroy {
 
   }
 
+  ngOnDestroy() {
+    // PENDIENTE, ESTÁ VINCULADO A LA PRACTICA DE OBSERVER
+    this.colorSubscription.unsubscribe();
+    // FIN A LA PRACTICA DE OBSERVER 
+    this.AdminServiceSubscription?.unsubscribe();
+  }
+
 
   onLogOut() {
 
@@ -60,12 +67,7 @@ export class TopBarComponent implements OnInit, OnDestroy {
   }
 
 
-  ngOnDestroy() {
-    // PENDIENTE, ESTÁ VINCULADO A LA PRACTICA DE OBSERVER
-    this.colorSubscription.unsubscribe();
-    // FIN A LA PRACTICA DE OBSERVER 
-    this.AdminServiceSubscription?.unsubscribe();
-  }
+
 
 
 

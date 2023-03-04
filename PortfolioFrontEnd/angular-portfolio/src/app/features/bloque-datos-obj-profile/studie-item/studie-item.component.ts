@@ -1,20 +1,16 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Studie, Organization, Person, Degree, FullPersonDTO } from '../../../models'
 
 import { faPen, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { Observable } from 'rxjs';
-import { DataService } from 'src/app/service/data.service';
+import { Observable, Subscription } from 'rxjs';
+import { AdminService, DataService } from 'src/app/service/data.service';
 
 @Component({
   selector: 'app-studie-item',
   templateUrl: './studie-item.component.html',
   styleUrls: ['./studie-item.component.css']
 })
-export class StudieItemComponent implements OnInit {
-  // PENDIENTE: SERVICIO QUE DEBE VINCULARSE CON EL LOGUEO
-  flagUserAdmin: boolean = false;
-  flagUserAdmin$: Observable<boolean>;
-
+export class StudieItemComponent implements OnInit, OnDestroy {
 
   @Input() item: Studie;
 
@@ -37,17 +33,32 @@ export class StudieItemComponent implements OnInit {
 
   DATAPORTFOLIO: FullPersonDTO;
 
-  constructor(private dataService: DataService,) { }
+ // Validacion Admin STATUS
+ esAdmin: boolean;
+ private AdminServiceSubscription: Subscription | undefined;
+
+
+  constructor(
+    private dataService: DataService,
+    private adminService: AdminService,
+    ) { }
 
   ngOnInit(): void {
     this.DATAPORTFOLIO = this.dataService.getData();
 
-    this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();
-    this.flagUserAdmin$.subscribe(  flagUserAdmin => this.flagUserAdmin = flagUserAdmin)
-    this.flagUserAdmin = this.dataService.getFlagUserAdmin()
+    this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
+      currentAdmin => {
+        this.esAdmin = currentAdmin;
+      }
+    );
 
   }
   
+
+  ngOnDestroy() {
+    this.AdminServiceSubscription?.unsubscribe();
+  }
+
   color:string = 'red';
 
   changeStyle($event: Event){
@@ -64,7 +75,7 @@ export class StudieItemComponent implements OnInit {
 
   delete(studie: Studie) {
     // llamo al metodo del padre via emit()
-    if (this.flagUserAdmin) {
+    if (this.esAdmin) {
       console.log(studie)
       this.onDelete.emit(studie);
     }

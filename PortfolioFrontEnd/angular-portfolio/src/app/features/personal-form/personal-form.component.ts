@@ -1,8 +1,8 @@
-import { Component, EventEmitter, Inject, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 
 import { faCheck, faMonument, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { Observable } from 'rxjs';
-import { DataService } from 'src/app/service/data.service';
+import { Observable, Subscription } from 'rxjs';
+import { AdminService, DataService } from 'src/app/service/data.service';
 
 // import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
 // import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
@@ -18,12 +18,7 @@ import { UploadMediaService } from 'src/app/service/upload-media.service';
   templateUrl: './personal-form.component.html',
   styleUrls: ['./personal-form.component.css']
 })
-export class PersonalFormComponent  implements OnInit {
-
-// SERVICIO QUE ESTÁ VINCULADO CON EL LOGUEO
-flagUserAdmin: boolean = false;
-flagUserAdmin$: Observable<boolean>;
-
+export class PersonalFormComponent  implements OnInit, OnDestroy {
 
 faCheck = faCheck;
 faTimes = faTimes;
@@ -31,17 +26,20 @@ faTimes = faTimes;
 form: FormGroup;
 oldForm: FormGroup;
 
-
 DATAPORTFOLIO: FullPersonDTO;
 message: String;
 gralData: Person;
 
+ // Validacion Admin STATUS
+ esAdmin: boolean;
+ private AdminServiceSubscription: Subscription | undefined;
+
+
 constructor(    
   private fb: FormBuilder,
   private dataService: DataService,
-  // private uploadMediaService: UploadMediaService,
   
-  private matDialog: MatDialog,
+  private adminService: AdminService,
   
   @Inject(MAT_DIALOG_DATA) data: { message: string, form:FormGroup },
 
@@ -70,10 +68,16 @@ constructor(
   ngOnInit(): void {
     // this.myData = this.dataService.getData();
 
-    // Verifica si está logueado como ADMIN
-    this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();
-    this.flagUserAdmin$.subscribe(  flagUserAdmin => this.flagUserAdmin = flagUserAdmin)
-    this.flagUserAdmin = this.dataService.getFlagUserAdmin()
+    this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
+      currentAdmin => {
+        this.esAdmin = currentAdmin;
+      }
+    );
+
+  }
+
+  ngOnDestroy() {
+    this.AdminServiceSubscription?.unsubscribe();
   }
 
   get Name(): any {
@@ -88,9 +92,6 @@ constructor(
   get Profession(): any {
     return this.form.get("profession")
   }
-  // get PathFoto(): any {
-  //   return this.form.get("pathFoto")
-  // }
   get Email(): any {
     return this.form.get("email")
   }
@@ -127,7 +128,7 @@ constructor(
     
   
     // PENDIENTE no estoy capturando error de subida del archivo, ni que se arrepeienta de la imagen que subio antes de confirmar.
-    if (this.flagUserAdmin && this.form.valid) {
+    if (this.esAdmin && this.form.valid) {
 
       if (this.realChange(this.form, this.oldForm) != null) {
         this.DATAPORTFOLIO.name = this.form.get("name")?.value.trim();

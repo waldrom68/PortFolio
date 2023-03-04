@@ -1,26 +1,22 @@
-import { Component, EventEmitter, Input, OnInit, Output, Inject, } from '@angular/core';
-import { DataService } from 'src/app/service/data.service';
+import { Component, EventEmitter, Input, OnInit, Output, Inject, OnDestroy, } from '@angular/core';
+import { AdminService, DataService } from 'src/app/service/data.service';
 import { faPlusCircle, faTimes } from '@fortawesome/free-solid-svg-icons';
 
-import { Organization, FullPersonDTO} from '../../models'
+import { Organization, FullPersonDTO } from '../../models'
 
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 import { MessageBoxComponent } from '../../shared/message-box/message-box.component';
-import { ModalActionsService } from 'src/app/service/modal-actions.service';
-import { Observable } from 'rxjs';
+
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-organization',
   templateUrl: './organization.component.html',
   styleUrls: ['./organization.component.css']
 })
-export class OrganizationComponent implements OnInit {
- 
-  // SERVICIO QUE ESTÁ VINCULADO CON EL LOGUEO
-  flagUserAdmin: boolean = false;
-  flagUserAdmin$: Observable<boolean>;
+export class OrganizationComponent implements OnInit, OnDestroy {
 
   showForm: boolean = false;  // flag para mostrar o no el formulario
 
@@ -30,7 +26,7 @@ export class OrganizationComponent implements OnInit {
   faPlusCircle = faPlusCircle;
   faTimes = faTimes;
 
-  @Input() showBtnAction: boolean= true;  // flag para mostrar o no los btn's de acciones del usuario
+  @Input() showBtnAction: boolean = true;  // flag para mostrar o no los btn's de acciones del usuario
   @Output() showBtnActionChange = new EventEmitter<boolean>();
 
   @Input() myOrganizations: Organization[];
@@ -39,42 +35,51 @@ export class OrganizationComponent implements OnInit {
   private itemParaBorrar: any;
 
   DATAPORTFOLIO: FullPersonDTO;
-  // user: Person;
- 
+
   message: string;
-  
+
+  // Validacion Admin STATUS
+  esAdmin: boolean;
+  private AdminServiceSubscription: Subscription | undefined;
+
   constructor(
     private dataService: DataService,
     public matDialog: MatDialog,
 
-    
-    @Inject(MAT_DIALOG_DATA) public data: { message: string,},
+    private adminService: AdminService,
+
+    @Inject(MAT_DIALOG_DATA) public data: { message: string, },
     public dialogRef: MatDialogRef<OrganizationComponent>, //OrganizationModal
 
-    private modalService: ModalActionsService
   ) {
-      this.message = data ? data.message :"prueba";
-   }
+    this.message = data ? data.message : "prueba";
+  }
 
   ngOnInit(): void {
     this.DATAPORTFOLIO = this.dataService.getData();
     this.myData = this.DATAPORTFOLIO.organization
-    
-    // Verifica si está logueado como ADMIN
-    this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();
-    this.flagUserAdmin$.subscribe(  flagUserAdmin => this.flagUserAdmin = flagUserAdmin);
-    this.flagUserAdmin = this.dataService.getFlagUserAdmin();
+
+    this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
+      currentAdmin => {
+        this.esAdmin = currentAdmin;
+      }
+    );
 
     this.resetForm();
   }
 
+  ngOnDestroy() {
+    this.AdminServiceSubscription?.unsubscribe();
+  }
+
   resetForm() {
-    this.formData = { 
-      id:0, 
-      name:"", 
-      resume:"",
-      url:"",
-      person:0 }
+    this.formData = {
+      id: 0,
+      name: "",
+      resume: "",
+      url: "",
+      person: 0
+    }
   }
 
   toggleForm() {
@@ -82,30 +87,25 @@ export class OrganizationComponent implements OnInit {
     this.showForm = !this.showForm;
     this.showBtnAction = !this.showBtnAction;
 
-  }  
-  
-  prueba(data:any) {
-    this.myData = data;
-    console.log("Prueba function in orga-compoment", this.myData)
-    this.myOrganizationsChange.emit(this.myData);
   }
+
 
   cancelation(organization: Organization) {
     this.toggleForm();
-    
+
   }
 
-  openModalDelete(organization: Organization){
+  openModalDelete(organization: Organization) {
     // Llamo al modal, si se confirma el borrado.
     // almaceno el item en cuestion en itemParaBorrar
     this.itemParaBorrar = organization;
     this.openDeleteModal(organization)
   }
 
-  
-  delItem(){
+
+  delItem() {
     if (this.itemParaBorrar) {
-      this.dataService.delOrganization(this.itemParaBorrar).subscribe( {
+      this.dataService.delOrganization(this.itemParaBorrar).subscribe({
         next: (v) => {
           console.log("Se ha eliminado exitosamente a: ", this.itemParaBorrar);
           this.myData = this.myData.filter((t) => { return t !== this.itemParaBorrar })
@@ -115,19 +115,16 @@ export class OrganizationComponent implements OnInit {
         },
         error: (e) => {
           alert("Response Error (" + e.status + ")" + "\n" + e.message);
-          console.log("Se quizo eliminar sin exito a: " , this.itemParaBorrar);
+          console.log("Se quizo eliminar sin exito a: ", this.itemParaBorrar);
         },
-        complete: () => {console.log("Completada la eliminacion de la Organization");}
+        complete: () => { console.log("Completada la eliminacion de la Organization"); }
 
       });
     }
   }
 
 
-  // upDateItem(organization: Organization) {
-  //   this.dataService.updateOrganization(organization).subscribe();
-  // }
-  
+
   addItem(organization: Organization) {
     this.dataService.addOrganization(organization).subscribe({
       next: (v) => {
@@ -147,10 +144,10 @@ export class OrganizationComponent implements OnInit {
     );
     this.resetForm();
     this.toggleForm();
-    
+
   }
 
-  openDeleteModal(data:any) {
+  openDeleteModal(data: any) {
     const dialogConfig = new MatDialogConfig();
     // The user can't close the dialog by clicking outside its body
     dialogConfig.disableClose = true;
@@ -179,7 +176,7 @@ export class OrganizationComponent implements OnInit {
     modalDialog.afterClosed().subscribe(
       data => {
         console.log("Dialogo output: ", data);
-        if (data) {this.delItem() }
+        if (data) { this.delItem() }
       }
 
     )

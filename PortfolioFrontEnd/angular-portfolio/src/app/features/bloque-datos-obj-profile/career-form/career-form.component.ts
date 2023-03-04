@@ -1,11 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { faCheck, faMonument, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { Observable } from 'rxjs';
-import { DataService } from 'src/app/service/data.service';
+import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { Subscription } from 'rxjs';
+import { AdminService, DataService } from 'src/app/service/data.service';
 
-import { LaboralCareer, Organization, RolePosition, Person, FullPersonDTO } from 'src/app/models';
+import { LaboralCareer, Organization, RolePosition, FullPersonDTO } from 'src/app/models';
 
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { OrganizationComponent } from '../../organization/organization.component';
@@ -17,12 +17,7 @@ import { formatDate } from '@angular/common';
   templateUrl: './career-form.component.html',
   styleUrls: ['./career-form.component.css']
 })
-export class CareerFormComponent implements OnInit {
-
-  // SERVICIO QUE ESTÁ VINCULADO CON EL LOGUEO
-  flagUserAdmin: boolean = false;
-  flagUserAdmin$: Observable<boolean>;
-
+export class CareerFormComponent implements OnInit, OnDestroy {
   @Input() formData: LaboralCareer;
 
   @Input() title: string;
@@ -49,13 +44,19 @@ export class CareerFormComponent implements OnInit {
   showRoleForm: boolean = false;
   showPrimaryForm: boolean = true;
 
+  // Validacion Admin STATUS
+  esAdmin: boolean;
+  private AdminServiceSubscription: Subscription | undefined;
+
   constructor(
     private dataService: DataService,
 
     private formBuilder: FormBuilder,
 
     private dialog: MatDialog,  // DeleteModal
-    
+
+    private adminService: AdminService,
+
   ) {
 
   }
@@ -66,17 +67,22 @@ export class CareerFormComponent implements OnInit {
     this.form = this.formBuilder.group({
       resume: [this.formData.resume, [Validators.required, Validators.minLength(2), Validators.maxLength(500)]],
       startDate: [formatDate(this.formData.startDate, 'yyyy-MM-dd', 'en'), [Validators.required]],
-      endDate: [formatDate(this.formData.endDate, 'yyyy-MM-dd', 'en'),[]],
+      endDate: [formatDate(this.formData.endDate, 'yyyy-MM-dd', 'en'), []],
       organization: [this.formData.organization, [Validators.required]],
       roleposition: [this.formData.roleposition, [Validators.required]],
     });
 
-    this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();
-    this.flagUserAdmin$.subscribe(flagUserAdmin => this.flagUserAdmin = flagUserAdmin)
-    this.flagUserAdmin = this.dataService.getFlagUserAdmin()
+    this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
+      currentAdmin => {
+        this.esAdmin = currentAdmin;
+      }
+    );
 
   }
 
+  ngOnDestroy() {
+    this.AdminServiceSubscription?.unsubscribe();
+  }
 
   get Resume(): any {
     return this.form.get("resume")
@@ -209,7 +215,7 @@ export class CareerFormComponent implements OnInit {
   onEnviar(event: Event,) {
     event.preventDefault;
     // Si deja de estar logueado, no registro lo que haya modificado y cierro form.
-    if (!this.flagUserAdmin) {
+    if (!this.esAdmin) {
 
       this.cancel.emit();
 

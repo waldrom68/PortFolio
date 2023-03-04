@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
-import { DataService } from 'src/app/service/data.service';
+import { Component, EventEmitter, Inject, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { AdminService, DataService } from 'src/app/service/data.service';
 import { faPlusCircle, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 import { Degree, FullPersonDTO } from '../../models'
@@ -8,19 +8,14 @@ import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angu
 import { MessageBoxComponent } from '../../shared/message-box/message-box.component';
 import { ModalActionsService } from 'src/app/service/modal-actions.service';
 
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-degree',
   templateUrl: './degree.component.html',
   styleUrls: ['./degree.component.css']
 })
-export class DegreeComponent implements OnInit {
-
-  // SERVICIO QUE ESTÁ VINCULADO CON EL LOGUEO
-  flagUserAdmin: boolean = false;
-  flagUserAdmin$: Observable<boolean>;
-
+export class DegreeComponent implements OnInit, OnDestroy {
   showForm: boolean = false;  // flag para mostrar o no el formulario
 
   myData: Degree[] = [];
@@ -38,9 +33,13 @@ export class DegreeComponent implements OnInit {
   itemParaBorrar: any;
 
   DATAPORTFOLIO: FullPersonDTO;
-  // user: Person;
-
+ 
   message: string;
+
+    // Validacion Admin STATUS
+    esAdmin: boolean;
+    private AdminServiceSubscription: Subscription | undefined;
+   
 
   constructor(
     private dataService: DataService,
@@ -49,7 +48,7 @@ export class DegreeComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: { message: string,},
     public dialogRef: MatDialogRef<DegreeComponent>, //DegreeModal
 
-    private modalService: ModalActionsService
+    private adminService: AdminService,
     
   ) { }
 
@@ -57,11 +56,17 @@ export class DegreeComponent implements OnInit {
     this.DATAPORTFOLIO = this.dataService.getData();
     this.myData = this.DATAPORTFOLIO.degree;
     
-    this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();
-    this.flagUserAdmin$.subscribe(  flagUserAdmin => this.flagUserAdmin = flagUserAdmin);
-    this.flagUserAdmin = this.dataService.getFlagUserAdmin();
+    this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
+      currentAdmin => {
+        this.esAdmin = currentAdmin;
+      }
+    );
 
     this.resetForm();
+  }
+
+  ngOnDestroy() {
+    this.AdminServiceSubscription?.unsubscribe();
   }
 
   resetForm() {
@@ -77,12 +82,6 @@ export class DegreeComponent implements OnInit {
     this.showForm = !this.showForm;
     this.showBtnAction = !this.showBtnAction;
   }  
-
-  prueba(data:any) {
-    this.myData = data;
-    console.log("Prueba function in degree-compoment", this.myData)
-    this.myDegreesChange.emit(this.myData);
-  }
 
   cancelation(degree: Degree) {
     this.toggleForm();
@@ -114,10 +113,7 @@ export class DegreeComponent implements OnInit {
     }
   }
 
-  // upDateItem(degree: Degree) {
-  //   this.dataService.updateDegree(degree).subscribe();
-  // }
-  
+
   addItem(degree: Degree) {
     this.dataService.addDegree(degree).subscribe( {
       next: (v) => {this.myData.push( v )},

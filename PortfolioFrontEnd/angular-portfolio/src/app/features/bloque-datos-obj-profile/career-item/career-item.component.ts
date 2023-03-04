@@ -1,20 +1,16 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FullPersonDTO, LaboralCareer, Organization, RolePosition } from '../../../models'
 
 import { faPen, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { Observable } from 'rxjs';
-import { DataService } from 'src/app/service/data.service';
+import { Observable, Subscription } from 'rxjs';
+import { AdminService, DataService } from 'src/app/service/data.service';
 
 @Component({
   selector: 'app-career-item',
   templateUrl: './career-item.component.html',
   styleUrls: ['./career-item.component.css']
 })
-export class CareerItemComponent implements OnInit {
-  // SERVICIO QUE ESTÁ VINCULADO CON EL LOGUEO
-  flagUserAdmin: boolean = false;
-  flagUserAdmin$: Observable<boolean>;
-
+export class CareerItemComponent implements OnInit, OnDestroy {
 
   @Input() item: LaboralCareer;
 
@@ -37,17 +33,30 @@ export class CareerItemComponent implements OnInit {
 
   DATAPORTFOLIO: FullPersonDTO;
 
-  constructor( private dataService: DataService, ) { }
+  // Validacion Admin STATUS
+  esAdmin: boolean;
+  private AdminServiceSubscription: Subscription | undefined;
+ 
+  constructor( 
+    private dataService: DataService, 
+    private adminService: AdminService, ) 
+    { }
 
   ngOnInit() {
     this.DATAPORTFOLIO = this.dataService.getData();
 
-    this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();
-    this.flagUserAdmin$.subscribe(  flagUserAdmin => this.flagUserAdmin = flagUserAdmin)
-    this.flagUserAdmin = this.dataService.getFlagUserAdmin()
+    this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
+      currentAdmin => {
+        this.esAdmin = currentAdmin;
+      }
+    );
 
   }
-  
+  ngOnDestroy() {
+
+    this.AdminServiceSubscription?.unsubscribe();
+  }
+
   color:string = 'red';
 
   changeStyle($event: Event){
@@ -64,7 +73,7 @@ export class CareerItemComponent implements OnInit {
 
   delete(laboralCareer: LaboralCareer) {
     // llamo al metodo del padre via emit()
-    if (this.flagUserAdmin) {
+    if (this.esAdmin) {
       this.onDelete.emit(laboralCareer);
     }
 
