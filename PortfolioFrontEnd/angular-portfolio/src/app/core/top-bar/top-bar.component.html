@@ -33,10 +33,10 @@
       <h6 
           [ngStyle] = "{'color':'blue','font-weight':'bolder', 'margin':'1em', 'float':'right'}"
       >
-      Administrador autenticado -> {{flagUserAdmin}}</h6>
+      Administrador autenticado -> {{esAdmin}}</h6>
       <!-- <span class="text-muted btn" -->
         
-      <ng-container *ngIf="!flagUserAdmin">
+      <ng-container *ngIf="!esAdmin">
 
           <!-- <button class="navbar-toggler btn btn-primary btn-sm" type="button" 
             data-toggle="collapse" data-target="#navbarToggleExternalContent" 
@@ -54,7 +54,7 @@
 
       </ng-container>
 
-      <ng-container *ngIf="flagUserAdmin">
+      <ng-container *ngIf="esAdmin">
           <button 
             class="navbar-toggler btn btn-primary btn-sm" type="button" 
             data-toggle="collapse" data-target="#navbarToggleExternalContent" 

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, throwError, Subject } from 'rxjs';
+import { Observable, throwError, Subject, BehaviorSubject } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 
 import { Person, HardSkill, SoftSkill, LaboralCareer, Interest, Project, Organization, Degree, RolePosition, Studie, FullPersonDTO } from '../models'
@@ -20,7 +20,6 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
-
 export class DataService {
   // private apiURL = 'http://localhost:5000'
   private LOCALHOST_API = environment.apiURL
@@ -30,10 +29,24 @@ export class DataService {
   private USERID: number = environment.idPersona;
   private USER: Person;
 
+  // #######################################
+  // Almacen y servicio de flag isLoggin
+  // Primero crear el almacen del dato si es Administrador,
+  //  el observado
+  private isAdmin: boolean = false;
+  // Segundo el subject será un elemento del servicio
+  private isAdmin$: Subject<boolean> = new Subject<boolean>();
+
+  // Fin Almacen y servicio de flag isLoggin
+  private myImage: string;
+  // Segundo el subject será un elemento del servicio
+  private myImage$: Subject<string> = new Subject<string>();
+
+  
+
 
   private flagChangeUser: boolean = false;
   private flagChangeUser$ = new Subject<boolean>();
-
   // ################################################
   // PENDIENTE DE ELIMINAR ESTA PRACTCA CON OBSERVER
   // ################################################
@@ -52,12 +65,10 @@ export class DataService {
   // aquellos componentes que quieran observar cambios en color
   // Este observable es capaz de vigilar el dato color
   getColor$(): Observable<string> {
-    console.log("el observable getColor() this.color$ -> ", this.color$);
-    
     return this.color$.asObservable();
   }
-  // Ahora, en cualquier componente que necesitemos estar 
-  // atentos a los cambios del almacén de datos, podemos 
+  // Ahora, en cada componente que necesitemos estar 
+  // atentos a los cambios del almacén de datos, o son responsables de cambiar su valor, podemos 
   // usar el observable que nos ofrece el servicio.
   // Primero se lo declara:
   //    colorSubscription: Subscription;  // esto es para poderlo eliminar
@@ -125,6 +136,28 @@ export class DataService {
     // inicializamos el metodo http
     private http: HttpClient,
   ) { }
+
+  // #######################################
+  // Metodos del servicio de flag isLoggin
+  // actualizacion del dato isAdmin
+  setIsAdmin(isAdmin: boolean) {
+    console.log("isAdmin, en almacen de datos, lo seteo como -> ", isAdmin)
+    this.isAdmin = isAdmin;
+    this.isAdmin$.next(this.isAdmin);
+  }
+  // Este observable es capaz de vigilar el dato isAdmin y se lo
+  //  entregará a aquellos componentes que se subscribieron.
+  getIsAdmin$(): Observable<boolean> {
+    // console.log("isAdmin, en almacen de datos, tiene registrado -> ", this.isAdmin, `(llamado desde ${desde})`);
+    return this.isAdmin$.asObservable();
+  }
+
+  adminStatus() {
+    return this.isAdmin;
+  }
+  // Fin Metodos del servicio de flag isLoggin
+
+
 
   //################PENDIENTE  Metodos en evaluacion, deben ser ereemplazados
   // PENDIENTE DE ELIMINAR, TRAS ELIMINAR COMPONENTE USER
@@ -399,15 +432,24 @@ export class DataService {
     return this.http.delete<Studie>(url, httpOptions)
   }
 
+}
 
 
+export interface Store {
+  isAdmin: boolean;
+}
 
+// https://rafaelneto.dev/blog/gestionar-estado-angular-rxjs-behaviorsubject-servicios-datos-observables/
+@Injectable({
+  providedIn: 'root'
+})
+export class AdminService {
+  private currentAdminSubject: BehaviorSubject<boolean> = new BehaviorSubject({} as boolean);
+  public readonly currentAdmin: Observable<boolean> = this.currentAdminSubject.asObservable();
 
+  constructor() { }
 
-
-
-
-
-
-
+  setCurrentAdmin(currentAdmin: boolean): void {
+    this.currentAdminSubject.next(currentAdmin);
+  }
 }

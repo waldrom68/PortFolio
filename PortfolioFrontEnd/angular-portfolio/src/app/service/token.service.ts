@@ -60,7 +60,7 @@ public getAuthorities(): string[] {
 public isAdmin() {
   let temp = this.getAuthorities();
   // console.log("Es admin? : ", temp)
-  console.log("Es admin? : ", temp.includes("ROLE_ADMIN"))
+  // console.log("Es admin? : ", temp.includes("ROLE_ADMIN"))
   return this.getAuthorities().includes("ROLE_ADMIN")
 }
 
@@ -71,7 +71,7 @@ public expiredToken(token: string): boolean {
     const expires = new Date(jwtToken.exp * 1000);
     const timeOut = (expires.getTime() - Date.now())/1000/60;
     if (timeOut >= 0) {
-      console.log("Expira en", timeOut.toFixed(1) , " minutos");
+      console.log("El token expira en", timeOut.toFixed(1) , " minutos");
       return false;
   
     } else {
@@ -85,7 +85,7 @@ public expiredToken(token: string): boolean {
 }
 
 public isValidAdmin() {
-  console.log("Administrator mode enabled ? ", this.isAdmin() && !this.expiredToken(this.getToken()))
+  // console.log("Administrator mode enabled ? ", this.isAdmin() && !this.expiredToken(this.getToken()))
   
   return this.isAdmin() && !this.expiredToken(this.getToken())
 }

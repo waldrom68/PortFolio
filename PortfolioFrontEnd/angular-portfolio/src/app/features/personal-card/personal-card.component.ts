@@ -1,11 +1,10 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
-import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
+import { Component, OnDestroy, OnInit, Renderer2 } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
 import { FullPersonDTO, Person } from '../../models'
 
-
 import { faPen, faTimes, faLocationDot } from '@fortawesome/free-solid-svg-icons';
-import { DataService } from 'src/app/service/data.service';
+import { DataService, AdminService } from 'src/app/service/data.service';
 import { Observable, Subscription } from 'rxjs';
 import { PersonalFormComponent } from '../personal-form/personal-form.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -18,10 +17,7 @@ import { UploadMediaService } from 'src/app/service/upload-media.service';
 })
 
 
-export class PersonalCardComponent implements OnInit {
-  // SERVICIO QUE ESTÁ VINCULADO CON EL LOGUEO
-  flagUserAdmin: boolean = false;
-  flagUserAdmin$: Observable<boolean>;
+export class PersonalCardComponent implements OnInit, OnDestroy {
 
   showForm: boolean = false;  // flag para mostrar o no el formulario
   showBtnAction: boolean = true;  // flag para mostrar o no los btn's de acciones del usuario
@@ -39,7 +35,7 @@ export class PersonalCardComponent implements OnInit {
   form: FormGroup;
 
   formImg: FormGroup;
-  changeImg: boolean = false;
+  changeImg: boolean;
 
 
   // PENDIENTE, ESTÁ VINCULADO A LA PRACTICA DE OBSERVER
@@ -48,8 +44,16 @@ export class PersonalCardComponent implements OnInit {
   color$: Observable<string>;
   // FIN A LA PRACTICA DE OBSERVER 
 
+  // Validacion Admin STATUS
+  esAdmin: boolean;
+  private AdminServiceSubscription: Subscription | undefined;
+
+
   constructor(
     private dataService: DataService,
+
+    private adminService: AdminService,
+
     private matDialog: MatDialog,
 
     private uploadMediaService: UploadMediaService,
@@ -57,13 +61,15 @@ export class PersonalCardComponent implements OnInit {
     private fb: FormBuilder,
     // private fb: FormBuilder,
 
+    private renderer: Renderer2,  // Se usa para renderizar tras la carga de todos los componentes iniciales, ngAfterViewInit 
 
-  ) {
-    // this.DATAPORTFOLIO = this.dataService.getData();
-  }
+
+  ) {  }
 
 
   ngOnInit(): void {
+    console.log("PASA POR PERSONAL-CARD.COMPONENT");
+
     this.DATAPORTFOLIO = this.dataService.getData();
 
     // PENDIENTE, ESTÁ VINCULADO A LA PRACTICA DE OBSERVER
@@ -71,25 +77,29 @@ export class PersonalCardComponent implements OnInit {
     this.color$.subscribe(color => this.color = color);
     // FIN A LA PRACTICA DE OBSERVER 
 
-    // Verifica si está logueado como ADMIN
-    this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();
-    this.flagUserAdmin$.subscribe(flagUserAdmin => this.flagUserAdmin = flagUserAdmin)
-    this.flagUserAdmin = this.dataService.getFlagUserAdmin()
-
-
     this.formImg = this.fb.group({ pathFoto: [this.DATAPORTFOLIO.pathFoto, [Validators.required]], });
+
+    this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
+      currentAdmin => {
+        this.esAdmin = currentAdmin;
+      }
+    );
+
+  }
+
+  ngOnDestroy() {
+    // PENDIENTE, ESTÁ VINCULADO A LA PRACTICA DE OBSERVER
+    this.colorSubscription.unsubscribe();
+    // FIN A LA PRACTICA DE OBSERVER 
+    this.AdminServiceSubscription?.unsubscribe();
+
   }
 
   // PENDIENTE, ESTÁ VINCULADO A LA PRACTICA DE OBSERVER
-  ngOnDestroy() {
-    this.colorSubscription.unsubscribe();
-  }
-
   setcolor() {
     this.dataService.setColor("burlywood");
+    // FIN A LA PRACTICA DE OBSERVER 
   }
-  // FIN A LA PRACTICA DE OBSERVER 
-
 
 
   get PathFoto(): any {
@@ -106,6 +116,7 @@ export class PersonalCardComponent implements OnInit {
     console.log("Teoricamente debo abrir el form");
 
     this.changeImg = !this.changeImg;
+    this.refreshImg();
   }
 
   async upLoadFile(evento: Event) {
@@ -118,6 +129,7 @@ export class PersonalCardComponent implements OnInit {
     const path = "image/" + this.DATAPORTFOLIO.id;
     const name = "/fotoPerfil"
     // this.uploadMediaService.upLoadFile(evento, path, name);
+    console.log("pasando por personalcard modificacion de imagen");
 
     this.uploadMediaService.upLoadFile(evento, path, name);
 
@@ -125,22 +137,27 @@ export class PersonalCardComponent implements OnInit {
     // LO REALIZO EN EL SERVICIO
     const url: string = this.uploadMediaService.url;
     console.log("Archivo en la nube: ", url)
-    this.dataService.changeGralData(this.DATAPORTFOLIO);
 
-    // if ( url != this.DATAPORTFOLIO.pathFoto) {
-    //   this.DATAPORTFOLIO.pathFoto = url;
-    // }
-    // .subscribe({
-    //   next: (v) => {
-    //     console.log("Guardado correctamente: ", v);
-    //     // Actualizo la variable observada por el resto de los componentes
-    //   },
-    //   error: (e) => {
-    //     alert("Response Error (" + e.status + ") en el metodo addItem()" + "\n" + e.message);
-    //     console.log("Se quizo subit un archivo sin exito ");
-    //   },
-    //   complete: () => console.log("Completado la actualizacion de datos")
-    // });
+
+    this.dataService.changeGralData(this.DATAPORTFOLIO);
+    this.changeImg = true;
+    this.refreshImg()
+
+
+  }
+
+
+  refreshImg() {
+    // SOLUCION DE COMPROMISO
+    console.log("Solucion de compromiso para manejar informacion async");
+
+    setTimeout(() => {
+
+      let element = this.renderer.selectRootElement(`#${'mifoto'}`, true);
+      element.scrollIntoView({ behavior: 'smooth' });
+
+    }, 4000);
+
   }
 
   gralDataToPerson(data: FullPersonDTO): Person {

@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { JwtDto, LoginUsuario, Usuario } from '../models';
-import { DataService } from './data.service';
+import { AdminService, DataService } from './data.service';
 
 const AUTH_API = "http://localhost:10000/auth/"
 
@@ -19,11 +19,14 @@ export class AuthService {
   constructor(
     private httpClient: HttpClient, 
     private dataService: DataService,
+            // PENDIENTE MODO PRUEBA
+private adminService: AdminService,
+// FIN MODO PRUEBA
     ) { }
 
-  public register(nuevoUsuario: Usuario): Observable<any>{
-    return this.httpClient.post<any>(AUTH_API + 'new', nuevoUsuario);
-  }
+  // public register(nuevoUsuario: Usuario): Observable<any>{
+  //   return this.httpClient.post<any>(AUTH_API + 'new', nuevoUsuario);
+  // }
 
   public login(loginUsuario: LoginUsuario): Observable<JwtDto>{
     
@@ -36,7 +39,9 @@ export class AuthService {
     //aqui debo cambiar el status de flagChangeUser, ubicado en data.service.ts
     this.dataService.hasCredentials(false)
     console.log("ELIMINANDO CREDENCIALES GUARDADAS")
+    this.adminService.setCurrentAdmin( false );
   }
   
   
 }
+

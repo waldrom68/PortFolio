@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Observable, Subscription } from 'rxjs';
 import { AuthService } from 'src/app/service/auth.service';
-import { DataService } from 'src/app/service/data.service';
-// import { TokenService } from 'src/app/service/token.service';
+import { AdminService, DataService } from 'src/app/service/data.service';
 
 @Component({
   selector: 'app-top-bar',
@@ -13,13 +12,9 @@ import { DataService } from 'src/app/service/data.service';
 })
 
 
-export class TopBarComponent implements OnInit {
+export class TopBarComponent implements OnInit, OnDestroy {
 
   faTimes = faTimes;
-  isLoggin: boolean;
-
-  flagUserAdmin: boolean = false;
-  flagUserAdmin$: Observable<boolean>;
 
   // PENDIENTE, ESTÁ VINCULADO A LA PRACTICA DE OBSERVER
   colorSubscription: Subscription;
@@ -27,10 +22,18 @@ export class TopBarComponent implements OnInit {
   color$: Observable<string>;
   // FIN A LA PRACTICA DE OBSERVER 
 
+  // Validacion Admin STATUS
+  esAdmin: boolean;
+  private AdminServiceSubscription: Subscription | undefined;
+ 
+
   constructor(
+    // PENDIENTE MODO PRUEBA
     private dataService: DataService,
-    // private tokenService: TokenService,
+    // FIN MODO PRUEBA
+
     private authService: AuthService,
+    private adminService: AdminService,
 
 
   ) { }
@@ -41,30 +44,30 @@ export class TopBarComponent implements OnInit {
     this.color$.subscribe(color => this.color = color);
     // FIN A LA PRACTICA DE OBSERVER 
 
-    this.flagUserAdmin$ = this.dataService.getFlagChangeUser$();
-    this.flagUserAdmin$.subscribe(flagUserAdmin => this.flagUserAdmin = flagUserAdmin)
+    this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
+      currentAdmin => {
+        this.esAdmin = currentAdmin;
+      }
+    );
 
   }
-
-  // PENDIENTE, ESTÁ VINCULADO A LA PRACTICA DE OBSERVER
-  ngOnDestroy() {
-    this.colorSubscription.unsubscribe();
-  }
-  // FIN A LA PRACTICA DE OBSERVER 
 
 
   onLogOut() {
-    // this.dataService.changeUser();
-    // this.isLoggin = false;
-    this.authService.logout();
-    this.dataService.hasCredentials(false);
-  }
-  // loggin() {
-  //   // this.dataService.changeUser();
-  //   this.dataService.hasCredentials(true);
-  // }
 
-  // toggleLoggin() {
-  //   // this.isLoggin = true;
-  // }
+    this.authService.logout();
+
+  }
+
+
+  ngOnDestroy() {
+    // PENDIENTE, ESTÁ VINCULADO A LA PRACTICA DE OBSERVER
+    this.colorSubscription.unsubscribe();
+    // FIN A LA PRACTICA DE OBSERVER 
+    this.AdminServiceSubscription?.unsubscribe();
+  }
+
+
+
+
 }

@@ -79,6 +79,18 @@ export class ObjetiveComponent implements OnInit {
     return this.form.get("objetive")
   }
 
+// codigo de prueba
+setAdmin() {
+  // this.isAdmin = true;
+  this.dataService.setIsAdmin(true);
+}
+
+unSetAdmin() {
+  // this.isAdmin = false;
+  this.dataService.setIsAdmin(false);
+}
+
+
   onEnviar(event:Event) {
     event.preventDefault;
 

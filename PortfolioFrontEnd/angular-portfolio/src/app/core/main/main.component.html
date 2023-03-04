@@ -1,9 +1,13 @@
 <div class="row text-center aling-self-center py-0" id="Init" >
+
+    
+    
     <ng-container  *ngIf="detailCards && DATAPORTFOLIO; else statusWait">
         
-
+        
         <div class="col-sm-8 aling-self-center order-0"
         >
+
             <!-- area que muestra las Tarjetas por un lado, su etiqueta frontal-->
             <ng-container *ngIf="statusCards">
                 <section id="" class="row p-0 m-0 justify-content-center">
@@ -136,13 +140,20 @@
         <div class="col-sm-4 g-0 m-auto p-2">
             <section id="nameAndImage" class="col order-5 opacity-75 align-self-center" style="border: 1px solid;">
 
-                <app-personal-card></app-personal-card>
+                <app-personal-card
+
+                ></app-personal-card>
 
             </section>
 
         </div>
 
+        
     </ng-container>
+    <!-- <div class="col-sm-12 justify-content-center m-2">
+        <button class="btn btn-warning btn-sm" (click)="setAdmin()"> Pasar a ser ADMIN </button>
+        <button class="btn btn-warning btn-sm" (click)="unSetAdmin()"> Dejar de ser ADMIN </button>
+    </div> -->
 
     <!-- <ng-container *ngIf="DATAPORTFOLIO">
         <ul>
@@ -175,13 +186,13 @@
 
     {{fecha}}
 
+
 </div>
 
 
 
 
 <ng-template #statusWait >
-
     <!-- <div 
         class="container-fluid"
         id="wait"
@@ -194,6 +205,6 @@
     
     <div class="loader">Iniciando
         <span></span>
-      </div>
+    </div>
 </ng-template>
 

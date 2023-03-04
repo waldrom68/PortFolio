@@ -10,7 +10,12 @@
         <div class="card"
         [style]= "{'background-color':color }"
         >
-        <ng-container *ngIf="flagUserAdmin">
+        <!-- <ng-container>
+            <div class="row" style="background-color: cadetblue;">
+                {{esAdmin}}
+            </div>
+        </ng-container> -->
+        <ng-container *ngIf="esAdmin">
             <br>
             <!-- (click)="toggleForm();" -->
             <button class="btn btn-outline-success btn-sm mt-2"
@@ -33,17 +38,19 @@
 
                 <div class="ratio ratio-1x1 rounded-circle overflow-hidden" style="width: 50%; height: 50%; margin: auto;">
 
-                    <img 
-                    [src]="DATAPORTFOLIO.pathFoto" class="card-img-top img-cover" alt="sin Imagen" >
+                    <img id="mifoto" 
+                    [src]="DATAPORTFOLIO.pathFoto" 
                     
+                    class="card-img-top img-cover" alt="sin Imagen" >
                 </div>
-                <ng-container *ngIf="flagUserAdmin">
+                <ng-container *ngIf="esAdmin">
                     <div class="row justify-content-center">
-                        <button class="btn btn-outline-success btn-sm mt-2">
+                        <button class="btn btn-outline-success btn-sm mt-2"
+                        (click)="toggleFlagChangeImg()"
+                        >
                             <fa-icon 
                                 [icon]="faPen"
                                 ngClass="p-2"
-                                (click)="toggleFlagChangeImg()"
                             >
                             </fa-icon>
                             Foto
@@ -88,9 +95,8 @@
     <div class="form-group">
     <label for="pathFoto">Foto:</label>
     <input type="file" 
-    id="src-file1"
+    id="pathFoto"
     name="pathFoto"
-
     [ngClass] = "{error: (PathFoto.invalid && PathFoto.touched)}"
     class="file-select" 
     accept=".jpeg, .jpg, .bmp, .png"
@@ -100,4 +106,6 @@
     <!-- <small class="mensajeError" *ngIf="formImg.hasError('required', 'pathFoto')"> Imagen requerida </small> -->
     </div>
 </form>
+
+
 </ng-container>

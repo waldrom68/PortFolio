@@ -1,3 +1,7 @@
+<div class="col-sm-12 justify-content-center m-2">
+    <button class="btn btn-warning btn-sm" (click)="setAdmin()"> Pasar a ser ADMIN </button>
+    <button class="btn btn-warning btn-sm" (click)="unSetAdmin()"> Dejar de ser ADMIN </button>
+</div>
 
 <div *ngIf="myData">
     <ng-container *ngIf="myData.objetive.length; else agregarObjetive">

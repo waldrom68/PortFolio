@@ -23,46 +23,6 @@ export class UploadMediaService {
   ) { this.DATAPORTFOLIO = this.dataService.getData();
   }
 
-
-
-
-
-  // upLoadFile(evento: any, path: string, name: string) {
-  //   const file = evento.target.files[0];
-  //   const fileref = ref(this.storage, path + name );
-   
-    
-  //   uploadBytes(fileref, file)
-  //   .then( r => {
-  //     console.log("resultado de uploadBytes", r)
-      
-  //     this.getUrlFile();
-  //   })
-  //   .catch( e  => console.log("Error de la subida"));
-
-  // }
-
-
-  // getUrlFile() {
-  //   const imageRef = ref(this.storage, "image/1");
-    
-    
-  //   list(imageRef)
-  //   .then(async r => {
-  //     console.log(r);
-
-  //     for(let file of r.items) {
-  //       console.log("Encontrado a " + file);
-  //       if (file.name == "fotoPerfil") {
-  //         this.url = await getDownloadURL(file);
-  //         console.log("URL COINCIDENTE-> " + this.url);
-  //       }
-  //     }
-  //   })
-  //   .catch(e  => console.log("Error al obtener URL de descarga"))
-
-  // }
-
   
   // Fuente: https://firebase.google.com/docs/storage/web/upload-files?hl=es-419
   upLoadFile(evento: any, path: string, name: string) {
@@ -119,8 +79,6 @@ export class UploadMediaService {
           this.url = downloadURL;
           this.DATAPORTFOLIO.pathFoto = this.url;
           this.dataService.changeGralData(this.DATAPORTFOLIO);
-          console.log(this.dataService.getData().pathFoto)
-
         });
       }
     );
