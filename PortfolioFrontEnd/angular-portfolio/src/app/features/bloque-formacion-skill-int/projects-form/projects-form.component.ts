@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { faCheck, faMonument, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { Observable, Subscription } from 'rxjs';
-import { AdminService, DataService } from 'src/app/service/data.service';
+import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { Subscription } from 'rxjs';
+import { DataService } from 'src/app/service/data.service';
+import { AdminService } from 'src/app/service/auth.service';
 
 import { Project } from 'src/app/models';
 import { formatDate } from '@angular/common';

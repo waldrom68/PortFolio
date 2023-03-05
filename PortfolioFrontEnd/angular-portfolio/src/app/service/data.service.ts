@@ -42,7 +42,7 @@ export class DataService {
   // Segundo el subject será un elemento del servicio
   private myImage$: Subject<string> = new Subject<string>();
 
-  
+
 
 
   private flagChangeUser: boolean = false;
@@ -270,6 +270,11 @@ export class DataService {
     const url = `${this.LOCALHOST_API}/interest/del/${interest.id}`
     return this.http.delete<Interest>(url, httpOptions)
   }
+
+
+
+
+
   // HardSkills APIREST ###################################################
   updateHardSkill(hardskill: HardSkill): Observable<HardSkill> {
     hardskill.person = this.USERID;
@@ -432,24 +437,66 @@ export class DataService {
     return this.http.delete<Studie>(url, httpOptions)
   }
 
+
+  // ########### Codigo implementado nuevo
+  upDateEntity(entidad: any, entityName: string): Observable<any> {
+    console.log("Modificando a ... ", entidad);
+    entidad.person = this.USERID;
+    const url = `${this.LOCALHOST_API}${entityName}/edit`;
+    console.log(url)
+    return this.http.post<any>(url, entidad, httpOptions)
+  }
+
+  addEntity(entidad: any, entityName: string): Observable<any> {
+    console.log("Agregando a ... ", entidad);
+    entidad.person = this.USERID;
+    const url = `${this.LOCALHOST_API}${entityName}/new`;
+    console.log(url)
+    return this.http.put<any>(url, entidad, httpOptions)
+  }
+  
+  delEntity(entidad: any, entityName: string): Observable<any> {
+    console.log("Eliminando a ... ", entidad);
+    const url = `${this.LOCALHOST_API}${entityName}/del/${entidad.id}`
+    console.log(url)
+    return this.http.delete<any>(url, httpOptions)
+  }
+
 }
 
 
-export interface Store {
-  isAdmin: boolean;
-}
 
 // https://rafaelneto.dev/blog/gestionar-estado-angular-rxjs-behaviorsubject-servicios-datos-observables/
 @Injectable({
   providedIn: 'root'
 })
-export class AdminService {
-  private currentAdminSubject: BehaviorSubject<boolean> = new BehaviorSubject({} as boolean);
-  public readonly currentAdmin: Observable<boolean> = this.currentAdminSubject.asObservable();
+export class BaseDataService {
+  private baseDataSubject: BehaviorSubject<FullPersonDTO> = new BehaviorSubject({} as FullPersonDTO);
+  public readonly currentBaseData: Observable<FullPersonDTO> = this.baseDataSubject.asObservable();
 
   constructor() { }
-
-  setCurrentAdmin(currentAdmin: boolean): void {
-    this.currentAdminSubject.next(currentAdmin);
+  
+  setCurrentBaseData(currentData: FullPersonDTO): void {
+    this.baseDataSubject.next(currentData);
   }
-}
+
+  // codigo en el componente que usa este servicio tanto como observador como modificador.
+  // baseData: FullPersonDTO;
+  // private BaseDataServiceSubscription: Subscription | undefined;
+  // constructor()
+  // private baseDataService: BaseDataService,
+  // 
+  // ngOnInit()
+  // this.BaseDataServiceSubscription = this.baseDataService.currentBaseData.subscribe(
+  //   currentData => {
+  //     this.baseData = currentData;
+  //   }
+  //   );
+  // 
+  // codigo en el componente que modifica los datos de este servicio:
+  // this.baseDataService.setCurrentBaseData( nuevoDato );  
+  // ngOnDestroy() {
+
+  //   this.BaseDataServiceSubscription?.unsubscribe();
+
+  }

@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { SoftSkill } from '../../../models'
+import { FullPersonDTO, SoftSkill } from '../../../models'
 
 import { faPen, faTimes, faTrash, faHand } from '@fortawesome/free-solid-svg-icons';
 import { Observable, Subscription } from 'rxjs';
-import { AdminService, DataService } from 'src/app/service/data.service';
-
+import { BaseDataService, DataService } from 'src/app/service/data.service';
+import { AdminService } from 'src/app/service/auth.service';
 
 @Component({
   selector: 'app-soft-item',
@@ -38,17 +38,25 @@ export class SoftItemComponent implements OnInit, OnDestroy {
   // Validacion Admin STATUS
   esAdmin: boolean;
   private AdminServiceSubscription: Subscription | undefined;
- 
+  baseData: FullPersonDTO;
+  private BaseDataServiceSubscription: Subscription | undefined;
 
   constructor(  
     private dataService: DataService, 
     private adminService: AdminService,
+    private baseDataService: BaseDataService,
     ) { }
 
   ngOnInit(): void {
         // this.oldData = this.item;
     // Clono el objeto, uso assign por no tener atributos compuesto por otros objetos
     this.oldData = Object.assign({} , this.item)
+    this.BaseDataServiceSubscription = this.baseDataService.currentBaseData.subscribe(
+      currentData => {
+        this.baseData = currentData;
+      }
+    );
+
     this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
       currentAdmin => {
         this.esAdmin = currentAdmin;
@@ -58,6 +66,7 @@ export class SoftItemComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.AdminServiceSubscription?.unsubscribe();
+    this.BaseDataServiceSubscription?.unsubscribe();
   }
 
   color:string = 'red';
@@ -84,13 +93,14 @@ export class SoftItemComponent implements OnInit, OnDestroy {
   }
 
   update(softskill: SoftSkill) {
-    this.dataService.updateSoftSkill(softskill).subscribe({
+    this.dataService.upDateEntity(softskill, "/softskill").subscribe({
       next: (v) => console.log("Guardado correctamente: ", v),
       error: (e) => {
         alert("Response Error (" + e.status + ") en el metodo upDateItem()" + "\n" + e.message);
         console.log("Se quizo modificar sin exito a: " + this.oldData.name);
         // Restauro valor original
         this.formData.name = this.oldData.name;
+        this.formData.assessment = this.oldData.assessment;
       },
       complete: () => console.log("Completada la actualizacion del softskill")
     } );

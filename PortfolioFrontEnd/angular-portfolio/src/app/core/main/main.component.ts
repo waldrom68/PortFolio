@@ -6,7 +6,8 @@ import { now } from 'moment';
 import { Subscription } from 'rxjs';
 import { FullPersonDTO } from 'src/app/models';
 
-import { DataService, AdminService } from 'src/app/service/data.service';
+import { BaseDataService, DataService } from 'src/app/service/data.service';
+import { AdminService } from 'src/app/service/auth.service';
 
 import { TokenService } from 'src/app/service/token.service';
 import { UiService } from 'src/app/service/ui.service';
@@ -45,27 +46,26 @@ export class MainComponent implements OnInit, OnDestroy {
 
   element: object;
   fragment: string = 'Init';
+  wait: boolean = true;
 
  
-  // PENDIENTE ELIMINAR VAR DE PRUEBA
-  fecha: Date;
-  // FIN ELIMINAR VAR DE PRUEBA
+  baseData: FullPersonDTO;
+  private BaseDataServiceSubscription: Subscription | undefined;
 
-  DATAPORTFOLIO: FullPersonDTO;
-
-  // PENDIENTE MODO PRUEBA
+  // Validacion Admin STATUS
   esAdmin: boolean;
   private AdminServiceSubscription: Subscription | undefined;
-// FIN MODO PRUEBA
+
 
 
   // Inyectando servicios en el contructor
   constructor(
     private dataService: DataService,
-// PENDIENTE MODO PRUEBA
-private adminService: AdminService,
-// FIN MODO PRUEBA
-    
+    // PENDIENTE MODO PRUEBA
+    private baseDataService: BaseDataService,
+    private adminService: AdminService,
+    // FIN MODO PRUEBA
+
     private miServicio: UiService,
     private tokenService: TokenService,
 
@@ -77,44 +77,39 @@ private adminService: AdminService,
   }
 
   ngOnInit(): void {
-  
+
+    this.BaseDataServiceSubscription = this.baseDataService.currentBaseData.subscribe(
+      currentData => {
+        this.baseData = currentData;
+      }
+    );
+
+
     // Traigo todos los datos del Portfolio
     this.dataService.getPortFolioData().subscribe({
       next: (gralData) => {
-        this.DATAPORTFOLIO = gralData;
-        this.dataService.changeGralData(gralData);
+        this.baseDataService.setCurrentBaseData(gralData);
+        this.wait = false;
+
       },
       error: (e) => {
         // e.status = 0, error del servidor
         // e.status = 400, e.statusText= OK, error en el pedido al servidor
+        this.wait = true;
         alert("Response Error (" + e.status + ") en iniciar.sesion.component" + "\n" + e.message);
         console.log("Se quizo obtener los datos sin exito; ", e)
       },
       complete: () => { console.log("Finalizado el proceso de obtener los datos del PortFolio") }
     });
 
+
+    // VALIDACION SI ES UN USUARIO ADMINISTRADOR Y TIENE TOKEN VIGENTE
     if (this.tokenService.isValidAdmin()) {
-      // PENDIENTE DE ELIMINAR, ESTA SIENDO REEMPLAZADO
-      this.dataService.hasCredentials(true);
-      // FIN PENDIENTE DE ELIMINAR
-      console.log("DESDE EL MAIN, COLOCO TRUE")
-      this.dataService.setIsAdmin(true);
+      this.adminService.setCurrentAdmin(true);
 
     } else {
-      console.log("DESDE EL MAIN, COLOCO FALSE")
-      this.dataService.setIsAdmin(false);
+      this.adminService.setCurrentAdmin(false);
     }
-    
-    // this.isAdmin$ = this.dataService.getIsAdmin$();
-    // this.isAdmin$.subscribe(isAdmin => this.isAdmin = isAdmin);
-    // // PENDIENTE ELIMINAR LINEA SIGUIENTE, SOLUCION DE COMPROMISO PORQUE NO ME ACTULIZA ESTE VALOR
-    // // ASINCRONICAMENTE, A PESAR DE USAR UN OBSERVABLE
-    // // this.isAdmin = this.dataService.adminStatus();
-
-   
-    // PENDIENTE ELIMINAR VAR DE PRUEBA
-    this.fecha = new Date(now())
-    // FIN ELIMINAR VAR DE PRUEBA
 
     this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
       currentAdmin => {
@@ -122,9 +117,10 @@ private adminService: AdminService,
       }
     );
 
+
+
     this.detailCards = this.miServicio.getCards();
     this.statusCards = this.miServicio.getStatusCards()
-
 
     // Separo los grupos
     this.CardsGroup1 = this.detailCards.filter(function (elem: any) { return elem.group == 1; })
@@ -144,26 +140,21 @@ private adminService: AdminService,
   ngOnDestroy() {
     // this.isAdminSubscription.unsubscribe();
     this.AdminServiceSubscription?.unsubscribe();
+    this.BaseDataServiceSubscription?.unsubscribe();
   }
 
 
   ngAfterViewInit(): void {
     let element = this.renderer.selectRootElement(`#${this.fragment}`, true);
     element.scrollIntoView({ behavior: 'smooth' });
-
   }
+
 
   toggleCards() {
     // PENDIENTE, DEBO TOGGLEAR LOS ARRAY PARCIALES, NO EL DE ORIGEN
     this.miServicio.toggleDetalles();
     this.miServicio.toggleStatusCards();
     this.statusCards = this.miServicio.getStatusCards()
-  }
-
-  onRefreshImg(url: string) {
-    console.log("LLEGUE A REFRESHIMG DEL MAIN con esta info", url);
-    let element = this.renderer.selectRootElement(`#mifoto`, true);
-    element.scrollIntoView({ behavior: 'smooth' });
   }
 
 

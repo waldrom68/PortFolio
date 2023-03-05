@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AdminService, DataService } from 'src/app/service/data.service';
+import { BaseDataService, DataService } from 'src/app/service/data.service';
+import { AdminService } from 'src/app/service/auth.service';
 
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
@@ -34,25 +35,30 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   esAdmin: boolean;
   private AdminServiceSubscription: Subscription | undefined;
  
-  DATAPORTFOLIO: FullPersonDTO;
+  baseData: FullPersonDTO;
+  private BaseDataServiceSubscription: Subscription | undefined;
 
   constructor( 
     private dataService: DataService,
      
     public matDialog: MatDialog,
     private adminService: AdminService,
+    private baseDataService: BaseDataService,
 
     ) {
       this.resetForm()
      }
 
   ngOnInit(): void {
-    this.DATAPORTFOLIO = this.dataService.getData();
-    this.myData = this.DATAPORTFOLIO.project;
-
     this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
       currentAdmin => {
         this.esAdmin = currentAdmin;
+      }
+    );
+    this.BaseDataServiceSubscription = this.baseDataService.currentBaseData.subscribe(
+      currentData => {
+        this.baseData = currentData;
+        this.myData = currentData.project;
       }
     );
   }
@@ -60,16 +66,10 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   
   ngOnDestroy() {
     this.AdminServiceSubscription?.unsubscribe();
+    this.BaseDataServiceSubscription?.unsubscribe();
   }
   resetForm() {
-    this.formData = { 
-      id:0, 
-      name:"", 
-      resume:"",
-      orderdeploy:0,
-      since: new Date(),
-      url:"",
-      person:0 }
+    this.formData = new Project();
   }
 
   toggleForm() {
@@ -91,13 +91,14 @@ export class ProjectsComponent implements OnInit, OnDestroy {
 
   delItem(){
     if (this.itemParaBorrar) {
-      this.dataService.delProject(this.itemParaBorrar).subscribe( {
+      this.dataService.delEntity(this.itemParaBorrar, "project").subscribe({
         next: (v) => {
           console.log("Se ha eliminado exitosamente a: ", this.itemParaBorrar);
           this.myData = this.myData.filter((t) => { return t !== this.itemParaBorrar })
           // Actualizo la informacion en el origen
-          this.DATAPORTFOLIO.project = this.myData
+          this.baseData.interest = this.myData;
           this.itemParaBorrar = null;
+
         },
         error: (e) => {
           alert("Response Error (" + e.status + ")" + "\n" + e.message);
@@ -110,11 +111,13 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   }
   
   addItem(project: Project) {
-    this.dataService.addProject(project).subscribe( {
+    this.dataService.upDateEntity(this.itemParaBorrar, "project").subscribe({
       next: (v) => {
         console.log("Guardado correctamente: ", v);
-        v.person = this.DATAPORTFOLIO.id;
+        project.id = v.id;
+        v.person = this.baseData.id;
         this.myData.push(v);
+        this.baseData.interest = this.myData;
       },
       error: (e) => {
         alert("Response Error (" + e.status + ") en el metodo addItem()" + "\n" + e.message);

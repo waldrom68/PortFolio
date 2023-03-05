@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, Inject, OnDestroy, } from '@angular/core';
-import { AdminService, DataService } from 'src/app/service/data.service';
+import { DataService } from 'src/app/service/data.service';
+import { AdminService } from 'src/app/service/auth.service';
 import { faPlusCircle, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 import { Organization, FullPersonDTO } from '../../models'
@@ -73,13 +74,7 @@ export class OrganizationComponent implements OnInit, OnDestroy {
   }
 
   resetForm() {
-    this.formData = {
-      id: 0,
-      name: "",
-      resume: "",
-      url: "",
-      person: 0
-    }
+    this.formData = new Organization();
   }
 
   toggleForm() {

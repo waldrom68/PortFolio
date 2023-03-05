@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { getDownloadURL, getStorage, list, ref, Storage, uploadBytes, uploadBytesResumable } from '@angular/fire/storage';
+import { Subscription } from 'rxjs';
 import { FullPersonDTO } from '../models';
-import { DataService } from './data.service';
+import { BaseDataService, DataService } from './data.service';
 
 
 @Injectable({
@@ -13,14 +14,25 @@ import { DataService } from './data.service';
 // upLoadFile()
 export class UploadMediaService {
   url: string = "";
-  DATAPORTFOLIO: FullPersonDTO;
+  // DATAPORTFOLIO: FullPersonDTO;
+
+  baseData: FullPersonDTO;
+  private BaseDataServiceSubscription: Subscription | undefined;
 
 
 
   constructor(
     private storage: Storage,
     private dataService: DataService,
-  ) { this.DATAPORTFOLIO = this.dataService.getData();
+    private baseDataService: BaseDataService,
+  ) { 
+    // this.DATAPORTFOLIO = this.dataService.getData();
+    this.BaseDataServiceSubscription = this.baseDataService.currentBaseData.subscribe(
+      currentData => {
+        this.baseData = currentData;
+      }
+    );
+
   }
 
   
@@ -77,8 +89,12 @@ export class UploadMediaService {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           console.log('File available at -> ', downloadURL);
           this.url = downloadURL;
-          this.DATAPORTFOLIO.pathFoto = this.url;
-          this.dataService.changeGralData(this.DATAPORTFOLIO);
+
+          this.baseData.pathFoto = downloadURL;
+          this.baseDataService.setCurrentBaseData( this.baseData );
+
+          // this.DATAPORTFOLIO.pathFoto = this.url;
+          // this.dataService.changeGralData(this.DATAPORTFOLIO);
         });
       }
     );

@@ -3,7 +3,8 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 
 import { faCheck, faMonument, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Observable, Subscription } from 'rxjs';
-import { AdminService, DataService } from 'src/app/service/data.service';
+import { DataService } from 'src/app/service/data.service';
+import { AdminService } from 'src/app/service/auth.service';
 
 import { Organization } from 'src/app/models';
 
@@ -67,12 +68,7 @@ form: FormGroup;
 
   
   resetForm() {
-    this.formData = { 
-      id:0, 
-      name:"", 
-      resume:"",
-      url:"",
-      person:0 }
+    this.formData = new Organization();
   }
 
   onEnviar(event: Event, ) {

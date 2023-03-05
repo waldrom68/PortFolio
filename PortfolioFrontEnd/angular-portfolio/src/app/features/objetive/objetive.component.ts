@@ -1,7 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Observable, Subscription } from 'rxjs';
-import { AdminService, DataService } from 'src/app/service/data.service';
+import { DataService } from 'src/app/service/data.service';
+import { AdminService } from 'src/app/service/auth.service';
+
 import { ModalActionsService } from 'src/app/service/modal-actions.service';
 import { faTrash, faPen, faTimes, faCheck, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
@@ -83,17 +85,6 @@ export class ObjetiveComponent implements OnInit, OnDestroy {
   get Objetive(): any {
     return this.form.get("objetive")
   }
-
-// codigo de prueba
-setAdmin() {
-  // this.isAdmin = true;
-  this.dataService.setIsAdmin(true);
-}
-
-unSetAdmin() {
-  // this.isAdmin = false;
-  this.dataService.setIsAdmin(false);
-}
 
 
   onEnviar(event:Event) {

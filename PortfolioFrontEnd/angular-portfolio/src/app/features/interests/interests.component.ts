@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AdminService, DataService } from 'src/app/service/data.service';
+import { BaseDataService, DataService } from 'src/app/service/data.service';
+import { AdminService } from 'src/app/service/auth.service';
 
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
@@ -30,18 +31,19 @@ export class InterestsComponent implements OnInit, OnDestroy {
 
   itemParaBorrar: any;  // objeto que se está por borrar, sirve para reestablecer si cancela borrado
 
-  DATAPORTFOLIO: FullPersonDTO;
+  // Validacion Admin STATUS
+  esAdmin: boolean;
+  private AdminServiceSubscription: Subscription | undefined;
+  baseData: FullPersonDTO;
+  private BaseDataServiceSubscription: Subscription | undefined;
 
-    // Validacion Admin STATUS
-    esAdmin: boolean;
-    private AdminServiceSubscription: Subscription | undefined;
-   
 
   constructor(
     private dataService: DataService,
     public matDialog: MatDialog,
 
     private adminService: AdminService,
+    private baseDataService: BaseDataService,
 
   ) {
     this.resetForm();
@@ -49,12 +51,15 @@ export class InterestsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-    this.DATAPORTFOLIO = this.dataService.getData();
-    this.myData = this.DATAPORTFOLIO.interest;
-
     this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
       currentAdmin => {
         this.esAdmin = currentAdmin;
+      }
+    );
+    this.BaseDataServiceSubscription = this.baseDataService.currentBaseData.subscribe(
+      currentData => {
+        this.baseData = currentData;
+        this.myData = currentData.interest;
       }
     );
 
@@ -62,12 +67,14 @@ export class InterestsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.AdminServiceSubscription?.unsubscribe();
+    this.BaseDataServiceSubscription?.unsubscribe();
   }
 
   resetForm() {
-    this.formData = { id: 0, name: "", orderdeploy: 0, person: 0 }
+    // this.formData = { id: 0, name: "", orderdeploy: 0, person: 0 }
+    this.formData = new Interest();
   }
-  
+
   toggleForm() {
     // Cierra el formulario de edicion o creacion
     this.showForm = !this.showForm;
@@ -88,34 +95,34 @@ export class InterestsComponent implements OnInit, OnDestroy {
   delItem() {
     if (this.itemParaBorrar) {
       // console.log(`Se acepto el borrado del item "${this.itemParaBorrar.name}"`);
-      this.dataService.delInterest(this.itemParaBorrar).subscribe( {
+      this.dataService.delEntity(this.itemParaBorrar, "/interest").subscribe({
         next: (v) => {
           console.log("Se ha eliminado exitosamente a: ", this.itemParaBorrar);
           this.myData = this.myData.filter((t) => { return t !== this.itemParaBorrar })
           // Actualizo la informacion en el origen
-          this.DATAPORTFOLIO.interest = this.myData;
+          this.baseData.interest = this.myData;
           this.itemParaBorrar = null;
 
         },
         error: (e) => {
           alert("Response Error (" + e.status + ")" + "\n" + e.message);
-          console.log("Se quizo eliminar sin exito a: " , this.itemParaBorrar);
+          console.log("Se quizo eliminar sin exito a: ", this.itemParaBorrar);
         },
         complete: () => console.log("Completada la actualizacion del interes")
       }
       );
-   }
+    }
 
   }
 
   addItem(interest: Interest) {
-    // console.log("Ejecuto this addItem()")
-    this.dataService.addInterest(interest).subscribe({
+    this.dataService.addEntity(interest, "/interest").subscribe({
       next: (v) => {
         console.log("Guardado correctamente: ", v);
         interest.id = v.id;
-        v.person = this.DATAPORTFOLIO.id;
-        this.myData.push(v);
+        interest.person = this.baseData.id;
+        this.myData.push(interest);
+        this.baseData.interest = this.myData;
       },
       error: (e) => {
         alert("Response Error (" + e.status + ") en el metodo addItem()" + "\n" + e.message);
@@ -154,11 +161,11 @@ export class InterestsComponent implements OnInit, OnDestroy {
 
     // https://material.angular.io/components/dialog/overview
     const modalDialog = this.matDialog.open(MessageBoxComponent, dialogConfig);
-    
+
     modalDialog.afterClosed().subscribe(
       data => {
         console.log("Dialogo output: ", data);
-        if (data) {this.delItem() }
+        if (data) { this.delItem() }
       }
 
     )

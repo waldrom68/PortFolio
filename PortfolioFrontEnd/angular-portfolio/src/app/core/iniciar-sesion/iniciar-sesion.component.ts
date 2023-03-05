@@ -3,8 +3,8 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { LoginUsuario } from 'src/app/models';
-import { AuthService } from 'src/app/service/auth.service';
-import { AdminService } from 'src/app/service/data.service';
+import { AuthService, AdminService } from 'src/app/service/auth.service';
+
 import { TokenService } from 'src/app/service/token.service';
 
 

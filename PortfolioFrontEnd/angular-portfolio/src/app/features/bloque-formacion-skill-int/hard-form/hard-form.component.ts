@@ -3,7 +3,8 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 
 import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Observable, Subscription } from 'rxjs';
-import { AdminService, DataService } from 'src/app/service/data.service';
+import { DataService } from 'src/app/service/data.service';
+import { AdminService } from 'src/app/service/auth.service';
 
 import { HardSkill } from 'src/app/models';
 
@@ -33,7 +34,7 @@ export class HardFormComponent implements OnInit, OnDestroy {
  
   constructor( 
     private formBuilder: FormBuilder,
-    private dataService: DataService, 
+ 
     private adminService: AdminService,
     ) { 
     

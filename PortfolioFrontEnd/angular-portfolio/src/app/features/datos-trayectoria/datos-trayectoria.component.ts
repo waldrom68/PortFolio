@@ -1,5 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { AdminService, DataService } from 'src/app/service/data.service';
+import { BaseDataService, DataService } from 'src/app/service/data.service';
+import { AdminService } from 'src/app/service/auth.service';
 
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
@@ -26,7 +27,8 @@ export class DatosTrayectoriaComponent implements OnInit, OnDestroy {
  
   itemParaBorrar: any;
 
-  DATAPORTFOLIO: FullPersonDTO;
+  baseData: FullPersonDTO;
+  private BaseDataServiceSubscription: Subscription | undefined;
   
   myData: LaboralCareer[] = [];
   formData: LaboralCareer;  // instancia vacia, para cuando se solicite un alta
@@ -40,6 +42,7 @@ export class DatosTrayectoriaComponent implements OnInit, OnDestroy {
   
   constructor( 
     private dataService: DataService, 
+    private baseDataService: BaseDataService,
 
     public matDialog: MatDialog,
 
@@ -48,10 +51,15 @@ export class DatosTrayectoriaComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
-    this.DATAPORTFOLIO = this.dataService.getData();
-    this.myData = this.DATAPORTFOLIO.laboralCareer;
-    this.myOrganizations = this.DATAPORTFOLIO.organization;
-    this.myRolePositions = this.DATAPORTFOLIO.roleposition;
+    this.BaseDataServiceSubscription = this.baseDataService.currentBaseData.subscribe(
+      currentData => {
+        this.baseData = currentData;
+      }
+    );
+
+    this.myData = this.baseData.laboralCareer;
+    this.myOrganizations = this.baseData.organization;
+    this.myRolePositions = this.baseData.roleposition;
 
     this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
       currentAdmin => {
@@ -65,30 +73,11 @@ export class DatosTrayectoriaComponent implements OnInit, OnDestroy {
 
    ngOnDestroy() {
     this.AdminServiceSubscription?.unsubscribe();
+    this.BaseDataServiceSubscription?.unsubscribe();
   }
 
   resetForm() {
-    this.formData = { 
-      id:0, 
-      resume:"",
-      startDate: new Date(),
-      endDate: new Date(),
-      orderdeploy:0,
-      status:true,
-      organization: {
-        id: 0,
-        name:"",
-        resume:"",
-        url:"",
-        person:0
-    },
-      roleposition:{
-        id: 0,
-        name:"",
-        person:0
-    } ,
-      person: 0
-    }
+    this.formData = new LaboralCareer();
   }
 
   
@@ -110,13 +99,14 @@ export class DatosTrayectoriaComponent implements OnInit, OnDestroy {
 
   delItem() {
     if (this.itemParaBorrar) {
-      this.dataService.delLaboralCareer(this.itemParaBorrar).subscribe( {
+      this.dataService.delEntity(this.itemParaBorrar, "/laboralcareer").subscribe({
         next: (v) => {
           console.log("Se ha eliminado exitosamente a: ", this.itemParaBorrar);
           this.myData = this.myData.filter((t) => { return t !== this.itemParaBorrar })
           // Actualizo la informacion en el origen
-          this.DATAPORTFOLIO.laboralCareer = this.myData;
+          this.baseData.laboralCareer = this.myData;
           this.itemParaBorrar = null;
+
         },
         error: (e) => {
           alert("Response Error (" + e.status + ")" + "\n" + e.message);
@@ -130,15 +120,13 @@ export class DatosTrayectoriaComponent implements OnInit, OnDestroy {
 
 
   addItem(laboralCareer: LaboralCareer) {
-    this.dataService.addLaboralCareer(laboralCareer).subscribe( {
+    this.dataService.addEntity(this.itemParaBorrar, "/laboralcareer").subscribe({
       next: (v) => {
         console.log("Guardado correctamente: ", v);
-        // v.organization = this.formData.organization;
-        // v.roleposition = this.formData.roleposition;
-        // v.person = this.DATAPORTFOLIO.id;
+        laboralCareer.id = v.id;
+        v.person = this.baseData.id;
         this.myData.push(v);
-        this.DATAPORTFOLIO.laboralCareer = this.myData;
-        console.log("Esto estoy guardando en myData", this.myData)
+        this.baseData.laboralCareer = this.myData;
       },
       error: (e) => {
         alert("Response Error (" + e.status + ") en el metodo addItem()" + "\n" + e.message);

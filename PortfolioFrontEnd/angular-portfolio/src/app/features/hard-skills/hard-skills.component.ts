@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AdminService, DataService } from 'src/app/service/data.service';
+import { BaseDataService, DataService } from 'src/app/service/data.service';
+import { AdminService } from 'src/app/service/auth.service';
 
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
@@ -31,12 +32,12 @@ export class HardSkillsComponent implements OnInit, OnDestroy {
  
   itemParaBorrar: any;  // objeto que se está por borrar, sirve para reestablecer si cancela borrado
 
-  DATAPORTFOLIO: FullPersonDTO;
-
   // Validacion Admin STATUS
   esAdmin: boolean;
   private AdminServiceSubscription: Subscription | undefined;
  
+  baseData: FullPersonDTO;
+  private BaseDataServiceSubscription: Subscription | undefined;
 
   
   constructor(
@@ -44,17 +45,21 @@ export class HardSkillsComponent implements OnInit, OnDestroy {
     public matDialog: MatDialog,
  
     private adminService: AdminService,
+    private baseDataService: BaseDataService,
   ) { 
     
   }
 
   ngOnInit(): void {
-    this.DATAPORTFOLIO = this.dataService.getData();
-    this.myData = this.DATAPORTFOLIO.hardskill;
-
     this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
       currentAdmin => {
         this.esAdmin = currentAdmin;
+      }
+    );
+    this.BaseDataServiceSubscription = this.baseDataService.currentBaseData.subscribe(
+      currentData => {
+        this.baseData = currentData;
+        this.myData = currentData.hardskill;
       }
     );
     
@@ -63,10 +68,11 @@ export class HardSkillsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.AdminServiceSubscription?.unsubscribe();
+    this.BaseDataServiceSubscription?.unsubscribe();
   }
 
   resetForm() {
-    this.formData = { id:0, name:"", assessment:0, orderdeploy:0, person:0 }
+    this.formData = new HardSkill();
   }
 
   toggleForm() {
@@ -88,12 +94,12 @@ export class HardSkillsComponent implements OnInit, OnDestroy {
 
   delItem(){
     if (this.itemParaBorrar) {
-      this.dataService.delHardSkill(this.itemParaBorrar).subscribe( {
+      this.dataService.delEntity(this.itemParaBorrar, "/hardskill").subscribe( {
         next: (v) => {
           console.log("Se ha eliminado exitosamente a: ", this.itemParaBorrar);
           this.myData = this.myData.filter((t) => { return t !== this.itemParaBorrar })
           // Actualizo la informacion en el origen
-          this.DATAPORTFOLIO.hardskill = this.myData;
+          this.baseData.hardskill = this.myData;
           this.itemParaBorrar = null;
         },
         error: (e) => {
@@ -108,11 +114,13 @@ export class HardSkillsComponent implements OnInit, OnDestroy {
 
   
   addItem(hardSkill: HardSkill) {
-    this.dataService.addHardskill(hardSkill).subscribe( {
+    this.dataService.addEntity(hardSkill, "/hardskill").subscribe( {
       next: (v) => {
         console.log("Guardado correctamente: ", v);
-        v.person = this.DATAPORTFOLIO.id;
-        this.myData.push(v);
+        hardSkill.id = v.id;
+        hardSkill.person = this.baseData.id;
+        this.myData.push(hardSkill);
+        this.baseData.hardskill= this.myData;
       },
       error: (e) => {
         alert("Response Error (" + e.status + ") en el metodo addItem()" + "\n" + e.message);

@@ -2,8 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Observable, Subscription } from 'rxjs';
-import { AuthService } from 'src/app/service/auth.service';
-import { AdminService, DataService } from 'src/app/service/data.service';
+import { AuthService, AdminService  } from 'src/app/service/auth.service';
+import { DataService } from 'src/app/service/data.service';
 
 @Component({
   selector: 'app-top-bar',

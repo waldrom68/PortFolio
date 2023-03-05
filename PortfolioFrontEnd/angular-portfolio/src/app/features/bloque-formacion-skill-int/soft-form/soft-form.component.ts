@@ -3,7 +3,8 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 
 import { faCheck, faTimes, faHand } from '@fortawesome/free-solid-svg-icons';
 import { Observable, Subscription } from 'rxjs';
-import { AdminService, DataService } from 'src/app/service/data.service';
+import { DataService } from 'src/app/service/data.service';
+import { AdminService } from 'src/app/service/auth.service';
 
 import { SoftSkill } from 'src/app/models';
 
@@ -15,7 +16,7 @@ import { SoftSkill } from 'src/app/models';
 export class SoftFormComponent implements OnInit, OnDestroy {
 
   @Input() formData: SoftSkill;
-  @Input() title:string;
+  @Input() title: string;
   @Output() onUpdate: EventEmitter<SoftSkill> = new EventEmitter()
   @Output() cancel: EventEmitter<SoftSkill> = new EventEmitter()
 
@@ -24,26 +25,26 @@ export class SoftFormComponent implements OnInit, OnDestroy {
   faHand = faHand;
 
   form: FormGroup;
-  minAssessment:number = 1;
-  maxAssessment:number = 5;
+  minAssessment: number = 1;
+  maxAssessment: number = 5;
 
-    // Validacion Admin STATUS
-    esAdmin: boolean;
-    private AdminServiceSubscription: Subscription | undefined;
- 
-    
-  constructor( 
+  // Validacion Admin STATUS
+  esAdmin: boolean;
+  private AdminServiceSubscription: Subscription | undefined;
+
+
+  constructor(
     private formBuilder: FormBuilder,
-    private dataService: DataService,
+
     private adminService: AdminService,
-     ) { 
-    
+  ) {
+
   }
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
-      name:[this.formData.name, [Validators.required, Validators.minLength(3) ]],
-      assessment:[this.formData.assessment, [Validators.required, Validators.max(this.maxAssessment), Validators.min(this.minAssessment) ]],
+      name: [this.formData.name, [Validators.required, Validators.minLength(3)]],
+      assessment: [this.formData.assessment, [Validators.required, Validators.max(this.maxAssessment), Validators.min(this.minAssessment)]],
     });
 
     this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
@@ -53,14 +54,14 @@ export class SoftFormComponent implements OnInit, OnDestroy {
     );
 
   }
-  
+
   ngOnDestroy() {
     this.AdminServiceSubscription?.unsubscribe();
   }
 
-  color:string = 'red';
-  
-  changeStyle($event: Event){
+  color: string = 'red';
+
+  changeStyle($event: Event) {
     this.color = $event.type == 'mouseover' ? 'resaltado' : 'normal';
   }
 
@@ -76,8 +77,8 @@ export class SoftFormComponent implements OnInit, OnDestroy {
     this.formData.name = "";
     this.formData.assessment = 0;
   }
-  
-  onEnviar(event: Event, ) {
+
+  onEnviar(event: Event,) {
     event.preventDefault;
     // Si deja de estar logueado, no registro lo que haya modificado y cierro form.
     if (!this.esAdmin) {
@@ -85,24 +86,24 @@ export class SoftFormComponent implements OnInit, OnDestroy {
       this.cancel.emit();
 
     } else {
-      
+
       if (this.form.valid) {
-  
+
         this.formData.name = this.form.get("name")?.value.trim();
         this.formData.assessment = this.form.get("assessment")?.value;
         this.onUpdate.emit(this.formData);
-  
+
       } else {
-        
+
         console.log("no es valido el valor ingresado")
         this.form.markAllAsTouched();
-  
+
       }
     }
 
   }
 
-  onCancel(event: Event, ) {
+  onCancel(event: Event,) {
     this.cancel.emit();
 
   }

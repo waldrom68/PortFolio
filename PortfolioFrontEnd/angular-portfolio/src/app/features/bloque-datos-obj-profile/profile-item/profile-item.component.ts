@@ -2,8 +2,10 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 import {Person} from '../../../models'
 
 import { faPen, faTimes, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
-import { AdminService, DataService } from 'src/app/service/data.service';
-import { Observable, Subscription } from 'rxjs';
+import { DataService } from 'src/app/service/data.service';
+import { AdminService } from 'src/app/service/auth.service';
+import { Subscription } from 'rxjs';
+
 
 @Component({
   selector: 'app-profile-item',

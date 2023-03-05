@@ -3,7 +3,8 @@ import { FullPersonDTO, LaboralCareer, Organization, RolePosition } from '../../
 
 import { faPen, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Observable, Subscription } from 'rxjs';
-import { AdminService, DataService } from 'src/app/service/data.service';
+import { BaseDataService, DataService } from 'src/app/service/data.service';
+import { AdminService } from 'src/app/service/auth.service';
 
 @Component({
   selector: 'app-career-item',
@@ -31,7 +32,9 @@ export class CareerItemComponent implements OnInit, OnDestroy {
 
   showForm: boolean = false;
 
-  DATAPORTFOLIO: FullPersonDTO;
+  baseData: FullPersonDTO;
+  private BaseDataServiceSubscription: Subscription | undefined;
+
 
   // Validacion Admin STATUS
   esAdmin: boolean;
@@ -39,12 +42,16 @@ export class CareerItemComponent implements OnInit, OnDestroy {
  
   constructor( 
     private dataService: DataService, 
-    private adminService: AdminService, ) 
+    private adminService: AdminService,
+    private baseDataService: BaseDataService, ) 
     { }
 
   ngOnInit() {
-    this.DATAPORTFOLIO = this.dataService.getData();
-
+    this.BaseDataServiceSubscription = this.baseDataService.currentBaseData.subscribe(
+      currentData => {
+        this.baseData = currentData;
+      }
+    );
     this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
       currentAdmin => {
         this.esAdmin = currentAdmin;
@@ -53,8 +60,8 @@ export class CareerItemComponent implements OnInit, OnDestroy {
 
   }
   ngOnDestroy() {
-
     this.AdminServiceSubscription?.unsubscribe();
+    this.BaseDataServiceSubscription?.unsubscribe();
   }
 
   color:string = 'red';
@@ -84,11 +91,12 @@ export class CareerItemComponent implements OnInit, OnDestroy {
 
   update(laboralCareer: LaboralCareer) {
 
-    this.dataService.updateLaboralCareer(laboralCareer).subscribe( {
+    this.dataService.upDateEntity(laboralCareer, "/laboralcareer").subscribe( {
       next: (v) => {
         console.log("Guardado correctamente: ", v);
-        // v.person = this.DATAPORTFOLIO.id;
-        // this.myData.push(v);
+        // v.person = this.baseData.id
+        // this.baseData.laboralCareer = v;
+        // this.item = laboralCareer;
       },
       error: (e) => {
         alert("Response Error (" + e.status + ") en el metodo addItem()" + "\n" + e.message);

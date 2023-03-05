@@ -3,7 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
-import { AdminService, DataService } from 'src/app/service/data.service';
+import { BaseDataService, DataService } from 'src/app/service/data.service';
+import { AdminService } from 'src/app/service/auth.service';
 
 import { LaboralCareer, Organization, RolePosition, FullPersonDTO } from 'src/app/models';
 
@@ -38,7 +39,9 @@ export class CareerFormComponent implements OnInit, OnDestroy {
 
   form: FormGroup;
 
-  DATAPORTFOLIO: FullPersonDTO;
+  baseData: FullPersonDTO;
+  private BaseDataServiceSubscription: Subscription | undefined;
+
 
   showOrgaForm: boolean = false;
   showRoleForm: boolean = false;
@@ -50,7 +53,7 @@ export class CareerFormComponent implements OnInit, OnDestroy {
 
   constructor(
     private dataService: DataService,
-
+    private baseDataService: BaseDataService,
     private formBuilder: FormBuilder,
 
     private dialog: MatDialog,  // DeleteModal
@@ -62,7 +65,11 @@ export class CareerFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.DATAPORTFOLIO = this.dataService.getData();
+    this.BaseDataServiceSubscription = this.baseDataService.currentBaseData.subscribe(
+      currentData => {
+        this.baseData = currentData;
+      }
+    );
 
     this.form = this.formBuilder.group({
       resume: [this.formData.resume, [Validators.required, Validators.minLength(2), Validators.maxLength(500)]],
@@ -82,6 +89,7 @@ export class CareerFormComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.AdminServiceSubscription?.unsubscribe();
+    this.BaseDataServiceSubscription?.unsubscribe();
   }
 
   get Resume(): any {
@@ -230,7 +238,7 @@ export class CareerFormComponent implements OnInit, OnDestroy {
         this.formData.organization = this.form.get("organization")?.value;
         this.formData.roleposition = this.form.get("roleposition")?.value;
         this.formData.status = true;
-        this.formData.person = this.DATAPORTFOLIO.id
+        this.formData.person = this.baseData.id
         this.onUpdate.emit(this.formData);
 
       } else {

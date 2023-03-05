@@ -3,7 +3,8 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 
 import { faCheck, faTimes} from '@fortawesome/free-solid-svg-icons';
 import { Observable, Subscription } from 'rxjs';
-import { AdminService, DataService } from 'src/app/service/data.service';
+import { DataService } from 'src/app/service/data.service';
+import { AdminService } from 'src/app/service/auth.service';
 
 import { Interest } from '../../../models';
 
@@ -52,7 +53,7 @@ export class InterestsFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.AdminServiceSubscription?.unsubscribe();
+    // this.AdminServiceSubscription?.unsubscribe();
   }
 
   get Nombre(): any {

@@ -2,7 +2,8 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 
 import { faTrash, faPen, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Observable, Subscription } from 'rxjs';
-import { AdminService, DataService } from 'src/app/service/data.service';
+import { DataService } from 'src/app/service/data.service';
+import { AdminService } from 'src/app/service/auth.service';
 
 import { Interest } from '../../../models'
 
@@ -85,8 +86,9 @@ export class InterestsItemComponent implements OnInit, OnDestroy {
   update(interest: Interest) {
     // Actualizacion de Interest
     console.log("Ejecuto this.upDateItem()");
-
-    this.dataService.updateInterest(interest).subscribe( {
+    // upDateEntity(entidad: any): Observable<any>
+    // this.dataService.updateInterest(interest).subscribe( {
+    this.dataService.upDateEntity(interest, "/interest").subscribe( {
       next: (v) => console.log("Guardado correctamente: ", v),
       error: (e) => {
         alert("Response Error (" + e.status + ") en el metodo upDateItem()" + "\n" + e.message);

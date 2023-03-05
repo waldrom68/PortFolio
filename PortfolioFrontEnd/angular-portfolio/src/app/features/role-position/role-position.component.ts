@@ -1,8 +1,9 @@
-import { Component, EventEmitter, Inject, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { AdminService, DataService } from 'src/app/service/data.service';
+import { Component, EventEmitter, Inject, Input, OnDestroy, OnInit, Output, resolveForwardRef } from '@angular/core';
+import { BaseDataService, DataService } from 'src/app/service/data.service';
+import { AdminService } from 'src/app/service/auth.service';
 import { faPlusCircle, faTimes } from '@fortawesome/free-solid-svg-icons';
 
-import {FullPersonDTO, Person, RolePosition} from '../../models'
+import { FullPersonDTO, Person, RolePosition } from '../../models'
 
 import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MessageBoxComponent } from '../../shared/message-box/message-box.component';
@@ -24,38 +25,41 @@ export class RolePositionComponent implements OnInit, OnDestroy {
   faPlusCircle = faPlusCircle;
   faTimes = faTimes;
 
-  @Input() showBtnAction: boolean= true;  // flag para mostrar o no los btn's de acciones del usuario
+  @Input() showBtnAction: boolean = true;  // flag para mostrar o no los btn's de acciones del usuario
   @Output() showBtnActionChange = new EventEmitter<boolean>();
- 
+
   @Input() myRolePositions: RolePosition[];
   @Output() myRolePositionsChange = new EventEmitter<RolePosition[]>();
 
-  DATAPORTFOLIO: FullPersonDTO;
-  
+  baseData: FullPersonDTO;
+  private BaseDataServiceSubscription: Subscription | undefined;
+
   itemParaBorrar: any;
 
   message: string;
-    // Validacion Admin STATUS
-    esAdmin: boolean;
-    private AdminServiceSubscription: Subscription | undefined;
-   
+  // Validacion Admin STATUS
+  esAdmin: boolean;
+  private AdminServiceSubscription: Subscription | undefined;
+
 
   constructor(
     private dataService: DataService,
+    private baseDataService: BaseDataService,
     public matDialog: MatDialog,
-    
-    private adminService: AdminService, 
-    
+
+    private adminService: AdminService,
+
     @Inject(MAT_DIALOG_DATA) public data: { message: string },
     public dialogRef: MatDialogRef<RolePositionComponent>, //OrganizationModal
-    
-    private modalService: ModalActionsService
 
   ) { }
 
   ngOnInit(): void {
-    this.DATAPORTFOLIO = this.dataService.getData();
-    this.myData = this.DATAPORTFOLIO.roleposition
+    this.BaseDataServiceSubscription = this.baseDataService.currentBaseData.subscribe(
+      currentData => {
+        this.baseData = currentData;
+      }
+    );
 
     this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
       currentAdmin => {
@@ -66,16 +70,12 @@ export class RolePositionComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-
     this.AdminServiceSubscription?.unsubscribe();
+    this.BaseDataServiceSubscription?.unsubscribe();
   }
 
   resetForm() {
-    this.formData = { 
-      id:0, 
-      name:"", 
-      person:0
-    }
+    this.formData = new RolePosition();
   }
 
   toggleForm() {
@@ -83,43 +83,50 @@ export class RolePositionComponent implements OnInit, OnDestroy {
     this.showForm = !this.showForm;
     this.showBtnAction = !this.showBtnAction;
 
-  }  
-  
+  }
+
 
   cancelation(rolePosition: RolePosition) {
     this.toggleForm();
   }
 
-  openModalDelete(rolePosition: RolePosition){
+  openModalDelete(rolePosition: RolePosition) {
     // Llamo al modal, si se confirma el borrado.
     // almaceno el item en cuestion en itemParaBorrar
     this.itemParaBorrar = rolePosition;
     this.openDeleteModal(rolePosition)
   }
 
-  delItem(){
+  delItem() {
     if (this.itemParaBorrar) {
-      this.dataService.delRolePosition(this.itemParaBorrar).subscribe( {
+      this.dataService.delRolePosition(this.itemParaBorrar).subscribe({
         next: (v) => {
           console.log("Se ha eliminado exitosamente a: ", this.itemParaBorrar);
           this.myData = this.myData.filter((t) => { return t !== this.itemParaBorrar })
           // Actualizo la informacion en el origen
           this.itemParaBorrar = null;
+          this.baseData.roleposition = this.myData;
         },
         error: (e) => {
           alert("Response Error (" + e.status + ")" + "\n" + e.message);
-          console.log("Se quizo eliminar sin exito a: " , this.itemParaBorrar);
+          console.log("Se quizo eliminar sin exito a: ", this.itemParaBorrar);
         },
-        complete: () => {console.log("Completada la actualizacion de la Posicion o Rol");}
+        complete: () => { console.log("Completada la actualizacion de la Posicion o Rol"); }
 
       });
     }
   }
 
-  
+
   addItem(rolePosition: RolePosition) {
-    this.dataService.addRolePosition(rolePosition).subscribe(  {
-      next: (v) => {this.myData.push( v )},
+    this.dataService.addRolePosition(rolePosition).subscribe({
+      next: (v) => { 
+        console.log("Guardado correctamente: ", v);
+        rolePosition.id = v.id;
+        v.person = this.baseData.id;
+        this.myData.push(v);
+        this.baseData.roleposition = this.myData;
+      },
       error: (e) => {
         alert("Response Error (" + e.status + ") en el metodo addItem()" + "\n" + e.message);
         console.log("Se quizo agregar sin exito a: " + rolePosition.name);
@@ -128,10 +135,10 @@ export class RolePositionComponent implements OnInit, OnDestroy {
     });
     this.toggleForm();
     this.resetForm();
-    
+
   }
-  
-  openDeleteModal(data:any) {
+
+  openDeleteModal(data: any) {
     const dialogConfig = new MatDialogConfig();
     // The user can't close the dialog by clicking outside its body
     dialogConfig.disableClose = true;
@@ -160,7 +167,7 @@ export class RolePositionComponent implements OnInit, OnDestroy {
     modalDialog.afterClosed().subscribe(
       data => {
         console.log("Dialogo output: ", data);
-        if (data) {this.delItem() }
+        if (data) { this.delItem() }
       }
 
     )

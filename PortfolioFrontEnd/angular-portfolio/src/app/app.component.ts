@@ -12,6 +12,7 @@ import * as moment from 'moment';
 import { DateAdapter } from '@angular/material/core';
 import { MatDatepickerComponent } from './shared/mat-datepicker/mat-datepicker.component';
 import { DataService } from './service/data.service';
+import { FullPersonDTO } from './models';
 
 
 
@@ -47,6 +48,7 @@ shortdate: FormControl;
 // PENDIENTE, ESTÁ VINCULADO A LA PRACTICA DE OBSERVER
 color: string;
 // FIN A LA PRACTICA DE OBSERVER 
+baseData: FullPersonDTO;
 
 
 constructor(

@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Inject, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { AdminService, DataService } from 'src/app/service/data.service';
+import { DataService } from 'src/app/service/data.service';
+import { AdminService } from 'src/app/service/auth.service';
+
 import { faPlusCircle, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 import { Degree, FullPersonDTO } from '../../models'
@@ -70,10 +72,7 @@ export class DegreeComponent implements OnInit, OnDestroy {
   }
 
   resetForm() {
-    this.formData = { 
-      id:0, 
-      name:"", 
-      person:0 }
+    this.formData = new Degree();
   }
 
   

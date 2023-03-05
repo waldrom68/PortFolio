@@ -1,23 +1,13 @@
 
-<ng-container *ngIf="DATAPORTFOLIO">
-    <button mat-raised-button color="danger" type="button"
-    (click)="setcolor();"
-    >
-      setear burlywood
-    </button>
+<ng-container *ngIf="baseData">
+
 
     <div class="container py-4 p-0 m-0">
         <div class="card"
         [style]= "{'background-color':color }"
         >
-        <!-- <ng-container>
-            <div class="row" style="background-color: cadetblue;">
-                {{esAdmin}}
-            </div>
-        </ng-container> -->
         <ng-container *ngIf="esAdmin">
             <br>
-            <!-- (click)="toggleForm();" -->
             <button class="btn btn-outline-success btn-sm mt-2"
             (click)="openPersonModal();"
             ngClass="faConfirm fa-ico"
@@ -27,7 +17,6 @@
             <fa-icon 
                 [icon]="faPen"
                 ngClass="p-2"
-                
             >
             </fa-icon>
             Datos
@@ -39,7 +28,7 @@
                 <div class="ratio ratio-1x1 rounded-circle overflow-hidden" style="width: 50%; height: 50%; margin: auto;">
 
                     <img id="mifoto" 
-                    [src]="DATAPORTFOLIO.pathFoto" 
+                    [src]="baseData.pathFoto" 
                     
                     class="card-img-top img-cover" alt="sin Imagen" >
                 </div>
@@ -62,50 +51,49 @@
 
                 <div class="card-body">
                     <h5 class="card-title">
-                        {{ DATAPORTFOLIO.name }} {{ DATAPORTFOLIO.lastName }}
+                        {{ baseData.name }} {{ baseData.lastName }}
                     </h5>
                     
                     <h6 class="card-text" 
-                        *ngFor="let elemento of DATAPORTFOLIO.profession.split('\n')">{{ elemento }}
+                        *ngFor="let elemento of profession">{{ elemento }}
                     </h6>
                     <hr style="border: 1px solid;">
-                    <p>Nacido en {{DATAPORTFOLIO.since | date:"yyyy"}}.</p>
+                    <p>Nacido en {{baseData.since | date:"yyyy"}}.</p>
                     <p>
                         <fa-icon 
                             [icon]="faLocationDot"
                         >
                         </fa-icon>
-                  {{DATAPORTFOLIO.location}}</p> 
+                  {{baseData.location}}</p> 
 
                 </div>
             </ng-container>
         </div>
-        <span>{{color$ | async }} -> color$ | async  / {{color}} -> color</span> 
+
     </div>
 
 </ng-container>
 
-<!-- <ng-container *ngIf="changeImg"> -->
 <ng-container >
-<form class="table-dark text-left container-fluid p-2 my-2"
-[formGroup]="formImg"
-#myForm="ngForm"
->
-    <!-- Quitar error del DOM : https://stackoverflow.com/questions/54580161/failed-to-set-the-value-property-on-htmlinputelement-in-reactive-form -->
-    <div class="form-group">
-    <label for="pathFoto">Foto:</label>
-    <input type="file" 
-    id="pathFoto"
-    name="pathFoto"
-    [ngClass] = "{error: (PathFoto.invalid && PathFoto.touched)}"
-    class="file-select" 
-    accept=".jpeg, .jpg, .bmp, .png"
-    (change)="upLoadFile($event)"
+    <form class="table-dark text-left container-fluid p-2 my-2"
+    [formGroup]="formImg"
+    #myForm="ngForm"
     >
-    <!-- placeholder="url archivo con la imagen" -->
-    <!-- <small class="mensajeError" *ngIf="formImg.hasError('required', 'pathFoto')"> Imagen requerida </small> -->
-    </div>
-</form>
+        <!-- Quitar error del DOM : https://stackoverflow.com/questions/54580161/failed-to-set-the-value-property-on-htmlinputelement-in-reactive-form -->
+        <div class="form-group">
+            <label for="pathFoto">Foto:</label>
+            <input type="file" 
+            id="pathFoto"
+            name="pathFoto"
+            [ngClass] = "{error: (PathFoto.invalid && PathFoto.touched)}"
+            class="file-select" 
+            accept=".jpeg, .jpg, .bmp, .png"
+            (change)="upLoadFile($event)"
+            >
+            <!-- placeholder="url archivo con la imagen" -->
+            <!-- <small class="mensajeError" *ngIf="formImg.hasError('required', 'pathFoto')"> Imagen requerida </small> -->
+        </div>
+    </form>
 
 
 </ng-container>

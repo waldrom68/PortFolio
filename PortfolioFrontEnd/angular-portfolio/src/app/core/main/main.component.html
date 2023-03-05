@@ -1,9 +1,10 @@
 <div class="row text-center aling-self-center py-0" id="Init" >
+    
+    <div class="col-12 text-warning font-weight-bold bg-dark p-2">
+        {{baseData.name}}
+    </div>
 
-    
-    
-    <ng-container  *ngIf="detailCards && DATAPORTFOLIO; else statusWait">
-        
+    <ng-container  *ngIf="!wait">
         
         <div class="col-sm-8 aling-self-center order-0"
         >
@@ -150,49 +151,12 @@
 
         
     </ng-container>
-    <!-- <div class="col-sm-12 justify-content-center m-2">
-        <button class="btn btn-warning btn-sm" (click)="setAdmin()"> Pasar a ser ADMIN </button>
-        <button class="btn btn-warning btn-sm" (click)="unSetAdmin()"> Dejar de ser ADMIN </button>
-    </div> -->
-
-    <!-- <ng-container *ngIf="DATAPORTFOLIO">
-        <ul>
-            <li *ngFor="let data of DATAPORTFOLIO.degree">
-                ({{data.id}}) - {{data.name}}
-            </li>
-        </ul>
-    </ng-container>
-    <ng-container *ngIf="DATAPORTFOLIO">
-        <ul>
-            <li *ngFor="let data of DATAPORTFOLIO.organization">
-                ({{data.id}}) - {{data.name}}
-            </li>
-        </ul>
-    </ng-container>
-    <ng-container *ngIf="DATAPORTFOLIO">
-        <ul>
-            <li *ngFor="let data of DATAPORTFOLIO.roleposition">
-                ({{data.id}}) - {{data.name}}
-            </li>
-        </ul>
-    </ng-container>
-    <ng-container *ngIf="DATAPORTFOLIO">
-        <ul>
-            <li *ngFor="let data of DATAPORTFOLIO.hardskill">
-                ({{data.id}}) - {{data.name}}
-            </li>
-        </ul>
-    </ng-container> -->
-
-    {{fecha}}
-
-
 </div>
 
 
 
 
-<ng-template #statusWait >
+<!-- <ng-template #statusWait > -->
     <!-- <div 
         class="container-fluid"
         id="wait"
@@ -203,8 +167,8 @@
 
     </div> -->
     
-    <div class="loader">Iniciando
+    <!-- <div class="loader">Iniciando
         <span></span>
-    </div>
-</ng-template>
+    </div> -->
+<!-- </ng-template> -->
 

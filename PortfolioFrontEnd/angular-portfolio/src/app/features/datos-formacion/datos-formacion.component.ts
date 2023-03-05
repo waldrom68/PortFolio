@@ -1,5 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { AdminService, DataService } from 'src/app/service/data.service';
+import { BaseDataService, DataService } from 'src/app/service/data.service';
+import { AdminService } from 'src/app/service/auth.service';
 
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
@@ -26,7 +27,8 @@ export class DatosFormacionComponent implements OnInit, OnDestroy {
  
   itemParaBorrar: any;
 
-  DATAPORTFOLIO: FullPersonDTO;
+  baseData: FullPersonDTO;
+  private BaseDataServiceSubscription: Subscription | undefined;
 
   myData: Studie[] = [];
   formData: Studie;  // instancia vacia, para cuando se solicite un alta
@@ -42,16 +44,22 @@ export class DatosFormacionComponent implements OnInit, OnDestroy {
   constructor( 
     private dataService: DataService,
     public matDialog: MatDialog,
+    private baseDataService: BaseDataService,
 
     private adminService: AdminService,
     ) {  }
 
 
   ngOnInit(): void {
-    this.DATAPORTFOLIO = this.dataService.getData();
-    this.myData = this.DATAPORTFOLIO.studie;
-    this.myOrganizations = this.DATAPORTFOLIO.organization;
-    this.myDegrees = this.DATAPORTFOLIO.degree;
+    this.BaseDataServiceSubscription = this.baseDataService.currentBaseData.subscribe(
+      currentData => {
+        this.baseData = currentData;
+      }
+    );
+
+    this.myData = this.baseData.studie;
+    this.myOrganizations = this.baseData.organization;
+    this.myDegrees = this.baseData.degree;
 
 
     this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
@@ -65,30 +73,11 @@ export class DatosFormacionComponent implements OnInit, OnDestroy {
   
   ngOnDestroy() {
     this.AdminServiceSubscription?.unsubscribe();
+    this.BaseDataServiceSubscription?.unsubscribe();
   }
 
   resetForm() {
-    this.formData = { 
-      id:0, 
-      name:"",
-      startDate: new Date(),
-      endDate: new Date(),
-      orderdeploy:0,
-      status:true,
-      organization: {
-        id: 0,
-        name:"",
-        resume:"",
-        url:"",
-        person:0
-    },
-      degree:{
-        id: 0,
-        name:"",
-        person:0
-    } ,
-      person: 0
-    }
+    this.formData = new Studie();
   }
 
   toggleForm() {
@@ -110,13 +99,14 @@ export class DatosFormacionComponent implements OnInit, OnDestroy {
 
   delItem() {
     if (this.itemParaBorrar) {
-      this.dataService.delStudie(this.itemParaBorrar).subscribe( {
+      this.dataService.delEntity(this.itemParaBorrar, "/studie").subscribe({
         next: (v) => {
           console.log("Se ha eliminado exitosamente a: ", this.itemParaBorrar);
           this.myData = this.myData.filter((t) => { return t !== this.itemParaBorrar })
           // Actualizo la informacion en el origen
-          this.DATAPORTFOLIO.studie = this.myData;
+          this.baseData.studie = this.myData;
           this.itemParaBorrar = null;
+
         },
         error: (e) => {
           alert("Response Error (" + e.status + ")" + "\n" + e.message);
@@ -130,15 +120,13 @@ export class DatosFormacionComponent implements OnInit, OnDestroy {
 
   
   addItem(studie: Studie) {
-    this.dataService.addStudie(studie).subscribe(  {
+    this.dataService.addEntity(this.itemParaBorrar, "/studie").subscribe({
       next: (v) => {
         console.log("Guardado correctamente: ", v);
-        // v.person = this.DATAPORTFOLIO.id;
-        // v.degree = this.formData.degree;
-        // v.organization = this.formData.organization;
+        studie.id = v.id;
+        v.person = this.baseData.id;
         this.myData.push(v);
-        this.DATAPORTFOLIO.studie = this.myData;
-        console.log("Esto estoy guardando en myData", this.myData)
+        this.baseData.studie = this.myData;
       },
       error: (e) => {
         alert("Response Error (" + e.status + ") en el metodo addItem()" + "\n" + e.message);

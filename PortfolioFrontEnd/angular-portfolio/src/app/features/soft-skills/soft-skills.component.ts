@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AdminService, DataService } from 'src/app/service/data.service';
+import { BaseDataService, DataService } from 'src/app/service/data.service';
+import { AdminService } from 'src/app/service/auth.service';
 
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
@@ -35,13 +36,15 @@ export class SoftSkillsComponent implements OnInit, OnDestroy {
   esAdmin: boolean;
   private AdminServiceSubscription: Subscription | undefined;
  
-  DATAPORTFOLIO: FullPersonDTO;
+  baseData: FullPersonDTO;
+  private BaseDataServiceSubscription: Subscription | undefined;
 
   constructor(
     private dataService: DataService,
 
     public matDialog: MatDialog,
     private adminService: AdminService,
+    private baseDataService: BaseDataService,
 
   ) {
     this.resetForm()
@@ -49,24 +52,28 @@ export class SoftSkillsComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
-    this.DATAPORTFOLIO = this.dataService.getData();
-    this.myData = this.DATAPORTFOLIO.softskill;
 
     this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
       currentAdmin => {
         this.esAdmin = currentAdmin;
       }
     );
+    this.BaseDataServiceSubscription = this.baseDataService.currentBaseData.subscribe(
+      currentData => {
+        this.baseData = currentData;
+        this.myData = currentData.softskill;
+      }
+    );
 
   }
 
   ngOnDestroy() {
-
     this.AdminServiceSubscription?.unsubscribe();
+    this.BaseDataServiceSubscription?.unsubscribe();
   }
 
   resetForm() {
-    this.formData = { id: 0, name: "", assessment: 0, orderdeploy: 0, person: 0 }
+    this.formData = new SoftSkill();
   }
 
   toggleForm() {
@@ -88,14 +95,15 @@ export class SoftSkillsComponent implements OnInit, OnDestroy {
 
   delItem() {
     if (this.itemParaBorrar) {
-      this.dataService.delSoftSkill(this.itemParaBorrar).subscribe({
+      // console.log(`Se acepto el borrado del item "${this.itemParaBorrar.name}"`);
+      this.dataService.delEntity(this.itemParaBorrar, "/softskill").subscribe({
         next: (v) => {
-          console.log(v);
           console.log("Se ha eliminado exitosamente a: ", this.itemParaBorrar);
           this.myData = this.myData.filter((t) => { return t !== this.itemParaBorrar })
           // Actualizo la informacion en el origen
-          this.DATAPORTFOLIO.softskill = this.myData;
+          this.baseData.softskill = this.myData;
           this.itemParaBorrar = null;
+
         },
         error: (e) => {
           alert("Response Error (" + e.status + ")" + "\n" + e.message);
@@ -108,21 +116,18 @@ export class SoftSkillsComponent implements OnInit, OnDestroy {
   }
 
 
-  // upDateItem(softskill: SoftSkill) {
-  //   this.dataService.updateSoftSkill(softskill).subscribe();
-  // }
-
-  addItem(softskill: SoftSkill) {
-    this.dataService.addSoftskill(softskill).subscribe({
+  addItem(softSkill: SoftSkill) {
+    this.dataService.upDateEntity(softSkill, "/softskill").subscribe({
       next: (v) => {
         console.log("Guardado correctamente: ", v);
-        v.person = this.DATAPORTFOLIO.id;
-        softskill.id = v.id;
-        this.myData.push(v);
+        softSkill.id = v.id;
+        softSkill.person = this.baseData.id;
+        this.myData.push(softSkill);
+        this.baseData.softskill = this.myData;
       },
       error: (e) => {
         alert("Response Error (" + e.status + ") en el metodo addItem()" + "\n" + e.message);
-        console.log("Se quizo agregar sin exito a: " + softskill.name);
+        console.log("Se quizo agregar sin exito a: " + softSkill.name);
       },
       complete: () => console.log("Completado el alta del softskill")
     });
