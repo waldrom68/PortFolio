@@ -82,9 +82,8 @@ export class OrganizationItemComponent implements OnInit, OnDestroy {
   }
 
   update(organization: Organization) {
-    this.dataService.updateOrganization(organization).subscribe(
-      {
-        next: (v) => console.log("Organization guardada correctamente: ", v),
+    this.dataService.upDateEntity(organization, "/organization").subscribe( {
+      next: (v) => console.log("Guardado correctamente: ", v),
         error: (e) => {
           alert("Response Error (" + e.status + ") en el metodo upDateItem()" + "\n" + e.message);
           console.log("Se quizo modificar sin exito a: " + this.oldData.name);

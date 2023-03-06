@@ -211,6 +211,8 @@ export class Studie {
     organization:Organization;
     degree:Degree;
     person:number;
+
+    constructor() {};
 }
 // ### END BACKEND clone model ####
 

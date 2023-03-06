@@ -25,7 +25,7 @@ export class HardFormComponent implements OnInit, OnDestroy {
   faTimes = faTimes;
 
   form: FormGroup;
-  minAssessment:number = 5;
+  minAssessment:number = 0;
   maxAssessment:number = 100;
 
   // Validacion Admin STATUS
@@ -51,6 +51,7 @@ export class HardFormComponent implements OnInit, OnDestroy {
         this.esAdmin = currentAdmin;
       }
     );
+    this.resetForm()
 
   }
 
@@ -74,7 +75,7 @@ export class HardFormComponent implements OnInit, OnDestroy {
 
   resetForm() {
     this.formData.name = "";
-    this.formData.assessment = 0;
+    this.formData.assessment = 1;
   }
 
   onEnviar(event: Event, ) {

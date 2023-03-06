@@ -46,7 +46,7 @@ export class InterestsComponent implements OnInit, OnDestroy {
     private baseDataService: BaseDataService,
 
   ) {
-    this.resetForm();
+    
   }
 
   ngOnInit(): void {
@@ -62,7 +62,7 @@ export class InterestsComponent implements OnInit, OnDestroy {
         this.myData = currentData.interest;
       }
     );
-
+    this.resetForm();
   }
 
   ngOnDestroy() {

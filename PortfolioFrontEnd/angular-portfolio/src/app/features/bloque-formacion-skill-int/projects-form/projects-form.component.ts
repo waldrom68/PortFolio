@@ -36,14 +36,16 @@ maxSince:string = '2030/05/1';
 
 constructor( 
   private formBuilder: FormBuilder,
-  private dataService: DataService,
+
   private adminService: AdminService,
   ) { 
 
 }
 
   ngOnInit() {
-
+    if (!this.formData.since) {
+      this.formData.since = new Date();
+    }
     this.form = this.formBuilder.group({
       name:[this.formData.name, [Validators.required, Validators.minLength(1) ]],
       resume:[this.formData.resume, [Validators.required, Validators.minLength(2), Validators.maxLength(500) ]],
@@ -56,7 +58,7 @@ constructor(
         this.esAdmin = currentAdmin;
       }
     );
-
+      console.log(this.formData)
   }
 
   ngOnDestroy() {

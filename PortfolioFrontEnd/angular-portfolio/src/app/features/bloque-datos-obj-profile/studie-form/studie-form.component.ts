@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 
 import { faCheck, faMonument, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Observable, Subscription } from 'rxjs';
-import { DataService } from 'src/app/service/data.service';
+import { BaseDataService, DataService } from 'src/app/service/data.service';
 import { AdminService } from 'src/app/service/auth.service';
 
 import { Studie, Organization, Degree, Person, FullPersonDTO } from 'src/app/models';
@@ -41,8 +41,6 @@ export class StudieFormComponent implements OnInit, OnDestroy {
 
   form: FormGroup;
 
-  DATAPORTFOLIO: FullPersonDTO;
-
   showOrgaForm: boolean = false;
   showDegreeForm: boolean = false;
   showPrimaryForm: boolean = true;
@@ -50,7 +48,9 @@ export class StudieFormComponent implements OnInit, OnDestroy {
     // Validacion Admin STATUS
     esAdmin: boolean;
     private AdminServiceSubscription: Subscription | undefined;
-   
+    baseData: FullPersonDTO;
+    private BaseDataServiceSubscription: Subscription | undefined;
+  
 
 
   constructor(
@@ -59,14 +59,22 @@ export class StudieFormComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,  // DeleteModal
 
     private adminService: AdminService,
+    private baseDataService: BaseDataService,
 
   ) {
 
   }
 
   ngOnInit(): void {
-    this.DATAPORTFOLIO = this.dataService.getData();
+   
+    this.BaseDataServiceSubscription = this.baseDataService.currentBaseData.subscribe(
+      currentData => {
+        this.baseData = currentData;
 
+      }
+    );
+    console.log("Estoy pasando por studie-form.componente, formData", this.formData);
+    
     this.form = this.formBuilder.group({
       name: [this.formData.name, [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
       startDate: [formatDate(this.formData.startDate, 'yyyy-MM-dd', 'en'), [Validators.required]],
@@ -80,11 +88,14 @@ export class StudieFormComponent implements OnInit, OnDestroy {
         this.esAdmin = currentAdmin;
       }
     );
-
+    this.resetForm();
+    console.log("Estoy en ngOnInit de studie.component esto está en formData", this.formData);
+    
   }
 
   ngOnDestroy() {
     this.AdminServiceSubscription?.unsubscribe();
+    this.BaseDataServiceSubscription?.unsubscribe();
   }
 
   get Name(): any {
@@ -103,7 +114,10 @@ export class StudieFormComponent implements OnInit, OnDestroy {
     return this.form.get("degree")
   }
 
-
+  resetForm() {
+    // this.formData = { id: 0, name: "", orderdeploy: 0, person: 0 }
+    this.formData = new Studie();
+  }
   togglePrimaryForm() {
     this.showPrimaryForm = !this.showPrimaryForm;
     this.showBtnAction = !this.showBtnAction;
@@ -228,7 +242,7 @@ export class StudieFormComponent implements OnInit, OnDestroy {
         this.formData.organization = this.form.get("organization")?.value;
         this.formData.degree = this.form.get("degree")?.value;
         this.formData.status = true;
-        this.formData.person = this.DATAPORTFOLIO.id
+        this.formData.person = this.baseData.id
         this.onUpdate.emit(this.formData);
 
       } else {

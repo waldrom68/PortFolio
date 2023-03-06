@@ -57,6 +57,7 @@ export class DegreeItemComponent implements OnInit, OnDestroy {
 
     this.AdminServiceSubscription?.unsubscribe();
   }
+
   color:string = 'red';
 
   changeStyle($event: Event){
@@ -80,7 +81,7 @@ export class DegreeItemComponent implements OnInit, OnDestroy {
   }
   
   update(degree: Degree) {
-    this.dataService.updateDegree(degree).subscribe( {
+      this.dataService.upDateEntity(degree, "/degree").subscribe( {
       next: (v) => console.log("Guardado correctamente: ", v),
       error: (e) => {
         alert("Response Error (" + e.status + ") en el metodo upDateItem()" + "\n" + e.message);

@@ -73,9 +73,13 @@ export class IniciarSesionComponent implements OnInit, OnDestroy {
 
         // Aperte de estar logueado, si es un Administrador valido
         if (this.tokenService.isAdmin()) {
+          console.log('%c Prueba 1! %c Prueba 2!',
+          'color: #1c87c9; background: #ccc; font-size: 20px;', 
+          'color: #8ebf42; background: # 666; font - size: 20 px;'
+        );  // salida consola tipo ANSI
 
-          console.log("Logueado correctamente como ADMIN");
 
+          console.log('Logueado correctamente como ADMIN!');
           this.adminService.setCurrentAdmin(true);
 
         }

@@ -38,6 +38,8 @@ form: FormGroup;
   }
 
   ngOnInit(): void {
+    console.log("recibo este formdata", this.formData);
+    
     this.form = this.formBuilder.group({
       name:[this.formData.name, [Validators.required, Validators.minLength(1),Validators.maxLength(100) ]],
       resume:[this.formData.resume, [Validators.maxLength(200) ]],
@@ -81,7 +83,8 @@ form: FormGroup;
     } else {
       
       if (this.form.valid) {
-  
+        console.log("Estoy en onEnviar()");
+        
         this.formData.name = this.form.get("name")?.value.trim();
         this.formData.resume = this.form.get("resume")?.value.trim();
         this.formData.url = this.form.get("url")?.value.trim();

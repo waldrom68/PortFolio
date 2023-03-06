@@ -91,14 +91,13 @@ export class ProjectsComponent implements OnInit, OnDestroy {
 
   delItem(){
     if (this.itemParaBorrar) {
-      this.dataService.delEntity(this.itemParaBorrar, "project").subscribe({
+      this.dataService.delEntity(this.itemParaBorrar, "/project").subscribe({
         next: (v) => {
           console.log("Se ha eliminado exitosamente a: ", this.itemParaBorrar);
           this.myData = this.myData.filter((t) => { return t !== this.itemParaBorrar })
           // Actualizo la informacion en el origen
           this.baseData.interest = this.myData;
           this.itemParaBorrar = null;
-
         },
         error: (e) => {
           alert("Response Error (" + e.status + ")" + "\n" + e.message);
@@ -111,13 +110,13 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   }
   
   addItem(project: Project) {
-    this.dataService.upDateEntity(this.itemParaBorrar, "project").subscribe({
+    this.dataService.addEntity(project, "/project").subscribe({
       next: (v) => {
         console.log("Guardado correctamente: ", v);
         project.id = v.id;
-        v.person = this.baseData.id;
+        project.person = this.baseData.id;
         this.myData.push(v);
-        this.baseData.interest = this.myData;
+        this.baseData.project = this.myData;
       },
       error: (e) => {
         alert("Response Error (" + e.status + ") en el metodo addItem()" + "\n" + e.message);

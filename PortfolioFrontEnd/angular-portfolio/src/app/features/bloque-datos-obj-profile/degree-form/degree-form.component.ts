@@ -24,6 +24,7 @@ export class DegreeFormComponent implements OnInit, OnDestroy {
   faTimes = faTimes;
 
   form: FormGroup;
+  
   // Validacion Admin STATUS
   esAdmin: boolean;
   private AdminServiceSubscription: Subscription | undefined;

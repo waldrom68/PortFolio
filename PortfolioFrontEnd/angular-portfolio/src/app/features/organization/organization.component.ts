@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, Inject, OnDestroy, } from '@angular/core';
-import { DataService } from 'src/app/service/data.service';
+import { BaseDataService, DataService } from 'src/app/service/data.service';
 import { AdminService } from 'src/app/service/auth.service';
 import { faPlusCircle, faTimes } from '@fortawesome/free-solid-svg-icons';
 
@@ -35,31 +35,39 @@ export class OrganizationComponent implements OnInit, OnDestroy {
 
   private itemParaBorrar: any;
 
-  DATAPORTFOLIO: FullPersonDTO;
 
   message: string;
 
   // Validacion Admin STATUS
   esAdmin: boolean;
   private AdminServiceSubscription: Subscription | undefined;
+  baseData: FullPersonDTO;
+  private BaseDataServiceSubscription: Subscription | undefined;
+
 
   constructor(
     private dataService: DataService,
     public matDialog: MatDialog,
 
     private adminService: AdminService,
+    private baseDataService: BaseDataService,
 
     @Inject(MAT_DIALOG_DATA) public data: { message: string, },
     public dialogRef: MatDialogRef<OrganizationComponent>, //OrganizationModal
 
   ) {
     this.message = data ? data.message : "prueba";
+    
   }
 
   ngOnInit(): void {
-    this.DATAPORTFOLIO = this.dataService.getData();
-    this.myData = this.DATAPORTFOLIO.organization
 
+    this.BaseDataServiceSubscription = this.baseDataService.currentBaseData.subscribe(
+      currentData => {
+        this.baseData = currentData;
+        this.myData = currentData.organization;
+      }
+    );
     this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
       currentAdmin => {
         this.esAdmin = currentAdmin;
@@ -71,6 +79,7 @@ export class OrganizationComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.AdminServiceSubscription?.unsubscribe();
+    this.BaseDataServiceSubscription?.unsubscribe();
   }
 
   resetForm() {
@@ -100,13 +109,14 @@ export class OrganizationComponent implements OnInit, OnDestroy {
 
   delItem() {
     if (this.itemParaBorrar) {
-      this.dataService.delOrganization(this.itemParaBorrar).subscribe({
+      this.dataService.delEntity(this.itemParaBorrar, "/organization").subscribe({
         next: (v) => {
           console.log("Se ha eliminado exitosamente a: ", this.itemParaBorrar);
           this.myData = this.myData.filter((t) => { return t !== this.itemParaBorrar })
           // Actualizo la informacion en el origen
-          this.DATAPORTFOLIO.organization = this.myData;
+          this.baseData.organization = this.myData;
           this.itemParaBorrar = null;
+
         },
         error: (e) => {
           alert("Response Error (" + e.status + ")" + "\n" + e.message);
@@ -121,14 +131,13 @@ export class OrganizationComponent implements OnInit, OnDestroy {
 
 
   addItem(organization: Organization) {
-    this.dataService.addOrganization(organization).subscribe({
+    this.dataService.addEntity(organization, "/organization").subscribe({
       next: (v) => {
-        console.log("Organizacion guardada correctamente: ", v);
-        v.person = this.DATAPORTFOLIO.id;
-        this.myData.push(v);
-        // Actualizo la informacion en el origen
-        this.DATAPORTFOLIO.organization = this.myData;
-
+        console.log("Guardado correctamente: ", v);
+        organization.id = v.id;
+        organization.person = this.baseData.id;
+        this.myData.push(organization);
+        this.baseData.organization = this.myData;
       },
       error: (e) => {
         alert("Response Error (" + e.status + ") en el metodo addItem()" + "\n" + e.message);

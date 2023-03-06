@@ -4,7 +4,7 @@ import { AdminService } from 'src/app/service/auth.service';
 
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
-import { Studie, Organization, Degree, FullPersonDTO} from '../../models'
+import { Studie, Organization, Degree, FullPersonDTO } from '../../models'
 
 
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
@@ -23,8 +23,8 @@ export class DatosFormacionComponent implements OnInit, OnDestroy {
 
   faPlusCircle = faPlusCircle;
 
-  showBtnAction: boolean= true;  // flag para mostrar o no los btn's de acciones del usuario
- 
+  showBtnAction: boolean = true;  // flag para mostrar o no los btn's de acciones del usuario
+
   itemParaBorrar: any;
 
   baseData: FullPersonDTO;
@@ -36,18 +36,18 @@ export class DatosFormacionComponent implements OnInit, OnDestroy {
   myOrganizations: Organization[];
   myDegrees: Degree[];
 
-   // Validacion Admin STATUS
-   esAdmin: boolean;
-   private AdminServiceSubscription: Subscription | undefined;
-  
- 
-  constructor( 
+  // Validacion Admin STATUS
+  esAdmin: boolean;
+  private AdminServiceSubscription: Subscription | undefined;
+
+
+  constructor(
     private dataService: DataService,
     public matDialog: MatDialog,
     private baseDataService: BaseDataService,
 
     private adminService: AdminService,
-    ) {  }
+  ) { }
 
 
   ngOnInit(): void {
@@ -70,26 +70,38 @@ export class DatosFormacionComponent implements OnInit, OnDestroy {
 
     this.resetForm()
   }
-  
+
   ngOnDestroy() {
     this.AdminServiceSubscription?.unsubscribe();
     this.BaseDataServiceSubscription?.unsubscribe();
   }
 
   resetForm() {
-    this.formData = new Studie();
+    this.formData = {
+      id: 0,
+      name: "",
+      startDate: new Date(),
+      endDate: new Date(),
+      orderdeploy: 0,
+      status: true,
+      organization: new Organization(),
+      degree: new Degree(),
+      person: this.baseData.id,
+    }
+    console.log("ESTOY AQUI FormData en resetForm de datos-formacion.component", this.formData);
+
   }
 
   toggleForm() {
     this.showForm = !this.showForm;
     this.showBtnAction = !this.showBtnAction;
-  }  
-  
+  }
+
   cancelation() {
     this.toggleForm();
   }
 
-  openModalDelete(studie: Studie){
+  openModalDelete(studie: Studie) {
     // Llamo al modal, si se confirma el borrado.
     // almaceno el item en cuestion en itemParaBorrar
     this.itemParaBorrar = studie;
@@ -110,22 +122,22 @@ export class DatosFormacionComponent implements OnInit, OnDestroy {
         },
         error: (e) => {
           alert("Response Error (" + e.status + ")" + "\n" + e.message);
-          console.log("Se quizo eliminar sin exito a: " , this.itemParaBorrar);
+          console.log("Se quizo eliminar sin exito a: ", this.itemParaBorrar);
         },
-        complete: () => {console.log("Completada la eliminacion de la Formación");}
+        complete: () => { console.log("Completada la eliminacion de la Formación"); }
 
       });
     }
   }
 
-  
+
   addItem(studie: Studie) {
-    this.dataService.addEntity(this.itemParaBorrar, "/studie").subscribe({
+    this.dataService.addEntity(studie, "/studie").subscribe({
       next: (v) => {
         console.log("Guardado correctamente: ", v);
         studie.id = v.id;
-        v.person = this.baseData.id;
-        this.myData.push(v);
+        studie.person = this.baseData.id;
+        this.myData.push(studie);
         this.baseData.studie = this.myData;
       },
       error: (e) => {
@@ -138,7 +150,7 @@ export class DatosFormacionComponent implements OnInit, OnDestroy {
     this.toggleForm();
   }
 
-  openDeleteModal(data:any) {
+  openDeleteModal(data: any) {
     const dialogConfig = new MatDialogConfig();
     // The user can't close the dialog by clicking outside its body
     dialogConfig.disableClose = true;
@@ -167,7 +179,7 @@ export class DatosFormacionComponent implements OnInit, OnDestroy {
     modalDialog.afterClosed().subscribe(
       data => {
         console.log("Dialogo output: ", data);
-        if (data) {this.delItem() }
+        if (data) { this.delItem() }
       }
 
     )

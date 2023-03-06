@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Inject, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { DataService } from 'src/app/service/data.service';
+import { BaseDataService, DataService } from 'src/app/service/data.service';
 import { AdminService } from 'src/app/service/auth.service';
 
 import { faPlusCircle, faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -26,38 +26,42 @@ export class DegreeComponent implements OnInit, OnDestroy {
   faPlusCircle = faPlusCircle;
   faTimes = faTimes;
 
-  @Input() showBtnAction: boolean= true;  // flag para mostrar o no los btn's de acciones del usuario
+  @Input() showBtnAction: boolean = true;  // flag para mostrar o no los btn's de acciones del usuario
   @Output() showBtnActionChange = new EventEmitter<boolean>();
- 
+
   @Input() myDegrees: Degree[];
   @Output() myDegreesChange = new EventEmitter<Degree[]>();
-  
+
   itemParaBorrar: any;
 
-  DATAPORTFOLIO: FullPersonDTO;
- 
   message: string;
 
-    // Validacion Admin STATUS
-    esAdmin: boolean;
-    private AdminServiceSubscription: Subscription | undefined;
-   
+  // Validacion Admin STATUS
+  esAdmin: boolean;
+  private AdminServiceSubscription: Subscription | undefined;
+  baseData: FullPersonDTO;
+  private BaseDataServiceSubscription: Subscription | undefined;
 
   constructor(
     private dataService: DataService,
     public matDialog: MatDialog,
 
-    @Inject(MAT_DIALOG_DATA) public data: { message: string,},
+    private adminService: AdminService,
+    private baseDataService: BaseDataService,
+
+    @Inject(MAT_DIALOG_DATA) public data: { message: string, },
     public dialogRef: MatDialogRef<DegreeComponent>, //DegreeModal
 
-    private adminService: AdminService,
-    
   ) { }
 
   ngOnInit(): void {
-    this.DATAPORTFOLIO = this.dataService.getData();
-    this.myData = this.DATAPORTFOLIO.degree;
-    
+
+    this.BaseDataServiceSubscription = this.baseDataService.currentBaseData.subscribe(
+      currentData => {
+        this.baseData = currentData;
+        this.myData = currentData.degree;
+      }
+    );
     this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
       currentAdmin => {
         this.esAdmin = currentAdmin;
@@ -69,44 +73,47 @@ export class DegreeComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.AdminServiceSubscription?.unsubscribe();
+    this.BaseDataServiceSubscription?.unsubscribe();
   }
 
   resetForm() {
     this.formData = new Degree();
   }
 
-  
+
   toggleForm() {
     // Cierra el formulario de edicion o creacion
     this.showForm = !this.showForm;
     this.showBtnAction = !this.showBtnAction;
-  }  
+  }
 
   cancelation(degree: Degree) {
     this.toggleForm();
   }
 
-  openModalDelete(degree: Degree){
+  openModalDelete(degree: Degree) {
     // Llamo al modal, si se confirma el borrado.
     // almaceno el item en cuestion en itemParaBorrar
     this.itemParaBorrar = degree;
     this.openDeleteModal(degree)
   }
 
-  delItem(){
+  delItem() {
     if (this.itemParaBorrar) {
-      this.dataService.delDegree(this.itemParaBorrar).subscribe( {
+      this.dataService.delEntity(this.itemParaBorrar, "/degree").subscribe({
         next: (v) => {
           console.log("Se ha eliminado exitosamente a: ", this.itemParaBorrar);
           this.myData = this.myData.filter((t) => { return t !== this.itemParaBorrar })
           // Actualizo la informacion en el origen
+          this.baseData.degree = this.myData;
           this.itemParaBorrar = null;
+
         },
         error: (e) => {
           alert("Response Error (" + e.status + ")" + "\n" + e.message);
-          console.log("Se quizo eliminar sin exito a: " , this.itemParaBorrar);
+          console.log("Se quizo eliminar sin exito a: ", this.itemParaBorrar);
         },
-        complete: () => {console.log("Completada la actualizacion de la Formación");}
+        complete: () => { console.log("Completada la actualizacion de la Formación"); }
 
       });
     }
@@ -114,8 +121,14 @@ export class DegreeComponent implements OnInit, OnDestroy {
 
 
   addItem(degree: Degree) {
-    this.dataService.addDegree(degree).subscribe( {
-      next: (v) => {this.myData.push( v )},
+    this.dataService.addEntity(degree, "/degree").subscribe({
+      next: (v) => {
+        console.log("Guardado correctamente: ", v);
+        degree.id = v.id;
+        degree.person = this.baseData.id;
+        this.myData.push(degree);
+        this.baseData.degree = this.myData;
+      },
       error: (e) => {
         alert("Response Error (" + e.status + ") en el metodo addItem()" + "\n" + e.message);
         console.log("Se quizo agregar sin exito a: " + degree.name);
@@ -124,10 +137,10 @@ export class DegreeComponent implements OnInit, OnDestroy {
     });
     this.toggleForm();
     this.resetForm();
-    
+
   }
 
-  openDeleteModal(data:any) {
+  openDeleteModal(data: any) {
     const dialogConfig = new MatDialogConfig();
     // The user can't close the dialog by clicking outside its body
     dialogConfig.disableClose = true;
@@ -156,10 +169,10 @@ export class DegreeComponent implements OnInit, OnDestroy {
     modalDialog.afterClosed().subscribe(
       data => {
         console.log("Dialogo output: ", data);
-        if (data) {this.delItem() }
+        if (data) { this.delItem() }
       }
 
     )
   }
-  
+
 }

@@ -25,7 +25,7 @@ export class SoftFormComponent implements OnInit, OnDestroy {
   faHand = faHand;
 
   form: FormGroup;
-  minAssessment: number = 1;
+  minAssessment: number = 0;
   maxAssessment: number = 5;
 
   // Validacion Admin STATUS
@@ -52,6 +52,7 @@ export class SoftFormComponent implements OnInit, OnDestroy {
         this.esAdmin = currentAdmin;
       }
     );
+    this.resetForm();
 
   }
 
