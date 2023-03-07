@@ -81,7 +81,7 @@
     >
         <!-- Quitar error del DOM : https://stackoverflow.com/questions/54580161/failed-to-set-the-value-property-on-htmlinputelement-in-reactive-form -->
         <div class="form-group">
-            <label for="pathFoto">Foto:</label>
+            <!-- <label for="pathFoto">Foto:</label>
             <input type="file" 
             id="pathFoto"
             name="pathFoto"
@@ -89,9 +89,18 @@
             class="file-select" 
             accept=".jpeg, .jpg, .bmp, .png"
             (change)="upLoadFile($event)"
-            >
+            > -->
             <!-- placeholder="url archivo con la imagen" -->
             <!-- <small class="mensajeError" *ngIf="formImg.hasError('required', 'pathFoto')"> Imagen requerida </small> -->
+            <label class="label-input"
+            (change)="upLoadFile($event)"
+            > Cambiar foto
+                <input type="file"
+                id="pathFoto"
+                name="pathFoto"
+                accept=".jpeg, .jpg, .bmp, .png"
+                >
+            </label> 
         </div>
     </form>
 

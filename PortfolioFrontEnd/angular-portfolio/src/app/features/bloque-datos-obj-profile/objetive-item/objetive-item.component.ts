@@ -34,23 +34,9 @@ export class ObjetiveItemComponent implements OnInit {
   ngOnInit() {
   }
     // Metodos propios de la clase UserDataComponent
-    resetUser() {
-      this.UserData = {
-            "id": 0,
-            "name": "",
-            "lastName": "",
-            "pathFoto": "",
-            "location": "",
-            "profession": "",
-            "profile": "",
-            "objetive": "",
-            "since": new Date(),
-            "email": "",
-            // "username": "",
-            // "password": "",
-            "displaydata": {"id":1,"name":true,"lastName":true,"photo":true,"location":true,"profession":true,"since":true,"theme":"Dark"}
-          }
-    }
+    // resetUser() {
+    //   this.UserData = new Person()
+    // }
 
     toggleForm() {
       // Alterna los estados de mostrar o no mostrar formulario

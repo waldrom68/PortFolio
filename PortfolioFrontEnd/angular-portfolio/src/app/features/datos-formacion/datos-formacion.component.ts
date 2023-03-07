@@ -77,19 +77,8 @@ export class DatosFormacionComponent implements OnInit, OnDestroy {
   }
 
   resetForm() {
-    this.formData = {
-      id: 0,
-      name: "",
-      startDate: new Date(),
-      endDate: new Date(),
-      orderdeploy: 0,
-      status: true,
-      organization: new Organization(),
-      degree: new Degree(),
-      person: this.baseData.id,
-    }
-    console.log("ESTOY AQUI FormData en resetForm de datos-formacion.component", this.formData);
-
+    this.formData = new Studie();
+    console.log()
   }
 
   toggleForm() {

@@ -61,7 +61,7 @@ export class InterestsFormComponent implements OnInit, OnDestroy {
   }
 
   resetForm() {
-    this.formData.name = ""
+    this.formData = new Interest();
   }
   
   onEnviar(event: Event, ) {

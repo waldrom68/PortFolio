@@ -52,7 +52,7 @@ export class SoftFormComponent implements OnInit, OnDestroy {
         this.esAdmin = currentAdmin;
       }
     );
-    this.resetForm();
+    // this.resetForm();
 
   }
 
@@ -75,8 +75,7 @@ export class SoftFormComponent implements OnInit, OnDestroy {
   }
 
   resetForm() {
-    this.formData.name = "";
-    this.formData.assessment = 0;
+    this.formData = new SoftSkill();
   }
 
   onEnviar(event: Event,) {

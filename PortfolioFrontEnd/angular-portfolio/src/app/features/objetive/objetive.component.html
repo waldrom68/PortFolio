@@ -1,9 +1,9 @@
-<div *ngIf="myData">
-    <ng-container *ngIf="myData.objetive.length; else agregarObjetive">
+<div *ngIf="baseData">
+    <ng-container *ngIf="baseData.objetive.length; else agregarObjetive">
         <div class="table-dark text-left container py-2" >
 
             <ng-container *ngIf="!showForm; else mostrarForm">
-                <p *ngFor="let item of myData.objetive.split('\n')">
+                <p *ngFor="let item of baseData.objetive.split('\n')">
                     {{item}}
                 </p>
 
@@ -13,7 +13,7 @@
     </ng-container>
 
     <div class="col-4 icon-group"
-        *ngIf="esAdmin && showBtnAction && myData.objetive.length != 0"
+        *ngIf="esAdmin && showBtnAction && baseData.objetive.length != 0"
     >
         <button class="btn btn-outline-success btn-sm"
         (click)="toggleForm();"
@@ -25,7 +25,7 @@
         </fa-icon>
     </button>
     <button class="btn btn-outline-danger btn-sm"
-            (click)="onDelete(myData)"
+            (click)="onDelete(baseData)"
             ngClass="faCancel"
             >
             <fa-icon 
@@ -48,7 +48,7 @@
         <textarea rows="12" 
             class="input-data"
             name="objetive" 
-            [ngModel]="myData.objetive"
+            [ngModel]="baseData.objetive"
             
             [ngStyle]="{'width':'100%'}"
             formControlName="objetive"

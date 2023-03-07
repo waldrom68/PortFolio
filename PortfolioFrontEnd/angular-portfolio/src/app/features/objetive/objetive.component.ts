@@ -1,13 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Observable, Subscription } from 'rxjs';
-import { DataService } from 'src/app/service/data.service';
+import { BaseDataService, DataService, ToPerson } from 'src/app/service/data.service';
 import { AdminService } from 'src/app/service/auth.service';
 
 import { ModalActionsService } from 'src/app/service/modal-actions.service';
 import { faTrash, faPen, faTimes, faCheck, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
-import {Person} from '../../models'
+import { FullPersonDTO, Person } from '../../models'
 import { MessageBoxComponent } from 'src/app/shared/message-box/message-box.component';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
@@ -17,21 +17,23 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
   templateUrl: './objetive.component.html',
   styleUrls: ['./objetive.component.css']
 })
-export class ObjetiveComponent implements OnInit, OnDestroy {
 
-  myData: Person;
+
+export class ObjetiveComponent implements OnInit, OnDestroy {
 
   form: FormGroup;
   formData: Person;
-  tempValue:string = "";
+  tempValue: string = "";
   showForm: boolean = false;  // flag para mostrar o no el formulario
-  
+
   // flag para mostrar o no los btn's de acciones del usuario
   showBtnAction: boolean = true;
- 
-  itemParaBorrar: Person;
+
+  itemParaBorrar: FullPersonDTO;
   flagBorrado: boolean = false;
   flagBorrado$: Observable<boolean>;
+
+  converPerson: Person;
 
   faTimes = faTimes;
   faPen = faPen;
@@ -42,22 +44,26 @@ export class ObjetiveComponent implements OnInit, OnDestroy {
   // Validacion Admin STATUS
   esAdmin: boolean;
   private AdminServiceSubscription: Subscription | undefined;
- 
 
-  constructor( 
+  baseData: FullPersonDTO;
+  private BaseDataServiceSubscription: Subscription | undefined;
+
+
+  constructor(
     private formBuilder: FormBuilder,
-    private dataService: DataService, 
+    private dataService: DataService,
     public matDialog: MatDialog,
     private modalService: ModalActionsService,
     private adminService: AdminService,
-    ) {
 
-    // Este servicio debiera pasarse a un Observable
-    this.myData = this.dataService.getUSER();
-
-  }
+    private baseDataService: BaseDataService,
+  ) { }
   ngOnInit(): void {
-
+    this.BaseDataServiceSubscription = this.baseDataService.currentBaseData.subscribe(
+      currentData => {
+        this.baseData = currentData;
+      }
+    );
     this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
       currentAdmin => {
         this.esAdmin = currentAdmin;
@@ -66,20 +72,21 @@ export class ObjetiveComponent implements OnInit, OnDestroy {
 
     // subscribo y me entero si se cambia el estatus del flag  
     this.flagBorrado$ = this.modalService.getFlagBorrado$();
-    this.flagBorrado$.subscribe( (tt)=> {
+    this.flagBorrado$.subscribe((tt) => {
       console.log(`Se acepto el borrado del item "${this.itemParaBorrar}"`);
-      this.myData.objetive = ""
-    } )
+      this.baseData.objetive = ""
+    })
 
     this.form = this.formBuilder.group({
-      objetive:["", [Validators.required, Validators.minLength(35) ]],
-      });
+      objetive: ["Es importante ingresar un objetivo", [Validators.required, Validators.minLength(35)]],
+    });
 
-    
+
   }
 
   ngOnDestroy() {
     this.AdminServiceSubscription?.unsubscribe();
+    this.BaseDataServiceSubscription?.unsubscribe();
   }
 
   get Objetive(): any {
@@ -87,7 +94,7 @@ export class ObjetiveComponent implements OnInit, OnDestroy {
   }
 
 
-  onEnviar(event:Event) {
+  onEnviar(event: Event) {
     event.preventDefault;
 
     if (!this.esAdmin) {
@@ -97,16 +104,27 @@ export class ObjetiveComponent implements OnInit, OnDestroy {
     } else {
 
       if (this.form.valid) {
-    
-        this.myData.objetive = this.form.get("objetive")?.value
-        this.dataService.updateGralData(this.myData).subscribe()
+
+        this.baseData.objetive = this.form.get("objetive")?.value.trim();
+        this.converPerson = ToPerson(this.baseData);
+        console.log(this.converPerson);
+
+        this.dataService.upDateEntity(this.converPerson, "/person").subscribe({
+          next: (v) => console.log("Guardado correctamente: ", v),
+          error: (e) => {
+            alert("Response Error (" + e.status + ") en el metodo upDateItem()" + "\n" + e.message);
+            console.log("Se quizo modificar sin exito a: " + this.baseData.name);
+            // Restauro valor original
+            this.formData.objetive = this.tempValue;
+          },
+          complete: () => console.log("Completada la actualizacion del Objetivo")
+        });
         this.toggleForm();  // cierro el formulario
 
       } else {
-        
+
         console.log("no es valido el valor ingresado")
         this.form.markAllAsTouched();
-
       }
     }
   }
@@ -114,29 +132,38 @@ export class ObjetiveComponent implements OnInit, OnDestroy {
   onCancel() {
 
     console.log("Cancele la operacion")
-    this.myData.objetive = this.tempValue;
+    this.baseData.objetive = this.tempValue;
 
     this.toggleForm();  // cierro el formulario
 
   }
 
-  onDelete(user: Person) {
+  onDelete(user: FullPersonDTO) {
     // Este codigo acualiza el array Person para que se actualice en 
     // el frontend, sin necesidad de recargar la pagina
     this.itemParaBorrar = user;
     this.openDeleteModal(user)
+    this.converPerson = ToPerson(this.baseData);
+    console.log(this.converPerson);
 
-    this.dataService.updateGralData(user).subscribe()
-
-    if (this.flagBorrado) {
-      this.myData.objetive = "";
-    }
+    this.dataService.upDateEntity(this.converPerson, "/person").subscribe({
+      next: (v) => {
+        console.log("Guardado correctamente: ", v);
+        this.baseData.objetive = "";
+      },
+      error: (e) => {
+        alert("Response Error (" + e.status + ") en el metodo upDateItem()" + "\n" + e.message);
+        console.log("Se quizo modificar sin exito a: " + this.baseData.name);
+        // Restauro valor original
+        this.formData.objetive = this.tempValue;
+      },
+      complete: () => console.log("Completada la actualizacion del Objetivo")
+    });
 
   }
 
   onAgregarObjetive() {
-    console.log("Quiero agregar")
-    this.myData.objetive = "Sea claro con el objetivo...";
+    this.baseData.objetive = "Sea claro con el objetivo...";
     this.toggleForm();
   }
 
@@ -145,13 +172,12 @@ export class ObjetiveComponent implements OnInit, OnDestroy {
     this.showBtnAction = !this.showBtnAction;
     // PENDIENTE, es medio rebuscado como manejo el tema de mostrar el objetive o restablecer su valor 
     if (this.showForm) {
-      this.tempValue = this.myData.objetive
+      this.tempValue = this.baseData.objetive
     }
   }
 
-  openDeleteModal(data:any) {
+  openDeleteModal(data: any) {
     // Acciones definidas en el modal-action.service.ts
-    const userId = this.myData.name;
     const dialogConfig = new MatDialogConfig();
     // The user can't close the dialog by clicking outside its body
     dialogConfig.disableClose = true;
@@ -161,7 +187,7 @@ export class ObjetiveComponent implements OnInit, OnDestroy {
     dialogConfig.data = {
       // atributos generales del message-box
       name: "delObjetive",
-      title: `Hi ${userId}, está por eliminar el objetivo`,
+      title: `Hola, está por eliminar el objetivo`,
       description: `¿ es correcto ?`,
       // por defecto mostrararía Aceptar
       actionButtonText: "Eliminar",

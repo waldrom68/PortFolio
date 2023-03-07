@@ -17,7 +17,7 @@ import { HardSkill } from 'src/app/models';
 export class HardFormComponent implements OnInit, OnDestroy {
 
   @Input() formData: HardSkill;
-  @Input() title:string;
+  @Input() title: string;
   @Output() onUpdate: EventEmitter<HardSkill> = new EventEmitter()
   @Output() cancel: EventEmitter<HardSkill> = new EventEmitter()
 
@@ -25,25 +25,25 @@ export class HardFormComponent implements OnInit, OnDestroy {
   faTimes = faTimes;
 
   form: FormGroup;
-  minAssessment:number = 0;
-  maxAssessment:number = 100;
+  minAssessment: number = 0;
+  maxAssessment: number = 100;
 
   // Validacion Admin STATUS
   esAdmin: boolean;
   private AdminServiceSubscription: Subscription | undefined;
- 
-  constructor( 
+
+  constructor(
     private formBuilder: FormBuilder,
- 
+
     private adminService: AdminService,
-    ) { 
-    
+  ) {
+
   }
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
-      name:[this.formData.name, [Validators.required, Validators.minLength(1) ]],
-      assessment:[this.formData.assessment, [Validators.required, Validators.max(this.maxAssessment), Validators.min(this.minAssessment) ]],
+      name: [this.formData.name, [Validators.required, Validators.minLength(1)]],
+      assessment: [this.formData.assessment, [Validators.required, Validators.max(this.maxAssessment), Validators.min(this.minAssessment)]],
     });
 
     this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
@@ -51,7 +51,7 @@ export class HardFormComponent implements OnInit, OnDestroy {
         this.esAdmin = currentAdmin;
       }
     );
-    this.resetForm()
+    // this.resetForm()
 
   }
 
@@ -59,9 +59,9 @@ export class HardFormComponent implements OnInit, OnDestroy {
     this.AdminServiceSubscription?.unsubscribe();
   }
 
-  color:string = 'red';
-  
-  changeStyle($event: Event){
+  color: string = 'red';
+
+  changeStyle($event: Event) {
     this.color = $event.type == 'mouseover' ? 'resaltado' : 'normal';
   }
 
@@ -74,11 +74,10 @@ export class HardFormComponent implements OnInit, OnDestroy {
   }
 
   resetForm() {
-    this.formData.name = "";
-    this.formData.assessment = 1;
+    this.formData = new HardSkill();
   }
 
-  onEnviar(event: Event, ) {
+  onEnviar(event: Event,) {
     event.preventDefault;
     // Si deja de estar logueado, no registro lo que haya modificado y cierro form.
     if (!this.esAdmin) {
@@ -86,24 +85,24 @@ export class HardFormComponent implements OnInit, OnDestroy {
       this.cancel.emit();
 
     } else {
-      
+
       if (this.form.valid) {
-  
+
         this.formData.name = this.form.get("name")?.value.trim();
         this.formData.assessment = this.form.get("assessment")?.value;
         this.onUpdate.emit(this.formData);
-  
+
       } else {
-        
+
         console.log("no es valido el valor ingresado")
         this.form.markAllAsTouched();
-  
+
       }
     }
 
   }
 
-  onCancel(event: Event, ) {
+  onCancel(event: Event,) {
     this.cancel.emit();
 
   }

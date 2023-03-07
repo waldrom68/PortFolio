@@ -1,11 +1,11 @@
 
-<div *ngIf="myData">
+<div *ngIf="baseData">
 
-    <ng-container *ngIf="myData.profile.length; else agregarProfile">
+    <ng-container *ngIf="baseData.profile.length; else agregarProfile">
         <div class="table-dark text-left container py-2" >
 
             <ng-container *ngIf="!showForm; else mostrarForm">
-                <p *ngFor="let item of myData.profile.split('\n')">
+                <p *ngFor="let item of baseData.profile.split('\n')">
                     {{item}}
                 </p>
 
@@ -15,7 +15,7 @@
     </ng-container>
 
     <div class="col-4 icon-group"
-        *ngIf="esAdmin && showBtnAction && myData.profile.length != 0"
+        *ngIf="esAdmin && showBtnAction && baseData.profile.length != 0"
     >
         <button class="btn btn-outline-success btn-sm"
         (click)="toggleForm();"
@@ -27,7 +27,7 @@
         </fa-icon>
     </button>
     <button class="btn btn-outline-danger btn-sm"
-            (click)="onDelete(myData)"
+            (click)="onDelete(baseData)"
             ngClass="faCancel"
             >
             <fa-icon 
@@ -50,7 +50,7 @@
         <textarea rows="12" 
             class="input-data"
             name="profile" 
-            [ngModel]="myData.profile"
+            [ngModel]="baseData.profile"
             
             [ngStyle]="{'width':'100%'}"
             formControlName="profile"

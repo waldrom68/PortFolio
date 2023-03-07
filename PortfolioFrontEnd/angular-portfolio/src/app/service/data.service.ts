@@ -42,11 +42,15 @@ export class DataService {
   // Segundo el subject será un elemento del servicio
   private myImage$: Subject<string> = new Subject<string>();
 
+  private currentValue: number;
+  private currentValue$ = new Subject<number>();
 
-
-
+ 
+  
+  
   private flagChangeUser: boolean = false;
   private flagChangeUser$ = new Subject<boolean>();
+  
   // ################################################
   // PENDIENTE DE ELIMINAR ESTA PRACTCA CON OBSERVER
   // ################################################
@@ -139,7 +143,7 @@ export class DataService {
 
   // #######################################
   // Metodos del servicio de flag isLoggin
-  // actualizacion del dato isAdmin
+  // Nueva IMPLEMENTACION
   setIsAdmin(isAdmin: boolean) {
     console.log("isAdmin, en almacen de datos, lo seteo como -> ", isAdmin)
     this.isAdmin = isAdmin;
@@ -238,10 +242,9 @@ export class DataService {
   // #### Nuevo metodo de acceso general a todos los datos del backend
   private gralData: FullPersonDTO;
   private gralData$ = new Subject<FullPersonDTO>();
-
-
-
-
+  
+  
+ 
   getPortFolioData(): Observable<FullPersonDTO> {
     const endPoint = `${this.LOCALHOST_API}/fullperson/view/${this.USERID}`
     const response = this.http.get<FullPersonDTO>(endPoint)
@@ -462,8 +465,39 @@ export class DataService {
     return this.http.delete<any>(url, httpOptions)
   }
 
+
+  setCurrentValue(value:number) {
+    this.currentValue = value;
+    this.currentValue$.next(this.currentValue);
+    console.log("RECIBO", value);
+    
+  }
+
+  getCurrentValue$(): Observable<number> {
+    return this.currentValue$.asObservable();
+  }
+
+
 }
 
+  // PENDIENTE, REVEER ESTA FUNCION, PENSARLA COMO UN METODO
+  // DE LA CLASE FullPersonDTO, o Person.
+  //  JSON tal vez?
+  export function ToPerson(data: FullPersonDTO): any {
+    return Object.assign(new Person(
+      data.id,
+      data.name,
+      data.lastName,
+      data.pathFoto,
+      data.location,
+      data.profession,
+      data.profile,
+      data.objetive,
+      data.since,
+      data.email,
+      data.displaydata
+    ))
+  }
 
 
 // https://rafaelneto.dev/blog/gestionar-estado-angular-rxjs-behaviorsubject-servicios-datos-observables/
@@ -477,6 +511,7 @@ export class BaseDataService {
   constructor() { }
   
   setCurrentBaseData(currentData: FullPersonDTO): void {
+    
     this.baseDataSubject.next(currentData);
   }
 
@@ -500,3 +535,21 @@ export class BaseDataService {
   //   this.BaseDataServiceSubscription?.unsubscribe();
 
   }
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class ObservableService{
+ 
+    createObservableService(): Observable<Date>{  // 1
+   
+        return new Observable(  // 2
+            observer => {   // 3
+                setInterval(() =>
+                    observer.next(new Date())  // 4
+                , 1000);
+            }
+        );
+    }
+  }
+

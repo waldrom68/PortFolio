@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { Cards, PortfolioInit} from '../models';
 
 import { CARDS, PORTFOLIOINIT } from '../mock-data';
@@ -29,6 +29,7 @@ export class UiService {
 
   private flagAction: boolean=true;
   private flagAction$ = new Subject<boolean>();
+
 
   constructor(
     private dataService: DataService,
@@ -91,4 +92,30 @@ export class UiService {
     return this.subjectShowComponent.asObservable();
   }
 
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ProgressValueService {
+  private progressValueSubject: BehaviorSubject<number> = new BehaviorSubject(0);
+  public readonly currentProgressValue: Observable<number> = this.progressValueSubject.asObservable();
+  public prueba: number;
+  constructor() {
+
+    
+    // this.setCurrentProgressValue(0);
+   }
+   get Prueba() {
+    return this.prueba;
+  }
+  
+  PruebaUp(value:number) {
+    console.log("RECIBIENDO ESTO", value);
+    
+    this.prueba = value;
+  }
+  setCurrentProgressValue(currentData: number): void {
+    this.progressValueSubject.next(currentData);
+  }
 }

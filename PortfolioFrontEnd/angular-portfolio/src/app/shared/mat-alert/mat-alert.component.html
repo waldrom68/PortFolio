@@ -1,8 +1,14 @@
-<div class="alert modal-header">
+<!-- <div class="alert modal-header">
     <button type="button" class="close" aria-label="Close"  
     (click)="closeAlert()"
     >
     <span aria-hidden="false">&times;</span>
     </button>
   </div>
-    <p>{{ message }}</p>
+    <p>{{ message }}</p> -->
+
+
+    <mat-dialog-content>
+      <span>{{ message }}</span>
+      <span (click)="closeAlert()">&times;</span>
+    </mat-dialog-content>

@@ -96,7 +96,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
           console.log("Se ha eliminado exitosamente a: ", this.itemParaBorrar);
           this.myData = this.myData.filter((t) => { return t !== this.itemParaBorrar })
           // Actualizo la informacion en el origen
-          this.baseData.interest = this.myData;
+          this.baseData.project = this.myData;
           this.itemParaBorrar = null;
         },
         error: (e) => {

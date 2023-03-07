@@ -73,7 +73,7 @@ export class StudieFormComponent implements OnInit, OnDestroy {
 
       }
     );
-    console.log("Estoy pasando por studie-form.componente, formData", this.formData);
+    console.log("Estoy pasando por studie-form.componente, formData", this.formData, this.formData.MyClass);
     
     this.form = this.formBuilder.group({
       name: [this.formData.name, [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],

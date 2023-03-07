@@ -172,21 +172,21 @@ export class PersonalCardComponent implements OnInit, OnDestroy {
 
   }
 
-  gralDataToPerson(data: FullPersonDTO): Person {
-    return new Person(
-      data.id,
-      data.name,
-      data.lastName,
-      data.pathFoto,
-      data.location,
-      data.profession,
-      data.profile,
-      data.objetive,
-      data.since,
-      data.email,
-      data.displaydata
-    )
-  }
+  // gralDataToPerson(data: FullPersonDTO): Person {
+  //   return new Person(
+  //     data.id,
+  //     data.name,
+  //     data.lastName,
+  //     data.pathFoto,
+  //     data.location,
+  //     data.profession,
+  //     data.profile,
+  //     data.objetive,
+  //     data.since,
+  //     data.email,
+  //     data.displaydata
+  //   )
+  // }
 
   openPersonModal(): void {
     const dialogConfig = new MatDialogConfig();
@@ -207,7 +207,8 @@ export class PersonalCardComponent implements OnInit, OnDestroy {
       if (data.clicked === 'update') {
 
         // Obtengo nuevo objeto para actualizar en la base de datos
-        const person = this.gralDataToPerson(data.newData);
+        // const person = this.gralDataToPerson(data.newData);
+        const person = data.newData.fullPersonToPerson();
 
         // Actualizo los datos via dataService
         this.dataService.upDateEntity(data.newData, "/person").subscribe({

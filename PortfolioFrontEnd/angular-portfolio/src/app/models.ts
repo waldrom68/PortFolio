@@ -10,69 +10,84 @@ export interface User {
 export interface Cards {
     id: number,
     name: string,
-    status:boolean,
+    status: boolean,
     group: number,
     data: any,
-    resume:string,
+    resume: string,
     modelTemplate: string,
-    userId:number,
+    userId: number,
 }
 export interface PortfolioInit {
     id: number,
-    userId:number,
+    userId: number,
     theme: string,
-    status:boolean,
+    status: boolean,
 }
 export interface Data {
-    id:number,
-    name:string,
-    lastname:string,
-    foto:string, 
-    location:string,
-    profession:string[], 
-    profile:string[], 
-    objetive:string[], 
-    since:string,
-    experiencia_resume:string
-    }
+    id: number,
+    name: string,
+    lastname: string,
+    foto: string,
+    location: string,
+    profession: string[],
+    profile: string[],
+    objetive: string[],
+    since: string,
+    experiencia_resume: string
+}
 export interface WorkExperience {
     id: number,
-    start_date:string,
-    end_date:string,
-    organization:string,
-    position:string,
+    start_date: string,
+    end_date: string,
+    organization: string,
+    position: string,
 }
 export interface Formacion {
     id: number,
-    start_date:string,
-    end_date:string,
-    institution:string,
-    degree:string,
+    start_date: string,
+    end_date: string,
+    institution: string,
+    degree: string,
 }
 export interface Intereses {
     id: number,
-    name:string,
+    name: string,
 }
 // Fin interfaces que tiene importadas mockdata
 
 
 // ##### BACKEND clone model ######
-export class Card {
+class Base {
+    get MyClass() {
+        return (this.constructor.name).toLowerCase();
+    }
+}
+export class Card extends Base {
     id: number;
     name: string;
-    resume:string;
+    resume: string;
     grupo: number;
     orderdeploy: number;
     status: boolean;
-}
-export class Degree {
-    id: number;
-    name:string;
-    person:number
 
-    constructor() {}
+    constructor() {
+        super();
+    }
 }
-export class DisplayData {
+export class Degree extends Base {
+    id: number;
+    name: string;
+    person: number;
+
+    constructor() {
+        super();
+        this.id = 0;
+        this.name = "";
+        this.person = 0;
+
+    }
+}
+export class DisplayData extends Base {
     id: number;
     name: boolean;
     lastName: boolean;
@@ -80,144 +95,251 @@ export class DisplayData {
     location: boolean;
     profession: boolean;
     since: boolean;
-    theme:String;
-}
-export class HardSkill {
-    id: number;
-    name:string;
-    assessment:number;
-    orderdeploy: number;
-    person:number;
+    theme: String;
+
+    constructor() {
+        super();
+        this.id = 1;
+        this.name = true;
+        this.lastName = true;
+        this.photo = true;
+        this.location = true;
+        this.profession = true;
+        this.since = true;
+        this.theme = "Dark"
+    }
 }
 
-export class Interest {
+
+export class HardSkill extends Base {
     id: number;
-    name:string;
-    orderdeploy:number;
+    name: string;
+    assessment: number;
+    orderdeploy: number;
+    person: number
+
+
+    constructor() {
+        super();
+        this.id = 0;
+        this.name = "";
+        this.assessment = 0;
+        this.orderdeploy = 0;
+        this.person = 0;
+    }
+
+}
+
+export class Interest extends Base {
+    id: number;
+    name: string;
+    orderdeploy: number;
     person: number;
 
     constructor() {
-
+        super();
+        this.id = 0;
+        this.name = "";
+        this.orderdeploy = 0;
+        this.person = 0;
     }
 }
-export class LaboralCareer {
+export class LaboralCareer extends Base {
     id: number;
-    resume:string;
-    startDate:Date;
-    endDate:Date;
-    orderdeploy:number;
-    status:boolean;
-    organization:Organization;
-    roleposition:RolePosition;
-    person:number
-}
-export class Organization {
-    id: number;
-    name:string;
-    resume:string;
-    url:string;
-    person:number
-    constructor() {}
+    resume: string;
+    startDate: Date;
+    endDate: Date;
+    orderdeploy: number;
+    status: boolean;
+    organization: Organization;
+    roleposition: RolePosition;
+    person: number;
+
+    constructor() {
+        super(),
+            this.id = 0,
+            this.resume = "",
+            this.startDate = new Date(),
+            this.endDate = new Date(),
+            this.orderdeploy = 0,
+            this.status = true,
+            this.organization = new Organization(),
+            this.roleposition = new Degree(),
+            this.person = 1
+    }
 
 }
-export class Person {
-    id:number;
-    name:string;
-    lastName:string;
-    pathFoto:string; 
-    location:string;
-    profession:string;
-    profile:string; 
-    objetive:string; 
-    since:Date;
-    email:string;
+export class Organization extends Base {
+    id: number;
+    name: string;
+    resume: string;
+    url: string;
+    person: number
+    constructor() {
+        super(),
+            this.id = 0,
+            this.name = "",
+            this.resume = "",
+            this.url = "",
+            this.person = 0
+    }
+
+}
+export class Person extends Base {
+    id: number;
+    name: string;
+    lastName: string;
+    pathFoto: string;
+    location: string;
+    profession: string;
+    profile: string;
+    objetive: string;
+    since: Date;
+    email: string;
     displaydata: DisplayData
 
-    constructor(    
-        id:number,
-        name:string,
-        lastName:string,
-        pathFoto:string, 
-        location:string,
-        profession:string,
-        profile:string, 
-        objetive:string, 
-        since:Date,
-        email:string, 
-        displaydata: DisplayData ) {
-            this.id = id;
-            this.name = name;
-            this.lastName = lastName;
-            this.pathFoto = pathFoto;
-            this.location = location;
-            this.profession = profession;
-            this.profile = profile;
-            this.objetive = objetive;
-            this.since = since;
-            this.email = email;
-            this.displaydata = displaydata;
-        }
-    
+    constructor(id:number, name:string, lastName:string, pathFoto:string,
+        location:string, profession:string, profile:string, objetive:string,
+        since:Date, email:string, displayData:DisplayData ) {
+        super();
+        this.id = id ? id : 0;
+        this.name = name ? name : "";
+        this.lastName = lastName ? lastName : "";
+        this.pathFoto = pathFoto ? pathFoto : "";
+        this.location = location ? location : "";
+        this.profession = profession ? profession : "";
+        this.profile = profile ? profile : "";
+        this.objetive = objetive ? objetive : "";
+        this.since = since ? since : new Date();
+        this.email = email ? email : "";
+        this.displaydata = new DisplayData()
+    }
+
+
 }
-export class Phone {
+export class Phone extends Base {
     id: number;
     description: string;
     number: string;
     orderdeploy: number;
+
+    constructor() {
+        super(),
+            this.id = 0,
+            this.description = "",
+            this.number = "",
+            this.orderdeploy = 0
+    }
 }
-export class Project {
+export class Project extends Base {
     id: number;
-    name:string;
-    resume:string;
-    orderdeploy:number;
-    since:Date;
-    url:string;
-    person:number
+    name: string;
+    resume: string;
+    orderdeploy: number;
+    since: Date;
+    url: string;
+    person: number
+
+    constructor() {
+        super(),
+            this.id = 0,
+            this.resume = "",
+            this.since = new Date(),
+            this.url = "",
+            this.orderdeploy = 0
+    }
 }
-export class ProjectMedia {
+export class ProjectMedia extends Base {
     id: number;
-    filePath:string;
-    upLoadDate:Date;
-    orderdeploy:number;
-    project:number;
+    filePath: string;
+    upLoadDate: Date;
+    orderdeploy: number;
+    project: Project;
+
+    constructor() {
+        super(),
+            this.id = 0,
+            this.filePath = "",
+            this.upLoadDate = new Date(),
+            this.orderdeploy = 0,
+            this.project = new Project()
+    }
 }
-export class RolePosition {
+export class RolePosition extends Base {
     id: number;
-    name:string;
-    person:number
+    name: string;
+    person: number
+
+    constructor() {
+        super(),
+            this.id = 0,
+            this.name = "",
+            this.person = 0
+    }
 }
-export class SocialNetwork {
+export class SocialNetwork extends Base {
     id: number;
     name: string;
     pathIcon: string;
     url: string;
     orderdeploy: number;
     person: number;
+
+    constructor() {
+        super(),
+            this.id = 0,
+            this.name = "",
+            this.pathIcon = "",
+            this.orderdeploy = 0,
+            this.person = 0
+    }
 }
-export class SoftSkill {
-    id: number;
-    name:string;
-    assessment:number;
-    orderdeploy:number;
-    person:number;
-}
-export class Studie {
+export class SoftSkill extends Base {
     id: number;
     name: string;
-    startDate:Date;
-    endDate:Date;
-    orderdeploy:number;
-    status:boolean;
-    organization:Organization;
-    degree:Degree;
-    person:number;
+    assessment: number;
+    orderdeploy: number;
+    person: number;
 
-    constructor() {};
+    constructor() {
+        super(),
+            this.id = 0,
+            this.name = "",
+            this.assessment = 0,
+            this.orderdeploy = 0,
+            this.person = 0
+    }
 }
-// ### END BACKEND clone model ####
+export class Studie extends Base {
+    id: number;
+    name: string;
+    startDate: Date;
+    endDate: Date;
+    orderdeploy: number;
+    status: boolean;
+    organization: Organization;
+    degree: Degree;
+    person: number;
 
+
+    constructor() {
+        super();
+        this.id = 0;
+        this.name = "";
+        this.startDate = new Date();
+        this.endDate = new Date();
+        this.orderdeploy = 0;
+        this.status = true;
+        this.organization = new Organization();
+        this.degree = new Degree();
+        this.person = 1;
+    }
+};
+
+// ### END BACKEND clone model ####
 // ######## ENTRY DOOR  ###########
-export class FullPersonDTO{
+
+export class FullPersonDTO {
     id: number;
     name: string;
     lastName: string;
@@ -241,6 +363,8 @@ export class FullPersonDTO{
     phone: Phone[];
     socialnetwork: SocialNetwork[];
     project: Project[];
+
+    constructor() {}
 }
 // ###### END ENTRY DOOR  #########
 
@@ -254,9 +378,9 @@ export class JwtDto {
 export class LoginUsuario {
     nombreUsuario: string;
     password: string;
-    constructor(nombreUsuario: string, password:string) {
-            this.nombreUsuario = nombreUsuario;
-            this.password = password;
+    constructor(nombreUsuario: string, password: string) {
+        this.nombreUsuario = nombreUsuario;
+        this.password = password;
     }
 }
 export class Rol {
@@ -265,12 +389,12 @@ export class Rol {
 
     constructor() {
         [
-        this.id=1,
-        this.rolNombre="ROLE_USER"
+            this.id = 1,
+            this.rolNombre = "ROLE_USER"
         ];
         [
-        this.id=1,
-        this.rolNombre="ROLE_ADMIN"
+            this.id = 1,
+            this.rolNombre = "ROLE_ADMIN"
         ]
     }
 }
@@ -281,4 +405,21 @@ export class Usuario {
     password: string;
     authorities: string[];
 }
+
+function getClass() {
+    throw new Error("Function not implemented.");
+}
 // ### END models for security  ###
+
+// ####### utilityies Class  ##########
+export class Mensaje {
+    type: string;
+    reference: string[];
+
+    constructor() {
+        this.type = "WARN";
+        this.reference = ["Mensaje 1", "Mensaje 2"]
+    };
+
+}
+// ### Fin utilityies Class  ##########

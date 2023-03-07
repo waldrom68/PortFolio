@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { UiService } from 'src/app/service/ui.service';  // para escuchar el botton de mostrar formulario de alta
+import { Component, OnInit } from '@angular/core';
+import { ProgressValueService, UiService } from 'src/app/service/ui.service';  // para escuchar el botton de mostrar formulario de alta
 
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
@@ -11,8 +11,10 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import * as moment from 'moment';
 import { DateAdapter } from '@angular/material/core';
 import { MatDatepickerComponent } from './shared/mat-datepicker/mat-datepicker.component';
-import { DataService } from './service/data.service';
+import { DataService, ObservableService } from './service/data.service';
 import { FullPersonDTO } from './models';
+
+import { Observable, Subscription } from 'rxjs';
 
 
 
@@ -23,7 +25,7 @@ import { FullPersonDTO } from './models';
   styleUrls: ['./app.component.css']
 })
 
-export class AppComponent  {
+export class AppComponent implements OnInit {
 
   title = 'angular-portfolio';
 
@@ -50,6 +52,11 @@ color: string;
 // FIN A LA PRACTICA DE OBSERVER 
 baseData: FullPersonDTO;
 
+valueSubscription: Subscription;
+progreesValueabc: number;
+progreesValueabc$?: Observable<number>;
+currentTime: Date;
+llamado?: number
 
 constructor(
   // Inicializamos los servicios del modulo User
@@ -63,6 +70,9 @@ constructor(
         // PENDIENTE, ESTÁ VINCULADO A LA PRACTICA DE OBSERVER
         private dataService: DataService,
         // FIN A LA PRACTICA DE OBSERVER 
+
+        private observableService: ObservableService,
+
 
   )
     {
@@ -82,10 +92,19 @@ constructor(
         shortdate: new FormControl(this.prueba),
       });
 
+      this.progreesValueabc$ = this.dataService.getCurrentValue$();
+      this.progreesValueabc$.subscribe(valor => this.progreesValueabc = valor);
+      
+      this.observableService.createObservableService()  // 3
+      .subscribe( data => this.currentTime = data );
+
     }
 
 
-  ngOnInit() {
+  ngOnInit(
+
+
+    ) {
       // prueba del datepicker
       this.dateAdapter.setLocale('es');
       this.formDate = this.fb.group({
@@ -94,8 +113,7 @@ constructor(
       });
 
 
-
-  }
+   }
 
   // PENDIENTE, ESTÁ VINCULADO A LA PRACTICA DE OBSERVER
   setcolor() {
@@ -130,6 +148,7 @@ constructor(
     this.uiService.toggleComponent(value)
   }
 
+  // Mensaje de alerta.
   alertDialog() {
     const dialogRef = this.dialog.open(MatAlertComponent, {
       width: '100%', height: 'auto',
@@ -137,6 +156,7 @@ constructor(
         message: 'Aqui va el texto desde donde se llama al modal',
       },
     });
+    dialogRef.afterClosed().subscribe(() => console.log("Cerrando alert-modal"));
   }
 
 
@@ -147,12 +167,13 @@ constructor(
         width: '100%', height: '400px',
         disableClose: true,
         restoreFocus: true,
+        direction: "rtl",
         // Puedo pasar los datos necesarios del formulario aqui, con el diccionario
         // data: {message:string, form: formGroup}, sino lo puedo crear en el .ts 
         // del componente que lo renderiza.
         // +info en https://edupala.com/how-to-implement-angular-material-dialog/
         data: { 
-            message: "Aquí va al string desde donde se abre el modal",
+            message: "Aquí va al string",
             form: this.form,
           },
       });

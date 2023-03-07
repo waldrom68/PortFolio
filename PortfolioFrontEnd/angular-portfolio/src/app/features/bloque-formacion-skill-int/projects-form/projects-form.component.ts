@@ -83,9 +83,7 @@ constructor(
   }
 
   resetForm() {
-    this.formData.name = "";
-    this.formData.resume = "";
-    this.formData.since = new Date();
+    this.formData = new Project();
 
   }
 

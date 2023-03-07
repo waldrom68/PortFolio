@@ -3,6 +3,7 @@ import { getDownloadURL, getStorage, list, ref, Storage, uploadBytes, uploadByte
 import { Subscription } from 'rxjs';
 import { FullPersonDTO } from '../models';
 import { BaseDataService, DataService } from './data.service';
+import { ProgressValueService } from './ui.service';
 
 
 @Injectable({
@@ -21,10 +22,16 @@ export class UploadMediaService {
 
 
 
+
   constructor(
     private storage: Storage,
     private dataService: DataService,
     private baseDataService: BaseDataService,
+
+
+   
+
+
   ) { 
     // this.DATAPORTFOLIO = this.dataService.getData();
     this.BaseDataServiceSubscription = this.baseDataService.currentBaseData.subscribe(
@@ -32,6 +39,7 @@ export class UploadMediaService {
         this.baseData = currentData;
       }
     );
+
 
   }
 
@@ -56,6 +64,9 @@ export class UploadMediaService {
       (snapshot) => {
         // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
         const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+
+        this.dataService.setCurrentValue(progress);
+        
         console.log('Upload is ' + progress + '% done');
         switch (snapshot.state) {
           case 'paused':
@@ -63,6 +74,7 @@ export class UploadMediaService {
             break;
           case 'running':
             console.log('Upload is running');
+
             break;
         }
       },
