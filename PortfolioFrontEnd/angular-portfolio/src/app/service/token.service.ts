@@ -19,7 +19,7 @@ constructor() { }
 
 
 public setToken(token:string): void {
-  console.log("GENERANDO TOKEN")
+  // console.log("GENERANDO TOKEN")
   window.sessionStorage.removeItem(TOKEN_KEY);
   window.sessionStorage.setItem(TOKEN_KEY, token);
 }

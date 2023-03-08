@@ -91,7 +91,7 @@ constructor(
         date: new FormControl(new Date()),
         shortdate: new FormControl(this.prueba),
       });
-
+      this.dataService.setCurrentValue(0);
       this.progreesValueabc$ = this.dataService.getCurrentValue$();
       this.progreesValueabc$.subscribe(valor => this.progreesValueabc = valor);
       

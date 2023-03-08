@@ -117,9 +117,9 @@ export class SoftSkillsComponent implements OnInit, OnDestroy {
 
 
   addItem(softSkill: SoftSkill) {
-    this.dataService.upDateEntity(softSkill, "/softskill").subscribe({
+    this.dataService.addEntity(softSkill, "/softskill").subscribe({
       next: (v) => {
-        console.log("Guardado correctamente: ", v);
+        console.log("Agregado correctamente: ", v);
         softSkill.id = v.id;
         softSkill.person = this.baseData.id;
         this.myData.push(softSkill);

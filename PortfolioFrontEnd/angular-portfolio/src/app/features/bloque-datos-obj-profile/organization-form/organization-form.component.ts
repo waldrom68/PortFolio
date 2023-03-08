@@ -15,35 +15,43 @@ import { Organization } from 'src/app/models';
 })
 export class OrganizationFormComponent implements OnInit {
 
-@Input() formData: Organization;
-@Input() title: string;
-@Output() onUpdate: EventEmitter<Organization> = new EventEmitter()
-@Output() cancel: EventEmitter<Organization> = new EventEmitter()
+  @Input() formData: Organization;
+  @Input() title: string;
+  @Output() onUpdate: EventEmitter<Organization> = new EventEmitter()
+  @Output() cancel: EventEmitter<Organization> = new EventEmitter()
 
-faCheck = faCheck;
-faTimes = faTimes;
+  faCheck = faCheck;
+  faTimes = faTimes;
 
-form: FormGroup;
+  form: FormGroup;
 
   // Validacion Admin STATUS
   esAdmin: boolean;
   private AdminServiceSubscription: Subscription | undefined;
- 
+
   constructor(
     private formBuilder: FormBuilder,
 
     private adminService: AdminService,
   ) {
-    
+
   }
 
   ngOnInit(): void {
-    console.log("recibo este formdata", this.formData);
-    
+    // console.log("recibo este formdata", this.formData);
+    if (!this.formData) {
+      this.resetForm()
+      console.log("ORGANIZATION-FORM.COMPONENT REVISANDO POR AQUI", this.formData);
+
+      // this.resetForm();
+    } else {
+      console.log("ORGANIZATION-FORM.COMPONENT REVISANDO POR AQUI", this.formData);
+
+    }
     this.form = this.formBuilder.group({
-      name:[this.formData.name, [Validators.required, Validators.minLength(1),Validators.maxLength(100) ]],
-      resume:[this.formData.resume, [Validators.maxLength(200) ]],
-      url:[this.formData.url, []]
+      name: [this.formData.name, [Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
+      resume: [this.formData.resume, [Validators.maxLength(200)]],
+      url: [this.formData.url, []]
 
     });
 
@@ -68,12 +76,12 @@ form: FormGroup;
     return this.form.get("url")
   }
 
-  
+
   resetForm() {
     this.formData = new Organization();
   }
 
-  onEnviar(event: Event, ) {
+  onEnviar(event: Event,) {
     event.preventDefault;
     // Si deja de estar logueado, no registro lo que haya modificado y cierro form.
     if (!this.esAdmin) {
@@ -81,25 +89,25 @@ form: FormGroup;
       this.cancel.emit();
 
     } else {
-      
+
       if (this.form.valid) {
         console.log("Estoy en onEnviar()");
-        
+
         this.formData.name = this.form.get("name")?.value.trim();
         this.formData.resume = this.form.get("resume")?.value.trim();
         this.formData.url = this.form.get("url")?.value.trim();
         this.onUpdate.emit(this.formData);
-  
+
       } else {
-        
+
         console.log("no es valido el valor ingresado")
         this.form.markAllAsTouched();
-  
+
       }
     }
 
   }
-  onCancel(event: Event, ) {
+  onCancel(event: Event,) {
     this.cancel.emit();
 
   }

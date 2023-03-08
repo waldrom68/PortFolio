@@ -118,7 +118,7 @@ export class InterestsComponent implements OnInit, OnDestroy {
   addItem(interest: Interest) {
     this.dataService.addEntity(interest, "/interest").subscribe({
       next: (v) => {
-        console.log("Guardado correctamente: ", v);
+        console.log("Agregado correctamente: ", v);
         interest.id = v.id;
         interest.person = this.baseData.id;
         this.myData.push(interest);

@@ -4,7 +4,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { FullPersonDTO, Person } from '../../models'
 
 import { faPen, faTimes, faLocationDot } from '@fortawesome/free-solid-svg-icons';
-import { BaseDataService, DataService } from 'src/app/service/data.service';
+import { BaseDataService, DataService, ToPerson } from 'src/app/service/data.service';
 import { AdminService } from 'src/app/service/auth.service';
 import { Observable, Subscription } from 'rxjs';
 import { PersonalFormComponent } from '../personal-form/personal-form.component';
@@ -50,7 +50,8 @@ export class PersonalCardComponent implements OnInit, OnDestroy {
   private BaseDataServiceSubscription: Subscription | undefined;
 
   profession: string[];
-  
+  converPerson: Person;
+
   constructor(
     private dataService: DataService,
     private adminService: AdminService,
@@ -144,11 +145,29 @@ export class PersonalCardComponent implements OnInit, OnDestroy {
 
     const url: string = this.uploadMediaService.url;
     console.log("Archivo en la nube: ", url)
+    
+    
+    this.converPerson = ToPerson(this.baseData);
+    console.log(this.converPerson);
+    
+    // this.dataService.updateGralData(this.converPerson).subscribe();
+    this.dataService.upDateEntity(this.converPerson, "/person").subscribe( {
+      next: (v) => {
+        console.log("Guardado correctamente: ", v)
+        // this.baseData.pathFoto = url;
+      },
+      error: (e) => {
+        alert("Response Error (" + e.status + ") en el metodo upDateItem()" + "\n" + e.message);
+        console.log("Se quizo cambiar imagen del Perfil sin exito a: " + this.baseData.name);
+        // Restauro valor original
+      },
+      complete: () => console.log("Completada la actualizacion de la imagen del perfil")
+    } );
 
-
-  
-    this.changeImg = true;
-    this.refreshImg()
+  // PENDIENTE, no se si tiene sentido estas acciones
+  this.changeImg = true;
+  this.refreshImg()
+  // FIN PENDIENTE
     console.log("finalizando medodo upLoadFile");
     
 
@@ -166,27 +185,14 @@ export class PersonalCardComponent implements OnInit, OnDestroy {
     // element.scrollIntoView({ behavior: 'smooth' });
       // this.baseData.pathFoto = downloadURL
       console.log(this.baseData)
-      this.baseDataService.setCurrentBaseData( this.baseData );
+      
     }, 6000);
     
 
   }
 
-  // gralDataToPerson(data: FullPersonDTO): Person {
-  //   return new Person(
-  //     data.id,
-  //     data.name,
-  //     data.lastName,
-  //     data.pathFoto,
-  //     data.location,
-  //     data.profession,
-  //     data.profile,
-  //     data.objetive,
-  //     data.since,
-  //     data.email,
-  //     data.displaydata
-  //   )
-  // }
+
+  
 
   openPersonModal(): void {
     const dialogConfig = new MatDialogConfig();
@@ -208,8 +214,8 @@ export class PersonalCardComponent implements OnInit, OnDestroy {
 
         // Obtengo nuevo objeto para actualizar en la base de datos
         // const person = this.gralDataToPerson(data.newData);
-        const person = data.newData.fullPersonToPerson();
-
+        this.converPerson = ToPerson(this.baseData);
+        console.log("Esto devuelve la transformada",this.converPerson);
         // Actualizo los datos via dataService
         this.dataService.upDateEntity(data.newData, "/person").subscribe({
           next: (v) => {
@@ -220,7 +226,7 @@ export class PersonalCardComponent implements OnInit, OnDestroy {
           },
           error: (e) => {
             alert("Response Error (" + e.status + ") en el metodo addItem()" + "\n" + e.message);
-            console.log("Se quizo modificar sin exito a: " + person.lastName);
+            console.log("Se quizo modificar sin exito a: " + this.converPerson.name);
           },
           complete: () => console.log("Completado la actualizacion de datos")
         });

@@ -116,7 +116,7 @@ export class HardSkillsComponent implements OnInit, OnDestroy {
   addItem(hardSkill: HardSkill) {
     this.dataService.addEntity(hardSkill, "/hardskill").subscribe( {
       next: (v) => {
-        console.log("Guardado correctamente: ", v);
+        console.log("Agregado correctamente: ", v);
         hardSkill.id = v.id;
         hardSkill.person = this.baseData.id;
         this.myData.push(hardSkill);
