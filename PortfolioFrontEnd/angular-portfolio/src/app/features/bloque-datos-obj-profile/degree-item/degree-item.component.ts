@@ -6,7 +6,6 @@ import { Observable, Subscription } from 'rxjs';
 import { DataService } from 'src/app/service/data.service';
 import { AdminService } from 'src/app/service/auth.service';
 
-
 @Component({
   selector: 'app-degree-item',
   templateUrl: './degree-item.component.html',
@@ -19,11 +18,11 @@ export class DegreeItemComponent implements OnInit, OnDestroy {
   @Input() showBtnAction!: boolean;
   @Input() formData: Degree;
   @Output() showBtnActionChange = new EventEmitter<boolean>();
- 
+
   @Output() onDelete: EventEmitter<Degree> = new EventEmitter()
   @Output() onUpdate: EventEmitter<Degree> = new EventEmitter()
   @Output() onToggleForm: EventEmitter<Degree> = new EventEmitter()
-  
+
   faTimes = faTimes;
   faPen = faPen;
   faTrash = faTrash;
@@ -32,18 +31,18 @@ export class DegreeItemComponent implements OnInit, OnDestroy {
   // formData: Degree; // Viene por un input
   oldData: Degree;
 
-   // Validacion Admin STATUS
-   esAdmin: boolean;
-   private AdminServiceSubscription: Subscription | undefined;
-  
+  // Validacion Admin STATUS
+  esAdmin: boolean;
+  private AdminServiceSubscription: Subscription | undefined;
+
   constructor(
     private dataService: DataService,
     private adminService: AdminService,
-    ) { }
+  ) { }
 
   ngOnInit(): void {
     // Clono el objeto, uso assign por no tener atributos compuesto por otros objetos
-    this.oldData = Object.assign({} , this.item)
+    this.oldData = Object.assign({}, this.item)
 
     this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
       currentAdmin => {
@@ -58,9 +57,9 @@ export class DegreeItemComponent implements OnInit, OnDestroy {
     this.AdminServiceSubscription?.unsubscribe();
   }
 
-  color:string = 'red';
+  color: string = 'red';
 
-  changeStyle($event: Event){
+  changeStyle($event: Event) {
     this.color = $event.type == 'mouseover' ? 'resaltado' : 'normal';
   }
 
@@ -79,23 +78,23 @@ export class DegreeItemComponent implements OnInit, OnDestroy {
     }
 
   }
-  
+
   update(degree: Degree) {
-      this.dataService.upDateEntity(degree, "/degree").subscribe( {
+    this.dataService.upDateEntity(degree, "/degree").subscribe({
       next: (v) => console.log("Guardado correctamente: ", v),
       error: (e) => {
         alert("Response Error (" + e.status + ") en el metodo upDateItem()" + "\n" + e.message);
         console.log("Se quizo modificar sin exito a: " + this.oldData.name);
         // Restauro valor original
-        this.formData.name = this.oldData.name;
+        this.formData = this.oldData;
       },
       complete: () => console.log("Completada la actualizacion del Nivel de Formacion")
-    } );
-    
+    });
+
     this.toggleForm(degree);  // cierro el formulario
-    
+
   }
-  
+
   cancelation(degree: Degree) {
     this.toggleForm(degree);  // cierro el formulario
   }

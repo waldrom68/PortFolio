@@ -5,9 +5,11 @@
 
   <ng-container *ngIf="!showOrgaForm && !showDegreeForm">
       <h5>Administrar</h5>
+      <!-- abrir admiistrador de niveles de estudio -->
       <button  class="btn btn-primary mx-2" (click)="openOrganization()">
         Organizaciones
       </button>
+      <!-- abrir administrador de organizaciones -->
       <button  class="btn btn-primary mx-2" (click)="openDegree()"
       ngClass = "{btn-warning: (!formData.degree) }"
       >
@@ -146,20 +148,22 @@
 </ng-template>
 
 <ng-container *ngIf="showOrgaForm && !showDegreeForm">
-
-    <app-organization
-      [(showBtnAction)]="showBtnAction"
-      (showBtnActionChange)="showBtnAction"
-
-      [myOrganizations]="myOrganizations"
-      (myOrganizationsChange)="myOrganizations"
-    ></app-organization>
-
+  <!-- No hay niveles de estudio registrados -->
+  <!-- abrir administrador de niveles de estudio -->
+  <app-organization
+  [(showBtnAction)]="showBtnAction"
+  (showBtnActionChange)="showBtnAction"
+  
+  [myOrganizations]="myOrganizations"
+  (myOrganizationsChange)="myOrganizations"
+  ></app-organization>
+  
 </ng-container>
 
 
 <ng-container *ngIf="showDegreeForm && !showOrgaForm">
-
+  <!-- No hay organizaciones registradas -->
+  <!-- abrir administrador de organizaciones -->
     <app-degree
       [(showBtnAction)]="showBtnAction"
       (showBtnActionChange)="showBtnAction"

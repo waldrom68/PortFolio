@@ -58,8 +58,15 @@ export class DatosFormacionComponent implements OnInit, OnDestroy {
     );
 
     this.myData = this.baseData.studie;
-    this.myOrganizations = this.baseData.organization;
-    this.myDegrees = this.baseData.degree;
+    console.log("ASIGNANDO VAORES A myOrganizations Y myDegrees");
+    
+    if (this.baseData.organization) {
+      this.myOrganizations = this.baseData.organization;
+    }
+
+    if (this.baseData.degree) {
+      this.myDegrees = this.baseData.degree;
+    }
 
 
     this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(

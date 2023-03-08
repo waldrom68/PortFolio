@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { getDownloadURL, getStorage, list, ref, Storage, uploadBytes, uploadBytesResumable } from '@angular/fire/storage';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { FullPersonDTO } from '../models';
 import { BaseDataService, DataService } from './data.service';
 import { ProgressValueService } from './ui.service';
@@ -20,7 +20,9 @@ export class UploadMediaService {
   baseData: FullPersonDTO;
   private BaseDataServiceSubscription: Subscription | undefined;
 
-
+  valueSubscription: Subscription;
+  progreesValueabc: number;
+  progreesValueabc$?: Observable<number>;
 
 
   constructor(
@@ -39,6 +41,10 @@ export class UploadMediaService {
         this.baseData = currentData;
       }
     );
+    this.progreesValueabc$ = this.dataService.getCurrentValue$();
+    this.progreesValueabc$.subscribe(valor => this.progreesValueabc = valor);
+    
+    // this.dataService.setCurrentValue(0);
 
 
   }

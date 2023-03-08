@@ -33,7 +33,7 @@ export class AuthService {
 
   public login(loginUsuario: LoginUsuario): Observable<JwtDto> {
 
-    console.log("Intentando loguearse como: ", loginUsuario.nombreUsuario);
+    // console.log("Intentando loguearse como: ", loginUsuario.nombreUsuario);
     return this.httpClient.post<JwtDto>(AUTH_API + 'login', loginUsuario)
   }
 
@@ -58,7 +58,7 @@ export class AdminService {
 
   setCurrentAdmin(currentAdmin: boolean): void {
     this.currentAdminSubject.next(currentAdmin);
-    console.log("Verificando rol del usuario");
+    // console.log("Verificando rol del usuario");
     
   }
 }

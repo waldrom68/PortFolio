@@ -1,84 +1,70 @@
 <h5 class="m-auto p-1">{{title}}</h5>
 
-  <form class="form-inline m-1"
-  style="display: flex ; width:90% "
-  [formGroup]="form"
-
-  #myForm="ngForm"
-  (ngSubmit)="onEnviar($event); myForm.resetForm()"
->
+<form class="form-inline m-1" style="display: flex ; width:90% " [formGroup]="form" #myForm="ngForm"
+  (ngSubmit)="onEnviar($event); myForm.resetForm()">
   <div class="row" style="display: contents ; width:100% ">
 
     <label class="form-label" for="name">Nombre:</label>
-    <textarea type="text" 
-        id="name"
-        formControlName="name" 
-        name="name" 
-        class="form-control"
-        placeholder="Nombre"
-        [ngStyle]="{'width':'100%'}"
-        formControlName="name"
-        [ngClass] = "{error: (Nombre.invalid && Nombre.touched)}"
-    ></textarea>
-    
-    <small class="mensajeError" *ngIf="form.hasError('required', 'name')"> Dato requerido </small>
-    <small class="mensajeError" *ngIf="form.hasError('minlength', 'name')"> Mínimo {{ Nombre.errors.minlength.requiredLength }} caracteres</small>
-    <small class="mensajeError" *ngIf="form.hasError('maxlength', 'name')"> Máximo {{ Nombre.errors.maxlength.requiredLength }} caracteres</small>
-</div>
-<div class="row" style="display: contents ; width:100% ">
-    <label class="form-label" for="resume">Resumen:</label>
-    <textarea type="text" 
-      id="resume"
-      formControlName="resume" 
-      name="resume" 
-      class="form-control"
-      placeholder="Resumen"
-      [ngStyle]="{'width':'100%'}"
-      formControlName="resume"
-      [ngClass] = "{error: (Resume.invalid && Resume.touched)}"
-    ></textarea>
-    <small class="mensajeError" *ngIf="form.hasError('required', 'resume')"> Dato requerido </small>
-    <small class="mensajeError" *ngIf="form.hasError('minlength', 'resume')"> Mínimo {{ Resume.errors.minlength.requiredLength }} caracteres</small>
-    <small class="mensajeError" *ngIf="form.hasError('maxlength', 'resume')"> Máximo {{ Resume.errors.maxlength.requiredLength }} caracteres</small>
+    <textarea type="text" id="name" formControlName="name" name="name" class="form-control" placeholder="Nombre"
+      [ngStyle]="{'width':'100%'}" formControlName="name"
+      [ngClass]="{error: (Nombre.invalid && Nombre.touched)}"></textarea>
 
-</div>
-<div class="row" style="display: contents ; width:100% ">
+    <small class="mensajeError" *ngIf="form.hasError('required', 'name')"> Dato requerido </small>
+    <small class="mensajeError" *ngIf="form.hasError('minlength', 'name')"> Mínimo {{
+      Nombre.errors.minlength.requiredLength }} caracteres</small>
+    <small class="mensajeError" *ngIf="form.hasError('maxlength', 'name')"> Máximo {{
+      Nombre.errors.maxlength.requiredLength }} caracteres</small>
+  </div>
+  <div class="row" style="display: contents ; width:100% ">
+    <label class="form-label" for="resume">Resumen:</label>
+    <textarea type="text" id="resume" formControlName="resume" name="resume" class="form-control" placeholder="Resumen"
+      [ngStyle]="{'width':'100%'}" formControlName="resume"
+      [ngClass]="{error: (Resume.invalid && Resume.touched)}"></textarea>
+    <small class="mensajeError" *ngIf="form.hasError('required', 'resume')"> Dato requerido </small>
+    <small class="mensajeError" *ngIf="form.hasError('minlength', 'resume')"> Mínimo {{
+      Resume.errors.minlength.requiredLength }} caracteres</small>
+    <small class="mensajeError" *ngIf="form.hasError('maxlength', 'resume')"> Máximo {{
+      Resume.errors.maxlength.requiredLength }} caracteres</small>
+
+  </div>
+  <div class="row" style="display: contents ; width:100% ">
     <label class="form-label" for="since">Realizado en:</label>
-    <input type="date"
-      id="since"
-      name="since"
-      class="form-control"
-      [ngStyle]="{'width':'100%'}"
-      formControlName="since"
-      [ngClass] = "{error: (Since.invalid && Since.touched)}"
-    >
+    <input type="date" id="since" name="since" class="form-control" [ngStyle]="{'width':'100%'}" formControlName="since"
+      [ngClass]="{error: (Since.invalid && Since.touched)}">
     <small class="mensajeError" *ngIf="form.hasError('required', 'since')"> Dato requerido </small>
-    
+
     <!-- Datepicker ANGULAR
       https://stackoverflow.com/questions/55721254/how-to-change-mat-datepicker-date-format-to-dd-mm-yyyy-in-simplest-way -->
-    
-</div>
 
-    <div class="icon-group row m-2">
+  </div>
+  <div class="row" style="display: contents ; width:100% ">
+    <label class="form-label" for="url">URL:</label>
+    <textarea type="text" id="url" formControlName="url" name="url" class="form-control" placeholder="Link del proyecto"
+      [ngStyle]="{'width':'100%'}" formControlName="url"
+      [ngClass]="{error: (Url.invalid && Url.touched)}"></textarea>
+    <small class="mensajeError" *ngIf="form.hasError('required', 'url')"> Dato requerido </small>
+    <small class="mensajeError" *ngIf="form.hasError('minlength', 'url')"> Mínimo {{
+      Url.errors.minlength.requiredLength }} caracteres</small>
+    <small class="mensajeError" *ngIf="form.hasError('maxlength', 'url')"> Máximo {{
+      Url.errors.maxlength.requiredLength }} caracteres</small>
 
-      <button type="submit" class="btn btn-outline-success btn-sm"
-      ngClass="faConfirm fa-ico"
-      [disabled]="!form.valid"
-      >
-        <fa-icon  [icon]="faCheck"> </fa-icon>
-      </button>
+  </div>
 
-      <button class="btn btn-outline-danger btn-sm"
-      (click)="onCancel($event); myForm.resetForm()"
-      ngClass="faCancel fa-ico"
-      >
-        <fa-icon [icon]="faTimes"> </fa-icon>
-      </button>
+  <div class="icon-group row m-2">
 
-    </div>
+    <button type="submit" class="btn btn-outline-success btn-sm" ngClass="faConfirm fa-ico" [disabled]="!form.valid">
+      <fa-icon [icon]="faCheck"> </fa-icon>
+    </button>
 
+    <button class="btn btn-outline-danger btn-sm" (click)="onCancel($event); myForm.resetForm()"
+      ngClass="faCancel fa-ico">
+      <fa-icon [icon]="faTimes"> </fa-icon>
+    </button>
+
+  </div>
 
 
 
 
-  </form>
+
+</form>

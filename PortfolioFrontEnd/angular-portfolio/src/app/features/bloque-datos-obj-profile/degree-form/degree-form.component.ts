@@ -37,6 +37,16 @@ export class DegreeFormComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    if (!this.formData) {
+      this.resetForm()
+      console.log("DEGREE-FORM.COMPONENT REVISANDO POR AQUI", this.formData);
+      
+      // this.resetForm();
+    } else {
+      console.log("DEGREE-FORM.COMPONENT REVISANDO POR AQUI", this.formData);
+      
+    }
+
     this.form = this.formBuilder.group({
       name:[this.formData.name, [Validators.required, Validators.minLength(1),Validators.maxLength(45) ]],
 

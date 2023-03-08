@@ -19,6 +19,7 @@ import { formatDate } from '@angular/common';
   styleUrls: ['./career-form.component.css']
 })
 export class CareerFormComponent implements OnInit, OnDestroy {
+
   @Input() formData: LaboralCareer;
 
   @Input() title: string;
@@ -39,10 +40,6 @@ export class CareerFormComponent implements OnInit, OnDestroy {
 
   form: FormGroup;
 
-  baseData: FullPersonDTO;
-  private BaseDataServiceSubscription: Subscription | undefined;
-
-
   showOrgaForm: boolean = false;
   showRoleForm: boolean = false;
   showPrimaryForm: boolean = true;
@@ -50,15 +47,18 @@ export class CareerFormComponent implements OnInit, OnDestroy {
   // Validacion Admin STATUS
   esAdmin: boolean;
   private AdminServiceSubscription: Subscription | undefined;
+  baseData: FullPersonDTO;
+  private BaseDataServiceSubscription: Subscription | undefined;
+
+
 
   constructor(
     private dataService: DataService,
-    private baseDataService: BaseDataService,
     private formBuilder: FormBuilder,
-
     private dialog: MatDialog,  // DeleteModal
-
+        
     private adminService: AdminService,
+    private baseDataService: BaseDataService,
 
   ) {
 
@@ -70,6 +70,7 @@ export class CareerFormComponent implements OnInit, OnDestroy {
         this.baseData = currentData;
       }
     );
+    console.log("Estoy pasando por career-form.componente, formData", this.formData, this.formData.MyClass);
 
     this.form = this.formBuilder.group({
       resume: [this.formData.resume, [Validators.required, Validators.minLength(2), Validators.maxLength(500)]],
@@ -84,6 +85,9 @@ export class CareerFormComponent implements OnInit, OnDestroy {
         this.esAdmin = currentAdmin;
       }
     );
+
+    // this.resetForm();
+    console.log("Estoy en ngOnInit de career-form.component esto está en formData", this.formData);
 
   }
 
@@ -108,7 +112,10 @@ export class CareerFormComponent implements OnInit, OnDestroy {
     return this.form.get("roleposition")
   }
 
-
+  resetForm() {
+    // this.formData = { id: 0, name: "", orderdeploy: 0, person: 0 }
+    this.formData = new LaboralCareer();
+  }
   togglePrimaryForm() {
     this.showPrimaryForm = !this.showPrimaryForm;
     this.showBtnAction = !this.showBtnAction;
@@ -117,23 +124,20 @@ export class CareerFormComponent implements OnInit, OnDestroy {
 
   toggleOrgaForm() {
     this.togglePrimaryForm();
-
-    // this.dataService.getOrganization().subscribe(organization =>
-    //   [this.myOrganizations = organization]
-    // );
-    this.formData.organization = this.myOrganizations[0]
-    this.showOrgaForm = !this.showOrgaForm;
-
+    if (this.myOrganizations) {
+      this.formData.organization = this.myOrganizations[0];
+    }
+    this.openOrganization();
+    // this.showOrgaForm = !this.showOrgaForm;
   }
 
   toggleRoleForm() {
     this.togglePrimaryForm();
-
-    // this.dataService.getRolePosition().subscribe(role =>
-    //   [this.myRolePositions = role]
-    //   );
-    this.formData.roleposition = this.myRolePositions[0]
-    this.showRoleForm = !this.showRoleForm;
+    if (this.myRolePositions) {
+      this.formData.roleposition = this.myRolePositions[0]
+    }
+    // this.showRoleForm = !this.showRoleForm;
+    this.openRolePosition();
   }
 
   openOrganization() {
@@ -166,7 +170,7 @@ export class CareerFormComponent implements OnInit, OnDestroy {
         })
       }
       console.log("Esto estaba en afterClosed()")
-
+      // this.togglePrimaryForm();
     })
 
   }
@@ -188,10 +192,9 @@ export class CareerFormComponent implements OnInit, OnDestroy {
     modalDialog.afterClosed().subscribe(result => {
       console.log("Esto esta en afterClosed()")
       console.log("Hubo cambios?", this.myRolePositions != result)
-
+      console.log(this.myRolePositions, result);
+      
       if (this.myRolePositions != result) {
-        this.myRolePositions = result;
-        this.myRolePositionsChange.emit(this.myRolePositions);
         // Debo verificar si se editó la organizacion que tenia registrado en el formulario
         this.myRolePositions.forEach(
           (e) => {
@@ -200,10 +203,13 @@ export class CareerFormComponent implements OnInit, OnDestroy {
               this.formData.roleposition = e;
             }
           })
+
+        this.myRolePositions = result;
+        this.myRolePositionsChange.emit(this.myRolePositions);
       }
       console.log("Esto estaba en afterClosed()")
     })
-
+    // this.togglePrimaryForm();
   }
   compararOrganizacion(myOrganization1: Organization, myOrganization2: Organization) {
     if (myOrganization1 == null || myOrganization2 == null) {
@@ -229,7 +235,7 @@ export class CareerFormComponent implements OnInit, OnDestroy {
 
     } else {
 
-      console.log(this.form.valid, this.form.get("organizacion")?.value)
+      console.log(this.form.valid, this.form.get("organizacion"))
       if (this.form.valid) {
 
         this.formData.resume = this.form.get("resume")?.value.trim();

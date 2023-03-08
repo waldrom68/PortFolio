@@ -49,8 +49,8 @@ constructor(
     this.form = this.formBuilder.group({
       name:[this.formData.name, [Validators.required, Validators.minLength(1) ]],
       resume:[this.formData.resume, [Validators.required, Validators.minLength(2), Validators.maxLength(500) ]],
-      since:[formatDate(this.formData.since, 'yyyy-MM-dd', 'en'), [Validators.required ]]
-
+      since:[formatDate(this.formData.since, 'yyyy-MM-dd', 'en'), [Validators.required ]],
+      url:[this.formData.url ]
     });
 
     this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
@@ -81,6 +81,9 @@ constructor(
   get Since(): any {
     return this.form.get("since")
   }
+  get Url(): any {
+    return this.form.get("url");
+  }
 
   resetForm() {
     this.formData = new Project();
@@ -96,12 +99,12 @@ constructor(
 
     } else {
       
-      console.log(this.form.valid, this.form.get("since")?.value)
       if (this.form.valid) {
   
         this.formData.name = this.form.get("name")?.value.trim();
         this.formData.resume = this.form.get("resume")?.value.trim();
         this.formData.since = this.form.get("since")?.value;
+        this.formData.url = this.form.get("url")?.value.trim();
         this.onUpdate.emit(this.formData);
   
       } else {

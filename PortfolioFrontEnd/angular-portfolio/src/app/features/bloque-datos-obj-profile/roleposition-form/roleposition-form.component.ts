@@ -32,11 +32,20 @@ form: FormGroup;
   constructor(
     private formBuilder: FormBuilder,
     private dataService: DataService,
-
     private adminService: AdminService,
+
   ) { }
 
   ngOnInit(): void {
+    if (!this.formData) {
+      this.resetForm()
+      console.log("ROLEPOSITION-FORM.COMPONENT REVISANDO POR AQUI", this.formData);
+      
+      // this.resetForm();
+    } else {
+      console.log("ROLEPOSITION-FORM.COMPONENT REVISANDO POR AQUI", this.formData);
+      
+    }
     this.form = this.formBuilder.group({
       name:[this.formData.name, [Validators.required, Validators.minLength(3),Validators.maxLength(100) ]],
 
@@ -51,9 +60,15 @@ form: FormGroup;
   }
 
   ngOnDestroy() {
+
     this.AdminServiceSubscription?.unsubscribe();
   }
 
+  color:string = 'red';
+  
+  changeStyle($event: Event){
+    this.color = $event.type == 'mouseover' ? 'resaltado' : 'normal';
+  }
   get Nombre(): any {
     return this.form.get("name")
   }
@@ -61,6 +76,7 @@ form: FormGroup;
   resetForm() {
     this.formData = new RolePosition();
   }
+
 
   onEnviar(event: Event, ) {
     event.preventDefault;

@@ -61,7 +61,7 @@ export class DataService {
   // Tercero el metodo que realizará la emision del evento de 
   // actualizacion del dato color
   setColor(color: string) {
-    console.log("en setcolor() recibo ", color)
+    // console.log("en setcolor() recibo ", color)
     this.color = color;
     this.color$.next(this.color);
   }
@@ -469,7 +469,7 @@ export class DataService {
   setCurrentValue(value:number) {
     this.currentValue = value;
     this.currentValue$.next(this.currentValue);
-    console.log("RECIBO", value);
+    // console.log("RECIBO", value);
     
   }
 
@@ -552,4 +552,6 @@ export class BaseDataService {
         );
     }
   }
+
+  
 

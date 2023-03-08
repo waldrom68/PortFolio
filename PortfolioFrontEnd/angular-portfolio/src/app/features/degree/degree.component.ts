@@ -1,15 +1,12 @@
 import { Component, EventEmitter, Inject, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { BaseDataService, DataService } from 'src/app/service/data.service';
 import { AdminService } from 'src/app/service/auth.service';
-
 import { faPlusCircle, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 import { Degree, FullPersonDTO } from '../../models'
 
 import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MessageBoxComponent } from '../../shared/message-box/message-box.component';
-import { ModalActionsService } from 'src/app/service/modal-actions.service';
-
 import { Observable, Subscription } from 'rxjs';
 
 @Component({
@@ -68,7 +65,15 @@ export class DegreeComponent implements OnInit, OnDestroy {
       }
     );
 
-    this.resetForm();
+    // if (!this.myData) {
+    //   this.resetForm()
+    //   console.log("DEGREE.COMPONENT REVISANDO POR AQUI", this.formData);
+
+    //   // this.resetForm();
+    // } else {
+    //   console.log("DEGREE.COMPONENT REVISANDO POR AQUI", this.formData);
+
+    // }
   }
 
   ngOnDestroy() {
@@ -107,7 +112,6 @@ export class DegreeComponent implements OnInit, OnDestroy {
           // Actualizo la informacion en el origen
           this.baseData.degree = this.myData;
           this.itemParaBorrar = null;
-
         },
         error: (e) => {
           alert("Response Error (" + e.status + ")" + "\n" + e.message);
@@ -174,5 +178,4 @@ export class DegreeComponent implements OnInit, OnDestroy {
 
     )
   }
-
 }

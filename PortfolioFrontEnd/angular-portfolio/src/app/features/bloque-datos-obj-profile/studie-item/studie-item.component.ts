@@ -3,7 +3,7 @@ import { Studie, Organization, Person, Degree, FullPersonDTO } from '../../../mo
 
 import { faPen, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Observable, Subscription } from 'rxjs';
-import { DataService } from 'src/app/service/data.service';
+import { BaseDataService, DataService } from 'src/app/service/data.service';
 import { AdminService } from 'src/app/service/auth.service';
 
 @Component({
@@ -32,7 +32,9 @@ export class StudieItemComponent implements OnInit, OnDestroy {
 
   showForm: boolean = false;
 
-  DATAPORTFOLIO: FullPersonDTO;
+  baseData: FullPersonDTO;
+  private BaseDataServiceSubscription: Subscription | undefined;
+
 
  // Validacion Admin STATUS
  esAdmin: boolean;
@@ -42,22 +44,24 @@ export class StudieItemComponent implements OnInit, OnDestroy {
   constructor(
     private dataService: DataService,
     private adminService: AdminService,
+    private baseDataService: BaseDataService, 
     ) { }
 
-  ngOnInit(): void {
-    this.DATAPORTFOLIO = this.dataService.getData();
-
+  ngOnInit() {
+    this.BaseDataServiceSubscription = this.baseDataService.currentBaseData.subscribe(
+      currentData => {
+        this.baseData = currentData;
+      }
+    );
     this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
       currentAdmin => {
         this.esAdmin = currentAdmin;
       }
     );
-
   }
-  
-
   ngOnDestroy() {
     this.AdminServiceSubscription?.unsubscribe();
+    this.BaseDataServiceSubscription?.unsubscribe();
   }
 
   color:string = 'red';
@@ -77,7 +81,6 @@ export class StudieItemComponent implements OnInit, OnDestroy {
   delete(studie: Studie) {
     // llamo al metodo del padre via emit()
     if (this.esAdmin) {
-      console.log(studie)
       this.onDelete.emit(studie);
     }
 
@@ -87,7 +90,8 @@ export class StudieItemComponent implements OnInit, OnDestroy {
   }
 
   update(studie: Studie) {
-    // PENDIENTE CAPTURAR EXCEPCIONES
+    console.log("Recibo esta modificacion", studie);
+    
     this.dataService.updateStudie(studie).subscribe( {
       next: (v) => {
         console.log("Guardado correctamente: ", v);
@@ -97,6 +101,8 @@ export class StudieItemComponent implements OnInit, OnDestroy {
       error: (e) => {
         alert("Response Error (" + e.status + ") en el metodo addItem()" + "\n" + e.message);
         console.log("Se quizo agregar sin exito a: " + studie.name);
+        // AQUI RESTAURO oldData
+        studie = this.item;
       },
       complete: () => console.log("Completado el alta en Formación")
     });
