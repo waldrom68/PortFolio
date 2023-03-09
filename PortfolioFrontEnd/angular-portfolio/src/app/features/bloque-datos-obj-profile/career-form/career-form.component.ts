@@ -25,7 +25,7 @@ export class CareerFormComponent implements OnInit, OnDestroy {
   @Input() title: string;
   @Input() myOrganizations: Organization[];
   @Output() myOrganizationChange: EventEmitter<Organization[]> = new EventEmitter;
-
+  
   @Input() myRolePositions: RolePosition[];
   @Output() myRolePositionsChange: EventEmitter<RolePosition[]> = new EventEmitter;
 
@@ -51,7 +51,6 @@ export class CareerFormComponent implements OnInit, OnDestroy {
   private BaseDataServiceSubscription: Subscription | undefined;
 
 
-
   constructor(
     private dataService: DataService,
     private formBuilder: FormBuilder,
@@ -71,21 +70,25 @@ export class CareerFormComponent implements OnInit, OnDestroy {
       }
     );
     console.log("Estoy pasando por career-form.componente, formData", this.formData, this.formData.MyClass);
-
+    // console.log(this.formData.organization);
     this.form = this.formBuilder.group({
       resume: [this.formData.resume, [Validators.required, Validators.minLength(2), Validators.maxLength(500)]],
       startDate: [formatDate(this.formData.startDate, 'yyyy-MM-dd', 'en'), [Validators.required]],
       endDate: [formatDate(this.formData.endDate, 'yyyy-MM-dd', 'en'), []],
-      organization: [this.formData.organization, [Validators.required]],
-      roleposition: [this.formData.roleposition, [Validators.required]],
+      
+      organization: [this.formData.organization.id ? 
+        this.formData.organization : '', [Validators.required]],
+      
+      roleposition: [ this.formData.organization.id ? 
+        this.formData.organization : '', [Validators.required]],
+        
     });
 
     this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
       currentAdmin => {
         this.esAdmin = currentAdmin;
       }
-    );
-
+      );
     // this.resetForm();
     console.log("Estoy en ngOnInit de career-form.component esto está en formData", this.formData);
 
@@ -123,7 +126,7 @@ export class CareerFormComponent implements OnInit, OnDestroy {
   }
 
   toggleOrgaForm() {
-    this.togglePrimaryForm();
+    // this.togglePrimaryForm();
     if (this.myOrganizations) {
       this.formData.organization = this.myOrganizations[0];
     }
@@ -132,7 +135,7 @@ export class CareerFormComponent implements OnInit, OnDestroy {
   }
 
   toggleRoleForm() {
-    this.togglePrimaryForm();
+    // this.togglePrimaryForm();
     if (this.myRolePositions) {
       this.formData.roleposition = this.myRolePositions[0]
     }
@@ -155,7 +158,7 @@ export class CareerFormComponent implements OnInit, OnDestroy {
     const modalDialog = this.dialog.open(OrganizationComponent, dialogConfig);
 
     modalDialog.afterClosed().subscribe(result => {
-      console.log("Esto esta en afterClosed()")
+      console.log("Al cerrar el modal de Organization, recibo esto:", result)
       console.log("Hubo cambios?", this.myOrganizations != result)
 
       if (this.myOrganizations != result) {

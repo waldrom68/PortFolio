@@ -32,6 +32,7 @@ export class OrganizationComponent implements OnInit, OnDestroy {
 
   @Input() myOrganizations: Organization[];
   @Output() myOrganizationsChange = new EventEmitter<Organization[]>();
+  @Output() mySelectChange = new EventEmitter<Organization[]>();
 
   private itemParaBorrar: any;
 

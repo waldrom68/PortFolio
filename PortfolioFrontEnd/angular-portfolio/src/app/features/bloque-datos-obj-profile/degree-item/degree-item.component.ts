@@ -86,7 +86,7 @@ export class DegreeItemComponent implements OnInit, OnDestroy {
         alert("Response Error (" + e.status + ") en el metodo upDateItem()" + "\n" + e.message);
         console.log("Se quizo modificar sin exito a: " + this.oldData.name);
         // Restauro valor original
-        this.formData = this.oldData;
+        degree = this.oldData;
       },
       complete: () => console.log("Completada la actualizacion del Nivel de Formacion")
     });

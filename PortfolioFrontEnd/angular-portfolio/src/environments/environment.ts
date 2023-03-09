@@ -16,7 +16,7 @@ export const environment = {
   production: false,
   // apiURL: "https://yoprogramo-waldrom68.koyeb.app",
   apiURL: "http://localhost:10000",
-  idPersona:1,
+  idPersona:4,
 };
 
 console.log("Modo development")

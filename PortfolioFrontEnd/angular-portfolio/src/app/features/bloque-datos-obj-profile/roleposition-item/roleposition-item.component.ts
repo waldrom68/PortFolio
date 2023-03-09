@@ -87,7 +87,7 @@ export class RolepositionItemComponent implements OnInit, OnDestroy {
         alert("Response Error (" + e.status + ") en el metodo addItem()" + "\n" + e.message);
         console.log("Se quizo modificar sin exito a: " + this.oldData.name);
         // Restauro valor original
-        this.formData = this.oldData;
+        rolePosition = this.oldData;
       },
       complete: () => console.log("Completado la actualizacion en Roles y Posiciones")
     });

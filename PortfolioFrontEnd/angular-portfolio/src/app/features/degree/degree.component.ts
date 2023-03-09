@@ -136,6 +136,7 @@ export class DegreeComponent implements OnInit, OnDestroy {
       error: (e) => {
         alert("Response Error (" + e.status + ") en el metodo addItem()" + "\n" + e.message);
         console.log("Se quizo agregar sin exito a: " + degree.name);
+        this.myData = this.baseData.degree;
       },
       complete: () => console.log("Completado el alta de la Formación")
     });

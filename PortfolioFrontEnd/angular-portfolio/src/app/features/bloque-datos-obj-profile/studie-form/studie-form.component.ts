@@ -123,7 +123,7 @@ export class StudieFormComponent implements OnInit, OnDestroy {
   }
 
   toggleOrgaForm() {
-    this.togglePrimaryForm();
+    // this.togglePrimaryForm();
     if (this.myOrganizations) {
       this.formData.organization = this.myOrganizations[0];
     }
@@ -132,7 +132,7 @@ export class StudieFormComponent implements OnInit, OnDestroy {
   }
 
   toggleDegreeForm() {
-    this.togglePrimaryForm();
+    // this.togglePrimaryForm();
     if (this.myDegrees) {
       this.formData.degree = this.myDegrees[0];
     }

@@ -120,17 +120,17 @@ export class DatosTrayectoriaComponent implements OnInit, OnDestroy {
 
 
   addItem(laboralCareer: LaboralCareer) {
-    this.dataService.addEntity(this.itemParaBorrar, "/laboralcareer").subscribe({
+    this.dataService.addEntity(laboralCareer, "/laboralcareer").subscribe({
       next: (v) => {
         console.log("Guardado correctamente: ", v);
         laboralCareer.id = v.id;
-        v.person = this.baseData.id;
+        laboralCareer.person = this.baseData.id;
         this.myData.push(v);
         this.baseData.laboralCareer = this.myData;
       },
       error: (e) => {
         alert("Response Error (" + e.status + ") en el metodo addItem()" + "\n" + e.message);
-        console.log("Se quizo agregar sin exito a: " + laboralCareer.resume);
+        console.log("Se quizo agregar sin exito a: " + laboralCareer.resume, "si realmente tiene la misma descripcion, procure hacer un pequeño cambio");
       },
       complete: () => console.log("Completado el alta en Trayectoria Laboral")
     });

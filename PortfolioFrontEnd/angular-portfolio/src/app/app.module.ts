@@ -27,12 +27,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 
 import { MessageBoxComponent } from './shared/message-box/message-box.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { interceptorProvider } from './service/interceptor.service';
 import { MatDatepickerComponent } from './shared/mat-datepicker/mat-datepicker.component';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideStorage,getStorage } from '@angular/fire/storage';
+import { DatosTrayectoriaComponent } from './features/datos-trayectoria/datos-trayectoria.component';
+import { ObjetiveComponent } from './features/objetive/objetive.component';
 
 
 
@@ -68,7 +70,7 @@ const appRouters: Routes = [
     MatButtonModule,
     MatDialogModule,
     MatToolbarModule,
-  
+    FormsModule,
     ReactiveFormsModule,
         provideFirebaseApp(() => initializeApp(environment.firebase)),
         provideStorage(() => getStorage()),
