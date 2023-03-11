@@ -58,9 +58,17 @@ export class DatosTrayectoriaComponent implements OnInit, OnDestroy {
     );
 
     this.myData = this.baseData.laboralCareer;
-    this.myOrganizations = this.baseData.organization;
-    this.myRolePositions = this.baseData.roleposition;
+    // this.myOrganizations = this.baseData.organization;
+    // this.myRolePositions = this.baseData.roleposition;
+    if (this.baseData.organization) {
+        this.myOrganizations = this.baseData.organization;
+      }
 
+      if (this.baseData.roleposition) {
+        this.myRolePositions = this.baseData.roleposition;
+      }
+
+      
     this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
       currentAdmin => {
         this.esAdmin = currentAdmin;
@@ -136,6 +144,7 @@ export class DatosTrayectoriaComponent implements OnInit, OnDestroy {
     });
     this.resetForm();
     this.toggleForm();
+
   }
 
   openDeleteModal(data:any) {

@@ -51,7 +51,6 @@ export class StudieFormComponent implements OnInit, OnDestroy {
   private BaseDataServiceSubscription: Subscription | undefined;
 
 
-
   constructor(
     private dataService: DataService,
     private formBuilder: FormBuilder,
@@ -71,14 +70,19 @@ export class StudieFormComponent implements OnInit, OnDestroy {
         this.baseData = currentData;
       }
     );
-    console.log("Estoy pasando por studie-form.componente, formData", this.formData, this.formData.MyClass);
+
 
     this.form = this.formBuilder.group({
       name: [this.formData.name, [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
       startDate: [formatDate(this.formData.startDate, 'yyyy-MM-dd', 'en'), [Validators.required]],
       endDate: [formatDate(this.formData.endDate, 'yyyy-MM-dd', 'en'), []],
-      organization: [this.formData.organization, [Validators.required]],
-      degree: [this.formData.degree, [Validators.required]],
+
+      organization: [this.formData.organization.id ?
+        this.formData.organization : '', [Validators.required]],
+
+      degree: [this.formData.degree.id ?
+        this.formData.degree : '', [Validators.required]],
+
     });
 
     this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
@@ -116,29 +120,30 @@ export class StudieFormComponent implements OnInit, OnDestroy {
     // this.formData = { id: 0, name: "", orderdeploy: 0, person: 0 }
     this.formData = new Studie();
   }
-  togglePrimaryForm() {
-    this.showPrimaryForm = !this.showPrimaryForm;
-    this.showBtnAction = !this.showBtnAction;
-    this.showBtnActionChange.emit(this.showBtnAction);
-  }
 
-  toggleOrgaForm() {
-    // this.togglePrimaryForm();
-    if (this.myOrganizations) {
-      this.formData.organization = this.myOrganizations[0];
-    }
-    // this.showOrgaForm = !this.showOrgaForm;
-    this.openOrganization();
-  }
+  // togglePrimaryForm() {
+  //   this.showPrimaryForm = !this.showPrimaryForm;
+  //   this.showBtnAction = !this.showBtnAction;
+  //   this.showBtnActionChange.emit(this.showBtnAction);
+  // }
 
-  toggleDegreeForm() {
-    // this.togglePrimaryForm();
-    if (this.myDegrees) {
-      this.formData.degree = this.myDegrees[0];
-    }
-    // this.showDegreeForm = !this.showDegreeForm;
-    this.openDegree();
-  }
+  // toggleOrgaForm() {
+  //   // this.togglePrimaryForm();
+  //   if (this.myOrganizations) {
+  //     this.formData.organization = this.myOrganizations[0];
+  //   }
+  //   // this.showOrgaForm = !this.showOrgaForm;
+  //   this.openOrganization();
+  // }
+
+  // toggleDegreeForm() {
+  //   // this.togglePrimaryForm();
+  //   if (this.myDegrees) {
+  //     this.formData.degree = this.myDegrees[0];
+  //   }
+  //   // this.showDegreeForm = !this.showDegreeForm;
+  //   this.openDegree();
+  // }
 
   openOrganization() {
     const dialogConfig = new MatDialogConfig();
@@ -155,21 +160,23 @@ export class StudieFormComponent implements OnInit, OnDestroy {
     const modalDialog = this.dialog.open(OrganizationComponent, dialogConfig);
 
     modalDialog.afterClosed().subscribe(result => {
-      console.log("Esto esta en afterClosed()")
+      // console.log("Esto esta en afterClosed()")
       console.log("Hubo cambios?", this.myOrganizations != result)
 
       if (this.myOrganizations != result) {
-        this.myOrganizations = result;
-        this.myOrganizationChange.emit(this.myOrganizations);
+        // PENDIENTE, CREO QUE AQUI HAY UN PROBLEMA
         // Debo verificar si se editó la organizacion que tenia registrado en el formulario
         this.myOrganizations.forEach((e) => {
-            if (e.id == this.formData.organization.id) {
-              console.log("se actualizo -> ", e)
-              this.formData.organization = e;
-            }
-          })
+          if (e.id == this.formData.organization.id) {
+            console.log("se actualizo -> ", e)
+            this.formData.organization = e;
+          }
+        })
+
+        this.myOrganizations = result;
+        this.myOrganizationChange.emit(this.myOrganizations);
       }
-      console.log("Esto estaba en afterClosed()")
+      // console.log("Esto estaba en afterClosed()")
     })
     // this.togglePrimaryForm();
   }
@@ -189,12 +196,13 @@ export class StudieFormComponent implements OnInit, OnDestroy {
     const modalDialog = this.dialog.open(DegreeComponent, dialogConfig);
 
     modalDialog.afterClosed().subscribe(result => {
-      console.log("Esto esta en afterClosed()")
+      // console.log("Esto esta en afterClosed()")
       console.log("Hubo cambios?", this.myDegrees != result)
       console.log(this.myDegrees, result);
-      
+
       if (this.myDegrees != result) {
 
+        // PENDIENTE, CREO QUE AQUI HAY UN PROBLEMA
         // Debo verificar si se editó la organizacion que tenia registrado en el formulario
         this.myDegrees.forEach(
           (e) => {
@@ -206,7 +214,7 @@ export class StudieFormComponent implements OnInit, OnDestroy {
         this.myDegrees = result;
         this.myDegreesChange.emit(this.myDegrees);
       }
-      console.log("Esto estaba en afterClosed(), studie-form", this.formData)
+      // console.log("Esto estaba en afterClosed(), studie-form", this.formData)
     })
     // this.togglePrimaryForm();
   }
@@ -235,7 +243,7 @@ export class StudieFormComponent implements OnInit, OnDestroy {
 
     } else {
 
-      console.log(this.form.valid, this.form.get("organizacion")?.value)
+      // console.log(this.form.valid, this.form.get("organizacion")?.value)
       if (this.form.valid) {
 
         this.formData.name = this.form.get("name")?.value.trim();
@@ -261,8 +269,8 @@ export class StudieFormComponent implements OnInit, OnDestroy {
     this.cancel.emit();
   }
 
-  ngAfterContentChecked() {
-    console.log("se termino ngAfterContentChecked")
-  }
+  // ngAfterContentChecked() {
+  //   console.log("se termino ngAfterContentChecked")
+  // }
 
 }

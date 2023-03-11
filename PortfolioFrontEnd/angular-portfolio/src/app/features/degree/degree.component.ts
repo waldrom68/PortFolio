@@ -65,15 +65,6 @@ export class DegreeComponent implements OnInit, OnDestroy {
       }
     );
 
-    // if (!this.myData) {
-    //   this.resetForm()
-    //   console.log("DEGREE.COMPONENT REVISANDO POR AQUI", this.formData);
-
-    //   // this.resetForm();
-    // } else {
-    //   console.log("DEGREE.COMPONENT REVISANDO POR AQUI", this.formData);
-
-    // }
   }
 
   ngOnDestroy() {
@@ -117,7 +108,7 @@ export class DegreeComponent implements OnInit, OnDestroy {
           alert("Response Error (" + e.status + ")" + "\n" + e.message);
           console.log("Se quizo eliminar sin exito a: ", this.itemParaBorrar);
         },
-        complete: () => { console.log("Completada la actualizacion de la Formación"); }
+        complete: () => { console.log("Completada la actualizacion del nive lde Formación"); }
 
       });
     }

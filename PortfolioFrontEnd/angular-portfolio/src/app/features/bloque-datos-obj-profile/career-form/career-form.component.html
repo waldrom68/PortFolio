@@ -1,78 +1,97 @@
-<!-- [ngClass]="{'user':myOrganizations, 'user2': !myOrganizations, 'admin':user.admin}" -->
-<ng-container class="m-auto p-1">
+<!-- Controles para el acceso a entidades Organizacion y RolePosition -->
+<div class="container-fluid m-auto p-1" id="accederModal">
   <h5>Administrar</h5>
+  <div class="row" style="width:100% ">
+    <ng-container class="col-6">
 
-  <ng-container id="accederModal">
-    <button (click)="openOrganization()" [ngClass]="{'btn btn-primary btn-sm mx-2': myOrganizations.length, 
-                  'btn btn-warning btn-sm mx-2': !myOrganizations.length}">
-      <ng-container *ngIf="!myOrganizations.length; else verOrga">
-        Crear organizaciones
-      </ng-container>
-      <ng-template #verOrga>Ver organizaciones</ng-template>
-    </button>
+      <button (click)="openOrganization()" [ngClass]="{'btn btn-primary btn-sm m-2': myOrganizations.length, 
+                      'btn btn-warning btn-sm m-2': !myOrganizations.length}">
+        <ng-container *ngIf="!myOrganizations.length; else verOrga">
+          Crear organizaciones
+        </ng-container>
+        <ng-template #verOrga>Ver organizaciones</ng-template>
+      </button>
 
-    <button (click)="openRolePosition()" [ngClass]="{'btn btn-primary btn-sm mx-2': myRolePositions.length, 
-                  'btn btn-warning btn-sm mx-2': !myRolePositions.length}">
-      <ng-container *ngIf="!myRolePositions.length; else verRole">
-        Crear posiciones
-      </ng-container>
-      <ng-template #verRole>Ver posiciones</ng-template>
-    </button>
-  </ng-container>
+    </ng-container>
 
-</ng-container>
+    <ng-container class="col-6">
 
-<form class="form-inline m-1" style="display: flex ; width:100% " *ngIf="showPrimaryForm" [formGroup]="form"
-  #myForm="ngForm" (ngSubmit)="onEnviar($event); myForm.resetForm()">
-  <div class="row" style="display: contents ; width:100% ">
-    <div class="col">
+      <button (click)="openRolePosition()" [ngClass]="{'btn btn-primary btn-sm m-2': myRolePositions.length, 
+                      'btn btn-warning btn-sm m-2': !myRolePositions.length}">
+        <ng-container *ngIf="!myRolePositions.length; else verRole">
+          Crear posiciones
+        </ng-container>
+        <ng-template #verRole>Ver posiciones</ng-template>
+      </button>
 
+    </ng-container>
+  </div>
+</div>
+<!-- FIN de Controles para el acceso a modales de Organizacion y RolePosition -->
+
+
+<form class="form-inline p-1" *ngIf="showPrimaryForm" [formGroup]="form" #myForm="ngForm"
+  (ngSubmit)="onEnviar($event); myForm.resetForm()">
+
+
+  <!-- SELECT ORGANIZACION Y POSICION -->
+  <div class="row" style="width:100% ">
+
+    <!-- ORGANIZACION -->
+    <div class="col-6">
       <label class="form-label" for="organization">Organizacion</label>
-      <!-- [(ngModel)]="seleccionadoOrga" -->
+
       <select class="form-control" formControlName="organization" name="organization"
         [compareWith]="compararOrganizacion" [ngClass]="{error: (Organization.invalid && Organization.touched)}">
-        <option *ngIf="!myRolePositions.length" value="">Agregue organizaciones</option>
+        <option *ngIf="!myOrganizations.length" value="" disabled selected>Debe dar de alta</option>
         <option *ngFor="let elemento of myOrganizations" [ngValue]="elemento">
-          {{elemento.name}}</option>
+          {{elemento.name}} </option>
+
       </select>
+
       <div class="row error-container mx-auto">
         <ng-container *ngIf="(Organization.invalid && Organization.touched); else isOk">
-          <!-- <ng-template class="col-12"> -->
-          <small class="mensajeError mx-auto" *ngIf="form.hasError('required', 'organization')"> Falta seleccion
+
+          <small class="mensajeError mx-1" *ngIf="form.hasError('required', 'organization')"> Falta seleccionar
           </small>
-          <!-- </ng-template> -->
+
         </ng-container>
         <ng-template #isOk>
         </ng-template>
       </div>
+    </div> <!-- FIN ORGANIZACION -->
 
+    <!-- POSICION -->
+    <div class="col-6">
       <!-- https://www.arquitecturajava.com/angular-select-y-todas-sus-opciones/ -->
-
       <label class="form-label" for="roleposition">Posicion/Rol</label>
-      <!-- [(ngModel)]="seleccionadoRole" -->
+
       <select class="form-control" formControlName="roleposition" name="roleposition" [compareWith]="compararRoles"
-        [ngClass]="{'error': (Roleposition?.invalid && Roleposition.touched)}">
-        <option *ngIf="!myRolePositions.length" value="">Agregue Posiciones</option>
+        [ngClass]="{'error': (Roleposition?.invalid && Roleposition?.touched)}">
+        <option *ngIf="!myRolePositions.length" value="" disabled selected>Debe dar de alta</option>
         <option *ngFor="let elemento of myRolePositions" [ngValue]="elemento">
           {{elemento.name}}</option>
 
       </select>
 
       <div class="row error-container mx-auto">
-        <ng-container *ngIf="(Roleposition.invalid && Roleposition.touched); else isOk">
-          <!-- <ng-template class="col-12"> -->
-          <small class="mensajeError mx-auto" *ngIf="form.hasError('required', 'roleposition')"> Falta seleccion
+        <ng-container *ngIf="(Roleposition?.invalid && Roleposition?.touched); else isOk">
+
+          <small class="mensajeError mx-1" *ngIf="form.hasError('required', 'roleposition')"> Falta seleccionar
           </small>
-          <!-- </ng-template> -->
+
+
         </ng-container>
         <ng-template #isOk>
         </ng-template>
       </div>
-    </div>
+    </div> <!--FIN POSICION  -->
 
-  </div>
+  </div>  <!--FIN ORGANIZACION Y POSICION-->
 
-  <div class="row" style="display: contents ; width:100% ">
+
+  <!-- RESUMEN -->
+  <div class="row" style="width:100% ">
     <div class="col-12">
       <label class="form-label" for="resume">Resumen:</label>
       <textarea type="text" rows="6" id="resume" formControlName="resume" name="resume" class="form-control"
@@ -82,51 +101,65 @@
 
     <div class="row error-container mx-auto">
       <ng-container *ngIf="(Resume.invalid && Resume.touched); else isOk">
-        <!-- <ng-template class="col-12"> -->
-        <small class="mensajeError mx-auto" *ngIf="form.hasError('required', 'resume')"> Dato requerido </small>
-        <small class="mensajeError mx-auto" *ngIf="form.hasError('minlength', 'resume')"> Minimo {{
+
+        <small class="mensajeError mx-1" *ngIf="form.hasError('required', 'resume')"> Dato requerido </small>
+        <small class="mensajeError mx-1" *ngIf="form.hasError('minlength', 'resume')"> Minimo {{
           Resume.errors.minlength.requiredLength }} caracteres</small>
-        <small class="mensajeError mx-auto" *ngIf="form.hasError('maxlength', 'resume')"> Máximo {{
+        <small class="mensajeError mx-1" *ngIf="form.hasError('maxlength', 'resume')"> Máximo {{
           Resume.errors.maxlength.requiredLength }} caracteres</small>
-        <!-- </ng-template> -->
+
       </ng-container>
       <ng-template #isOk>
       </ng-template>
     </div>
 
-  </div>
+  </div> <!-- FIN RESUMEN -->
 
-  <div class="row m-auto">
-    <div class="col-6">
+  <!-- FECHA DE INICIO Y FECHA FIN -->
+  <div class="row" style="width:100% ">
+    <div class="col-6 m-auto">
       <label class="form-label" for="startDate">Desde:</label>
-      <input type="date" id="startDate" name="startDate" class="form-control" [ngStyle]="{'width':'100%'}"
-        formControlName="startDate" [ngClass]="{error: (StartDate.invalid && StartDate.touched)}">
-      <small class="mensajeError" *ngIf="form.hasError('required', 'startDate')"> Dato requerido </small>
+      <input type="date" id="startDate" name="startDate" class="form-control" formControlName="startDate"
+        [ngClass]="{error: (StartDate.invalid && StartDate.touched)}">
+
+
+      <div class="row error-container mx-auto">
+        <ng-container *ngIf="(StartDate.invalid && StartDate.touched); else isOk">
+
+          <small class="mensajeError mx-1" *ngIf="form.hasError('required', 'startDate')"> Dato requerido
+          </small>
+
+        </ng-container>
+        <ng-template #isOk>
+        </ng-template>
+      </div>
+
     </div>
-    
-    <div class="col-6">
+    <div class="col-6 m-auto">
       <label class="form-label" for="endDate">Hasta:</label>
-      <input type="date" id="endDate" name="endDate" class="form-control"
-       [ngStyle]="{'width':'100%'}"
-       formControlName="endDate" [ngClass]="{error: (EndDate.invalid && EndDate.touched)}"
-
-       [min]="StartDate.value"
-       >
+      <input type="date" id="endDate" name="endDate" class="form-control" formControlName="endDate"
+        [ngClass]="{error: (EndDate.invalid && EndDate.touched)}" [min]="StartDate.value">
     </div>
-  </div>
+  </div> <!-- FIN FECHAS INICIO Y FIN -->
 
-  <div class="row icon-group m-2">
+  <!-- </div> -->
 
-    <button type="submit" class="btn btn-outline-success btn-sm" ngClass="faConfirm fa-ico" [disabled]="!form.valid">
-      <fa-icon [icon]="faCheck"> </fa-icon>
-    </button>
-
-    <button class="btn btn-outline-danger btn-sm" (click)="onCancel($event); myForm.resetForm()"
-      ngClass="faCancel fa-ico">
-      <fa-icon [icon]="faTimes"> </fa-icon>
-    </button>
-
-  </div>
+  <!-- SUBMIN O CANCELAR Y CERRAR -->
+  <div class="row icon-group my-2 mx-auto">
+    <div class="col-6">
+      <button type="submit" class="btn btn-outline-success btn-sm" ngClass="faConfirm fa-ico" [disabled]="!form.valid">
+        <fa-icon [icon]="faCheck"> </fa-icon>
+      </button>
+    </div>
+    <div class="col-6">
+      <button class="btn btn-outline-danger btn-sm" (click)="onCancel($event); myForm.resetForm()"
+        ngClass="faCancel fa-ico">
+        <fa-icon [icon]="faTimes"> </fa-icon>
+      </button>
+    </div>
+  </div> <!-- FIN SUBMIN CANCEL -->
 
 
 </form>
+Organizacion es valido? {{Organization.valid}} <br>
+Role position es valido? {{Roleposition.valid}}

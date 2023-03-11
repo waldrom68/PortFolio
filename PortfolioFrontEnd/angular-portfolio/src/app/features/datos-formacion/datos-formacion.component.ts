@@ -58,9 +58,7 @@ export class DatosFormacionComponent implements OnInit, OnDestroy {
     );
 
     this.myData = this.baseData.studie;
-    console.log("ASIGNANDO VAORES A myOrganizations Y myDegrees");
-    
-    if (this.baseData.organization) {
+   if (this.baseData.organization) {
       this.myOrganizations = this.baseData.organization;
     }
 
@@ -85,8 +83,8 @@ export class DatosFormacionComponent implements OnInit, OnDestroy {
 
   resetForm() {
     this.formData = new Studie();
-    console.log()
   }
+
 
   toggleForm() {
     this.showForm = !this.showForm;
@@ -157,7 +155,7 @@ export class DatosFormacionComponent implements OnInit, OnDestroy {
       // atributos generales del message-box
       name: "eliminar",
       title: `Hola, está por eliminar uno de los estudios`,
-      description: `¿Estás seguro de eliminar "${data.organization.name} (${data.name})" ?`,
+      description: `¿Estás seguro de eliminar "${data.organization.name} (${data.degree.name})" ?`,
       // por defecto mostrararía Aceptar
       actionButtonText: "Eliminar",
       // por defecto mostraría Cancelar

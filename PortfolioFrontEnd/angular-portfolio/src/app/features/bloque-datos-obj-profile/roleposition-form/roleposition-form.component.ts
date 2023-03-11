@@ -89,7 +89,7 @@ form: FormGroup;
       
       if (this.form.valid) {
   
-        this.formData.name = this.form.get("name")?.value;
+        this.formData.name = this.form.get("name")?.value.trim();
         this.onUpdate.emit(this.formData);
   
       } else {

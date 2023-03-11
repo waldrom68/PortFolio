@@ -1,65 +1,47 @@
+<div class="table-dark text-left container-fluid">
+    <ng-container *ngIf="!showForm">
 
-<ng-container *ngIf="!showForm">
+        <div class="row" [ngClass]="color" (mouseover)="changeStyle($event)" (mouseout)="changeStyle($event)">
+            <div class="container-fluid" style="display: inline-block;">
+                <div *ngIf="item.endDate; else elseBlock">
+                    <h6>({{item.startDate | date:'MM-yyyy' }} hasta {{item.endDate | date:'MM-yyyy'}})
+                        {{item.organization.name}} -{{item.roleposition.name}}-</h6>
+                </div>
+                <ng-template #elseBlock>
+                    <h6>(Desde {{item.startDate | date:'MM-yyyy' }}) {{item.organization.name}}
+                        -{{item.roleposition.name}}-</h6>
+                </ng-template>
 
-    <div class="container row py-2"
-    [ngClass]="color" (mouseover)="changeStyle($event)" (mouseout)="changeStyle($event)"
-    >
-        <div class="container-fluid" style="display: inline-block;"
-        >
-            <div *ngIf="item.endDate; else elseBlock">
-                <h6>({{item.startDate | date:'MM-yyyy' }} hasta {{item.endDate | date:'MM-yyyy'}})  {{item.organization.name}} -{{item.roleposition.name}}-</h6>
+                <p *ngFor="let elemento of item.resume.split('\n')">
+                    <small class="px-5"><i> {{elemento}}</i></small>
+                </p>
             </div>
-            <ng-template #elseBlock>
-                <h6>(Desde {{item.startDate | date:'MM-yyyy' }}) {{item.organization.name}} -{{item.roleposition.name}}-</h6>
-            </ng-template>
+            <!-- ##################### -->
 
-            <p *ngFor="let elemento of item.resume.split('\n')"> 
-                <small class="px-5"><i> {{elemento}}</i></small>
-            </p>
+            <div class="icon-group" *ngIf="esAdmin && showBtnAction">
+                <button class="btn btn-outline-success btn-sm" (click)="toggleForm(item);" ngClass="faConfirm fa-ico">
+                    <fa-icon [icon]="faPen">
+                    </fa-icon>
+                </button>
+                <button class="btn btn-outline-danger btn-sm" (click)="delete(item)" ngClass="faCancel">
+                    <fa-icon [icon]="faTrash">
+                    </fa-icon>
+                </button>
+            </div>
         </div>
-        <!-- ##################### -->
 
-        <div class="icon-group"
-            *ngIf="esAdmin && showBtnAction"
-            >
-            <button class="btn btn-outline-success btn-sm"
-                (click)="toggleForm(item);"
-                ngClass="faConfirm fa-ico">
-                <fa-icon 
-                    [icon]="faPen"
-                    
-                >
-                </fa-icon>
-            </button>
-            <button class="btn btn-outline-danger btn-sm"
-                (click)="delete(item)"
-                ngClass="faCancel"
-            >
-                <fa-icon 
-                    [icon]="faTrash"
-                >
-                </fa-icon>
-            </button>
-        </div>
-    </div>
+    </ng-container>
 
-</ng-container >
+    <app-career-form *ngIf="showForm && esAdmin" [ngStyle]="{'width':'100%'}" [formData]="formData"
+        [title]="'Agregar un trabajo'" 
+        [myOrganizations]="myOrganizations" 
+        (myOrganizationsChange)="myOrganizations"
 
-<app-career-form
-  *ngIf="showForm && esAdmin"
-  [ngStyle]="{'width':'100%'}"
-  
-  [formData]="formData"
-  [title]="'Agregar un trabajo'"
-
-  [myOrganizations]="myOrganizations"
-  (myOrganizationsChange)="myOrganizations"
-  [myRolePositions]="myRolePositions"
-  (myRolePositionsChange)="myRolePositions"
-
-  (showBtnActionChange)="showBtnAction"
-  (onUpdate)=" update($event);"
-  (cancel)="cancelation($event)"
-
-  >
-</app-career-form>
+        [myRolePositions]="myRolePositions" 
+        (myRolePositionsChange)="myRolePositions"
+        
+        (showBtnActionChange)="showBtnAction" 
+        (onUpdate)="update($event);" 
+        (cancel)="cancelation($event)">
+    </app-career-form>
+</div>

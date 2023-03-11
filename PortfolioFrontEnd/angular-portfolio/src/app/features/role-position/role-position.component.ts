@@ -8,7 +8,7 @@ import { FullPersonDTO, RolePosition } from '../../models'
 import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MessageBoxComponent } from '../../shared/message-box/message-box.component';
 import { Observable, Subscription } from 'rxjs';
-import { RolepositionFormComponent } from '../bloque-datos-obj-profile/roleposition-form/roleposition-form.component';
+
 @Component({
   selector: 'app-role-position',
   templateUrl: './role-position.component.html',

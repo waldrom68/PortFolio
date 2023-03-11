@@ -1,8 +1,7 @@
-<div>
+<div class="table-dark text-left container-fluid" >
     <ng-container *ngIf="myData.length; else agregar">
-        <div class="table-dark text-left container-fluid p-5" 
-        *ngIf="!showForm"
-        >
+        <div *ngIf="!showForm" >
+
             <app-career-item 
                 *ngFor="let item of myData"
                 [item]="item"
@@ -59,7 +58,6 @@
         <fa-icon
         ngClass="fa-3x text-primary"
             [icon]="faPlusCircle"
-            
             >
         </fa-icon>
     </button>

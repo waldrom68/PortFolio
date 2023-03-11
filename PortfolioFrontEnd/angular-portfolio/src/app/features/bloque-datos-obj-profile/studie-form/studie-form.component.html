@@ -133,14 +133,14 @@
 <ng-template #estaVacio>
   <ng-container *ngIf="myOrganizations.length == 0">
     <p>Debe registrar organizaciones</p>
-    <button  class="btn btn-warning" (click)="toggleOrgaForm()">
+    <button  class="btn btn-warning" (click)="openOrganization()">
       Agregar organizaciones
     </button>
   </ng-container>
 
   <ng-container *ngIf="myDegrees.length == 0">
     <p>Debe registrar niveles de estudio</p>
-    <button  class="btn btn-warning" (click)="toggleDegreeForm()">
+    <button  class="btn btn-warning" (click)="openDegree()">
       Agregar niveles
     </button>
   </ng-container>

@@ -1,7 +1,6 @@
-<div>
+<div class="table-dark text-left container-fluid">
     <ng-container *ngIf="myData.length; else agregar">
-        <div class="table-dark text-left container-fluid p-5" 
-        *ngIf="!showForm"
+        <div *ngIf="!showForm"
         >
             <app-studie-item 
                 *ngFor="let item of myData"
@@ -53,7 +52,6 @@
 
 <ng-container *ngIf="esAdmin && showBtnAction">
     <br>
-
     <button class="btn btn-default btn-sm" 
         ngClass="faControl fa-ico"
         (click)="toggleForm()"
