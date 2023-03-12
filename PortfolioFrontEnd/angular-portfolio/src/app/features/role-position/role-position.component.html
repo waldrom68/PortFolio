@@ -8,19 +8,19 @@
             {{ message }}Posiciones / Roles
         </h4>
         <button type="button" class="close" aria-label="Close" 
-        (click)="dialogRef.close(myData)"
+        (click)="dialogRef.close(baseData.roleposition)"
         >
         <span aria-hidden="false">&times;</span>
         </button>
     </div>
 
     <div class="modal-body">
-        <ng-container *ngIf="myData.length; else agregar">
+        <ng-container *ngIf="baseData.roleposition.length; else agregar">
             <div class="table-dark text-left container-fluid p-5" 
             *ngIf="!showForm"
             >
                 <app-roleposition-item 
-                    *ngFor="let item of myData"
+                    *ngFor="let item of baseData.roleposition"
                     [item]="item"
 
                     (onDelete)="openModalDelete(item)"
@@ -36,14 +36,14 @@
         <app-roleposition-form
             *ngIf="showForm && esAdmin"
 
-            [formData]="formData"
             [title]="'Ingrese un rol/posicion'"
-
             (showBtnActionChange)="showBtnAction"
+            
             (onUpdate)=" addItem($event)"
             (cancel)="cancelation($event)"
-        >
+            >
         </app-roleposition-form>
+        <!-- [formData]="formData" -->
 
         <ng-template #agregar>
             <div class="table-dark text-left container"  >

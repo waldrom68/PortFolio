@@ -30,11 +30,11 @@ export class DatosTrayectoriaComponent implements OnInit, OnDestroy {
   baseData: FullPersonDTO;
   private BaseDataServiceSubscription: Subscription | undefined;
   
-  myData: LaboralCareer[] = [];
+  // myData: LaboralCareer[] = [];
   formData: LaboralCareer;  // instancia vacia, para cuando se solicite un alta
 
-  myOrganizations: Organization[];
-  myRolePositions: RolePosition[];
+  // myOrganizations: Organization[];
+  // myRolePositions: RolePosition[];
 
    // Validacion Admin STATUS
    esAdmin: boolean;
@@ -57,16 +57,16 @@ export class DatosTrayectoriaComponent implements OnInit, OnDestroy {
       }
     );
 
-    this.myData = this.baseData.laboralCareer;
+    // this.myData = this.baseData.laboralCareer;
     // this.myOrganizations = this.baseData.organization;
     // this.myRolePositions = this.baseData.roleposition;
-    if (this.baseData.organization) {
-        this.myOrganizations = this.baseData.organization;
-      }
+    // if (this.baseData.organization) {
+    //     this.myOrganizations = this.baseData.organization;
+    //   }
 
-      if (this.baseData.roleposition) {
-        this.myRolePositions = this.baseData.roleposition;
-      }
+    //   if (this.baseData.roleposition) {
+    //     this.myRolePositions = this.baseData.roleposition;
+    //   }
 
       
     this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
@@ -110,9 +110,9 @@ export class DatosTrayectoriaComponent implements OnInit, OnDestroy {
       this.dataService.delEntity(this.itemParaBorrar, "/laboralcareer").subscribe({
         next: (v) => {
           console.log("Se ha eliminado exitosamente a: ", this.itemParaBorrar);
-          this.myData = this.myData.filter((t) => { return t !== this.itemParaBorrar })
+          this.baseData.laboralCareer = this.baseData.laboralCareer.filter((t) => { return t !== this.itemParaBorrar })
           // Actualizo la informacion en el origen
-          this.baseData.laboralCareer = this.myData;
+          this.baseData.laboralCareer = this.baseData.laboralCareer;
           this.itemParaBorrar = null;
 
         },
@@ -133,8 +133,8 @@ export class DatosTrayectoriaComponent implements OnInit, OnDestroy {
         console.log("Guardado correctamente: ", v);
         laboralCareer.id = v.id;
         laboralCareer.person = this.baseData.id;
-        this.myData.push(v);
-        this.baseData.laboralCareer = this.myData;
+        this.baseData.laboralCareer.push(v);
+        this.baseData.laboralCareer = this.baseData.laboralCareer;
       },
       error: (e) => {
         alert("Response Error (" + e.status + ") en el metodo addItem()" + "\n" + e.message);

@@ -14,14 +14,17 @@ import { RolePosition } from 'src/app/models';
 })
 export class RolepositionFormComponent implements OnInit, OnDestroy {
 
-@Input() formData: RolePosition;
+// @Input() formData: RolePosition;
 @Input() title: string;
+@Input() item: RolePosition;
+
 @Output() onUpdate: EventEmitter<RolePosition> = new EventEmitter()
 @Output() cancel: EventEmitter<RolePosition> = new EventEmitter()
 
 faCheck = faCheck;
 faTimes = faTimes;
 
+formData: RolePosition;
 form: FormGroup;
 
   // Validacion Admin STATUS
@@ -37,14 +40,14 @@ form: FormGroup;
   ) { }
 
   ngOnInit(): void {
-    if (!this.formData) {
+    if (!this.item) {
       this.resetForm()
-      console.log("ROLEPOSITION-FORM.COMPONENT REVISANDO POR AQUI", this.formData);
+      // console.log("ROLEPOSITION-FORM.COMPONENT REVISANDO POR AQUI", this.formData);
       
       // this.resetForm();
     } else {
-      console.log("ROLEPOSITION-FORM.COMPONENT REVISANDO POR AQUI", this.formData);
-      
+      // console.log("ROLEPOSITION-FORM.COMPONENT REVISANDO POR AQUI", this.formData);
+      this.formData = this.item;
     }
     this.form = this.formBuilder.group({
       name:[this.formData.name, [Validators.required, Validators.minLength(3),Validators.maxLength(100) ]],

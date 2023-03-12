@@ -1,8 +1,9 @@
-<div class="table-dark text-left container-fluid">
+<div class="table-dark text-left container-fluid bg-secondary">
     <ng-container *ngIf="!showForm">
 
-        <div class="row" [ngClass]="color" (mouseover)="changeStyle($event)" (mouseout)="changeStyle($event)">
-            <div class="container-fluid" style="display: inline-block;">
+        <div class="row  border border-primary rounded d-flex justify-content-around" [ngClass]="color" (mouseover)="changeStyle($event)" (mouseout)="changeStyle($event)">
+            <div 
+            [ngClass]="{'col-auto':esAdmin, 'col-12':!esAdmin}" >
                 <div *ngIf="item.endDate; else elseBlock">
                     <h6>({{item.startDate | date:'MM-yyyy' }} hasta {{item.endDate | date:'MM-yyyy'}})
                         {{item.organization.name}} -{{item.roleposition.name}}-</h6>
@@ -11,14 +12,19 @@
                     <h6>(Desde {{item.startDate | date:'MM-yyyy' }}) {{item.organization.name}}
                         -{{item.roleposition.name}}-</h6>
                 </ng-template>
+            <div class="row" >
 
-                <p *ngFor="let elemento of item.resume.split('\n')">
-                    <small class="px-5"><i> {{elemento}}</i></small>
-                </p>
+                <span *ngFor="let elemento of item.resume.split('\n')"
+                class="bg-primary mx-2 "  style="font-size: 0,5rem;"
+                >
+                         {{elemento}}
+                </span>
+                
+            </div>
             </div>
             <!-- ##################### -->
 
-            <div class="icon-group" *ngIf="esAdmin && showBtnAction">
+            <div class="icon-group  col-auto" *ngIf="esAdmin && showBtnAction">
                 <button class="btn btn-outline-success btn-sm" (click)="toggleForm(item);" ngClass="faConfirm fa-ico">
                     <fa-icon [icon]="faPen">
                     </fa-icon>
@@ -34,14 +40,15 @@
 
     <app-career-form *ngIf="showForm && esAdmin" [ngStyle]="{'width':'100%'}" [formData]="formData"
         [title]="'Agregar un trabajo'" 
-        [myOrganizations]="myOrganizations" 
-        (myOrganizationsChange)="myOrganizations"
-
-        [myRolePositions]="myRolePositions" 
-        (myRolePositionsChange)="myRolePositions"
+        
         
         (showBtnActionChange)="showBtnAction" 
         (onUpdate)="update($event);" 
         (cancel)="cancelation($event)">
     </app-career-form>
+
+    <!-- [myOrganizations]="myOrganizations" 
+    (myOrganizationsChange)="myOrganizations" -->
+    <!-- [myRolePositions]="myRolePositions" 
+    (myRolePositionsChange)="myRolePositions" -->
 </div>

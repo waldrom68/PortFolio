@@ -18,18 +18,20 @@ import { Observable, Subscription } from 'rxjs';
 export class RolePositionComponent implements OnInit, OnDestroy {
   showForm: boolean = false;  // flag para mostrar o no el formulario
 
-  myData: RolePosition[] = [];
-  formData: RolePosition;  // instancia vacia, para cuando se solicite un alta
+  // myData: RolePosition[] = [];
+  // formData: RolePosition;  // instancia vacia, para cuando se solicite un alta
 
   faPlusCircle = faPlusCircle;
   faTimes = faTimes;
 
-  @Input() showBtnAction: boolean = true;  // flag para mostrar o no los btn's de acciones del usuario
-  @Output() showBtnActionChange = new EventEmitter<boolean>();
+  // @Input() showBtnAction: boolean = true;  // flag para mostrar o no los btn's de acciones del usuario
+  // @Output() showBtnActionChange = new EventEmitter<boolean>();
+  
+  // @Input() myRolePositions: RolePosition[];
+  // @Output() myRolePositionsChange = new EventEmitter<RolePosition[]>();
 
-  @Input() myRolePositions: RolePosition[];
-  @Output() myRolePositionsChange = new EventEmitter<RolePosition[]>();
-
+  showBtnAction: boolean = true;  // flag para mostrar o no los btn's de acciones del usuario
+  
   itemParaBorrar: any;
 
   message: string;
@@ -57,7 +59,7 @@ export class RolePositionComponent implements OnInit, OnDestroy {
     this.BaseDataServiceSubscription = this.baseDataService.currentBaseData.subscribe(
       currentData => {
         this.baseData = currentData;
-        this.myData = currentData.roleposition;
+        // this.myData = currentData.roleposition;
       }
     );
     this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
@@ -73,9 +75,9 @@ export class RolePositionComponent implements OnInit, OnDestroy {
     this.BaseDataServiceSubscription?.unsubscribe();
   }
 
-  resetForm() {
-    this.formData = new RolePosition();
-  }
+  // resetForm() {
+  //   this.formData = new RolePosition();
+  // }
 
   toggleForm() {
     // Cierra el formulario de edicion o creacion
@@ -101,9 +103,9 @@ export class RolePositionComponent implements OnInit, OnDestroy {
       this.dataService.delEntity(this.itemParaBorrar, "/roleposition").subscribe({
         next: (v) => {
           console.log("Se ha eliminado exitosamente a: ", this.itemParaBorrar);
-          this.myData = this.myData.filter((t) => { return t !== this.itemParaBorrar })
+          this.baseData.roleposition = this.baseData.roleposition.filter((t) => { return t !== this.itemParaBorrar })
           // Actualizo la informacion en el origen
-          this.baseData.roleposition = this.myData;
+          // this.baseData.roleposition = this.myData;
           this.itemParaBorrar = null;
         },
         error: (e) => {
@@ -123,8 +125,8 @@ export class RolePositionComponent implements OnInit, OnDestroy {
         console.log("Guardado correctamente: ", v);
         rolePosition.id = v.id;
         rolePosition.person = this.baseData.id;
-        this.myData.push(rolePosition);
-        this.baseData.roleposition = this.myData;
+        this.baseData.roleposition.push(rolePosition);
+        // this.baseData.roleposition = this.baseData.roleposition;
       },
       error: (e) => {
         alert("Response Error (" + e.status + ") en el metodo addItem()" + "\n" + e.message);
@@ -133,7 +135,7 @@ export class RolePositionComponent implements OnInit, OnDestroy {
       complete: () => console.log("Completado el alta de la Posicion o Rol")
     });
     this.toggleForm();
-    this.resetForm();
+    // this.resetForm();
 
   }
 

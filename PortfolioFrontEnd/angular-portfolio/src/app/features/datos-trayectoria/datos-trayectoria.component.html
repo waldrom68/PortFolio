@@ -1,21 +1,20 @@
-<div class="table-dark text-left container-fluid" >
-    <ng-container *ngIf="myData.length; else agregar">
+<div class="table-dark text-left container-fluid py-4" >
+    <ng-container *ngIf="baseData.laboralCareer.length; else agregar">
         <div *ngIf="!showForm" >
 
             <app-career-item 
-                *ngFor="let item of myData"
+                *ngFor="let item of baseData.laboralCareer"
                 [item]="item"
                 [formData]="formData"
                 (onDelete)="openModalDelete(item)"
                 
-                [myOrganizations]="myOrganizations"
-                (myOrganizationsChange)="myOrganizations"
-                [myRolePositions]="myRolePositions"
-                (myRolePositionsChange)="myRolePositions"
-
                 [(showBtnAction)]="showBtnAction"
-            >
+                >
             </app-career-item>
+            <!-- [myOrganizations]="myOrganizations"
+            (myOrganizationsChange)="myOrganizations"
+            [myRolePositions]="myRolePositions"
+            (myRolePositionsChange)="myRolePositions" -->
 
 
         </div>
@@ -27,17 +26,12 @@
         [formData]="formData"
         [title]="'Agregar un trabajo'"
         
-        [myOrganizations]="myOrganizations"
-        (myOrganizationsChange)="myOrganizations"
-
-        [myRolePositions]="myRolePositions"
-        (myRolePositionsChange)="myRolePositions"
-        
         (showBtnActionChange)="showBtnAction"
         (onUpdate)=" addItem($event)"
         (cancel)="cancelation($event)"
-    >
+        >
     </app-career-form>
+
 
     <ng-template #agregar>
         <div class="table-dark text-left container"  >

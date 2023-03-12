@@ -35,11 +35,12 @@
 
 </ng-container >
 
+<!-- [formData]="formData" -->
 <app-roleposition-form
     *ngIf="showForm"
     [ngStyle]="{'width':'100%'}"
-    [formData]="formData"
     [title]="''"
+    [item]="item"
     (onUpdate)=" update($event);"
     (cancel)="cancelation($event)"
 

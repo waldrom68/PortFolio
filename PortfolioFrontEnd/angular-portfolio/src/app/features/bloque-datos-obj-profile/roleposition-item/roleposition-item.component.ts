@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { RolePosition } from '../../../models'
+import { FullPersonDTO, RolePosition } from '../../../models'
 
 import { faPen, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Observable, Subscription } from 'rxjs';
-import { DataService } from 'src/app/service/data.service';
+import { BaseDataService, DataService } from 'src/app/service/data.service';
 import { AdminService } from 'src/app/service/auth.service';
 
 @Component({
@@ -16,8 +16,8 @@ export class RolepositionItemComponent implements OnInit, OnDestroy {
   @Input() item: RolePosition;
 
   @Input() showBtnAction!: boolean;
-  @Input() formData: RolePosition;
   @Output() showBtnActionChange = new EventEmitter<boolean>();
+  // @Input() formData: RolePosition;
 
   @Output() onDelete: EventEmitter<RolePosition> = new EventEmitter()
   @Output() onUpdate: EventEmitter<RolePosition> = new EventEmitter()
@@ -28,20 +28,29 @@ export class RolepositionItemComponent implements OnInit, OnDestroy {
   faTrash = faTrash;
 
   showForm: boolean = false;
-  // formData: Degree; // Viene por un input
+
+  // formData: RolePosition;
   oldData: RolePosition;
 
   // Validacion Admin STATUS
   esAdmin: boolean;
-  private AdminServiceSubscription: Subscription | undefined;
 
+  private AdminServiceSubscription: Subscription | undefined;
+  baseData: FullPersonDTO;
+  private BaseDataServiceSubscription: Subscription | undefined;
 
   constructor(
     private dataService: DataService,
     private adminService: AdminService,
+    private baseDataService: BaseDataService,
   ) { }
 
   ngOnInit(): void {
+    this.BaseDataServiceSubscription = this.baseDataService.currentBaseData.subscribe(
+      currentData => {
+        this.baseData = currentData;
+      }
+    );
     // Clono el objeto, uso assign por no tener atributos compuesto por otros objetos
     this.oldData = Object.assign({}, this.item)
 
@@ -54,8 +63,10 @@ export class RolepositionItemComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-
     this.AdminServiceSubscription?.unsubscribe();
+    this.BaseDataServiceSubscription?.unsubscribe();
+
+    this.baseDataService.setCurrentBaseData(this.baseData);
   }
 
   color: string = 'red';
@@ -66,7 +77,7 @@ export class RolepositionItemComponent implements OnInit, OnDestroy {
 
   toggleForm(rolePosition: RolePosition) {
     this.showForm = !this.showForm;
-    this.formData = rolePosition;
+    // this.formData = rolePosition;
     // habilito las acciones de cada item
     this.showBtnAction = !this.showBtnAction
     this.showBtnActionChange.emit(this.showBtnAction)
