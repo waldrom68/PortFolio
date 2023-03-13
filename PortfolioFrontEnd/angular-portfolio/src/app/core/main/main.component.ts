@@ -46,7 +46,7 @@ export class MainComponent implements OnInit, OnDestroy {
 
   element: object;
   fragment: string = 'Init';
-  wait: boolean = true;
+  // wait: boolean = true;
 
  
   baseData: FullPersonDTO;
@@ -84,23 +84,22 @@ export class MainComponent implements OnInit, OnDestroy {
       }
     );
 
-
-    // Traigo todos los datos del Portfolio
-    this.dataService.getPortFolioData().subscribe({
-      next: (gralData) => {
-        this.baseDataService.setCurrentBaseData(gralData);
-        this.wait = false;
-
-      },
-      error: (e) => {
-        // e.status = 0, error del servidor
-        // e.status = 400, e.statusText= OK, error en el pedido al servidor
-        this.wait = true;
-        alert("Response Error (" + e.status + ") en iniciar.sesion.component" + "\n" + e.message);
-        console.log("Se quizo obtener los datos sin exito; ", e)
-      },
-      complete: () => { console.log("Finalizado el proceso de obtener los datos del PortFolio") }
-    });
+    // // Traigo todos los datos del Portfolio
+    // this.dataService.getPortFolioData().subscribe({
+    //   next: (gralData) => {
+    //     this.baseDataService.setCurrentBaseData(gralData);
+    //     this.wait = false;
+    //     console.log(this.baseData);
+    //   },
+    //   error: (e) => {
+    //     // e.status = 0, error del servidor
+    //     // e.status = 400, e.statusText= OK, error en el pedido al servidor
+    //     this.wait = true;
+    //     alert("Response Error (" + e.status + ") en iniciar.sesion.component" + "\n" + e.message);
+    //     console.log("Se quizo obtener los datos sin exito; ", e)
+    //   },
+    //   complete: () => { console.log("Finalizado el proceso de obtener los datos del PortFolio") }
+    // });
 
 
     // VALIDACION SI ES UN USUARIO ADMINISTRADOR Y TIENE TOKEN VIGENTE

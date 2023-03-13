@@ -4,7 +4,8 @@
         {{baseData.name}}
     </div>
 
-    <ng-container  *ngIf="!wait">
+    <!-- <ng-container  *ngIf="!wait"> -->
+    <ng-container>
         
         <div class="col-sm-8 aling-self-center order-0"
         >
@@ -12,7 +13,7 @@
             <!-- area que muestra las Tarjetas por un lado, su etiqueta frontal-->
             <ng-container *ngIf="statusCards">
                 <section id="" class="row p-0 m-0 justify-content-center">
-                    <p class="h4 text-center">{{labelGroup1}}</p>
+                    <p class="h6 text-center">{{labelGroup1}}</p>
                     <app-data-card
                         [detailCard]="CardsGroup1"
                         (toggleCards)="toggleCards()"
@@ -21,7 +22,7 @@
                 </section>
 
                 <section id="" class="row p-0 m-0 justify-content-center">
-                    <p class="h4 text-center">{{labelGroup2}}</p>
+                    <p class="h6 text-center">{{labelGroup2}}</p>
                     <app-data-card
                         [detailCard]="CardsGroup2"
                         (toggleCards)="toggleCards()"

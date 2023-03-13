@@ -11,7 +11,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import * as moment from 'moment';
 import { DateAdapter } from '@angular/material/core';
 import { MatDatepickerComponent } from './shared/mat-datepicker/mat-datepicker.component';
-import { DataService, ObservableService } from './service/data.service';
+import { BaseDataService, DataService, ObservableService } from './service/data.service';
 import { FullPersonDTO } from './models';
 
 import { Observable, Subscription } from 'rxjs';
@@ -26,6 +26,8 @@ import { Observable, Subscription } from 'rxjs';
 })
 
 export class AppComponent implements OnInit {
+  baseData: FullPersonDTO;
+  private BaseDataServiceSubscription: Subscription | undefined;
 
   title = 'angular-portfolio';
 
@@ -50,7 +52,8 @@ shortdate: FormControl;
 // PENDIENTE, ESTÁ VINCULADO A LA PRACTICA DE OBSERVER
 color: string;
 // FIN A LA PRACTICA DE OBSERVER 
-baseData: FullPersonDTO;
+// baseData: FullPersonDTO;
+wait: boolean = true;
 
 valueSubscription: Subscription;
 progreesValueabc: number;
@@ -69,6 +72,7 @@ constructor(
 
         // PENDIENTE, ESTÁ VINCULADO A LA PRACTICA DE OBSERVER
         private dataService: DataService,
+        private baseDataService: BaseDataService,
         // FIN A LA PRACTICA DE OBSERVER 
 
         private observableService: ObservableService,
@@ -101,10 +105,31 @@ constructor(
     }
 
 
-  ngOnInit(
+  ngOnInit(  ) {
+      this.BaseDataServiceSubscription = this.baseDataService.currentBaseData.subscribe(
+        currentData => {
+          this.baseData = currentData;
+          // console.log(this.baseData);
+          
+        }
+      );
+          // Traigo todos los datos del Portfolio
+    this.dataService.getPortFolioData().subscribe({
+      next: (gralData) => {
+        this.baseDataService.setCurrentBaseData(gralData);
+        this.wait = false;
 
+      },
+      error: (e) => {
+        // e.status = 0, error del servidor
+        // e.status = 400, e.statusText= OK, error en el pedido al servidor
+        this.wait = true;
+        alert("Response Error (" + e.status + ") en iniciar.sesion.component" + "\n" + e.message);
+        console.log("Se quizo obtener los datos sin exito; ", e)
+      },
+      complete: () => { console.log("Finalizado el proceso de obtener los datos del PortFolio") }
+    });
 
-    ) {
       // prueba del datepicker
       this.dateAdapter.setLocale('es');
       this.formDate = this.fb.group({

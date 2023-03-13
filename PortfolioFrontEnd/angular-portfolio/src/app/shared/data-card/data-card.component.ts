@@ -12,6 +12,7 @@ import { UiService } from 'src/app/service/ui.service';
 export class DataCardComponent implements OnInit {
   faTimes = faTimes;
    
+  // PENDIENTE Esta entrada no la uso para nada
   @Input() detailCard:Cards [];
 
   @Output() toggleCards = new EventEmitter();

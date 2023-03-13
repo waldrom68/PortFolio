@@ -1,21 +1,30 @@
-.resaltado {
-    color: yellow;
+
+/* 
+ul.head {
+    cursor: pointer !important;
+    font-size: 120%;
+    padding: 0.5rem;
+    color: var(--text-color);
+    border-left: .3rem solid var(--text-color) !important;
 }
 
-.normal {
-    color: inherit;
-}
-
-a:hover {
-    color: white;
-    font-weight: bolder;
-    text-decoration: none;
-}
-
-span.resume {
-    font-size: 0.75rem;
-    font-style: italic;
-    margin: 0;
-    margin-left: 2rem;
+ul.head:hover {
     
+    border-color: rgb(111, 92, 252) !important;
+    color: white !important;
+    background-color: #4d4d63;
+
+    animation: fadeIn 1s; 
 }
+
+li.resume {
+    cursor: auto !important;
+    font-size: normal;
+    padding-left: 1rem;
+    font-style: italic;
+}
+
+@keyframes fadeIn {
+    0% { background-color: initial; }
+    100% { background-color: #4d4d63; }
+  } */

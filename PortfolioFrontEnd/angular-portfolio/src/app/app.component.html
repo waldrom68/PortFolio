@@ -10,7 +10,14 @@
     </button>
     <h5 class="text-right p-2">{{progreesValueabc}}</h5>
     <h6 class="text-right p-2">{{currentTime  | date:"HH:mm:ss"}}</h6>
-        <app-main></app-main>
+    
+    <ng-container *ngIf="baseData.displaydata">
+
+      <app-main *ngIf="baseData.displaydata.theme == 'Flip' "></app-main>
+
+    </ng-container>
+      
+      
 
 
 <app-footer></app-footer>

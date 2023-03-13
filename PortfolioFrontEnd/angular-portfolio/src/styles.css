@@ -7,28 +7,60 @@
     src: local('Julius Sans One'), local('Julius-Sans-One'), url(./assets/fonts/JuliusSansOne-Regular.ttf);
     unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
 }
+@font-face {
+    font-family: 'Quinta-light';
+    font-style: normal;  /* light */
+    src: local('BwQuintaPro light'), local('BwQuintaPro-light'), url(./assets/fonts/BwQuintaPro-Light.woff2 )  format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+    }
+
 
 :root {
-    --body-font-family:'Julius-Sans-One','roboto', system-ui, "Segoe UI", "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    /* --body-font-family:'Julius-Sans-One','roboto', system-ui, "Segoe UI", "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; */
+    --body-font-family:'Quinta-light','roboto', system-ui, "Segoe UI", "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 
     --metal: #e3e3e3;
     --metallight-shadow: #b5b5b5;
     --metaldark-shadow: #787878;
+
     /* ATRIBUTO COMUN, SIRVE PARA RESALTAR ALGO BAJO UN TONO COMÚN, ej: Star */
     --acento: #00ff00;  /* --progress-color */
     --acento-bg: #00468b !important;  /* 5 */
     color: rgb(141, 174, 177);
     --grosor: 5px;
+    --text-color: rgb(199, 201, 202);
     /* --atencion:rgb(199, 199, 45) ; */
 
 }
 
 html, body { height: 100%; }
-
 body {
     font-family: var(--body-font-family);
     background-image: linear-gradient(90deg, var(--metaldark-shadow) 0%, var(--metallight-shadow) 25%, var(--metal) 50%, var(--metallight-shadow) 75%, var(--metaldark-shadow) 100% ) !important;
 }
+
+h1,h2,h3,h4,h5,h6 {
+    font-family: 'Quinta-light';
+    font-style: normal;
+    font-weight: bold;
+    /* letter-spacing: 1.5rem; */
+    }
+a.header {
+    font-size: 1.2rem;
+    letter-spacing: .1rem;
+    font-style: italic;
+}
+
+ul, li {
+    list-style-type: none;
+}
+
+p {
+    text-indent: 1.5rem ;
+}
+
+
+
 
 /* MODAL STYLE */
 mat-dialog-container#modal-component, mat-dialog-container#modal-delete {
@@ -63,9 +95,15 @@ mat-dialog-container#modal-component, mat-dialog-container#modal-delete {
 
 .icon-group {
     display: flex;
+    align-items: center;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    padding: 0px;
+    padding-right: 5px;
 }
 button.fa-ico {
     margin: 0px 1em;
+    max-height: 1.5rem;
 }
 
 .faControl {
@@ -146,24 +184,24 @@ button.fa-ico {
 
    
 .loader   {
-      position:absolute;
-      top:50%;
-      left:50%;
-      transform:translate(-50%,-50%);
-      width:150px;
-      height:150px;
-      background:transparent;
-      /* border:3px solid #3c3c3c; */
-      border-radius:50%;
-      text-align:center;
-      line-height:150px;
-      font-family:sans-serif;
-      font-size:20px;
-      color:blue;
-      letter-spacing:4px;
-      text-transform:uppercase;
-      text-shadow:0 0 10px blue;
-      box-shadow:0 0 20px rgba(0,0,0,.5);
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    width:150px;
+    height:150px;
+    background:transparent;
+    /* border:3px solid #3c3c3c; */
+    border-radius:50%;
+    text-align:center;
+    line-height:150px;
+    font-family:sans-serif;
+    font-size:20px;
+    color:blue;
+    letter-spacing:4px;
+    text-transform:uppercase;
+    text-shadow:0 0 10px blue;
+    box-shadow:0 0 20px rgba(0,0,0,.5);
     }
     .loader:before
     {
@@ -225,3 +263,38 @@ button.fa-ico {
         transform:rotate(405deg);
       }
     }
+
+    /* estilos para listado de trayectoria, educacion y proyectos */
+    ul {
+        margin-top: 0 !important;
+    }
+ul.head {
+    cursor: pointer !important;
+    font-size: 120%;
+    padding: 0.5rem;
+    color: var(--text-color);
+    border-left: .3rem solid var(--text-color) !important;
+}
+
+ul.head:hover {
+    /* border-left: 0.3rem solid rgb(111, 92, 252) !important; */
+    border-color: rgb(111, 92, 252) !important;
+    color: white !important;
+    background-color: #4d4d63;
+
+    animation: fadeIn 1s; 
+}
+
+li.resume > p {
+    cursor: auto !important;
+    font-size: smaller;
+    padding-left: 1rem;
+    font-style: italic;
+    margin-bottom: 0.5rem;
+}
+
+@keyframes fadeIn {
+    0% { background-color: initial; }
+    100% { background-color: #4d4d63; }
+  }
+/* listado de trayectoria, educacion y proyectos */

@@ -5,6 +5,9 @@ import {DATA} from '../../../mock-data'
 
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
+
+
+// PENDIENTE, este componente al final no lo estoy usando
 @Component({
   selector: 'app-data',
   templateUrl: './data.component.html',

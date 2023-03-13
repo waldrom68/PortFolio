@@ -1,9 +1,9 @@
-<div class="table-dark bg-secondary row" *ngIf="!showForm">
+<div class="table-dark row " *ngIf="!showForm">
     <!-- <div  class="row container-fluid"> -->
 
-    <div [ngClass]="{'col-10 border border-primary rounded':esAdmin, 'col-12':!esAdmin}">
+    <div [ngClass]="{'p-0 col-10':esAdmin, 'col-12':!esAdmin}">
         <div [ngClass]="color" (mouseover)="changeStyle($event)" (mouseout)="changeStyle($event)">
-            <ul>
+            <ul class="head border rounded fade-in-ul mb-0 mt-2">
                 <div *ngIf="item.endDate; else elseBlock">
                     <h6>({{item.startDate | date:'MM-yyyy' }} hasta {{item.endDate | date:'MM-yyyy'}})
                         {{item.organization.name}} -{{item.roleposition.name}}-</h6>
@@ -13,8 +13,8 @@
                         -{{item.roleposition.name}}-</h6>
                 </ng-template>
 
-                <li *ngFor="let elemento of item.resume.split('\n')">
-                    <small><i> {{elemento}}</i></small>
+                <li class="resume" *ngFor="let elemento of item.resume.split('\n')">
+                    <p><i> {{elemento}}</i></p>
                 </li>
             </ul>
         </div>

@@ -106,7 +106,7 @@ export class DisplayData extends Base {
         this.location = true;
         this.profession = true;
         this.since = true;
-        this.theme = "Dark"
+        this.theme = "Flip"
     }
 }
 
