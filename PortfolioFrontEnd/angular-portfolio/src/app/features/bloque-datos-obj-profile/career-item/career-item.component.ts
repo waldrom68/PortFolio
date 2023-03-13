@@ -32,6 +32,7 @@ export class CareerItemComponent implements OnInit, OnDestroy {
 
   showForm: boolean = false;
 
+  oldData: LaboralCareer;
   baseData: FullPersonDTO;
   private BaseDataServiceSubscription: Subscription | undefined;
 
@@ -57,6 +58,8 @@ export class CareerItemComponent implements OnInit, OnDestroy {
         this.esAdmin = currentAdmin;
       }
     );
+      // Clono el objeto, uso assign por no tener atributos compuesto por otros objetos
+      this.oldData = Object.assign({}, this.item)
 
   }
   ngOnDestroy() {
@@ -102,7 +105,7 @@ export class CareerItemComponent implements OnInit, OnDestroy {
         alert("Response Error (" + e.status + ") en el metodo addItem()" + "\n" + e.message);
         console.log("Se quizo agregar sin exito a: " + laboralCareer.resume, "si realmente tiene la misma descripcion, procure hacer un pequeño cambio");
         // AQUI RESTAURO oldData
-        laboralCareer = this.item;
+        laboralCareer = this.oldData;
       },
       complete: () => console.log("Completado el alta en Trayectoria Laboral")
     });

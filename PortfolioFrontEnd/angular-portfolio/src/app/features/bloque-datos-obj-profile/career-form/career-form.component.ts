@@ -39,7 +39,7 @@ export class CareerFormComponent implements OnInit, OnDestroy {
   faTimes = faTimes;
 
   form: FormGroup;
-  oldData: RolePosition[];
+  // oldData: LaboralCareer[];
 
   showOrgaForm: boolean = false;
   showRoleForm: boolean = false;
@@ -70,8 +70,8 @@ export class CareerFormComponent implements OnInit, OnDestroy {
         this.baseData = currentData;
       }
     );
-    // Clono el objeto, uso assign por no tener atributos compuesto por otros objetos
-    this.oldData = Object.assign({}, this.baseData.roleposition)
+    // // Clono el objeto, uso assign por no tener atributos compuesto por otros objetos
+    // this.oldData = Object.assign({}, this.baseData.roleposition)
 
 
 

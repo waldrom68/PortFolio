@@ -76,7 +76,7 @@ export class DatosTrayectoriaComponent implements OnInit, OnDestroy {
     );
 
     this.resetForm()
-
+       
    }
 
    ngOnDestroy() {

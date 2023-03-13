@@ -159,8 +159,10 @@
       <label class="form-label" for="endDate">Hasta:</label>
       <input type="date" id="endDate" name="endDate" class="form-control p-2" formControlName="endDate"
         [ngClass]="{'error is-invalid': (EndDate.invalid && EndDate.touched), 'is-valid':EndDate.valid}"
-        [min]="StartDate.value">
-    </div>
+        attr.min='{{StartDate.value}}'
+        >
+      </div>
+      <!-- [min]="StartDate.value" -->
   </div> <!-- FIN FECHAS INICIO Y FIN -->
 
 

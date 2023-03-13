@@ -1,9 +1,9 @@
-<div class="table-dark text-left container-fluid bg-secondary">
-    <ng-container *ngIf="!showForm">
+<div class="table-dark bg-secondary row" *ngIf="!showForm">
+    <!-- <div  class="row container-fluid"> -->
 
-        <div class="row  border border-primary rounded d-flex justify-content-around" [ngClass]="color" (mouseover)="changeStyle($event)" (mouseout)="changeStyle($event)">
-            <div 
-            [ngClass]="{'col-auto':esAdmin, 'col-12':!esAdmin}" >
+    <div [ngClass]="{'col-10 border border-primary rounded':esAdmin, 'col-12':!esAdmin}">
+        <div [ngClass]="color" (mouseover)="changeStyle($event)" (mouseout)="changeStyle($event)">
+            <ul>
                 <div *ngIf="item.endDate; else elseBlock">
                     <h6>({{item.startDate | date:'MM-yyyy' }} hasta {{item.endDate | date:'MM-yyyy'}})
                         {{item.organization.name}} -{{item.roleposition.name}}-</h6>
@@ -12,38 +12,30 @@
                     <h6>(Desde {{item.startDate | date:'MM-yyyy' }}) {{item.organization.name}}
                         -{{item.roleposition.name}}-</h6>
                 </ng-template>
-            <div class="row" >
 
-                <span *ngFor="let elemento of item.resume.split('\n')"
-                class="bg-primary mx-2 "  style="font-size: 0,5rem;"
-                >
-                         {{elemento}}
-                </span>
-                
-            </div>
-            </div>
-            <!-- ##################### -->
-
-            <div class="icon-group  col-auto" *ngIf="esAdmin && showBtnAction">
-                <button class="btn btn-outline-success btn-sm" (click)="toggleForm(item);" ngClass="faConfirm fa-ico">
-                    <fa-icon [icon]="faPen">
-                    </fa-icon>
-                </button>
-                <button class="btn btn-outline-danger btn-sm" (click)="delete(item)" ngClass="faCancel">
-                    <fa-icon [icon]="faTrash">
-                    </fa-icon>
-                </button>
-            </div>
+                <li *ngFor="let elemento of item.resume.split('\n')">
+                    <small><i> {{elemento}}</i></small>
+                </li>
+            </ul>
         </div>
+    </div>
 
-    </ng-container>
+    <div *ngIf="esAdmin && showBtnAction" class="col icon-group">
+        <button class="btn btn-outline-success btn-sm" (click)="toggleForm(item);" ngClass="faConfirm fa-ico">
+            <fa-icon [icon]="faPen">
+            </fa-icon>
+        </button>
+        <button class="btn btn-outline-danger btn-sm" (click)="delete(item)" ngClass="faCancel">
+            <fa-icon [icon]="faTrash">
+            </fa-icon>
+        </button>
+    </div>
+
+
+    <!-- </div> -->
 
     <app-career-form *ngIf="showForm && esAdmin" [ngStyle]="{'width':'100%'}" [formData]="formData"
-        [title]="'Agregar un trabajo'" 
-        
-        
-        (showBtnActionChange)="showBtnAction" 
-        (onUpdate)="update($event);" 
+        [title]="'Agregar un trabajo'" (showBtnActionChange)="showBtnAction" (onUpdate)="update($event);"
         (cancel)="cancelation($event)">
     </app-career-form>
 

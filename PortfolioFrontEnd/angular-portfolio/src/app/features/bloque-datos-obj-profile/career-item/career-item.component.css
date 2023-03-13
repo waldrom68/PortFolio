@@ -11,3 +11,11 @@ a:hover {
     font-weight: bolder;
     text-decoration: none;
 }
+
+span.resume {
+    font-size: 0.75rem;
+    font-style: italic;
+    margin: 0;
+    margin-left: 2rem;
+    
+}
