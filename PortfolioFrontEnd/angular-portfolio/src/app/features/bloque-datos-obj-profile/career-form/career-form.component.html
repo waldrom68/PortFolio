@@ -1,5 +1,5 @@
-<!-- Controles para la administracion de Organizacion y RolePosition -->
 
+<!-- Controles para la administracion de Organizacion y RolePosition -->
 <div class="form-row border border-primary rounded p-1 d-flex justify-content-around" id="accederModal">
 
   <div class="form-group col d-flex align-items-center ">
@@ -36,7 +36,10 @@
 <!-- FIN Controles para la administracion de Organizacion y RolePosition -->
 
 
-<form class="form-row p-1 d-flex justify-content-around" *ngIf="showPrimaryForm" [formGroup]="form" #myForm="ngForm"
+<form class="form-row p-1 d-flex justify-content-around" 
+  *ngIf="showPrimaryForm" 
+  [formGroup]="form" 
+  #myForm="ngForm"
   (ngSubmit)="onEnviar($event); myForm.resetForm()">
 
 
@@ -114,7 +117,8 @@
   <div class="row" style="width:100% ">
     <div class="col-12">
       <label class="form-label" for="resume">Resumen:</label>
-      <textarea type="text" rows="6" id="resume" formControlName="resume" name="resume" class="form-control "
+      <textarea type="text" rows="6" id="resume" formControlName="resume" name="resume"
+        class="form-control "
         placeholder="Resumen" formControlName="resume" [ngClass]="{'error is-invalid': (Resume.invalid && Resume.touched)
         , 'is-valid':Resume.valid}"></textarea>
     </div>
@@ -159,10 +163,12 @@
       <label class="form-label" for="endDate">Hasta:</label>
       <input type="date" id="endDate" name="endDate" class="form-control p-2" formControlName="endDate"
         [ngClass]="{'error is-invalid': (EndDate.invalid && EndDate.touched), 'is-valid':EndDate.valid}"
-        attr.min='{{StartDate.value}}'
+        [attr.min]='StartDate.value'
+        
         >
       </div>
       <!-- [min]="StartDate.value" -->
+
   </div> <!-- FIN FECHAS INICIO Y FIN -->
 
 

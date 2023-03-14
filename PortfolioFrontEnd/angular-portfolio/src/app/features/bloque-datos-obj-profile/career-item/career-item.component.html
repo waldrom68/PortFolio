@@ -9,8 +9,7 @@
                         {{item.organization.name}} -{{item.roleposition.name}}-</h6>
                 </div>
                 <ng-template #elseBlock>
-                    <h6>(Desde {{item.startDate | date:'MM-yyyy' }}) {{item.organization.name}}
-                        -{{item.roleposition.name}}-</h6>
+                    <h6>(Desde {{item.startDate | date:'MM-yyyy' }}) {{item.organization.name}} -{{item.roleposition.name}}-</h6>
                 </ng-template>
 
                 <li class="resume" *ngFor="let elemento of item.resume.split('\n')">
@@ -31,16 +30,19 @@
         </button>
     </div>
 
-
+</div>
     <!-- </div> -->
-
-    <app-career-form *ngIf="showForm && esAdmin" [ngStyle]="{'width':'100%'}" [formData]="formData"
-        [title]="'Agregar un trabajo'" (showBtnActionChange)="showBtnAction" (onUpdate)="update($event);"
+    {{showForm}} && {{esAdmin}}
+    <app-career-form *ngIf="showForm && esAdmin" [ngStyle]="{'width':'100%'}" 
+    [formData]="formData"
+        [title]="'Agregar un trabajo'" 
+        (showBtnActionChange)="showBtnAction" 
+        (onUpdate)="update($event);"
         (cancel)="cancelation($event)">
     </app-career-form>
+
 
     <!-- [myOrganizations]="myOrganizations" 
     (myOrganizationsChange)="myOrganizations" -->
     <!-- [myRolePositions]="myRolePositions" 
     (myRolePositionsChange)="myRolePositions" -->
-</div>

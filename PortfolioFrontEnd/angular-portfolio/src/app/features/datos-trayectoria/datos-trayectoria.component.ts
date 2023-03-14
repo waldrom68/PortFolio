@@ -57,6 +57,7 @@ export class DatosTrayectoriaComponent implements OnInit, OnDestroy {
       }
     );
 
+
     // this.myData = this.baseData.laboralCareer;
     // this.myOrganizations = this.baseData.organization;
     // this.myRolePositions = this.baseData.roleposition;
@@ -112,7 +113,7 @@ export class DatosTrayectoriaComponent implements OnInit, OnDestroy {
           console.log("Se ha eliminado exitosamente a: ", this.itemParaBorrar);
           this.baseData.laboralCareer = this.baseData.laboralCareer.filter((t) => { return t !== this.itemParaBorrar })
           // Actualizo la informacion en el origen
-          this.baseData.laboralCareer = this.baseData.laboralCareer;
+          this.baseDataService.setCurrentBaseData(this.baseData)
           this.itemParaBorrar = null;
 
         },
@@ -134,7 +135,7 @@ export class DatosTrayectoriaComponent implements OnInit, OnDestroy {
         laboralCareer.id = v.id;
         laboralCareer.person = this.baseData.id;
         this.baseData.laboralCareer.push(v);
-        this.baseData.laboralCareer = this.baseData.laboralCareer;
+        this.baseDataService.setCurrentBaseData(this.baseData)
       },
       error: (e) => {
         alert("Response Error (" + e.status + ") en el metodo addItem()" + "\n" + e.message);

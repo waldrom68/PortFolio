@@ -59,7 +59,9 @@ p {
     text-indent: 1.5rem ;
 }
 
-
+section.row:nth-child(1), section.row:nth-child(2) {
+    display: block;
+    }
 
 
 /* MODAL STYLE */
@@ -274,6 +276,7 @@ ul.head {
     padding: 0.5rem;
     color: var(--text-color);
     border-left: .3rem solid var(--text-color) !important;
+    margin-left: 0.5rem !important;
 }
 
 ul.head:hover {
@@ -282,7 +285,7 @@ ul.head:hover {
     color: white !important;
     background-color: #4d4d63;
 
-    animation: fadeIn 1s; 
+    animation: fadeIn 2s; 
 }
 
 li.resume > p {

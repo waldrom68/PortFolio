@@ -73,8 +73,6 @@ export class CareerFormComponent implements OnInit, OnDestroy {
     // // Clono el objeto, uso assign por no tener atributos compuesto por otros objetos
     // this.oldData = Object.assign({}, this.baseData.roleposition)
 
-
-
     // console.log(this.formData.organization);
     this.form = this.formBuilder.group({
       resume: [this.formData.resume, [Validators.required, Validators.minLength(2), Validators.maxLength(500)]],
@@ -88,7 +86,6 @@ export class CareerFormComponent implements OnInit, OnDestroy {
         this.formData.roleposition : '', [Validators.required]],
     });
 
-    console.log("this.baseData.roleposition", this.baseData.roleposition);
 
     this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
       currentAdmin => {
@@ -160,6 +157,8 @@ export class CareerFormComponent implements OnInit, OnDestroy {
   //   // this.showRoleForm = !this.showRoleForm;
   //   this.openRolePosition();
   // }
+
+
 
   openOrganization() {
     const dialogConfig = new MatDialogConfig();
@@ -326,8 +325,11 @@ export class CareerFormComponent implements OnInit, OnDestroy {
   }
 
   onEnviar(event: Event,) {
+    console.log("Envio formulario, este es ", this.form.valid);
+    console.log("Es Admin ", this.esAdmin);
     event.preventDefault;
     // Si deja de estar logueado, no registro lo que haya modificado y cierro form.
+    
     if (!this.esAdmin) {
 
       this.cancel.emit();

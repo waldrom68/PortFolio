@@ -60,7 +60,6 @@ export class CareerItemComponent implements OnInit, OnDestroy {
     );
       // Clono el objeto, uso assign por no tener atributos compuesto por otros objetos
       this.oldData = Object.assign({}, this.item)
-
   }
   ngOnDestroy() {
     this.AdminServiceSubscription?.unsubscribe();
@@ -74,11 +73,14 @@ export class CareerItemComponent implements OnInit, OnDestroy {
   }
 
   toggleForm(laboralCareer: LaboralCareer) {
+    console.log("Ingrese a toggleForm", laboralCareer);
+    
     this.showForm = !this.showForm;
     this.formData = laboralCareer;
 
     this.showBtnAction = !this.showBtnAction
     this.showBtnActionChange.emit(this.showBtnAction)
+    console.log("Ingrese a toggleForm y puse a showForm con el valor", this.showForm );
   }
 
   delete(laboralCareer: LaboralCareer) {
