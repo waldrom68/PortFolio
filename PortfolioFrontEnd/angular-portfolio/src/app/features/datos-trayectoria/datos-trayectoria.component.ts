@@ -1,16 +1,15 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BaseDataService, DataService } from 'src/app/service/data.service';
 import { AdminService } from 'src/app/service/auth.service';
 
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
-import {LaboralCareer, Organization, RolePosition, FullPersonDTO} from '../../models'
-
+import {LaboralCareer, FullPersonDTO} from '../../models'
 
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MessageBoxComponent } from '../../shared/message-box/message-box.component';
-import { ModalActionsService } from 'src/app/service/modal-actions.service';
-import { Observable, Subscription } from 'rxjs';
+
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-datos-trayectoria',
@@ -30,16 +29,15 @@ export class DatosTrayectoriaComponent implements OnInit, OnDestroy {
   baseData: FullPersonDTO;
   private BaseDataServiceSubscription: Subscription | undefined;
   
-  // myData: LaboralCareer[] = [];
   formData: LaboralCareer;  // instancia vacia, para cuando se solicite un alta
 
-  // myOrganizations: Organization[];
-  // myRolePositions: RolePosition[];
+  recargarItem: number = 0;  // elemento para la directiva "RefreshDirective"
 
    // Validacion Admin STATUS
    esAdmin: boolean;
    private AdminServiceSubscription: Subscription | undefined;
   
+
   constructor( 
     private dataService: DataService, 
     private baseDataService: BaseDataService,
@@ -47,6 +45,7 @@ export class DatosTrayectoriaComponent implements OnInit, OnDestroy {
     public matDialog: MatDialog,
 
     private adminService: AdminService,
+    // private formService: FormService,
     ) {  }
 
 
@@ -57,19 +56,6 @@ export class DatosTrayectoriaComponent implements OnInit, OnDestroy {
       }
     );
 
-
-    // this.myData = this.baseData.laboralCareer;
-    // this.myOrganizations = this.baseData.organization;
-    // this.myRolePositions = this.baseData.roleposition;
-    // if (this.baseData.organization) {
-    //     this.myOrganizations = this.baseData.organization;
-    //   }
-
-    //   if (this.baseData.roleposition) {
-    //     this.myRolePositions = this.baseData.roleposition;
-    //   }
-
-      
     this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
       currentAdmin => {
         this.esAdmin = currentAdmin;
@@ -77,8 +63,8 @@ export class DatosTrayectoriaComponent implements OnInit, OnDestroy {
     );
 
     this.resetForm()
-       
-   }
+
+  }
 
    ngOnDestroy() {
     this.AdminServiceSubscription?.unsubscribe();
@@ -91,13 +77,17 @@ export class DatosTrayectoriaComponent implements OnInit, OnDestroy {
 
   
   toggleForm() {
+  // PENDIENTE, evaluar si aqui se podria actualizar los items ya dezplegados
+  // tras algun cambio en Organizacion, Roles
     this.showForm = !this.showForm;
     this.showBtnAction = !this.showBtnAction;
   }  
   
   cancelation(career: LaboralCareer) {
     this.toggleForm();
+
   }
+
 
   openModalDelete(laboralCareer: LaboralCareer){
     // Llamo al modal, si se confirma el borrado.
@@ -176,7 +166,7 @@ export class DatosTrayectoriaComponent implements OnInit, OnDestroy {
 
     modalDialog.afterClosed().subscribe(
       data => {
-        console.log("Dialogo output: ", data);
+        // console.log("Dialogo output: ", data);
         if (data) {this.delItem() }
       }
 

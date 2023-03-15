@@ -119,3 +119,22 @@ export class ProgressValueService {
     this.progressValueSubject.next(currentData);
   }
 }
+
+// Nueva IMPLEMENTACION
+@Injectable({
+  providedIn: 'root'
+})
+export class FormService {
+  // Este servicio mantiene el control si se abren formularios que no están
+  // contenidos dentro de un modal. La idea es que sólo existe un form visible
+  // para el usuario
+  private currentOpenFormSubject: BehaviorSubject<number> = new BehaviorSubject({} as number);
+  public readonly currentOpenForm: Observable<number> = this.currentOpenFormSubject.asObservable();
+
+  constructor() { }
+
+  setCurrentForm(current: number): void {
+    this.currentOpenFormSubject.next( current);
+
+  }
+}

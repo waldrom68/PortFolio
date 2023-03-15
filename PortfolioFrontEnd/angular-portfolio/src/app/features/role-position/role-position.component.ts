@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Inject, Input, OnDestroy, OnInit, Output, resolveForwardRef } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit  } from '@angular/core';
 import { BaseDataService, DataService } from 'src/app/service/data.service';
 import { AdminService } from 'src/app/service/auth.service';
 import { faPlusCircle, faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -7,7 +7,7 @@ import { FullPersonDTO, RolePosition } from '../../models'
 
 import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MessageBoxComponent } from '../../shared/message-box/message-box.component';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-role-position',
@@ -107,6 +107,7 @@ export class RolePositionComponent implements OnInit, OnDestroy {
           // Actualizo la informacion en el origen
           // this.baseData.roleposition = this.myData;
           this.itemParaBorrar = null;
+          this.baseDataService.setCurrentBaseData(this.baseData);
         },
         error: (e) => {
           alert("Response Error (" + e.status + ")" + "\n" + e.message);
@@ -126,7 +127,7 @@ export class RolePositionComponent implements OnInit, OnDestroy {
         rolePosition.id = v.id;
         rolePosition.person = this.baseData.id;
         this.baseData.roleposition.push(rolePosition);
-        // this.baseData.roleposition = this.baseData.roleposition;
+        this.baseDataService.setCurrentBaseData(this.baseData);
       },
       error: (e) => {
         alert("Response Error (" + e.status + ") en el metodo addItem()" + "\n" + e.message);
@@ -167,7 +168,7 @@ export class RolePositionComponent implements OnInit, OnDestroy {
 
     modalDialog.afterClosed().subscribe(
       data => {
-        console.log("Dialogo output: ", data);
+        // console.log("Dialogo output: ", data);
         if (data) { this.delItem() }
       }
 

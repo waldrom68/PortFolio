@@ -1,21 +1,18 @@
-<div class="table-dark text-left container-fluid py-4" >
+<div class="table-dark text-left container-fluid py-4" 
+
+>
+
     <ng-container *ngIf="baseData.laboralCareer.length; else agregar">
-        <div *ngIf="!showForm" >
+    
+        <div id="listado" *ngIf="!showForm" >
 
             <app-career-item 
-                *ngFor="let item of baseData.laboralCareer"
-                [item]="item"
-                [formData]="formData"
-                (onDelete)="openModalDelete(item)"
                 
-                [(showBtnAction)]="showBtnAction"
+                *ngFor="let item of baseData.laboralCareer"
+                [item]= "item"
+                (onDelete)="openModalDelete(item)"
                 >
             </app-career-item>
-            <!-- [myOrganizations]="myOrganizations"
-            (myOrganizationsChange)="myOrganizations"
-            [myRolePositions]="myRolePositions"
-            (myRolePositionsChange)="myRolePositions" -->
-
 
         </div>
     </ng-container>
@@ -23,14 +20,14 @@
     <app-career-form
         *ngIf="showForm && esAdmin"
         [ngStyle]="{'width':'100%'}"
-        [formData]="formData"
         [title]="'Agregar un trabajo'"
         
-        (showBtnActionChange)="showBtnAction"
         (onUpdate)=" addItem($event)"
         (cancel)="cancelation($event)"
         >
     </app-career-form>
+    <!-- [formData]="formData" -->
+    <!-- (showBtnActionChange)="showBtnAction" -->
 
 
     <ng-template #agregar>
@@ -56,4 +53,7 @@
         </fa-icon>
     </button>
 </ng-container>
+
+
+
 

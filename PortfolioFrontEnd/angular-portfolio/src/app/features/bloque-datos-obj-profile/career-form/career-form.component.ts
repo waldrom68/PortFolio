@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
@@ -23,7 +23,7 @@ export class CareerFormComponent implements OnInit, OnDestroy {
   @Input() formData: LaboralCareer;
 
   @Input() title: string;
-  
+
   // @Input() myOrganizations: Organization[];
   // @Output() myOrganizationChange: EventEmitter<Organization[]> = new EventEmitter;
   // @Input() myRolePositions: RolePosition[];
@@ -39,6 +39,7 @@ export class CareerFormComponent implements OnInit, OnDestroy {
   faTimes = faTimes;
 
   form: FormGroup;
+
   // oldData: LaboralCareer[];
 
   showOrgaForm: boolean = false;
@@ -180,11 +181,6 @@ export class CareerFormComponent implements OnInit, OnDestroy {
       // Con altas, bajas y modificaciones, ya sea si impactan o no
       // en la DB. Ideal, si hay alta, quede en la instancia nueva, 
       // si se eliminó todo no debiera quedar en blanco, etc.
-      console.log("Esto se recibe al cerrar el modal", result);
-      console.log("Esto tiene basedata.Organization", this.baseData.organization);
-      console.log("Esto está en el formData", this.form.get('organization'));
-
-
       if (result.length > 0) {
 
         this.baseData.organization.forEach(
@@ -194,19 +190,18 @@ export class CareerFormComponent implements OnInit, OnDestroy {
               e.name != this.formData.organization.name) {
               console.log("se actualizo a -> ", e)
               // Con esto, logro dejar como seleccionada la opcion en el select.
-              // No encontré otra manera, de otra forma, mostraba seleccion, pero
-              // figuraba como no seleccionado dentro del .form, era no valido.
+              // No encontré otra manera, de otra forma mostraba seleccion, pero
+              // no figuraba seleccionado, con ello era invalid.
               // In patchValue method of FormGroup, we can omit other fields that 
               // is not required to be set dynamically.
               this.formData.organization = e;
               this.form.patchValue({ organization: e });
-              // this.form.controls['organization'].patchValue({disabled:false})
 
             }
           });
 
         if (!this.formData.organization) {
-          console.log("Aparentemente hubo un agregado");
+          // console.log("Aparentemente hubo un agregado");
           this.formData.organization = result[0];
         }
 
@@ -221,7 +216,6 @@ export class CareerFormComponent implements OnInit, OnDestroy {
           defaultOrg: "selected",
         });
 
-        console.log("TEngo organization vacio");
         this.form.get('organization')?.disable();
       }
 
@@ -230,10 +224,6 @@ export class CareerFormComponent implements OnInit, OnDestroy {
   }
 
   openRolePosition() {
-
-    // Clono el objeto, uso assign por no tener atributos compuesto por otros objetos
-    // const oldData = Object.assign({}, this.myRolePositions)
-
     const dialogConfig = new MatDialogConfig();
     // The user can't close the dialog by clicking outside its body
     dialogConfig.disableClose = true;
@@ -256,22 +246,18 @@ export class CareerFormComponent implements OnInit, OnDestroy {
       // Con altas, bajas y modificaciones, ya sea si impactan o no
       // en la DB. Ideal, si hay alta, quede en la instancia nueva, 
       // si se eliminó todo no debiera quedar en blanco, etc.
-      console.log("Esto se recibe al cerrar el modal", result);
-      console.log("Esto tiene basedata.roleposition", this.baseData.roleposition);
-      console.log("Esto está en el formData", this.form.get('roleposition'));
-
 
       if (result.length > 0) {
 
         this.baseData.roleposition.forEach(
           (e) => {
 
-            if (e.id != this.formData.roleposition.id ||
+            if (e.id == this.formData.roleposition.id &&
               e.name != this.formData.roleposition.name) {
               console.log("se actualizo a -> ", e)
               // Con esto, logro dejar como seleccionada la opcion en el select.
-              // No encontré otra manera, de otra forma, mostraba seleccion, pero
-              // figuraba como no seleccionado dentro del .form, era no valido.
+              // No encontré otra manera, de otra forma mostraba seleccion, pero
+              // no figuraba seleccionado, con ello era invalid.
               // In patchValue method of FormGroup, we can omit other fields that 
               // is not required to be set dynamically.
               this.formData.roleposition = e;
@@ -282,24 +268,21 @@ export class CareerFormComponent implements OnInit, OnDestroy {
           });
 
         if (!this.formData.roleposition) {
-          console.log("Aparentemente hubo un agregado");
+
           this.formData.roleposition = result[0];
         }
 
-        // this.myRolePositions = this.oldData
         this.form.get('roleposition')?.enable();
 
 
-      } else {
+      } else {  // la lista de roles quedó vacía
         this.formData.roleposition = new RolePosition();
         this.form.patchValue({
           roleposition: "",
           defaultRol: "selected"
         });
-
         this.form.get('roleposition')?.disable();
-        console.log("TEngo un roleposicion vacio");
-        // this.form.get('first')?.enable();
+        this.baseDataService.setCurrentBaseData(this.baseData)
 
       }
 
@@ -325,18 +308,17 @@ export class CareerFormComponent implements OnInit, OnDestroy {
   }
 
   onEnviar(event: Event,) {
-    console.log("Envio formulario, este es ", this.form.valid);
-    console.log("Es Admin ", this.esAdmin);
     event.preventDefault;
+
+    // console.log(this.form);
+
     // Si deja de estar logueado, no registro lo que haya modificado y cierro form.
-    
     if (!this.esAdmin) {
 
       this.cancel.emit();
 
     } else {
 
-      // console.log(this.form.valid, this.form.get("organizacion"))
       if (this.form.valid) {
 
         this.formData.resume = this.form.get("resume")?.value.trim();
@@ -346,6 +328,7 @@ export class CareerFormComponent implements OnInit, OnDestroy {
         this.formData.roleposition = this.form.get("roleposition")?.value;
         this.formData.status = true;
         this.formData.person = this.baseData.id
+        // estoy por cerrar el formulario, emito orden de actualizarse
         this.onUpdate.emit(this.formData);
 
       } else {
@@ -359,11 +342,11 @@ export class CareerFormComponent implements OnInit, OnDestroy {
   }
 
   onCancel(event: Event,) {
+
     this.cancel.emit();
   }
 
   // ngAfterContentChecked() {
-  //   console.log("se termino ngAfterContentChecked")
 
   // }
 

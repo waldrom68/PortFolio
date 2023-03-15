@@ -1,8 +1,8 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { faCheck, faMonument, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { Observable, Subscription } from 'rxjs';
+import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { Subscription } from 'rxjs';
 import { DataService } from 'src/app/service/data.service';
 import { AdminService } from 'src/app/service/auth.service';
 
@@ -34,21 +34,19 @@ form: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
-    private dataService: DataService,
     private adminService: AdminService,
-
   ) { }
 
   ngOnInit(): void {
+
     if (!this.item) {
       this.resetForm()
-      // console.log("ROLEPOSITION-FORM.COMPONENT REVISANDO POR AQUI", this.formData);
-      
-      // this.resetForm();
+
     } else {
-      // console.log("ROLEPOSITION-FORM.COMPONENT REVISANDO POR AQUI", this.formData);
+
       this.formData = this.item;
     }
+
     this.form = this.formBuilder.group({
       name:[this.formData.name, [Validators.required, Validators.minLength(3),Validators.maxLength(100) ]],
 
@@ -72,7 +70,7 @@ form: FormGroup;
   changeStyle($event: Event){
     this.color = $event.type == 'mouseover' ? 'resaltado' : 'normal';
   }
-  get Nombre(): any {
+  get Name(): any {
     return this.form.get("name")
   }
 

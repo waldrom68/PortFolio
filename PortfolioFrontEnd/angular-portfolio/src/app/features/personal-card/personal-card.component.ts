@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
 import { FullPersonDTO, Person } from '../../models'
@@ -6,10 +6,11 @@ import { FullPersonDTO, Person } from '../../models'
 import { faPen, faTimes, faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import { BaseDataService, DataService, ToPerson } from 'src/app/service/data.service';
 import { AdminService } from 'src/app/service/auth.service';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { PersonalFormComponent } from '../personal-form/personal-form.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UploadMediaService } from 'src/app/service/upload-media.service';
+import { FormService } from 'src/app/service/ui.service';
 
 @Component({
   selector: 'app-personal-card',
@@ -36,24 +37,22 @@ export class PersonalCardComponent implements OnInit, OnDestroy {
   changeImg: boolean;
 
 
-  // PENDIENTE, ESTÁ VINCULADO A LA PRACTICA DE OBSERVER
-  colorSubscription: Subscription;
-  color: string;
-  color$: Observable<string>;
-  // FIN A LA PRACTICA DE OBSERVER 
-
   // Validacion Admin STATUS
   esAdmin: boolean;
   private AdminServiceSubscription: Subscription | undefined;
+  openForm: number;
+  private formServiceSubscription: Subscription | undefined;
 
   baseData: FullPersonDTO;
   private BaseDataServiceSubscription: Subscription | undefined;
+
 
   profession: string[];
   converPerson: Person;
 
   constructor(
     private dataService: DataService,
+
     private adminService: AdminService,
 
     private baseDataService: BaseDataService,
@@ -63,6 +62,8 @@ export class PersonalCardComponent implements OnInit, OnDestroy {
     private uploadMediaService: UploadMediaService,
 
     private fb: FormBuilder,
+
+    private formService: FormService,
     // private fb: FormBuilder,
 
   ) { }
@@ -86,22 +87,22 @@ export class PersonalCardComponent implements OnInit, OnDestroy {
       }
     );
 
-    // PENDIENTE, ESTÁ VINCULADO A LA PRACTICA DE OBSERVER
-    this.color$ = this.dataService.getColor$();
-    this.color$.subscribe(color => this.color = color);
-    // FIN A LA PRACTICA DE OBSERVER 
+    this.formServiceSubscription = this.formService.currentOpenForm.subscribe(
+      currentForm => {
+        this.openForm = currentForm > 0 ? currentForm  : 0;
+      }
+    );
 
-
-
+ 
 
   }
 
   ngOnDestroy() {
     // PENDIENTE, ESTÁ VINCULADO A LA PRACTICA DE OBSERVER
-    this.colorSubscription.unsubscribe();
     // FIN A LA PRACTICA DE OBSERVER 
     this.AdminServiceSubscription?.unsubscribe();
     this.BaseDataServiceSubscription?.unsubscribe();
+    this.formServiceSubscription?.unsubscribe();
 
   }
 
@@ -120,6 +121,13 @@ export class PersonalCardComponent implements OnInit, OnDestroy {
     // Cierra el formulario de edicion o creacion
     this.showForm = !this.showForm;
     this.showBtnAction = !this.showBtnAction
+
+    if (this.showForm) {
+      this.formService.setCurrentForm(this.openForm + 1)
+    } else {
+      this.formService.setCurrentForm(this.openForm - 1)
+    };
+
   }
 
   toggleFlagChangeImg() {
@@ -127,6 +135,13 @@ export class PersonalCardComponent implements OnInit, OnDestroy {
 
     this.changeImg = !this.changeImg;
     this.refreshImg();
+
+    if (this.showForm) {
+      this.formService.setCurrentForm(this.openForm + 1)
+    } else {
+      this.formService.setCurrentForm(this.openForm - 1)
+    };
+
   }
 
   async upLoadFile(evento: Event) {

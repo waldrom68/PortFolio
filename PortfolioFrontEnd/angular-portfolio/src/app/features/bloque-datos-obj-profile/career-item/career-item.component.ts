@@ -5,6 +5,7 @@ import { faPen, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Observable, Subscription } from 'rxjs';
 import { BaseDataService, DataService } from 'src/app/service/data.service';
 import { AdminService } from 'src/app/service/auth.service';
+import { FormService } from 'src/app/service/ui.service';
 
 @Component({
   selector: 'app-career-item',
@@ -16,11 +17,12 @@ export class CareerItemComponent implements OnInit, OnDestroy {
   @Input() item: LaboralCareer;
 
   @Input() formData: LaboralCareer;
-  @Input() myOrganizations: Organization[];
-  @Input() myRolePositions: RolePosition[];
 
-  @Input() showBtnAction!: boolean;
-  @Output() showBtnActionChange = new EventEmitter<boolean>();
+  // @Input() myOrganizations: Organization[];
+  // @Input() myRolePositions: RolePosition[];
+
+  // @Input() showBtnAction!: boolean;
+  // @Output() showBtnActionChange = new EventEmitter<boolean>();
  
   @Output() onDelete: EventEmitter<LaboralCareer> = new EventEmitter()
   @Output() onUpdate: EventEmitter<LaboralCareer> = new EventEmitter()
@@ -31,6 +33,7 @@ export class CareerItemComponent implements OnInit, OnDestroy {
   faTrash = faTrash;
 
   showForm: boolean = false;
+  // formData: LaboralCareer;
 
   oldData: LaboralCareer;
   baseData: FullPersonDTO;
@@ -40,12 +43,16 @@ export class CareerItemComponent implements OnInit, OnDestroy {
   // Validacion Admin STATUS
   esAdmin: boolean;
   private AdminServiceSubscription: Subscription | undefined;
+  openForm: number;
+  private formServiceSubscription: Subscription | undefined;
  
   constructor( 
     private dataService: DataService, 
     private adminService: AdminService,
-    private baseDataService: BaseDataService, ) 
-    { }
+    private baseDataService: BaseDataService,
+    private formService: FormService,
+
+    ) { }
 
   ngOnInit() {
     this.BaseDataServiceSubscription = this.baseDataService.currentBaseData.subscribe(
@@ -58,12 +65,20 @@ export class CareerItemComponent implements OnInit, OnDestroy {
         this.esAdmin = currentAdmin;
       }
     );
+
+    this.formServiceSubscription = this.formService.currentOpenForm.subscribe(
+      currentForm => {
+        this.openForm = currentForm > 0 ? currentForm  : 0;
+      }
+    );
       // Clono el objeto, uso assign por no tener atributos compuesto por otros objetos
       this.oldData = Object.assign({}, this.item)
   }
   ngOnDestroy() {
     this.AdminServiceSubscription?.unsubscribe();
     this.BaseDataServiceSubscription?.unsubscribe();
+    this.formServiceSubscription?.unsubscribe();
+
   }
 
   color:string = 'red';
@@ -73,14 +88,19 @@ export class CareerItemComponent implements OnInit, OnDestroy {
   }
 
   toggleForm(laboralCareer: LaboralCareer) {
-    console.log("Ingrese a toggleForm", laboralCareer);
-    
+
     this.showForm = !this.showForm;
     this.formData = laboralCareer;
 
-    this.showBtnAction = !this.showBtnAction
-    this.showBtnActionChange.emit(this.showBtnAction)
-    console.log("Ingrese a toggleForm y puse a showForm con el valor", this.showForm );
+   
+    if (this.showForm) {
+      this.formService.setCurrentForm(this.openForm + 1)
+    } else {
+      this.formService.setCurrentForm(this.openForm - 1)
+    }
+
+    this.baseDataService.setCurrentBaseData(this.baseData)
+
   }
 
   delete(laboralCareer: LaboralCareer) {
@@ -102,6 +122,9 @@ export class CareerItemComponent implements OnInit, OnDestroy {
         // v.person = this.baseData.id
         // this.baseData.laboralCareer = v;
         // this.item = laboralCareer;
+        // console.log("dataService.upDateEntity career-item, Aqui debiera tener los datos actualizados de roleposition", this.baseData.roleposition);
+        // this.item = laboralCareer;
+
       },
       error: (e) => {
         alert("Response Error (" + e.status + ") en el metodo addItem()" + "\n" + e.message);
@@ -111,10 +134,11 @@ export class CareerItemComponent implements OnInit, OnDestroy {
       },
       complete: () => console.log("Completado el alta en Trayectoria Laboral")
     });
-
-
-
+    
+    
+    this.baseDataService.setCurrentBaseData(this.baseData)
     this.toggleForm(laboralCareer);  // cierro el formulario
+    
 
   }
 }

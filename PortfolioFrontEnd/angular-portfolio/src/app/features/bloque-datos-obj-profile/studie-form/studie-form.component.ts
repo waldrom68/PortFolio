@@ -23,11 +23,12 @@ export class StudieFormComponent implements OnInit, OnDestroy {
   @Input() formData: Studie;
 
   @Input() title: string;
-  @Input() myOrganizations: Organization[];
-  @Output() myOrganizationChange: EventEmitter<Organization[]> = new EventEmitter;
 
-  @Input() myDegrees: Degree[];
-  @Output() myDegreesChange: EventEmitter<Degree[]> = new EventEmitter;
+  // @Input() myOrganizations: Organization[];
+  // @Output() myOrganizationChange: EventEmitter<Organization[]> = new EventEmitter;
+
+  // @Input() myDegrees: Degree[];
+  // @Output() myDegreesChange: EventEmitter<Degree[]> = new EventEmitter;
 
   @Input() showBtnAction: boolean;
   @Output() showBtnActionChange = new EventEmitter<boolean>();
@@ -90,8 +91,18 @@ export class StudieFormComponent implements OnInit, OnDestroy {
         this.esAdmin = currentAdmin;
       }
     );
+
+    
+    this.baseData.organization.length > 0 ?
+      this.form.get('organization')?.enable() :
+      this.form.get('organization')?.disable()
+
+
+    this.baseData.roleposition.length > 0 ?
+      this.form.get('degree')?.enable() :
+      this.form.get('degree')?.disable()
     // this.resetForm();
-    console.log("Estoy en ngOnInit de studie-form.component esto está en formData", this.formData);
+
 
   }
 
@@ -160,25 +171,51 @@ export class StudieFormComponent implements OnInit, OnDestroy {
     const modalDialog = this.dialog.open(OrganizationComponent, dialogConfig);
 
     modalDialog.afterClosed().subscribe(result => {
-      // console.log("Esto esta en afterClosed()")
-      console.log("Hubo cambios?", this.myOrganizations != result)
 
-      if (this.myOrganizations != result) {
-        // PENDIENTE, CREO QUE AQUI HAY UN PROBLEMA
-        // Debo verificar si se editó la organizacion que tenia registrado en el formulario
-        this.myOrganizations.forEach((e) => {
-          if (e.id == this.formData.organization.id) {
-            console.log("se actualizo -> ", e)
-            this.formData.organization = e;
-          }
-        })
+      // PENDIENTE, ESTO ES ¡ UNA CHANCHADA !, REPENSARLO DESDE CERO
+      // Con altas, bajas y modificaciones, ya sea si impactan o no
+      // en la DB. Ideal, si hay alta, quede en la instancia nueva, 
+      // si se eliminó todo no debiera quedar en blanco, etc.
+      if (result.length > 0) {
 
-        this.myOrganizations = result;
-        this.myOrganizationChange.emit(this.myOrganizations);
+        this.baseData.organization.forEach(
+          (e) => {
+
+            if (e.id != this.formData.organization.id ||
+              e.name != this.formData.organization.name) {
+              console.log("se actualizo a -> ", e)
+              // Con esto, logro dejar como seleccionada la opcion en el select.
+              // No encontré otra manera, de otra forma mostraba seleccion, pero
+              // no figuraba seleccionado, con ello era invalid.
+              // In patchValue method of FormGroup, we can omit other fields that 
+              // is not required to be set dynamically.
+              this.formData.organization = e;
+              this.form.patchValue({ organization: e });
+
+            }
+          });
+
+        if (!this.formData.organization) {
+          // console.log("Aparentemente hubo un agregado");
+          this.formData.organization = result[0];
+        }
+
+        // this.myorganizations = this.oldData
+        this.form.get('organization')?.enable();
+
+
+      } else {
+        this.formData.organization = new Organization();
+        this.form.patchValue({
+          organization: "",
+          defaultOrg: "selected",
+        });
+
+        this.form.get('organization')?.disable();
       }
-      // console.log("Esto estaba en afterClosed()")
+
     })
-    // this.togglePrimaryForm();
+
   }
 
   openDegree() {
@@ -196,25 +233,49 @@ export class StudieFormComponent implements OnInit, OnDestroy {
     const modalDialog = this.dialog.open(DegreeComponent, dialogConfig);
 
     modalDialog.afterClosed().subscribe(result => {
-      // console.log("Esto esta en afterClosed()")
-      console.log("Hubo cambios?", this.myDegrees != result)
-      console.log(this.myDegrees, result);
 
-      if (this.myDegrees != result) {
+      // PENDIENTE, ESTO ES ¡ UNA CHANCHADA !, REPENSARLO DESDE CERO
+      // Tiene que quedar sincronizado myRolepositions y formData
+      // Con altas, bajas y modificaciones, ya sea si impactan o no
+      // en la DB. Ideal, si hay alta, quede en la instancia nueva, 
+      // si se eliminó todo no debiera quedar en blanco, etc.
+
+      if (result.length > 0) {
 
         // PENDIENTE, CREO QUE AQUI HAY UN PROBLEMA
         // Debo verificar si se editó la organizacion que tenia registrado en el formulario
-        this.myDegrees.forEach(
+        this.baseData.degree.forEach(
           (e) => {
-            if (e.id == this.formData.degree.id) {
+
+            if (e.id == this.formData.degree.id && 
+              e.name != this.formData.degree.name) {
               console.log("se actualizo -> ", e)
+              // Con esto, logro dejar como seleccionada la opcion en el select.
+              // No encontré otra manera, de otra forma mostraba seleccion, pero
+              // no figuraba seleccionado, con ello era invalid.
+              // In patchValue method of FormGroup, we can omit other fields that 
+              // is not required to be set dynamically.
               this.formData.degree = e;
+              this.form.patchValue({ degree: e });
             }
           })
-        this.myDegrees = result;
-        this.myDegreesChange.emit(this.myDegrees);
+          if (!this.formData.degree) {
+
+            this.formData.degree = result[0];
+          }
+  
+          this.form.get('degree')?.enable();
+      } else {  // la lista de roles quedó vacía
+
+      this.formData.degree = new Degree();
+        this.form.patchValue({
+          degree: "",
+          defaultRol: "selected"
+        });
+        this.form.get('degree')?.disable();
+        this.baseDataService.setCurrentBaseData(this.baseData)
+
       }
-      // console.log("Esto estaba en afterClosed(), studie-form", this.formData)
     })
     // this.togglePrimaryForm();
   }

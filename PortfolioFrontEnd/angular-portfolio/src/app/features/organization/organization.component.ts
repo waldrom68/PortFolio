@@ -5,11 +5,8 @@ import { faPlusCircle, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 import { Organization, FullPersonDTO } from '../../models'
 
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-
+import { MatDialog, MatDialogConfig, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MessageBoxComponent } from '../../shared/message-box/message-box.component';
-
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -18,21 +15,22 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./organization.component.css']
 })
 export class OrganizationComponent implements OnInit, OnDestroy {
-
   showForm: boolean = false;  // flag para mostrar o no el formulario
 
-  myData: Organization[] = [];
-  formData: Organization;  // instancia vacia, para cuando se solicite un alta
+  // myData: Organization[] = [];
+  // formData: Organization;  // instancia vacia, para cuando se solicite un alta
 
   faPlusCircle = faPlusCircle;
   faTimes = faTimes;
 
-  @Input() showBtnAction: boolean = true;  // flag para mostrar o no los btn's de acciones del usuario
-  @Output() showBtnActionChange = new EventEmitter<boolean>();
+  // @Input() showBtnAction: boolean = true;  // flag para mostrar o no los btn's de acciones del usuario
+  // @Output() showBtnActionChange = new EventEmitter<boolean>();
 
-  @Input() myOrganizations: Organization[];
-  @Output() myOrganizationsChange = new EventEmitter<Organization[]>();
-  @Output() mySelectChange = new EventEmitter<Organization[]>();
+  // @Input() myOrganizations: Organization[];
+  // @Output() myOrganizationsChange = new EventEmitter<Organization[]>();
+  // @Output() mySelectChange = new EventEmitter<Organization[]>();
+
+  showBtnAction: boolean = true;  // flag para mostrar o no los btn's de acciones del usuario
 
   private itemParaBorrar: any;
 
@@ -56,17 +54,14 @@ export class OrganizationComponent implements OnInit, OnDestroy {
     @Inject(MAT_DIALOG_DATA) public data: { message: string, },
     public dialogRef: MatDialogRef<OrganizationComponent>, //OrganizationModal
 
-  ) {
-    this.message = data ? data.message : "prueba";
-    
-  }
+  ) {  }
 
   ngOnInit(): void {
 
     this.BaseDataServiceSubscription = this.baseDataService.currentBaseData.subscribe(
       currentData => {
         this.baseData = currentData;
-        this.myData = currentData.organization;
+        // this.myData = currentData.organization;
       }
     );
     this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
@@ -74,8 +69,7 @@ export class OrganizationComponent implements OnInit, OnDestroy {
         this.esAdmin = currentAdmin;
       }
     );
-
-    this.resetForm();
+    // this.resetForm();
   }
 
   ngOnDestroy() {
@@ -83,9 +77,9 @@ export class OrganizationComponent implements OnInit, OnDestroy {
     this.BaseDataServiceSubscription?.unsubscribe();
   }
 
-  resetForm() {
-    this.formData = new Organization();
-  }
+  // resetForm() {
+  //   this.formData = new Organization();
+  // }
 
   toggleForm() {
     // Cierra el formulario de edicion o creacion
@@ -93,7 +87,6 @@ export class OrganizationComponent implements OnInit, OnDestroy {
     this.showBtnAction = !this.showBtnAction;
 
   }
-
 
   cancelation(organization: Organization) {
     this.toggleForm();
@@ -113,11 +106,11 @@ export class OrganizationComponent implements OnInit, OnDestroy {
       this.dataService.delEntity(this.itemParaBorrar, "/organization").subscribe({
         next: (v) => {
           console.log("Se ha eliminado exitosamente a: ", this.itemParaBorrar);
-          this.myData = this.myData.filter((t) => { return t !== this.itemParaBorrar })
+          this.baseData.organization = this.baseData.organization.filter((t) => { return t !== this.itemParaBorrar })
           // Actualizo la informacion en el origen
-          this.baseData.organization = this.myData;
+          // this.baseData.organization = this.myData;
           this.itemParaBorrar = null;
-
+          this.baseDataService.setCurrentBaseData(this.baseData);
         },
         error: (e) => {
           alert("Response Error (" + e.status + ")" + "\n" + e.message);
@@ -137,8 +130,8 @@ export class OrganizationComponent implements OnInit, OnDestroy {
         console.log("Guardado correctamente: ", v);
         organization.id = v.id;
         organization.person = this.baseData.id;
-        this.myData.push(organization);
-        this.baseData.organization = this.myData;
+        this.baseData.organization.push(organization);
+        this.baseDataService.setCurrentBaseData(this.baseData);
       },
       error: (e) => {
         alert("Response Error (" + e.status + ") en el metodo addItem()" + "\n" + e.message);
@@ -147,8 +140,8 @@ export class OrganizationComponent implements OnInit, OnDestroy {
       complete: () => console.log("Completado el alta de la Organizacion")
     }
     );
-    this.resetForm();
     this.toggleForm();
+    // this.resetForm();
 
   }
 

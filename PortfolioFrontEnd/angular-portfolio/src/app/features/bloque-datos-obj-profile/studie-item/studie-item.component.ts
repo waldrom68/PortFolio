@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { Studie, Organization, Person, Degree, FullPersonDTO } from '../../../models'
+import { Studie, Organization, Degree, FullPersonDTO } from '../../../models'
 
 import { faPen, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { BaseDataService, DataService } from 'src/app/service/data.service';
 import { AdminService } from 'src/app/service/auth.service';
+import { FormService } from 'src/app/service/ui.service';
 
 @Component({
   selector: 'app-studie-item',
@@ -16,11 +17,12 @@ export class StudieItemComponent implements OnInit, OnDestroy {
   @Input() item: Studie;
 
   @Input() formData: Studie;
-  @Input() myOrganizations: Organization[];
-  @Input() myDegrees: Degree[];
 
-  @Input() showBtnAction!: boolean;
-  @Output() showBtnActionChange = new EventEmitter<boolean>();
+  // @Input() myOrganizations: Organization[];
+  // @Input() myDegrees: Degree[];
+
+  // @Input() showBtnAction!: boolean;
+  // @Output() showBtnActionChange = new EventEmitter<boolean>();
  
   @Output() onDelete: EventEmitter<Studie> = new EventEmitter()
   @Output() onUpdate: EventEmitter<Studie> = new EventEmitter()
@@ -32,6 +34,7 @@ export class StudieItemComponent implements OnInit, OnDestroy {
 
   showForm: boolean = false;
 
+  oldData: Studie;
   baseData: FullPersonDTO;
   private BaseDataServiceSubscription: Subscription | undefined;
 
@@ -39,12 +42,15 @@ export class StudieItemComponent implements OnInit, OnDestroy {
  // Validacion Admin STATUS
  esAdmin: boolean;
  private AdminServiceSubscription: Subscription | undefined;
-
+ openForm: number;
+ private formServiceSubscription: Subscription | undefined;
 
   constructor(
     private dataService: DataService,
     private adminService: AdminService,
     private baseDataService: BaseDataService, 
+    private formService: FormService,
+    
     ) { }
 
   ngOnInit() {
@@ -58,10 +64,18 @@ export class StudieItemComponent implements OnInit, OnDestroy {
         this.esAdmin = currentAdmin;
       }
     );
+    this.formServiceSubscription = this.formService.currentOpenForm.subscribe(
+      currentForm => {
+        this.openForm = currentForm > 0 ? currentForm  : 0;
+      }
+    );
+      // Clono el objeto, uso assign por no tener atributos compuesto por otros objetos
+      this.oldData = Object.assign({}, this.item)
   }
   ngOnDestroy() {
     this.AdminServiceSubscription?.unsubscribe();
     this.BaseDataServiceSubscription?.unsubscribe();
+    this.formServiceSubscription?.unsubscribe();
   }
 
   color:string = 'red';
@@ -74,8 +88,14 @@ export class StudieItemComponent implements OnInit, OnDestroy {
     this.showForm = !this.showForm;
     this.formData = studie;
  
-    this.showBtnAction = !this.showBtnAction
-    this.showBtnActionChange.emit(this.showBtnAction)
+    if (this.showForm) {
+      this.formService.setCurrentForm(this.openForm + 1)
+    } else {
+      this.formService.setCurrentForm(this.openForm - 1)
+    }
+
+    this.baseDataService.setCurrentBaseData(this.baseData)
+
   }
 
   delete(studie: Studie) {
@@ -101,13 +121,13 @@ export class StudieItemComponent implements OnInit, OnDestroy {
         alert("Response Error (" + e.status + ") en el metodo addItem()" + "\n" + e.message);
         console.log("Se quizo agregar sin exito a: " + studie.name, "si realmente tiene el mismo nombre, procure hacer un pequeño cambio");
         // AQUI RESTAURO oldData
-        studie = this.item;
+        studie = this.oldData;
       },
       complete: () => console.log("Completado el alta en Formación")
     });
 
 
-
+    this.baseDataService.setCurrentBaseData(this.baseData)
     this.toggleForm(studie);  // cierro el formulario
 
   }

@@ -38,6 +38,7 @@
 
 <form class="form-row p-1 d-flex justify-content-around" 
   *ngIf="showPrimaryForm" 
+
   [formGroup]="form" 
   #myForm="ngForm"
   (ngSubmit)="onEnviar($event); myForm.resetForm()">
@@ -48,34 +49,31 @@
 
     <!-- ORGANIZACION -->
       <div class="form-group col-md-6 ">
-      <label class="form-label" for="organization">Organizacion</label>
+        <label class="form-label" for="organization">Organizacion</label>
+        
+        
+        <select class="form-control" formControlName="organization" name="organization" [compareWith]="compararOrganizacion"
+          [ngClass]="{'error is-invalid': (Organization?.invalid && Organization?.touched), 'is-valid': Organization.valid}">
+        
+          <option name="defaultOrg" *ngIf="!baseData.organization.length" value="" disabled selected>Sin datos</option>
+          <option *ngFor="let elemento of baseData.organization" [ngValue]="elemento">
+            {{elemento.name}} </option>
+        
+        </select>
 
-
-      <select class="form-control" 
-      formControlName="organization" 
-      name="organization"
-        [compareWith]="compararOrganizacion"
-        [ngClass]="{'error is-invalid': (Organization?.invalid && Organization?.touched), 'is-valid': Organization.valid}">
-
-        <option name="defaultOrg" *ngIf="!baseData.organization.length" value="" disabled selected>Sin datos</option>
-        <option *ngFor="let elemento of baseData.organization" [ngValue]="elemento">
-          {{elemento.name}} </option>
-
-      </select>
-
-      <div class="row error-container mx-auto">
-        <small class="mensajeError mx-1" *ngIf="!baseData.organization.length"> Debe crear organizaciones
-        </small>
-        <ng-container *ngIf="(Organization.invalid && Organization.touched); else isOk">
-
-          <small class="mensajeError mx-1" *ngIf="form.hasError('required', 'organization')"> Falta seleccionar
+        <div class="row error-container mx-auto">
+          <small class="mensajeError mx-1" *ngIf="!baseData.organization.length"> Debe crear organizaciones
           </small>
+          <ng-container *ngIf="(Organization.invalid && Organization.touched); else isOk">
 
-        </ng-container>
-        <ng-template #isOk>
-        </ng-template>
-      </div>
-      <!-- </div> -->
+            <small class="mensajeError mx-1" *ngIf="form.hasError('required', 'organization')"> Falta seleccionar
+            </small>
+
+          </ng-container>
+          <ng-template #isOk>
+          </ng-template>
+        </div>
+
     </div> <!-- FIN ORGANIZACION -->
 
     <!-- POSICION -->
@@ -172,9 +170,7 @@
   </div> <!-- FIN FECHAS INICIO Y FIN -->
 
 
-
-  
-  <!-- SUBMIN O CANCELAR Y CERRAR -->
+   <!-- SUBMIN O CANCELAR Y CERRAR -->
   <div class="form-row m-4" style="width:100% ">
     <div class="form-group col d-flex align-items-center m-auto justify-content-around">
       <button type="submit" class="btn btn-success btn-sm p-2 m-2" [disabled]="!form.valid">

@@ -54,6 +54,7 @@ import { StudieItemComponent } from '../features/bloque-datos-obj-profile/studie
 import { StudieFormComponent } from '../features/bloque-datos-obj-profile/studie-form/studie-form.component';
 
 import { IniciarSesionComponent } from './iniciar-sesion/iniciar-sesion.component';
+import { RefreshDirective } from '../directive/refresh.directive';
 
 
 @NgModule({
@@ -98,6 +99,7 @@ import { IniciarSesionComponent } from './iniciar-sesion/iniciar-sesion.componen
         StudieItemComponent,
         StudieFormComponent,
         IniciarSesionComponent,
+        RefreshDirective, 
 
     ],
     exports: [

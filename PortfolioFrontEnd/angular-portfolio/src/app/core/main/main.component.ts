@@ -10,7 +10,7 @@ import { BaseDataService, DataService } from 'src/app/service/data.service';
 import { AdminService } from 'src/app/service/auth.service';
 
 import { TokenService } from 'src/app/service/token.service';
-import { UiService } from 'src/app/service/ui.service';
+import { UiService, FormService } from 'src/app/service/ui.service';
 
 @Component({
   selector: 'app-main',
@@ -48,14 +48,15 @@ export class MainComponent implements OnInit, OnDestroy {
   fragment: string = 'Init';
   // wait: boolean = true;
 
- 
   baseData: FullPersonDTO;
   private BaseDataServiceSubscription: Subscription | undefined;
 
   // Validacion Admin STATUS
   esAdmin: boolean;
   private AdminServiceSubscription: Subscription | undefined;
-
+  openForm: number;
+  private formServiceSubscription: Subscription | undefined;
+  
 
 
   // Inyectando servicios en el contructor
@@ -68,6 +69,7 @@ export class MainComponent implements OnInit, OnDestroy {
 
     private miServicio: UiService,
     private tokenService: TokenService,
+    private formService: FormService,
 
     private renderer: Renderer2,  // Se usa para renderizar tras la carga de todos los componentes iniciales, ngAfterViewInit 
 
@@ -84,24 +86,6 @@ export class MainComponent implements OnInit, OnDestroy {
       }
     );
 
-    // // Traigo todos los datos del Portfolio
-    // this.dataService.getPortFolioData().subscribe({
-    //   next: (gralData) => {
-    //     this.baseDataService.setCurrentBaseData(gralData);
-    //     this.wait = false;
-    //     console.log(this.baseData);
-    //   },
-    //   error: (e) => {
-    //     // e.status = 0, error del servidor
-    //     // e.status = 400, e.statusText= OK, error en el pedido al servidor
-    //     this.wait = true;
-    //     alert("Response Error (" + e.status + ") en iniciar.sesion.component" + "\n" + e.message);
-    //     console.log("Se quizo obtener los datos sin exito; ", e)
-    //   },
-    //   complete: () => { console.log("Finalizado el proceso de obtener los datos del PortFolio") }
-    // });
-
-
     // VALIDACION SI ES UN USUARIO ADMINISTRADOR Y TIENE TOKEN VIGENTE
     if (this.tokenService.isValidAdmin()) {
       this.adminService.setCurrentAdmin(true);
@@ -115,7 +99,12 @@ export class MainComponent implements OnInit, OnDestroy {
         this.esAdmin = currentAdmin;
       }
     );
-
+    // Se susbcribe para ver cuantos formularios hay abiertos
+    this.formServiceSubscription = this.formService.currentOpenForm.subscribe(
+      currentForm => {
+        this.openForm = currentForm > 0 ? currentForm  : 0;
+      }
+    );
 
 
     this.detailCards = this.miServicio.getCards();
@@ -140,6 +129,8 @@ export class MainComponent implements OnInit, OnDestroy {
     // this.isAdminSubscription.unsubscribe();
     this.AdminServiceSubscription?.unsubscribe();
     this.BaseDataServiceSubscription?.unsubscribe();
+    this.formServiceSubscription?.unsubscribe();
+
   }
 
 

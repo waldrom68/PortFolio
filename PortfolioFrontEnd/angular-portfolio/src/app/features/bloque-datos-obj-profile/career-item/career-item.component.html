@@ -1,8 +1,9 @@
-<div class="table-dark row " *ngIf="!showForm">
+<div class="table-dark row " *ngIf="!showForm && openForm == 0">
     <!-- <div  class="row container-fluid"> -->
 
     <div [ngClass]="{'p-0 col-10':esAdmin, 'col-12':!esAdmin}">
         <div [ngClass]="color" (mouseover)="changeStyle($event)" (mouseout)="changeStyle($event)">
+            
             <ul class="head border rounded fade-in-ul mb-0 mt-2">
                 <div *ngIf="item.endDate; else elseBlock">
                     <h6>({{item.startDate | date:'MM-yyyy' }} hasta {{item.endDate | date:'MM-yyyy'}})
@@ -19,27 +20,32 @@
         </div>
     </div>
 
-    <div *ngIf="esAdmin && showBtnAction" class="col icon-group">
-        <button class="btn btn-outline-success btn-sm" (click)="toggleForm(item);" ngClass="faConfirm fa-ico">
-            <fa-icon [icon]="faPen">
-            </fa-icon>
+    <div *ngIf="esAdmin  && openForm == 0" class="col icon-group">
+        <button class="btn btn-outline-success btn-sm" 
+            (click)="toggleForm(item);" 
+            ngClass="faConfirm fa-ico">
+            <fa-icon [icon]="faPen"></fa-icon>
         </button>
-        <button class="btn btn-outline-danger btn-sm" (click)="delete(item)" ngClass="faCancel">
-            <fa-icon [icon]="faTrash">
-            </fa-icon>
+        <button class="btn btn-outline-danger btn-sm" 
+            (click)="delete(item)" 
+            ngClass="faCancel"
+        >
+            <fa-icon [icon]="faTrash"></fa-icon>
         </button>
     </div>
 
 </div>
-    <!-- </div> -->
-    {{showForm}} && {{esAdmin}}
-    <app-career-form *ngIf="showForm && esAdmin" [ngStyle]="{'width':'100%'}" 
-    [formData]="formData"
-        [title]="'Agregar un trabajo'" 
-        (showBtnActionChange)="showBtnAction" 
-        (onUpdate)="update($event);"
-        (cancel)="cancelation($event)">
-    </app-career-form>
+<!-- </div> -->
+
+<app-career-form *ngIf="showForm && esAdmin" [ngStyle]="{'width':'100%'}" 
+[title]="'Agregar un trabajo'" 
+[formData]="formData"
+
+(onUpdate)="update($event);"
+(cancel)="cancelation($event)">
+</app-career-form>
+
+<!-- (showBtnActionChange)="showBtnAction"  -->
 
 
     <!-- [myOrganizations]="myOrganizations" 

@@ -42,6 +42,19 @@ export class DataService {
   // Segundo el subject será un elemento del servicio
   private myImage$: Subject<string> = new Subject<string>();
 
+ // #######################################
+  // Almacen y servicio de flag showForm
+  // Primero crear el almacen del dato si es Administrador,
+  //  el observado
+  private showForm2: boolean = false;
+  // Segundo el subject será un elemento del servicio
+  private showForm2$: Subject<boolean> = new Subject<boolean>();
+
+  // Fin Almacen y servicio de flag isLoggin
+
+
+
+
   private currentValue: number;
   private currentValue$ = new Subject<number>();
 
@@ -159,6 +172,7 @@ export class DataService {
   adminStatus() {
     return this.isAdmin;
   }
+
   // Fin Metodos del servicio de flag isLoggin
 
 
@@ -536,6 +550,12 @@ export class BaseDataService {
 
   }
 
+
+  // Fin Metodos del servicio de flag isLoggin
+
+
+// PENDIENTE implementar un logout si el usuario no tiene actividad, ver idea en:
+// https://fullstackdeveloper.guru/2020/03/25/how-to-check-user-inactivity-in-angular/
   @Injectable({
     providedIn: 'root'
   })
@@ -553,5 +573,4 @@ export class BaseDataService {
     }
   }
 
-  
 

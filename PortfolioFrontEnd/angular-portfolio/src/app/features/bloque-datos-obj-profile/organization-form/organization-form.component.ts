@@ -1,8 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { faCheck, faMonument, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { Observable, Subscription } from 'rxjs';
+import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { Subscription } from 'rxjs';
 import { DataService } from 'src/app/service/data.service';
 import { AdminService } from 'src/app/service/auth.service';
 
@@ -15,14 +15,17 @@ import { Organization } from 'src/app/models';
 })
 export class OrganizationFormComponent implements OnInit {
 
-  @Input() formData: Organization;
+  // @Input() formData: Organization;
   @Input() title: string;
+  @Input() item: Organization;
+
   @Output() onUpdate: EventEmitter<Organization> = new EventEmitter()
   @Output() cancel: EventEmitter<Organization> = new EventEmitter()
 
   faCheck = faCheck;
   faTimes = faTimes;
 
+  formData: Organization;
   form: FormGroup;
 
   // Validacion Admin STATUS
@@ -33,23 +36,20 @@ export class OrganizationFormComponent implements OnInit {
     private formBuilder: FormBuilder,
 
     private adminService: AdminService,
-  ) {
-
-  }
+  ) { }
 
   ngOnInit(): void {
-    // console.log("recibo este formdata", this.formData);
-    if (!this.formData) {
+ 
+    if (!this.item) {
       this.resetForm()
-      console.log("ORGANIZATION-FORM.COMPONENT REVISANDO POR AQUI", this.formData);
-
-      // this.resetForm();
+ 
     } else {
-      console.log("ORGANIZATION-FORM.COMPONENT REVISANDO POR AQUI", this.formData);
-
+      
+      this.formData = this.item;
     }
+
     this.form = this.formBuilder.group({
-      name: [this.formData.name, [Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
+      name: [this.formData.name, [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
       resume: [this.formData.resume, [Validators.maxLength(200)]],
       url: [this.formData.url, []]
 
@@ -66,7 +66,14 @@ export class OrganizationFormComponent implements OnInit {
 
     this.AdminServiceSubscription?.unsubscribe();
   }
-  get Nombre(): any {
+
+  color:string = 'red';
+  
+  changeStyle($event: Event){
+    this.color = $event.type == 'mouseover' ? 'resaltado' : 'normal';
+  }
+
+  get Name(): any {
     return this.form.get("name")
   }
   get Resume(): any {
@@ -91,7 +98,6 @@ export class OrganizationFormComponent implements OnInit {
     } else {
 
       if (this.form.valid) {
-        console.log("Estoy en onEnviar()");
 
         this.formData.name = this.form.get("name")?.value.trim();
         this.formData.resume = this.form.get("resume")?.value.trim();

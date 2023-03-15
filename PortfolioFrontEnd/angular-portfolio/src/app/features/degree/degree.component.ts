@@ -7,7 +7,7 @@ import { Degree, FullPersonDTO } from '../../models'
 
 import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MessageBoxComponent } from '../../shared/message-box/message-box.component';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-degree',
@@ -17,17 +17,19 @@ import { Observable, Subscription } from 'rxjs';
 export class DegreeComponent implements OnInit, OnDestroy {
   showForm: boolean = false;  // flag para mostrar o no el formulario
 
-  myData: Degree[] = [];
-  formData: Degree;  // instancia vacia, para cuando se solicite un alta
+  // myData: Degree[] = [];
+  // formData: Degree;  // instancia vacia, para cuando se solicite un alta
 
   faPlusCircle = faPlusCircle;
   faTimes = faTimes;
 
-  @Input() showBtnAction: boolean = true;  // flag para mostrar o no los btn's de acciones del usuario
-  @Output() showBtnActionChange = new EventEmitter<boolean>();
+  // @Input() showBtnAction: boolean = true;  // flag para mostrar o no los btn's de acciones del usuario
+  // @Output() showBtnActionChange = new EventEmitter<boolean>();
 
-  @Input() myDegrees: Degree[];
-  @Output() myDegreesChange = new EventEmitter<Degree[]>();
+  // @Input() myDegrees: Degree[];
+  // @Output() myDegreesChange = new EventEmitter<Degree[]>();
+
+  showBtnAction: boolean = true;  // flag para mostrar o no los btn's de acciones del usuario
 
   itemParaBorrar: any;
 
@@ -56,7 +58,7 @@ export class DegreeComponent implements OnInit, OnDestroy {
     this.BaseDataServiceSubscription = this.baseDataService.currentBaseData.subscribe(
       currentData => {
         this.baseData = currentData;
-        this.myData = currentData.degree;
+        // this.myData = currentData.degree;
       }
     );
     this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
@@ -72,9 +74,9 @@ export class DegreeComponent implements OnInit, OnDestroy {
     this.BaseDataServiceSubscription?.unsubscribe();
   }
 
-  resetForm() {
-    this.formData = new Degree();
-  }
+  // resetForm() {
+  //   this.formData = new Degree();
+  // }
 
 
   toggleForm() {
@@ -99,16 +101,17 @@ export class DegreeComponent implements OnInit, OnDestroy {
       this.dataService.delEntity(this.itemParaBorrar, "/degree").subscribe({
         next: (v) => {
           console.log("Se ha eliminado exitosamente a: ", this.itemParaBorrar);
-          this.myData = this.myData.filter((t) => { return t !== this.itemParaBorrar })
+          this.baseData.degree = this.baseData.degree.filter((t) => { return t !== this.itemParaBorrar })
           // Actualizo la informacion en el origen
-          this.baseData.degree = this.myData;
+          // this.baseData.degree = this.myData;
           this.itemParaBorrar = null;
+          this.baseDataService.setCurrentBaseData(this.baseData);
         },
         error: (e) => {
           alert("Response Error (" + e.status + ")" + "\n" + e.message);
           console.log("Se quizo eliminar sin exito a: ", this.itemParaBorrar);
         },
-        complete: () => { console.log("Completada la actualizacion del nive lde Formación"); }
+        complete: () => { console.log("Completada la actualizacion del nivel de Formación"); }
 
       });
     }
@@ -121,18 +124,17 @@ export class DegreeComponent implements OnInit, OnDestroy {
         console.log("Guardado correctamente: ", v);
         degree.id = v.id;
         degree.person = this.baseData.id;
-        this.myData.push(degree);
-        this.baseData.degree = this.myData;
+        this.baseData.degree.push(degree);
+        this.baseDataService.setCurrentBaseData(this.baseData);
       },
       error: (e) => {
         alert("Response Error (" + e.status + ") en el metodo addItem()" + "\n" + e.message);
         console.log("Se quizo agregar sin exito a: " + degree.name);
-        this.myData = this.baseData.degree;
       },
       complete: () => console.log("Completado el alta de la Formación")
     });
     this.toggleForm();
-    this.resetForm();
+    // this.resetForm();
 
   }
 
@@ -164,7 +166,7 @@ export class DegreeComponent implements OnInit, OnDestroy {
 
     modalDialog.afterClosed().subscribe(
       data => {
-        console.log("Dialogo output: ", data);
+        // console.log("Dialogo output: ", data);
         if (data) { this.delItem() }
       }
 

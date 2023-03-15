@@ -7,19 +7,19 @@
             {{ message }}Niveles de Formación
         </h4>
         <button type="button" class="close" aria-label="Close" 
-        (click)="dialogRef.close(myData);"
+        (click)="dialogRef.close(baseData.degree);"
         >
         <span aria-hidden="false">&times;</span>
         </button>
     </div>
 
     <div class="modal-body">
-        <ng-container *ngIf="myData.length; else agregar">
+        <ng-container *ngIf="baseData.degree.length; else agregar">
             <div class="table-dark text-left container-fluid p-5" 
             *ngIf="!showForm"
             >
                 <app-degree-item 
-                    *ngFor="let item of myData"
+                    *ngFor="let item of baseData.degree"
                     [item]="item"
 
                     (onDelete)="openModalDelete(item)"
@@ -35,10 +35,9 @@
         <app-degree-form
             *ngIf="showForm && esAdmin"
 
-            [formData]="formData"
             [title]="'Ingrese un nivel de formación'"
-
             (showBtnActionChange)="showBtnAction"
+            
             (onUpdate)=" addItem($event)"
             (cancel)="cancelation($event)"
         >

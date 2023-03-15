@@ -15,14 +15,17 @@ import { Degree } from 'src/app/models';
 })
 export class DegreeFormComponent implements OnInit, OnDestroy {
 
-  @Input() formData: Degree;
+  // @Input() formData: Degree;
   @Input() title: string;
+  @Input() item: Degree;
+
   @Output() onUpdate: EventEmitter<Degree> = new EventEmitter()
   @Output() cancel: EventEmitter<Degree> = new EventEmitter()
 
   faCheck = faCheck;
   faTimes = faTimes;
 
+  formData: Degree;
   form: FormGroup;
   
   // Validacion Admin STATUS
@@ -31,24 +34,23 @@ export class DegreeFormComponent implements OnInit, OnDestroy {
   
   constructor(
     private formBuilder: FormBuilder,
-    private dataService: DataService,
     private adminService: AdminService,
 
   ) { }
 
   ngOnInit(): void {
-    if (!this.formData) {
+
+    if (!this.item) {
       this.resetForm()
-      console.log("DEGREE-FORM.COMPONENT REVISANDO POR AQUI", this.formData);
       
       // this.resetForm();
     } else {
-      console.log("DEGREE-FORM.COMPONENT REVISANDO POR AQUI", this.formData);
       
+      this.formData = this.item;
     }
 
     this.form = this.formBuilder.group({
-      name:[this.formData.name, [Validators.required, Validators.minLength(1),Validators.maxLength(45) ]],
+      name:[this.formData.name, [Validators.required, Validators.minLength(3),Validators.maxLength(45) ]],
 
     });
     this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
@@ -69,7 +71,7 @@ export class DegreeFormComponent implements OnInit, OnDestroy {
   changeStyle($event: Event){
     this.color = $event.type == 'mouseover' ? 'resaltado' : 'normal';
   }
-  get Nombre(): any {
+  get Name(): any {
     return this.form.get("name")
   }
 

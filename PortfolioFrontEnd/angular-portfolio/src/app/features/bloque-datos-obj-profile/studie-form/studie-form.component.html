@@ -1,175 +1,180 @@
+<!-- Controles para la administracion de Organizacion y RolePosition -->
+<div class="form-row border border-primary rounded p-1 d-flex justify-content-around" id="accederModal">
 
-<ng-container class="m-auto p-1" 
-*ngIf="myOrganizations.length > 0 && myDegrees.length> 0; else estaVacio"
-  >
+  <div class="form-group col d-flex align-items-center ">
+    <label class="form-label">Administrar</label>
+  </div>
 
-  <ng-container *ngIf="!showOrgaForm && !showDegreeForm">
-      <h5>Administrar</h5>
-      <!-- abrir admiistrador de niveles de estudio -->
-      <button  class="btn btn-primary mx-2" (click)="openOrganization()">
-        Organizaciones
+  <div class="form-row">
+    <ng-container class="form-group col-md-6 d-flex align-items-center justify-content-around">
+
+      <button (click)="openOrganization()" [ngClass]="{'btn btn-primary btn-sm m-2': baseData.organization.length, 
+                      'btn btn-warning btn-sm m-2': !baseData.organization.length}">
+        <ng-container *ngIf="!baseData.organization.length; else verOrga">
+          Crear organizaciones
+        </ng-container>
+        <ng-template #verOrga>Ver organizaciones</ng-template>
       </button>
-      <!-- abrir administrador de organizaciones -->
-      <button  class="btn btn-primary mx-2" (click)="openDegree()"
-      ngClass = "{btn-warning: (!formData.degree) }"
-      >
-        Niveles
+
+    </ng-container>
+
+    <ng-container class="form-group col-md-6 d-flex align-items-center">
+
+      <button (click)="openDegree()" [ngClass]="{'btn btn-primary btn-sm m-2': baseData.degree.length, 
+                      'btn btn-warning btn-sm m-2': !baseData.degree.length}">
+        <ng-container *ngIf="!baseData.degree.length; else verNivel">
+          Crear niveles
+        </ng-container>
+        <ng-template #verNivel>Ver niveles</ng-template>
       </button>
-      <hr>
-  </ng-container>
+
+    </ng-container>
+  </div>
+
+</div>
+<!-- FIN Controles para la administracion de Organizacion y RolePosition -->
 
 
-  <form class="form-inline m-1"
-    style="display: flex ; width:100% "
-    *ngIf="showPrimaryForm"
-    [formGroup]="form"
-    #myForm="ngForm"
-    (ngSubmit)="onEnviar($event); myForm.resetForm()"
-    >
-      <div class="row" style="display: contents ; width:100% ">
-        <div class="col">
-          <label class="form-label" for="organization">Organizacion</label>
-          <!-- [(ngModel)]="seleccionadoOrga" -->
-          <select class="form-control" formControlName="organization" name="organization" 
-          [compareWith]="compararOrganizacion"
-          [ngClass] = "{error: (Organization.invalid && Organization.touched)}"
-          >
-              <option *ngFor="let elemento of myOrganizations" 
-              [ngValue]="elemento"
-              >
-            {{elemento.name}}</option>
 
-          </select>
+
+
+<form class="form-row p-1 d-flex justify-content-around" *ngIf="showPrimaryForm" [formGroup]="form" #myForm="ngForm"
+  (ngSubmit)="onEnviar($event); myForm.resetForm()">
+
+
+  <!-- SELECT ORGANIZACION Y POSICION -->
+  <div class="form-row">
+
+    <!-- ORGANIZACION -->
+    <div class="form-group col-md-6 ">
+      <label class="form-label" for="organization">Organizacion</label>
+
+
+      <select class="form-control" formControlName="organization" name="organization"
+        [compareWith]="compararOrganizacion"
+        [ngClass]="{'error is-invalid': (Organization?.invalid && Organization?.touched), 'is-valid': Organization.valid}">
+
+        <option name="defaultOrg" *ngIf="!baseData.organization.length" value="" disabled selected>Sin datos</option>
+        <option *ngFor="let elemento of baseData.organization" [ngValue]="elemento">
+          {{elemento.name}} </option>
+
+      </select>
+
+      <div class="row error-container mx-auto">
+        <small class="mensajeError mx-1" *ngIf="!baseData.organization.length"> Debe crear organizaciones
+        </small>
+        <ng-container *ngIf="(Organization.invalid && Organization.touched); else isOk">
+
+          <small class="mensajeError mx-1" *ngIf="form.hasError('required', 'organization')"> Falta seleccionar
+          </small>
+
+        </ng-container>
+        <ng-template #isOk>
+        </ng-template>
+      </div>
+
+    </div> <!-- FIN ORGANIZACION -->
+    <!-- NIVEL FORMACION -->
+    <div class="form-group col-md-6">
+
       <!-- https://www.arquitecturajava.com/angular-select-y-todas-sus-opciones/ -->
+      <label class="form-label" for="degree">Posicion/Rol</label>
+      <select class="form-control" formControlName="degree" name="degree" [compareWith]="compararDegree"
+        [ngClass]="{'error is-invalid': (Degree?.invalid && Degree?.touched), 'is-valid': Degree.valid}">
 
-          <label class="form-label" for="degree">Grado/Nivel</label>
-          <!-- [(ngModel)]="seleccionadoRole" -->
-          <select class="form-control" formControlName="degree" name="degree" 
-          [compareWith]="compararDegree"
-          [ngClass] = "{error: (Degree.invalid && Degree.touched)}"
-          >
-              <option *ngFor="let elemento of myDegrees" 
-              [ngValue]="elemento"
-              >
-            {{elemento.name}}</option>
+        <option name="defaultRol" *ngIf="!baseData.degree.length" value="" disabled selected>Sin datos</option>
+        <option *ngFor="let elemento of baseData.degree" [ngValue]="elemento">
+          {{elemento.name}}</option>
 
-          </select>
+      </select>
 
-        </div>
+      <div class="row error-container mx-auto">
+        <small class="mensajeError mx-1" *ngIf="!baseData.degree.length"> Debe crear posiciones
+        </small>
+        <ng-container *ngIf="(Degree?.invalid && Degree?.touched); else isOk">
 
+          <small class="mensajeError mx-1" *ngIf="form.hasError('required', 'degree')"> Falta seleccionar
+          </small>
+
+
+        </ng-container>
+        <ng-template #isOk>
+        </ng-template>
+      </div>
+    </div> <!--FIN POSICION  -->
+
+  </div> <!--FIN ORGANIZACION Y POSICION-->
+
+
+  <!-- RESUMEN -->
+  <div class="row" style="width:100% ">
+    <div class="col-12">
+      <label class="form-label" for="name">Nombre:</label>
+      <textarea type="text" rows="6" id="name" formControlName="name" name="name" class="form-control "
+        placeholder="Nombre" formControlName="name" [ngClass]="{'error is-invalid': (Name.invalid && Name.touched)
+        , 'is-valid':Name.valid}"></textarea>
+    </div>
+
+    <div class="row error-container text-justify-left mx-3">
+      <ng-container *ngIf="(Name.invalid && Name.touched); else isOk">
+
+        <div class="mensajeError mx-1" *ngIf="form.hasError('required', 'name')"> Dato requerido </div>
+        <div class="mensajeError mx-1" *ngIf="form.hasError('minlength', 'name')"> Minimo {{
+          Name.errors.minlength.requiredLength }} caracteres</div>
+        <div class="mensajeError mx-1" *ngIf="form.hasError('maxlength', 'name')"> Máximo {{
+          Name.errors.maxlength.requiredLength }} caracteres</div>
+
+      </ng-container>
+      <ng-template #isOk>
+      </ng-template>
+    </div>
+
+  </div> <!-- FIN RESUMEN -->
+
+  <!-- FECHA DE INICIO Y FECHA FIN -->
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label class="form-label" for="startDate">Desde:</label>
+      <input type="date" id="startDate" name="startDate" class="form-control p-2" formControlName="startDate" [ngClass]="{'error is-invalid': (StartDate.invalid && StartDate.touched),
+    'is-valid':StartDate.valid}">
+
+
+      <div class="row error-container mx-auto">
+        <ng-container *ngIf="(StartDate.invalid && StartDate.touched); else isOk">
+
+          <small class="mensajeError mx-1" *ngIf="form.hasError('required', 'startDate')"> Dato requerido
+          </small>
+
+        </ng-container>
+        <ng-template #isOk>
+        </ng-template>
       </div>
 
-      <div class="row" style="display: contents ; width:100% ">
-        <div class="col-12"> 
-          <label class="form-label" for="name">Nombre:</label>
-          <textarea type="text" 
-          rows="6"
-          id="name"
-          formControlName="name" 
-          name="name" 
-          class="form-control"
-          placeholder="Nombre del estudio"
-          [ngStyle]="{'width':'100%'}"
-          formControlName="name"
-          [ngClass] = "{error: (Name.invalid && Name.touched)}"
-          ></textarea>
-        </div>
-          <small class="mensajeError" *ngIf="form.hasError('required', 'name')"> Dato requerido </small>
-          <small class="mensajeError" *ngIf="form.hasError('minlength', 'name')"> Minimo {{ Name.errors.minlength.requiredLength }} caracteres</small>
-          <small class="mensajeError" *ngIf="form.hasError('maxlength', 'name')"> Máximo {{ Name.errors.maxlength.requiredLength }} caracteres</small>
+    </div>
+    <div class="form-group col-md-6">
+      <label class="form-label" for="endDate">Hasta:</label>
+      <input type="date" id="endDate" name="endDate" class="form-control p-2" formControlName="endDate"
+        [ngClass]="{'error is-invalid': (EndDate.invalid && EndDate.touched), 'is-valid':EndDate.valid}"
+        [attr.min]='StartDate.value'>
+    </div>
+    <!-- [min]="StartDate.value" -->
 
-      </div>
+  </div> <!-- FIN FECHAS INICIO Y FIN -->
 
-      <div class="row">
-          <div class="col">
-              <label class="form-label" for="startDate">Desde:</label>
-              <input type="date"
-              id="startDate"
-              name="startDate"
-              class="form-control"
-              [ngStyle]="{'width':'100%'}"
-              formControlName="startDate"
-              [ngClass] = "{error: (StartDate.invalid && StartDate.touched)}"
-              >
-              <small class="mensajeError" *ngIf="form.hasError('required', 'startDate')"> Dato requerido </small>
-          </div>
-          <div class="col">
-              <label class="form-label" for="endDate">Hasta:</label>
-              <input type="date"
-              id="endDate"
-              name="endDate"
-              class="form-control"
-              [ngStyle]="{'width':'100%'}"
-              formControlName="endDate"
-              [ngClass] = "{error: (EndDate.invalid && EndDate.touched)}"
-              >
-          </div>
-          
-      </div>
+  <!-- SUBMIN O CANCELAR Y CERRAR -->
+  <div class="form-row m-4" style="width:100% ">
+    <div class="form-group col d-flex align-items-center m-auto justify-content-around">
+      <button type="submit" class="btn btn-success btn-sm p-2 m-2" [disabled]="!form.valid">
+        Guardar
+      </button>
+    </div>
+    <div class="form-group col d-flex align-items-center m-auto justify-content-around">
+      <button class="btn btn-danger btn-sm p-2 m-2" (click)="onCancel($event); myForm.resetForm()">
+        Cancelar
+      </button>
+    </div>
 
-      <div class="row icon-group m-2">
-
-        <button type="submit" class="btn btn-outline-success btn-sm"
-        ngClass="faConfirm fa-ico"
-        [disabled]="!form.valid"
-        >
-          <fa-icon  [icon]="faCheck"> </fa-icon>
-        </button>
-
-        <button class="btn btn-outline-danger btn-sm"
-        (click)="onCancel($event); myForm.resetForm()"
-        ngClass="faCancel fa-ico"
-        >
-          <fa-icon [icon]="faTimes"> </fa-icon>
-        </button>
-
-      </div>
+  </div> <!-- FIN SUBMIN CANCEL -->
 
 
-  </form>
-
-</ng-container>
-
-<ng-template #estaVacio>
-  <ng-container *ngIf="myOrganizations.length == 0">
-    <p>Debe registrar organizaciones</p>
-    <button  class="btn btn-warning" (click)="openOrganization()">
-      Agregar organizaciones
-    </button>
-  </ng-container>
-
-  <ng-container *ngIf="myDegrees.length == 0">
-    <p>Debe registrar niveles de estudio</p>
-    <button  class="btn btn-warning" (click)="openDegree()">
-      Agregar niveles
-    </button>
-  </ng-container>
-
-</ng-template>
-
-<ng-container *ngIf="showOrgaForm && !showDegreeForm">
-  <!-- No hay niveles de estudio registrados -->
-  <!-- abrir administrador de niveles de estudio -->
-  <app-organization
-  [(showBtnAction)]="showBtnAction"
-  (showBtnActionChange)="showBtnAction"
-  
-  [myOrganizations]="myOrganizations"
-  (myOrganizationsChange)="myOrganizations"
-  ></app-organization>
-  
-</ng-container>
-
-
-<ng-container *ngIf="showDegreeForm && !showOrgaForm">
-  <!-- No hay organizaciones registradas -->
-  <!-- abrir administrador de organizaciones -->
-    <app-degree
-      [(showBtnAction)]="showBtnAction"
-      (showBtnActionChange)="showBtnAction"
-
-      [myDegrees]="myDegrees"
-      (myDegreesChange)="myDegrees"
-    ></app-degree>
-
-</ng-container>
+</form>

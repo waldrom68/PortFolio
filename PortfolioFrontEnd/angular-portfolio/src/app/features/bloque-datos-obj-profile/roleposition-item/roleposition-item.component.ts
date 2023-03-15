@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 import { FullPersonDTO, RolePosition } from '../../../models'
 
 import { faPen, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { BaseDataService, DataService } from 'src/app/service/data.service';
 import { AdminService } from 'src/app/service/auth.service';
 
@@ -17,7 +17,6 @@ export class RolepositionItemComponent implements OnInit, OnDestroy {
 
   @Input() showBtnAction!: boolean;
   @Output() showBtnActionChange = new EventEmitter<boolean>();
-  // @Input() formData: RolePosition;
 
   @Output() onDelete: EventEmitter<RolePosition> = new EventEmitter()
   @Output() onUpdate: EventEmitter<RolePosition> = new EventEmitter()
@@ -29,13 +28,12 @@ export class RolepositionItemComponent implements OnInit, OnDestroy {
 
   showForm: boolean = false;
 
-  // formData: RolePosition;
   oldData: RolePosition;
 
   // Validacion Admin STATUS
   esAdmin: boolean;
-
   private AdminServiceSubscription: Subscription | undefined;
+
   baseData: FullPersonDTO;
   private BaseDataServiceSubscription: Subscription | undefined;
 
@@ -46,6 +44,7 @@ export class RolepositionItemComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+
     this.BaseDataServiceSubscription = this.baseDataService.currentBaseData.subscribe(
       currentData => {
         this.baseData = currentData;
@@ -59,14 +58,13 @@ export class RolepositionItemComponent implements OnInit, OnDestroy {
         this.esAdmin = currentAdmin;
       }
     );
-
   }
 
   ngOnDestroy() {
+
     this.AdminServiceSubscription?.unsubscribe();
     this.BaseDataServiceSubscription?.unsubscribe();
 
-    this.baseDataService.setCurrentBaseData(this.baseData);
   }
 
   color: string = 'red';
@@ -77,8 +75,7 @@ export class RolepositionItemComponent implements OnInit, OnDestroy {
 
   toggleForm(rolePosition: RolePosition) {
     this.showForm = !this.showForm;
-    // this.formData = rolePosition;
-    // habilito las acciones de cada item
+     // habilito las acciones de cada item
     this.showBtnAction = !this.showBtnAction
     this.showBtnActionChange.emit(this.showBtnAction)
   }
@@ -88,25 +85,43 @@ export class RolepositionItemComponent implements OnInit, OnDestroy {
     if (this.esAdmin) {
       this.onDelete.emit(rolePosition);
     }
-
   }
 
   update(rolePosition: RolePosition) {
     this.dataService.upDateEntity(rolePosition, "/roleposition").subscribe({
-      next: (v) => { console.log("Guardado correctamente: ", v); },
+
+      next: (v) => { 
+        console.log("Guardado correctamente: ", v); 
+        
+        // Debo actualizar dataBase, laboralcareer, la cual es copia del backend.
+        // Como sólo se busca la info al iniciar el sistema, debo mantener una imagen
+        // de lo que hago en la DB. 
+        // Aquí lo hago para que se actualicen todas las relaciones laborales que 
+        // contienen el RolePosition modificado, caso contrario, no se actualizaran 
+        // las mismas en el listado de otras trayectorias que contengan el mismo 
+        // rol/posicion.
+        this.baseData.laboralCareer.forEach(element => {
+          if (element.roleposition.id == rolePosition.id)
+            element.roleposition.name = rolePosition.name;
+        });
+
+        // console.log("ESTE ES EL PARCHE QUE ESTOY HACIENDO", this.baseData.laboralCareer);
+        
+      },
       error: (e) => {
         alert("Response Error (" + e.status + ") en el metodo addItem()" + "\n" + e.message);
         console.log("Se quizo modificar sin exito a: " + this.oldData.name);
         // Restauro valor original
         rolePosition = this.oldData;
       },
+
       complete: () => console.log("Completado la actualizacion en Roles y Posiciones")
     });
-
+    
     this.toggleForm(rolePosition);  // cierro el formulario
-
+    this.baseDataService.setCurrentBaseData(this.baseData);
   }
-
+  
   cancelation(rolePosition: RolePosition) {
     this.toggleForm(rolePosition);  // cierro el formulario
   }

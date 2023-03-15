@@ -1,40 +1,23 @@
 <div class="table-dark text-left container-fluid">
-    <ng-container *ngIf="myData.length; else agregar">
-        <div *ngIf="!showForm"
-        >
+    <ng-container *ngIf="baseData.studie.length; else agregar">
+        <div *ngIf="!showForm">
+
             <app-studie-item 
-                *ngFor="let item of myData"
+                *ngFor="let item of baseData.studie"
                 [item]="item"
-                [formData]="formData"
                 (onDelete)="openModalDelete(item)"
-                
-                [myOrganizations]="myOrganizations"
-                (myOrganizationsChange)="myOrganizations"
-                [myDegrees]="myDegrees"
-                (myDegreesChange)="myDegrees"
-
-                [(showBtnAction)]="showBtnAction"
             >
-
             </app-studie-item>
 
-
         </div>
+
     </ng-container>
 
     <app-studie-form
         *ngIf="showForm && esAdmin"
         [ngStyle]="{'width':'100%'}"
-        [formData]="formData"
         [title]="'Agregar un estudio'"
-        
-        [myOrganizations]="myOrganizations"
-        (myOrganizationsChange)="myOrganizations"
-        
-        [myDegrees]="myDegrees"
-        (myDegreesChange)="myDegrees"
-        
-        (showBtnActionChange)="showBtnAction"
+
         (onUpdate)=" addItem($event)"
         (cancel)="cancelation()"
     >

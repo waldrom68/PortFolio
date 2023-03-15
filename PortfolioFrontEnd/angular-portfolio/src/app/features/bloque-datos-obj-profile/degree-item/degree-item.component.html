@@ -40,9 +40,9 @@
 
 <app-degree-form
     *ngIf="showForm"
-    [ngStyle]="{'width':'100%'}"
-    [formData]="formData"
     [title]="''"
+    [ngStyle]="{'width':'100%'}"
+
     (onUpdate)=" update($event);"
     (cancel)="cancelation($event)"
 

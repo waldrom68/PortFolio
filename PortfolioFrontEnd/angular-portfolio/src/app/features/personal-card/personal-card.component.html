@@ -3,10 +3,9 @@
 
 
     <div class="container py-4 p-0 m-0">
-        <div class="card"
-        [style]= "{'background-color':color }"
-        >
-        <ng-container *ngIf="esAdmin">
+        <div class="card">
+            
+        <ng-container *ngIf="esAdmin && openForm == 0">
             <br>
             <button class="btn btn-outline-success btn-sm mt-2"
             (click)="openPersonModal();"
@@ -47,7 +46,7 @@
                         
                     </div>
                 </ng-container> -->
-                <ng-container *ngIf="esAdmin">
+                <ng-container *ngIf="esAdmin && openForm == 0">
                     <form class="row justify-content-center"
                     [formGroup]="formImg"
                     #myForm="ngForm"

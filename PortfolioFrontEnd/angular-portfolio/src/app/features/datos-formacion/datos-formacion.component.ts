@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BaseDataService, DataService } from 'src/app/service/data.service';
 import { AdminService } from 'src/app/service/auth.service';
 
@@ -6,11 +6,10 @@ import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
 import { Studie, Organization, Degree, FullPersonDTO } from '../../models'
 
-
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MessageBoxComponent } from '../../shared/message-box/message-box.component';
-import { ModalActionsService } from 'src/app/service/modal-actions.service';
-import { Observable, Subscription } from 'rxjs';
+
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-datos-formacion',
@@ -18,7 +17,7 @@ import { Observable, Subscription } from 'rxjs';
   styleUrls: ['./datos-formacion.component.css']
 })
 export class DatosFormacionComponent implements OnInit, OnDestroy {
-
+  
   showForm: boolean = false;  // flag para mostrar o no el formulario
 
   faPlusCircle = faPlusCircle;
@@ -30,11 +29,7 @@ export class DatosFormacionComponent implements OnInit, OnDestroy {
   baseData: FullPersonDTO;
   private BaseDataServiceSubscription: Subscription | undefined;
 
-  myData: Studie[] = [];
   formData: Studie;  // instancia vacia, para cuando se solicite un alta
-
-  myOrganizations: Organization[];
-  myDegrees: Degree[];
 
   // Validacion Admin STATUS
   esAdmin: boolean;
@@ -43,8 +38,9 @@ export class DatosFormacionComponent implements OnInit, OnDestroy {
 
   constructor(
     private dataService: DataService,
-    public matDialog: MatDialog,
     private baseDataService: BaseDataService,
+    
+    public matDialog: MatDialog,
 
     private adminService: AdminService,
   ) { }
@@ -56,16 +52,6 @@ export class DatosFormacionComponent implements OnInit, OnDestroy {
         this.baseData = currentData;
       }
     );
-
-    this.myData = this.baseData.studie;
-   if (this.baseData.organization) {
-      this.myOrganizations = this.baseData.organization;
-    }
-
-    if (this.baseData.degree) {
-      this.myDegrees = this.baseData.degree;
-    }
-
 
     this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
       currentAdmin => {
@@ -108,9 +94,9 @@ export class DatosFormacionComponent implements OnInit, OnDestroy {
       this.dataService.delEntity(this.itemParaBorrar, "/studie").subscribe({
         next: (v) => {
           console.log("Se ha eliminado exitosamente a: ", this.itemParaBorrar);
-          this.myData = this.myData.filter((t) => { return t !== this.itemParaBorrar })
+          this.baseData.studie = this.baseData.studie.filter((t) => { return t !== this.itemParaBorrar })
           // Actualizo la informacion en el origen
-          this.baseData.studie = this.myData;
+          this.baseDataService.setCurrentBaseData(this.baseData)
           this.itemParaBorrar = null;
 
         },
@@ -131,8 +117,8 @@ export class DatosFormacionComponent implements OnInit, OnDestroy {
         console.log("Guardado correctamente: ", v);
         studie.id = v.id;
         studie.person = this.baseData.id;
-        this.myData.push(studie);
-        this.baseData.studie = this.myData;
+        this.baseData.studie.push(studie);
+        this.baseDataService.setCurrentBaseData(this.baseData)
       },
       error: (e) => {
         alert("Response Error (" + e.status + ") en el metodo addItem()" + "\n" + e.message);

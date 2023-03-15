@@ -1,7 +1,7 @@
 <div class="row text-center aling-self-center py-0" id="Init" >
     
     <div class="col-12 text-warning font-weight-bold bg-dark p-2">
-        {{baseData.name}}
+        {{baseData.name}}  -> Forms abiertos {{openForm}}
     </div>
 
     <!-- <ng-container  *ngIf="!wait"> -->
@@ -83,6 +83,7 @@
                             <app-datos-trayectoria></app-datos-trayectoria>
 
                         </div>
+
 
                         <div *ngSwitchCase="'Formación'"
                             ngClass="basic-container"

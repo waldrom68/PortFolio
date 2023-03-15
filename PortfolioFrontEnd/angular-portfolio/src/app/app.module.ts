@@ -36,6 +36,8 @@ import { provideStorage,getStorage } from '@angular/fire/storage';
 import { DatosTrayectoriaComponent } from './features/datos-trayectoria/datos-trayectoria.component';
 import { ObjetiveComponent } from './features/objetive/objetive.component';
 
+import { RefreshDirective } from './directive/refresh.directive';
+
 
 
 
