@@ -73,10 +73,10 @@ export class CareerFormComponent implements OnInit, OnDestroy {
     );
     // // Clono el objeto, uso assign por no tener atributos compuesto por otros objetos
     // this.oldData = Object.assign({}, this.baseData.roleposition)
-
+    
     // console.log(this.formData.organization);
     this.form = this.formBuilder.group({
-      resume: [this.formData.resume, [Validators.required, Validators.minLength(2), Validators.maxLength(500)]],
+      resume: [this.formData.resume, [Validators.required, Validators.minLength(20), Validators.maxLength(500)]],
       startDate: [formatDate(this.formData.startDate, 'yyyy-MM-dd', 'en'), [Validators.required]],
       endDate: [formatDate(this.formData.endDate, 'yyyy-MM-dd', 'en'), []],
 
@@ -160,6 +160,8 @@ export class CareerFormComponent implements OnInit, OnDestroy {
   // }
 
 
+  // .mat-dialog-container {
+  //   padding: 1em;
 
   openOrganization() {
     const dialogConfig = new MatDialogConfig();
@@ -169,8 +171,8 @@ export class CareerFormComponent implements OnInit, OnDestroy {
     // dialogConfig.panelClass = "modal-component";
     // dialogConfig.backdropClass = "modal-component"
 
-    dialogConfig.height = "80%";
-    dialogConfig.width = "90%";
+    dialogConfig.height = "90%";
+    dialogConfig.width = "95%";
     dialogConfig.data = { message: "Organizaciones" }
 
     const modalDialog = this.dialog.open(OrganizationComponent, dialogConfig);
@@ -231,8 +233,8 @@ export class CareerFormComponent implements OnInit, OnDestroy {
     // dialogConfig.panelClass = "modal-component";
     // dialogConfig.backdropClass = "modal-component"
 
-    dialogConfig.height = "80%";
-    dialogConfig.width = "90%";
+    dialogConfig.height = "90%";
+    dialogConfig.width = "95%";
     dialogConfig.data = { message: "Posiciones / Roles" }
 
     const modalDialog = this.dialog.open(RolePositionComponent, dialogConfig);

@@ -1,0 +1,59 @@
+/* mat-dialog-container {
+    margin: 0px  !important;
+    padding: 0px  !important;
+    overflow: hidden !important;
+} */
+
+/* span.close {
+    border: none !important;
+    margin: 0% !important;
+    padding: 0 0.5rem;
+    font-size: 2rem;
+    line-height: 2rem;
+    color: var(--danger);
+}
+    span.close:hover {
+
+        color:white;
+        font-weight: bolder;
+        background-color: var(--danger);
+    } */
+
+::ng-deep .modal-content {
+    border: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: none !important;
+    }
+
+::ng-deep mat-dialog-container#modal-warn {
+    position:fixed;
+    top:auto;
+    right:0;
+    left:auto;
+    bottom:0;
+    height: auto;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow-x: hidden;
+    background: none !important;
+ } 
+
+ ::ng-deep mat-dialog-container#modal-info {
+    position:relative;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow-x: hidden;
+    background: rgba(248,248,248, 1) !important;
+ } 
+ ::ng-deep .modal-content.error   {
+    background: rgba( 234, 106, 135, 0.9) !important;
+ }
+ ::ng-deep .modal-content.ok {
+    background: rgba(134, 165, 134, 0.9) !important;
+ }
+ /* ::ng-deep .modal-content.info {
+    background: rgba(248,248,248, 1) !important;
+} */
+
+

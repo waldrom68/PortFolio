@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
-import { DataService } from 'src/app/service/data.service';
 import { AdminService } from 'src/app/service/auth.service';
 
 import { RolePosition } from 'src/app/models';

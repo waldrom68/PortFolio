@@ -1,14 +1,35 @@
-<!-- <div class="alert modal-header">
-    <button type="button" class="close" aria-label="Close"  
-    (click)="closeAlert()"
-    >
-    <span aria-hidden="false">&times;</span>
-    </button>
-  </div>
-    <p>{{ message }}</p> -->
+<!-- <div
+    class="" 
+    id="modal-content-wrapper" 
+    tabindex="-1" 
+    role="dialog" 
+    [ngStyle]="{'background-color': 'showConfirmAction' ? modalData.backColor: 'red'}"
+> -->
 
+<div class="modal-dialog modal-lg"
+  tabindex="-1"
+  id="prueba"
+  >
 
-    <mat-dialog-content>
-      <span>{{ message }}</span>
-      <span (click)="closeAlert()">&times;</span>
-    </mat-dialog-content>
+  <div class="modal-content" [ngClass]="{error: type=='error', ok:type=='ok', info: type=='info'}"
+   >
+
+    <!-- <div class="modal-body "> -->
+      <div class="row m-0 p-0">
+
+        <div class="col m-0 p-0">
+          {{ modalData.message[0] }}
+          <span *ngFor="let element of modalData.message.slice(1)">
+            <li> {{element}}</li>
+          </span>
+        </div>
+
+        <div class="col-auto  m-0 p-0">
+          <span class="close" aria-hidden="false" (click)="dismiss()">&times;</span>
+
+        </div>
+      </div>
+    </div>
+
+  <!-- </div> -->
+    

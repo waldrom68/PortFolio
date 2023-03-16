@@ -2,6 +2,8 @@
 
 <form class="form-row p-1 d-flex justify-content-around" [formGroup]="form" #myForm="ngForm"
   (ngSubmit)="onEnviar($event); myForm.resetForm()">
+  
+  <!-- NOMBRE -->
   <div class="row" style="width:100% ">
     <div class="col-12">
       <label class="form-label" for="name">Nombre:</label>
@@ -12,7 +14,7 @@
       <ng-container *ngIf="(Name.invalid && Name.touched); else isOk">
 
         <div class="mensajeError mx-1" *ngIf="form.hasError('required', 'name')"> Dato requerido </div>
-        <div class="mensajeError mx-1" *ngIf="form.hasError('minlength', 'name')"> Minimo {{
+        <div class="mensajeError mx-1" *ngIf="form.hasError('minlength', 'name')"> Mínimo {{
           Name.errors.minlength.requiredLength }} caracteres</div>
         <div class="mensajeError mx-1" *ngIf="form.hasError('maxlength', 'name')"> Máximo {{
           Name.errors.maxlength.requiredLength }} caracteres</div>
@@ -22,6 +24,7 @@
       </ng-template>
     </div>
   </div>
+
   <!-- RESUMEN -->
   <div class="row" style="width:100% ">
     <div class="col-12">
@@ -44,6 +47,7 @@
     </div>
   </div>
 
+  <!-- URL -->
   <div class="row" style="width:100% ">
     <div class="col-12">
       <label class="form-label" for="since">Url:</label>
@@ -54,7 +58,7 @@
     </ng-template>
   </div>
 
-  <!-- SUBMIN O CANCELAR Y CERRAR -->
+  <!-- SUBMIT O CANCELAR Y CERRAR -->
   <div class="form-row m-4" style="width:100% ">
     <div class="form-group col d-flex align-items-center m-auto justify-content-around">
       <button type="submit" class="btn btn-success btn-sm p-2 m-2" [disabled]="!form.valid">
@@ -67,6 +71,6 @@
       </button>
     </div>
 
-  </div> <!-- FIN SUBMIN CANCEL -->
+  </div> <!-- FIN SUBMIT CANCEL -->
 
 </form>

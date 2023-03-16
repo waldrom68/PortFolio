@@ -1,46 +1,58 @@
-<div class="table-dark row " *ngIf="!showForm && openForm == 0">
+<div *ngIf="!showForm" class="table-dark row ">
 
     <div [ngClass]="{'p-0 col-10':esAdmin, 'col-12':!esAdmin}">
-
         <div [ngClass]="color" (mouseover)="changeStyle($event)" (mouseout)="changeStyle($event)"
         >
             <ul class="head border rounded fade-in-ul mb-0 mt-2">
-                <h6>{{item.name}}
-                    <ng-template *ngIf="item.url">
-                        <a class="px-3" href="{{item.url}}" target="_blank"
-                        *ngIf="showBtnAction"
-                        >-Visitar-</a>
-                    </ng-template>
-                </h6>
-            
-                <li class="resume"><p><i> {{item.resume}}</i></p></li>
-
+                <div>
+                    <h6>{{item.name}}
+                        <ng-container *ngIf="item.url.length">
+                            <a class="px-3" href="https://{{item.url}}" target="_blank"
+                            >- visitar sitio web -</a>
+                        </ng-container>
+                        <!-- *ngIf="showBtnAction" -->
+                    </h6>
+                </div>
+                
+                <li class="resume" *ngFor="let elemento of item.resume.split('\n')">
+                    <p><i> {{elemento}}</i></p>
+                </li>
             </ul>
         </div>
     </div>
-    
     <!-- ##################### -->
-    <div *ngIf="esAdmin  && openForm == 0" class="col icon-group">
+
+    <div class="col icon-group"
+    *ngIf="esAdmin && showBtnAction"
+    >
         <button class="btn btn-outline-success btn-sm"
             (click)="toggleForm(item);"
             ngClass="faConfirm fa-ico">
-            <fa-icon [icon]="faPen"></fa-icon>
+            <fa-icon 
+                [icon]="faPen"
+                
+            >
+            </fa-icon>
         </button>
         <button class="btn btn-outline-danger btn-sm"
             (click)="delete(item)"
             ngClass="faCancel"
         >
-            <fa-icon  [icon]="faTrash"></fa-icon>
+            <fa-icon 
+                [icon]="faTrash"
+            >
+            </fa-icon>
         </button>
     </div>
+
 </div>
 
-<!-- </div > -->
 
 <app-organization-form
-    *ngIf="showForm && esAdmin"
+    *ngIf="showForm && esAdmin" [ngStyle]="{'width':'100%'}" 
     [title]="''"
-    
+    [item]="item"
+
     (onUpdate)=" update($event);"
     (cancel)="cancelation($event)"
     >

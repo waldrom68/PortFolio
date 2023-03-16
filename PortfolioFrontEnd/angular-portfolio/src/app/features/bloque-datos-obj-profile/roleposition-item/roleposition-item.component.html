@@ -1,43 +1,43 @@
-<ng-container *ngIf="!showForm">
+<div *ngIf="!showForm" class="table-dark row ">
 
-    <div class="container row py-2"
-    [ngClass]="color" (mouseover)="changeStyle($event)" (mouseout)="changeStyle($event)"
-    >
-        <div class="container-fluid" style="display: inline-block;"
+    <div [ngClass]="{'p-0 col-10':esAdmin, 'col-12':!esAdmin}">
+        <div [ngClass]="color" (mouseover)="changeStyle($event)" (mouseout)="changeStyle($event)"
         >
-            <h6>{{item.name}}</h6>
-        </div>
-        <!-- ##################### -->
-        
-        <div class="icon-group"
-             *ngIf="esAdmin && showBtnAction"
-            >
-            <button class="btn btn-outline-success btn-sm"
-                (click)="toggleForm(item);"
-                ngClass="faConfirm fa-ico">
-                <fa-icon 
-                    [icon]="faPen"
-                    
-                >
-                </fa-icon>
-            </button>
-            <button class="btn btn-outline-danger btn-sm"
-                (click)="delete(item)"
-                ngClass="faCancel"
-            >
-                <fa-icon 
-                    [icon]="faTrash"
-                >
-                </fa-icon>
-            </button>
+            <ul class="head border rounded fade-in-ul mb-0 mt-2">
+               <li><h6>{{item.name}}</h6></li>
+            </ul>
         </div>
     </div>
+    <!-- ##################### -->
+        
+    <div class="col icon-group"
+            *ngIf="esAdmin && showBtnAction"
+        >
+        <button class="btn btn-outline-success btn-sm"
+            (click)="toggleForm(item);"
+            ngClass="faConfirm fa-ico">
+            <fa-icon 
+                [icon]="faPen"
+                
+            >
+            </fa-icon>
+        </button>
+        <button class="btn btn-outline-danger btn-sm"
+            (click)="delete(item)"
+            ngClass="faCancel"
+        >
+            <fa-icon 
+                [icon]="faTrash"
+            >
+            </fa-icon>
+        </button>
+    </div>
 
-</ng-container >
+</div>
 
 <!-- [formData]="formData" -->
 <app-roleposition-form
-    *ngIf="showForm"
+    *ngIf="showForm && esAdmin"
     [ngStyle]="{'width':'100%'}"
     [title]="''"
     [item]="item"

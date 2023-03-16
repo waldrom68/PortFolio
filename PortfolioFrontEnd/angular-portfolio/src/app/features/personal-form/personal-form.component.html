@@ -36,7 +36,7 @@
             [ngClass] = "{error: (Name.invalid && Name.touched)}"
             >
             <small class="mensajeError" *ngIf="form.hasError('required', 'name')"> Dato requerido </small>
-            <small class="mensajeError" *ngIf="form.hasError('minlength', 'name')"> Minimo {{ Name.errors.minlength.requiredLength }} caracteres</small>
+            <small class="mensajeError" *ngIf="form.hasError('minlength', 'name')"> Mínimo {{ Name.errors.minlength.requiredLength }} caracteres</small>
             <small class="mensajeError" *ngIf="form.hasError('maxlength', 'name')"> Máximo {{ Name.errors.maxlength.requiredLength }} caracteres</small>
         
           </div>
@@ -54,7 +54,7 @@
             [ngClass] = "{error: (LastName.invalid && LastName.touched)}"
             >
             <small class="mensajeError" *ngIf="form.hasError('required', 'lastName')"> Dato requerido </small>
-            <small class="mensajeError" *ngIf="form.hasError('minlength', 'lastName')"> Minimo {{ LastName.errors.minlength.requiredLength }} caracteres</small>
+            <small class="mensajeError" *ngIf="form.hasError('minlength', 'lastName')"> Mínimo {{ LastName.errors.minlength.requiredLength }} caracteres</small>
             <small class="mensajeError" *ngIf="form.hasError('maxlength', 'lastName')"> Máximo {{ LastName.errors.maxlength.requiredLength }} caracteres</small>
           </div>
           
@@ -71,7 +71,7 @@
             [ngClass] = "{error: (Location.invalid && Location.touched)}"
             >
             <small class="mensajeError" *ngIf="form.hasError('required', 'location')"> Dato requerido </small>
-            <small class="mensajeError" *ngIf="form.hasError('minlength', 'location')"> Minimo {{ Location.errors.minlength.requiredLength }} caracteres</small>
+            <small class="mensajeError" *ngIf="form.hasError('minlength', 'location')"> Mínimo {{ Location.errors.minlength.requiredLength }} caracteres</small>
             <small class="mensajeError" *ngIf="form.hasError('maxlength', 'location')"> Máximo {{ Location.errors.maxlength.requiredLength }} caracteres</small>
           </div>
           
@@ -88,7 +88,7 @@
             [ngClass] = "{error: (Profession.invalid && Profession.touched)}"
             ></textarea>
             <small class="mensajeError" *ngIf="form.hasError('required', 'profession')"> Dato requerido </small>
-            <small class="mensajeError" *ngIf="form.hasError('minlength', 'profession')"> Minimo {{ Location.errors.minlength.requiredLength }} caracteres</small>
+            <small class="mensajeError" *ngIf="form.hasError('minlength', 'profession')"> Mínimo {{ Location.errors.minlength.requiredLength }} caracteres</small>
             <small class="mensajeError" *ngIf="form.hasError('maxlength', 'profession')"> Máximo {{ Location.errors.maxlength.requiredLength }} caracteres</small>
           </div>
 

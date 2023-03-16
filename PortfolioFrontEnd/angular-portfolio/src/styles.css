@@ -67,9 +67,11 @@ section.row:nth-child(1), section.row:nth-child(2) {
 /* MODAL STYLE */
 mat-dialog-container#modal-component, mat-dialog-container#modal-delete {
     border: 3px solid #262626 !important;
-    border-radius: 11px !important;
+    border-radius: 15px !important;
     background-color: #1a1a1a !important;
     color: white !important;
+    padding: 0rem !important;
+    padding-bottom: 1rem !important;
 }
     .close > span {
         padding: 0px 15px;
@@ -287,6 +289,25 @@ ul.head:hover {
 
     animation: fadeIn 2s; 
 }
+
+
+ul.head a:link, ul.head a:visited {
+    color: inherit;
+    text-decoration: none;
+    cursor: auto;
+}
+
+ul.head  a:link:active, ul.head a:visited:active {
+    color: inherit;
+}
+
+ul.head a:hover {
+    color: yellow;
+}
+
+
+
+
 
 li.resume > p {
     cursor: auto !important;

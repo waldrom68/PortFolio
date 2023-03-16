@@ -3,7 +3,7 @@ import { ProgressValueService, UiService } from 'src/app/service/ui.service';  /
 
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { MatAlertComponent } from './shared/mat-alert/mat-alert.component';
 import { MatInputPromptComponent } from './shared/mat-input-prompt/mat-input-prompt.component';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -175,14 +175,25 @@ constructor(
 
   // Mensaje de alerta.
   alertDialog() {
-    const dialogRef = this.dialog.open(MatAlertComponent, {
-      width: '100%', height: 'auto',
-      data: {
-        message: 'Aqui va el texto desde donde se llama al modal',
-      },
-    });
-    dialogRef.afterClosed().subscribe(() => console.log("Cerrando alert-modal"));
-  }
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = false;
+    dialogConfig.id = "modal-warn";
+  
+    // dialogConfig.height = "350px";
+    // dialogConfig.width = "600px";
+    // dialogConfig.maxWidth = '700px';
+    dialogConfig.data = {
+        type: "ok",
+        timer: 1500,
+        message: ['Todo bien, estoy confirmandolo'],
+    };
+
+  const dialogRef = this.dialog.open(MatAlertComponent, dialogConfig);
+
+  dialogRef.afterClosed().subscribe(() => console.log("Cerrando alert-modal"));
+}
+
+
 
 
 

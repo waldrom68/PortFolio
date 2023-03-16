@@ -5,7 +5,7 @@ import { faPen, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { BaseDataService, DataService } from 'src/app/service/data.service';
 import { AdminService } from 'src/app/service/auth.service';
-import { FormService } from 'src/app/service/ui.service';
+
 
 @Component({
   selector: 'app-organization-item',
@@ -35,16 +35,15 @@ export class OrganizationItemComponent implements OnInit, OnDestroy {
   // Validacion Admin STATUS
   esAdmin: boolean;
   private AdminServiceSubscription: Subscription | undefined;
+
   baseData: FullPersonDTO;
   private BaseDataServiceSubscription: Subscription | undefined;
-  openForm: number;
-  private formServiceSubscription: Subscription | undefined;
-
+ 
   constructor(
     private dataService: DataService,
     private adminService: AdminService,
     private baseDataService: BaseDataService,
-    private formService: FormService,
+  
   ) { }
 
   ngOnInit(): void {
@@ -63,18 +62,12 @@ export class OrganizationItemComponent implements OnInit, OnDestroy {
       }
     );
 
-    this.formServiceSubscription = this.formService.currentOpenForm.subscribe(
-      currentForm => {
-        this.openForm = currentForm > 0 ? currentForm  : 0;
-      }
-    );
   }
 
   ngOnDestroy() {
 
     this.AdminServiceSubscription?.unsubscribe();
     this.BaseDataServiceSubscription?.unsubscribe();
-    this.formServiceSubscription?.unsubscribe();
   }
 
   color: string = 'red';
@@ -85,17 +78,8 @@ export class OrganizationItemComponent implements OnInit, OnDestroy {
 
   toggleForm(organization: Organization) {
     this.showForm = !this.showForm;
-
-    if (this.showForm) {
-      this.formService.setCurrentForm(this.openForm + 1)
-    } else {
-      this.formService.setCurrentForm(this.openForm - 1)
-    }
-
-    this.baseDataService.setCurrentBaseData(this.baseData)
-    
-     // habilito las acciones de cada item
-    this.showBtnAction = true;
+    // habilito las acciones de cada item
+    this.showBtnAction = !this.showBtnAction;
     this.showBtnActionChange.emit(this.showBtnAction)
   }
 
@@ -144,3 +128,4 @@ export class OrganizationItemComponent implements OnInit, OnDestroy {
   }
 
 }
+  

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, Inject, OnDestroy, } from '@angular/core';
+import { Component, OnInit, Inject, OnDestroy, } from '@angular/core';
 import { BaseDataService, DataService } from 'src/app/service/data.service';
 import { AdminService } from 'src/app/service/auth.service';
 import { faPlusCircle, faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -14,6 +14,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './organization.component.html',
   styleUrls: ['./organization.component.css']
 })
+
 export class OrganizationComponent implements OnInit, OnDestroy {
   showForm: boolean = false;  // flag para mostrar o no el formulario
 
@@ -151,7 +152,9 @@ export class OrganizationComponent implements OnInit, OnDestroy {
     dialogConfig.disableClose = true;
     dialogConfig.id = "modal-delete";
     dialogConfig.height = "350px";
+    dialogConfig.maxHeight = "90%";
     dialogConfig.width = "600px";
+    dialogConfig.maxWidth = "95%";
     dialogConfig.data = {
       // atributos generales del message-box
       name: "eliminar",

@@ -1,11 +1,13 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { FullPersonDTO, LaboralCareer, Organization, RolePosition } from '../../../models'
+import { FullPersonDTO, LaboralCareer } from '../../../models'
 
 import { faPen, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { BaseDataService, DataService } from 'src/app/service/data.service';
 import { AdminService } from 'src/app/service/auth.service';
 import { FormService } from 'src/app/service/ui.service';
+import { MatAlertComponent } from 'src/app/shared/mat-alert/mat-alert.component';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-career-item',
@@ -23,11 +25,11 @@ export class CareerItemComponent implements OnInit, OnDestroy {
 
   // @Input() showBtnAction!: boolean;
   // @Output() showBtnActionChange = new EventEmitter<boolean>();
- 
+
   @Output() onDelete: EventEmitter<LaboralCareer> = new EventEmitter()
   @Output() onUpdate: EventEmitter<LaboralCareer> = new EventEmitter()
   @Output() onToggleForm: EventEmitter<LaboralCareer> = new EventEmitter()
-  
+
   faTimes = faTimes;
   faPen = faPen;
   faTrash = faTrash;
@@ -36,23 +38,25 @@ export class CareerItemComponent implements OnInit, OnDestroy {
   // formData: LaboralCareer;
 
   oldData: LaboralCareer;
-  baseData: FullPersonDTO;
-  private BaseDataServiceSubscription: Subscription | undefined;
-
-
+  
+  
   // Validacion Admin STATUS
   esAdmin: boolean;
   private AdminServiceSubscription: Subscription | undefined;
+  baseData: FullPersonDTO;
+  private BaseDataServiceSubscription: Subscription | undefined;
   openForm: number;
   private formServiceSubscription: Subscription | undefined;
- 
-  constructor( 
-    private dataService: DataService, 
+
+  constructor(
+    private dataService: DataService,
     private adminService: AdminService,
     private baseDataService: BaseDataService,
     private formService: FormService,
 
-    ) { }
+    private dialog: MatDialog,
+
+  ) { }
 
   ngOnInit() {
     this.BaseDataServiceSubscription = this.baseDataService.currentBaseData.subscribe(
@@ -68,11 +72,11 @@ export class CareerItemComponent implements OnInit, OnDestroy {
 
     this.formServiceSubscription = this.formService.currentOpenForm.subscribe(
       currentForm => {
-        this.openForm = currentForm > 0 ? currentForm  : 0;
+        this.openForm = currentForm > 0 ? currentForm : 0;
       }
     );
-      // Clono el objeto, uso assign por no tener atributos compuesto por otros objetos
-      this.oldData = Object.assign({}, this.item)
+    // Clono el objeto, uso assign por no tener atributos compuesto por otros objetos
+    this.oldData = Object.assign({}, this.item)
   }
   ngOnDestroy() {
     this.AdminServiceSubscription?.unsubscribe();
@@ -81,9 +85,9 @@ export class CareerItemComponent implements OnInit, OnDestroy {
 
   }
 
-  color:string = 'red';
+  color: string = 'red';
 
-  changeStyle($event: Event){
+  changeStyle($event: Event) {
     this.color = $event.type == 'mouseover' ? 'resaltado' : 'normal';
   }
 
@@ -92,7 +96,7 @@ export class CareerItemComponent implements OnInit, OnDestroy {
     this.showForm = !this.showForm;
     this.formData = laboralCareer;
 
-   
+
     if (this.showForm) {
       this.formService.setCurrentForm(this.openForm + 1)
     } else {
@@ -102,6 +106,50 @@ export class CareerItemComponent implements OnInit, OnDestroy {
     this.baseDataService.setCurrentBaseData(this.baseData)
 
   }
+
+  verOrga(laboralCareer: LaboralCareer) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = false;
+    dialogConfig.id = "modal-info";
+
+    // dialogConfig.height = "350px";
+    // dialogConfig.width = "600px";
+    // dialogConfig.maxWidth = '700px';
+    dialogConfig.data = {
+      type: "info",
+      message: [
+        laboralCareer.organization.name,
+        laboralCareer.organization.resume,
+        laboralCareer.organization.url,
+      ]
+    };
+
+    const dialogRef = this.dialog.open(MatAlertComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(() => console.log("Cerrando alert-modal"));
+  }
+
+  verError() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = false;
+    dialogConfig.id = "modal-warn";
+
+    // dialogConfig.height = "350px";
+    // dialogConfig.width = "600px";
+    // dialogConfig.maxWidth = '700px';
+    dialogConfig.data = {
+      type: "error",
+      message: [
+        "Terrible error de programacion",
+        "pruebe contratar a algun experto"
+      ]
+    };
+
+    const dialogRef = this.dialog.open(MatAlertComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(() => console.log("Cerrando alert-modal"));
+  }
+
 
   delete(laboralCareer: LaboralCareer) {
     // llamo al metodo del padre via emit()
@@ -116,7 +164,7 @@ export class CareerItemComponent implements OnInit, OnDestroy {
 
   update(laboralCareer: LaboralCareer) {
 
-    this.dataService.upDateEntity(laboralCareer, "/laboralcareer").subscribe( {
+    this.dataService.upDateEntity(laboralCareer, "/laboralcareer").subscribe({
       next: (v) => {
         console.log("Guardado correctamente: ", v);
         // v.person = this.baseData.id
@@ -134,11 +182,11 @@ export class CareerItemComponent implements OnInit, OnDestroy {
       },
       complete: () => console.log("Completado el alta en Trayectoria Laboral")
     });
-    
-    
+
+
     this.baseDataService.setCurrentBaseData(this.baseData)
     this.toggleForm(laboralCareer);  // cierro el formulario
-    
+
 
   }
 }

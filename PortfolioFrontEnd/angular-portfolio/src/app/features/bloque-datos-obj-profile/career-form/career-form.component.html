@@ -1,46 +1,46 @@
-
 <!-- Controles para la administracion de Organizacion y RolePosition -->
-<div class="form-row border border-primary rounded p-1 d-flex justify-content-around" id="accederModal">
 
-  <div class="form-group col d-flex align-items-center ">
-    <label class="form-label">Administrar</label>
-  </div>
+  <ul class="head form-row p-1 d-flex border rounded fade-in-ul justify-content-center  m-1 mb-0 " id="accederModal">
 
-  <div class="form-row">
-    <ng-container class="form-group col-md-6 d-flex align-items-center justify-content-around">
+    <div class="col d-flex align-items-center justify-content-center">
+      <h4 class="form-label">Administrar</h4>
+    </div>
 
-      <button (click)="openOrganization()" [ngClass]="{'btn btn-primary btn-sm m-2': baseData.organization.length, 
+    <div class=" col d-flex">
+      <li class="justify-content-center">
+        <ng-container class="form-group col-md-6">
+
+          <button (click)="openOrganization()" [ngClass]="{'btn btn-primary btn-sm m-2': baseData.organization.length, 
                       'btn btn-warning btn-sm m-2': !baseData.organization.length}">
-        <ng-container *ngIf="!baseData.organization.length; else verOrga">
-          Crear organizaciones
+            <ng-container *ngIf="!baseData.organization.length; else verOrga">
+              Crear organizaciones
+            </ng-container>
+            <ng-template #verOrga>Ver organizaciones</ng-template>
+          </button>
+
         </ng-container>
-        <ng-template #verOrga>Ver organizaciones</ng-template>
-      </button>
+      </li>
+      <li class="justify-content-center">
+        <ng-container class="col-md-3">
 
-    </ng-container>
-
-    <ng-container class="form-group col-md-6 d-flex align-items-center">
-
-      <button (click)="openRolePosition()" [ngClass]="{'btn btn-primary btn-sm m-2': baseData.roleposition.length, 
+          <button (click)="openRolePosition()" [ngClass]="{'btn btn-primary btn-sm m-2': baseData.roleposition.length, 
                       'btn btn-warning btn-sm m-2': !baseData.roleposition.length}">
-        <ng-container *ngIf="!baseData.roleposition.length; else verRole">
-          Crear posiciones
+            <ng-container *ngIf="!baseData.roleposition.length; else verRole">
+              Crear posiciones
+            </ng-container>
+            <ng-template #verRole>Ver posiciones</ng-template>
+          </button>
+
         </ng-container>
-        <ng-template #verRole>Ver posiciones</ng-template>
-      </button>
+      </li>
+    </div>
 
-    </ng-container>
-  </div>
+  </ul>
 
-</div>
 <!-- FIN Controles para la administracion de Organizacion y RolePosition -->
 
 
-<form class="form-row p-1 d-flex justify-content-around" 
-  *ngIf="showPrimaryForm" 
-
-  [formGroup]="form" 
-  #myForm="ngForm"
+<form class="form-row p-1 d-flex justify-content-around" *ngIf="showPrimaryForm" [formGroup]="form" #myForm="ngForm"
   (ngSubmit)="onEnviar($event); myForm.resetForm()">
 
 
@@ -48,31 +48,32 @@
   <div class="form-row">
 
     <!-- ORGANIZACION -->
-      <div class="form-group col-md-6 ">
-        <label class="form-label" for="organization">Organizacion</label>
-        
-        
-        <select class="form-control" formControlName="organization" name="organization" [compareWith]="compararOrganizacion"
-          [ngClass]="{'error is-invalid': (Organization?.invalid && Organization?.touched), 'is-valid': Organization.valid}">
-        
-          <option name="defaultOrg" *ngIf="!baseData.organization.length" value="" disabled selected>Sin datos</option>
-          <option *ngFor="let elemento of baseData.organization" [ngValue]="elemento">
-            {{elemento.name}} </option>
-        
-        </select>
+    <div class="form-group col-md-6 ">
+      <label class="form-label" for="organization">Organizacion</label>
 
-        <div class="row error-container mx-auto">
-          <small class="mensajeError mx-1" *ngIf="!baseData.organization.length"> Debe crear organizaciones
+
+      <select class="form-control" formControlName="organization" name="organization"
+        [compareWith]="compararOrganizacion"
+        [ngClass]="{'error is-invalid': (Organization?.invalid && Organization?.touched), 'is-valid': Organization.valid}">
+
+        <option name="defaultOrg" *ngIf="!baseData.organization.length" value="" disabled selected>Sin datos</option>
+        <option *ngFor="let elemento of baseData.organization" [ngValue]="elemento">
+          {{elemento.name}} </option>
+
+      </select>
+
+      <div class="row error-container mx-auto">
+        <small class="mensajeError mx-1" *ngIf="!baseData.organization.length"> Debe crear organizaciones
+        </small>
+        <ng-container *ngIf="(Organization.invalid && Organization.touched); else isOk">
+
+          <small class="mensajeError mx-1" *ngIf="form.hasError('required', 'organization')"> Falta seleccionar
           </small>
-          <ng-container *ngIf="(Organization.invalid && Organization.touched); else isOk">
 
-            <small class="mensajeError mx-1" *ngIf="form.hasError('required', 'organization')"> Falta seleccionar
-            </small>
-
-          </ng-container>
-          <ng-template #isOk>
-          </ng-template>
-        </div>
+        </ng-container>
+        <ng-template #isOk>
+        </ng-template>
+      </div>
 
     </div> <!-- FIN ORGANIZACION -->
 
@@ -81,10 +82,7 @@
 
       <!-- https://www.arquitecturajava.com/angular-select-y-todas-sus-opciones/ -->
       <label class="form-label" for="roleposition">Posicion/Rol</label>
-      <select class="form-control" 
-      formControlName="roleposition" 
-      name="roleposition" 
-        [compareWith]="compararRoles"
+      <select class="form-control" formControlName="roleposition" name="roleposition" [compareWith]="compararRoles"
         [ngClass]="{'error is-invalid': (Roleposition?.invalid && Roleposition?.touched), 'is-valid': Roleposition.valid}">
 
         <option name="defaultRol" *ngIf="!baseData.roleposition.length" value="" disabled selected>Sin datos</option>
@@ -115,8 +113,7 @@
   <div class="row" style="width:100% ">
     <div class="col-12">
       <label class="form-label" for="resume">Resumen:</label>
-      <textarea type="text" rows="6" id="resume" formControlName="resume" name="resume"
-        class="form-control "
+      <textarea type="text" rows="6" id="resume" formControlName="resume" name="resume" class="form-control "
         placeholder="Resumen" formControlName="resume" [ngClass]="{'error is-invalid': (Resume.invalid && Resume.touched)
         , 'is-valid':Resume.valid}"></textarea>
     </div>
@@ -125,7 +122,7 @@
       <ng-container *ngIf="(Resume.invalid && Resume.touched); else isOk">
 
         <div class="mensajeError mx-1" *ngIf="form.hasError('required', 'resume')"> Dato requerido </div>
-        <div class="mensajeError mx-1" *ngIf="form.hasError('minlength', 'resume')"> Minimo {{
+        <div class="mensajeError mx-1" *ngIf="form.hasError('minlength', 'resume')"> Mínimo {{
           Resume.errors.minlength.requiredLength }} caracteres</div>
         <div class="mensajeError mx-1" *ngIf="form.hasError('maxlength', 'resume')"> Máximo {{
           Resume.errors.maxlength.requiredLength }} caracteres</div>
@@ -161,16 +158,14 @@
       <label class="form-label" for="endDate">Hasta:</label>
       <input type="date" id="endDate" name="endDate" class="form-control p-2" formControlName="endDate"
         [ngClass]="{'error is-invalid': (EndDate.invalid && EndDate.touched), 'is-valid':EndDate.valid}"
-        [attr.min]='StartDate.value'
-        
-        >
-      </div>
-      <!-- [min]="StartDate.value" -->
+        [attr.min]='StartDate.value'>
+    </div>
+    <!-- [min]="StartDate.value" -->
 
   </div> <!-- FIN FECHAS INICIO Y FIN -->
 
 
-   <!-- SUBMIN O CANCELAR Y CERRAR -->
+  <!-- SUBMIT O CANCELAR Y CERRAR -->
   <div class="form-row m-4" style="width:100% ">
     <div class="form-group col d-flex align-items-center m-auto justify-content-around">
       <button type="submit" class="btn btn-success btn-sm p-2 m-2" [disabled]="!form.valid">
@@ -182,8 +177,7 @@
         Cancelar
       </button>
     </div>
-
-  </div> <!-- FIN SUBMIN CANCEL -->
+  </div> <!-- FIN SUBMIT CANCEL -->
 
 
 </form>

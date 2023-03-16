@@ -119,7 +119,7 @@
       <ng-container *ngIf="(Name.invalid && Name.touched); else isOk">
 
         <div class="mensajeError mx-1" *ngIf="form.hasError('required', 'name')"> Dato requerido </div>
-        <div class="mensajeError mx-1" *ngIf="form.hasError('minlength', 'name')"> Minimo {{
+        <div class="mensajeError mx-1" *ngIf="form.hasError('minlength', 'name')"> Mínimo {{
           Name.errors.minlength.requiredLength }} caracteres</div>
         <div class="mensajeError mx-1" *ngIf="form.hasError('maxlength', 'name')"> Máximo {{
           Name.errors.maxlength.requiredLength }} caracteres</div>
@@ -161,7 +161,7 @@
 
   </div> <!-- FIN FECHAS INICIO Y FIN -->
 
-  <!-- SUBMIN O CANCELAR Y CERRAR -->
+  <!-- SUBMIT O CANCELAR Y CERRAR -->
   <div class="form-row m-4" style="width:100% ">
     <div class="form-group col d-flex align-items-center m-auto justify-content-around">
       <button type="submit" class="btn btn-success btn-sm p-2 m-2" [disabled]="!form.valid">
@@ -174,7 +174,7 @@
       </button>
     </div>
 
-  </div> <!-- FIN SUBMIN CANCEL -->
+  </div> <!-- FIN SUBMIT CANCEL -->
 
 
 </form>

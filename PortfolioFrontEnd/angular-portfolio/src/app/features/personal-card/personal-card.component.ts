@@ -216,8 +216,8 @@ export class PersonalCardComponent implements OnInit, OnDestroy {
     dialogConfig.restoreFocus = true;
     dialogConfig.id = "modal-component";
 
-    dialogConfig.height = "80%";
-    dialogConfig.width = "90%";
+    dialogConfig.height = "90%";
+     dialogConfig.width = "95%";
 
     dialogConfig.data = { message: "Datos generales", }
 

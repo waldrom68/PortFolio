@@ -104,9 +104,6 @@ export class RolepositionItemComponent implements OnInit, OnDestroy {
           if (element.roleposition.id == rolePosition.id)
             element.roleposition.name = rolePosition.name;
         });
-
-        // console.log("ESTE ES EL PARCHE QUE ESTOY HACIENDO", this.baseData.laboralCareer);
-        
       },
       error: (e) => {
         alert("Response Error (" + e.status + ") en el metodo addItem()" + "\n" + e.message);

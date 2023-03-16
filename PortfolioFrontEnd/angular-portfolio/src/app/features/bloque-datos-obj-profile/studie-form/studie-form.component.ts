@@ -164,8 +164,8 @@ export class StudieFormComponent implements OnInit, OnDestroy {
     // dialogConfig.panelClass = "modal-component";
     // dialogConfig.backdropClass = "modal-component"
 
-    dialogConfig.height = "80%";
-    dialogConfig.width = "90%";
+    dialogConfig.height = "90%";
+     dialogConfig.width = "95%";
     dialogConfig.data = { message: "Organizaciones" }
 
     const modalDialog = this.dialog.open(OrganizationComponent, dialogConfig);
@@ -226,8 +226,8 @@ export class StudieFormComponent implements OnInit, OnDestroy {
     // dialogConfig.panelClass = "modal-component";
     // dialogConfig.backdropClass = "modal-component"
 
-    dialogConfig.height = "80%";
-    dialogConfig.width = "90%";
+    dialogConfig.height = "90%";
+     dialogConfig.width = "95%";
     dialogConfig.data = { message: "Niveles de Formación" }
 
     const modalDialog = this.dialog.open(DegreeComponent, dialogConfig);

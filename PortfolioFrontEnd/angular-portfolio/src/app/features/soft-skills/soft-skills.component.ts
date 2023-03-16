@@ -141,7 +141,9 @@ export class SoftSkillsComponent implements OnInit, OnDestroy {
     dialogConfig.disableClose = true;
     dialogConfig.id = "modal-delete";
     dialogConfig.height = "350px";
+    dialogConfig.maxHeight = "90%";
     dialogConfig.width = "600px";
+    dialogConfig.maxWidth = "95%";
     dialogConfig.data = {
       // atributos generales del message-box
       name: "eliminar",

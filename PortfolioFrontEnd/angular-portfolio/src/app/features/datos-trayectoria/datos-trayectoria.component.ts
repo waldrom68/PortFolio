@@ -4,7 +4,7 @@ import { AdminService } from 'src/app/service/auth.service';
 
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
-import {LaboralCareer, FullPersonDTO} from '../../models'
+import { LaboralCareer, FullPersonDTO } from '../../models'
 
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MessageBoxComponent } from '../../shared/message-box/message-box.component';
@@ -22,31 +22,30 @@ export class DatosTrayectoriaComponent implements OnInit, OnDestroy {
 
   faPlusCircle = faPlusCircle;
 
-  showBtnAction: boolean= true;  // flag para mostrar o no los btn's de acciones del usuario
- 
+  showBtnAction: boolean = true;  // flag para mostrar o no los btn's de acciones del usuario
+
   itemParaBorrar: any;
 
   baseData: FullPersonDTO;
   private BaseDataServiceSubscription: Subscription | undefined;
-  
+
   formData: LaboralCareer;  // instancia vacia, para cuando se solicite un alta
 
   recargarItem: number = 0;  // elemento para la directiva "RefreshDirective"
 
-   // Validacion Admin STATUS
-   esAdmin: boolean;
-   private AdminServiceSubscription: Subscription | undefined;
-  
+  // Validacion Admin STATUS
+  esAdmin: boolean;
+  private AdminServiceSubscription: Subscription | undefined;
 
-  constructor( 
-    private dataService: DataService, 
+
+  constructor(
+    private dataService: DataService,
     private baseDataService: BaseDataService,
 
     public matDialog: MatDialog,
 
     private adminService: AdminService,
-    // private formService: FormService,
-    ) {  }
+  ) { }
 
 
   ngOnInit(): void {
@@ -66,30 +65,36 @@ export class DatosTrayectoriaComponent implements OnInit, OnDestroy {
 
   }
 
-   ngOnDestroy() {
+  ngOnDestroy() {
     this.AdminServiceSubscription?.unsubscribe();
     this.BaseDataServiceSubscription?.unsubscribe();
   }
 
   resetForm() {
+    console.log("Esto tengo antes del resetForm", this.formData);
+
     this.formData = new LaboralCareer();
+
+
+    console.log("resetForm en datos-trayectoria, creo un form vacio", this.formData);
+
   }
 
-  
+
   toggleForm() {
-  // PENDIENTE, evaluar si aqui se podria actualizar los items ya dezplegados
-  // tras algun cambio en Organizacion, Roles
+    // PENDIENTE, evaluar si aqui se podria actualizar los items ya dezplegados
+    // tras algun cambio en Organizacion, Roles
     this.showForm = !this.showForm;
     this.showBtnAction = !this.showBtnAction;
-  }  
-  
+  }
+
   cancelation(career: LaboralCareer) {
     this.toggleForm();
 
   }
 
 
-  openModalDelete(laboralCareer: LaboralCareer){
+  openModalDelete(laboralCareer: LaboralCareer) {
     // Llamo al modal, si se confirma el borrado.
     // almaceno el item en cuestion en itemParaBorrar
     this.itemParaBorrar = laboralCareer;
@@ -109,9 +114,9 @@ export class DatosTrayectoriaComponent implements OnInit, OnDestroy {
         },
         error: (e) => {
           alert("Response Error (" + e.status + ")" + "\n" + e.message);
-          console.log("Se quizo eliminar sin exito a: " , this.itemParaBorrar);
+          console.log("Se quizo eliminar sin exito a: ", this.itemParaBorrar);
         },
-        complete: () => {console.log("Completada la eliminacion en la Trayectoria Laboral");}
+        complete: () => { console.log("Completada la eliminacion en la Trayectoria Laboral"); }
 
       });
     }
@@ -138,13 +143,15 @@ export class DatosTrayectoriaComponent implements OnInit, OnDestroy {
 
   }
 
-  openDeleteModal(data:any) {
+  openDeleteModal(data: any) {
     const dialogConfig = new MatDialogConfig();
     // The user can't close the dialog by clicking outside its body
     dialogConfig.disableClose = true;
     dialogConfig.id = "modal-delete";
     dialogConfig.height = "350px";
+    dialogConfig.maxHeight = "90%";
     dialogConfig.width = "600px";
+    dialogConfig.maxWidth = "95%";
     dialogConfig.data = {
       // atributos generales del message-box
       name: "eliminar",
@@ -167,7 +174,7 @@ export class DatosTrayectoriaComponent implements OnInit, OnDestroy {
     modalDialog.afterClosed().subscribe(
       data => {
         // console.log("Dialogo output: ", data);
-        if (data) {this.delItem() }
+        if (data) { this.delItem() }
       }
 
     )
