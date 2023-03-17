@@ -80,6 +80,8 @@ export class CareerItemComponent implements OnInit, OnDestroy {
     this.BaseDataServiceSubscription?.unsubscribe();
     this.formServiceSubscription?.unsubscribe();
 
+    this.formService.setCurrentForm(0);
+
   }
 
   color: string = 'red';

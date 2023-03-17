@@ -21,7 +21,7 @@ export class MatAlertComponent implements OnInit {
     this.type = modalData.type ? modalData.type : 'info';
     this.timer = modalData.timer ? modalData.timer : 0;
     if (modalData.type == 'ok') {
-      this.delay(this.timer);
+      this.delay(1500);
     }
 
 

@@ -50,7 +50,8 @@
     background: rgba( 234, 106, 135, 0.9) !important;
  }
  ::ng-deep .modal-content.ok {
-    background: rgba(134, 165, 134, 0.9) !important;
+    background: rgba(119, 179, 93, 0.9) !important;
+    padding: 0.5rem !important;
  }
  /* ::ng-deep .modal-content.info {
     background: rgba(248,248,248, 1) !important;

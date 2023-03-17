@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Studie, FullPersonDTO } from '../../../models'
 
-import { faPen, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faPen, faTimes, faTrash,  } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { BaseDataService, DataService } from 'src/app/service/data.service';
 import { AdminService } from 'src/app/service/auth.service';

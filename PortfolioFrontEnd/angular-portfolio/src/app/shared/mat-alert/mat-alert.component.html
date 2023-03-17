@@ -25,7 +25,9 @@
         </div>
 
         <div class="col-auto  m-0 p-0">
-          <span class="close" aria-hidden="false" (click)="dismiss()">&times;</span>
+          <span *ngIf="type!='ok'" class="close" aria-hidden="false" (click)="dismiss()">&times;</span>
+          <span *ngIf="type=='ok'" class="close" aria-hidden="false" (click)="dismiss()">&#10003;</span>
+
 
         </div>
       </div>
