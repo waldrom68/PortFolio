@@ -1,48 +1,51 @@
 <!-- Controles para la administracion de Organizacion y RolePosition -->
-<div class="form-row border border-primary rounded p-1 d-flex justify-content-around" id="accederModal">
+<ul class="head form-row p-1 d-flex border rounded fade-in-ul justify-content-center  m-1 mb-0 " id="accederModal">
 
-  <div class="form-group col d-flex align-items-center ">
-    <label class="form-label">Administrar</label>
+  <div class="col d-flex align-items-center justify-content-center">
+    <h4 class="form-label">Administrar</h4>
   </div>
 
-  <div class="form-row">
-    <ng-container class="form-group col-md-6 d-flex align-items-center justify-content-around">
+  <div class=" col d-flex">
 
-      <button (click)="openOrganization()" [ngClass]="{'btn btn-primary btn-sm m-2': baseData.organization.length, 
-                      'btn btn-warning btn-sm m-2': !baseData.organization.length}">
-        <ng-container *ngIf="!baseData.organization.length; else verOrga">
-          Crear organizaciones
-        </ng-container>
-        <ng-template #verOrga>Ver organizaciones</ng-template>
-      </button>
+    <li class="justify-content-center">
+      <ng-container class="form-group col-md-6">
 
-    </ng-container>
+        <button (click)="openOrganization()" [ngClass]="{'btn btn-primary btn-sm m-2': baseData.organization.length, 
+                    'btn btn-warning btn-sm m-2': !baseData.organization.length}">
+          <ng-container *ngIf="!baseData.organization.length; else verOrga">
+            Crear organizaciones
+          </ng-container>
+          <ng-template #verOrga>Ver organizaciones</ng-template>
+        </button>
 
-    <ng-container class="form-group col-md-6 d-flex align-items-center">
+      </ng-container>
+    </li>
 
-      <button (click)="openDegree()" [ngClass]="{'btn btn-primary btn-sm m-2': baseData.degree.length, 
+    <li class="justify-content-center">
+      <ng-container class="col-md-3">
+
+        <button (click)="openDegree()" [ngClass]="{'btn btn-primary btn-sm m-2': baseData.degree.length, 
                       'btn btn-warning btn-sm m-2': !baseData.degree.length}">
-        <ng-container *ngIf="!baseData.degree.length; else verNivel">
-          Crear niveles
-        </ng-container>
-        <ng-template #verNivel>Ver niveles</ng-template>
-      </button>
+          <ng-container *ngIf="!baseData.degree.length; else verNivel">
+            Crear niveles
+          </ng-container>
+          <ng-template #verNivel>Ver niveles</ng-template>
+        </button>
 
-    </ng-container>
+      </ng-container>
+    </li>
   </div>
 
-</div>
+</ul>
 <!-- FIN Controles para la administracion de Organizacion y RolePosition -->
 
 
-
-
-
-<form class="form-row p-1 d-flex justify-content-around" *ngIf="showPrimaryForm" [formGroup]="form" #myForm="ngForm"
+<form class="form-row p-1 d-flex justify-content-around"
+[formGroup]="form" #myForm="ngForm"
   (ngSubmit)="onEnviar($event); myForm.resetForm()">
 
 
-  <!-- SELECT ORGANIZACION Y POSICION -->
+  <!-- SELECT ORGANIZACION Y FORMACION -->
   <div class="form-row">
 
     <!-- ORGANIZACION -->
@@ -74,22 +77,23 @@
       </div>
 
     </div> <!-- FIN ORGANIZACION -->
+
     <!-- NIVEL FORMACION -->
     <div class="form-group col-md-6">
 
       <!-- https://www.arquitecturajava.com/angular-select-y-todas-sus-opciones/ -->
-      <label class="form-label" for="degree">Posicion/Rol</label>
+      <label class="form-label" for="degree">Formación</label>
       <select class="form-control" formControlName="degree" name="degree" [compareWith]="compararDegree"
         [ngClass]="{'error is-invalid': (Degree?.invalid && Degree?.touched), 'is-valid': Degree.valid}">
 
-        <option name="defaultRol" *ngIf="!baseData.degree.length" value="" disabled selected>Sin datos</option>
+        <option name="defaultPos" *ngIf="!baseData.degree.length" value="" disabled selected>Sin datos</option>
         <option *ngFor="let elemento of baseData.degree" [ngValue]="elemento">
           {{elemento.name}}</option>
 
       </select>
 
       <div class="row error-container mx-auto">
-        <small class="mensajeError mx-1" *ngIf="!baseData.degree.length"> Debe crear posiciones
+        <small class="mensajeError mx-1" *ngIf="!baseData.degree.length"> Debe crear niveles
         </small>
         <ng-container *ngIf="(Degree?.invalid && Degree?.touched); else isOk">
 
@@ -101,9 +105,9 @@
         <ng-template #isOk>
         </ng-template>
       </div>
-    </div> <!--FIN POSICION  -->
+    </div> <!--FIN FORMACION  -->
 
-  </div> <!--FIN ORGANIZACION Y POSICION-->
+  </div> <!--FIN ORGANIZACION Y FORMACION-->
 
 
   <!-- RESUMEN -->
@@ -162,7 +166,7 @@
   </div> <!-- FIN FECHAS INICIO Y FIN -->
 
   <!-- SUBMIT O CANCELAR Y CERRAR -->
-  <div class="form-row m-4" style="width:100% ">
+  <div class="form-row m-4" style="width:100%">
     <div class="form-group col d-flex align-items-center m-auto justify-content-around">
       <button type="submit" class="btn btn-success btn-sm p-2 m-2" [disabled]="!form.valid">
         Guardar
@@ -173,7 +177,6 @@
         Cancelar
       </button>
     </div>
-
   </div> <!-- FIN SUBMIT CANCEL -->
 
 

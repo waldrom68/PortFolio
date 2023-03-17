@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
@@ -40,13 +40,7 @@ export class CareerFormComponent implements OnInit, OnDestroy {
 
   form: FormGroup;
 
-  // oldData: LaboralCareer[];
-
-  showOrgaForm: boolean = false;
-  showRoleForm: boolean = false;
-  showPrimaryForm: boolean = true;
-
-  // Validacion Admin STATUS
+   // Validacion Admin STATUS
   esAdmin: boolean;
   private AdminServiceSubscription: Subscription | undefined;
   baseData: FullPersonDTO;
@@ -71,10 +65,7 @@ export class CareerFormComponent implements OnInit, OnDestroy {
         this.baseData = currentData;
       }
     );
-    // // Clono el objeto, uso assign por no tener atributos compuesto por otros objetos
-    // this.oldData = Object.assign({}, this.baseData.roleposition)
-    
-    // console.log(this.formData.organization);
+  
     this.form = this.formBuilder.group({
       resume: [this.formData.resume, [Validators.required, Validators.minLength(20), Validators.maxLength(500)]],
       startDate: [formatDate(this.formData.startDate, 'yyyy-MM-dd', 'en'), [Validators.required]],
@@ -103,10 +94,8 @@ export class CareerFormComponent implements OnInit, OnDestroy {
       this.form.get('roleposition')?.enable() :
       this.form.get('roleposition')?.disable()
 
-    // this.resetForm();
-    // console.log("Estoy en ngOnInit de career-form.component esto está en formData", this.formData);
-    // console.log("Estoy en ngOnInit de career-form.component esto está en oldData", this.oldData);
-
+    // Inicializo en falso, porque ingreso directamente en un formulario
+    this.showBtnAction = false;
   }
 
   ngOnDestroy() {
@@ -134,34 +123,6 @@ export class CareerFormComponent implements OnInit, OnDestroy {
     // this.formData = { id: 0, name: "", orderdeploy: 0, person: 0 }
     this.formData = new LaboralCareer();
   }
-
-  // togglePrimaryForm() {
-  //   this.showPrimaryForm = !this.showPrimaryForm;
-  //   this.showBtnAction = !this.showBtnAction;
-  //   this.showBtnActionChange.emit(this.showBtnAction);
-  // }
-
-  // toggleOrgaForm() {
-  //   // this.togglePrimaryForm();
-  //   if (this.myOrganizations) {
-  //     this.formData.organization = this.myOrganizations[0];
-  //   }
-  //   this.openOrganization();
-  //   // this.showOrgaForm = !this.showOrgaForm;
-  // }
-
-  // toggleRoleForm() {
-  //   // this.togglePrimaryForm();
-  //   if (this.myRolePositions) {
-  //     this.formData.roleposition = this.myRolePositions[0]
-  //   }
-  //   // this.showRoleForm = !this.showRoleForm;
-  //   this.openRolePosition();
-  // }
-
-
-  // .mat-dialog-container {
-  //   padding: 1em;
 
   openOrganization() {
     const dialogConfig = new MatDialogConfig();
@@ -239,8 +200,6 @@ export class CareerFormComponent implements OnInit, OnDestroy {
 
     const modalDialog = this.dialog.open(RolePositionComponent, dialogConfig);
 
-    // PENDIENTE, CREO QUE NO HAY QUE CONTROLAR ESTO, PUES LOS CAMBIOS LOS HACE EN
-    // LOS COMPONENTES A LOS QUE LLAMA, EN ESTE CASO A ROLEPOSITION.COMPONENT
     modalDialog.afterClosed().subscribe(result => {
 
       // PENDIENTE, ESTO ES ¡ UNA CHANCHADA !, REPENSARLO DESDE CERO
@@ -264,8 +223,6 @@ export class CareerFormComponent implements OnInit, OnDestroy {
               // is not required to be set dynamically.
               this.formData.roleposition = e;
               this.form.patchValue({ roleposition: e });
-              // this.form.controls['roleposition'].patchValue({disabled:false})
-
             }
           });
 
@@ -276,8 +233,8 @@ export class CareerFormComponent implements OnInit, OnDestroy {
 
         this.form.get('roleposition')?.enable();
 
-
       } else {  // la lista de roles quedó vacía
+
         this.formData.roleposition = new RolePosition();
         this.form.patchValue({
           roleposition: "",
@@ -289,9 +246,7 @@ export class CareerFormComponent implements OnInit, OnDestroy {
       }
 
     })
-
   }
-
 
   compararOrganizacion(myOrganization1: Organization, myOrganization2: Organization) {
     if (myOrganization1 == null || myOrganization2 == null) {
@@ -311,8 +266,6 @@ export class CareerFormComponent implements OnInit, OnDestroy {
 
   onEnviar(event: Event,) {
     event.preventDefault;
-
-    // console.log(this.form);
 
     // Si deja de estar logueado, no registro lo que haya modificado y cierro form.
     if (!this.esAdmin) {
@@ -344,7 +297,6 @@ export class CareerFormComponent implements OnInit, OnDestroy {
   }
 
   onCancel(event: Event,) {
-
     this.cancel.emit();
   }
 

@@ -20,9 +20,6 @@ export class CareerItemComponent implements OnInit, OnDestroy {
 
   @Input() formData: LaboralCareer;
 
-  // @Input() myOrganizations: Organization[];
-  // @Input() myRolePositions: RolePosition[];
-
   // @Input() showBtnAction!: boolean;
   // @Output() showBtnActionChange = new EventEmitter<boolean>();
 
@@ -129,6 +126,9 @@ export class CareerItemComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe(() => console.log("Cerrando alert-modal"));
   }
 
+  // PENDIENTE, FUE UNA PRUEBA DE LOS ALERT
+  // DEBE INCLUIRSE EN TODOS LOS COMPOENETES QUE 
+  // TENGAN MENSAJES ERROR, SUCCESS CON ALERT()
   verError() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = false;
@@ -156,10 +156,6 @@ export class CareerItemComponent implements OnInit, OnDestroy {
     if (this.esAdmin) {
       this.onDelete.emit(laboralCareer);
     }
-
-  }
-  cancelation(laboralCareer: LaboralCareer) {
-    this.toggleForm(laboralCareer);  // cierro el formulario
   }
 
   update(laboralCareer: LaboralCareer) {
@@ -167,12 +163,6 @@ export class CareerItemComponent implements OnInit, OnDestroy {
     this.dataService.upDateEntity(laboralCareer, "/laboralcareer").subscribe({
       next: (v) => {
         console.log("Guardado correctamente: ", v);
-        // v.person = this.baseData.id
-        // this.baseData.laboralCareer = v;
-        // this.item = laboralCareer;
-        // console.log("dataService.upDateEntity career-item, Aqui debiera tener los datos actualizados de roleposition", this.baseData.roleposition);
-        // this.item = laboralCareer;
-
       },
       error: (e) => {
         alert("Response Error (" + e.status + ") en el metodo addItem()" + "\n" + e.message);
@@ -184,9 +174,13 @@ export class CareerItemComponent implements OnInit, OnDestroy {
     });
 
 
-    this.baseDataService.setCurrentBaseData(this.baseData)
     this.toggleForm(laboralCareer);  // cierro el formulario
+    this.baseDataService.setCurrentBaseData(this.baseData)
 
 
+  }
+
+  cancelation(laboralCareer: LaboralCareer) {
+    this.toggleForm(laboralCareer);  // cierro el formulario
   }
 }

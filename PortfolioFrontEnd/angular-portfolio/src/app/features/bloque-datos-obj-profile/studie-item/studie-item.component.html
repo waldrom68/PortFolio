@@ -5,7 +5,10 @@
         <div [ngClass]="color" (mouseover)="changeStyle($event)" (mouseout)="changeStyle($event)">
 
             <ul class="head border rounded fade-in-ul mb-0 mt-2">
-                <div *ngIf="item.endDate; else elseBlock">
+                <div *ngIf="item.endDate; else elseBlock"
+                ngClass="information"
+                (click)="verOrga(item);"
+                >
                     <h6>({{item.startDate | date:'MM-yyyy' }} hasta {{item.endDate | date:'MM-yyyy'}})
                         {{item.organization.name}} -{{item.degree.name}}-</h6>
                 </div>
@@ -14,18 +17,26 @@
                         -{{item.degree.name}}-</h6>
                 </ng-template>
 
-                <li class="resume" *ngFor="let elemento of item.name.split('\n')">
+                <li class="resume" *ngFor="let elemento of item.name.split('\n')"
+                (click)="verError()"
+                >
                     <p><i> {{elemento}}</i></p>
                 </li>
             </ul>
         </div>
     </div>
 
+    <!-- ##################### -->
     <div *ngIf="esAdmin  && openForm == 0" class="col icon-group">
-        <button class="btn btn-outline-success btn-sm" (click)="toggleForm(item);" ngClass="faConfirm fa-ico">
+        <button class="btn btn-outline-success btn-sm" 
+            (click)="toggleForm(item);" 
+            ngClass="faConfirm fa-ico">
             <fa-icon [icon]="faPen"></fa-icon>
         </button>
-        <button class="btn btn-outline-danger btn-sm" (click)="delete(item)" ngClass="faCancel">
+        <button class="btn btn-outline-danger btn-sm" 
+            (click)="delete(item)" 
+            ngClass="faCancel"
+        >
             <fa-icon [icon]="faTrash"></fa-icon>
         </button>
     </div>
@@ -33,6 +44,10 @@
 </div>
 <!-- </div> -->
 
-<app-studie-form *ngIf="showForm && esAdmin" [ngStyle]="{'width':'100%'}" [title]="'Agregar un trabajo'"
-    [formData]="formData" (onUpdate)="update($event);" (cancel)="cancelation($event)">
+<app-studie-form *ngIf="showForm && esAdmin" [ngStyle]="{'width':'100%'}" 
+[title]="'Agregar un estudio'" 
+[formData]="item"
+
+(onUpdate)="update($event);"
+(cancel)="cancelation($event)">
 </app-studie-form>

@@ -13,23 +13,23 @@ import { RolePosition } from 'src/app/models';
 })
 export class RolepositionFormComponent implements OnInit, OnDestroy {
 
-// @Input() formData: RolePosition;
-@Input() title: string;
-@Input() item: RolePosition;
+  // @Input() formData: RolePosition;
+  @Input() title: string;
+  @Input() item: RolePosition;
 
-@Output() onUpdate: EventEmitter<RolePosition> = new EventEmitter()
-@Output() cancel: EventEmitter<RolePosition> = new EventEmitter()
+  @Output() onUpdate: EventEmitter<RolePosition> = new EventEmitter()
+  @Output() cancel: EventEmitter<RolePosition> = new EventEmitter()
 
-faCheck = faCheck;
-faTimes = faTimes;
+  faCheck = faCheck;
+  faTimes = faTimes;
 
-formData: RolePosition;
-form: FormGroup;
+  formData: RolePosition;
+  form: FormGroup;
 
   // Validacion Admin STATUS
   esAdmin: boolean;
   private AdminServiceSubscription: Subscription | undefined;
- 
+
 
   constructor(
     private formBuilder: FormBuilder,
@@ -47,7 +47,7 @@ form: FormGroup;
     }
 
     this.form = this.formBuilder.group({
-      name:[this.formData.name, [Validators.required, Validators.minLength(3),Validators.maxLength(100) ]],
+      name: [this.formData.name, [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
 
     });
 
@@ -64,9 +64,9 @@ form: FormGroup;
     this.AdminServiceSubscription?.unsubscribe();
   }
 
-  color:string = 'red';
-  
-  changeStyle($event: Event){
+  color: string = 'red';
+
+  changeStyle($event: Event) {
     this.color = $event.type == 'mouseover' ? 'resaltado' : 'normal';
   }
   get Name(): any {
@@ -78,7 +78,7 @@ form: FormGroup;
   }
 
 
-  onEnviar(event: Event, ) {
+  onEnviar(event: Event,) {
     event.preventDefault;
     // Si deja de estar logueado, no registro lo que haya modificado y cierro form.
     if (!this.esAdmin) {
@@ -86,22 +86,22 @@ form: FormGroup;
       this.cancel.emit();
 
     } else {
-      
+
       if (this.form.valid) {
-  
+
         this.formData.name = this.form.get("name")?.value.trim();
         this.onUpdate.emit(this.formData);
-  
+
       } else {
-        
+
         console.log("no es valido el valor ingresado")
         this.form.markAllAsTouched();
-  
+
       }
     }
 
   }
-  onCancel(event: Event, ) {
+  onCancel(event: Event,) {
     this.cancel.emit();
 
   }

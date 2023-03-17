@@ -1,9 +1,10 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { JwtDto, LoginUsuario } from '../models';
 import { DataService } from './data.service';
+import { FormService } from './ui.service';
 
 
 // const AUTH_API = "http://localhost:10000/auth/"
@@ -13,18 +14,23 @@ const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
+
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
+  // Si está en modo edicion y se desloguea, debo colocar openForm = 0;
+  openForm: number;
+  private formServiceSubscription: Subscription | undefined;
+
 
   constructor(
     private httpClient: HttpClient,
-    private dataService: DataService,
-    // PENDIENTE MODO PRUEBA
+    private formService: FormService,
+
     private adminService: AdminService,
-    // FIN MODO PRUEBA
+
   ) { }
 
   // public register(nuevoUsuario: Usuario): Observable<any>{
@@ -41,6 +47,8 @@ export class AuthService {
     window.sessionStorage.clear();
 
     this.adminService.setCurrentAdmin(false);
+    this.formService.setCurrentForm(0);  // debo indicar que no quedan formularios abiertos
+
   }
 
 

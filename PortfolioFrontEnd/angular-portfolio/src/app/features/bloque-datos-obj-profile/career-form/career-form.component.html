@@ -1,46 +1,48 @@
 <!-- Controles para la administracion de Organizacion y RolePosition -->
 
-  <ul class="head form-row p-1 d-flex border rounded fade-in-ul justify-content-center  m-1 mb-0 " id="accederModal">
+<ul class="head form-row p-1 d-flex border rounded fade-in-ul justify-content-center  m-1 mb-0 " id="accederModal">
 
-    <div class="col d-flex align-items-center justify-content-center">
-      <h4 class="form-label">Administrar</h4>
-    </div>
+  <div class="col d-flex align-items-center justify-content-center">
+    <h4 class="form-label">Administrar</h4>
+  </div>
 
-    <div class=" col d-flex">
-      <li class="justify-content-center">
-        <ng-container class="form-group col-md-6">
+  <div class=" col d-flex">
 
-          <button (click)="openOrganization()" [ngClass]="{'btn btn-primary btn-sm m-2': baseData.organization.length, 
+    <li class="justify-content-center">
+      <ng-container class="form-group col-md-6">
+
+        <button (click)="openOrganization()" [ngClass]="{'btn btn-primary btn-sm m-2': baseData.organization.length, 
                       'btn btn-warning btn-sm m-2': !baseData.organization.length}">
-            <ng-container *ngIf="!baseData.organization.length; else verOrga">
-              Crear organizaciones
-            </ng-container>
-            <ng-template #verOrga>Ver organizaciones</ng-template>
-          </button>
+          <ng-container *ngIf="!baseData.organization.length; else verOrga">
+            Crear organizaciones
+          </ng-container>
+          <ng-template #verOrga>Ver organizaciones</ng-template>
+        </button>
 
-        </ng-container>
-      </li>
-      <li class="justify-content-center">
-        <ng-container class="col-md-3">
+      </ng-container>
+    </li>
+    <li class="justify-content-center">
+      <ng-container class="col-md-3">
 
-          <button (click)="openRolePosition()" [ngClass]="{'btn btn-primary btn-sm m-2': baseData.roleposition.length, 
+        <button (click)="openRolePosition()" [ngClass]="{'btn btn-primary btn-sm m-2': baseData.roleposition.length, 
                       'btn btn-warning btn-sm m-2': !baseData.roleposition.length}">
-            <ng-container *ngIf="!baseData.roleposition.length; else verRole">
-              Crear posiciones
-            </ng-container>
-            <ng-template #verRole>Ver posiciones</ng-template>
-          </button>
+          <ng-container *ngIf="!baseData.roleposition.length; else verRole">
+            Crear posiciones
+          </ng-container>
+          <ng-template #verRole>Ver posiciones</ng-template>
+        </button>
 
-        </ng-container>
-      </li>
-    </div>
+      </ng-container>
+    </li>
+  </div>
 
-  </ul>
+</ul>
 
 <!-- FIN Controles para la administracion de Organizacion y RolePosition -->
 
 
-<form class="form-row p-1 d-flex justify-content-around" *ngIf="showPrimaryForm" [formGroup]="form" #myForm="ngForm"
+<form class="form-row p-1 d-flex justify-content-around" 
+[formGroup]="form" #myForm="ngForm"
   (ngSubmit)="onEnviar($event); myForm.resetForm()">
 
 
@@ -78,6 +80,7 @@
     </div> <!-- FIN ORGANIZACION -->
 
     <!-- POSICION -->
+
     <div class="form-group col-md-6">
 
       <!-- https://www.arquitecturajava.com/angular-select-y-todas-sus-opciones/ -->

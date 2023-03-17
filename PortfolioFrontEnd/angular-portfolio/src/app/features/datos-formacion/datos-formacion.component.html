@@ -1,7 +1,9 @@
-<div class="table-dark text-left container-fluid">
-    <ng-container *ngIf="baseData.studie.length; else agregar">
-        <div *ngIf="!showForm">
+<div class="table-dark text-left container-fluid py-4" >
 
+    <ng-container *ngIf="baseData.studie.length; else agregar">
+        
+        <div *ngIf="!showForm">
+           
             <app-studie-item 
                 *ngFor="let item of baseData.studie"
                 [item]="item"

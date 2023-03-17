@@ -1,9 +1,8 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup,  Validators } from '@angular/forms';
 
 import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
-import { DataService } from 'src/app/service/data.service';
 import { AdminService } from 'src/app/service/auth.service';
 
 import { Degree } from 'src/app/models';
@@ -39,6 +38,7 @@ export class DegreeFormComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+console.log("recibo por el html input()", this.item);
 
     if (!this.item) {
       this.resetForm()

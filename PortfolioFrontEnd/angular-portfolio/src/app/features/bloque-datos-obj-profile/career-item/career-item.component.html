@@ -6,6 +6,7 @@
             
             <ul class="head border rounded fade-in-ul mb-0 mt-2">
                 <div *ngIf="item.endDate; else elseBlock"
+                ngClass="information"
                 (click)="verOrga(item);"
                 >
                     <h6>({{item.startDate | date:'MM-yyyy' }} hasta {{item.endDate | date:'MM-yyyy'}})

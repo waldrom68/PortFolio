@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Inject, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { BaseDataService, DataService } from 'src/app/service/data.service';
 import { AdminService } from 'src/app/service/auth.service';
 import { faPlusCircle, faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -14,6 +14,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './degree.component.html',
   styleUrls: ['./degree.component.css']
 })
+
 export class DegreeComponent implements OnInit, OnDestroy {
   showForm: boolean = false;  // flag para mostrar o no el formulario
 
@@ -77,7 +78,6 @@ export class DegreeComponent implements OnInit, OnDestroy {
   // resetForm() {
   //   this.formData = new Degree();
   // }
-
 
   toggleForm() {
     // Cierra el formulario de edicion o creacion

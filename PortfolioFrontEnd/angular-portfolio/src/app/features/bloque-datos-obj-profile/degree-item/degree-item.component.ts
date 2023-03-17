@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 import { Degree, FullPersonDTO } from '../../../models'
 
 import { faPen, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { BaseDataService, DataService } from 'src/app/service/data.service';
 import { AdminService } from 'src/app/service/auth.service';
 
@@ -107,7 +107,7 @@ export class DegreeItemComponent implements OnInit, OnDestroy {
       },
       error: (e) => {
         alert("Response Error (" + e.status + ") en el metodo upDateItem()" + "\n" + e.message);
-        console.log("Se quizo modificar sin exito a: " + this.oldData.name);
+        console.log("Se quizo modificar sin exito a: " + degree.name);
         // Restauro valor original
         degree = this.oldData;
       },

@@ -83,9 +83,7 @@ export class RolePositionComponent implements OnInit, OnDestroy {
     // Cierra el formulario de edicion o creacion
     this.showForm = !this.showForm;
     this.showBtnAction = !this.showBtnAction;
-
   }
-
 
   cancelation(rolePosition: RolePosition) {
     this.toggleForm();

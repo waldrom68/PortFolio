@@ -71,26 +71,17 @@ export class DatosTrayectoriaComponent implements OnInit, OnDestroy {
   }
 
   resetForm() {
-    console.log("Esto tengo antes del resetForm", this.formData);
-
     this.formData = new LaboralCareer();
-
-
-    console.log("resetForm en datos-trayectoria, creo un form vacio", this.formData);
-
   }
 
 
   toggleForm() {
-    // PENDIENTE, evaluar si aqui se podria actualizar los items ya dezplegados
-    // tras algun cambio en Organizacion, Roles
     this.showForm = !this.showForm;
     this.showBtnAction = !this.showBtnAction;
   }
 
   cancelation(career: LaboralCareer) {
     this.toggleForm();
-
   }
 
 

@@ -1,14 +1,10 @@
-<h5 class="m-auto p-1">{{formData.name}}{{title}}</h5>
+<!-- <h5 class="m-auto p-1">{{formData.name}}{{title}}</h5> -->
 
-  <form class="form-inline m-1"
-  style="display: flex ; width:90% "
-  [formGroup]="form"
-
-  #myForm="ngForm"
+<form class="form-row p-1 d-flex justify-content-around" [formGroup]="form" #myForm="ngForm"
   (ngSubmit)="onEnviar($event); myForm.resetForm()"
 >
-  <div class="col" style="display: contents ; width:100% ">
-
+  <div class="row" style="width:100% ">
+  <div class="col-12">
     <label class="form-label" for="name">Nombre:</label>
     <input type="text" 
         id="name"
@@ -20,31 +16,37 @@
         formControlName="name"
         [ngClass] = "{error: (Name.invalid && Name.touched)}"
     >
-    
-    <small class="mensajeError" *ngIf="form.hasError('required', 'name')"> Dato requerido </small>
-    <small class="mensajeError" *ngIf="form.hasError('minlength', 'name')"> Mínimo {{ Name.errors.minlength.requiredLength }} caracteres</small>
-    <small class="mensajeError" *ngIf="form.hasError('maxlength', 'name')"> Máximo {{ Name.errors.maxlength.requiredLength }} caracteres</small>
-    
-    <div class="icon-group m-2">
-        {{form.valid}}
-      <button type="submit" class="btn btn-outline-success btn-sm"
-      ngClass="faConfirm fa-ico"
-      [disabled]="!form.valid"
-      >
-        <fa-icon  [icon]="faCheck"> </fa-icon>
-      </button>
+  </div>
+  
+    <div class="row error-container text-justify-left mx-3">
+      <ng-container *ngIf="(Name.invalid && Name.touched); else isOk">
 
-      <button class="btn btn-outline-danger btn-sm"
-      (click)="onCancel($event); myForm.resetForm()"
-      ngClass="faCancel fa-ico"
-      >
-        <fa-icon [icon]="faTimes"> </fa-icon>
-      </button>
+        <div class="mensajeError mx-1" *ngIf="form.hasError('required', 'name')"> Dato requerido </div>
+        <div class="mensajeError mx-1" *ngIf="form.hasError('minlength', 'name')"> Mínimo {{
+          Name.errors.minlength.requiredLength }} caracteres</div>
+        <div class="mensajeError mx-1" *ngIf="form.hasError('maxlength', 'name')"> Máximo {{
+          Name.errors.maxlength.requiredLength }} caracteres</div>
 
+      </ng-container>
+      <ng-template #isOk>
+      </ng-template>
     </div>
 
-
   </div>
+  <!-- SUBMIT O CANCELAR Y CERRAR -->
+  <div class="form-row m-4" style="width:100% ">
+    <div class="form-group col d-flex align-items-center m-auto justify-content-around">
+      <button type="submit" class="btn btn-success btn-sm p-2 m-2" [disabled]="!form.valid">
+        Guardar
+      </button>
+    </div>
+    <div class="form-group col d-flex align-items-center m-auto justify-content-around">
+      <button class="btn btn-danger btn-sm p-2 m-2" (click)="onCancel($event); myForm.resetForm()">
+        Cancelar
+      </button>
+    </div>
+
+  </div> <!-- FIN SUBMIT CANCEL -->
 
 
-  </form>
+</form>
