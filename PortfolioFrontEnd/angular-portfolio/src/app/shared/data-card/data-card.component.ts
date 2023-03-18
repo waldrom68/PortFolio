@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faPen, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Cards } from 'src/app/models';
 
 import { UiService } from 'src/app/service/ui.service';
@@ -11,6 +11,8 @@ import { UiService } from 'src/app/service/ui.service';
 })
 export class DataCardComponent implements OnInit {
   faTimes = faTimes;
+  faPen = faPen;
+  faTrash = faTrash;
    
   // PENDIENTE Esta entrada no la uso para nada
   @Input() detailCard:Cards [];

@@ -1,6 +1,6 @@
-<div class="row text-center aling-self-center py-0" id="Init" >
+<div class="row text-center aling-self-center py-0 mx-0" id="Init" >
     
-    <div class="col-12 text-warning font-weight-bold bg-dark p-2">
+    <div class="container-fluid text-warning font-weight-bold bg-dark p-2">
         {{baseData.name}}  -> Forms abiertos {{openForm}}
     </div>
 
@@ -37,7 +37,7 @@
                     <button class="btn btn-default btn-sm" 
                     ngClass='faControl faClose'
 
-                    (click)="toggleCards()"
+                    (click)="toggleCards();"
                     >
                         <fa-icon 
                             [icon]="faTimes"

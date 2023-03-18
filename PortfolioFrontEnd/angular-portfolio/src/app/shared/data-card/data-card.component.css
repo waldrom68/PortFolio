@@ -21,7 +21,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    border-radius: 25px;
+    border-radius: 20px;
     background: #000;
     filter: blur(35px);
 
@@ -33,8 +33,8 @@
 .flip-box {
     background-color: transparent;
     perspective: 1000px;
-    width:230px;
-    height: 100px;
+    width: 240px;
+    height: 110px;
 }
 
     .flip-box-inner {
@@ -68,14 +68,15 @@
         background-size: cover;
         -webkit-backface-visibility: hidden;
         backface-visibility: hidden;
-        border-radius: 25px;
+        border-radius: 20px;
     }
 
     .flip-box-front {
         background-image: linear-gradient(90deg, var(--metaldark-shadow) 0%, var(--metallight-shadow) 25%, var(--metal) 50%, var(--metallight-shadow) 75%, var(--metaldark-shadow) 100% ) !important;   ;
     }
     .flip-box-back {
-        background-image: linear-gradient(90deg, var(--metaldark-shadow) 0%, var(--metallight-shadow) 25%, var(--metal) 50%, var(--metallight-shadow) 75%, var(--metaldark-shadow) 100% ) !important;
+        color: #ffc107;
+        background-image: linear-gradient(90deg, #262626 0%, #4c4c4c 50%, #262626 100% ) !important;
         transform: rotateY(180deg); 
         /* height: 200%; */
         box-shadow: 3px 3px 3px 3px rgb(232, 248, 232);

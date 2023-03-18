@@ -1,57 +1,48 @@
-<ng-container *ngIf="!showForm">
+<div class="table-dark row " *ngIf="!showForm && openForm == 0">
+    <!-- <div  class="row container-fluid"> -->
 
-    <div class="container row py-2"
-    [ngClass]="color" (mouseover)="changeStyle($event)" (mouseout)="changeStyle($event)"
-    >
-        <div class="container-fluid" style="display: inline-block;"
+    <div [ngClass]="{'p-0 col-10':esAdmin, 'col-12':!esAdmin}">
+        <div [ngClass]="color" (mouseover)="changeStyle($event)" (mouseout)="changeStyle($event)">
 
-        >
-        <!-- (dblclick)="toggleForm(item);" -->
-            
-            <h6>( {{item.since | date:'MM-yyyy'}} )  {{item.name}}
-                <a  class="px-3" href="{{item.url}}" target="_blank">-Visitar-</a>
-            </h6>
+            <ul class="head border rounded fade-in-ul mb-0 mt-2">
+                <div>
+                    <h6>( {{item.since | date:'MM-yyyy'}} ) {{item.name}}
 
-            <p *ngFor="let elemento of item.resume.split('\n')"> 
-                <small class="px-5"><i> {{elemento}}</i></small>
-            </p>
-            
-        </div>
-        <!-- ##################### -->
-        
-        <div class="icon-group"
-             *ngIf="esAdmin && showBtnAction"
-            >
-            <button class="btn btn-outline-success btn-sm"
-                (click)="toggleForm(item);"
-                ngClass="faConfirm fa-ico">
-                <fa-icon 
-                    [icon]="faPen"
-                    
-                >
-                </fa-icon>
-            </button>
-            <button class="btn btn-outline-danger btn-sm"
-                (click)="delete(item)"
-                ngClass="faCancel"
-            >
-                <fa-icon 
-                    [icon]="faTrash"
-                >
-                </fa-icon>
-            </button>
+                        <ng-container *ngIf="item.url.length">
+                            <a class="px-3 url " href="https://{{item.url}}" target="_blank">- visitar sitio web -</a>
+                        </ng-container>
+
+                    </h6>
+                </div>  
+                <li class="resume" *ngFor="let elemento of item.resume.split('\n')">
+                    <p><i> {{elemento}}</i></p>
+                </li>
+
+            </ul>
         </div>
     </div>
+    <!-- ##################### -->
+    <div *ngIf="esAdmin  && openForm == 0" class="col icon-group">
+        <button class="btn btn-outline-success btn-sm" 
+            (click)="toggleForm(item);" 
+            ngClass="faConfirm fa-ico">
+            <fa-icon [icon]="faPen"></fa-icon>
+        </button>
+        <button class="btn btn-outline-danger btn-sm" 
+            (click)="delete(item)" 
+            ngClass="faCancel"
+        >
+            <fa-icon [icon]="faTrash"></fa-icon>
+        </button>
+    </div>
 
-</ng-container >
+</div>
 
-<app-projects-form
-    *ngIf="showForm"
-    [ngStyle]="{'width':'100%'}"
-    [formData]="formData"
-    [title]="''"
-    (onUpdate)=" update($event);"
-    (cancel)="cancelation($event)"
+<app-projects-form *ngIf="showForm && esAdmin" 
+[ngStyle]="{'width':'100%'}" 
+[title]="'Agregar un proyecto'" 
+[formData]="formData"
 
-    >
+(onUpdate)="update($event);"
+(cancel)="cancelation($event)">
 </app-projects-form>

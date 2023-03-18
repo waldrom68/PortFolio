@@ -59,6 +59,7 @@ p {
     text-indent: 1.5rem ;
 }
 
+
 section.row:nth-child(1), section.row:nth-child(2) {
     display: block;
     }
@@ -291,20 +292,28 @@ ul.head:hover {
 }
 
 
-ul.head a:link, ul.head a:visited {
+ul.head a:link, ul.head a:visited, a.url {
     color: inherit;
     text-decoration: none;
     cursor: auto;
 }
 
-ul.head  a:link:active, ul.head a:visited:active {
+ul.head  a:link:active, ul.head a:visited:active, 
+a.url:link:active, a.url:visited:active {
     color: inherit;
 }
 
 ul.head a:hover {
     color: yellow;
+    cursor: pointer;
 }
 
+a.url:hover {
+    border: none;
+    color: #0056b3;
+    text-decoration: none;
+    cursor: pointer;
+}
 
 
 

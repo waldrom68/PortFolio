@@ -1,42 +1,45 @@
-<ng-container *ngIf="myData.length; else agregar">
-    <div class="table-dark text-center container p-5" style="display: table-row-group;"
-    *ngIf="!showForm"
+<div class="table-dark text-center container p-5" style="display: table-row-group;">
+    
+    <ng-container *ngIf="baseData.hardskill.length; else agregar">
+
+        <div id="listado" *ngIf="!showForm">
+
+            <app-hard-item *ngFor="let item of baseData.hardskill"
+                [item]="item"
+                (onDelete)="openModalDelete(item)"
+
+                [(showBtnAction)]="showBtnAction" 
+                (showBtnActionChange)="showBtnAction"
+            >
+            </app-hard-item>
+
+        </div>
+    </ng-container>
+
+
+    <app-hard-form
+        *ngIf="showForm && esAdmin"
+
+        [formData]="formData"
+        [title]="'Ingrese una habilidad'"
+
+        (onUpdate)=" addItem($event)"
+        (cancel)="cancelation()"
         >
+    </app-hard-form>
+    <!-- (showBtnActionChange)="showBtnAction" -->
+    
+    <ng-template #agregar>
+        <div class="table-dark text-left container"  >
+            <p> Sin registrar habilidades.
+            </p>
+        </div>
+    </ng-template>
 
-        <app-hard-item 
-            *ngFor="let item of myData"
-            [item]="item"
-
-            (onDelete)="openModalDelete(item)"
-            [(showBtnAction)]="showBtnAction"
-        >
-        </app-hard-item>
-
-    </div>
-</ng-container>
+</div>
 
 
-<app-hard-form
-    *ngIf="showForm && esAdmin"
-
-    [formData]="formData"
-    [title]="'Ingrese una habilidad'"
-
-    (showBtnActionChange)="showBtnAction"
-    (onUpdate)=" addItem($event)"
-    (cancel)="cancelation()"
->
-</app-hard-form>
-
-<ng-template #agregar>
-    <div class="table-dark text-left container"  >
-        <p> Sin registrar habilidades.
-        </p>
-    </div>
-</ng-template>
-
-<ng-container *ngIf="esAdmin && showBtnAction"
->
+<ng-container *ngIf="esAdmin && showBtnAction">
     <br>
     <button class="btn btn-default btn-sm" 
         ngClass="faControl fa-ico"

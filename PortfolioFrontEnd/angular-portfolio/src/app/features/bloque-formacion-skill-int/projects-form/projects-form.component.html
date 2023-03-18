@@ -1,68 +1,121 @@
-<h5 class="m-auto p-1">{{title}}</h5>
+<!-- <h5 class="m-auto p-1">{{title}}</h5> -->
 
-<form class="form-inline m-1" style="display: flex ; width:90% " [formGroup]="form" #myForm="ngForm"
+<form class="form-row p-1 d-flex justify-content-around" 
+[formGroup]="form" #myForm="ngForm"
   (ngSubmit)="onEnviar($event); myForm.resetForm()">
-  <div class="row" style="display: contents ; width:100% ">
 
-    <label class="form-label" for="name">Nombre:</label>
-    <textarea type="text" id="name" formControlName="name" name="name" class="form-control" placeholder="Nombre"
-      [ngStyle]="{'width':'100%'}" formControlName="name"
-      [ngClass]="{error: (Nombre.invalid && Nombre.touched)}"></textarea>
 
-    <small class="mensajeError" *ngIf="form.hasError('required', 'name')"> Dato requerido </small>
-    <small class="mensajeError" *ngIf="form.hasError('minlength', 'name')"> Mínimo {{
-      Nombre.errors.minlength.requiredLength }} caracteres</small>
-    <small class="mensajeError" *ngIf="form.hasError('maxlength', 'name')"> Máximo {{
-      Nombre.errors.maxlength.requiredLength }} caracteres</small>
-  </div>
-  <div class="row" style="display: contents ; width:100% ">
-    <label class="form-label" for="resume">Resumen:</label>
-    <textarea type="text" id="resume" formControlName="resume" name="resume" class="form-control" placeholder="Resumen"
-      [ngStyle]="{'width':'100%'}" formControlName="resume"
-      [ngClass]="{error: (Resume.invalid && Resume.touched)}"></textarea>
-    <small class="mensajeError" *ngIf="form.hasError('required', 'resume')"> Dato requerido </small>
-    <small class="mensajeError" *ngIf="form.hasError('minlength', 'resume')"> Mínimo {{
-      Resume.errors.minlength.requiredLength }} caracteres</small>
-    <small class="mensajeError" *ngIf="form.hasError('maxlength', 'resume')"> Máximo {{
-      Resume.errors.maxlength.requiredLength }} caracteres</small>
+  <!-- NOMBRE -->
+  <div class="row" style="width:100% ">
+    <div class="col-12">
+      <label class="form-label" for="name">Nombre:</label>
+      <textarea type="text" id="name" formControlName="name" name="name" class="form-control" placeholder="Nombre"
+        [ngStyle]="{'width':'100%'}" formControlName="name" [ngClass]="{'error is-invalid': (Name.invalid && Name.touched),
+        'is-valid':Name.valid
+      }"></textarea>
 
-  </div>
-  <div class="row" style="display: contents ; width:100% ">
-    <label class="form-label" for="since">Realizado en:</label>
-    <input type="date" id="since" name="since" class="form-control" [ngStyle]="{'width':'100%'}" formControlName="since"
-      [ngClass]="{error: (Since.invalid && Since.touched)}">
-    <small class="mensajeError" *ngIf="form.hasError('required', 'since')"> Dato requerido </small>
+    </div>
 
-    <!-- Datepicker ANGULAR
+    <div class="row error-container text-justify-left mx-3">
+      <ng-container *ngIf="(Name.invalid && Name.touched); else isOk">
+        <div class="mensajeError mx-1" *ngIf="form.hasError('required', 'name')"> Dato requerido </div>
+        <div class="mensajeError mx-1" *ngIf="form.hasError('minlength', 'name')"> Mínimo {{
+          Name.errors.minlength.requiredLength }} caracteres</div>
+        <div class="mensajeError mx-1" *ngIf="form.hasError('maxlength', 'name')"> Máximo {{
+          Name.errors.maxlength.requiredLength }} caracteres</div>
+      </ng-container>
+      <ng-template #isOk>
+      </ng-template>
+    </div>
+  </div> <!-- FIN NOMBRE -->
+
+  <!-- RESUMEN -->
+  <div class="row" style="width:100% ">
+    <div class="col-12">
+      <label class="form-label" for="resume">Resumen:</label>
+      <textarea type="text" rows="6" id="resume" formControlName="resume" name="resume" class="form-control "
+        placeholder="Resumen" formControlName="resume" [ngClass]="{'error is-invalid': (Resume.invalid && Resume.touched)
+        , 'is-valid':Resume.valid}"></textarea>
+    </div>
+
+    <div class="row error-container text-justify-left mx-3">
+      <ng-container *ngIf="(Resume.invalid && Resume.touched); else isOk">
+
+        <div class="mensajeError mx-1" *ngIf="form.hasError('required', 'resume')"> Dato requerido </div>
+        <div class="mensajeError mx-1" *ngIf="form.hasError('minlength', 'resume')"> Mínimo {{
+          Resume.errors.minlength.requiredLength }} caracteres</div>
+        <div class="mensajeError mx-1" *ngIf="form.hasError('maxlength', 'resume')"> Máximo {{
+          Resume.errors.maxlength.requiredLength }} caracteres</div>
+
+      </ng-container>
+      <ng-template #isOk>
+      </ng-template>
+    </div>
+  </div> <!-- FIN RESUMEN -->
+
+  <!-- FECHA DE REALIZACION -->
+  <div class="row">
+    <div class="col">
+      <label class="form-label" for="since">Desde:</label>
+      <input type="date" id="since" name="since" class="form-control p-2" formControlName="since" [ngClass]="{'error is-invalid': (Since.invalid && Since.touched),
+      'is-valid':Since.valid}">
+
+
+      <div class="row error-container mx-auto">
+        <ng-container *ngIf="(Since.invalid && Since.touched); else isOk">
+
+          <small class="mensajeError mx-1" *ngIf="form.hasError('required', 'since')"> Dato requerido
+          </small>
+
+        </ng-container>
+        <ng-template #isOk>
+        </ng-template>
+      </div>
+
+    </div>
+  </div> <!-- FIN FECHA -->
+ 
+ 
+  <!-- Datepicker ANGULAR
       https://stackoverflow.com/questions/55721254/how-to-change-mat-datepicker-date-format-to-dd-mm-yyyy-in-simplest-way -->
 
-  </div>
-  <div class="row" style="display: contents ; width:100% ">
-    <label class="form-label" for="url">URL:</label>
-    <textarea type="text" id="url" formControlName="url" name="url" class="form-control" placeholder="Link del proyecto"
-      [ngStyle]="{'width':'100%'}" formControlName="url"
-      [ngClass]="{error: (Url.invalid && Url.touched)}"></textarea>
-    <small class="mensajeError" *ngIf="form.hasError('required', 'url')"> Dato requerido </small>
-    <small class="mensajeError" *ngIf="form.hasError('minlength', 'url')"> Mínimo {{
-      Url.errors.minlength.requiredLength }} caracteres</small>
-    <small class="mensajeError" *ngIf="form.hasError('maxlength', 'url')"> Máximo {{
-      Url.errors.maxlength.requiredLength }} caracteres</small>
+  <!-- URL -->
+  <div class="row" style="width:100% ">
+    <div class="col-12">
+      <label class="form-label" for="url">URL:</label>
+      <textarea type="text" id="url" formControlName="url" name="url" class="form-control"
+        placeholder="Link del proyecto" formControlName="url"
+        [ngClass]="{'error is-invalid': (Url.invalid && Url.touched), 'is-valid':Url.valid}"></textarea>
+    </div>
 
-  </div>
+    <div class="row error-container text-justify-left mx-3">
+      <ng-container *ngIf="(Url.invalid && Url.touched); else isOk">
 
-  <div class="icon-group row m-2">
+        <div class="mensajeError mx-1" *ngIf="form.hasError('required', 'url')"> Dato requerido </div>
+        <div class="mensajeError mx-1" *ngIf="form.hasError('minlength', 'url')"> Mínimo {{
+          Url.errors.minlength.requiredLength }} caracteres</div>
+        <div class="mensajeError mx-1" *ngIf="form.hasError('maxlength', 'url')"> Máximo {{
+          Url.errors.maxlength.requiredLength }} caracteres</div>
 
-    <button type="submit" class="btn btn-outline-success btn-sm" ngClass="faConfirm fa-ico" [disabled]="!form.valid">
-      <fa-icon [icon]="faCheck"> </fa-icon>
-    </button>
+      </ng-container>
+      <ng-template #isOk>
+      </ng-template>
+    </div>
+  </div> <!-- FIN URL-->
 
-    <button class="btn btn-outline-danger btn-sm" (click)="onCancel($event); myForm.resetForm()"
-      ngClass="faCancel fa-ico">
-      <fa-icon [icon]="faTimes"> </fa-icon>
-    </button>
-
-  </div>
-
+  <!-- SUBMIT O CANCELAR Y CERRAR -->
+  <div class="form-row m-4" style="width:100% ">
+    <div class="form-group col d-flex align-items-center m-auto justify-content-around">
+      <button type="submit" class="btn btn-success btn-sm p-2 m-2" [disabled]="!form.valid">
+        Guardar
+      </button>
+    </div>
+    <div class="form-group col d-flex align-items-center m-auto justify-content-around">
+      <button class="btn btn-danger btn-sm p-2 m-2" (click)="onCancel($event); myForm.resetForm()">
+        Cancelar
+      </button>
+    </div>
+  </div> <!-- FIN SUBMIT CANCEL -->
 
 
 

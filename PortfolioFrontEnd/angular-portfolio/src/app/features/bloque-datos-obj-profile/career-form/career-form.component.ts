@@ -96,6 +96,8 @@ export class CareerFormComponent implements OnInit, OnDestroy {
 
     // Inicializo en falso, porque ingreso directamente en un formulario
     this.showBtnAction = false;
+    this.showBtnActionChange.emit(this.showBtnAction)
+
   }
 
   ngOnDestroy() {

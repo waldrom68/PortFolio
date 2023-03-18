@@ -4,7 +4,7 @@
     overflow: hidden !important;
 } */
 
-/* span.close {
+span.close {
     border: none !important;
     margin: 0% !important;
     padding: 0 0.5rem;
@@ -17,7 +17,7 @@
         color:white;
         font-weight: bolder;
         background-color: var(--danger);
-    } */
+    }
 
 ::ng-deep .modal-content {
     border: none !important;
@@ -41,8 +41,8 @@
 
  ::ng-deep mat-dialog-container#modal-info {
     position:relative;
-    margin: 0 !important;
-    padding: 0 !important;
+    margin: 1rem !important;
+    padding: 2rem !important;
     overflow-x: hidden;
     background: rgba(248,248,248, 1) !important;
  } 

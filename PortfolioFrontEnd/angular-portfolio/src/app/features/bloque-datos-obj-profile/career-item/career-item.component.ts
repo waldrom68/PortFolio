@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { FullPersonDTO, LaboralCareer } from '../../../models'
+import { FullPersonDTO, LaboralCareer, Mensaje } from '../../../models'
 
 import { faPen, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
@@ -80,7 +80,7 @@ export class CareerItemComponent implements OnInit, OnDestroy {
     this.BaseDataServiceSubscription?.unsubscribe();
     this.formServiceSubscription?.unsubscribe();
 
-    this.formService.setCurrentForm(0);
+    // this.formService.setCurrentForm(0);
 
   }
 
@@ -114,14 +114,11 @@ export class CareerItemComponent implements OnInit, OnDestroy {
     // dialogConfig.height = "350px";
     // dialogConfig.width = "600px";
     // dialogConfig.maxWidth = '700px';
-    dialogConfig.data = {
-      type: "info",
-      message: [
-        laboralCareer.organization.name,
-        laboralCareer.organization.resume,
-        laboralCareer.organization.url,
-      ]
-    };
+    dialogConfig.data = new Mensaje("info", [
+            laboralCareer.organization.name,
+            laboralCareer.organization.resume,
+          ], 0 ,
+          laboralCareer.organization.url )
 
     const dialogRef = this.dialog.open(MatAlertComponent, dialogConfig);
 

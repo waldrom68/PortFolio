@@ -1,45 +1,37 @@
-<ng-container *ngIf="!showForm">
-    <div class="container row py-2"
-    [ngClass]="color" (mouseover)="changeStyle($event)" (mouseout)="changeStyle($event)"
+<div class="table-dark row " *ngIf="!showForm && openForm == 0">
+    <!-- <div  class="row container-fluid"> -->
 
-    >
-            <div class="col-8"
+    <div [ngClass]="{'p-0 col-10':esAdmin, 'col-12':!esAdmin}">
+        <div [ngClass]="color" (mouseover)="changeStyle($event)" (mouseout)="changeStyle($event)">
 
-            >
-            <!-- (dblclick)="toggleForm(item);" -->
-                <span 
-                >{{item.name}}  </span>
-            </div>
-        <div class="col-4 icon-group"
-             *ngIf="esAdmin && showBtnAction"
-            >
-            <button class="btn btn-outline-success btn-sm"
-                (click)="toggleForm(item);"
-                ngClass="faConfirm fa-ico">
-                <fa-icon 
-                    [icon]="faPen"
-                    
-                >
-                </fa-icon>
-            </button>
-            <button class="btn btn-outline-danger btn-sm"
-                (click)="delete(item)"
-                ngClass="faCancel"
-            >
-                <fa-icon 
-                    [icon]="faTrash"
-                >
-                </fa-icon>
-            </button>
+            <ul class="head border rounded fade-in-ul mb-0 mt-2">
+                <div> <h6> {{item.name}} </h6> </div>
+            </ul>
         </div>
     </div>
-</ng-container >
 
-<app-interests-form
-    *ngIf="showForm"
+    <!-- ##################### -->
+    <div *ngIf="esAdmin  && openForm == 0" class="col icon-group">
+        <button class="btn btn-outline-success btn-sm" 
+            (click)="toggleForm(item);" 
+            ngClass="faConfirm fa-ico">
+            <fa-icon [icon]="faPen"></fa-icon>
+        </button>
+        <button class="btn btn-outline-danger btn-sm" 
+            (click)="delete(item)" 
+            ngClass="faCancel"
+        >
+            <fa-icon [icon]="faTrash"></fa-icon>
+        </button>
+    </div>
+
+</div>
+
+<app-interests-form *ngIf="showForm && esAdmin" 
     [ngStyle]="{'width':'100%'}"
-    [formData]="formData"
     [title]="''"
+    [formData]="formData"
+    
     (onUpdate)=" update($event);"
     (cancel)="cancelation($event)"
     >

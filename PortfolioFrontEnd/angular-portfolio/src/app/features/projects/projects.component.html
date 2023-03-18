@@ -1,28 +1,28 @@
-    <ng-container *ngIf="myData.length; else agregar">
-        <div class="table-dark text-left container-fluid p-5" 
-        *ngIf="!showForm"
-        >
+<div class="table-dark text-left container-fluid py-4" >
+
+    <ng-container *ngIf="baseData.laboralCareer.length; else agregar">
+    
+        <div id="listado" *ngIf="!showForm" >
+
             <app-projects-item 
-                *ngFor="let item of myData"
+                *ngFor="let item of baseData.project"
                 [item]="item"
 
                 (onDelete)="openModalDelete(item)"
                 [(showBtnAction)]="showBtnAction"
-            >
-
+                (showBtnActionChange)="showBtnAction"
+                >
             </app-projects-item>
-
 
         </div>
     </ng-container>
 
     <app-projects-form
         *ngIf="showForm && esAdmin"
-
+        [ngStyle]="{'width':'100%'}"
+        [title]="'Agregar un proyecto'"
         [formData]="formData"
-        [title]="'Ingrese un proyecto'"
-
-        (showBtnActionChange)="showBtnAction"
+        
         (onUpdate)=" addItem($event)"
         (cancel)="cancelation()"
     >
@@ -34,7 +34,7 @@
             </p>
         </div>
     </ng-template>
-
+</div>
 
 
 

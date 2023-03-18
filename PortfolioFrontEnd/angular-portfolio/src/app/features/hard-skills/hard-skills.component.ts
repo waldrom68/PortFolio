@@ -9,7 +9,7 @@ import { HardSkill, FullPersonDTO} from '../../models'
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MessageBoxComponent } from '../../shared/message-box/message-box.component';
 
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 // Declaro la funcion que debe levantarse de \src\assets\widget.js
 declare function initAndSetupTheSliders(): void;
@@ -20,11 +20,10 @@ declare function initAndSetupTheSliders(): void;
   styleUrls: ['./hard-skills.component.css']
 })
 export class HardSkillsComponent implements OnInit, OnDestroy {
-
   showForm: boolean = false;  // flag para mostrar o no el formulario
  
-  myData: HardSkill[] = [];
-  formData: HardSkill;  // instancia vacia, para cuando se solicite un alta
+  // myData: HardSkill[] = [];
+  // formData: HardSkill;  // instancia vacia, para cuando se solicite un alta
 
   faPlusCircle = faPlusCircle;
 
@@ -32,34 +31,37 @@ export class HardSkillsComponent implements OnInit, OnDestroy {
  
   itemParaBorrar: any;  // objeto que se está por borrar, sirve para reestablecer si cancela borrado
 
+  formData: HardSkill;  // instancia vacia, para cuando se solicite un alta
+
   // Validacion Admin STATUS
   esAdmin: boolean;
   private AdminServiceSubscription: Subscription | undefined;
- 
-  baseData: FullPersonDTO;
+   baseData: FullPersonDTO;
   private BaseDataServiceSubscription: Subscription | undefined;
 
   
   constructor(
     private dataService: DataService,
+    private baseDataService: BaseDataService,
+
     public matDialog: MatDialog,
  
     private adminService: AdminService,
-    private baseDataService: BaseDataService,
   ) { 
     
   }
 
   ngOnInit(): void {
-    this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
-      currentAdmin => {
-        this.esAdmin = currentAdmin;
-      }
-    );
     this.BaseDataServiceSubscription = this.baseDataService.currentBaseData.subscribe(
       currentData => {
         this.baseData = currentData;
-        this.myData = currentData.hardskill;
+        // this.myData = currentData.interest;
+      }
+    );
+
+    this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
+      currentAdmin => {
+        this.esAdmin = currentAdmin;
       }
     );
     
@@ -97,10 +99,10 @@ export class HardSkillsComponent implements OnInit, OnDestroy {
       this.dataService.delEntity(this.itemParaBorrar, "/hardskill").subscribe( {
         next: (v) => {
           console.log("Se ha eliminado exitosamente a: ", this.itemParaBorrar);
-          this.myData = this.myData.filter((t) => { return t !== this.itemParaBorrar })
+          this.baseData.hardskill = this.baseData.hardskill.filter((t) => { return t !== this.itemParaBorrar })
           // Actualizo la informacion en el origen
-          this.baseData.hardskill = this.myData;
           this.itemParaBorrar = null;
+          this.baseDataService.setCurrentBaseData(this.baseData);
         },
         error: (e) => {
           alert("Response Error (" + e.status + ")" + "\n" + e.message);
@@ -119,8 +121,8 @@ export class HardSkillsComponent implements OnInit, OnDestroy {
         console.log("Agregado correctamente: ", v);
         hardSkill.id = v.id;
         hardSkill.person = this.baseData.id;
-        this.myData.push(hardSkill);
-        this.baseData.hardskill= this.myData;
+        this.baseData.hardskill.push(hardSkill);
+        this.baseDataService.setCurrentBaseData(this.baseData);
       },
       error: (e) => {
         alert("Response Error (" + e.status + ") en el metodo addItem()" + "\n" + e.message);

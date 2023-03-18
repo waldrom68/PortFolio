@@ -1,13 +1,14 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
-import { DataService } from 'src/app/service/data.service';
+
 import { AdminService } from 'src/app/service/auth.service';
 
-import { Project } from 'src/app/models';
+import { FullPersonDTO, Project } from 'src/app/models';
 import { formatDate } from '@angular/common';
+import { BaseDataService } from 'src/app/service/data.service';
 
 
 @Component({
@@ -18,7 +19,12 @@ import { formatDate } from '@angular/common';
 export class ProjectsFormComponent implements OnInit, OnDestroy {
 
 @Input() formData: Project;
+
 @Input() title: string;
+
+@Input() showBtnAction: boolean;
+@Output() showBtnActionChange = new EventEmitter<boolean>();
+
 @Output() onUpdate: EventEmitter<Project> = new EventEmitter()
 @Output() cancel: EventEmitter<Project> = new EventEmitter()
 
@@ -26,30 +32,38 @@ faCheck = faCheck;
 faTimes = faTimes;
 
 form: FormGroup;
-minSince:string = '2018/03/1';
+minSince:string = '1970/03/1';
 maxSince:string = '2030/05/1';
 
   // Validacion Admin STATUS
   esAdmin: boolean;
   private AdminServiceSubscription: Subscription | undefined;
- 
+  baseData: FullPersonDTO;
+  private BaseDataServiceSubscription: Subscription | undefined;
+
 
 constructor( 
   private formBuilder: FormBuilder,
 
   private adminService: AdminService,
+  private baseDataService: BaseDataService,
   ) { 
 
 }
 
   ngOnInit() {
-    if (!this.formData.since) {
-      this.formData.since = new Date();
-    }
+    this.BaseDataServiceSubscription = this.baseDataService.currentBaseData.subscribe(
+      currentData => {
+        this.baseData = currentData;
+      }
+    );
+  
+      
     this.form = this.formBuilder.group({
       name:[this.formData.name, [Validators.required, Validators.minLength(1) ]],
       resume:[this.formData.resume, [Validators.required, Validators.minLength(2), Validators.maxLength(500) ]],
-      since:[formatDate(this.formData.since, 'yyyy-MM-dd', 'en'), [Validators.required ]],
+      since:[formatDate(this.formData.since ? this.formData.since : new Date(),
+         'yyyy-MM-dd', 'en'), [Validators.required ]],
       url:[this.formData.url ]
     });
 
@@ -58,11 +72,15 @@ constructor(
         this.esAdmin = currentAdmin;
       }
     );
-      console.log(this.formData)
+
+    // Inicializo en falso, porque ingreso directamente en un formulario
+    this.showBtnAction = false;
+    this.showBtnActionChange.emit(this.showBtnAction)
   }
 
   ngOnDestroy() {
     this.AdminServiceSubscription?.unsubscribe();
+    this.BaseDataServiceSubscription?.unsubscribe();
   }
 
 
@@ -72,7 +90,7 @@ constructor(
     this.color = $event.type == 'mouseover' ? 'resaltado' : 'normal';
   }
 
-  get Nombre(): any {
+  get Name(): any {
     return this.form.get("name")
   }
   get Resume(): any {
@@ -105,6 +123,8 @@ constructor(
         this.formData.resume = this.form.get("resume")?.value.trim();
         this.formData.since = this.form.get("since")?.value;
         this.formData.url = this.form.get("url")?.value.trim();
+        this.formData.person = this.baseData.id
+        // estoy por cerrar el formulario, emito orden de actualizarse
         this.onUpdate.emit(this.formData);
   
       } else {

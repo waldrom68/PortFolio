@@ -8,8 +8,7 @@ import { FullPersonDTO, Interest } from '../../models'
 
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MessageBoxComponent } from '../../shared/message-box/message-box.component';
-
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-interests',
@@ -17,19 +16,16 @@ import { Observable, Subscription } from 'rxjs';
   styleUrls: ['./interests.component.css']
 })
 
-
 export class InterestsComponent implements OnInit, OnDestroy {
-
   showForm: boolean = false;  // flag para mostrar o no el formulario
-
-  myData: Interest[] = [];
-  formData: Interest;  // instancia vacia, para cuando se solicite un alta
 
   faPlusCircle = faPlusCircle;
 
   showBtnAction: boolean = true;  // flag para mostrar o no los btn's de acciones del usuario
 
   itemParaBorrar: any;  // objeto que se está por borrar, sirve para reestablecer si cancela borrado
+
+  formData: Interest;  // instancia vacia, para cuando se solicite un alta
 
   // Validacion Admin STATUS
   esAdmin: boolean;
@@ -40,28 +36,29 @@ export class InterestsComponent implements OnInit, OnDestroy {
 
   constructor(
     private dataService: DataService,
+    private baseDataService: BaseDataService,
+
     public matDialog: MatDialog,
 
     private adminService: AdminService,
-    private baseDataService: BaseDataService,
 
   ) {
     
   }
 
   ngOnInit(): void {
-
+    this.BaseDataServiceSubscription = this.baseDataService.currentBaseData.subscribe(
+      currentData => {
+        this.baseData = currentData;
+        // this.myData = currentData.interest;
+      }
+    );
     this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
       currentAdmin => {
         this.esAdmin = currentAdmin;
       }
     );
-    this.BaseDataServiceSubscription = this.baseDataService.currentBaseData.subscribe(
-      currentData => {
-        this.baseData = currentData;
-        this.myData = currentData.interest;
-      }
-    );
+
     this.resetForm();
   }
 
@@ -71,7 +68,6 @@ export class InterestsComponent implements OnInit, OnDestroy {
   }
 
   resetForm() {
-    // this.formData = { id: 0, name: "", orderdeploy: 0, person: 0 }
     this.formData = new Interest();
   }
 
@@ -94,14 +90,13 @@ export class InterestsComponent implements OnInit, OnDestroy {
 
   delItem() {
     if (this.itemParaBorrar) {
-      // console.log(`Se acepto el borrado del item "${this.itemParaBorrar.name}"`);
       this.dataService.delEntity(this.itemParaBorrar, "/interest").subscribe({
         next: (v) => {
           console.log("Se ha eliminado exitosamente a: ", this.itemParaBorrar);
-          this.myData = this.myData.filter((t) => { return t !== this.itemParaBorrar })
+          this.baseData.interest = this.baseData.interest.filter((t) => { return t !== this.itemParaBorrar })
           // Actualizo la informacion en el origen
-          this.baseData.interest = this.myData;
           this.itemParaBorrar = null;
+          this.baseDataService.setCurrentBaseData(this.baseData);
 
         },
         error: (e) => {
@@ -121,8 +116,8 @@ export class InterestsComponent implements OnInit, OnDestroy {
         console.log("Agregado correctamente: ", v);
         interest.id = v.id;
         interest.person = this.baseData.id;
-        this.myData.push(interest);
-        this.baseData.interest = this.myData;
+        this.baseData.interest.push(v);
+        this.baseDataService.setCurrentBaseData(this.baseData);
       },
       error: (e) => {
         alert("Response Error (" + e.status + ") en el metodo addItem()" + "\n" + e.message);

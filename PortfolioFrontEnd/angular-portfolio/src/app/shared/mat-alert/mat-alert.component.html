@@ -1,37 +1,31 @@
-<!-- <div
-    class="" 
-    id="modal-content-wrapper" 
-    tabindex="-1" 
-    role="dialog" 
-    [ngStyle]="{'background-color': 'showConfirmAction' ? modalData.backColor: 'red'}"
-> -->
+<div class="modal-dialog modal-lg" tabindex="-1" id="prueba">
 
-<div class="modal-dialog modal-lg"
-  tabindex="-1"
-  id="prueba"
-  >
-
-  <div class="modal-content" [ngClass]="{error: type=='error', ok:type=='ok', info: type=='info'}"
-   >
+  <div class="modal-content" [ngClass]="{error: modalData.type=='error', ok: modalData.type=='ok', info: modalData.type=='info'}">
 
     <!-- <div class="modal-body "> -->
-      <div class="row m-0 p-0">
+    <div class="row m-0 p-0">
 
-        <div class="col m-0 p-0">
-          {{ modalData.message[0] }}
-          <span *ngFor="let element of modalData.message.slice(1)">
-            <li> {{element}}</li>
-          </span>
-        </div>
+      <div class="col m-0 p-0">
+        {{ modalData.message[0] }}
+        
+        <span *ngFor="let element of modalData.message.slice(1)">
+          <li> {{element}}</li>
+        </span>
+        
+        
 
-        <div class="col-auto  m-0 p-0">
-          <span *ngIf="type!='ok'" class="close" aria-hidden="false" (click)="dismiss()">&times;</span>
-          <span *ngIf="type=='ok'" class="close" aria-hidden="false" (click)="dismiss()">&#10003;</span>
+        <ng-container *ngIf="modalData.url.length">
+          <hr>
+          <a class="url px-3" href="https://{{modalData.url}}" target="_blank">visitar sitio web</a>
+        </ng-container>
 
+      </div>
 
-        </div>
+      <div class="col-auto  m-0 p-0">
+        <span *ngIf="modalData.type!='ok'" class="close" aria-hidden="false" (click)="dismiss()">&times;</span>
+        <span *ngIf="modalData.type=='ok'" class="close" aria-hidden="false" (click)="dismiss()">&#10003;</span>
       </div>
     </div>
+  </div>
 
   <!-- </div> -->
-    

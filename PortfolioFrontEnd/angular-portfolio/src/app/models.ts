@@ -56,7 +56,7 @@ export interface Intereses {
 // Fin interfaces que tiene importadas mockdata
 
 
-// ##### BACKEND clone model ######
+// #####  clone BACKEND model ######
 class Base {
     get MyClass() {
         return (this.constructor.name).toLowerCase();
@@ -406,19 +406,25 @@ export class Usuario {
     authorities: string[];
 }
 
-function getClass() {
-    throw new Error("Function not implemented.");
-}
 // ### END models for security  ###
 
 // ####### utilityies Class  ##########
 export class Mensaje {
-    type: string;
-    reference: string[];
+    type: string;  
+    message: string[];
+    timer:number;
+    url: string;
 
-    constructor() {
-        this.type = "WARN";
-        this.reference = ["Mensaje 1", "Mensaje 2"]
+    constructor(type:string, message: string[], timer?:number, url?:string) {
+        // valid values: error, ok, info
+        if (["info", "error", "ok"].includes(type) ) {
+            this.type = type;
+            this.message = message;
+            this.timer = timer ? timer : 0;
+            this.url = url ? url : '';
+        } else {
+            console.log("ERROR en parametros del mensaje alert");
+        }
     };
 
 }

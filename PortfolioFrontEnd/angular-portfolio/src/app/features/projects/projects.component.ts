@@ -8,7 +8,6 @@ import {Project, FullPersonDTO} from '../../models'
 
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MessageBoxComponent } from '../../shared/message-box/message-box.component';
-
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -17,19 +16,15 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./projects.component.css']
 })
 export class ProjectsComponent implements OnInit, OnDestroy {
-
-
   showForm: boolean = false;  // flag para mostrar o no el formulario
-
-  // softskill: SoftSkill[] = SOFTSKILL;
-  myData: Project[] = [];
-  formData: Project;  // instancia vacia, para cuando se solicite un alta
 
   faPlusCircle = faPlusCircle;
 
   showBtnAction: boolean= true;  // flag para mostrar o no los btn's de acciones del usuario
  
   itemParaBorrar: any;
+
+  formData: Project;  // instancia vacia, para cuando se solicite un alta
 
   // Validacion Admin STATUS
   esAdmin: boolean;
@@ -40,27 +35,31 @@ export class ProjectsComponent implements OnInit, OnDestroy {
 
   constructor( 
     private dataService: DataService,
-     
-    public matDialog: MatDialog,
-    private adminService: AdminService,
     private baseDataService: BaseDataService,
+    
+    public matDialog: MatDialog,
+
+    private adminService: AdminService,
 
     ) {
-      this.resetForm()
+      // this.resetForm()
      }
 
   ngOnInit(): void {
+    this.BaseDataServiceSubscription = this.baseDataService.currentBaseData.subscribe(
+      currentData => {
+        this.baseData = currentData;
+        // this.myData = currentData.project;
+      }
+    );
     this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
       currentAdmin => {
         this.esAdmin = currentAdmin;
       }
     );
-    this.BaseDataServiceSubscription = this.baseDataService.currentBaseData.subscribe(
-      currentData => {
-        this.baseData = currentData;
-        this.myData = currentData.project;
-      }
-    );
+
+    this.resetForm()
+
   }
 
   
@@ -68,6 +67,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     this.AdminServiceSubscription?.unsubscribe();
     this.BaseDataServiceSubscription?.unsubscribe();
   }
+
   resetForm() {
     this.formData = new Project();
   }
@@ -94,10 +94,11 @@ export class ProjectsComponent implements OnInit, OnDestroy {
       this.dataService.delEntity(this.itemParaBorrar, "/project").subscribe({
         next: (v) => {
           console.log("Se ha eliminado exitosamente a: ", this.itemParaBorrar);
-          this.myData = this.myData.filter((t) => { return t !== this.itemParaBorrar })
+          this.baseData.project = this.baseData.project.filter((t) => { return t !== this.itemParaBorrar })
           // Actualizo la informacion en el origen
-          this.baseData.project = this.myData;
+          // this.baseData.project = this.baseData.project;
           this.itemParaBorrar = null;
+          this.baseDataService.setCurrentBaseData(this.baseData);
         },
         error: (e) => {
           alert("Response Error (" + e.status + ")" + "\n" + e.message);
@@ -115,8 +116,8 @@ export class ProjectsComponent implements OnInit, OnDestroy {
         console.log("Guardado correctamente: ", v);
         project.id = v.id;
         project.person = this.baseData.id;
-        this.myData.push(v);
-        this.baseData.project = this.myData;
+        this.baseData.project.push(v);
+        this.baseDataService.setCurrentBaseData(this.baseData);
       },
       error: (e) => {
         alert("Response Error (" + e.status + ") en el metodo addItem()" + "\n" + e.message);
@@ -124,8 +125,8 @@ export class ProjectsComponent implements OnInit, OnDestroy {
       },
       complete: () => console.log("Completado el alta del Proyecto")
     });
-    this.resetForm();
     this.toggleForm();
+    this.resetForm();
   }
 
   openDeleteModal(data:any) {

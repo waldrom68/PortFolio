@@ -12,7 +12,7 @@ import * as moment from 'moment';
 import { DateAdapter } from '@angular/material/core';
 import { MatDatepickerComponent } from './shared/mat-datepicker/mat-datepicker.component';
 import { BaseDataService, DataService, ObservableService } from './service/data.service';
-import { FullPersonDTO } from './models';
+import { FullPersonDTO, Mensaje } from './models';
 
 import { Observable, Subscription } from 'rxjs';
 
@@ -36,84 +36,83 @@ export class AppComponent implements OnInit {
   showListUsers: boolean = false;
   showDatos: boolean = false;
 
-  dataFromDialog : any;
-  
+  dataFromDialog: any;
+
   // codigo probando el modal
-  form: FormGroup; 
+  form: FormGroup;
 
-// codigo para probar el datepicker
-dateMinDate = new Date(2019, 0, 1);
-dateMaxDate = new Date(moment.now());
-formDate: FormGroup = new FormGroup({});
+  // codigo para probar el datepicker
+  dateMinDate = new Date(2019, 0, 1);
+  dateMaxDate = new Date(moment.now());
+  formDate: FormGroup = new FormGroup({});
 
-prueba = new Date(1968, 4, 20)
-shortdate: FormControl;
+  prueba = new Date(1968, 4, 20)
+  shortdate: FormControl;
 
-// PENDIENTE, ESTÁ VINCULADO A LA PRACTICA DE OBSERVER
-color: string;
-// FIN A LA PRACTICA DE OBSERVER 
-// baseData: FullPersonDTO;
-wait: boolean = true;
+  // PENDIENTE, ESTÁ VINCULADO A LA PRACTICA DE OBSERVER
+  color: string;
+  // FIN A LA PRACTICA DE OBSERVER 
+  // baseData: FullPersonDTO;
+  wait: boolean = true;
 
-valueSubscription: Subscription;
-progreesValueabc: number;
-progreesValueabc$?: Observable<number>;
-currentTime: Date;
-llamado?: number
+  valueSubscription: Subscription;
+  progreesValueabc: number;
+  progreesValueabc$?: Observable<number>;
+  currentTime: Date;
+  llamado?: number
 
-constructor(
-  // Inicializamos los servicios del modulo User
-        private uiService:UiService,  // defino el servicio para el botton de mostrar form
-        private dialog: MatDialog,
+  constructor(
+    // Inicializamos los servicios del modulo User
+    private uiService: UiService,  // defino el servicio para el botton de mostrar form
+    private dialog: MatDialog,
 
-        private fb: FormBuilder,
+    private fb: FormBuilder,
 
-        private dateAdapter: DateAdapter<Date>,
+    private dateAdapter: DateAdapter<Date>,
 
-        // PENDIENTE, ESTÁ VINCULADO A LA PRACTICA DE OBSERVER
-        private dataService: DataService,
-        private baseDataService: BaseDataService,
-        // FIN A LA PRACTICA DE OBSERVER 
+    // PENDIENTE, ESTÁ VINCULADO A LA PRACTICA DE OBSERVER
+    private dataService: DataService,
+    private baseDataService: BaseDataService,
+    // FIN A LA PRACTICA DE OBSERVER 
 
-        private observableService: ObservableService,
-
-
-  )
-    {
-
-      this.form = this.fb.group(
-        {
-          name: ['Origen datos', Validators.required],
-          address: ['componente de llamada', Validators.required],
-          country: ['']
-        }
-      )
-
-      // prueba del datepicker
-      this.dateAdapter.setLocale('es');
-      this.formDate = this.fb.group({
-        date: new FormControl(new Date()),
-        shortdate: new FormControl(this.prueba),
-      });
-      this.dataService.setCurrentValue(0);
-      this.progreesValueabc$ = this.dataService.getCurrentValue$();
-      this.progreesValueabc$.subscribe(valor => this.progreesValueabc = valor);
-      
-      this.observableService.createObservableService()  // 3
-      .subscribe( data => this.currentTime = data );
-
-    }
+    private observableService: ObservableService,
 
 
-  ngOnInit(  ) {
-      this.BaseDataServiceSubscription = this.baseDataService.currentBaseData.subscribe(
-        currentData => {
-          this.baseData = currentData;
-          // console.log(this.baseData);
-          
-        }
-      );
-          // Traigo todos los datos del Portfolio
+  ) {
+
+    this.form = this.fb.group(
+      {
+        name: ['Origen datos', Validators.required],
+        address: ['componente de llamada', Validators.required],
+        country: ['']
+      }
+    )
+
+    // prueba del datepicker
+    this.dateAdapter.setLocale('es');
+    this.formDate = this.fb.group({
+      date: new FormControl(new Date()),
+      shortdate: new FormControl(this.prueba),
+    });
+    this.dataService.setCurrentValue(0);
+    this.progreesValueabc$ = this.dataService.getCurrentValue$();
+    this.progreesValueabc$.subscribe(valor => this.progreesValueabc = valor);
+
+    this.observableService.createObservableService()  // 3
+      .subscribe(data => this.currentTime = data);
+
+  }
+
+
+  ngOnInit() {
+    this.BaseDataServiceSubscription = this.baseDataService.currentBaseData.subscribe(
+      currentData => {
+        this.baseData = currentData;
+        // console.log(this.baseData);
+
+      }
+    );
+    // Traigo todos los datos del Portfolio
     this.dataService.getPortFolioData().subscribe({
       next: (gralData) => {
         this.baseDataService.setCurrentBaseData(gralData);
@@ -130,44 +129,44 @@ constructor(
       complete: () => { console.log("Finalizado el proceso de obtener los datos del PortFolio") }
     });
 
-      // prueba del datepicker
-      this.dateAdapter.setLocale('es');
-      this.formDate = this.fb.group({
-        date: new FormControl(new Date()),
-        shortdate: new FormControl(this.prueba),
-      });
+    // prueba del datepicker
+    this.dateAdapter.setLocale('es');
+    this.formDate = this.fb.group({
+      date: new FormControl(new Date()),
+      shortdate: new FormControl(this.prueba),
+    });
 
 
-   }
+  }
 
   // PENDIENTE, ESTÁ VINCULADO A LA PRACTICA DE OBSERVER
   setcolor() {
-    this.dataService.setColor("lightblue"); 
+    this.dataService.setColor("lightblue");
   }
   // FIN A LA PRACTICA DE OBSERVER 
 
-  
+
   // Pruebas del DatePicker
   onSubmit(): void {
     console.log("Hice click en el datepicker", this.formDate)
   }
 
   onDateUpdate(date: FormControl) {
-    console.log("INPUT:", date.value._i==date.value._d);
+    console.log("INPUT:", date.value._i == date.value._d);
     this.formDate.value.shortdate = date.value._d;
-    
+
   }
 
-// Eventos recibidos desde: add-button-user.component.html
+  // Eventos recibidos desde: add-button-user.component.html
   // 
-  toggleListUser(value:any) {
+  toggleListUser(value: any) {
     // Recibo el metodo y lo relaciono con el uiService.
 
     this.showListUsers = !this.showListUsers;
     this.uiService.toggleComponent(value)
   }
 
-  toggleDatos(value:any) {
+  toggleDatos(value: any) {
     // Recibo el metodo y lo relaciono con el uiService.
     this.showDatos = !this.showDatos;
     this.uiService.toggleComponent(value)
@@ -178,20 +177,18 @@ constructor(
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = false;
     dialogConfig.id = "modal-warn";
-  
+
     // dialogConfig.height = "350px";
     // dialogConfig.width = "600px";
     // dialogConfig.maxWidth = '700px';
-    dialogConfig.data = {
-        type: "ok",
-        timer: 1500,
-        message: ['Todo bien, estoy confirmandolo'],
-    };
+    dialogConfig.data = new Mensaje("ok",
+      ['Todo bien, estoy confirmandolo'], 1500)
 
-  const dialogRef = this.dialog.open(MatAlertComponent, dialogConfig);
 
-  dialogRef.afterClosed().subscribe(() => console.log("Cerrando alert-modal"));
-}
+    const dialogRef = this.dialog.open(MatAlertComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(() => console.log("Cerrando alert-modal"));
+  }
 
 
 
@@ -199,7 +196,7 @@ constructor(
 
   showPrompt(): void {
     const dialogRef = this.dialog.open(MatInputPromptComponent,
-      { 
+      {
         width: '100%', height: '400px',
         disableClose: true,
         restoreFocus: true,
@@ -208,10 +205,10 @@ constructor(
         // data: {message:string, form: formGroup}, sino lo puedo crear en el .ts 
         // del componente que lo renderiza.
         // +info en https://edupala.com/how-to-implement-angular-material-dialog/
-        data: { 
-            message: "Aquí va al string",
-            form: this.form,
-          },
+        data: {
+          message: "Aquí va al string",
+          form: this.form,
+        },
       });
 
 

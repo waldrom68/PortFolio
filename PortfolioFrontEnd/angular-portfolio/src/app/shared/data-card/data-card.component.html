@@ -12,48 +12,44 @@
                 <div class="flip-box container-card">
                     <div class="flip-box-inner">
                         <div class="flip-box-front">
-                            
+                
                             <div class="font-weight-bold align-self-center">
                                 {{card.name}}
                             </div>
-                            
+                
                         </div>
-                        <div class="flip-box-back"
-                            (click)="toggleContenedor(card.name)"
-                            
-                            >
-                                <span class="font-weight-bold align-self-center p-2">
-                                    <p 
-                                    *ngIf="card.resume.length > 0 else sinresume"
-                                    >
-                                        {{card.resume}}
-                                    
-                                    </p>
-                                    <ng-template #sinresume>
-                                            {{card.name}}
-                                    </ng-template>
-                                    <p class="font-weight-normal">ver mas</p></span>
-                            </div>
+                        <div class="flip-box-back" (click)="toggleContenedor(card.name)">
+                            <span class="font-weight-bold align-self-center p-2">
+                                <p *ngIf="card.resume.length > 0 else sinresume">
+                                    <small>{{card.resume}}</small>
+                
+                                </p>
+                                <ng-template #sinresume>
+                                    {{card.name}}
+                                </ng-template>
+                                
+                                <h6 class="font-weight-normal pt-1 text-primary">ver mas</h6>
+                            </span>
                         </div>
+                    </div>
                 </div>
             </a>
-        <!-- </div> -->
-        <!-- <div class="" style="border: 1px solid"
-            *ngIf="card.status"
-            >
-            <a (click)="onClick($event)">
-                <fa-icon 
-                    [icon]="faTimes"
-                    [ngStyle] = "{'color':'red'}" >
-                </fa-icon>
-            </a>
 
-            <p>{{card.name}} works!</p>
+        <!-- QUEDA BIEN, PERO NO ME CONVENCE USARLO AQUI -->
+            <!-- <div class="col icon-group">
+                <button class="btn btn-outline-success btn-sm" 
 
-            <div *ngIf="card.modelTemplate == 'lista'">
-                <li *ngFor="let item of card.data">{{item}}</li>
-            </div>
-        </div> -->
+                    ngClass="faConfirm fa-ico">
+                    <fa-icon [icon]="faPen"></fa-icon>
+                </button>
+                <button class="btn btn-outline-danger btn-sm" 
+
+                    ngClass="faCancel"
+                >
+                    <fa-icon [icon]="faTrash"></fa-icon>
+                </button>
+            </div> -->
+        <!-- FIN QUEDA BIEN -->
 
     </div>
 

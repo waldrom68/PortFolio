@@ -158,18 +158,21 @@ export class PersonalCardComponent implements OnInit, OnDestroy {
 
     this.uploadMediaService.upLoadFile(evento, path, name);
 
+    // PENDIENTE IMPORTANTE, ESTO ASYNCRONICO NO FUNCIONA, SI ES EL UNICO DATO A 
+    // GUARDAR QUEDA EN BLANCO, REUBICARLO EN EL SERVICIO O MANEJARLO 
+    // ASYNCRONICAMENTE.
+    // Volver a ver la documentacion oficial o algun tutorial......
     const url: string = this.uploadMediaService.url;
     console.log("Archivo en la nube: ", url)
-    
-    
+
     this.converPerson = ToPerson(this.baseData);
-    console.log(this.converPerson);
+    console.log("esto es lo que mando a guardar ", this.converPerson.pathFoto);
     
     // this.dataService.updateGralData(this.converPerson).subscribe();
     this.dataService.upDateEntity(this.converPerson, "/person").subscribe( {
       next: (v) => {
         console.log("Guardado correctamente: ", v)
-        // this.baseData.pathFoto = url;
+        this.baseData.pathFoto = url;
       },
       error: (e) => {
         alert("Response Error (" + e.status + ") en el metodo upDateItem()" + "\n" + e.message);
@@ -181,10 +184,12 @@ export class PersonalCardComponent implements OnInit, OnDestroy {
 
   // PENDIENTE, no se si tiene sentido estas acciones
   this.changeImg = true;
+
   this.refreshImg()
   // FIN PENDIENTE
-    console.log("finalizando medodo upLoadFile");
-    
+  console.log("finalizando medodo upLoadFile, se actualizó el pathFoto", this.baseData.pathFoto);
+  this.baseDataService.setCurrentBaseData(this.baseData);
+  
 
 
   }

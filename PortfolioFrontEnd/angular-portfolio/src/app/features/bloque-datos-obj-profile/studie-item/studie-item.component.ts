@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { Studie, FullPersonDTO } from '../../../models'
+import { Studie, FullPersonDTO, Mensaje } from '../../../models'
 
-import { faPen, faTimes, faTrash,  } from '@fortawesome/free-solid-svg-icons';
+import { faPen, faTimes, faTrash, } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { BaseDataService, DataService } from 'src/app/service/data.service';
 import { AdminService } from 'src/app/service/auth.service';
@@ -111,15 +111,12 @@ export class StudieItemComponent implements OnInit, OnDestroy {
     // dialogConfig.height = "350px";
     // dialogConfig.width = "600px";
     // dialogConfig.maxWidth = '700px';
-    dialogConfig.data = {
-      type: "info",
-      message: [
+    dialogConfig.data = new Mensaje("info", [
         studie.organization.name,
         studie.organization.resume,
-        studie.organization.url,
-      ]
-    };
+      ], 0, studie.organization.url);
 
+    
     const dialogRef = this.dialog.open(MatAlertComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(() => console.log("Cerrando alert-modal"));

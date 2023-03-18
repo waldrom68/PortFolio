@@ -111,8 +111,7 @@ export class UploadMediaService {
           this.baseData.pathFoto = downloadURL;
           this.baseDataService.setCurrentBaseData( this.baseData );
 
-          // this.DATAPORTFOLIO.pathFoto = this.url;
-          // this.dataService.changeGralData(this.DATAPORTFOLIO);
+
         });
       }
     );

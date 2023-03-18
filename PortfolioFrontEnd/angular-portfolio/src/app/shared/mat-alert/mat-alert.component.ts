@@ -10,18 +10,20 @@ import { ModalActionsService } from 'src/app/service/modal-actions.service';
 })
 export class MatAlertComponent implements OnInit {
 
-  type: string;
-  timer: number;
+  // type: string;
+  // timer: number;
 
   constructor(
     public dialogRef: MatDialogRef<MatAlertComponent>,
     @Inject(MAT_DIALOG_DATA) public modalData: any,
     private modalService: ModalActionsService,
   ) {
-    this.type = modalData.type ? modalData.type : 'info';
-    this.timer = modalData.timer ? modalData.timer : 0;
-    if (modalData.type == 'ok') {
-      this.delay(1500);
+
+    modalData.timer = modalData.timer ? modalData.timer : 0;
+    modalData.url = modalData.url ? modalData.url : 0;
+
+    if (modalData.timer > 0 ) {
+      this.delay(modalData.timer);
     }
 
 

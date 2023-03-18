@@ -145,6 +145,10 @@ export class MainComponent implements OnInit, OnDestroy {
     this.miServicio.toggleDetalles();
     this.miServicio.toggleStatusCards();
     this.statusCards = this.miServicio.getStatusCards()
+    
+    // Ya sea que ingrese o salga de una tarjeta, se entiende que no puede 
+    // coexistir un formulario abierto
+    this.formService.setCurrentForm(0);
   }
 
 
