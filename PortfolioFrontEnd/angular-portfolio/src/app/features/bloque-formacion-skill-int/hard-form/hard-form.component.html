@@ -15,13 +15,27 @@
         class="form-control"
         [ngStyle]="{'width':'100%'}"
         formControlName="name"
-        [ngClass] = "{error: (Name.invalid && Name.touched)}"
+        placeholder="Habilidad técnica, especilización, hardskill ... "
+        [ngClass]="{'error is-invalid': (Name.invalid && Name.touched)
+        , 'is-valid':Name.valid}"
     ></textarea>
 
-    <small class="mensajeError" *ngIf="form.hasError('required', 'name')"> Dato requerido </small>
+    <div class="row error-container text-justify-left mx-1">
+      <ng-container *ngIf="(Name.invalid && Name.touched); else isOk">
+
+        <div class="mensajeError mx-1" *ngIf="form.hasError('required', 'name')"> Dato requerido </div>
+        <div class="mensajeError mx-1" *ngIf="form.hasError('minlength', 'name')"> Mínimo {{
+          Name.errors.minlength.requiredLength }} caracteres</div>
+      </ng-container>
+      <ng-template #isOk>
+      </ng-template>
+      </div>
+
+    <!-- <small class="mensajeError" *ngIf="form.hasError('required', 'name')"> Dato requerido </small>
     <small class="mensajeError" *ngIf="form.hasError('minlength', 'name')"> Mínimo {{ Name.errors.minlength.requiredLength }} caracteres</small>
+    
     <small class="mensajeError" *ngIf="form.hasError('min', 'assessment')"> Mínimo {{ minAssessment }} </small>
-    <small class="mensajeError" *ngIf="form.hasError('max', 'assessment')"> Máximo {{ maxAssessment }} </small>
+    <small class="mensajeError" *ngIf="form.hasError('max', 'assessment')"> Máximo {{ maxAssessment }} </small> -->
 
     <div class="m-auto p-1">
       <b><em>
@@ -44,23 +58,23 @@
     >
 
 
+    <!-- SUBMIT O CANCELAR Y CERRAR -->
     <div class="col-4 icon-group m-2">
-
-      <button type="submit" class="btn btn-outline-success btn-sm"
+      <button type="submit" class="btn btn-success btn-sm"
       ngClass="faConfirm fa-ico"
       [disabled]="!form.valid"
       >
-        <fa-icon  [icon]="faCheck"> </fa-icon>
+      Guardar
       </button>
 
-      <button class="btn btn-outline-danger btn-sm"
+      <button class="btn btn-danger btn-sm"
       (click)="onCancel($event); myForm.resetForm()"
       ngClass="faCancel fa-ico"
       >
-        <fa-icon [icon]="faTimes"> </fa-icon>
+      Cancelar
       </button>
+    </div> <!-- FIN SUBMIT CANCEL -->
 
-    </div>
 
 
   </div>

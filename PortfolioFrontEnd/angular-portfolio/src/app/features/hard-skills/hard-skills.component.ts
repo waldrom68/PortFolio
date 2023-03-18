@@ -10,6 +10,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MessageBoxComponent } from '../../shared/message-box/message-box.component';
 
 import { Subscription } from 'rxjs';
+import { FormService } from 'src/app/service/ui.service';
 
 // Declaro la funcion que debe levantarse de \src\assets\widget.js
 declare function initAndSetupTheSliders(): void;
@@ -38,7 +39,8 @@ export class HardSkillsComponent implements OnInit, OnDestroy {
   private AdminServiceSubscription: Subscription | undefined;
    baseData: FullPersonDTO;
   private BaseDataServiceSubscription: Subscription | undefined;
-
+  openForm: number;
+  private formServiceSubscription: Subscription | undefined;
   
   constructor(
     private dataService: DataService,
@@ -47,6 +49,7 @@ export class HardSkillsComponent implements OnInit, OnDestroy {
     public matDialog: MatDialog,
  
     private adminService: AdminService,
+    private formService: FormService,
   ) { 
     
   }
@@ -64,6 +67,11 @@ export class HardSkillsComponent implements OnInit, OnDestroy {
         this.esAdmin = currentAdmin;
       }
     );
+    this.formServiceSubscription = this.formService.currentOpenForm.subscribe(
+      currentForm => {
+        this.openForm = currentForm > 0 ? currentForm : 0;
+      }
+    );
     
     this.resetForm();
   }
@@ -71,6 +79,7 @@ export class HardSkillsComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.AdminServiceSubscription?.unsubscribe();
     this.BaseDataServiceSubscription?.unsubscribe();
+    this.formServiceSubscription?.unsubscribe();
   }
 
   resetForm() {
@@ -81,6 +90,12 @@ export class HardSkillsComponent implements OnInit, OnDestroy {
     // Cierra el formulario de edicion o creacion
     this.showForm = !this.showForm;
     this.showBtnAction = !this.showBtnAction;
+
+    if (this.showForm) {
+      this.formService.setCurrentForm(this.openForm + 1)
+    } else {
+      this.formService.setCurrentForm(this.openForm - 1)
+    }
   }  
   
   cancelation() {

@@ -160,7 +160,7 @@ export class PersonalCardComponent implements OnInit, OnDestroy {
 
     // PENDIENTE IMPORTANTE, ESTO ASYNCRONICO NO FUNCIONA, SI ES EL UNICO DATO A 
     // GUARDAR QUEDA EN BLANCO, REUBICARLO EN EL SERVICIO O MANEJARLO 
-    // ASYNCRONICAMENTE.
+    // ASINCRONICAMENTE.
     // Volver a ver la documentacion oficial o algun tutorial......
     const url: string = this.uploadMediaService.url;
     console.log("Archivo en la nube: ", url)

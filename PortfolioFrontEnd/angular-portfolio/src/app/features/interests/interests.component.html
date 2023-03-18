@@ -16,7 +16,7 @@
 
     <app-interests-form *ngIf="showForm && esAdmin" 
     [ngStyle]="{'width':'100%'}" 
-    [title]="'Agregar un interés'"
+    [title]="''"
         [formData]="formData" 
         
         (onUpdate)="addItem($event)" 
@@ -40,7 +40,8 @@
 
 <ng-container *ngIf="esAdmin && showBtnAction">
     <br>
-    <button class="btn btn-default btn-sm" ngClass="faControl fa-ico" (click)="toggleForm()">
+    <button class="btn btn-default btn-sm" ngClass="faControl fa-ico" 
+    (click)="toggleForm()">
         <fa-icon ngClass="fa-3x text-primary" [icon]="faPlusCircle">
         </fa-icon>
     </button>

@@ -21,13 +21,16 @@
         *ngIf="showForm && esAdmin"
 
         [formData]="formData"
-        [title]="'Ingrese una habilidad'"
+        [title]="''"
 
         (onUpdate)=" addItem($event)"
         (cancel)="cancelation()"
+
+        [(showBtnAction)]="showBtnAction" 
+        (showBtnActionChange)="showBtnAction"
         >
     </app-hard-form>
-    <!-- (showBtnActionChange)="showBtnAction" -->
+
     
     <ng-template #agregar>
         <div class="table-dark text-left container"  >

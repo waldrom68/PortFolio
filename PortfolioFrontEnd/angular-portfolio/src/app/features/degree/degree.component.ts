@@ -8,6 +8,7 @@ import { Degree, FullPersonDTO } from '../../models'
 import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MessageBoxComponent } from '../../shared/message-box/message-box.component';
 import { Subscription } from 'rxjs';
+import { FormService } from 'src/app/service/ui.service';
 
 @Component({
   selector: 'app-degree',
@@ -41,13 +42,16 @@ export class DegreeComponent implements OnInit, OnDestroy {
   private AdminServiceSubscription: Subscription | undefined;
   baseData: FullPersonDTO;
   private BaseDataServiceSubscription: Subscription | undefined;
-
+  openForm: number;
+  private formServiceSubscription: Subscription | undefined;
+  
   constructor(
     private dataService: DataService,
     public matDialog: MatDialog,
 
     private adminService: AdminService,
     private baseDataService: BaseDataService,
+    private formService: FormService,
 
     @Inject(MAT_DIALOG_DATA) public data: { message: string, },
     public dialogRef: MatDialogRef<DegreeComponent>, //DegreeModal
@@ -55,7 +59,6 @@ export class DegreeComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-
     this.BaseDataServiceSubscription = this.baseDataService.currentBaseData.subscribe(
       currentData => {
         this.baseData = currentData;
@@ -67,12 +70,18 @@ export class DegreeComponent implements OnInit, OnDestroy {
         this.esAdmin = currentAdmin;
       }
     );
+    this.formServiceSubscription = this.formService.currentOpenForm.subscribe(
+      currentForm => {
+        this.openForm = currentForm > 0 ? currentForm : 0;
+      }
+    );
 
   }
 
   ngOnDestroy() {
     this.AdminServiceSubscription?.unsubscribe();
     this.BaseDataServiceSubscription?.unsubscribe();
+    this.formServiceSubscription?.unsubscribe();
   }
 
   // resetForm() {
@@ -83,6 +92,13 @@ export class DegreeComponent implements OnInit, OnDestroy {
     // Cierra el formulario de edicion o creacion
     this.showForm = !this.showForm;
     this.showBtnAction = !this.showBtnAction;
+
+    if (this.showForm) {
+      this.formService.setCurrentForm(this.openForm + 1)
+    } else {
+      this.formService.setCurrentForm(this.openForm - 1)
+    }
+        
   }
 
   cancelation(degree: Degree) {

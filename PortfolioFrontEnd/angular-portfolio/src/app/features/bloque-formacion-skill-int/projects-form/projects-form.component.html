@@ -9,7 +9,7 @@
   <div class="row" style="width:100% ">
     <div class="col-12">
       <label class="form-label" for="name">Nombre:</label>
-      <textarea type="text" id="name" formControlName="name" name="name" class="form-control" placeholder="Nombre"
+      <textarea type="text" id="name" formControlName="name" name="name" class="form-control" placeholder="nombre comercial .. calculator Pro, etc...."
         [ngStyle]="{'width':'100%'}" formControlName="name" [ngClass]="{'error is-invalid': (Name.invalid && Name.touched),
         'is-valid':Name.valid
       }"></textarea>
@@ -34,7 +34,7 @@
     <div class="col-12">
       <label class="form-label" for="resume">Resumen:</label>
       <textarea type="text" rows="6" id="resume" formControlName="resume" name="resume" class="form-control "
-        placeholder="Resumen" formControlName="resume" [ngClass]="{'error is-invalid': (Resume.invalid && Resume.touched)
+        placeholder="Breve descripción del producto, sus caracteristicas..." formControlName="resume" [ngClass]="{'error is-invalid': (Resume.invalid && Resume.touched)
         , 'is-valid':Resume.valid}"></textarea>
     </div>
 
@@ -84,7 +84,7 @@
     <div class="col-12">
       <label class="form-label" for="url">URL:</label>
       <textarea type="text" id="url" formControlName="url" name="url" class="form-control"
-        placeholder="Link del proyecto" formControlName="url"
+        placeholder="www.miproyecto.com.ar......" formControlName="url"
         [ngClass]="{'error is-invalid': (Url.invalid && Url.touched), 'is-valid':Url.valid}"></textarea>
     </div>
 

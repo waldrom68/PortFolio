@@ -36,9 +36,14 @@
 html, body { height: 100%; }
 body {
     font-family: var(--body-font-family);
-    background-image: linear-gradient(90deg, var(--metaldark-shadow) 0%, var(--metallight-shadow) 25%, var(--metal) 50%, var(--metallight-shadow) 75%, var(--metaldark-shadow) 100% ) !important;
+    background-image: linear-gradient( 90deg, 
+    /* #72956E 0%,  */
+    /* #72956E 25%,  */
+    #9ABAA0 25%, 
+    /* #72956E 75%,  */
+    #72956E 100% ) !important;
 }
-
+/* #2F4F4F y #72956E */
 h1,h2,h3,h4,h5,h6 {
     font-family: 'Quinta-light';
     font-style: normal;
@@ -348,3 +353,6 @@ li.resume > p {
 .wait {
     cursor: wait;
 }
+
+
+/* rgb(35, 135, 170) */

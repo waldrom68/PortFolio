@@ -17,6 +17,10 @@ export class SoftFormComponent implements OnInit, OnDestroy {
 
   @Input() formData: SoftSkill;
   @Input() title: string;
+  
+  @Input() showBtnAction!: boolean;
+  @Output() showBtnActionChange = new EventEmitter<boolean>();
+
   @Output() onUpdate: EventEmitter<SoftSkill> = new EventEmitter()
   @Output() cancel: EventEmitter<SoftSkill> = new EventEmitter()
 
@@ -66,7 +70,7 @@ export class SoftFormComponent implements OnInit, OnDestroy {
     this.color = $event.type == 'mouseover' ? 'resaltado' : 'normal';
   }
 
-  get Nombre(): any {
+  get Name(): any {
     return this.form.get("name")
   }
 

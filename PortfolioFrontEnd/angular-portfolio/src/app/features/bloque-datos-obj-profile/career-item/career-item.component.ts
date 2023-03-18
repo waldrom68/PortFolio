@@ -20,8 +20,8 @@ export class CareerItemComponent implements OnInit, OnDestroy {
 
   @Input() formData: LaboralCareer;
 
-  // @Input() showBtnAction!: boolean;
-  // @Output() showBtnActionChange = new EventEmitter<boolean>();
+  @Input() showBtnAction!: boolean;
+  @Output() showBtnActionChange = new EventEmitter<boolean>();
 
   @Output() onDelete: EventEmitter<LaboralCareer> = new EventEmitter()
   @Output() onUpdate: EventEmitter<LaboralCareer> = new EventEmitter()
@@ -91,9 +91,12 @@ export class CareerItemComponent implements OnInit, OnDestroy {
   }
 
   toggleForm(laboralCareer: LaboralCareer) {
-
     this.showForm = !this.showForm;
     this.formData = laboralCareer;
+
+    // habilito las acciones de cada item
+    this.showBtnAction = !this.showBtnAction
+    this.showBtnActionChange.emit(this.showBtnAction)
 
 
     if (this.showForm) {

@@ -20,8 +20,8 @@ export class StudieItemComponent implements OnInit, OnDestroy {
 
   @Input() formData: Studie;
 
-  // @Input() showBtnAction!: boolean;
-  // @Output() showBtnActionChange = new EventEmitter<boolean>();
+  @Input() showBtnAction!: boolean;
+  @Output() showBtnActionChange = new EventEmitter<boolean>();
 
   @Output() onDelete: EventEmitter<Studie> = new EventEmitter()
   @Output() onUpdate: EventEmitter<Studie> = new EventEmitter()
@@ -93,6 +93,10 @@ export class StudieItemComponent implements OnInit, OnDestroy {
     this.showForm = !this.showForm;
     this.formData = studie;
 
+    // habilito las acciones de cada item
+    this.showBtnAction = !this.showBtnAction
+    this.showBtnActionChange.emit(this.showBtnAction)
+    
     if (this.showForm) {
       this.formService.setCurrentForm(this.openForm + 1)
     } else {

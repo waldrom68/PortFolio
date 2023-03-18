@@ -9,6 +9,7 @@ import { FullPersonDTO, Interest } from '../../models'
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MessageBoxComponent } from '../../shared/message-box/message-box.component';
 import { Subscription } from 'rxjs';
+import { FormService } from 'src/app/service/ui.service';
 
 @Component({
   selector: 'app-interests',
@@ -32,6 +33,8 @@ export class InterestsComponent implements OnInit, OnDestroy {
   private AdminServiceSubscription: Subscription | undefined;
   baseData: FullPersonDTO;
   private BaseDataServiceSubscription: Subscription | undefined;
+  openForm: number;
+  private formServiceSubscription: Subscription | undefined;
 
 
   constructor(
@@ -41,6 +44,7 @@ export class InterestsComponent implements OnInit, OnDestroy {
     public matDialog: MatDialog,
 
     private adminService: AdminService,
+    private formService: FormService,
 
   ) {
     
@@ -58,13 +62,18 @@ export class InterestsComponent implements OnInit, OnDestroy {
         this.esAdmin = currentAdmin;
       }
     );
-
+    this.formServiceSubscription = this.formService.currentOpenForm.subscribe(
+      currentForm => {
+        this.openForm = currentForm > 0 ? currentForm : 0;
+      }
+    );
     this.resetForm();
   }
 
   ngOnDestroy() {
     this.AdminServiceSubscription?.unsubscribe();
     this.BaseDataServiceSubscription?.unsubscribe();
+    this.formServiceSubscription?.unsubscribe();
   }
 
   resetForm() {
@@ -75,6 +84,15 @@ export class InterestsComponent implements OnInit, OnDestroy {
     // Cierra el formulario de edicion o creacion
     this.showForm = !this.showForm;
     this.showBtnAction = !this.showBtnAction
+
+    if (this.showForm) {
+      this.formService.setCurrentForm(this.openForm + 1)
+    } else {
+      this.formService.setCurrentForm(this.openForm - 1)
+    }
+
+
+
   }
 
   cancelation() {

@@ -10,6 +10,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MessageBoxComponent } from '../../shared/message-box/message-box.component';
 
 import { Observable, Subscription } from 'rxjs';
+import { FormService } from 'src/app/service/ui.service';
 
 
 // Declaro la funcion que debe levantarse de \src\assets\widget.js
@@ -38,13 +39,16 @@ export class SoftSkillsComponent implements OnInit, OnDestroy {
  
   baseData: FullPersonDTO;
   private BaseDataServiceSubscription: Subscription | undefined;
-
+  openForm: number;
+  private formServiceSubscription: Subscription | undefined;
+  
   constructor(
     private dataService: DataService,
 
     public matDialog: MatDialog,
     private adminService: AdminService,
     private baseDataService: BaseDataService,
+    private formService: FormService,
 
   ) {
     this.resetForm()
@@ -64,12 +68,18 @@ export class SoftSkillsComponent implements OnInit, OnDestroy {
         this.myData = currentData.softskill;
       }
     );
+    this.formServiceSubscription = this.formService.currentOpenForm.subscribe(
+      currentForm => {
+        this.openForm = currentForm > 0 ? currentForm : 0;
+      }
+    );
 
   }
 
   ngOnDestroy() {
     this.AdminServiceSubscription?.unsubscribe();
     this.BaseDataServiceSubscription?.unsubscribe();
+    this.formServiceSubscription?.unsubscribe();
   }
 
   resetForm() {
@@ -80,6 +90,13 @@ export class SoftSkillsComponent implements OnInit, OnDestroy {
     // Cierra el formulario de edicion o creacion
     this.showForm = !this.showForm;
     this.showBtnAction = !this.showBtnAction;
+    
+    if (this.showForm) {
+      this.formService.setCurrentForm(this.openForm + 1)
+    } else {
+      this.formService.setCurrentForm(this.openForm - 1)
+    }
+
   }
 
   cancelation() {

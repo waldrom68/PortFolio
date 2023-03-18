@@ -47,7 +47,8 @@ span.close {
     background: rgba(248,248,248, 1) !important;
  } 
  ::ng-deep .modal-content.error   {
-    background: rgba( 234, 106, 135, 0.9) !important;
+    background: rgba( 202, 87, 93, 1) !important;
+    color: white !important;
  }
  ::ng-deep .modal-content.ok {
     background: rgba(119, 179, 93, 0.9) !important;

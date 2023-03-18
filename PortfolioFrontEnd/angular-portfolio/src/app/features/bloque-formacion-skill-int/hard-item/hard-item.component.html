@@ -1,65 +1,73 @@
-<ng-container *ngIf="!showForm">
+<ng-container *ngIf="!showForm" class="table-row-group">
 
-    <div class="container-chart m-2" id="{{item.name.replace(regex,'')}}" 
+    <div class="container-chart" id="{{item.name.replace(regex,'')}}" 
     attr.aria-label='{{item.name}}' 
     attr.aria-value='{{item.assessment}}'
     [ngClass]="color" (mouseover)="changeStyle($event)" (mouseout)="changeStyle($event)"
     >
-            
-        <div class="donut-chart-block block-chart">
-            <div class="donut-chart">
+        
+        <div class="col-sm-6">
+            <div class="donut-chart-block block-chart">
 
-                <div id="section1-chart" class="clip-chart">
-                <div class="item-chart"></div>
-                </div>
-                <div id="section2-chart" class="clip-chart">
-                <div class="item-chart"></div>
-                </div>
-                <div id="section3-chart" class="clip-chart">
-                <div class="item-chart"></div>
-                </div>
-                
-                <div class="center-chart">
-                    <span>0%</span>
-                </div>
-                <div class="center-label">
-                    <span>Habilidad duplicada</span>
-                </div>  <!-- center-label-->
-            </div>  <!-- donut chart-->
-        </div>  <!-- donut-chart-block -->
 
-        <!-- Debe existir pese a que sólo lo usa el JS -->
-        <!-- PENDIENTE -- ELIMINARLO -->
-        <div class="range-slider" style="display: none;" >
-            <input type="range" orient="vertical" min="0" max="100"/>
-            <div class="range-slider__bar"></div>
-            <div class="range-slider__thumb"></div>
-            range-slider
-        </div>  
+                <div class="donut-chart">
 
-<!-- #################### -->
-
-        <div class="icon-group"
-        *ngIf="esAdmin && showBtnAction"
-        >
-            <button class="btn btn-outline-success btn-sm"
-                (click)="toggleForm(item);"
-                ngClass="faConfirm fa-ico">
-                <fa-icon 
-                    [icon]="faPen"
+                    <div id="section1-chart" class="clip-chart">
+                    <div class="item-chart"></div>
+                    </div>
+                    <div id="section2-chart" class="clip-chart">
+                    <div class="item-chart"></div>
+                    </div>
+                    <div id="section3-chart" class="clip-chart">
+                    <div class="item-chart"></div>
+                    </div>
                     
-                >
-                </fa-icon>
-            </button>
-            <button class="btn btn-outline-danger btn-sm"
-                (click)="delete(item)"
-                ngClass="faCancel"
+                    <div class="center-chart">
+                        <span>0%</span>
+                    </div>
+                    <div class="center-label">
+                        <span>Habilidad duplicada</span>
+                    </div>  <!-- center-label-->
+                </div>  <!-- donut chart-->
+
+
+
+            </div>  <!-- donut-chart-block -->
+
+            <!-- Debe existir pese a que sólo lo usa el JS -->
+            <!-- PENDIENTE -- ELIMINARLO -->
+            <div class="range-slider" style="display: none;" >
+                <input type="range" orient="vertical" min="0" max="100"/>
+                <div class="range-slider__bar"></div>
+                <div class="range-slider__thumb"></div>
+                range-slider
+            </div>  
+        </div>
+        <div class="col-auto d-flex"> 
+            <!-- #################### -->
+            <div class="icon-group"
+            *ngIf="esAdmin && showBtnAction"
             >
-                <fa-icon 
-                    [icon]="faTrash"
+                <button class="btn btn-outline-success btn-sm"
+                    (click)="toggleForm(item);"
+                    ngClass="faConfirm fa-ico">
+                    <fa-icon 
+                        [icon]="faPen"
+                        
+                    >
+                    </fa-icon>
+                </button>
+                <button class="btn btn-outline-danger btn-sm"
+                    (click)="delete(item)"
+                    ngClass="faCancel"
                 >
-                </fa-icon>
-            </button>
+                    <fa-icon 
+                        [icon]="faTrash"
+                    >
+                    </fa-icon>
+                </button>
+            </div>
+            <!-- #################### -->
         </div>
 
     </div>  <!-- container-chart -->

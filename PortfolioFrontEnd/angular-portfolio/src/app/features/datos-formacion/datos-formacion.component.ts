@@ -10,6 +10,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MessageBoxComponent } from '../../shared/message-box/message-box.component';
 
 import { Subscription } from 'rxjs';
+import { FormService } from 'src/app/service/ui.service';
 
 @Component({
   selector: 'app-datos-formacion',
@@ -34,6 +35,9 @@ export class DatosFormacionComponent implements OnInit, OnDestroy {
   // Validacion Admin STATUS
   esAdmin: boolean;
   private AdminServiceSubscription: Subscription | undefined;
+  openForm: number;
+  private formServiceSubscription: Subscription | undefined;
+  
 
 
   constructor(
@@ -43,6 +47,7 @@ export class DatosFormacionComponent implements OnInit, OnDestroy {
     public matDialog: MatDialog,
 
     private adminService: AdminService,
+    private formService: FormService,
   ) { }
 
 
@@ -58,13 +63,18 @@ export class DatosFormacionComponent implements OnInit, OnDestroy {
         this.esAdmin = currentAdmin;
       }
     );
-
+    this.formServiceSubscription = this.formService.currentOpenForm.subscribe(
+      currentForm => {
+        this.openForm = currentForm > 0 ? currentForm : 0;
+      }
+    );
     this.resetForm()
   }
 
   ngOnDestroy() {
     this.AdminServiceSubscription?.unsubscribe();
     this.BaseDataServiceSubscription?.unsubscribe();
+    this.formServiceSubscription?.unsubscribe();
   }
 
   resetForm() {
@@ -75,6 +85,13 @@ export class DatosFormacionComponent implements OnInit, OnDestroy {
   toggleForm() {
     this.showForm = !this.showForm;
     this.showBtnAction = !this.showBtnAction;
+    
+    if (this.showForm) {
+      this.formService.setCurrentForm(this.openForm + 1)
+    } else {
+      this.formService.setCurrentForm(this.openForm - 1)
+    }
+
   }
 
   cancelation() {

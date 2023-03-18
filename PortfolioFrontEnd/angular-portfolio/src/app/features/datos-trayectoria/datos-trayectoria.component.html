@@ -8,6 +8,9 @@
                 *ngFor="let item of baseData.laboralCareer"
                 [item]= "item"
                 (onDelete)="openModalDelete(item)"
+
+                [(showBtnAction)]="showBtnAction" 
+                (showBtnActionChange)="showBtnAction">
                 >
             </app-career-item>
 
@@ -17,11 +20,14 @@
     <app-career-form
         *ngIf="showForm && esAdmin"
         [ngStyle]="{'width':'100%'}"
-        [title]="'Agregar un trabajo'"
+        [title]="''"
         [formData]="formData"
         
         (onUpdate)=" addItem($event)"
         (cancel)="cancelation($event)"
+
+        [(showBtnAction)]="showBtnAction" 
+        (showBtnActionChange)="showBtnAction">
         >
     </app-career-form>
     <!-- [formData]="formData" -->

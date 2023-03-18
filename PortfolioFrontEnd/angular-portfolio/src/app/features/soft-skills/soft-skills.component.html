@@ -1,5 +1,8 @@
-<ng-container *ngIf="myData.length; else agregar">
-    <div class="table-dark text-center container-fluid p-5"
+<div class="table-dark text-center container p-5" style="display: table-row-group;">
+    
+    <ng-container *ngIf="baseData.hardskill.length; else agregar">
+
+    <div class="listado"
     *ngIf="!showForm"
     >
             
@@ -8,7 +11,8 @@
             [item]="item"
 
             (onDelete)="openModalDelete(item)"
-            [(showBtnAction)]="showBtnAction"
+            [(showBtnAction)]="showBtnAction" 
+            (showBtnActionChange)="showBtnAction"
         >
         </app-soft-item>
 
@@ -20,11 +24,13 @@
     *ngIf="showForm && esAdmin"
     
     [formData]="formData"
-    [title]="'Ingrese una habilidad'"
+    [title]="''"
     
-    (showBtnActionChange)="showBtnAction"
     (onUpdate)=" addItem($event)"
     (cancel)="cancelation()"
+
+    [(showBtnAction)]="showBtnAction" 
+    (showBtnActionChange)="showBtnAction"
     >
 </app-soft-form>
 
@@ -35,7 +41,7 @@
     </div>
 </ng-template>
 
-
+</div>
 
 
 <ng-container *ngIf="esAdmin && showBtnAction">

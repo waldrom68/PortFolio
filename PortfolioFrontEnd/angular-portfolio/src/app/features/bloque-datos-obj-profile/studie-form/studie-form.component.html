@@ -115,7 +115,8 @@
     <div class="col-12">
       <label class="form-label" for="name">Nombre:</label>
       <textarea type="text" rows="6" id="name" formControlName="name" name="name" class="form-control "
-        placeholder="Nombre" formControlName="name" [ngClass]="{'error is-invalid': (Name.invalid && Name.touched)
+        placeholder="Nombre del curso, carrera o capacitación" formControlName="name" 
+        [ngClass]="{'error is-invalid': (Name.invalid && Name.touched)
         , 'is-valid':Name.valid}"></textarea>
     </div>
 

@@ -5,6 +5,7 @@ import { faPen, faTimes, faTrash, faHand } from '@fortawesome/free-solid-svg-ico
 import { Observable, Subscription } from 'rxjs';
 import { BaseDataService, DataService } from 'src/app/service/data.service';
 import { AdminService } from 'src/app/service/auth.service';
+import { FormService } from 'src/app/service/ui.service';
 
 @Component({
   selector: 'app-soft-item',
@@ -40,11 +41,14 @@ export class SoftItemComponent implements OnInit, OnDestroy {
   private AdminServiceSubscription: Subscription | undefined;
   baseData: FullPersonDTO;
   private BaseDataServiceSubscription: Subscription | undefined;
-
+  openForm: number;
+  private formServiceSubscription: Subscription | undefined;
+  
   constructor(  
     private dataService: DataService, 
     private adminService: AdminService,
     private baseDataService: BaseDataService,
+    private formService: FormService,
     ) { }
 
   ngOnInit(): void {
@@ -62,11 +66,17 @@ export class SoftItemComponent implements OnInit, OnDestroy {
         this.esAdmin = currentAdmin;
       }
     );
+    this.formServiceSubscription = this.formService.currentOpenForm.subscribe(
+      currentForm => {
+        this.openForm = currentForm > 0 ? currentForm : 0;
+      }
+    );
   }
 
   ngOnDestroy() {
     this.AdminServiceSubscription?.unsubscribe();
     this.BaseDataServiceSubscription?.unsubscribe();
+    this.formServiceSubscription?.unsubscribe();
   }
 
   color:string = 'red';
@@ -82,6 +92,12 @@ export class SoftItemComponent implements OnInit, OnDestroy {
     // habilito las acciones de cada item
     this.showBtnAction = !this.showBtnAction
     this.showBtnActionChange.emit(this.showBtnAction)
+
+    if (this.showForm) {
+      this.formService.setCurrentForm(this.openForm + 1)
+    } else {
+      this.formService.setCurrentForm(this.openForm - 1)
+    }
   }
 
   delete(softskill: SoftSkill) {

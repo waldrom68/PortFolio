@@ -7,7 +7,7 @@
   <div class="row" style="width:100% ">
     <div class="col-12">
       <label class="form-label" for="name">Nombre:</label>
-      <input type="text" id="name" formControlName="name" name="name" class="form-control" placeholder="Nombre"
+      <input type="text" id="name" formControlName="name" name="name" class="form-control" placeholder="Nombre de la empresa, organizacioón o institución...."
         [ngStyle]="{'width':'100%'}" formControlName="name" [ngClass]="{error: (Name.invalid && Name.touched)}">
     </div>
     <div class="row error-container text-justify-left mx-3">
@@ -30,7 +30,7 @@
     <div class="col-12">
       <label class="form-label" for="resume">Resumen:</label>
       <textarea type="text" rows="6" id="resume" formControlName="resume" name="resume" class="form-control "
-        placeholder="Resumen" formControlName="resume" [ngClass]="{'error is-invalid': (Resume.invalid && Resume.touched)
+        placeholder="Breve descripción general de la organizacion..." formControlName="resume" [ngClass]="{'error is-invalid': (Resume.invalid && Resume.touched)
       , 'is-valid':Resume.valid}"></textarea>
     </div>
 
@@ -52,6 +52,7 @@
     <div class="col-12">
       <label class="form-label" for="since">Url:</label>
       <input type="text" id="url" name="url" class="form-control" [ngStyle]="{'width':'100%'}" formControlName="url"
+      placeholder="www.sitioweb.com.ar......"
         [ngClass]="{error: (Url.invalid && Url.touched)}">
     </div>
     <ng-template #isOk>
