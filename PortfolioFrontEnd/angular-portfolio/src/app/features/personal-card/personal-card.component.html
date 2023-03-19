@@ -1,83 +1,39 @@
-
 <ng-container *ngIf="baseData">
 
 
     <div class="container py-4 p-0 m-0">
         <div class="card">
-            
-        <ng-container *ngIf="esAdmin && openForm == 0">
-            <br>
-            <button class="btn btn-outline-success btn-sm mt-2"
-            (click)="openPersonModal();"
-            ngClass="faConfirm fa-ico"
-            [ngStyle]="{'width':'fit-content', 'align-self':'end'}"
-        
-            >
-            <fa-icon 
-                [icon]="faPen"
-                ngClass="p-2"
-            >
-            </fa-icon>
-            Datos
-            </button>
-        </ng-container>
+
+            <ng-container *ngIf="esAdmin && openForm == 0">
+                <button class="btn btn-outline-success btn-sm mt-2" (click)="openPersonModal();"
+                    ngClass="faConfirm fa-ico" [ngStyle]="{'width':'fit-content', 'align-self':'end'}">
+                    <fa-icon [icon]="faPen" ngClass="p-2"></fa-icon> Datos
+                </button>
+            </ng-container>
 
             <ng-container>
 
-                <div class="ratio ratio-1x1 rounded-circle overflow-hidden" style="width: 50%; height: 50%; margin: auto;">
+                <div class="ratio ratio-1x1 rounded-circle overflow-hidden"
+                    style="width: 50%; height: 50%; margin: auto;">
 
-                    <img id="mifoto" 
-                    [src]="baseData.pathFoto" 
-                    
-                    class="card-img-top img-cover" alt="sin Imagen" >
+                    <img id="mifoto" [src]="baseData.pathFoto" class="card-img-top img-cover" alt="sin Imagen">
                 </div>
-                <!-- <ng-container *ngIf="esAdmin">
-                    <div class="row justify-content-center">
-                        <button class="btn btn-outline-success btn-sm mt-2"
-                        (click)="toggleFlagChangeImg()"
-                        >
-                            <fa-icon 
-                                [icon]="faPen"
-                                ngClass="p-2"
-                            >
-                            </fa-icon>
-                            Foto
-                        </button>
-                        
-                    </div>
-                </ng-container> -->
+
                 <ng-container *ngIf="esAdmin && openForm == 0">
-                    <form class="row justify-content-center"
-                    [formGroup]="formImg"
-                    #myForm="ngForm"
-                    >
+                    <form class="row justify-content-center mt-2" [formGroup]="formImg" #myForm="ngForm">
                         <!-- Quitar error del DOM : https://stackoverflow.com/questions/54580161/failed-to-set-the-value-property-on-htmlinputelement-in-reactive-form -->
                         <div class="form-group">
-                            <!-- <label for="pathFoto">Foto:</label>
-                            <input type="file" 
-                            id="pathFoto"
-                            name="pathFoto"
-                            [ngClass] = "{error: (PathFoto.invalid && PathFoto.touched)}"
-                            class="file-select" 
-                            accept=".jpeg, .jpg, .bmp, .png"
-                            (change)="upLoadFile($event)"
-                            > -->
-                            <!-- placeholder="url archivo con la imagen" -->
-                            <!-- <small class="mensajeError" *ngIf="formImg.hasError('required', 'pathFoto')"> Imagen requerida </small> -->
-                            <label class="label-input"
-                            (change)="upLoadFile($event)"
-                            > Cambiar foto
-                                <input type="file"
-                                id="pathFoto"
-                                name="pathFoto"
-                                accept=".jpeg, .jpg, .bmp, .png"
+                            
+                            <label class="label-input" (change)="upLoadFile($event)"> <fa-icon [icon]="faPen" ngClass="p-2"></fa-icon>
                                 
-                                >
-                            </label> 
+                                Cambiar foto
+                                
+                                <input type="file" id="pathFoto" name="pathFoto" accept=".jpeg, .jpg, .bmp, .png">
+                            </label>
                         </div>
                     </form>
-                
-                
+
+
                 </ng-container>
 
 
@@ -85,18 +41,16 @@
                     <h5 class="card-title">
                         {{ baseData.name }} {{ baseData.lastName }}
                     </h5>
-                    
-                    <h6 class="card-text" 
-                        *ngFor="let elemento of profession">{{ elemento }}
+
+                    <h6 class="card-text" *ngFor="let elemento of profession">{{ elemento }}
                     </h6>
                     <hr style="border: 1px solid;">
                     <p>Nacido en {{baseData.since | date:"yyyy"}}.</p>
                     <p>
-                        <fa-icon 
-                            [icon]="faLocationDot"
-                        >
+                        <fa-icon [icon]="faLocationDot">
                         </fa-icon>
-                  {{baseData.location}}</p> 
+                        {{baseData.location}}
+                    </p>
 
                 </div>
             </ng-container>
@@ -105,4 +59,3 @@
     </div>
 
 </ng-container>
-

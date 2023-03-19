@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faTimes, faUser, faContactCard } from '@fortawesome/free-solid-svg-icons';
 import { Observable, Subscription } from 'rxjs';
 import { AuthService, AdminService  } from 'src/app/service/auth.service';
 import { DataService } from 'src/app/service/data.service';
@@ -15,12 +15,8 @@ import { DataService } from 'src/app/service/data.service';
 export class TopBarComponent implements OnInit, OnDestroy {
 
   faTimes = faTimes;
-
-  // PENDIENTE, ESTÁ VINCULADO A LA PRACTICA DE OBSERVER
-  colorSubscription: Subscription;
-  color: string;
-  color$: Observable<string>;
-  // FIN A LA PRACTICA DE OBSERVER 
+  faUser = faUser;
+  faContactCard = faContactCard;
 
   // Validacion Admin STATUS
   esAdmin: boolean;
@@ -39,11 +35,6 @@ export class TopBarComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    // PENDIENTE, ESTÁ VINCULADO A LA PRACTICA DE OBSERVER
-    this.color$ = this.dataService.getColor$();
-    this.color$.subscribe(color => this.color = color);
-    // FIN A LA PRACTICA DE OBSERVER 
-
     this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
       currentAdmin => {
         this.esAdmin = currentAdmin;
@@ -53,9 +44,6 @@ export class TopBarComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    // PENDIENTE, ESTÁ VINCULADO A LA PRACTICA DE OBSERVER
-    this.colorSubscription.unsubscribe();
-    // FIN A LA PRACTICA DE OBSERVER 
     this.AdminServiceSubscription?.unsubscribe();
   }
 
@@ -65,7 +53,10 @@ export class TopBarComponent implements OnInit, OnDestroy {
     this.authService.logout();
 
   }
-
+  icon: string = 'red';
+  changeStyle($event: Event) {
+    this.icon = $event.type == 'mouseover' ? 'fa-beat fa-x2 text-light' : 'fa-x2';
+  }
 
 
 

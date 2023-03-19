@@ -34,7 +34,7 @@ export class PersonalCardComponent implements OnInit, OnDestroy {
   form: FormGroup;
 
   formImg: FormGroup;
-  changeImg: boolean;
+  // changeImg: boolean;
 
 
   // Validacion Admin STATUS
@@ -106,11 +106,6 @@ export class PersonalCardComponent implements OnInit, OnDestroy {
 
   }
 
-  // PENDIENTE, ESTÁ VINCULADO A LA PRACTICA DE OBSERVER
-  setcolor() {
-    this.dataService.setColor("burlywood");
-    // FIN A LA PRACTICA DE OBSERVER 
-  }
 
 
   get PathFoto(): any {
@@ -133,8 +128,8 @@ export class PersonalCardComponent implements OnInit, OnDestroy {
   toggleFlagChangeImg() {
     console.log("Teoricamente debo abrir el form");
 
-    this.changeImg = !this.changeImg;
-    this.refreshImg();
+    // this.changeImg = !this.changeImg;
+    // this.refreshImg();
 
     if (this.showForm) {
       this.formService.setCurrentForm(this.openForm + 1)
@@ -147,69 +142,64 @@ export class PersonalCardComponent implements OnInit, OnDestroy {
   async upLoadFile(evento: Event) {
     evento.preventDefault;
     // PENDIENTE
-    // actualizar la imagen al cerrar el form.
-    // no mostrar el input, mostrar un boton, actualizar el input al obtener la URL
+    // INVESTIGAR SI ES LA MEJOR PRACTICA PARA EL MANEJO DE ESTE PROCESO
+    // ASINCRONICO. ESTOY MOVIENDO ESTE CODIGO QUE HACE EL HTTP REQUEST 
+    // AL MISMO SERVICIO QUE SUBE LA IMAGEN.
+    // 
 
     // Solo se puede tener una foto de perfil.
     const path = "image/" + this.baseData.id;
     const name = "/fotoPerfil"
-    // this.uploadMediaService.upLoadFile(evento, path, name);
-    console.log("pasando por personalcard modificacion de imagen");
-
-    this.uploadMediaService.upLoadFile(evento, path, name);
-
-    // PENDIENTE IMPORTANTE, ESTO ASYNCRONICO NO FUNCIONA, SI ES EL UNICO DATO A 
-    // GUARDAR QUEDA EN BLANCO, REUBICARLO EN EL SERVICIO O MANEJARLO 
-    // ASINCRONICAMENTE.
-    // Volver a ver la documentacion oficial o algun tutorial......
-    const url: string = this.uploadMediaService.url;
-    console.log("Archivo en la nube: ", url)
-
+    // Preparo una instancia de Person para actualizar la entidad en el backend
     this.converPerson = ToPerson(this.baseData);
-    console.log("esto es lo que mando a guardar ", this.converPerson.pathFoto);
-    
-    // this.dataService.updateGralData(this.converPerson).subscribe();
-    this.dataService.upDateEntity(this.converPerson, "/person").subscribe( {
-      next: (v) => {
-        console.log("Guardado correctamente: ", v)
-        this.baseData.pathFoto = url;
-      },
-      error: (e) => {
-        alert("Response Error (" + e.status + ") en el metodo upDateItem()" + "\n" + e.message);
-        console.log("Se quizo cambiar imagen del Perfil sin exito a: " + this.baseData.name);
-        // Restauro valor original
-      },
-      complete: () => console.log("Completada la actualizacion de la imagen del perfil")
-    } );
-
-  // PENDIENTE, no se si tiene sentido estas acciones
-  this.changeImg = true;
-
-  this.refreshImg()
-  // FIN PENDIENTE
-  console.log("finalizando medodo upLoadFile, se actualizó el pathFoto", this.baseData.pathFoto);
-  this.baseDataService.setCurrentBaseData(this.baseData);
+ 
+    this.uploadMediaService.upLoadFile(evento, path, name, this.converPerson);
   
+// CODIGO QUE SE MOVIO AL SERVICIO
+  //   // Volver a ver la documentacion oficial o algun tutorial......
+  //   const url: string = this.uploadMediaService.url;
+  //   console.log("Archivo en la nube: ", url)
+  // 
+  //   // this.dataService.updateGralData(this.converPerson).subscribe();
+  //   this.dataService.upDateEntity(this.converPerson, "/person").subscribe( {
+  //     next: (v) => {
+  //       console.log("Guardado correctamente: ", v)
+  //       this.baseData.pathFoto = url;
+  //     },
+  //     error: (e) => {
+  //       alert("Response Error (" + e.status + ") en el metodo upDateItem()" + "\n" + e.message);
+  //       console.log("Se quizo cambiar imagen del Perfil sin exito a: " + this.baseData.name);
+  //       // Restauro valor original
+  //     },
+  //     complete: () => console.log("Completada la actualizacion de la imagen del perfil")
+  //   } );
 
+  // // PENDIENTE, no se si tiene sentido estas acciones
+  // this.changeImg = true;
 
+  // this.refreshImg()
+  // // FIN PENDIENTE
+  // console.log("finalizando medodo upLoadFile, se actualizó el pathFoto", this.baseData.pathFoto);
+  // this.baseDataService.setCurrentBaseData(this.baseData);
+  
   }
 
 
-  refreshImg() {
-    // SOLUCION DE COMPROMISO
-    console.log("Solucion de compromiso para manejar informacion async");
+  // refreshImg() {
+  //   // SOLUCION DE COMPROMISO
+  //   console.log("Solucion de compromiso para manejar informacion async");
 
-    setTimeout(() => {
+  //   setTimeout(() => {
 
-    // let element = this.renderer.selectRootElement(`#${'mifoto'}`, true);
-    // element.scrollIntoView({ behavior: 'smooth' });
-      // this.baseData.pathFoto = downloadURL
-      console.log(this.baseData)
+  //   // let element = this.renderer.selectRootElement(`#${'mifoto'}`, true);
+  //   // element.scrollIntoView({ behavior: 'smooth' });
+  //     // this.baseData.pathFoto = downloadURL
+  //     console.log(this.baseData)
       
-    }, 6000);
+  //   }, 6000);
     
 
-  }
+  // }
 
 
   

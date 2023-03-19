@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { getDownloadURL, getStorage, list, ref, Storage, uploadBytes, uploadBytesResumable } from '@angular/fire/storage';
 import { Observable, Subscription } from 'rxjs';
-import { FullPersonDTO } from '../models';
+import { FullPersonDTO, Person } from '../models';
 import { BaseDataService, DataService } from './data.service';
 import { ProgressValueService } from './ui.service';
 
@@ -31,9 +31,6 @@ export class UploadMediaService {
     private baseDataService: BaseDataService,
 
 
-   
-
-
   ) { 
     // this.DATAPORTFOLIO = this.dataService.getData();
     this.BaseDataServiceSubscription = this.baseDataService.currentBaseData.subscribe(
@@ -51,8 +48,10 @@ export class UploadMediaService {
 
   
   // Fuente: https://firebase.google.com/docs/storage/web/upload-files?hl=es-419
-  upLoadFile(evento: any, path: string, name: string) {
+  upLoadFile(evento: any, path: string, name: string, person:Person) {
     // PENDIENTE MOSTRAR BARRA DE PROGRESO.
+    // SI YA TENIA UNA IMAGEN DE PERFIL, ELIMINARLA DEL REPO DE GOOGLE AL FINALIZAR
+    // LA ACTUALIZACION. 
     const storage = getStorage();
 
     // Create the file metadata
@@ -106,10 +105,24 @@ export class UploadMediaService {
         // Upload completed successfully, now we can get the download URL
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           console.log('File available at -> ', downloadURL);
-          this.url = downloadURL;
+          person.pathFoto = downloadURL;
 
-          this.baseData.pathFoto = downloadURL;
-          this.baseDataService.setCurrentBaseData( this.baseData );
+          this.dataService.upDateEntity(person, "/person").subscribe( {
+            next: (v) => {
+              console.log("Guardado correctamente: ", v)
+              // actualizo los valores
+              this.baseData.pathFoto = downloadURL;
+              this.baseDataService.setCurrentBaseData( this.baseData );
+            },
+            error: (e) => {
+              alert("Response Error (" + e.status + ") en el metodo upDateItem()" + "\n" + e.message);
+              console.log("Se quizo cambiar imagen del Perfil sin exito");
+              // Restauro valor original
+            },
+            complete: () => console.log("Completada la actualizacion de la imagen del perfil")
+          } );
+
+
 
 
         });

@@ -1,29 +1,21 @@
 <!-- HTML principal -->
 <!-- <router-outlet></router-outlet> -->
+<ng-container *ngIf="baseData.displaydata">
+  
+  <app-top-bar></app-top-bar>
+    <!-- PENDIENTE, ERA UN INICIO DE LA PRUEBA PARA MOSTRAR PROGRESS BAR -->
+    <!-- <h5 class="text-right p-2">{{progreesValueabc}}</h5> -->
+    <!-- FIN  PRUEBA PARA MOSTRAR PROGRESS BAR -->
 
-<app-top-bar></app-top-bar>
+    <h6 class="text-right p-2">{{currentTime  | date:"HH : mm"}}</h6>
 
-    <button mat-raised-button color="danger" type="button"
-    (click)="setcolor();"
-    >
-      setear lightblue
-    </button>
-    <h5 class="text-right p-2">{{progreesValueabc}}</h5>
-    <h6 class="text-right p-2">{{currentTime  | date:"HH:mm:ss"}}</h6>
-    
-    <ng-container *ngIf="baseData.displaydata">
+    <app-main *ngIf="baseData.displaydata.theme == 'Flip' "></app-main>
 
-      <app-main *ngIf="baseData.displaydata.theme == 'Flip' "></app-main>
-
-    </ng-container>
+  <app-footer></app-footer>
+</ng-container>
       
-      
-
-
-<app-footer></app-footer>
 
 <!-- CODIGOS DE PRUEBAS -->
-
 <!-- <mat-toolbar color="primary" class="container-fluid">
     <span>Usuarios</span>
 </mat-toolbar>
@@ -46,21 +38,19 @@
 
 <!-- FIN CODIGOS DE PRUEBAS -->
 
-<section class="mat-button-container">
-    <!-- https://edupala.com/how-to-implement-angular-material-dialog/ -->
+
+<!-- https://edupala.com/how-to-implement-angular-material-dialog/ -->
+<!-- <section class="mat-button-container">
   <h2>Angular Material dialog</h2>
   <div class="example-button-row">
     <button mat-raised-button (click)="alertDialog()">
       Angular Material Alert
     </button>
-    <!-- <button mat-raised-button color="primary" (click)="confirmDialog()">
-      Confirm
-    </button> -->
+
     <button mat-raised-button color="accent" (click)="showPrompt()">
       Prompt Input
     </button>
   </div>
-  <!-- Aqui veo el doble binding de la variable form -->
   {{form.value.name}}
 </section>
 
@@ -92,5 +82,5 @@
     
   </form>
   
-</div>
+</div> -->
 

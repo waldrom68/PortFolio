@@ -32,6 +32,7 @@ export class AppComponent implements OnInit {
   title = 'angular-portfolio';
 
   faTimes = faTimes;
+  
 
   showListUsers: boolean = false;
   showDatos: boolean = false;
@@ -49,9 +50,6 @@ export class AppComponent implements OnInit {
   prueba = new Date(1968, 4, 20)
   shortdate: FormControl;
 
-  // PENDIENTE, ESTÁ VINCULADO A LA PRACTICA DE OBSERVER
-  color: string;
-  // FIN A LA PRACTICA DE OBSERVER 
   // baseData: FullPersonDTO;
   wait: boolean = true;
 
@@ -108,10 +106,9 @@ export class AppComponent implements OnInit {
     this.BaseDataServiceSubscription = this.baseDataService.currentBaseData.subscribe(
       currentData => {
         this.baseData = currentData;
-        // console.log(this.baseData);
-
       }
     );
+
     // Traigo todos los datos del Portfolio
     this.dataService.getPortFolioData().subscribe({
       next: (gralData) => {
@@ -138,12 +135,6 @@ export class AppComponent implements OnInit {
 
 
   }
-
-  // PENDIENTE, ESTÁ VINCULADO A LA PRACTICA DE OBSERVER
-  setcolor() {
-    this.dataService.setColor("lightblue");
-  }
-  // FIN A LA PRACTICA DE OBSERVER 
 
 
   // Pruebas del DatePicker
@@ -189,7 +180,6 @@ export class AppComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(() => console.log("Cerrando alert-modal"));
   }
-
 
 
 

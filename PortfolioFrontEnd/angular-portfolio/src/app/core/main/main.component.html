@@ -1,8 +1,9 @@
 <div class="row text-center aling-self-center py-0 mx-0" id="Init" >
     
-    <div class="container-fluid text-warning font-weight-bold bg-dark p-2">
+    <!-- codigo de prueba -->
+    <!-- <div class="container-fluid text-warning font-weight-bold bg-dark p-2">
         {{baseData.name}}  -> Forms abiertos {{openForm}}
-    </div>
+    </div> -->
 
     <!-- <ng-container  *ngIf="!wait"> -->
     <ng-container>
@@ -13,7 +14,10 @@
             <!-- area que muestra las Tarjetas por un lado, su etiqueta frontal-->
             <ng-container *ngIf="statusCards">
                 <section id="" class="row p-0 m-0 justify-content-center">
-                    <p class="h6 text-center">{{labelGroup1}}</p>
+                    <div class="container-fluid text-warning font-weight-bold bg-dark p-2">
+                        {{labelGroup1}}
+                    </div>
+                    <!-- <p class="h6 text-center">{{labelGroup1}}</p> -->
                     <app-data-card
                         [detailCard]="CardsGroup1"
                         (toggleCards)="toggleCards()"
@@ -22,7 +26,10 @@
                 </section>
 
                 <section id="" class="row p-0 m-0 justify-content-center">
-                    <p class="h6 text-center">{{labelGroup2}}</p>
+                    <div class="container-fluid text-warning font-weight-bold bg-dark p-2">
+                        {{labelGroup2}}
+                    </div>
+                    <!-- <p class="h6 text-center">{{labelGroup2}}</p> -->
                     <app-data-card
                         [detailCard]="CardsGroup2"
                         (toggleCards)="toggleCards()"

@@ -3,8 +3,6 @@
     color: #fff;
   }
 
-
-
   input[type="file"] {
       display: none;
   }
@@ -12,13 +10,22 @@
   .label-input{
     font: bold 13px Arial;
     text-decoration: none;
-    background-color: #2387aa;
-    color: #EEEEEE;
-    padding: 4px 79px 5px 66px;
-    border-top: 1px solid #CCCCCC;
+    /* background-color: #28a745;
+    color: #EEEEEE; */
+    padding: 5px 1rem;
+    font-weight: normal;
+    /* border-top: 1px solid #CCCCCC;   */
     /* border-right: 1px solid #333333; */
     /* border-bottom: 1px solid #333333; */
-    border-left: 1px solid #CCCCCC;
+    border: 1px solid #28a745;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #28a745;
   }
 
+  .label-input:hover {
+    background-color: #28a745;
+    color: white;
+  }
 
+/* background-color: #2387aa; */

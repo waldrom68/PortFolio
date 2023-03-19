@@ -1,69 +1,71 @@
 <!-- componente, mobile menu -->
-<section id="menu" class="pos-f-t"
->
+<section id="menu" class="pos-f-t">
 
 
 
-  <nav class="navbar navbar-dark bg-dark justify-content-end"
-
-  >
-    <div class="container-fluid">
+  <nav class="navbar navbar-dark bg-dark justify-content-end">
+    <div class="col-8 justify-content-left">
       <img class="navbar-brand" src="../../../assets/images/logo-argentina-programa.png" alt="">
-
-      <button class="navbar-toggler d-flex" type="button" 
-        data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" 
-        aria-expanded="false" aria-label="Toggle navigation">
-        
-        <span class="navbar-toggler-icon"></span>
-      </button>
     </div>
-    <span 
-    [style]= "{'color':color, 'background-color':'white'  }"
-    >
-    {{color$ | async }} -> color$ | async  / {{color}} -> color</span> 
+    <div class="col-4 d-flex justify-content-end align-items-center">
+      <div class="d-flex">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent"
+          aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+          <fa-icon [icon]="faContactCard">
+
+          </fa-icon>
+          <!-- <span class="navbar-toggler-icon"></span> -->
+        </button>
+      <!-- </div>
+      
+      
+      <div class=""> -->
+        <button class="navbar-toggler d-flex" type="button" data-toggle="collapse"
+          data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false"
+          aria-label="Toggle navigation">
+          <fa-icon [icon]="faUser" [ngClass]="icon" (mouseover)="changeStyle($event)" (mouseout)="changeStyle($event)">
+
+          </fa-icon>
+          <!-- <span class="navbar-toggler-icon"></span> -->
+        </button>
+      </div>
+    </div>
+
+
   </nav>
-  <div class="collapse" id="navbarToggleExternalContent"
-  
-  >
-    
-    
-    
+  <div class="collapse" id="navbarToggleExternalContent">
+
+
+
     <div class="bg-dark p-4">
       <h4 class="text-white">User logging</h4>
-      <h6 
-          [ngStyle] = "{'color':'blue','font-weight':'bolder', 'margin':'1em', 'float':'right'}"
-      >
-      Administrador autenticado -> {{esAdmin}}</h6>
-      <!-- <span class="text-muted btn" -->
-        
+      <!-- <h6 [ngStyle]="{'color':'blue','font-weight':'bolder', 'margin':'1em', 'float':'right'}">
+        Administrador autenticado -> {{esAdmin}}</h6> -->
+
+
       <ng-container *ngIf="!esAdmin">
 
-          <!-- <button class="navbar-toggler btn btn-primary btn-sm" type="button" 
+        <!-- <button class="navbar-toggler btn btn-primary btn-sm" type="button" 
             data-toggle="collapse" data-target="#navbarToggleExternalContent" 
             aria-controls="navbarToggleExternalContent" aria-expanded="false" 
             aria-label="Toggle navigation" 
             (click)="loggin()"
           >
             Ingresar como administrador
-            
+
           </button> -->
-          
-      <!-- (toggleLoggin)="toggleLoggin()" -->
-        <app-iniciar-sesion
-        ></app-iniciar-sesion>
+
+        <!-- (toggleLoggin)="toggleLoggin()" -->
+        <app-iniciar-sesion></app-iniciar-sesion>
 
       </ng-container>
 
       <ng-container *ngIf="esAdmin">
-          <button 
-            class="navbar-toggler btn btn-primary btn-sm" type="button" 
-            data-toggle="collapse" data-target="#navbarToggleExternalContent" 
-            aria-controls="navbarToggleExternalContent" aria-expanded="false" 
-            aria-label="Toggle navigation" 
-            (click)="onLogOut()"
-          > Cerrar sesion
+        <button class="navbar-toggler btn btn-primary btn-sm" type="button" data-toggle="collapse"
+          data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false"
+          aria-label="Toggle navigation" (click)="onLogOut()"> Cerrar sesion
 
-          </button>
+        </button>
       </ng-container>
 
 
@@ -71,4 +73,3 @@
     </div>
   </div>
 </section>
-
