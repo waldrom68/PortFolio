@@ -1,75 +1,96 @@
 <!-- componente, mobile menu -->
 <section id="menu" class="pos-f-t">
 
+  <nav class="navbar justify-content-left"
+    [ngClass]="{'navbar-primary custom': (esAdmin), 'navbar-dark bg-dark':!esAdmin}">
 
+    <!-- LEFT SIDE -->
+    <div class="col-sm-8">
 
-  <nav class="navbar navbar-dark bg-dark justify-content-end">
-    <div class="col-8 justify-content-left">
       <img class="navbar-brand" src="../../../assets/images/logo-argentina-programa.png" alt="">
-    </div>
-    <div class="col-4 d-flex justify-content-end align-items-center">
-      <div class="d-flex">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent"
-          aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
-          <fa-icon [icon]="faContactCard">
 
-          </fa-icon>
-          <!-- <span class="navbar-toggler-icon"></span> -->
+    </div>
+
+    <!-- RIGHT SIDE -->
+    <div class="col-sm-4 d-flex justify-content-end align-items-center text-light">
+      <div class="d-flex">
+
+        <!-- CONTACTO -->
+        <button class="btn btn-outline-secondary mr-4" type="button" data-toggle="collapse"
+          data-target="#navbarToggleExternalContact" aria-controls="navbarToggleExternalContact" aria-expanded="false"
+          aria-label="Toggle navigation">
+          <fa-icon [icon]="faAt"> </fa-icon><span ngClass="ml-2">Contacto</span>
+
         </button>
-      <!-- </div>
-      
-      
-      <div class=""> -->
-        <button class="navbar-toggler d-flex" type="button" data-toggle="collapse"
+
+        <!-- LOGGING -->
+        <button class="btn btn-outline-secondary mr-2" type="button" data-toggle="collapse"
           data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false"
           aria-label="Toggle navigation">
-          <fa-icon [icon]="faUser" [ngClass]="icon" (mouseover)="changeStyle($event)" (mouseout)="changeStyle($event)">
+          <fa-icon [icon]="faUser"> </fa-icon>
 
-          </fa-icon>
-          <!-- <span class="navbar-toggler-icon"></span> -->
+          <span ngClass="ml-2" *ngIf="esAdmin; else isAdmin">Cerrar</span>
+
+          <ng-template #isAdmin>Ingresar</ng-template>
         </button>
       </div>
     </div>
-
+    <!-- RIGHT SIDE -->
 
   </nav>
-  <div class="collapse" id="navbarToggleExternalContent">
 
-
+  <!-- EXPAND LOGGING CONTAINER -->
+  <div class="collapse border-top border-bottom border-warning" id="navbarToggleExternalContent">
 
     <div class="bg-dark p-4">
-      <h4 class="text-white">User logging</h4>
-      <!-- <h6 [ngStyle]="{'color':'blue','font-weight':'bolder', 'margin':'1em', 'float':'right'}">
-        Administrador autenticado -> {{esAdmin}}</h6> -->
-
 
       <ng-container *ngIf="!esAdmin">
 
-        <!-- <button class="navbar-toggler btn btn-primary btn-sm" type="button" 
-            data-toggle="collapse" data-target="#navbarToggleExternalContent" 
-            aria-controls="navbarToggleExternalContent" aria-expanded="false" 
-            aria-label="Toggle navigation" 
-            (click)="loggin()"
-          >
-            Ingresar como administrador
-
-          </button> -->
-
-        <!-- (toggleLoggin)="toggleLoggin()" -->
         <app-iniciar-sesion></app-iniciar-sesion>
 
       </ng-container>
 
-      <ng-container *ngIf="esAdmin">
-        <button class="navbar-toggler btn btn-primary btn-sm" type="button" data-toggle="collapse"
+      <ng-container *ngIf="esAdmin" ngClass="d-flex justify-content-end align-items-center mr-2">
+        <button class="navbar-toggler btn btn-secondary" type="button" data-toggle="collapse"
           data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false"
-          aria-label="Toggle navigation" (click)="onLogOut()"> Cerrar sesion
-
+          aria-label="Toggle navigation" (click)="onLogOut()"> Confirme cerrar sesion
         </button>
       </ng-container>
 
-
-
     </div>
   </div>
+
+  <!-- MEDIOS DE CONTACTO -->
+  <div class="collapse  border-top border-bottom border-warning" id="navbarToggleExternalContact">
+
+    <div class="navbar-toggler bg-dark collapse" id="navbarToggleExternalContact">
+
+      <div class="d-flex justify-content-center align-items-center mr-2">
+        <div class="col-sm-4">
+          <h4 class="text-white text-center">Medios de contactos</h4>
+
+        </div>
+        <div class="col-sm-8 d-flex justify-content-around align-middle">
+
+          <div class="col-sm3 fa-container">
+            <fa-icon class="fa-1x" [icon]="faLinkedinIn"></fa-icon>
+            <span class="text-muted fa-container ml-2">LinkedIn</span>
+          </div>
+
+          <div class="col-sm3 fa-container">
+            <fa-icon class="fa-1x" [icon]="faGithub"></fa-icon>
+            <span class="text-muted fa-container ml-2">GitHub</span>
+          </div>
+
+          <div class="col-sm3 fa-container">
+            <fa-icon class="fa-1x" [icon]="faGoogle"></fa-icon>
+            <span class="text-muted fa-container ml-2">Gmail</span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- MEDIOS DE CONTACTO -->
+
 </section>

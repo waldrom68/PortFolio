@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, InjectionToken, OnInit } from '@angular/core';
 import { ProgressValueService, UiService } from 'src/app/service/ui.service';  // para escuchar el botton de mostrar formulario de alta
 
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -59,7 +59,7 @@ export class AppComponent implements OnInit {
   currentTime: Date;
   llamado?: number
 
-  constructor(
+    constructor(
     // Inicializamos los servicios del modulo User
     private uiService: UiService,  // defino el servicio para el botton de mostrar form
     private dialog: MatDialog,
@@ -75,7 +75,7 @@ export class AppComponent implements OnInit {
 
     private observableService: ObservableService,
 
-
+  
   ) {
 
     this.form = this.fb.group(
@@ -112,6 +112,8 @@ export class AppComponent implements OnInit {
     // Traigo todos los datos del Portfolio
     this.dataService.getPortFolioData().subscribe({
       next: (gralData) => {
+        console.log(gralData);
+        
         this.baseDataService.setCurrentBaseData(gralData);
         this.wait = false;
 

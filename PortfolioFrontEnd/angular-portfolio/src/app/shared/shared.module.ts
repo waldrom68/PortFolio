@@ -23,7 +23,8 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { CUSTOM_DATE_FORMATS } from './mat-datepicker/custom-date-formats';
 import { MatDatepickerComponent } from './mat-datepicker/mat-datepicker.component';
-
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatCardModule } from '@angular/material/card';
 
 
 
@@ -37,6 +38,8 @@ const MaterialModules = [
   MatIconModule,
   MatInputModule,
   MatSelectModule,
+  MatProgressSpinnerModule,
+  MatCardModule
   
 ];
 

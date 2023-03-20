@@ -31,7 +31,7 @@ export class UploadMediaService {
     private baseDataService: BaseDataService,
 
 
-  ) { 
+  ) {
     // this.DATAPORTFOLIO = this.dataService.getData();
     this.BaseDataServiceSubscription = this.baseDataService.currentBaseData.subscribe(
       currentData => {
@@ -40,15 +40,15 @@ export class UploadMediaService {
     );
     this.progreesValueabc$ = this.dataService.getCurrentValue$();
     this.progreesValueabc$.subscribe(valor => this.progreesValueabc = valor);
-    
+
     // this.dataService.setCurrentValue(0);
 
 
   }
 
-  
+
   // Fuente: https://firebase.google.com/docs/storage/web/upload-files?hl=es-419
-  upLoadFile(evento: any, path: string, name: string, person:Person) {
+  upLoadFile(evento: any, path: string, name: string, person: Person) {
     // PENDIENTE MOSTRAR BARRA DE PROGRESO.
     // SI YA TENIA UNA IMAGEN DE PERFIL, ELIMINARLA DEL REPO DE GOOGLE AL FINALIZAR
     // LA ACTUALIZACION. 
@@ -71,7 +71,7 @@ export class UploadMediaService {
         const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
 
         this.dataService.setCurrentValue(progress);
-        
+
         console.log('Upload is ' + progress + '% done');
         switch (snapshot.state) {
           case 'paused':
@@ -105,14 +105,25 @@ export class UploadMediaService {
         // Upload completed successfully, now we can get the download URL
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           console.log('File available at -> ', downloadURL);
-          person.pathFoto = downloadURL;
 
-          this.dataService.upDateEntity(person, "/person").subscribe( {
+          // PENDIENTE, es una truchada, repensarlo y refactorizar
+          // me duelen los ojos al ver lo que hice aquí ;)
+          if (name == "/fotoBG") {
+            person.pathBgImage = downloadURL;
+          } else {
+            person.pathFoto = downloadURL;
+          }
+
+
+          this.dataService.upDateEntity(person, "/person").subscribe({
             next: (v) => {
               console.log("Guardado correctamente: ", v)
+
+
               // actualizo los valores
-              this.baseData.pathFoto = downloadURL;
-              this.baseDataService.setCurrentBaseData( this.baseData );
+              // this.baseData.pathFoto = downloadURL;
+              this.baseDataService.setCurrentBaseData(this.baseData);
+
             },
             error: (e) => {
               alert("Response Error (" + e.status + ") en el metodo upDateItem()" + "\n" + e.message);
@@ -120,7 +131,7 @@ export class UploadMediaService {
               // Restauro valor original
             },
             complete: () => console.log("Completada la actualizacion de la imagen del perfil")
-          } );
+          });
 
 
 

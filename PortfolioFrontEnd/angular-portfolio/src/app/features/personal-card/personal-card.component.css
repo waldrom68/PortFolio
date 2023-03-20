@@ -20,12 +20,27 @@
     border: 1px solid #28a745;
     border-radius: 5px;
     cursor: pointer;
-    color: #28a745;
+    color: #f1f1f1;
   }
 
   .label-input:hover {
     background-color: #28a745;
     color: white;
+    cursor: pointer;
   }
 
 /* background-color: #2387aa; */
+.responsive {
+  width: 100%;
+  height: auto;
+  background-size: cover;
+  z-index: -1;
+}
+
+
+.card {
+  /* background-color: rgba(231, 231, 231, 0.9); */
+ /*  background: rgb(0, 0, 0); Fallback color */
+  background: rgba(230, 230, 50, 0.3);; /* Black background with 0.5 opacity */
+  color: #f1f1f1;
+}

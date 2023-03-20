@@ -210,6 +210,9 @@ https://www.youtube.com/@salvadoracuna473/videos
 ### implementacion de todos los componentes de angular material
 https://edupala.com/how-to-implement-angular-material-dialog/
 
+### implementacion de spinner, vie servicio
+https://danielk.tech/home/angular-how-to-add-a-loading-spinner -->
+  <!-- <mat-spinner *ngIf="true"></mat-spinner> -->
 ### Modal
 https://material.angular.io/guide/getting-started
 

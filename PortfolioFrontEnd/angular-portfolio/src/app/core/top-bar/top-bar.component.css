@@ -4,3 +4,24 @@
     height: 3em !important; 
     padding-left: 0px !important;
 }
+
+.custom
+{
+    background-color: rgb(13, 80, 60);
+}
+
+button:hover {
+    color: white !important;
+    background-color: transparent !important;
+}
+
+
+.fa-container {
+    color: grey !important;
+    background-color: transparent !important;
+    cursor: pointer;
+}
+.fa-container:hover {
+    color: white !important;
+    background-color: transparent !important;
+}

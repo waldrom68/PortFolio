@@ -1,0 +1,92 @@
+<!-- componente, mobile menu -->
+<section id="menu" class="pos-f-t">
+
+
+
+  <nav class="navbar justify-content-left"
+    [ngClass]="{'navbar-primary custom': (esAdmin), 'navbar-dark bg-dark':!esAdmin}">
+    <div class="col-sm-8">
+      <img class="navbar-brand" src="../../../assets/images/logo-argentina-programa.png" alt="">
+    </div>
+    <div class="col-sm-4 d-flex justify-content-end align-items-center text-light">
+      <div class="d-flex">
+        <button class="btn btn-outline-secondary mr-4" type="button" data-toggle="collapse"
+          data-target="#navbarToggleContact" aria-controls="navbarToggleContact" aria-expanded="false"
+          aria-label="Toggle navigation">
+          <fa-icon [icon]="faAt"></fa-icon> Contacto
+
+        </button>
+
+        <button class="btn btn-outline-secondary mr-2" type="button" data-toggle="collapse"
+          data-target="#navbarToggleloggin" aria-controls="navbarToggleloggin" aria-expanded="false"
+          aria-label="Toggle navigation">
+          <fa-icon [icon]="faUser"> </fa-icon>
+          <span *ngIf="esAdmin; else isAdmin">
+            Cerrar
+          </span>
+          <ng-template #isAdmin>
+            Ingresar
+          </ng-template>
+
+        </button>
+
+      </div>
+    </div>
+
+
+  </nav>
+  <div class="collapse" id="navbarToggleloggin">
+
+
+    <!-- LOGGIN -->
+    <div class="bg-dark p-2">
+
+      <ng-container *ngIf="!esAdmin">
+
+        <h4 class="text-white">User logging</h4>
+
+        <app-iniciar-sesion></app-iniciar-sesion>
+
+      </ng-container>
+
+      <ng-container class="navbar-toggler">
+        <div *ngIf="esAdmin" class="d-flex justify-content-end align-items-center mr-2">
+          <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#navbarToggleloggin"
+            aria-controls="navbarToggleloggin" aria-expanded="false" aria-label="Toggle navigation"
+            (click)="onLogOut()"> Confirme cerrar sesion
+
+          </button>
+        </div>
+      </ng-container>
+
+
+    </div>
+  </div>
+  <!-- FIN LOGGIN -->
+
+
+  <!-- MEDIOS DE CONTACTO -->
+  <div class="navbar-toggler bg-dark collapse" id="navbarToggleContact">
+
+    <div class="d-flex justify-content-center align-items-center mr-2">
+      <h4 class="text-white">Medios de contacto</h4>
+
+      <div class="col-sm3 fa-container">
+        <fa-icon class="fa-2x" [icon]="faLinkedinIn"></fa-icon>
+        <span class="text-muted fa-container">LinkedIn</span>
+      </div>
+
+      <div class="col-sm3 fa-container">
+        <fa-icon class="fa-2x" [icon]="faGithub"></fa-icon>
+        <span class="text-muted fa-container">GitHub</span>
+      </div>
+
+      <div class="col-sm3 fa-container">
+        <fa-icon class="fa-2x" [icon]="faGoogle"></fa-icon>
+        <span class="text-muted fa-container">Gmail</span>
+      </div>
+    </div>
+  </div>
+  <!-- MEDIOS DE CONTACTO -->
+
+</section>

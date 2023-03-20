@@ -196,11 +196,12 @@ export class Person extends Base {
     objetive: string;
     since: Date;
     email: string;
+    pathBgImage: string;
     displaydata: DisplayData
 
     constructor(id:number, name:string, lastName:string, pathFoto:string,
         location:string, profession:string, profile:string, objetive:string,
-        since:Date, email:string, displayData:DisplayData ) {
+        since:Date, email:string, pathBgImage:string, displayData:DisplayData ) {
         super();
         this.id = id ? id : 0;
         this.name = name ? name : "";
@@ -212,6 +213,7 @@ export class Person extends Base {
         this.objetive = objetive ? objetive : "";
         this.since = since ? since : new Date();
         this.email = email ? email : "";
+        this.pathBgImage = pathBgImage ? pathBgImage : "";
         this.displaydata = new DisplayData()
     }
 
@@ -350,6 +352,7 @@ export class FullPersonDTO {
     objetive: string;
     since: Date;
     email: string;
+    pathBgImage: string;
     username: string;
     displaydata: DisplayData;
     hardskill: HardSkill[];

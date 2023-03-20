@@ -14,7 +14,9 @@
             <!-- area que muestra las Tarjetas por un lado, su etiqueta frontal-->
             <ng-container *ngIf="statusCards">
                 <section id="" class="row p-0 m-0 justify-content-center">
-                    <div class="container-fluid text-warning font-weight-bold bg-dark p-2">
+                    <div class="container-fluid text-warning font-weight-bold p-2"
+                    style="background-color: #4c6249; border-radius: 8px;"
+                    >
                         {{labelGroup1}}
                     </div>
                     <!-- <p class="h6 text-center">{{labelGroup1}}</p> -->
@@ -26,7 +28,9 @@
                 </section>
 
                 <section id="" class="row p-0 m-0 justify-content-center">
-                    <div class="container-fluid text-warning font-weight-bold bg-dark p-2">
+                    <div class="container-fluid text-warning font-weight-bold p-2"
+                    style="background-color: #4c6249; border-radius: 8px;"
+                    >
                         {{labelGroup2}}
                     </div>
                     <!-- <p class="h6 text-center">{{labelGroup2}}</p> -->
@@ -148,7 +152,8 @@
 
     <!-- Personal Card , aside -->
         <div class="col-sm-4 g-0 m-auto p-2">
-            <section id="nameAndImage" class="col order-5 opacity-75 align-self-center" style="border: 1px solid;">
+            <section id="nameAndImage" 
+                class="col order-5 opacity-75 align-self-center p-0">
 
                 <app-personal-card
 

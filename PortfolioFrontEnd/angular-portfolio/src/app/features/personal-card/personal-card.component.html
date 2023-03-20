@@ -1,12 +1,16 @@
-<ng-container *ngIf="baseData">
+<ng-container *ngIf="baseData" style="background-color: black;">
 
+    <!-- background-image: url(img_flwr.gif), url(paper.gif); -->
+    <!-- {{ 'url(' + baseData.pathBgImage + '), linear-gradient(to right, rgba(30, 75, 115, 1), rgba(255, 255, 255, 0)'}} -->
 
-    <div class="container py-4 p-0 m-0">
-        <div class="card">
+    <div class="container p-0 m-0 responsive"
+        [style.background]="'url(' + baseData.pathBgImage + '), linear-gradient(to right, rgba(30, 75, 115, 1), rgba(255, 255, 255, 0)' "
+        [style.width.%]="100" [style.background-size]="'cover'">
+        <div class="card border rounded-3">
 
-            <ng-container *ngIf="esAdmin && openForm == 0">
-                <button class="btn btn-outline-success btn-sm mt-2" (click)="openPersonModal();"
-                    ngClass="faConfirm fa-ico" [ngStyle]="{'width':'fit-content', 'align-self':'end'}">
+            <ng-container *ngIf="esAdmin && openForm == 0" class="row">
+                <button class="btn btn-outline-success btn-sm mx-auto my-2 text-light" (click)="openPersonModal();"
+                    ngClass="faConfirm fa-ico" [ngStyle]="{'width':'fit-content'}">
                     <fa-icon [icon]="faPen" ngClass="p-2"></fa-icon> Datos
                 </button>
             </ng-container>
@@ -19,15 +23,17 @@
                     <img id="mifoto" [src]="baseData.pathFoto" class="card-img-top img-cover" alt="sin Imagen">
                 </div>
 
+
                 <ng-container *ngIf="esAdmin && openForm == 0">
                     <form class="row justify-content-center mt-2" [formGroup]="formImg" #myForm="ngForm">
                         <!-- Quitar error del DOM : https://stackoverflow.com/questions/54580161/failed-to-set-the-value-property-on-htmlinputelement-in-reactive-form -->
                         <div class="form-group">
-                            
-                            <label class="label-input" (change)="upLoadFile($event)"> <fa-icon [icon]="faPen" ngClass="p-2"></fa-icon>
-                                
-                                Cambiar foto
-                                
+
+                            <label class="label-input" (change)="upLoadFile($event)"> <fa-icon [icon]="faPen"
+                                    ngClass="p-2"></fa-icon>
+
+                                Foto perfil
+
                                 <input type="file" id="pathFoto" name="pathFoto" accept=".jpeg, .jpg, .bmp, .png">
                             </label>
                         </div>
@@ -35,6 +41,7 @@
 
 
                 </ng-container>
+
 
 
                 <div class="card-body">
@@ -54,8 +61,26 @@
 
                 </div>
             </ng-container>
-        </div>
 
+            <!-- PIE DE CARD -->
+            <ng-container *ngIf="esAdmin && openForm == 0">
+                <form class="row justify-content-center mx-auto my-2" [formGroup]="formImg" #myForm="ngForm">
+                    <div class="form-group">
+
+                        <label class="label-input" (change)="upLoadFileBG($event)"> <fa-icon [icon]="faPen"
+                                ngClass="p-2"></fa-icon>
+
+                            Imagen de fondo
+
+                            <input type="file" id="pathBgImage" name="pathBgImage" accept=".jpeg, .jpg, .bmp, .png">
+                        </label>
+                    </div>
+                </form>
+
+
+            </ng-container>
+            <!-- FIN PIE DE CARD -->
+        </div>
     </div>
 
 </ng-container>

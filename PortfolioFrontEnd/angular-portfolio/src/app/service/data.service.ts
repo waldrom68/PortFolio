@@ -509,6 +509,7 @@ export class DataService {
       data.objetive,
       data.since,
       data.email,
+      data.pathBgImage,
       data.displaydata
     ))
   }

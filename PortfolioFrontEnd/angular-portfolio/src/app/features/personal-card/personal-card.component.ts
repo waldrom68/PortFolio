@@ -74,7 +74,7 @@ export class PersonalCardComponent implements OnInit, OnDestroy {
       currentData => {
         this.baseData = currentData;
         if (this.baseData.profession) {
-          this.profession = this.baseData.profession.split('\n') 
+          this.profession = this.baseData.profession.split('\n')
         }
       }
     );
@@ -89,11 +89,11 @@ export class PersonalCardComponent implements OnInit, OnDestroy {
 
     this.formServiceSubscription = this.formService.currentOpenForm.subscribe(
       currentForm => {
-        this.openForm = currentForm > 0 ? currentForm  : 0;
+        this.openForm = currentForm > 0 ? currentForm : 0;
       }
     );
 
- 
+
 
   }
 
@@ -106,7 +106,10 @@ export class PersonalCardComponent implements OnInit, OnDestroy {
 
   }
 
+  get PathBgImage(): any {
+    return this.formImg.get("pathBgImage")
 
+  }
 
   get PathFoto(): any {
     return this.formImg.get("pathFoto")
@@ -152,36 +155,36 @@ export class PersonalCardComponent implements OnInit, OnDestroy {
     const name = "/fotoPerfil"
     // Preparo una instancia de Person para actualizar la entidad en el backend
     this.converPerson = ToPerson(this.baseData);
- 
+
     this.uploadMediaService.upLoadFile(evento, path, name, this.converPerson);
-  
-// CODIGO QUE SE MOVIO AL SERVICIO
-  //   // Volver a ver la documentacion oficial o algun tutorial......
-  //   const url: string = this.uploadMediaService.url;
-  //   console.log("Archivo en la nube: ", url)
-  // 
-  //   // this.dataService.updateGralData(this.converPerson).subscribe();
-  //   this.dataService.upDateEntity(this.converPerson, "/person").subscribe( {
-  //     next: (v) => {
-  //       console.log("Guardado correctamente: ", v)
-  //       this.baseData.pathFoto = url;
-  //     },
-  //     error: (e) => {
-  //       alert("Response Error (" + e.status + ") en el metodo upDateItem()" + "\n" + e.message);
-  //       console.log("Se quizo cambiar imagen del Perfil sin exito a: " + this.baseData.name);
-  //       // Restauro valor original
-  //     },
-  //     complete: () => console.log("Completada la actualizacion de la imagen del perfil")
-  //   } );
 
-  // // PENDIENTE, no se si tiene sentido estas acciones
-  // this.changeImg = true;
+    // CODIGO QUE SE MOVIO AL SERVICIO
+    //   // Volver a ver la documentacion oficial o algun tutorial......
+    //   const url: string = this.uploadMediaService.url;
+    //   console.log("Archivo en la nube: ", url)
+    // 
+    //   // this.dataService.updateGralData(this.converPerson).subscribe();
+    //   this.dataService.upDateEntity(this.converPerson, "/person").subscribe( {
+    //     next: (v) => {
+    //       console.log("Guardado correctamente: ", v)
+    //       this.baseData.pathFoto = url;
+    //     },
+    //     error: (e) => {
+    //       alert("Response Error (" + e.status + ") en el metodo upDateItem()" + "\n" + e.message);
+    //       console.log("Se quizo cambiar imagen del Perfil sin exito a: " + this.baseData.name);
+    //       // Restauro valor original
+    //     },
+    //     complete: () => console.log("Completada la actualizacion de la imagen del perfil")
+    //   } );
 
-  // this.refreshImg()
-  // // FIN PENDIENTE
-  // console.log("finalizando medodo upLoadFile, se actualizó el pathFoto", this.baseData.pathFoto);
-  // this.baseDataService.setCurrentBaseData(this.baseData);
-  
+    // // PENDIENTE, no se si tiene sentido estas acciones
+    // this.changeImg = true;
+
+    // this.refreshImg()
+    // // FIN PENDIENTE
+    // console.log("finalizando medodo upLoadFile, se actualizó el pathFoto", this.baseData.pathFoto);
+    // this.baseDataService.setCurrentBaseData(this.baseData);
+
   }
 
 
@@ -195,14 +198,29 @@ export class PersonalCardComponent implements OnInit, OnDestroy {
   //   // element.scrollIntoView({ behavior: 'smooth' });
   //     // this.baseData.pathFoto = downloadURL
   //     console.log(this.baseData)
-      
+
   //   }, 6000);
-    
+
 
   // }
 
+  async upLoadFileBG(evento: Event) {
+    evento.preventDefault;
+    // PENDIENTE
+    // INVESTIGAR SI ES LA MEJOR PRACTICA PARA EL MANEJO DE ESTE PROCESO
+    // ASINCRONICO. ESTOY MOVIENDO ESTE CODIGO QUE HACE EL HTTP REQUEST 
+    // AL MISMO SERVICIO QUE SUBE LA IMAGEN.
+    // 
 
-  
+    // Solo se puede tener una foto de fondo.
+    const path = "image/" + this.baseData.id;
+    const name = "/fotoBG"
+    // Preparo una instancia de Person para actualizar la entidad en el backend
+    this.converPerson = ToPerson(this.baseData);
+
+    this.uploadMediaService.upLoadFile(evento, path, name, this.converPerson);
+  }
+
 
   openPersonModal(): void {
     const dialogConfig = new MatDialogConfig();
@@ -212,7 +230,7 @@ export class PersonalCardComponent implements OnInit, OnDestroy {
     dialogConfig.id = "modal-component";
 
     dialogConfig.height = "90%";
-     dialogConfig.width = "95%";
+    dialogConfig.width = "95%";
 
     dialogConfig.data = { message: "Datos generales", }
 
@@ -225,7 +243,7 @@ export class PersonalCardComponent implements OnInit, OnDestroy {
         // Obtengo nuevo objeto para actualizar en la base de datos
         // const person = this.gralDataToPerson(data.newData);
         this.converPerson = ToPerson(this.baseData);
-        console.log("Esto devuelve la transformada",this.converPerson);
+        console.log("Esto devuelve la transformada", this.converPerson);
         // Actualizo los datos via dataService
         this.dataService.upDateEntity(data.newData, "/person").subscribe({
           next: (v) => {
