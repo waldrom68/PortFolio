@@ -41,6 +41,7 @@
 .card {
   /* background-color: rgba(231, 231, 231, 0.9); */
  /*  background: rgb(0, 0, 0); Fallback color */
-  background: rgba(230, 230, 50, 0.3);; /* Black background with 0.5 opacity */
+ /*  background: rgba(230, 230, 50, 0.3);; Black background with 0.5 opacity */
+  background-color: transparent !important;
   color: #f1f1f1;
 }

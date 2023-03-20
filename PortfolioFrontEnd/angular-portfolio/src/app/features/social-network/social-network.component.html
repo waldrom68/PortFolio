@@ -1,0 +1,77 @@
+<div
+    tabindex="-1" 
+    role="dialog" 
+>
+    <div class="modal-header">
+        <h4 class="modal-title">
+            {{ message }}Redes sociales
+          </h4>
+        <button type="button" class="close" aria-label="Close" 
+          (click)="dialogRef.close(baseData.socialnetwork);"
+          >
+          <span aria-hidden="false">&times;</span>
+        </button>
+    </div>
+
+    <div class="modal-body px-0">
+
+        <ng-container *ngIf="baseData.socialnetwork.length; else agregar">
+
+            <div class="table-dark text-left container-fluid  py-4" 
+            *ngIf="!showForm"
+            >
+                <app-social-item *ngFor="let item of baseData.socialnetwork"
+                    [item]="item"
+
+                    (onDelete)="openModalDelete(item)"
+                    [(showBtnAction)]="showBtnAction" 
+                >
+
+                </app-social-item>
+
+
+            </div>
+        </ng-container>
+
+        <app-social-form
+            *ngIf="showForm && esAdmin"
+
+            [title]="''"
+
+            (onUpdate)=" addItem($event)"
+            (cancel)="cancelation($event)"
+            
+            >
+          </app-social-form>
+          <!-- [(showBtnAction)]="showBtnAction" 
+          (showBtnActionChange)="showBtnAction"> -->
+        <!-- [formData]="formData" -->
+
+        <ng-template #agregar>
+            <div class="table-dark text-left container"  >
+                <p> Sin registrar redes sociales.
+                </p>
+            </div>
+        </ng-template>
+
+    </div>
+
+    <div class="modal-footer">
+        <!-- Agregar organizaciones -->
+        <ng-container *ngIf="esAdmin && showBtnAction">
+            <br>
+            <button class="btn btn-default btn-sm" 
+                ngClass="faControl fa-ico"
+                (click)="toggleForm()"
+                >
+                <fa-icon
+                ngClass="fa-3x text-primary"
+                    [icon]="faPlusCircle"
+                    
+                    >
+                </fa-icon>
+            </button>
+        </ng-container>
+    </div>
+
+</div>

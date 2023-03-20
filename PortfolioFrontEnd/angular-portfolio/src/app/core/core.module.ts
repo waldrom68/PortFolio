@@ -55,6 +55,9 @@ import { StudieFormComponent } from '../features/bloque-datos-obj-profile/studie
 
 import { IniciarSesionComponent } from './iniciar-sesion/iniciar-sesion.component';
 import { RefreshDirective } from '../directive/refresh.directive';
+import { SocialNetworkComponent } from '../features/social-network/social-network.component';
+import { SocialFormComponent } from '../features/social-form/social-form.component';
+import { SocialItemComponent } from '../features/social-item/social-item.component';
 
 
 @NgModule({
@@ -99,6 +102,11 @@ import { RefreshDirective } from '../directive/refresh.directive';
         StudieItemComponent,
         StudieFormComponent,
         IniciarSesionComponent,
+        DatosTrayectoriaComponent,
+
+        SocialNetworkComponent,
+        SocialFormComponent,
+        SocialItemComponent,
         RefreshDirective, 
 
     ],

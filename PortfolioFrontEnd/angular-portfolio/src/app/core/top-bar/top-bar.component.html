@@ -31,8 +31,11 @@
 
           <span ngClass="ml-2" *ngIf="esAdmin; else isAdmin">Cerrar</span>
 
-          <ng-template #isAdmin>Ingresar</ng-template>
+          <ng-template #isAdmin >
+            <span ngClass="ml-2">Ingresar</span>
+          </ng-template>
         </button>
+        
       </div>
     </div>
     <!-- RIGHT SIDE -->

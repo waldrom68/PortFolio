@@ -1,0 +1,95 @@
+<!-- <h5 class="m-auto p-1">{{formData.name}}{{title}}</h5>  -->
+<!-- <h5 class="m-auto p-1">{{title}}</h5> -->
+
+
+<form class="form-row p-1 d-flex justify-content-around" [formGroup]="form" #myForm="ngForm"
+  (ngSubmit)="onEnviar($event); myForm.resetForm()">
+
+  <!-- NOMBRE -->
+  <div class="row" style="width:100% ">
+    <div class="col-12">
+      <label class="form-label" for="name">Nombre:</label>
+      <input type="text" id="name" formControlName="name" name="name" class="form-control" placeholder="GitHub, LinkedIn, Youtube, Twitter ..."
+        [ngStyle]="{'width':'100%'}" [ngClass]="{'error is-invalid': (Name.invalid && Name.touched),'is-valid':Name.valid}">
+
+    </div>
+
+    <div class="row error-container text-justify-left mx-3">
+      <ng-container *ngIf="(Name.invalid && Name.touched); else isOk">
+        <div class="mensajeError mx-1" *ngIf="form.hasError('required', 'name')"> Dato requerido </div>
+        <div class="mensajeError mx-1" *ngIf="form.hasError('minlength', 'name')"> Mínimo {{
+          Name.errors.minlength.requiredLength }} caracteres</div>
+        <div class="mensajeError mx-1" *ngIf="form.hasError('maxlength', 'name')"> Máximo {{
+          Name.errors.maxlength.requiredLength }} caracteres</div>
+      </ng-container>
+      <ng-template #isOk>
+      </ng-template>
+    </div>
+  </div> <!-- FIN NOMBRE -->
+
+    <!-- URL -->
+    <div class="row" style="width:100% ">
+      <div class="col-12">
+        <label class="form-label" for="url">Url:</label>
+        <input type="text" id="url" formControlName="url" name="url" class="form-control" placeholder="www. ...."
+          [ngStyle]="{'width':'100%'}" [ngClass]="{'error is-invalid': (Url.invalid && Url.touched),'is-valid':Url.valid}">
+  
+      </div>
+  
+      <div class="row error-container text-justify-left mx-3">
+        <ng-container *ngIf="(Url.invalid && Url.touched); else isOk">
+          <div class="mensajeError mx-1" *ngIf="form.hasError('required', 'url')"> Dato requerido </div>
+          <div class="mensajeError mx-1" *ngIf="form.hasError('minlength', 'url')"> Mínimo {{
+            Url.errors.minlength.requiredLength }} caracteres</div>
+          <div class="mensajeError mx-1" *ngIf="form.hasError('maxlength', 'url')"> Máximo {{
+            Url.errors.maxlength.requiredLength }} caracteres</div>
+        </ng-container>
+        <ng-template #isOk>
+        </ng-template>
+      </div>
+    </div> <!-- FIN url -->
+  
+
+    
+  <!-- ICON -->
+  <div class="row" style="width:100% ">
+    <div class="col-12">
+      <label class="form-label" for="pathIcon">Icono:</label>
+      <input type="text" id="url" formControlName="pathIcon" name="pathIcon" class="form-control" placeholder="fortawesome brands: faGithub, faLinkedinIn, faGoogle, fa-youtube...."
+        [ngStyle]="{'width':'100%'}" [ngClass]="{'error is-invalid': (PathIcon.invalid && PathIcon.touched),'is-valid':PathIcon.valid}">
+
+    </div>
+
+    <div class="row error-container text-justify-left mx-3">
+      <ng-container *ngIf="(PathIcon.invalid && PathIcon.touched); else isOk">
+        <div class="mensajeError mx-1" *ngIf="form.hasError('required', 'pathIcon')"> Dato requerido </div>
+        <div class="mensajeError mx-1" *ngIf="form.hasError('minlength', 'pathIcon')"> Mínimo {{
+          PathIcon.errors.minlength.requiredLength }} caracteres</div>
+        <div class="mensajeError mx-1" *ngIf="form.hasError('maxlength', 'pathIcon')"> Máximo {{
+          PathIcon.errors.maxlength.requiredLength }} caracteres</div>
+      </ng-container>
+      <ng-template #isOk>
+      </ng-template>
+    </div>
+  </div> <!-- FIN ICON -->
+
+
+
+  <!-- SUBMIT O CANCELAR Y CERRAR -->
+  <div class="form-row m-4" style="width:100% ">
+    <div class="form-group col d-flex align-items-center m-auto justify-content-around">
+      <button type="submit" class="btn btn-success btn-sm p-2 m-2" [disabled]="!form.valid">
+        Guardar
+      </button>
+    </div>
+    <div class="form-group col d-flex align-items-center m-auto justify-content-around">
+      <button class="btn btn-danger btn-sm p-2 m-2" (click)="onCancel($event); myForm.resetForm()">
+        Cancelar
+      </button>
+    </div>
+  </div> <!-- FIN SUBMIT CANCEL -->
+
+
+
+
+</form>

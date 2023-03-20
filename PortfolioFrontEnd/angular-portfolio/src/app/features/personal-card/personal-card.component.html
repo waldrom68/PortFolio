@@ -3,6 +3,7 @@
     <!-- background-image: url(img_flwr.gif), url(paper.gif); -->
     <!-- {{ 'url(' + baseData.pathBgImage + '), linear-gradient(to right, rgba(30, 75, 115, 1), rgba(255, 255, 255, 0)'}} -->
 
+    <!-- [style.background]="'url(' + baseData.pathBgImage + '), linear-gradient(to right, rgba(30, 75, 115, 1), rgba(255, 255, 255, 0)' " -->
     <div class="container p-0 m-0 responsive"
         [style.background]="'url(' + baseData.pathBgImage + '), linear-gradient(to right, rgba(30, 75, 115, 1), rgba(255, 255, 255, 0)' "
         [style.width.%]="100" [style.background-size]="'cover'">
@@ -82,5 +83,10 @@
             <!-- FIN PIE DE CARD -->
         </div>
     </div>
+
+    <button class="btn btn-outline-success btn-sm mx-auto my-2 text-light" (click)="openSocialModal();"
+        ngClass="faConfirm fa-ico" [ngStyle]="{'width':'fit-content'}">
+        <fa-icon [icon]="faPen" ngClass="p-2"></fa-icon> Redes sociales
+    </button>
 
 </ng-container>

@@ -11,6 +11,7 @@ import { PersonalFormComponent } from '../personal-form/personal-form.component'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UploadMediaService } from 'src/app/service/upload-media.service';
 import { FormService } from 'src/app/service/ui.service';
+import { SocialNetworkComponent } from '../social-network/social-network.component';
 
 @Component({
   selector: 'app-personal-card',
@@ -30,8 +31,8 @@ export class PersonalCardComponent implements OnInit, OnDestroy {
   faLocationDot = faLocationDot;
 
   // codigo probando el modal
-  dataFromDialog: any;
-  form: FormGroup;
+  // dataFromDialog: any;
+  // form: FormGroup;
 
   formImg: FormGroup;
   // changeImg: boolean;
@@ -263,5 +264,48 @@ export class PersonalCardComponent implements OnInit, OnDestroy {
     });  // cierro el afterclosed()
   }  // fin openPersonModal()
 
+
+
+
+  openSocialModal(): void {
+    const dialogConfig = new MatDialogConfig();
+    // The user can't close the dialog by clicking outside its body
+    dialogConfig.disableClose = true;
+    dialogConfig.restoreFocus = true;
+    dialogConfig.id = "modal-component";
+
+    dialogConfig.height = "90%";
+    dialogConfig.width = "95%";
+
+    dialogConfig.data = { message: "Redes sociales", }
+
+    const dialogRef = this.matDialog.open(SocialNetworkComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe((data) => {
+
+      if (data.clicked === 'update') {
+
+        // Obtengo nuevo objeto para actualizar en la base de datos
+        // const person = this.gralDataToPerson(data.newData);
+
+        console.log("Esto devuelve la transformada", this.baseData);
+        // Actualizo los datos via dataService
+        this.dataService.upDateEntity(data.newData, "/socialnetwork").subscribe({
+          next: (v) => {
+            console.log("Guardado correctamente: ", v);
+            // Actualizo la variable observada por el resto de los componentes
+            // this.dataService.changeGralData(data.newData);
+            this.baseDataService.setCurrentBaseData(data.newData);
+          },
+          error: (e) => {
+            alert("Response Error (" + e.status + ") en el metodo addItem()" + "\n" + e.message);
+            console.log("Se quizo modificar sin exito a: " + this.baseData.name);
+          },
+          complete: () => console.log("Completado la actualizacion de Redes Sociales")
+        });
+
+      }  // cierro la condicion si action es update
+    });  // cierro el afterclosed()
+  }  // fin openPersonModal()
 
 }

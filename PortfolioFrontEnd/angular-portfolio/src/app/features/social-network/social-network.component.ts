@@ -1,32 +1,32 @@
-import { Component, OnInit, Inject, OnDestroy, } from '@angular/core';
-import { BaseDataService, DataService } from 'src/app/service/data.service';
-import { AdminService } from 'src/app/service/auth.service';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+
+import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { faPlusCircle, faTimes } from '@fortawesome/free-solid-svg-icons';
-
-import { Organization, FullPersonDTO } from '../../models'
-
-import { MatDialog, MatDialogConfig, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { MessageBoxComponent } from '../../shared/message-box/message-box.component';
 import { Subscription } from 'rxjs';
+import { AdminService } from 'src/app/service/auth.service';
+import { BaseDataService, DataService } from 'src/app/service/data.service';
+import { FormService } from 'src/app/service/ui.service';
+import { MessageBoxComponent } from 'src/app/shared/message-box/message-box.component';
+
+import { FullPersonDTO, SocialNetwork } from '../../models'
+
 
 @Component({
-  selector: 'app-organization',
-  templateUrl: './organization.component.html',
-  styleUrls: ['./organization.component.css']
+  selector: 'app-social-network',
+  templateUrl: './social-network.component.html',
+  styleUrls: ['./social-network.component.css']
 })
-
-export class OrganizationComponent implements OnInit, OnDestroy {
+export class SocialNetworkComponent implements OnInit, OnDestroy {
   showForm: boolean = false;  // flag para mostrar o no el formulario
   showBtnAction: boolean = true;  // flag para mostrar o no los btn's de acciones del usuario
 
   faPlusCircle = faPlusCircle;
   faTimes = faTimes;
 
-
-  private itemParaBorrar: any;
-
+  private itemParaBorrar: any;  // objeto que se está por borrar, sirve para reestablecer si cancela borrado
 
   message: string;
+
 
   // Validacion Admin STATUS
   esAdmin: boolean;
@@ -37,105 +37,104 @@ export class OrganizationComponent implements OnInit, OnDestroy {
 
   constructor(
     private dataService: DataService,
-    public matDialog: MatDialog,
-
-    private adminService: AdminService,
     private baseDataService: BaseDataService,
 
+    private matDialog: MatDialog,
+
+    private adminService: AdminService,
+
     @Inject(MAT_DIALOG_DATA) public data: { message: string, },
-    public dialogRef: MatDialogRef<OrganizationComponent>, //OrganizationModal
+    public dialogRef: MatDialogRef<SocialNetworkComponent>, //OrganizationModal
 
-  ) {  }
 
-  ngOnInit(): void {
+  ) { }
 
+  ngOnInit() {
     this.BaseDataServiceSubscription = this.baseDataService.currentBaseData.subscribe(
       currentData => {
         this.baseData = currentData;
-        // this.myData = currentData.organization;
       }
     );
+
     this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
       currentAdmin => {
         this.esAdmin = currentAdmin;
       }
     );
-    // this.resetForm();
+
+
   }
 
-  ngOnDestroy() {
+
+  ngOnDestroy(): void {
     this.AdminServiceSubscription?.unsubscribe();
     this.BaseDataServiceSubscription?.unsubscribe();
+
   }
 
-  // resetForm() {
-  //   this.formData = new Organization();
-  // }
 
   toggleForm() {
     // Cierra el formulario de edicion o creacion
     this.showForm = !this.showForm;
-    this.showBtnAction = !this.showBtnAction;
+    this.showBtnAction = !this.showBtnAction
+
 
   }
 
-  cancelation(organization: Organization) {
+  cancelation(socialnetwork: SocialNetwork) {
     this.toggleForm();
-
   }
 
-  addItem(organization: Organization) {
-    this.dataService.addEntity(organization, "/organization").subscribe({
+  addItem(SocialNetwork: SocialNetwork) {
+    this.dataService.addEntity(SocialNetwork, "/socialnetwork").subscribe({
       next: (v) => {
-        console.log("Guardado correctamente: ", v);
-        organization.id = v.id;
-        organization.person = this.baseData.id;
-        this.baseData.organization.push(organization);
+        console.log("Agregado correctamente: ", v);
+        SocialNetwork.id = v.id;
+        SocialNetwork.person = this.baseData.id;
+        this.baseData.socialnetwork.push(SocialNetwork);
         this.baseDataService.setCurrentBaseData(this.baseData);
       },
       error: (e) => {
         alert("Response Error (" + e.status + ") en el metodo addItem()" + "\n" + e.message);
-        console.log("Se quizo agregar sin exito a: " + organization.name);
+        console.log("Se quizo agregar sin exito a: " + SocialNetwork.name);
       },
-      complete: () => console.log("Completado el alta de la Organizacion")
+      complete: () => console.log("Completado el alta de la Red social")
     }
     );
-    this.toggleForm();
     // this.resetForm();
-
+    this.toggleForm();
   }
 
-  openModalDelete(organization: Organization) {
+
+  openModalDelete(SocialNetwork: SocialNetwork) {
     // Llamo al modal, si se confirma el borrado.
     // almaceno el item en cuestion en itemParaBorrar
-    this.itemParaBorrar = organization;
-    this.openDeleteModal(organization)
+    this.itemParaBorrar = SocialNetwork;
+    this.openDeleteModal(SocialNetwork);
   }
 
 
   delItem() {
     if (this.itemParaBorrar) {
-      this.dataService.delEntity(this.itemParaBorrar, "/organization").subscribe({
+      this.dataService.delEntity(this.itemParaBorrar, "/socialnetwork").subscribe({
         next: (v) => {
           console.log("Se ha eliminado exitosamente a: ", this.itemParaBorrar);
-          this.baseData.organization = this.baseData.organization.filter((t) => { return t !== this.itemParaBorrar })
+          this.baseData.socialnetwork = this.baseData.socialnetwork.filter((t) => { return t !== this.itemParaBorrar })
           // Actualizo la informacion en el origen
-          // this.baseData.organization = this.myData;
           this.itemParaBorrar = null;
           this.baseDataService.setCurrentBaseData(this.baseData);
+
         },
         error: (e) => {
           alert("Response Error (" + e.status + ")" + "\n" + e.message);
           console.log("Se quizo eliminar sin exito a: ", this.itemParaBorrar);
         },
-        complete: () => { console.log("Completada la eliminacion de la Organization"); }
-
-      });
+        complete: () => console.log("Completada la actualizacion de las redes sociales")
+      }
+      );
     }
+
   }
-
-
-
 
 
   openDeleteModal(data: any) {
@@ -150,8 +149,8 @@ export class OrganizationComponent implements OnInit, OnDestroy {
     dialogConfig.data = {
       // atributos generales del message-box
       name: "eliminar",
-      title: `Hola, está por eliminar una de las organizaciones`,
-      description: `¿Estás seguro de eliminar a "${data.name}" ?`,
+      title: `Hola, está por eliminar uno de las Redes sociales`,
+      description: `¿Estás seguro de eliminar "${data.name}" ?`,
       // por defecto mostrararía Aceptar
       actionButtonText: "Eliminar",
       // por defecto mostraría Cancelar
@@ -174,5 +173,8 @@ export class OrganizationComponent implements OnInit, OnDestroy {
 
     )
   }
+
+
+
 
 }

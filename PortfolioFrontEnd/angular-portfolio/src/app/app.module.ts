@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HttpClientModule} from '@angular/common/http'
 import { RouterModule, Routes } from '@angular/router';
 
@@ -33,12 +33,14 @@ import { MatDatepickerComponent } from './shared/mat-datepicker/mat-datepicker.c
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideStorage,getStorage } from '@angular/fire/storage';
-import { DatosTrayectoriaComponent } from './features/datos-trayectoria/datos-trayectoria.component';
+// import { DatosTrayectoriaComponent } from './features/datos-trayectoria/datos-trayectoria.component';
 import { ObjetiveComponent } from './features/objetive/objetive.component';
 
 import { RefreshDirective } from './directive/refresh.directive';
 
 
+// import { library } from '@fortawesome/fontawesome-svg-core';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
 
 
 const appRouters: Routes = [
@@ -87,4 +89,12 @@ const appRouters: Routes = [
   bootstrap: [AppComponent],
   entryComponents: [MessageBoxComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor() { }
+
+
+// export class AppModule {
+//   constructor(library: FaIconLibrary) {
+//     library.addIcons(faStar);
+//   }
+}
