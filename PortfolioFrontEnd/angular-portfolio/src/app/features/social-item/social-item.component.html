@@ -4,23 +4,27 @@
       <div [ngClass]="color" (mouseover)="changeStyle($event)" (mouseout)="changeStyle($event)"
       >
           <ul class="head border rounded fade-in-ul mb-0 mt-2">
-              <div>
-                  <h6>{{item.name}}
-                      <ng-container *ngIf="item.url.length">
-                          <a class="px-3 url" href="https://{{item.url}}" target="_blank"
-                          >- visitar sitio web -</a>
-                      </ng-container>
-                      <!-- *ngIf="showBtnAction" -->
-                  </h6>
-                  
-                  <!-- PENDIENTE, vincular el faIcon del atributo -->
-                  <!-- <fa-icon [icon]="['fas', 'times']"></fa-icon> -->
-                  <!--  viable? https://stackblitz.com/edit/angular-ivy-ewuvqk?file=src%2Fapp%2Fapp.module.ts,src%2Fapp%2Fapp.component.html,src%2Fapp%2Fapp.component.ts -->
-                  
-                  <fa-icon>
-                     [icon]= {{item.pathIcon.toString()}}
-                  </fa-icon>
-              </div>
+            <li class="d-flex justify-content-right align-middle mr-4">
+                <!-- <li class="form-row"> -->
+                <!-- RESUELTO, vincular el faIcon del atributo -->
+                <!-- https://github.com/FortAwesome/angular-fontawesome/blob/HEAD/docs/usage/icon-library.md#using-the-icon-library -->
+                <!-- https://stackoverflow.com/questions/74385842/typescript-get-iconname-from-string -->
+                <fa-icon *ngIf="iconExists(iconPrefix, item.pathIcon); else sinIcon"
+                    [icon]="[iconPrefix , item.pathIcon]"></fa-icon>
+                
+                    <ng-template #sinIcon>
+                        <fa-icon class="text-danger" [icon]="faTimes"></fa-icon>
+                    </ng-template>
+                <!-- {{iconExists(iconPrefix, item.pathIcon)}} -->
+                <!-- PENDIENTE, la validacion en el FORM..... -->
+                <h6 class="ml-2">{{item.name}}
+                <ng-container *ngIf="item.url.length">
+                <a class="px-3 url" href="https://{{item.url}}" target="_blank"
+                >- visitar sitio web -</a>
+                </ng-container>
+
+                </h6>
+            </li> 
           </ul>
       </div>
   </div>

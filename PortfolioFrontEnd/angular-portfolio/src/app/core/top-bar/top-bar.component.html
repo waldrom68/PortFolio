@@ -75,12 +75,24 @@
         </div>
         <div class="col-sm-8 d-flex justify-content-around align-middle">
 
-          <div class="col-sm3 fa-container">
-            <fa-icon class="fa-1x" [icon]="faLinkedinIn"></fa-icon>
-            <span class="text-muted fa-container ml-2">LinkedIn</span>
+
+          <div *ngFor="let elemento of baseData.socialnetwork" 
+            class="col-sm3 fa-container">
+
+            <fa-icon *ngIf="iconExists(iconPrefix, elemento.pathIcon);"
+            [icon]="[iconPrefix , elemento.pathIcon]"></fa-icon>
+
+            <span class="fa-container ml-2">{{elemento.name}}</span>
+
           </div>
 
-          <div class="col-sm3 fa-container">
+
+          <!-- <div class="col-sm3 fa-container">
+            <fa-icon class="fa-1x" [icon]="faLinkedinIn"></fa-icon>
+            <span class="text-muted fa-container ml-2">LinkedIn</span>
+          </div> -->
+
+          <!-- <div class="col-sm3 fa-container">
             <fa-icon class="fa-1x" [icon]="faGithub"></fa-icon>
             <span class="text-muted fa-container ml-2">GitHub</span>
           </div>
@@ -88,7 +100,7 @@
           <div class="col-sm3 fa-container">
             <fa-icon class="fa-1x" [icon]="faGoogle"></fa-icon>
             <span class="text-muted fa-container ml-2">Gmail</span>
-          </div>
+          </div> -->
 
         </div>
       </div>

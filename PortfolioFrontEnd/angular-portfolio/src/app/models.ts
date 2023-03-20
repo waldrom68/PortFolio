@@ -1,6 +1,8 @@
 // ### PENDIENTE VERIFICAR EL USO DE
 // ESTAS INTERFACES ANTES DE ELIMINAR
 
+import { IconName } from "@fortawesome/fontawesome-svg-core";
+
 export interface User {
     id: number,
     username: string,
@@ -282,18 +284,18 @@ export class RolePosition extends Base {
 export class SocialNetwork extends Base {
     id: number;
     name: string;
-    pathIcon: string;
+    pathIcon: IconName;
     url: string;
     orderdeploy: number;
     person: number;
 
     constructor() {
-        super(),
-            this.id = 0,
-            this.name = "",
-            this.pathIcon = "",
-            this.orderdeploy = 0,
-            this.person = 0
+        super()
+            // this.id = 0,
+            // this.name = "",
+            // this.pathIcon = 'pen',
+            // this.orderdeploy = 0,
+            // this.person = 0
     }
 }
 export class SoftSkill extends Base {

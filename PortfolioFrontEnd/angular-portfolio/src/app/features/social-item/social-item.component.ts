@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, OnDestroy, Input, Output } from '@angular/core';
 import { FullPersonDTO, SocialNetwork } from 'src/app/models';
-import { faTrash, faPen, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faPen, faTimes, fas } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { BaseDataService, DataService } from 'src/app/service/data.service';
 import { AdminService } from 'src/app/service/auth.service';
@@ -11,12 +11,17 @@ import { FormService } from 'src/app/service/ui.service';
 //   IconName,
 // } from '@fortawesome/fontawesome-svg-core';
 
+import { IconPrefix, IconName, library } from '@fortawesome/fontawesome-svg-core';
+import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
+import { far } from '@fortawesome/free-regular-svg-icons';
+import { fab } from '@fortawesome/free-brands-svg-icons';
 @Component({
   selector: 'app-social-item',
   templateUrl: './social-item.component.html',
   styleUrls: ['./social-item.component.css']
 })
 export class SocialItemComponent implements OnInit, OnDestroy {
+
   @Input() item: SocialNetwork;
 
   @Input() formData: SocialNetwork;
@@ -43,39 +48,19 @@ export class SocialItemComponent implements OnInit, OnDestroy {
   baseData: FullPersonDTO;
   private BaseDataServiceSubscription: Subscription | undefined;
 
-  // navbarData: {
-  //   routeLink: string;
-  //   iconfirst: IconPrefix;
-  //   iconsecond: IconName;
-  //   iconfull: IconProp;
-  //   label: string;
-  // }[] = [
-  //   {
-  //     routeLink: 'dashboard',
-  //     iconfirst: 'fas',
-  //     iconsecond: 'star',
-  //     iconfull: ['fas', 'star'],
-  //     label: 'Dashboard',
-  //   },
-  //   {
-  //     routeLink: 'dashboard',
-  //     iconfirst: 'fas',
-  //     iconsecond: 'times',
-  //     iconfull: ['fas', 'times'],
-  //     label: 'Dashboard',
-  //   },
-  // ];
-
-  // expanded = false;
-
+  // Prefix de los iconos de @fontawesome
+  iconPrefix: IconPrefix = 'fab'
 
 
   constructor(
+    private library: FaIconLibrary,
     private dataService: DataService,
     private adminService: AdminService,
     private baseDataService: BaseDataService,
 
-  ) { }
+  ) {
+    library.addIconPacks(fab);
+  }
 
 
 
@@ -95,11 +80,19 @@ export class SocialItemComponent implements OnInit, OnDestroy {
     );
     // Clono el objeto, uso assign por no tener atributos compuesto por otros objetos
     this.oldData = Object.assign({}, this.item)
+
+
+
   }
 
   ngOnDestroy() {
     this.AdminServiceSubscription?.unsubscribe();
     this.BaseDataServiceSubscription?.unsubscribe();
+  }
+
+
+  iconExists(prefix: IconPrefix, name: IconName): boolean {
+    return this.library.getIconDefinition(prefix, name) != null;
   }
 
   color: string = 'red';
