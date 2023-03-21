@@ -37,12 +37,6 @@ export class IniciarSesionComponent implements OnInit, OnDestroy {
 
     private formBuilder: FormBuilder,
   ) {
-    ///Creamos el grupo de controles para el formulario de login
-    this.form = this.formBuilder.group({
-      nombreUsuario: ["", [Validators.required, Validators.minLength(3)]],
-      password: ["", [Validators.required, Validators.minLength(3)]],
-    })
-
 
   }
 
@@ -53,6 +47,12 @@ export class IniciarSesionComponent implements OnInit, OnDestroy {
         this.esAdmin = currentAdmin;
       }
     );
+    
+    ///Creamos el grupo de controles para el formulario de login
+    this.form = this.formBuilder.group({
+      nombreUsuario: ["", [Validators.required, Validators.minLength(3)]],
+      password: ["", [Validators.required, Validators.minLength(3)]],
+    })
   }
 
   ngOnDestroy() {
@@ -78,7 +78,7 @@ export class IniciarSesionComponent implements OnInit, OnDestroy {
           'color: #8ebf42; background: # 666; font - size: 20 px;'
         );  // salida consola tipo ANSI
 
-
+          // alert("detengo aqui!")
           console.log('Logueado correctamente como ADMIN!');
           this.adminService.setCurrentAdmin(true);
 

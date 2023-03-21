@@ -1,5 +1,5 @@
 <!-- componente, mobile menu -->
-<section id="menu" class="pos-f-t">
+<section *ngIf="baseData" id="menu" class="pos-f-t">
 
   <nav class="navbar justify-content-left"
     [ngClass]="{'navbar-primary custom': (esAdmin), 'navbar-dark bg-dark':!esAdmin}">
@@ -19,7 +19,7 @@
         <button class="btn btn-outline-secondary mr-4" type="button" data-toggle="collapse"
           data-target="#navbarToggleExternalContact" aria-controls="navbarToggleExternalContact" aria-expanded="false"
           aria-label="Toggle navigation">
-          <fa-icon [icon]="faAt"> </fa-icon><span ngClass="ml-2">Contacto</span>
+          <span>Contacto</span>
 
         </button>
 
@@ -69,14 +69,17 @@
     <div class="navbar-toggler bg-dark collapse" id="navbarToggleExternalContact">
 
       <div class="d-flex justify-content-center align-items-center mr-2">
-        <div class="col-sm-4">
-          <h4 class="text-white text-center">Medios de contactos</h4>
+        <div class="col-sm-6 d-flex justify-content-right align-middle">
 
+          <fa-icon class="text-warning fa-2x" [icon]="faAt"> </fa-icon>
+          <fa-icon class="text-warning fa-2x" [icon]="faArrowRight"> </fa-icon>
+          <h4 class="text-white text-center ml-2">{{baseData.email}}</h4>
+          
         </div>
-        <div class="col-sm-8 d-flex justify-content-around align-middle">
+        <div class="col-sm-6 d-flex justify-content-around align-middle">
 
 
-          <div *ngFor="let elemento of baseData.socialnetwork" 
+          <!-- <div *ngFor="let elemento of baseData.socialnetwork" 
             class="col-sm3 fa-container">
 
             <fa-icon *ngIf="iconExists(iconPrefix, elemento.pathIcon);"
@@ -84,7 +87,7 @@
 
             <span class="fa-container ml-2">{{elemento.name}}</span>
 
-          </div>
+          </div> -->
 
 
           <!-- <div class="col-sm3 fa-container">

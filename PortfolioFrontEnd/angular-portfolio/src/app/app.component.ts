@@ -113,7 +113,6 @@ export class AppComponent implements OnInit {
     this.dataService.getPortFolioData().subscribe({
       next: (gralData) => {
         console.log(gralData);
-        
         this.baseDataService.setCurrentBaseData(gralData);
         this.wait = false;
 

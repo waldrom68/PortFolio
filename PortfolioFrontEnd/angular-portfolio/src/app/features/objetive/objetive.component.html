@@ -1,105 +1,91 @@
-
+ver BTN {{showBtnAction}}
+ver FORM {{showForm}}
+ver LENGTH {{baseData.objetive.length}}
 <div *ngIf="baseData">
     <ng-container *ngIf="baseData.objetive.length; else agregarObjetive">
-        <div class="table-dark text-left container py-2" >
 
-            <ng-container *ngIf="!showForm; else mostrarForm">
+        <!-- MOSTRANDO EL OBJETIVO -->
+        <div class="table-dark text-left container py-2">
+
+            <ng-container *ngIf="!showForm">
                 <p *ngFor="let item of baseData.objetive.split('\n')">
                     {{item}}
                 </p>
 
             </ng-container>
+
+            <!-- BOTONES DE EDITAR, BORRAR -->
+            <div class="col-4 icon-group" *ngIf="esAdmin && showBtnAction">
+                <button class="btn btn-outline-success btn-sm" (click)="toggleForm();" ngClass="faConfirm fa-ico">
+                    <fa-icon [icon]="faPen">
+                    </fa-icon>
+                </button>
+                <button class="btn btn-outline-danger btn-sm" (click)="onDelete(baseData)" ngClass="faCancel">
+                    <fa-icon [icon]="faTrash">
+                    </fa-icon>
+                </button>
+            </div> <!--FIN BOTONES EDITAR, BORRAR -->
         </div>
-        
+
     </ng-container>
 
-    <div class="col-4 icon-group"
-        *ngIf="esAdmin && showBtnAction && baseData.objetive.length != 0"
-    >
-        <button class="btn btn-outline-success btn-sm"
-        (click)="toggleForm();"
-            ngClass="faConfirm fa-ico">
-            <fa-icon 
-                [icon]="faPen"
-                
-            >
-        </fa-icon>
-    </button>
-    <button class="btn btn-outline-danger btn-sm"
-            (click)="onDelete(baseData)"
-            ngClass="faCancel"
-            >
-            <fa-icon 
-            [icon]="faTrash"
-            >
-        </fa-icon>
-    </button>
-</div>
+    <div *ngIf="showForm && esAdmin">
 
-</div>
+        <form class="form-row p-1 d-flex justify-content-around" [formGroup]="form" #myForm="ngForm"
+            (ngSubmit)="onEnviar($event);">
 
-<ng-template #mostrarForm >
-    <form class="form-inline my-2 py-2"
-        [formGroup]="form"
+            <div class="row" style="width:100% ">
+                <div class="col-12">
+                    <textarea rows="12" class="form-control" name="objetive" [ngStyle]="{'width':'100%'}"
+                        formControlName="objetive" placeholder="Ingrese su objetivo, y sea claro..."
+                        [ngClass]="{'error is-invalid': (Objetive.invalid && Objetive.touched),'is-valid':Objetive.valid}"> </textarea>
+                </div>
 
-        #myForm="ngForm"
-        (ngSubmit)="onEnviar($event);"
-    >
+                <div class="row error-container text-justify-left mx-3">
+                    <ng-container *ngIf="(Objetive.invalid && Objetive.touched); else isOk">
+                        <div class="mensajeError mx-1" *ngIf="form.hasError('required', 'objetive')"> Dato requerido
+                        </div>
+                        <div class="mensajeError mx-1" *ngIf="form.hasError('minlength', 'objetive')"> Mínimo {{
+                            Objetive.errors.minlength.requiredLength }} caracteres</div>
+                        <div class="mensajeError mx-1" *ngIf="form.hasError('maxlength', 'objetive')"> Máximo {{
+                            Objetive.errors.maxlength.requiredLength }} caracteres</div>
+                    </ng-container>
+                    <ng-template #isOk>
+                    </ng-template>
+                </div>
+            </div>
 
-        <textarea rows="12" 
-            class="input-data"
-            name="objetive" 
-            [ngModel]="baseData.objetive"
-            
-            [ngStyle]="{'width':'100%'}"
-            formControlName="objetive"
-            [ngClass] = "{error: (Objetive.invalid && Objetive.touched)}"
-        > </textarea>
+            <!-- SUBMIT O CANCELAR Y CERRAR -->
+            <div class="form-row m-4" style="width:100% ">
+                <div class="form-group col d-flex align-items-center m-auto justify-content-around">
+                    <button type="submit" class="btn btn-success btn-sm p-2 m-2" [disabled]="!form.valid">
+                        Guardar
+                    </button>
+                </div>
+                <div class="form-group col d-flex align-items-center m-auto justify-content-around">
+                    <button class="btn btn-danger btn-sm p-2 m-2" (click)="onCancel(); myForm.resetForm()">
+                        Cancelar
+                    </button>
+                </div>
+            </div> <!-- FIN SUBMIT CANCEL -->
 
-        <div class="icon-group my-2">
+        </form>
 
-            <button type="submit" class="btn btn-outline-success btn-sm"
-            ngClass="faConfirm fa-ico"
-            [disabled]="!form.valid"
-            >
-            <fa-icon  [icon]="faCheck"> </fa-icon>
-            </button>
-
-            <button class="btn btn-outline-danger btn-sm"
-            (click)="onCancel();"
-            ngClass="faCancel fa-ico"
-            >
-            <fa-icon [icon]="faTimes"> </fa-icon>
-            </button>
-
-        </div>
-
-    </form>
-    <small class="mensajeError"
-      *ngIf="form.hasError('minlength', 'objetive')"> Mínimo {{ Objetive.errors.minlength.requiredLength }} caracteres
-    </small>
-
- 
-</ng-template>
-
-
-<ng-template #agregarObjetive>
-    <div class="table-dark text-left container"  >
-        <p> Sin registrar el objetivo.
-        </p>
     </div>
-    <br>
-    <ng-container *ngIf="esAdmin">
-        <button class="btn btn-default btn-sm" 
-            ngClass="faControl fa-ico"
-            (click)="onAgregarObjetive()"
-            >
-            <fa-icon
-            ngClass="fa-3x text-primary"
-                [icon]="faPlusCircle"
-                
-                >
-            </fa-icon>
-        </button>
-    </ng-container>
-</ng-template>
+
+
+    <ng-template #agregarObjetive>
+        <div class="table-dark text-left container">
+            <p> Sin registrar el objetivo.
+            </p>
+        </div>
+        <br>
+        <ng-container *ngIf="esAdmin && showBtnAction">
+            <button class="btn btn-default btn-sm" ngClass="faControl fa-ico" (click)="toggleForm()">
+                <fa-icon ngClass="fa-3x text-primary" [icon]="faPlusCircle">
+                </fa-icon>
+            </button>
+        </ng-container>
+    </ng-template>
+
+</div>

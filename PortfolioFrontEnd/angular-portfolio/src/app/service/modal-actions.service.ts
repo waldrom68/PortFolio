@@ -65,42 +65,42 @@ export class ModalActionsService {
       //   this.deleteProject(modalData);
       //   break;
 
-      case "delOrganization":
-        this.deleteOrganization(modalData);
-        break;
+    //   case "delOrganization":
+    //     this.deleteOrganization(modalData);
+    //     break;
 
-      case "delLaboralCareer":
-        this.deleteCareer(modalData);
-        break;
+    //   case "delLaboralCareer":
+    //     this.deleteCareer(modalData);
+    //     break;
 
-      case "delRolePosition":
-        this.deleteRole(modalData);
-        break;
+    //   case "delRolePosition":
+    //     this.deleteRole(modalData);
+    //     break;
 
-      case "delDegree":
-        this.deleteDegree(modalData);
-        break;
+    //   case "delDegree":
+    //     this.deleteDegree(modalData);
+    //     break;
 
-      case "delStudie":
-        this.deleteStudie(modalData);
-        break;
+    //   case "delStudie":
+    //     this.deleteStudie(modalData);
+    //     break;
       
-      // Modifica atributos de Person entity
-      case "delProfile":
-        modalData.data.profile = ""
-        this.updateData(modalData)
-        break;
+    //   // Modifica atributos de Person entity
+    //   case "delProfile":
+    //     modalData.data.profile = ""
+    //     this.updateData(modalData)
+    //     break;
         
-      case "delObjetive":
-        modalData.data.objetive = ""
-        this.updateData(modalData)
-        break;
+    //   case "delObjetive":
+    //     modalData.data.objetive = ""
+    //     this.updateData(modalData)
+    //     break;
         
 
-      default:
-        console.log("ALERTA: en modalAction, No se ha encontrado modalData.name")
-        break;
-    }
+    //   default:
+    //     console.log("ALERTA: en modalAction, No se ha encontrado modalData.name")
+    //     break;
+    // }
 
   }
 
@@ -136,25 +136,26 @@ export class ModalActionsService {
   //   console.log(modalData.data)
   //   this.dataservice.delProject(modalData.data).subscribe()
   // }
-  private deleteOrganization(modalData: any) {
-    console.log(modalData.data)
-    this.dataservice.delOrganization(modalData.data).subscribe()
-  }
-  private deleteCareer(modalData: any) {
-    console.log(modalData.data)
-    this.dataservice.delLaboralCareer(modalData.data).subscribe()
-  }
-  private deleteRole(modalData: any) {
-    console.log(modalData.data)
-    this.dataservice.delRolePosition(modalData.data).subscribe()
-  }
-  private deleteDegree(modalData: any) {
-    console.log(modalData.data)
-    this.dataservice.delDegree(modalData.data).subscribe()
-  }
-  private deleteStudie(modalData: any) {
-    console.log(modalData.data)
-    this.dataservice.delStudie(modalData.data).subscribe()
+  // private deleteOrganization(modalData: any) {
+  //   console.log(modalData.data)
+  //   this.dataservice.delOrganization(modalData.data).subscribe()
+  // }
+  // private deleteCareer(modalData: any) {
+  //   console.log(modalData.data)
+  //   this.dataservice.delLaboralCareer(modalData.data).subscribe()
+  // }
+  // private deleteRole(modalData: any) {
+  //   console.log(modalData.data)
+  //   this.dataservice.delRolePosition(modalData.data).subscribe()
+  // }
+  // private deleteDegree(modalData: any) {
+  //   console.log(modalData.data)
+  //   this.dataservice.delDegree(modalData.data).subscribe()
+  // }
+  // private deleteStudie(modalData: any) {
+  //   console.log(modalData.data)
+  //   this.dataservice.delStudie(modalData.data).subscribe()
+  
   }
 
   
