@@ -1,32 +1,36 @@
 <!-- HTML principal -->
 <!-- <router-outlet></router-outlet> -->
-<ng-container *ngIf="baseData.displaydata">
+
+<ng-container *ngIf="baseData.displaydata; else wait">
 
   <!-- https://danielk.tech/home/angular-how-to-add-a-loading-spinner -->
   <!-- <mat-spinner *ngIf="true"></mat-spinner> -->
 
   <app-top-bar></app-top-bar>
-    <!-- PENDIENTE, ERA UN INICIO DE LA PRUEBA PARA MOSTRAR PROGRESS BAR -->
-    <!-- <h5 class="text-right p-2">{{progreesValueabc}}</h5> -->
-    <!-- FIN  PRUEBA PARA MOSTRAR PROGRESS BAR -->
-    <div class="row d-flex justify-content-end align-items-center mx-1">
-      
-      <div  class="border border-primary p-1"
-        style="width: fit-content;" >
-        <span class="text-right p-2" 
-          style="font-family:roboto; border-radius: 8px;"
-          ><b>{{currentTime | date:"HH:mm:ss"}}</b>
-        </span>
-      </div>
+  <!-- PENDIENTE, ERA UN INICIO DE LA PRUEBA PARA MOSTRAR PROGRESS BAR -->
+  <!-- <h5 class="text-right p-2">{{progreesValueabc}}</h5> -->
+  <!-- FIN  PRUEBA PARA MOSTRAR PROGRESS BAR -->
 
+  <div class="row d-flex justify-content-end align-items-center mx-1 mt-3">
+    <div class="border border-primary p-1" style="width: fit-content;">
+      <span class="text-right text-light p-2" style="font-family:roboto; border-radius: 8px;">
+        <b>{{currentTime | date:"HH:mm:ss"}}</b>
+      </span>
     </div>
+  </div>
 
-    <app-main *ngIf="baseData.displaydata.theme == 'Flip' "></app-main>
+
+  <app-main *ngIf="baseData.displaydata.theme == 'Flip' "></app-main>
 
   <app-footer></app-footer>
 </ng-container>
-      
 
+<ng-template #wait>
+  <div class="loader">Leyendo..
+    <span id="loader"></span>
+  </div>
+
+</ng-template>
 <!-- CODIGOS DE PRUEBAS -->
 <!-- <mat-toolbar color="primary" class="container-fluid">
     <span>Usuarios</span>
@@ -95,4 +99,3 @@
   </form>
   
 </div> -->
-

@@ -1,5 +1,5 @@
 <!-- componente, mobile menu -->
-<section *ngIf="baseData" id="menu" class="pos-f-t">
+<section *ngIf="baseData" id="menu" class="pos-f-t sombreado">
 
   <nav class="navbar justify-content-left"
     [ngClass]="{'navbar-primary custom': (esAdmin), 'navbar-dark bg-dark':!esAdmin}">
@@ -16,7 +16,7 @@
       <div class="d-flex">
 
         <!-- CONTACTO -->
-        <button class="btn btn-outline-secondary mr-4" type="button" data-toggle="collapse"
+        <button class="btn btn-outline-warning mr-4" type="button" data-toggle="collapse"
           data-target="#navbarToggleExternalContact" aria-controls="navbarToggleExternalContact" aria-expanded="false"
           aria-label="Toggle navigation">
           <span>Contacto</span>
@@ -24,18 +24,18 @@
         </button>
 
         <!-- LOGGING -->
-        <button class="btn btn-outline-secondary mr-2" type="button" data-toggle="collapse"
+        <button class="btn btn-outline-warning mr-2" type="button" data-toggle="collapse"
           data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false"
           aria-label="Toggle navigation">
           <fa-icon [icon]="faUser"> </fa-icon>
 
           <span ngClass="ml-2" *ngIf="esAdmin; else isAdmin">Cerrar</span>
 
-          <ng-template #isAdmin >
+          <ng-template #isAdmin>
             <span ngClass="ml-2">Ingresar</span>
           </ng-template>
         </button>
-        
+
       </div>
     </div>
     <!-- RIGHT SIDE -->
@@ -54,7 +54,7 @@
       </ng-container>
 
       <ng-container *ngIf="esAdmin" ngClass="d-flex justify-content-end align-items-center mr-2">
-        <button class="navbar-toggler btn btn-secondary" type="button" data-toggle="collapse"
+        <button class="btn btn-outline-warning" type="button" data-toggle="collapse"
           data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false"
           aria-label="Toggle navigation" (click)="onLogOut()"> Confirme cerrar sesion
         </button>
@@ -63,52 +63,35 @@
     </div>
   </div>
 
-  <!-- MEDIOS DE CONTACTO -->
+  <!-- EXPAND MEDIOS DE CONTACTO -->
   <div class="collapse  border-top border-bottom border-warning" id="navbarToggleExternalContact">
 
-    <div class="navbar-toggler bg-dark collapse" id="navbarToggleExternalContact">
+    <!-- <div class="navbar-toggler bg-dark collapse" id="navbarToggleExternalContact"> -->
 
-      <div class="d-flex justify-content-center align-items-center mr-2">
-        <div class="col-sm-6 d-flex justify-content-right align-middle">
+    <div class="d-flex justify-content-center align-items-center mr-2">
+      <div class="col-sm-6">
+        <!-- <fa-icon class="text-warning fa-1x" [icon]="faAt"> </fa-icon> -->
+        <fa-icon class="text-warning fa-1x latente" [icon]="faArrowRight"> </fa-icon>
+        <h5 class="text-white text-center ml-2">{{baseData.email}}</h5>
 
-          <fa-icon class="text-warning fa-2x" [icon]="faAt"> </fa-icon>
-          <fa-icon class="text-warning fa-2x" [icon]="faArrowRight"> </fa-icon>
-          <h4 class="text-white text-center ml-2">{{baseData.email}}</h4>
-          
-        </div>
-        <div class="col-sm-6 d-flex justify-content-around align-middle">
-
-
-          <!-- <div *ngFor="let elemento of baseData.socialnetwork" 
-            class="col-sm3 fa-container">
-
-            <fa-icon *ngIf="iconExists(iconPrefix, elemento.pathIcon);"
-            [icon]="[iconPrefix , elemento.pathIcon]"></fa-icon>
-
-            <span class="fa-container ml-2">{{elemento.name}}</span>
-
-          </div> -->
-
-
-          <!-- <div class="col-sm3 fa-container">
-            <fa-icon class="fa-1x" [icon]="faLinkedinIn"></fa-icon>
-            <span class="text-muted fa-container ml-2">LinkedIn</span>
-          </div> -->
-
-          <!-- <div class="col-sm3 fa-container">
-            <fa-icon class="fa-1x" [icon]="faGithub"></fa-icon>
-            <span class="text-muted fa-container ml-2">GitHub</span>
-          </div>
-
-          <div class="col-sm3 fa-container">
-            <fa-icon class="fa-1x" [icon]="faGoogle"></fa-icon>
-            <span class="text-muted fa-container ml-2">Gmail</span>
-          </div> -->
-
-        </div>
       </div>
+
+      <div class="row">
+
+        <div *ngFor="let elemento of baseData.socialnetwork" class="fa-container m-2 d-flex">
+
+          <fa-icon *ngIf="iconExists(iconPrefix, elemento.iconname);"
+            [icon]="[iconPrefix , elemento.iconname]"></fa-icon>
+
+          <span class="fa-container ml-2">{{elemento.name}}</span>
+
+        </div>
+
+      </div>
+
     </div>
-  </div>
-  <!-- MEDIOS DE CONTACTO -->
+    <!-- </div> -->
+  </div> <!-- FIN MEDIOS DE CONTACTO -->
+
 
 </section>

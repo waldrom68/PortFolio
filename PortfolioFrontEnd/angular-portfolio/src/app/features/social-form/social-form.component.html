@@ -54,19 +54,20 @@
   <!-- ICON -->
   <div class="row" style="width:100% ">
     <div class="col-12">
-      <label class="form-label" for="pathIcon">Icono:</label>
-      <input type="text" id="url" formControlName="pathIcon" name="pathIcon" class="form-control" placeholder="fortawesome brands: github, linkedin, google, youtube...."
-        [ngStyle]="{'width':'100%'}" [ngClass]="{'error is-invalid': (PathIcon.invalid && PathIcon.touched),'is-valid':PathIcon.valid}">
+      <label class="form-label" for="iconname">Icono:</label>
+      <input type="text" id="url" formControlName="iconname" name="iconname" class="form-control" placeholder="fortawesome brands: github, linkedin, google, youtube...."
+        [ngStyle]="{'width':'100%'}" [ngClass]="{'error is-invalid': (Iconname.invalid && Iconname.touched),'is-valid':Iconname.valid}">
 
     </div>
 
     <div class="row error-container text-justify-left mx-3">
-      <ng-container *ngIf="(PathIcon.invalid && PathIcon.touched); else isOk">
-        <div class="mensajeError mx-1" *ngIf="form.hasError('required', 'pathIcon')"> Dato requerido </div>
-        <div class="mensajeError mx-1" *ngIf="form.hasError('minlength', 'pathIcon')"> Mínimo {{
-          PathIcon.errors.minlength.requiredLength }} caracteres</div>
-        <div class="mensajeError mx-1" *ngIf="form.hasError('maxlength', 'pathIcon')"> Máximo {{
-          PathIcon.errors.maxlength.requiredLength }} caracteres</div>
+      <small>Ver lista: https://fontawesome.com/search?o=r&m=free&f=brands</small>
+      <ng-container *ngIf="(Iconname.invalid && Iconname.touched); else isOk">
+        <div class="mensajeError mx-1" *ngIf="form.hasError('required', 'iconname')"> Dato requerido </div>
+        <div class="mensajeError mx-1" *ngIf="form.hasError('minlength', 'iconname')"> Mínimo {{
+          Iconname.errors.minlength.requiredLength }} caracteres</div>
+        <div class="mensajeError mx-1" *ngIf="form.hasError('maxlength', 'iconname')"> Máximo {{
+          Iconname.errors.maxlength.requiredLength }} caracteres</div>
       </ng-container>
       <ng-template #isOk>
       </ng-template>

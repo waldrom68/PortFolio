@@ -119,9 +119,12 @@ export class UploadMediaService {
             next: (v) => {
               console.log("Guardado correctamente: ", v)
 
-
               // actualizo los valores
-              // this.baseData.pathFoto = downloadURL;
+              if (name == "/fotoBG") {
+                this.baseData.pathBgImage = downloadURL;
+              } else {
+                this.baseData.pathFoto = downloadURL;
+              }
               this.baseDataService.setCurrentBaseData(this.baseData);
 
             },

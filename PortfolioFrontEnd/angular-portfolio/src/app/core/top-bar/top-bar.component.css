@@ -7,7 +7,7 @@
 
 .custom
 {
-    background-color: rgb(13, 80, 60);
+    background-color: var(--triada-color-m);
 }
 
 button:hover {
@@ -24,4 +24,22 @@ button:hover {
 .fa-container:hover {
     color: white !important;
     background-color: transparent !important;
+}
+
+.latente {
+    animation: pulsate 3s ease-out;
+    animation-iteration-count: infinite; 
+    opacity: 0.5;
+}
+
+@keyframes pulsate {
+    0% { 
+        opacity: 0.3;
+    }
+    50% { 
+        opacity: 1.0;
+    }
+    100% { 
+        opacity: 0.3;
+    }
 }

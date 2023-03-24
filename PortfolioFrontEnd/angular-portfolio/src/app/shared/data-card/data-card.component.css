@@ -72,13 +72,23 @@
     }
 
     .flip-box-front {
-        background-image: linear-gradient(90deg, var(--metaldark-shadow) 0%, var(--metallight-shadow) 25%, var(--metal) 50%, var(--metallight-shadow) 75%, var(--metaldark-shadow) 100% ) !important;   ;
+        background-image: linear-gradient(90deg, 
+            var(--metaldark-shadow) 0%, 
+            var(--metallight-shadow) 25%, 
+            var(--metal) 50%, 
+            var(--metallight-shadow) 75%, 
+            var(--metaldark-shadow) 100% ) !important;   ;
     }
     .flip-box-back {
         color: #ffc107;
-        background-image: linear-gradient(90deg, #2F4F4F 0%, #4c4c4c 50%, #2F4F4F 100% ) !important;
+        background-image: linear-gradient(90deg,
+        var(--metal-shadow) 0%, 
+        var(--metal-dark) 50%, 
+        var(--metallight-shadow) 100% ) !important;   ;
+            
         transform: rotateY(180deg); 
         /* height: 200%; */
-        box-shadow: 3px 3px 3px 3px rgb(232, 248, 232);
+        box-shadow: 1px 1px 1px 1px rgb(232, 248, 232);
 
     }
+

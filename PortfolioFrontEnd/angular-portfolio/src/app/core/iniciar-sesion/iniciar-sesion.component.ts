@@ -122,7 +122,7 @@ export class IniciarSesionComponent implements OnInit, OnDestroy {
     if (this.form.valid) {
       // Llamamos a nuestro servicio para enviar los datos al servidor
 
-      this.loginUsuario = new LoginUsuario(this.NombreUsuario?.value, this.Password?.value);
+      this.loginUsuario = new LoginUsuario(this.NombreUsuario?.value.trim(), this.Password?.value.trim());
       this.onLoggin(this.loginUsuario);
 
     } else {

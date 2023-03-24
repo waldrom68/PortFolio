@@ -15,7 +15,8 @@
 
     /* input-range, donut and labels content */
     .container-chart {
-    display: inline-flex;
+    /* display: inline-flex; */
+    display: inline-block !important;
     width: auto;
     /* background: inherit; */
     /* background-color: transparent */

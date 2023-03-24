@@ -284,7 +284,7 @@ export class RolePosition extends Base {
 export class SocialNetwork extends Base {
     id: number;
     name: string;
-    pathIcon: IconName;
+    iconname: IconName;
     url: string;
     orderdeploy: number;
     person: number;
@@ -355,7 +355,7 @@ export class FullPersonDTO {
     since: Date;
     email: string;
     pathBgImage: string;
-    username: string;
+    // username: string;
     displaydata: DisplayData;
     hardskill: HardSkill[];
     softskill: SoftSkill[];

@@ -274,25 +274,26 @@ export class DataService {
 
   // ########### Codigo implementado nuevo
   upDateEntity(entidad: any, entityName: string): Observable<any> {
-    console.log("Modificando a ... ", entidad);
     entidad.person = this.USERID;
     const url = `${this.LOCALHOST_API}${entityName}/edit`;
     console.log(url)
+    console.log("Modificando a ... ", entidad);
     return this.http.post<any>(url, entidad, httpOptions)
   }
 
   addEntity(entidad: any, entityName: string): Observable<any> {
-    console.log("Agregando a ... ", entidad);
     entidad.person = this.USERID;
+    entidad.id = -1;
     const url = `${this.LOCALHOST_API}${entityName}/new`;
     console.log(url)
+    console.log("Agregando a ... ", entidad);
     return this.http.put<any>(url, entidad, httpOptions)
   }
   
   delEntity(entidad: any, entityName: string): Observable<any> {
-    console.log("Eliminando a ... ", entidad);
     const url = `${this.LOCALHOST_API}${entityName}/del/${entidad.id}`
     console.log(url)
+    console.log("Eliminando a ... ", entidad);
     return this.http.delete<any>(url, httpOptions)
   }
 

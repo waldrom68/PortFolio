@@ -10,7 +10,8 @@ export const environment = {
     measurementId: 'G-Z292YC8H9F',
   },
   production: true,
-  apiURL: "https://yoprogramo-waldrom68.koyeb.app",
+  // apiURL: "https://yoprogramo-waldrom68.koyeb.app:8000",
+  apiURL: "https://yoprogramo-waldrom68.onrender.com",
   idPersona:1,
 };
 

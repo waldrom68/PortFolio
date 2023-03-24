@@ -9,8 +9,8 @@
                 <!-- RESUELTO, vincular el faIcon del atributo -->
                 <!-- https://github.com/FortAwesome/angular-fontawesome/blob/HEAD/docs/usage/icon-library.md#using-the-icon-library -->
                 <!-- https://stackoverflow.com/questions/74385842/typescript-get-iconname-from-string -->
-                <fa-icon *ngIf="iconExists(iconPrefix, item.pathIcon); else sinIcon"
-                    [icon]="[iconPrefix , item.pathIcon]"></fa-icon>
+                <fa-icon *ngIf="iconExists(iconPrefix, item.iconname); else sinIcon"
+                    [icon]="[iconPrefix , item.iconname]"></fa-icon>
                 
                     <ng-template #sinIcon>
                         <fa-icon class="text-danger" [icon]="faTimes"></fa-icon>

@@ -54,10 +54,10 @@ export class SocialFormComponent implements OnInit, OnDestroy {
     }
 
     this.form = this.formBuilder.group({
-      name: [this.formData.name, [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
+      name: [this.formData.name, [Validators.required, Validators.minLength(2), Validators.maxLength(45)]],
       // resume: [this.formData.resume, [Validators.maxLength(200)]],
-      pathIcon: [this.formData.pathIcon, []],
-      url: [this.formData.url, [Validators.required, Validators.minLength(2), Validators.maxLength(100)]]
+      iconname: [this.formData.iconname, []],
+      url: [this.formData.url, [Validators.required, Validators.minLength(2), Validators.maxLength(250)]]
 
 
     });
@@ -80,8 +80,8 @@ export class SocialFormComponent implements OnInit, OnDestroy {
   get Url(): any {
     return this.form.get("url")
   }
-  get PathIcon(): any {
-  return this.form.get("pathIcon")
+  get Iconname(): any {
+  return this.form.get("iconname")
   }
   
   resetForm() {
@@ -100,7 +100,7 @@ export class SocialFormComponent implements OnInit, OnDestroy {
       if (this.form.valid) {
   
         this.formData.name = this.form.get("name")?.value.trim();
-        this.formData.pathIcon = this.form.get("pathIcon")?.value.trim();
+        this.formData.iconname = this.form.get("iconname")?.value.trim();
         this.formData.url = this.form.get("url")?.value.trim();
         // estoy por cerrar el formulario, emito orden de actualizarse
         this.onUpdate.emit(this.formData);

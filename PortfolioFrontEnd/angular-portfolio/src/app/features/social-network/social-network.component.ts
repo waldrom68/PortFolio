@@ -85,13 +85,17 @@ export class SocialNetworkComponent implements OnInit, OnDestroy {
     this.toggleForm();
   }
 
-  addItem(SocialNetwork: SocialNetwork) {
-    this.dataService.addEntity(SocialNetwork, "/socialnetwork").subscribe({
+  addItem(socialnetwork: SocialNetwork) {
+    console.log(socialnetwork);
+    
+    // Por problemas en el backend, doy un alta via edit, colocando su id en valor -1
+    // socialnetwork.id = -1;
+    this.dataService.addEntity(socialnetwork, "/socialnetwork").subscribe({
       next: (v) => {
         console.log("Agregado correctamente: ", v);
-        SocialNetwork.id = v.id;
-        SocialNetwork.person = this.baseData.id;
-        this.baseData.socialnetwork.push(SocialNetwork);
+        socialnetwork.id = v.id;
+        socialnetwork.person = this.baseData.id;
+        this.baseData.socialnetwork.push(socialnetwork);
         this.baseDataService.setCurrentBaseData(this.baseData);
       },
       error: (e) => {

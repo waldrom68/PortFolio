@@ -1,18 +1,10 @@
-<ng-container *ngIf="baseData" style="background-color: black;">
+<ng-container *ngIf="baseData" >
 
 
-    <div class="container p-0 m-0 responsive"
+    <div class="container p-0 m-0 responsive sombreado mt-1"
         [style.background]="'url(' + baseData.pathBgImage + '), linear-gradient(to right, rgba(30, 75, 115, 1), rgba(255, 255, 255, 0)' "
-        [style.width.%]="100" [style.background-size]="'cover'"
-        >
-        <div class="card border rounded-3">
-
-            <ng-container *ngIf="esAdmin && openForm == 0" class="row">
-                <button class="btn btn-outline-success btn-sm mx-auto my-2 text-light" (click)="openPersonModal();"
-                    ngClass="faConfirm fa-ico" [ngStyle]="{'width':'fit-content'}">
-                    <fa-icon [icon]="faPen" ngClass="p-2"></fa-icon> Datos
-                </button>
-            </ng-container>
+        [style.width.%]="100" [style.background-size]="'cover'">
+        <div class="card border border-warning rounded-3">
 
             <ng-container>
 
@@ -23,26 +15,6 @@
                 </div>
 
 
-                <ng-container *ngIf="esAdmin && openForm == 0">
-                    <form class="row justify-content-center mt-2" [formGroup]="formImg" #myForm="ngForm">
-                        <!-- Quitar error del DOM : https://stackoverflow.com/questions/54580161/failed-to-set-the-value-property-on-htmlinputelement-in-reactive-form -->
-                        <div class="form-group">
-
-                            <label class="label-input" (change)="upLoadFile($event)"> <fa-icon [icon]="faPen"
-                                    ngClass="p-2"></fa-icon>
-
-                                Foto perfil
-
-                                <input type="file" id="pathFoto" name="pathFoto" accept=".jpeg, .jpg, .bmp, .png">
-                            </label>
-                        </div>
-                    </form>
-
-
-                </ng-container>
-
-
-
                 <div class="card-body">
                     <h5 class="card-title">
                         {{ baseData.name }} {{ baseData.lastName }}
@@ -50,7 +22,7 @@
 
                     <h6 class="card-text" *ngFor="let elemento of profession">{{ elemento }}
                     </h6>
-                    <hr style="border: 1px solid;">
+                    <hr class=" border border-warning border-5">
                     <p>Nacido en {{baseData.since | date:"yyyy"}}.</p>
                     <p>
                         <fa-icon [icon]="faLocationDot">
@@ -61,25 +33,38 @@
                 </div>
             </ng-container>
 
-            <!-- PIE DE CARD -->
+            <!-- PIE DE CARD ACCESO A BTN DE IMAGENES, REDES SOCIALES, proximamente REORDER -->
             <ng-container *ngIf="esAdmin && openForm == 0">
-                <form class="row justify-content-center mx-auto my-2" [formGroup]="formImg" #myForm="ngForm">
-                    <div class="form-group">
+                <form [formGroup]="formImg" #myForm="ngForm"
+                    ngClass="d-flex align-items-center m-auto justify-content-around m-2">
 
-                        <label class="label-input" (change)="upLoadFileBG($event)"> <fa-icon [icon]="faPen"
-                                ngClass="p-2"></fa-icon>
+                    <!-- <div class="row "> -->
 
-                            Imagen de fondo
+                    <div class="container-fluid">
 
-                            <input type="file" id="pathBgImage" name="pathBgImage" accept=".jpeg, .jpg, .bmp, .png">
-                        </label>
+                            <label class="btn btn-primary btn-block"  (click)="openPersonModal()">
+                                <fa-icon [icon]="faPen"></fa-icon><span class="px-2">Datos personales</span> 
+                            </label>
+
+                            <label ngClass="btn btn-primary btn-block" (click)="openSocialModal();">
+                                <fa-icon [icon]="faPen"></fa-icon><span class="px-2">Redes sociales</span> 
+                            </label>
+                
+                            <label class="btn btn-primary btn-block" (change)="upLoadFile($event)">
+                                <fa-icon [icon]="faPen"></fa-icon><span class="px-2">Imagen de perfil</span>
+                                <input type="file" id="pathFoto" name="pathFoto" accept=".jpeg, .jpg, .bmp, .png">
+                            </label>
+
+
+                            <label class="btn btn-primary btn-block" (change)="upLoadFileBG($event)"> 
+                                <fa-icon [icon]="faPen"></fa-icon><span class="px-2">Imagen de fondo</span> 
+                                <input type="file" id="pathBgImage" name="pathBgImage" accept=".jpeg, .jpg, .bmp, .png">
+                            </label>
+
                     </div>
+
                 </form>
 
-                <button class="btn btn-outline-success btn-sm mx-auto my-2 text-light" (click)="openSocialModal();"
-                ngClass="faConfirm fa-ico" [ngStyle]="{'width':'fit-content'}">
-                <fa-icon [icon]="faPen" ngClass="p-2"></fa-icon> Redes sociales
-            </button>
 
             </ng-container>
             <!-- FIN PIE DE CARD -->

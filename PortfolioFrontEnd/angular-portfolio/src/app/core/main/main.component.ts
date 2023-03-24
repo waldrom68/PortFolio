@@ -79,7 +79,8 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-
+    console.log("ingreando al main.");
+    
     this.BaseDataServiceSubscription = this.baseDataService.currentBaseData.subscribe(
       currentData => {
         this.baseData = currentData;

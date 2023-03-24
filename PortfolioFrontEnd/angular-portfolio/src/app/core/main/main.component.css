@@ -1,0 +1,6 @@
+#separador1, #separador2 {
+    background-color: var(--triada-color-d) ;
+    border-radius: 8px;
+    border: 1px solid;
+    padding: 10px;
+}
