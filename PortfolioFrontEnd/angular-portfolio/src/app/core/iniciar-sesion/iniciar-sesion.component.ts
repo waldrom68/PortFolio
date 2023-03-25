@@ -78,7 +78,7 @@ export class IniciarSesionComponent implements OnInit, OnDestroy {
           'color: #8ebf42; background: # 666; font - size: 20 px;'
         );  // salida consola tipo ANSI
 
-          // alert("detengo aqui!")
+          alert("detengo aqui! onLoggin()")
           console.log('Logueado correctamente como ADMIN!');
           this.adminService.setCurrentAdmin(true);
 
@@ -121,10 +121,10 @@ export class IniciarSesionComponent implements OnInit, OnDestroy {
 
     if (this.form.valid) {
       // Llamamos a nuestro servicio para enviar los datos al servidor
-
-      this.loginUsuario = new LoginUsuario(this.NombreUsuario?.value.trim(), this.Password?.value.trim());
+      this.loginUsuario = new LoginUsuario(this.NombreUsuario?.value, this.Password?.value);
       this.onLoggin(this.loginUsuario);
-
+      alert("Detengo aqui! onEnviar() iniciar session");
+      
     } else {
       // Corremos todas las validaciones para que se ejecuten los mensajes de error en el template     
       this.form.markAllAsTouched();

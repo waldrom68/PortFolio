@@ -37,9 +37,10 @@ export class InterceptorService {
         const token = this.tokenService.getToken();
 
         // this.tokenService.isValidAdmin();
-
-        if (token != null && this.tokenService.isValidAdmin()) {
-            console.log("Tiene token vigente");
+        alert("detengo aqui, intercept() ")
+        if (token != null ) {
+        // if (token != null && this.tokenService.isValidAdmin()) {
+            console.log("Tiene token y está vigente");
             
             intReq = req.clone({
                 headers: req.headers.set('Authorization', 'Bearer' + token)
@@ -62,7 +63,8 @@ export class InterceptorService {
 
         //     this.adminService.setCurrentAdmin( true );
         // };
-
+       
+        alert("Me detengo aqui en el interceptor, pero al final de intercept()")
         return next.handle(intReq);
     }
 }

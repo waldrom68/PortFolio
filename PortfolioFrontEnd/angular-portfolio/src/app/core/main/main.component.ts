@@ -88,7 +88,9 @@ export class MainComponent implements OnInit, OnDestroy {
     );
 
     // VALIDACION SI ES UN USUARIO ADMINISTRADOR Y TIENE TOKEN VIGENTE
-    if (this.tokenService.isValidAdmin()) {
+    // if (this.tokenService.isValidAdmin()) {
+      if (this.tokenService.isAdmin()) {
+      // VALIDACION SI ES UN USUARIO ADMINISTRADOR
       this.adminService.setCurrentAdmin(true);
 
     } else {

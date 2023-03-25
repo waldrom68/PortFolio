@@ -21,12 +21,12 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class DataService {
-  // private apiURL = 'http://localhost:5000'
   private LOCALHOST_API = environment.apiURL
-  private EndPoint: string = ""
-
-  // PENDIENTE, vincular con el logging
   private USERID: number = environment.idPersona;
+  // private EndPoint: string = ""
+  
+  // private apiURL = 'http://localhost:5000'
+  // PENDIENTE, vincular con el logging
   private USER: Person;
 
   // #######################################
@@ -261,8 +261,8 @@ export class DataService {
  
   getPortFolioData(): Observable<FullPersonDTO> {
     const endPoint = `${this.LOCALHOST_API}/fullperson/view/${this.USERID}`
-    const response = this.http.get<FullPersonDTO>(endPoint, httpOptions)
-    .pipe(catchError(this.handleError));
+    const response = this.http.get<FullPersonDTO>(endPoint)
+    // .pipe(catchError(this.handleError));
     return response;
   }
   getPortFolioData$(): Observable<FullPersonDTO> {

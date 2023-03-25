@@ -83,9 +83,9 @@ export class TokenService {
     // return true;
   }
 
-  public isValidAdmin() {
-    return this.isAdmin() && this.validToken(this.getToken())
-  }
+  // public isValidAdmin() {
+  //   return this.isAdmin() && this.validToken(this.getToken())
+  // }
 
 
 }
