@@ -177,6 +177,8 @@ EndPoint's information:
 ## Investigar: Manejo de excepciones para API Rest
 https://www.toptal.com/java/spring-boot-rest-api-error-handling
 
+## Investigar a fondo el manejo de los CORS:
+p.e.: https://spring.io/guides/gs/rest-service-cors/
 
 ##################################################################################################################################
 FrontEnd
