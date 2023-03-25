@@ -134,20 +134,20 @@ export class DataService {
 
   // PENDIENTE, no se está usando, validar necesidad de existencia
   // SEGURO PODRIA SERVIR PARA VALIDAR LA OBTENCION DE GRALDATA AL INICIAR
-  // private handleError(error: HttpErrorResponse) {
-  //   if (error.status === 0) {
-  //     // A client-side or network error occurred. Handle it accordingly.
-  //     // PENDIENTE redirigir a una pagina de error en servidor
-  //     console.error('OJO, An error occurred:', error.error);
-  //   } else {
-  //     // The backend returned an unsuccessful response code.
-  //     // The response body may contain clues as to what went wrong.
-  //     console.error(
-  //       `Backend returned code ${error.status}, body was: `, error.error);
-  //   }
-  //   // Return an observable with a user-facing error message.
-  //   return throwError(() => new Error('Something bad happened; please try again later.'));
-  // }
+  private handleError(error: HttpErrorResponse) {
+    if (error.status === 0) {
+      // A client-side or network error occurred. Handle it accordingly.
+      // PENDIENTE redirigir a una pagina de error en servidor
+      console.error('OJO, An error occurred:', error.error);
+    } else {
+      // The backend returned an unsuccessful response code.
+      // The response body may contain clues as to what went wrong.
+      console.error(
+        `Backend returned code ${error.status}, body was: `, error.error);
+    }
+    // Return an observable with a user-facing error message.
+    return throwError(() => new Error('Something bad happened; please try again later.'));
+  }
 
   constructor(
     // inicializamos el metodo http
@@ -261,8 +261,8 @@ export class DataService {
  
   getPortFolioData(): Observable<FullPersonDTO> {
     const endPoint = `${this.LOCALHOST_API}/fullperson/view/${this.USERID}`
-    const response = this.http.get<FullPersonDTO>(endPoint)
-    // .pipe(catchError(this.handleError));
+    const response = this.http.get<FullPersonDTO>(endPoint, httpOptions)
+    .pipe(catchError(this.handleError));
     return response;
   }
   getPortFolioData$(): Observable<FullPersonDTO> {

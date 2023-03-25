@@ -38,24 +38,30 @@ export class InterceptorService {
 
         // this.tokenService.isValidAdmin();
 
-        if (token != null) {
+        if (token != null && this.tokenService.isValidAdmin()) {
+            console.log("Tiene token vigente");
+            
             intReq = req.clone({
                 headers: req.headers.set('Authorization', 'Bearer' + token)
             });
+            this.adminService.setCurrentAdmin( true );
+        } else {
+            console.log("Sin loguear o con token expirado");
+
         }
 
-        if (!this.tokenService.isValidAdmin()) {
-            // console.log("El interceptor notó que no está habilitado, elimina Token si es que existe y Desloguea");
-            this.authService.logout();
-            // this.isAdmin = false;
+        // if (!this.tokenService.isValidAdmin()) {
+        //     // console.log("El interceptor notó que no está habilitado, elimina Token si es que existe y Desloguea");
+        //     this.authService.logout();
+        //     // this.isAdmin = false;
 
-            this.adminService.setCurrentAdmin( false );
-        } else {
+        //     this.adminService.setCurrentAdmin( false );
+        // } else {
             
-            // this.isAdmin = true;
+        //     // this.isAdmin = true;
 
-            this.adminService.setCurrentAdmin( true );
-        };
+        //     this.adminService.setCurrentAdmin( true );
+        // };
 
         return next.handle(intReq);
     }

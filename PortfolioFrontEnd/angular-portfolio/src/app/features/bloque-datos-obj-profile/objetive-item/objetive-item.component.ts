@@ -25,10 +25,10 @@ export class ObjetiveItemComponent implements OnInit {
 
   showAddForm:boolean = false;
   subscriptionAddForm?: Subscription;
-  UserData: Person
+  // UserData: Person
 
   constructor( private dataservice: DataService, ) {
-    this.UserData = this.item;
+    // this.UserData = this.item;
    }
 
   ngOnInit() {

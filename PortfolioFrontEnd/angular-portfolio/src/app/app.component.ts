@@ -74,6 +74,9 @@ export class AppComponent implements OnInit {
     private baseDataService: BaseDataService,
     // FIN A LA PRACTICA DE OBSERVER 
 
+    // Este observable, por ahora genera un reloj que se actualiza cada 
+    // segundo, la idea es controlar el tiempo de vigencia del token si 
+    // ha ingresado como admin
     private observableService: ObservableService,
 
   

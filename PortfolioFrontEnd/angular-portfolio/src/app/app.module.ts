@@ -6,7 +6,7 @@ import { HttpClientModule} from '@angular/common/http'
 import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { UserDataComponent } from './users/user-data/user-data.component'
+// import { UserDataComponent } from './users/user-data/user-data.component'
 
 
 // import the feature module here so you can add it to the imports array below
@@ -45,7 +45,7 @@ import { faStar } from '@fortawesome/free-solid-svg-icons';
 
 const appRouters: Routes = [
   { path: '', component: AppComponent},
-  { path: 'user', component: UserDataComponent},
+  // { path: 'user', component: UserDataComponent},
 ]
 
 
