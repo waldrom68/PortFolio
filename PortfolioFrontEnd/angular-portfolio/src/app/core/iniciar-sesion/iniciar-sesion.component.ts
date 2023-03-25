@@ -37,17 +37,17 @@ export class IniciarSesionComponent implements OnInit, OnDestroy {
 
     private formBuilder: FormBuilder,
   ) {
-
-  }
-
-  ngOnInit() {
-
     this.adminServiceSubscription = this.adminService.currentAdmin.subscribe(
       currentAdmin => {
         this.esAdmin = currentAdmin;
       }
     );
     
+  }
+
+  ngOnInit() {
+
+
     ///Creamos el grupo de controles para el formulario de login
     this.form = this.formBuilder.group({
       nombreUsuario: ["", [Validators.required, Validators.minLength(3)]],
@@ -57,7 +57,7 @@ export class IniciarSesionComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
 
-    this.adminServiceSubscription?.unsubscribe();
+    // this.adminServiceSubscription?.unsubscribe();
 
   }
 
@@ -78,7 +78,6 @@ export class IniciarSesionComponent implements OnInit, OnDestroy {
           'color: #8ebf42; background: # 666; font - size: 20 px;'
         );  // salida consola tipo ANSI
 
-          alert("detengo aqui! onLoggin()")
           console.log('Logueado correctamente como ADMIN!');
           this.adminService.setCurrentAdmin(true);
 
@@ -94,7 +93,6 @@ export class IniciarSesionComponent implements OnInit, OnDestroy {
       complete: () => console.log("Finalizado el proceso de loggin")
     }
     );
-
 
   }
 
@@ -123,7 +121,6 @@ export class IniciarSesionComponent implements OnInit, OnDestroy {
       // Llamamos a nuestro servicio para enviar los datos al servidor
       this.loginUsuario = new LoginUsuario(this.NombreUsuario?.value, this.Password?.value);
       this.onLoggin(this.loginUsuario);
-      alert("Detengo aqui! onEnviar() iniciar session");
       
     } else {
       // Corremos todas las validaciones para que se ejecuten los mensajes de error en el template     

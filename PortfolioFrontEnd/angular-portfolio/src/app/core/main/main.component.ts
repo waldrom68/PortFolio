@@ -79,25 +79,14 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    console.log("ingreando al main.");
-    
+
     this.BaseDataServiceSubscription = this.baseDataService.currentBaseData.subscribe(
       currentData => {
         this.baseData = currentData;
       }
     );
 
-    // VALIDACION SI ES UN USUARIO ADMINISTRADOR Y TIENE TOKEN VIGENTE
-    // if (this.tokenService.isValidAdmin()) {
-      if (this.tokenService.isAdmin()) {
-      // VALIDACION SI ES UN USUARIO ADMINISTRADOR
-      this.adminService.setCurrentAdmin(true);
-
-    } else {
-      this.adminService.setCurrentAdmin(false);
-    }
-
-    this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
+     this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
       currentAdmin => {
         this.esAdmin = currentAdmin;
       }
@@ -109,6 +98,15 @@ export class MainComponent implements OnInit, OnDestroy {
       }
     );
 
+   // VALIDACION SI ES UN USUARIO ADMINISTRADOR Y TIENE TOKEN VIGENTE
+   if (this.tokenService.isValidAdmin()) {
+    // VALIDACION SI ES UN USUARIO ADMINISTRADOR
+    // if (this.tokenService.isAdmin()) {
+    this.adminService.setCurrentAdmin(true);
+
+  } else {
+    this.adminService.setCurrentAdmin(false);
+  }
 
     this.detailCards = this.miServicio.getCards();
     this.statusCards = this.miServicio.getStatusCards()

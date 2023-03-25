@@ -100,10 +100,10 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     
     // Traigo todos los datos del Portfolio
-    alert("me detengo aqui, ngOnInit del app component")
+
     this.dataService.getPortFolioData().subscribe({
       next: (currentData) => {
-        console.log(currentData);
+        console.log("Datos obtenidos exitosamente",currentData);
 
         this.baseDataService.setCurrentBaseData(currentData);
         this.wait = false;

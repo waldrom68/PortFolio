@@ -62,7 +62,7 @@ export class TokenService {
     return this.getAuthorities().includes("ROLE_ADMIN")
   }
 
-  public validToken(token: string): boolean {
+  public expiredToken(token: string): boolean {
     // Si no existe un token, lo interpreta como Token expirado.
     if (token) {
       const jwtToken = JSON.parse(atob(token.split('.')[1]));
@@ -70,22 +70,21 @@ export class TokenService {
       const timeOut = (expires.getTime() - Date.now()) / 1000 / 60;
       if (timeOut >= 0) {
         console.log("El token expira en", timeOut.toFixed(1), " minutos");
-        return true;
+        return false;
 
       } else {
 
         console.log("Token vencido hace ", -timeOut.toFixed(1), " minutos");
-        return false;
+        return true;
       }
     }
     console.log("Sin token aun");
-    return false;
-    // return true;
+    return true;
   }
 
-  // public isValidAdmin() {
-  //   return this.isAdmin() && this.validToken(this.getToken())
-  // }
+  public isValidAdmin() {
+    return this.isAdmin() && !this.expiredToken(this.getToken())
+  }
 
 
 }

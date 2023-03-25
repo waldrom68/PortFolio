@@ -15,7 +15,10 @@ export class InterceptorService {
     // isAdminSubscription: Subscription;  // esto es para poderlo eliminar
     // isAdmin: boolean;  // el atributo que tendrá el valor actualizado
     // isAdmin$: Observable<boolean>;
-
+    esAdmin: boolean;
+    private adminServiceSubscription: Subscription | undefined;
+  
+  
     constructor(
         private tokenService: TokenService,
         private authService: AuthService,
@@ -25,10 +28,11 @@ export class InterceptorService {
         // FIN MODO PRUEBA
 
     ) {
-
-        // this.isAdmin$ = this.dataService.getIsAdmin$();
-        // this.isAdmin$.subscribe(isAdmin => this.isAdmin = isAdmin);
-
+        this.adminServiceSubscription = this.adminService.currentAdmin.subscribe(
+            currentAdmin => {
+              this.esAdmin = currentAdmin;
+            }
+          );
     }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -38,8 +42,8 @@ export class InterceptorService {
 
         // this.tokenService.isValidAdmin();
         alert("detengo aqui, intercept() ")
-        if (token != null ) {
-        // if (token != null && this.tokenService.isValidAdmin()) {
+        // if (token != null ) {
+        if (token != null && this.tokenService.isValidAdmin()) {
             console.log("Tiene token y está vigente");
             
             intReq = req.clone({
@@ -51,20 +55,6 @@ export class InterceptorService {
 
         }
 
-        // if (!this.tokenService.isValidAdmin()) {
-        //     // console.log("El interceptor notó que no está habilitado, elimina Token si es que existe y Desloguea");
-        //     this.authService.logout();
-        //     // this.isAdmin = false;
-
-        //     this.adminService.setCurrentAdmin( false );
-        // } else {
-            
-        //     // this.isAdmin = true;
-
-        //     this.adminService.setCurrentAdmin( true );
-        // };
-       
-        alert("Me detengo aqui en el interceptor, pero al final de intercept()")
         return next.handle(intReq);
     }
 }

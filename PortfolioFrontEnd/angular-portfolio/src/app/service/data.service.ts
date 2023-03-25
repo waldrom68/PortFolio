@@ -249,6 +249,8 @@ export class DataService {
     return this.flagChangeUser$.asObservable();
   }
   hasCredentials(value: boolean) {
+    // console.log("hasCredentials",value);
+    
     this.flagChangeUser = value;
     this.flagChangeUser$.next(this.flagChangeUser);
   }

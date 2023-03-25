@@ -56,7 +56,7 @@ export class TopBarComponent implements OnInit, OnDestroy {
         this.esAdmin = currentAdmin;
       }
     );
-      alert("Detengo aqui ngOnInit top-bar")
+
   }
 
   ngOnDestroy() {
