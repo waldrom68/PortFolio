@@ -1,10 +1,12 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { Degree, FullPersonDTO } from '../../../models'
+import { Degree, FullPersonDTO, Mensaje } from '../../../models'
 
 import { faPen, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { BaseDataService, DataService } from 'src/app/service/data.service';
 import { AdminService } from 'src/app/service/auth.service';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatAlertComponent } from 'src/app/shared/mat-alert/mat-alert.component';
 
 @Component({
   selector: 'app-degree-item',
@@ -41,6 +43,8 @@ export class DegreeItemComponent implements OnInit, OnDestroy {
     private dataService: DataService,
     private adminService: AdminService,
     private baseDataService: BaseDataService,
+    private dialog: MatDialog,
+
   ) { }
 
   ngOnInit(): void {
@@ -92,6 +96,12 @@ export class DegreeItemComponent implements OnInit, OnDestroy {
     this.dataService.upDateEntity(degree, "/degree").subscribe({
       next: (v) => {
         console.log("Guardado correctamente: ", v);
+
+        this.alertDialog(
+          "ok",
+          ['Datos guardados exitosamente'],
+          1500 );
+
         // Debo actualizar dataBase, studie, la cual es copia del backend.
         // Como sólo se busca la info al iniciar el sistema, debo mantener una imagen
         // de lo que hago en la DB. 
@@ -106,7 +116,11 @@ export class DegreeItemComponent implements OnInit, OnDestroy {
       
       },
       error: (e) => {
-        alert("Response Error (" + e.status + ") en el metodo upDateItem()" + "\n" + e.message);
+        let msg = new Array()
+        msg.push("Se quizo modificar sin exito a: " + this.oldData.name);
+        msg.push(e.message);
+        this.alertDialog("error", msg, 0 );
+
         console.log("Se quizo modificar sin exito a: " + degree.name);
         // Restauro valor original
         degree = this.oldData;
@@ -122,5 +136,24 @@ export class DegreeItemComponent implements OnInit, OnDestroy {
   cancelation(degree: Degree) {
     this.toggleForm(degree);  // cierro el formulario
   }
+
+  // Mensaje de alerta.
+  // type: "ok", "error", "info"
+  alertDialog( type:string="ok", data:string[], timer:number=0) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = false;
+    dialogConfig.id = "modal-warn";
+
+    // dialogConfig.height = "350px";
+    // dialogConfig.width = "600px";
+    // dialogConfig.maxWidth = '700px';
+    dialogConfig.data = new Mensaje(type, data, timer)
+
+
+    const dialogRef = this.dialog.open(MatAlertComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(() => console.log("Cerrando alert-modal"));
+  }
+
 
 }

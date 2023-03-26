@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
-import { FullPersonDTO, Person } from '../../models'
+import { FullPersonDTO, Mensaje, Person } from '../../models'
 
 import { faPen, faTimes, faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import { BaseDataService, DataService, ToPerson } from 'src/app/service/data.service';
@@ -12,6 +12,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UploadMediaService } from 'src/app/service/upload-media.service';
 import { FormService } from 'src/app/service/ui.service';
 import { SocialNetworkComponent } from '../social-network/social-network.component';
+import { MatAlertComponent } from 'src/app/shared/mat-alert/mat-alert.component';
 
 @Component({
   selector: 'app-personal-card',
@@ -59,6 +60,7 @@ export class PersonalCardComponent implements OnInit, OnDestroy {
     private baseDataService: BaseDataService,
 
     private matDialog: MatDialog,
+    private dialog: MatDialog,
 
     private uploadMediaService: UploadMediaService,
 
@@ -159,51 +161,8 @@ export class PersonalCardComponent implements OnInit, OnDestroy {
 
     this.uploadMediaService.upLoadFile(evento, path, name, this.converPerson);
 
-    // CODIGO QUE SE MOVIO AL SERVICIO
-    //   // Volver a ver la documentacion oficial o algun tutorial......
-    //   const url: string = this.uploadMediaService.url;
-    //   console.log("Archivo en la nube: ", url)
-    // 
-    //   // this.dataService.updateGralData(this.converPerson).subscribe();
-    //   this.dataService.upDateEntity(this.converPerson, "/person").subscribe( {
-    //     next: (v) => {
-    //       console.log("Guardado correctamente: ", v)
-    //       this.baseData.pathFoto = url;
-    //     },
-    //     error: (e) => {
-    //       alert("Response Error (" + e.status + ") en el metodo upDateItem()" + "\n" + e.message);
-    //       console.log("Se quizo cambiar imagen del Perfil sin exito a: " + this.baseData.name);
-    //       // Restauro valor original
-    //     },
-    //     complete: () => console.log("Completada la actualizacion de la imagen del perfil")
-    //   } );
-
-    // // PENDIENTE, no se si tiene sentido estas acciones
-    // this.changeImg = true;
-
-    // this.refreshImg()
-    // // FIN PENDIENTE
-    // console.log("finalizando medodo upLoadFile, se actualizó el pathFoto", this.baseData.pathFoto);
-    // this.baseDataService.setCurrentBaseData(this.baseData);
-
   }
 
-
-  // refreshImg() {
-  //   // SOLUCION DE COMPROMISO
-  //   console.log("Solucion de compromiso para manejar informacion async");
-
-  //   setTimeout(() => {
-
-  //   // let element = this.renderer.selectRootElement(`#${'mifoto'}`, true);
-  //   // element.scrollIntoView({ behavior: 'smooth' });
-  //     // this.baseData.pathFoto = downloadURL
-  //     console.log(this.baseData)
-
-  //   }, 6000);
-
-
-  // }
 
   async upLoadFileBG(evento: Event) {
     evento.preventDefault;
@@ -248,13 +207,22 @@ export class PersonalCardComponent implements OnInit, OnDestroy {
         // Actualizo los datos via dataService
         this.dataService.upDateEntity(data.newData, "/person").subscribe({
           next: (v) => {
-            console.log("Guardado correctamente: ", v);
+            console.log("Guardado correctamente")
+            this.alertDialog(
+              "ok",
+              ['Datos guardados exitosamente'],
+              1500 );
+
             // Actualizo la variable observada por el resto de los componentes
             // this.dataService.changeGralData(data.newData);
             this.baseDataService.setCurrentBaseData(data.newData);
           },
           error: (e) => {
-            alert("Response Error (" + e.status + ") en el metodo addItem()" + "\n" + e.message);
+            let msg = new Array()
+            msg.push("Se quizo modificar sin exito a: " + this.converPerson.name);
+            msg.push(e.message);
+            this.alertDialog("error", msg, 0 );
+
             console.log("Se quizo modificar sin exito a: " + this.converPerson.name);
           },
           complete: () => console.log("Completado la actualizacion de datos")
@@ -292,13 +260,20 @@ export class PersonalCardComponent implements OnInit, OnDestroy {
         // Actualizo los datos via dataService
         this.dataService.upDateEntity(data.newData, "/socialnetwork").subscribe({
           next: (v) => {
-            console.log("Guardado correctamente: ", v);
+            console.log("Guardado correctamente")
+            this.alertDialog(
+              "ok",
+              ['Datos guardados exitosamente'],
+              1500 );
             // Actualizo la variable observada por el resto de los componentes
             // this.dataService.changeGralData(data.newData);
             this.baseDataService.setCurrentBaseData(data.newData);
           },
           error: (e) => {
-            alert("Response Error (" + e.status + ") en el metodo addItem()" + "\n" + e.message);
+                    let msg = new Array()
+        msg.push("Se quizo modificar sin exito a: " + this.baseData.name);
+        msg.push(e.message);
+        this.alertDialog("error", msg, 0 );
             console.log("Se quizo modificar sin exito a: " + this.baseData.name);
           },
           complete: () => console.log("Completado la actualizacion de Redes Sociales")
@@ -307,5 +282,23 @@ export class PersonalCardComponent implements OnInit, OnDestroy {
       }  // cierro la condicion si action es update
     });  // cierro el afterclosed()
   }  // fin openPersonModal()
+
+  // Mensaje de alerta.
+  // type: "ok", "error", "info"
+  alertDialog( type:string="ok", data:string[], timer:number=0) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = false;
+    dialogConfig.id = "modal-warn";
+
+    // dialogConfig.height = "350px";
+    // dialogConfig.width = "600px";
+    // dialogConfig.maxWidth = '700px';
+    dialogConfig.data = new Mensaje(type, data, timer)
+
+
+    const dialogRef = this.dialog.open(MatAlertComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(() => console.log("Cerrando alert-modal"));
+  }
 
 }

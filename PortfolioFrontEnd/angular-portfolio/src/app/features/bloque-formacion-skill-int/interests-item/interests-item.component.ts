@@ -1,11 +1,13 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { FullPersonDTO, Interest } from '../../../models'
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, Renderer2 } from '@angular/core';
+import { FullPersonDTO, Interest, Mensaje } from '../../../models'
 
 import { faTrash, faPen, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { BaseDataService, DataService } from 'src/app/service/data.service';
 import { AdminService } from 'src/app/service/auth.service';
 import { FormService } from 'src/app/service/ui.service';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatAlertComponent } from 'src/app/shared/mat-alert/mat-alert.component';
 
 @Component({
   selector: 'app-interests-item',
@@ -43,12 +45,14 @@ export class InterestsItemComponent implements OnInit, OnDestroy {
   openForm: number;
   private formServiceSubscription: Subscription | undefined;
 
-
   constructor(
     private dataService: DataService,
     private adminService: AdminService,
     private baseDataService: BaseDataService,
     private formService: FormService,
+
+    private dialog: MatDialog,
+    
   ) { }
 
   ngOnInit(): void {
@@ -115,24 +119,53 @@ export class InterestsItemComponent implements OnInit, OnDestroy {
     // Actualizacion de Interest
     this.dataService.upDateEntity(interest, "/interest").subscribe({
       next: (v) => {
-        console.log("Guardado correctamente: ", v)
+        console.log("Guardado correctamente")
+        this.alertDialog(
+          "ok",
+          ['Datos guardados exitosamente'],
+          1500 );
       },
       error: (e) => {
-        alert("Response Error (" + e.status + ") en el metodo upDateItem()" + "\n" + e.message);
+        let msg = new Array()
+        msg.push("Se quizo modificar sin exito a: " + this.oldData.name);
+        msg.push(e.message);
+        this.alertDialog("error", msg, 0 );
+        // alert("Response Error (" + e.status + ") en el metodo upDateItem()" + "\n" + e.message);
         console.log("Se quizo modificar sin exito a: " + this.oldData.name);
         // Restauro valor original
-        interest = this.oldData;
+        this.formData = this.oldData;
+
       },
       complete: () => console.log("Completada la actualizacion del interes")
     });
 
     this.toggleForm(interest);  // cierro el formulario
-    this.baseDataService.setCurrentBaseData(this.baseData);
+    // this.baseDataService.setCurrentBaseData(this.baseData);
 
   }
 
   cancelation(interest: Interest) {
     this.toggleForm(interest);  // cierro el formulario
   }
+
+
+  // Mensaje de alerta.
+  // type: "ok", "error", "info"
+  alertDialog( type:string="ok", data:string[], timer:number=0) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = false;
+    dialogConfig.id = "modal-warn";
+
+    // dialogConfig.height = "350px";
+    // dialogConfig.width = "600px";
+    // dialogConfig.maxWidth = '700px';
+    dialogConfig.data = new Mensaje(type, data, timer)
+
+
+    const dialogRef = this.dialog.open(MatAlertComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(() => console.log("Cerrando alert-modal"));
+  }
+
 
 }

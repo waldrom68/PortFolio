@@ -3,12 +3,13 @@ import { BaseDataService, DataService } from 'src/app/service/data.service';
 import { AdminService } from 'src/app/service/auth.service';
 import { faPlusCircle, faTimes } from '@fortawesome/free-solid-svg-icons';
 
-import { Degree, FullPersonDTO } from '../../models'
+import { Degree, FullPersonDTO, Mensaje } from '../../models'
 
 import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MessageBoxComponent } from '../../shared/message-box/message-box.component';
 import { Subscription } from 'rxjs';
 import { FormService } from 'src/app/service/ui.service';
+import { MatAlertComponent } from 'src/app/shared/mat-alert/mat-alert.component';
 
 @Component({
   selector: 'app-degree',
@@ -45,9 +46,11 @@ export class DegreeComponent implements OnInit, OnDestroy {
   openForm: number;
   private formServiceSubscription: Subscription | undefined;
   
+  
   constructor(
     private dataService: DataService,
     public matDialog: MatDialog,
+    public dialog: MatDialog,
 
     private adminService: AdminService,
     private baseDataService: BaseDataService,
@@ -117,6 +120,11 @@ export class DegreeComponent implements OnInit, OnDestroy {
       this.dataService.delEntity(this.itemParaBorrar, "/degree").subscribe({
         next: (v) => {
           console.log("Se ha eliminado exitosamente a: ", this.itemParaBorrar);
+          this.alertDialog(
+            "ok",
+            ['Se ha eliminado exitosamente'],
+            1500 );
+
           this.baseData.degree = this.baseData.degree.filter((t) => { return t !== this.itemParaBorrar })
           // Actualizo la informacion en el origen
           // this.baseData.degree = this.myData;
@@ -124,7 +132,11 @@ export class DegreeComponent implements OnInit, OnDestroy {
           this.baseDataService.setCurrentBaseData(this.baseData);
         },
         error: (e) => {
-          alert("Response Error (" + e.status + ")" + "\n" + e.message);
+          let msg = new Array()
+          msg.push("Se quizo modificar sin exito a: " + this.itemParaBorrar.name);
+          msg.push(e.message);
+          this.alertDialog("error", msg, 0 );
+
           console.log("Se quizo eliminar sin exito a: ", this.itemParaBorrar);
         },
         complete: () => { console.log("Completada la actualizacion del nivel de Formación"); }
@@ -137,14 +149,23 @@ export class DegreeComponent implements OnInit, OnDestroy {
   addItem(degree: Degree) {
     this.dataService.addEntity(degree, "/degree").subscribe({
       next: (v) => {
-        console.log("Guardado correctamente: ", v);
+        console.log("Guardado correctamente")
+        this.alertDialog(
+          "ok",
+          ['Datos guardados exitosamente'],
+          1500 );
+
         degree.id = v.id;
         degree.person = this.baseData.id;
         this.baseData.degree.push(degree);
         this.baseDataService.setCurrentBaseData(this.baseData);
       },
       error: (e) => {
-        alert("Response Error (" + e.status + ") en el metodo addItem()" + "\n" + e.message);
+        let msg = new Array()
+        msg.push("Se quizo agregar sin exito a: " + degree.name);
+        msg.push(e.message);
+        this.alertDialog("error", msg, 0 );
+
         console.log("Se quizo agregar sin exito a: " + degree.name);
       },
       complete: () => console.log("Completado el alta de la Formación")
@@ -190,4 +211,24 @@ export class DegreeComponent implements OnInit, OnDestroy {
 
     )
   }
+
+    // Mensaje de alerta.
+  // type: "ok", "error", "info"
+  alertDialog( type:string="ok", data:string[], timer:number=0) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = false;
+    dialogConfig.id = "modal-warn";
+
+    // dialogConfig.height = "350px";
+    // dialogConfig.width = "600px";
+    // dialogConfig.maxWidth = '700px';
+    dialogConfig.data = new Mensaje(type, data, timer)
+
+
+    const dialogRef = this.dialog.open(MatAlertComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(() => console.log("Cerrando alert-modal"));
+  }
+
+
 }

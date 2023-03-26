@@ -1,15 +1,16 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { BaseDataService, DataService } from 'src/app/service/data.service';
 import { AdminService } from 'src/app/service/auth.service';
 
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
-import { FullPersonDTO, Interest } from '../../models'
+import { FullPersonDTO, Interest, Mensaje } from '../../models'
 
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MessageBoxComponent } from '../../shared/message-box/message-box.component';
 import { Subscription } from 'rxjs';
 import { FormService } from 'src/app/service/ui.service';
+import { MatAlertComponent } from 'src/app/shared/mat-alert/mat-alert.component';
 
 @Component({
   selector: 'app-interests',
@@ -35,13 +36,16 @@ export class InterestsComponent implements OnInit, OnDestroy {
   private BaseDataServiceSubscription: Subscription | undefined;
   openForm: number;
   private formServiceSubscription: Subscription | undefined;
-
+  element: object;
+  fragment: string = 'Init';
 
   constructor(
     private dataService: DataService,
     private baseDataService: BaseDataService,
 
     public matDialog: MatDialog,
+    public dialog: MatDialog,
+    private renderer: Renderer2,  // Se usa para renderizar tras la carga de todos los componentes iniciales, ngAfterViewInit 
 
     private adminService: AdminService,
     private formService: FormService,
@@ -111,6 +115,10 @@ export class InterestsComponent implements OnInit, OnDestroy {
       this.dataService.delEntity(this.itemParaBorrar, "/interest").subscribe({
         next: (v) => {
           console.log("Se ha eliminado exitosamente a: ", this.itemParaBorrar);
+          this.alertDialog(
+            "ok",
+            ['Datos eliminado exitosamente'],
+            1500 );
           this.baseData.interest = this.baseData.interest.filter((t) => { return t !== this.itemParaBorrar })
           // Actualizo la informacion en el origen
           this.itemParaBorrar = null;
@@ -118,7 +126,10 @@ export class InterestsComponent implements OnInit, OnDestroy {
 
         },
         error: (e) => {
-          alert("Response Error (" + e.status + ")" + "\n" + e.message);
+          let msg = new Array()
+          msg.push("Se quizo eliminar sin exito a: " + this.itemParaBorrar.name);
+          msg.push(e.message);
+          this.alertDialog("error", msg, 0 );
           console.log("Se quizo eliminar sin exito a: ", this.itemParaBorrar);
         },
         complete: () => console.log("Completada la actualizacion del interes")
@@ -131,14 +142,22 @@ export class InterestsComponent implements OnInit, OnDestroy {
   addItem(interest: Interest) {
     this.dataService.addEntity(interest, "/interest").subscribe({
       next: (v) => {
-        console.log("Agregado correctamente: ", v);
+        console.log("Agregado correctamente: ");
+        this.alertDialog(
+          "ok",
+          ['Datos guardados exitosamente'],
+          1500 );
         interest.id = v.id;
         interest.person = this.baseData.id;
         this.baseData.interest.push(v);
         this.baseDataService.setCurrentBaseData(this.baseData);
       },
       error: (e) => {
-        alert("Response Error (" + e.status + ") en el metodo addItem()" + "\n" + e.message);
+        let msg = new Array()
+        msg.push("Se quizo agregar sin exito a: " + interest.name);
+        msg.push(e.message);
+        this.alertDialog("error", msg, 0 );
+
         console.log("Se quizo agregar sin exito a: " + interest.name);
       },
       complete: () => console.log("Completado el alta del interes")
@@ -186,4 +205,27 @@ export class InterestsComponent implements OnInit, OnDestroy {
     )
   }
 
+  
+  // Mensaje de alerta.
+  // type: "ok", "error", "info"
+  alertDialog( type:string="ok", data:string[], timer:number=0) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = false;
+    dialogConfig.id = "modal-warn";
+
+    // dialogConfig.height = "350px";
+    // dialogConfig.width = "600px";
+    // dialogConfig.maxWidth = '700px';
+    dialogConfig.data = new Mensaje(type, data, timer)
+
+
+    const dialogRef = this.dialog.open(MatAlertComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(() => console.log("Cerrando alert-modal"));
+  }
+  
+  ngAfterViewInit(): void {
+    let element = this.renderer.selectRootElement(`#${this.fragment}`, true);
+    element.scrollIntoView({ behavior: 'smooth' });
+  }
 }

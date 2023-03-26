@@ -1,11 +1,13 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { FullPersonDTO, Project } from '../../../models'
+import { FullPersonDTO, Mensaje, Project } from '../../../models'
 
 import { faPen, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { BaseDataService, DataService } from 'src/app/service/data.service';
 import { AdminService } from 'src/app/service/auth.service';
 import { FormService } from 'src/app/service/ui.service';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatAlertComponent } from 'src/app/shared/mat-alert/mat-alert.component';
 
 @Component({
   selector: 'app-projects-item',
@@ -48,6 +50,7 @@ export class ProjectsItemComponent implements OnInit, OnDestroy {
     private adminService: AdminService,
     private baseDataService: BaseDataService,
     private formService: FormService,
+    private dialog: MatDialog,
     ) { }
 
   ngOnInit(): void {
@@ -113,10 +116,18 @@ export class ProjectsItemComponent implements OnInit, OnDestroy {
     // Actualizacion 
     this.dataService.upDateEntity(project, "/project").subscribe( {
       next: (v) => {
-        console.log("Guardado correctamente: ", v);
+        console.log("Guardado correctamente")
+        this.alertDialog(
+          "ok",
+          ['Datos guardados exitosamente'],
+          1500 );
       },
       error: (e) => {
-        alert("Response Error (" + e.status + ") en el metodo upDateItem()" + "\n" + e.message);
+        let msg = new Array()
+        msg.push("Se quizo modificar sin exito a: " + this.oldData.name);
+        msg.push(e.message);
+        this.alertDialog("error", msg, 0 );
+
         console.log("Se quizo modificar sin exito a: " + this.oldData.name);
         // Restauro valor original
         project = this.oldData;
@@ -132,5 +143,21 @@ export class ProjectsItemComponent implements OnInit, OnDestroy {
   cancelation(project: Project) {
     this.toggleForm(project);  // cierro el formulario
   }
+  // Mensaje de alerta.
+  // type: "ok", "error", "info"
+  alertDialog( type:string="ok", data:string[], timer:number=0) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = false;
+    dialogConfig.id = "modal-warn";
 
+    // dialogConfig.height = "350px";
+    // dialogConfig.width = "600px";
+    // dialogConfig.maxWidth = '700px';
+    dialogConfig.data = new Mensaje(type, data, timer)
+
+
+    const dialogRef = this.dialog.open(MatAlertComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(() => console.log("Cerrando alert-modal"));
+  }
 }

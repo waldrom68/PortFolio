@@ -1,16 +1,17 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { BaseDataService, DataService } from 'src/app/service/data.service';
 import { AdminService } from 'src/app/service/auth.service';
 
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
-import { HardSkill, FullPersonDTO} from '../../models'
+import { HardSkill, FullPersonDTO, Mensaje} from '../../models'
 
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MessageBoxComponent } from '../../shared/message-box/message-box.component';
 
 import { Subscription } from 'rxjs';
 import { FormService } from 'src/app/service/ui.service';
+import { MatAlertComponent } from 'src/app/shared/mat-alert/mat-alert.component';
 
 // Declaro la funcion que debe levantarse de \src\assets\widget.js
 declare function initAndSetupTheSliders(): void;
@@ -42,11 +43,16 @@ export class HardSkillsComponent implements OnInit, OnDestroy {
   openForm: number;
   private formServiceSubscription: Subscription | undefined;
   
+  element: object;
+fragment: string = 'Init';
   constructor(
     private dataService: DataService,
     private baseDataService: BaseDataService,
 
     public matDialog: MatDialog,
+    public dialog: MatDialog,
+
+    private renderer: Renderer2,  // Se usa para renderizar tras la carga de todos los componentes iniciales, ngAfterViewInit 
  
     private adminService: AdminService,
     private formService: FormService,
@@ -114,13 +120,21 @@ export class HardSkillsComponent implements OnInit, OnDestroy {
       this.dataService.delEntity(this.itemParaBorrar, "/hardskill").subscribe( {
         next: (v) => {
           console.log("Se ha eliminado exitosamente a: ", this.itemParaBorrar);
+          this.alertDialog(
+            "ok",
+            ['Se ha eliminado exitosamente'],
+            1500 );
+
           this.baseData.hardskill = this.baseData.hardskill.filter((t) => { return t !== this.itemParaBorrar })
           // Actualizo la informacion en el origen
           this.itemParaBorrar = null;
           this.baseDataService.setCurrentBaseData(this.baseData);
         },
         error: (e) => {
-          alert("Response Error (" + e.status + ")" + "\n" + e.message);
+          let msg = new Array()
+          msg.push("Se quizo eliminar sin exito a: " + this.itemParaBorrar.name);
+          msg.push(e.message);
+          this.alertDialog("error", msg, 0 );
           console.log("Se quizo eliminar sin exito a: " , this.itemParaBorrar);
         },
         complete: () => {console.log("Completada la actualizacion del hardSkill");}
@@ -133,14 +147,23 @@ export class HardSkillsComponent implements OnInit, OnDestroy {
   addItem(hardSkill: HardSkill) {
     this.dataService.addEntity(hardSkill, "/hardskill").subscribe( {
       next: (v) => {
-        console.log("Agregado correctamente: ", v);
+        console.log("Guardado correctamente")
+        this.alertDialog(
+          "ok",
+          ['Datos guardados exitosamente'],
+          1500 );
+
         hardSkill.id = v.id;
         hardSkill.person = this.baseData.id;
         this.baseData.hardskill.push(hardSkill);
         this.baseDataService.setCurrentBaseData(this.baseData);
       },
       error: (e) => {
-        alert("Response Error (" + e.status + ") en el metodo addItem()" + "\n" + e.message);
+        let msg = new Array()
+        msg.push("Se quizo agregar sin exito a: " + this.itemParaBorrar.name);
+        msg.push(e.message);
+        this.alertDialog("error", msg, 0 );
+
         console.log("Se quizo agregar sin exito a: " + hardSkill.name);
       },
       complete: () => console.log("Completado el alta del hardSkill")
@@ -186,7 +209,29 @@ export class HardSkillsComponent implements OnInit, OnDestroy {
     )
   }
 
+    // Mensaje de alerta.
+  // type: "ok", "error", "info"
+  alertDialog( type:string="ok", data:string[], timer:number=0) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = false;
+    dialogConfig.id = "modal-warn";
+
+    // dialogConfig.height = "350px";
+    // dialogConfig.width = "600px";
+    // dialogConfig.maxWidth = '700px';
+    dialogConfig.data = new Mensaje(type, data, timer)
+
+
+    const dialogRef = this.dialog.open(MatAlertComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(() => console.log("Cerrando alert-modal"));
+  }
   
+  ngAfterViewInit(): void {
+  let element = this.renderer.selectRootElement(`#${this.fragment}`, true);
+  element.scrollIntoView({ behavior: 'smooth' });
+}
+
   ngAfterViewChecked() {
     initAndSetupTheSliders();
   }

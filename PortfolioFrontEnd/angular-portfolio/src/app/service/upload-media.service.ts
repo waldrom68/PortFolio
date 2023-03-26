@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { getDownloadURL, getStorage, list, ref, Storage, uploadBytes, uploadBytesResumable } from '@angular/fire/storage';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Observable, Subscription } from 'rxjs';
-import { FullPersonDTO, Person } from '../models';
+import { FullPersonDTO, Mensaje, Person } from '../models';
+import { MatAlertComponent } from '../shared/mat-alert/mat-alert.component';
 import { BaseDataService, DataService } from './data.service';
 import { ProgressValueService } from './ui.service';
 
@@ -29,6 +31,8 @@ export class UploadMediaService {
     private storage: Storage,
     private dataService: DataService,
     private baseDataService: BaseDataService,
+
+    private dialog: MatDialog,
 
 
   ) {
@@ -117,6 +121,11 @@ export class UploadMediaService {
 
           this.dataService.upDateEntity(person, "/person").subscribe({
             next: (v) => {
+              this.alertDialog(
+                "ok",
+                ['Imagen guardada exitosamente'],
+                1500);
+
               console.log("Guardado correctamente: ", v)
 
               // actualizo los valores
@@ -129,7 +138,11 @@ export class UploadMediaService {
 
             },
             error: (e) => {
-              alert("Response Error (" + e.status + ") en el metodo upDateItem()" + "\n" + e.message);
+              let msg = new Array()
+              msg.push("Se quizo modificar sin exito la imagen");
+              msg.push(e.message);
+              this.alertDialog("error", msg, 0);
+
               console.log("Se quizo cambiar imagen del Perfil sin exito");
               // Restauro valor original
             },
@@ -144,4 +157,21 @@ export class UploadMediaService {
     );
   }
 
+    // Mensaje de alerta.
+  // type: "ok", "error", "info"
+  alertDialog( type:string="ok", data:string[], timer:number=0) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = false;
+    dialogConfig.id = "modal-warn";
+
+    // dialogConfig.height = "350px";
+    // dialogConfig.width = "600px";
+    // dialogConfig.maxWidth = '700px';
+    dialogConfig.data = new Mensaje(type, data, timer)
+
+
+    const dialogRef = this.dialog.open(MatAlertComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(() => console.log("Cerrando alert-modal"));
+  }
 }

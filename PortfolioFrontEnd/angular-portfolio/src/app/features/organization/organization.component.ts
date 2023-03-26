@@ -3,11 +3,12 @@ import { BaseDataService, DataService } from 'src/app/service/data.service';
 import { AdminService } from 'src/app/service/auth.service';
 import { faPlusCircle, faTimes } from '@fortawesome/free-solid-svg-icons';
 
-import { Organization, FullPersonDTO } from '../../models'
+import { Organization, FullPersonDTO, Mensaje } from '../../models'
 
 import { MatDialog, MatDialogConfig, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MessageBoxComponent } from '../../shared/message-box/message-box.component';
 import { Subscription } from 'rxjs';
+import { MatAlertComponent } from 'src/app/shared/mat-alert/mat-alert.component';
 
 @Component({
   selector: 'app-organization',
@@ -38,6 +39,7 @@ export class OrganizationComponent implements OnInit, OnDestroy {
   constructor(
     private dataService: DataService,
     public matDialog: MatDialog,
+    public dialog: MatDialog,
 
     private adminService: AdminService,
     private baseDataService: BaseDataService,
@@ -87,14 +89,23 @@ export class OrganizationComponent implements OnInit, OnDestroy {
   addItem(organization: Organization) {
     this.dataService.addEntity(organization, "/organization").subscribe({
       next: (v) => {
-        console.log("Guardado correctamente: ", v);
+        console.log("Guardado correctamente")
+        this.alertDialog(
+          "ok",
+          ['Datos guardados exitosamente'],
+          1500 );
+
         organization.id = v.id;
         organization.person = this.baseData.id;
         this.baseData.organization.push(organization);
         this.baseDataService.setCurrentBaseData(this.baseData);
       },
       error: (e) => {
-        alert("Response Error (" + e.status + ") en el metodo addItem()" + "\n" + e.message);
+        let msg = new Array()
+        msg.push("Se quizo modificar sin exito a: " + organization.name);
+        msg.push(e.message);
+        this.alertDialog("error", msg, 0 );
+
         console.log("Se quizo agregar sin exito a: " + organization.name);
       },
       complete: () => console.log("Completado el alta de la Organizacion")
@@ -117,6 +128,11 @@ export class OrganizationComponent implements OnInit, OnDestroy {
     if (this.itemParaBorrar) {
       this.dataService.delEntity(this.itemParaBorrar, "/organization").subscribe({
         next: (v) => {
+          this.alertDialog(
+            "ok",
+            ['Se ha eliminado exitosamente a: ', this.itemParaBorrar],
+            1500 );
+
           console.log("Se ha eliminado exitosamente a: ", this.itemParaBorrar);
           this.baseData.organization = this.baseData.organization.filter((t) => { return t !== this.itemParaBorrar })
           // Actualizo la informacion en el origen
@@ -125,7 +141,11 @@ export class OrganizationComponent implements OnInit, OnDestroy {
           this.baseDataService.setCurrentBaseData(this.baseData);
         },
         error: (e) => {
-          alert("Response Error (" + e.status + ")" + "\n" + e.message);
+          let msg = new Array()
+          msg.push("Se quizo modificar sin exito a: " + this.itemParaBorrar.name);
+          msg.push(e.message);
+          this.alertDialog("error", msg, 0 );
+
           console.log("Se quizo eliminar sin exito a: ", this.itemParaBorrar);
         },
         complete: () => { console.log("Completada la eliminacion de la Organization"); }
@@ -174,5 +194,21 @@ export class OrganizationComponent implements OnInit, OnDestroy {
 
     )
   }
+  // Mensaje de alerta.
+  // type: "ok", "error", "info"
+  alertDialog( type:string="ok", data:string[], timer:number=0) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = false;
+    dialogConfig.id = "modal-warn";
 
+    // dialogConfig.height = "350px";
+    // dialogConfig.width = "600px";
+    // dialogConfig.maxWidth = '700px';
+    dialogConfig.data = new Mensaje(type, data, timer)
+
+
+    const dialogRef = this.dialog.open(MatAlertComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(() => console.log("Cerrando alert-modal"));
+  }
 }

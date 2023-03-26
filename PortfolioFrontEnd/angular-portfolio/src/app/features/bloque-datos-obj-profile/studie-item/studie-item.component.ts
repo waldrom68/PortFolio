@@ -126,29 +126,6 @@ export class StudieItemComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe(() => console.log("Cerrando alert-modal"));
   }
 
-  // PENDIENTE, FUE UNA PRUEBA DE LOS ALERT
-  // DEBE INCLUIRSE EN TODOS LOS COMPOENETES QUE 
-  // TENGAN MENSAJES ERROR, SUCCESS CON ALERT()
-  verError() {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = false;
-    dialogConfig.id = "modal-warn";
-
-    // dialogConfig.height = "350px";
-    // dialogConfig.width = "600px";
-    // dialogConfig.maxWidth = '700px';
-    dialogConfig.data = {
-      type: "error",
-      message: [
-        "Terrible error de programacion",
-        "pruebe contratar a algun experto"
-      ]
-    };
-
-    const dialogRef = this.dialog.open(MatAlertComponent, dialogConfig);
-
-    dialogRef.afterClosed().subscribe(() => console.log("Cerrando alert-modal"));
-  }
 
   delete(studie: Studie) {
     // llamo al metodo del padre via emit()
@@ -161,10 +138,18 @@ export class StudieItemComponent implements OnInit, OnDestroy {
 
     this.dataService.upDateEntity(studie, "/studie").subscribe({
       next: (v) => {
-        console.log("Guardado correctamente: ", v);
+        console.log("Guardado correctamente")
+        this.alertDialog(
+          "ok",
+          ['Datos guardados exitosamente'],
+          1500 );
       },
       error: (e) => {
-        alert("Response Error (" + e.status + ") en el metodo addItem()" + "\n" + e.message);
+        let msg = new Array()
+        msg.push("Se quizo modificar sin exito a: " + this.oldData.name);
+        msg.push(e.message);
+        this.alertDialog("error", msg, 0 );
+        
         console.log("Se quizo agregar sin exito a: " + studie.name, "si realmente tiene el mismo nombre, procure hacer un pequeño cambio");
         // AQUI RESTAURO oldData
         studie = this.oldData;
@@ -181,5 +166,24 @@ export class StudieItemComponent implements OnInit, OnDestroy {
   cancelation(studie: Studie) {
     this.toggleForm(studie);  // cierro el formulario
   }
+
+  // Mensaje de alerta.
+  // type: "ok", "error", "info"
+  alertDialog( type:string="ok", data:string[], timer:number=0) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = false;
+    dialogConfig.id = "modal-warn";
+
+    // dialogConfig.height = "350px";
+    // dialogConfig.width = "600px";
+    // dialogConfig.maxWidth = '700px';
+    dialogConfig.data = new Mensaje(type, data, timer)
+
+
+    const dialogRef = this.dialog.open(MatAlertComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(() => console.log("Cerrando alert-modal"));
+  }
+
 
 }

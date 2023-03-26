@@ -41,7 +41,7 @@ export class InterceptorService {
         const token = this.tokenService.getToken();
 
         // this.tokenService.isValidAdmin();
-        alert("detengo aqui, intercept() ")
+
         // if (token != null ) {
         if (token != null && this.tokenService.isValidAdmin()) {
             console.log("Tiene token y está vigente");
@@ -52,7 +52,7 @@ export class InterceptorService {
             this.adminService.setCurrentAdmin( true );
         } else {
             console.log("Sin loguear o con token expirado");
-
+            this.adminService.setCurrentAdmin( false );
         }
 
         return next.handle(intReq);

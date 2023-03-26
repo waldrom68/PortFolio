@@ -7,7 +7,9 @@
 
 .custom
 {
-    background-color: var(--triada-color-m);
+    /* background-color: var(--triada-color-m); */
+    background: linear-gradient(45deg, var(--triada-color-l) 0%, 
+    var(--triada-color-m) 51%, var(--triada-color-d) 85%);
 }
 
 button:hover {

@@ -10,7 +10,7 @@ span.close {
     padding: 0 0.5rem;
     font-size: 2rem;
     line-height: 2rem;
-    color: var(--danger);
+    color: white;
 }
     span.close:hover {
 
@@ -28,10 +28,10 @@ span.close {
 
 ::ng-deep mat-dialog-container#modal-warn {
     position:fixed;
-    top:auto;
+    top:0;
     right:0;
     left:auto;
-    bottom:0;
+    bottom:auto;
     height: auto;
     margin: 0 !important;
     padding: 0 !important;

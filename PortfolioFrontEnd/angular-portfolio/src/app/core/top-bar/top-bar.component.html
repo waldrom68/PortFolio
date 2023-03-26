@@ -78,13 +78,24 @@
 
       <div class="row">
 
+
+
         <div *ngFor="let elemento of baseData.socialnetwork" class="fa-container m-2 d-flex">
-
-          <fa-icon *ngIf="iconExists(iconPrefix, elemento.iconname);"
-            [icon]="[iconPrefix , elemento.iconname]"></fa-icon>
-
-          <span class="fa-container ml-2">{{elemento.name}}</span>
-
+          
+          <!-- Por validacion, debe tener un enlace a una url, pero por las -->
+          <ng-container *ngIf="elemento.url.length; else sinEnlace">
+            <a class="url" href="https://{{elemento.url}}" target="_blank">
+              <fa-icon *ngIf="iconExists(iconPrefix, elemento.iconname);"
+                [icon]="[iconPrefix , elemento.iconname]"></fa-icon>
+                <span class="fa-container ml-2">{{elemento.name}}</span>
+            </a>
+          </ng-container>
+          <!-- Dejo este otro contenedor sin enlace -->
+          <ng-template #sinEnlace>
+            <fa-icon *ngIf="iconExists(iconPrefix, elemento.iconname);"
+              [icon]="[iconPrefix , elemento.iconname]"></fa-icon>
+            <span class="fa-container ml-2">{{elemento.name}}</span>
+          </ng-template>
         </div>
 
       </div>

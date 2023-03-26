@@ -31,3 +31,33 @@ console.log("Modo development")
 //  * on performance if an error is thrown.
 //  */
 // import 'zone.js/plugins/zone-error';  // Included with Angular CLI.
+
+// element: object;
+// fragment: string = 'Init';
+// private renderer: Renderer2,  // Se usa para renderizar tras la carga de todos los componentes iniciales, ngAfterViewInit 
+// ngAfterViewInit(): void {
+//   let element = this.renderer.selectRootElement(`#${this.fragment}`, true);
+//   element.scrollIntoView({ behavior: 'smooth' });
+// }
+
+
+
+// private dialog: MatDialog,
+
+  // // Mensaje de alerta.
+  // // type: "ok", "error", "info"
+  // alertDialog( type:string="ok", data:string[], timer:number=0) {
+  //   const dialogConfig = new MatDialogConfig();
+  //   dialogConfig.disableClose = false;
+  //   dialogConfig.id = "modal-warn";
+
+  //   // dialogConfig.height = "350px";
+  //   // dialogConfig.width = "600px";
+  //   // dialogConfig.maxWidth = '700px';
+  //   dialogConfig.data = new Mensaje(type, data, timer)
+
+
+  //   const dialogRef = this.dialog.open(MatAlertComponent, dialogConfig);
+
+  //   dialogRef.afterClosed().subscribe(() => console.log("Cerrando alert-modal"));
+  // }

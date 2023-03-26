@@ -1,16 +1,17 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { BaseDataService, DataService } from 'src/app/service/data.service';
 import { AdminService } from 'src/app/service/auth.service';
 
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
-import { SoftSkill, FullPersonDTO } from '../../models'
+import { SoftSkill, FullPersonDTO, Mensaje } from '../../models'
 
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MessageBoxComponent } from '../../shared/message-box/message-box.component';
 
 import { Observable, Subscription } from 'rxjs';
 import { FormService } from 'src/app/service/ui.service';
+import { MatAlertComponent } from 'src/app/shared/mat-alert/mat-alert.component';
 
 
 // Declaro la funcion que debe levantarse de \src\assets\widget.js
@@ -32,20 +33,27 @@ export class SoftSkillsComponent implements OnInit, OnDestroy {
   showBtnAction: boolean = true;  // flag para mostrar o no los btn's de acciones del usuario
 
   itemParaBorrar: any;
-  
+
   // Validacion Admin STATUS
   esAdmin: boolean;
   private AdminServiceSubscription: Subscription | undefined;
- 
+
   baseData: FullPersonDTO;
   private BaseDataServiceSubscription: Subscription | undefined;
   openForm: number;
   private formServiceSubscription: Subscription | undefined;
-  
+
+  element: object;
+  fragment: string = 'Init';
+
   constructor(
     private dataService: DataService,
 
     public matDialog: MatDialog,
+    public dialog: MatDialog,
+
+    private renderer: Renderer2,  // Se usa para renderizar tras la carga de todos los componentes iniciales, ngAfterViewInit
+
     private adminService: AdminService,
     private baseDataService: BaseDataService,
     private formService: FormService,
@@ -90,7 +98,7 @@ export class SoftSkillsComponent implements OnInit, OnDestroy {
     // Cierra el formulario de edicion o creacion
     this.showForm = !this.showForm;
     this.showBtnAction = !this.showBtnAction;
-    
+
     if (this.showForm) {
       this.formService.setCurrentForm(this.openForm + 1)
     } else {
@@ -115,6 +123,11 @@ export class SoftSkillsComponent implements OnInit, OnDestroy {
       // console.log(`Se acepto el borrado del item "${this.itemParaBorrar.name}"`);
       this.dataService.delEntity(this.itemParaBorrar, "/softskill").subscribe({
         next: (v) => {
+          this.alertDialog(
+            "ok",
+            ['Se ha eliminado exitosamente'],
+            1500 );
+
           console.log("Se ha eliminado exitosamente a: ", this.itemParaBorrar);
           this.myData = this.myData.filter((t) => { return t !== this.itemParaBorrar })
           // Actualizo la informacion en el origen
@@ -123,7 +136,11 @@ export class SoftSkillsComponent implements OnInit, OnDestroy {
 
         },
         error: (e) => {
-          alert("Response Error (" + e.status + ")" + "\n" + e.message);
+          let msg = new Array()
+          msg.push("Se quizo eliminar sin exito a: " + this.itemParaBorrar.name);
+          msg.push(e.message);
+          this.alertDialog("error", msg, 0 );
+
           console.log("Se quizo eliminar sin exito a: ", this.itemParaBorrar);
         },
         complete: () => console.log("Completada la actualizacion del softskill")
@@ -136,14 +153,23 @@ export class SoftSkillsComponent implements OnInit, OnDestroy {
   addItem(softSkill: SoftSkill) {
     this.dataService.addEntity(softSkill, "/softskill").subscribe({
       next: (v) => {
-        console.log("Agregado correctamente: ", v);
+        console.log("Guardado correctamente")
+        this.alertDialog(
+          "ok",
+          ['Datos guardados exitosamente'],
+          1500 );
+
         softSkill.id = v.id;
         softSkill.person = this.baseData.id;
         this.myData.push(softSkill);
         this.baseData.softskill = this.myData;
       },
       error: (e) => {
-        alert("Response Error (" + e.status + ") en el metodo addItem()" + "\n" + e.message);
+        let msg = new Array()
+        msg.push("Se quizo agregar sin exito a: " + softSkill.name);
+        msg.push(e.message);
+        this.alertDialog("error", msg, 0 );
+
         console.log("Se quizo agregar sin exito a: " + softSkill.name);
       },
       complete: () => console.log("Completado el alta del softskill")
@@ -189,10 +215,29 @@ export class SoftSkillsComponent implements OnInit, OnDestroy {
     )
   }
 
-  // ngAfterViewInit(){
-  //   console.log("se termino ngAfterViewInit")
-  //   updateProgress();
-  // }
+  // Mensaje de alerta.
+  // type: "ok", "error", "info"
+  alertDialog(type: string = "ok", data: string[], timer: number = 0) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = false;
+    dialogConfig.id = "modal-warn";
+
+    // dialogConfig.height = "350px";
+    // dialogConfig.width = "600px";
+    // dialogConfig.maxWidth = '700px';
+    dialogConfig.data = new Mensaje(type, data, timer)
+
+
+    const dialogRef = this.dialog.open(MatAlertComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(() => console.log("Cerrando alert-modal"));
+  }
+
+
+ngAfterViewInit(): void {
+  let element = this.renderer.selectRootElement(`#${this.fragment}`, true);
+  element.scrollIntoView({ behavior: 'smooth' });
+}
 
   ngAfterViewChecked() {
     // console.log("se termino ngAfterViewChecked")

@@ -128,31 +128,6 @@ export class CareerItemComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe(() => console.log("Cerrando alert-modal"));
   }
 
-  // PENDIENTE, FUE UNA PRUEBA DE LOS ALERT
-  // DEBE INCLUIRSE EN TODOS LOS COMPOENETES QUE 
-  // TENGAN MENSAJES ERROR, SUCCESS CON ALERT()
-  verError() {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = false;
-    dialogConfig.id = "modal-warn";
-
-    // dialogConfig.height = "350px";
-    // dialogConfig.width = "600px";
-    // dialogConfig.maxWidth = '700px';
-    dialogConfig.data = {
-      type: "error",
-      message: [
-        "Terrible error de programacion",
-        "pruebe contratar a algun experto"
-      ]
-    };
-
-    const dialogRef = this.dialog.open(MatAlertComponent, dialogConfig);
-
-    dialogRef.afterClosed().subscribe(() => console.log("Cerrando alert-modal"));
-  }
-
-
   delete(laboralCareer: LaboralCareer) {
     // llamo al metodo del padre via emit()
     if (this.esAdmin) {
@@ -165,9 +140,18 @@ export class CareerItemComponent implements OnInit, OnDestroy {
     this.dataService.upDateEntity(laboralCareer, "/laboralcareer").subscribe({
       next: (v) => {
         console.log("Guardado correctamente: ", v);
+        this.alertDialog(
+          "ok",
+          ['Datos guardados exitosamente'],
+          1500 );
       },
       error: (e) => {
-        alert("Response Error (" + e.status + ") en el metodo addItem()" + "\n" + e.message);
+        let msg = new Array()
+        msg.push("Se quizo obtener los datos sin exito," + e.message)
+        msg.push("Se quizo modificar sin exito al trabajo");
+        msg.push(e.message);
+        this.alertDialog("error", msg, 0 );
+
         console.log("Se quizo agregar sin exito a: " + laboralCareer.resume, "si realmente tiene la misma descripcion, procure hacer un pequeño cambio");
         // AQUI RESTAURO oldData
         laboralCareer = this.oldData;
@@ -185,4 +169,23 @@ export class CareerItemComponent implements OnInit, OnDestroy {
   cancelation(laboralCareer: LaboralCareer) {
     this.toggleForm(laboralCareer);  // cierro el formulario
   }
+
+  // Mensaje de alerta.
+  // type: "ok", "error", "info"
+  alertDialog( type:string="ok", data:string[], timer:number=0) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = false;
+    dialogConfig.id = "modal-warn";
+
+    // dialogConfig.height = "350px";
+    // dialogConfig.width = "600px";
+    // dialogConfig.maxWidth = '700px';
+    dialogConfig.data = new Mensaje(type, data, timer)
+
+
+    const dialogRef = this.dialog.open(MatAlertComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(() => console.log("Cerrando alert-modal"));
+  }
+
 }

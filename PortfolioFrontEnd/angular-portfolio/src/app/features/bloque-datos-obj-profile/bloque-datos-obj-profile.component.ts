@@ -71,7 +71,6 @@ export class BloqueDatosObjProfileComponent implements OnInit {
 
   // Metodos de la version anterior sin servicios
   onClick(evento:any) {
-  alert("estoy aqui")
   this.showDatos = !this.showDatos
   }
   toggleContenedorObj() {

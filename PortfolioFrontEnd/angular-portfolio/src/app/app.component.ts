@@ -100,37 +100,53 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     
     // Traigo todos los datos del Portfolio
-
     this.dataService.getPortFolioData().subscribe({
       next: (currentData) => {
-        console.log("Datos obtenidos exitosamente",currentData);
+
+        this.alertDialog(
+          "ok",
+          ['Datos obtenidos exitosamente'],
+          1500 );
 
         this.baseDataService.setCurrentBaseData(currentData);
         this.wait = false;
+        console.log("Obtenidos los datos exitosamente");
+        
 
       },
       error: (e) => {
         // e.status = 0, error del servidor
         // e.status = 400, e.statusText= OK, error en el pedido al servidor
+        let msg = new Array()
+        msg.push("Se quizo obtener los datos sin exito," + e.message)
         this.wait = true;
-        alert("Response Error (" + e.status + ") en iniciar.sesion.component" + "\n" + e.message);
-        console.log("Se quizo obtener los datos sin exito; ", e)
+       
+        console.log("Se quizo obtener los datos sin exito; ")
+        switch (e.status) {
+          case 0:
+            // error en el servidor
+            msg.push("Error en el servicio, reintente en unos minutos");
+            break
+          case 400:
+            if (e.statusText.toLowerCase() == "ok" ) {
+              // error en el pedido del servidor
+              msg.push("Error en la base de datos","Reintente en unos minutos");
+            }
+            break;
+        };
+        this.alertDialog("error", msg, 0 );
       },
       complete: () => { console.log("Finalizado el proceso de obtener los datos del PortFolio") }
     });
 
     
-    // prueba del datepicker
-    // this.dateAdapter.setLocale('es');
-    // this.formDate = this.fb.group({
-    //   date: new FormControl(new Date()),
-    //   shortdate: new FormControl(this.prueba),
-    // });
+
 
   }
 
   // Mensaje de alerta.
-  alertDialog() {
+  // type: "ok", "error", "info"
+  alertDialog( type:string="ok", data:string[], timer:number=0) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = false;
     dialogConfig.id = "modal-warn";
@@ -138,8 +154,7 @@ export class AppComponent implements OnInit {
     // dialogConfig.height = "350px";
     // dialogConfig.width = "600px";
     // dialogConfig.maxWidth = '700px';
-    dialogConfig.data = new Mensaje("ok",
-      ['Todo bien, estoy confirmandolo'], 1500)
+    dialogConfig.data = new Mensaje(type, data, timer)
 
 
     const dialogRef = this.dialog.open(MatAlertComponent, dialogConfig);

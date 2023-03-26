@@ -1,10 +1,12 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { FullPersonDTO, Organization } from '../../../models'
+import { FullPersonDTO, Mensaje, Organization } from '../../../models'
 
 import { faPen, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { BaseDataService, DataService } from 'src/app/service/data.service';
 import { AdminService } from 'src/app/service/auth.service';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatAlertComponent } from 'src/app/shared/mat-alert/mat-alert.component';
 
 
 @Component({
@@ -43,6 +45,7 @@ export class OrganizationItemComponent implements OnInit, OnDestroy {
     private dataService: DataService,
     private adminService: AdminService,
     private baseDataService: BaseDataService,
+    private dialog: MatDialog,
   
   ) { }
 
@@ -94,8 +97,11 @@ export class OrganizationItemComponent implements OnInit, OnDestroy {
     this.dataService.upDateEntity(organization, "/organization").subscribe( {
       
       next: (v) => {
-        console.log("Guardado correctamente: ", v),
-
+        console.log("Guardado correctamente: "),
+        this.alertDialog(
+          "ok",
+          ['Datos guardados exitosamente'],
+          1500 );
         // Debo actualizar dataBase, laboralcareer, la cual es copia del backend.
         // Como sólo se busca la info al iniciar el sistema, debo mantener una imagen
         // de lo que hago en la DB. 
@@ -110,7 +116,11 @@ export class OrganizationItemComponent implements OnInit, OnDestroy {
       },
 
         error: (e) => {
-          alert("Response Error (" + e.status + ") en el metodo upDateItem()" + "\n" + e.message);
+          let msg = new Array()
+          msg.push("Se quizo modificar sin exito a: " + this.oldData.name);
+          msg.push(e.message);
+          this.alertDialog("error", msg, 0 );
+
           console.log("Se quizo modificar sin exito a: " + this.oldData.name);
           // Restauro valor original
           organization = this.oldData;
@@ -127,5 +137,22 @@ export class OrganizationItemComponent implements OnInit, OnDestroy {
     this.toggleForm(organization);  // cierro el formulario
   }
 
+  // Mensaje de alerta.
+  // type: "ok", "error", "info"
+  alertDialog( type:string="ok", data:string[], timer:number=0) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = false;
+    dialogConfig.id = "modal-warn";
+
+    // dialogConfig.height = "350px";
+    // dialogConfig.width = "600px";
+    // dialogConfig.maxWidth = '700px';
+    dialogConfig.data = new Mensaje(type, data, timer)
+
+
+    const dialogRef = this.dialog.open(MatAlertComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(() => console.log("Cerrando alert-modal"));
+  }
 }
   

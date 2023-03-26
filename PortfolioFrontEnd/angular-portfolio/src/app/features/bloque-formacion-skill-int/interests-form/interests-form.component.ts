@@ -55,7 +55,7 @@ export class InterestsFormComponent implements OnInit, OnDestroy {
     
     this.form = this.formBuilder.group({
       name:[this.formData.name, [Validators.required,
-        Validators.minLength(5) ]],
+        Validators.minLength(5), Validators.maxLength(75) ]],
     });
 
     this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(

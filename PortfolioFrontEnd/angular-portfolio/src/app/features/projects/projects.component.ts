@@ -1,15 +1,16 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { BaseDataService, DataService } from 'src/app/service/data.service';
 import { AdminService } from 'src/app/service/auth.service';
 
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
-import {Project, FullPersonDTO} from '../../models'
+import {Project, FullPersonDTO, Mensaje} from '../../models'
 
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MessageBoxComponent } from '../../shared/message-box/message-box.component';
 import { Subscription } from 'rxjs';
 import { FormService } from 'src/app/service/ui.service';
+import { MatAlertComponent } from 'src/app/shared/mat-alert/mat-alert.component';
 
 @Component({
   selector: 'app-projects',
@@ -35,12 +36,16 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   private BaseDataServiceSubscription: Subscription | undefined;
   openForm: number;
   private formServiceSubscription: Subscription | undefined;
-  
+  element: object;
+fragment: string = 'Init';
+
   constructor( 
     private dataService: DataService,
     private baseDataService: BaseDataService,
     
     public matDialog: MatDialog,
+    public dialog: MatDialog,
+    private renderer: Renderer2,  // Se usa para renderizar tras la carga de todos los componentes iniciales, ngAfterViewInit 
 
     private adminService: AdminService,
     private formService: FormService,
@@ -109,6 +114,11 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     if (this.itemParaBorrar) {
       this.dataService.delEntity(this.itemParaBorrar, "/project").subscribe({
         next: (v) => {
+          this.alertDialog(
+            "ok",
+            ['Se ha eliminado exitosamente'],
+            1500 );
+
           console.log("Se ha eliminado exitosamente a: ", this.itemParaBorrar);
           this.baseData.project = this.baseData.project.filter((t) => { return t !== this.itemParaBorrar })
           // Actualizo la informacion en el origen
@@ -117,7 +127,11 @@ export class ProjectsComponent implements OnInit, OnDestroy {
           this.baseDataService.setCurrentBaseData(this.baseData);
         },
         error: (e) => {
-          alert("Response Error (" + e.status + ")" + "\n" + e.message);
+          let msg = new Array()
+          msg.push("Se quizo eliminar sin exito a: " + this.itemParaBorrar.name);
+          msg.push(e.message);
+          this.alertDialog("error", msg, 0 );
+
           console.log("Se quizo eliminar sin exito a: " , this.itemParaBorrar);
         },
         complete: () => console.log("Completada la actualizacion del proyecto")
@@ -129,14 +143,21 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   addItem(project: Project) {
     this.dataService.addEntity(project, "/project").subscribe({
       next: (v) => {
-        console.log("Guardado correctamente: ", v);
+        console.log("Guardado correctamente: ");
+        this.alertDialog(
+          "ok",
+          ['Datos guardados exitosamente'],
+          1500 );
         project.id = v.id;
         project.person = this.baseData.id;
         this.baseData.project.push(v);
         this.baseDataService.setCurrentBaseData(this.baseData);
       },
       error: (e) => {
-        alert("Response Error (" + e.status + ") en el metodo addItem()" + "\n" + e.message);
+                let msg = new Array()
+        msg.push("Se quizo agregar sin exito a: " +  project.name);
+        msg.push(e.message);
+        this.alertDialog("error", msg, 0 );
         console.log("Se quizo agregar sin exito a: " + project.name);
       },
       complete: () => console.log("Completado el alta del Proyecto")
@@ -181,4 +202,29 @@ export class ProjectsComponent implements OnInit, OnDestroy {
 
     )
   }
+
+    // Mensaje de alerta.
+  // type: "ok", "error", "info"
+  alertDialog( type:string="ok", data:string[], timer:number=0) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = false;
+    dialogConfig.id = "modal-warn";
+
+    // dialogConfig.height = "350px";
+    // dialogConfig.width = "600px";
+    // dialogConfig.maxWidth = '700px';
+    dialogConfig.data = new Mensaje(type, data, timer)
+
+
+    const dialogRef = this.dialog.open(MatAlertComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(() => console.log("Cerrando alert-modal"));
+  }
+  
+
+  ngAfterViewInit(): void {
+  let element = this.renderer.selectRootElement(`#${this.fragment}`, true);
+  element.scrollIntoView({ behavior: 'smooth' });
+}
+
 }
