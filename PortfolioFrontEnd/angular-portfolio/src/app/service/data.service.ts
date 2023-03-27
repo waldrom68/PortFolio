@@ -189,9 +189,9 @@ export class DataService {
   getUSER() {
     return this.USER;
   }
-  // gerUserID() {
-  //   return this.USERID
-  // }
+  gerUserID() {
+    return this.USERID
+  }
   //   
   // changeUser() {
   //   this.flagChangeUser = !this.flagChangeUser;

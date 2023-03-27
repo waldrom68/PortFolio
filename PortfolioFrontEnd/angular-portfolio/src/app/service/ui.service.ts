@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { Cards, PortfolioInit} from '../models';
 
-import { CARDS, PORTFOLIOINIT } from '../mock-data';
+import { CARDS, PORTFOLIOINIT } from '../../assets/data/mock-data';
 
 import { DataService } from './data.service';
 

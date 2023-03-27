@@ -54,8 +54,13 @@ span.close {
     background: rgba(119, 179, 93, 0.9) !important;
     padding: 0.5rem !important;
  }
- /* ::ng-deep .modal-content.info {
-    background: rgba(248,248,248, 1) !important;
-} */
+
+ /* El carácter ^ indica que este selector debe seleccionar los
+ elementos <img> sólo si tienen la cadena alerta al comienzo del
+ valor del atributo src.  */
+ /* img[id^="modal-warn"] {
+    border: 5px solid white;
+  } */
+  
 
 

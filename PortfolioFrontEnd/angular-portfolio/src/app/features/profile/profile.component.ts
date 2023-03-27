@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { BaseDataService, DataService, ToPerson } from 'src/app/service/data.service';
@@ -43,13 +43,15 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   baseData: FullPersonDTO;
   private BaseDataServiceSubscription: Subscription | undefined;
-
+  element: object;
+  fragment: string = 'Init';
 
   constructor(
     private formBuilder: FormBuilder,
     private dataService: DataService,
     public matDialog: MatDialog,
     public dialog: MatDialog,
+    private renderer: Renderer2,  // Se usa para renderizar tras la carga de todos los componentes iniciales, ngAfterViewInit 
 
     private adminService: AdminService,
 
@@ -106,13 +108,13 @@ export class ProfileComponent implements OnInit, OnDestroy {
             this.alertDialog(
               "ok",
               ['Datos guardados exitosamente'],
-              1500 );
+              1500);
           },
           error: (e) => {
             let msg = new Array()
             msg.push("Se quizo modificar sin exito el perfi");
             msg.push(e.message);
-            this.alertDialog("error", msg, 0 );
+            this.alertDialog("error", msg, 0);
 
             console.log("Se quizo modificar sin exito el perfil");
             // Restauro valor original
@@ -151,31 +153,31 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   delItem() {
 
-      this.baseData.profile = "";
-      this.converPerson = ToPerson(this.baseData);
+    this.baseData.profile = "";
+    this.converPerson = ToPerson(this.baseData);
 
-      this.dataService.upDateEntity(this.converPerson, "/person").subscribe({
-        next: (v) => {
-          console.log("Se ha eliminado exitosamente ", v);
-          this.alertDialog(
-            "ok",
-            ['Datos eliminado exitosamente'],
-            1500 );
+    this.dataService.upDateEntity(this.converPerson, "/person").subscribe({
+      next: (v) => {
+        console.log("Se ha eliminado exitosamente ", v);
+        this.alertDialog(
+          "ok",
+          ['Datos eliminado exitosamente'],
+          1500);
 
-          this.baseDataService.setCurrentBaseData(this.baseData);
-          this.form.reset();
-        },
-        error: (e) => {
-                  let msg = new Array()
-        msg.push("Se quizo eliminar sin exito el perfil" );
+        this.baseDataService.setCurrentBaseData(this.baseData);
+        this.form.reset();
+      },
+      error: (e) => {
+        let msg = new Array()
+        msg.push("Se quizo eliminar sin exito el perfil");
         msg.push(e.message);
-        this.alertDialog("error", msg, 0 );
-          console.log("Se quizo eliminar sin exito al perfil");
-          // Restauro valor original
-          this.baseData.profile = this.itemParaBorrar;
-        },
-        complete: () => console.log("Completada la actualizacion del Perfil")
-      });
+        this.alertDialog("error", msg, 0);
+        console.log("Se quizo eliminar sin exito al perfil");
+        // Restauro valor original
+        this.baseData.profile = this.itemParaBorrar;
+      },
+      complete: () => console.log("Completada la actualizacion del Perfil")
+    });
 
   }
 
@@ -219,9 +221,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
     )
   }
 
-    // Mensaje de alerta.
+  // Mensaje de alerta.
   // type: "ok", "error", "info"
-  alertDialog( type:string="ok", data:string[], timer:number=0) {
+  alertDialog(type: string = "ok", data: string[], timer: number = 0) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = false;
     dialogConfig.id = "modal-warn";
@@ -235,6 +237,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(MatAlertComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(() => console.log("Cerrando alert-modal"));
+  }
+
+  ngAfterViewInit(): void {
+    let element = this.renderer.selectRootElement(`#${this.fragment}`, true);
+    element.scrollIntoView({ behavior: 'smooth' });
   }
 
 }

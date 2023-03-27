@@ -15,8 +15,8 @@ export const environment = {
   },
   production: false,
   // apiURL: "https://yoprogramo-waldrom68.koyeb.app:8000",  // KOYEB
-  apiURL: "https://yoprogramo-waldrom68.onrender.com",  // RENDER
-  // apiURL: "http://localhost:8080",
+  // apiURL: "https://yoprogramo-waldrom68.onrender.com",  // RENDER
+  apiURL: "http://localhost:8080",
   idPersona:1,
 };
 
@@ -40,24 +40,9 @@ console.log("Modo development")
 //   element.scrollIntoView({ behavior: 'smooth' });
 // }
 
+// private matAlert: MatAlertComponent,
 
-
-// private dialog: MatDialog,
-
-  // // Mensaje de alerta.
-  // // type: "ok", "error", "info"
-  // alertDialog( type:string="ok", data:string[], timer:number=0) {
-  //   const dialogConfig = new MatDialogConfig();
-  //   dialogConfig.disableClose = false;
-  //   dialogConfig.id = "modal-warn";
-
-  //   // dialogConfig.height = "350px";
-  //   // dialogConfig.width = "600px";
-  //   // dialogConfig.maxWidth = '700px';
-  //   dialogConfig.data = new Mensaje(type, data, timer)
-
-
-  //   const dialogRef = this.dialog.open(MatAlertComponent, dialogConfig);
-
-  //   dialogRef.afterClosed().subscribe(() => console.log("Cerrando alert-modal"));
-  // }
+// let msg = new Array()
+// msg.push("Se quizo loguear sin exito como :" + loginUsuario.nombreUsuario);
+// // msg.push(e.message);
+// this.matAlert.alertDialog("error", msg, 0 );

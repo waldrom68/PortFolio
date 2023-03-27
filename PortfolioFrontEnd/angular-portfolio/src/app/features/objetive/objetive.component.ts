@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { BaseDataService, DataService, ToPerson } from 'src/app/service/data.service';
@@ -23,7 +23,7 @@ import { MatAlertComponent } from 'src/app/shared/mat-alert/mat-alert.component'
 export class ObjetiveComponent implements OnInit, OnDestroy {
 
   form: FormGroup;
- 
+
   showForm: boolean = false;  // flag para mostrar o no el formulario
 
   // flag para mostrar o no los btn's de acciones del usuario
@@ -44,12 +44,15 @@ export class ObjetiveComponent implements OnInit, OnDestroy {
   baseData: FullPersonDTO;
   private BaseDataServiceSubscription: Subscription | undefined;
 
+  element: object;
+  fragment: string = 'Init';
 
   constructor(
     private formBuilder: FormBuilder,
     private dataService: DataService,
     public matDialog: MatDialog,
     private dialog: MatDialog,
+    private renderer: Renderer2,  // Se usa para renderizar tras la carga de todos los componentes iniciales, ngAfterViewInit 
 
     private adminService: AdminService,
 
@@ -107,13 +110,13 @@ export class ObjetiveComponent implements OnInit, OnDestroy {
             this.alertDialog(
               "ok",
               ['Datos guardados exitosamente'],
-              1500 );
+              1500);
           },
           error: (e) => {
             let msg = new Array()
             msg.push("Se quizo modificar sin exito el objetivo");
             msg.push(e.message);
-            this.alertDialog("error", msg, 0 );
+            this.alertDialog("error", msg, 0);
 
             console.log("Se quizo modificar sin exito el objetivo");
             // Restauro valor original
@@ -138,11 +141,11 @@ export class ObjetiveComponent implements OnInit, OnDestroy {
   }
 
 
-   
+
   toggleForm() {
     this.showForm = !this.showForm;
     this.showBtnAction = !this.showBtnAction;
- 
+
   }
 
   onDelete(user: FullPersonDTO) {
@@ -153,32 +156,32 @@ export class ObjetiveComponent implements OnInit, OnDestroy {
 
   delItem() {
 
-      this.baseData.objetive = "";
-      this.converPerson = ToPerson(this.baseData);
+    this.baseData.objetive = "";
+    this.converPerson = ToPerson(this.baseData);
 
-      this.dataService.upDateEntity(this.converPerson, "/person").subscribe({
-        next: (v) => {
-          console.log("Guardado correctamente")
-          this.alertDialog(
-            "ok",
-            ['Dato guardado exitosamente'],
-            1500 );
-          this.baseDataService.setCurrentBaseData(this.baseData);
-          this.form.reset();
-        },
-        error: (e) => {
-          let msg = new Array()
-          msg.push("Se quizo eliminar sin exito al Objetivo");
-          msg.push(e.message);
-          this.alertDialog("error", msg, 0 );
-          console.log("Se quizo eliminar sin exito al objetivo");
-          // Restauro valor original
-          this.baseData.objetive = this.itemParaBorrar;
-        },
-        complete: () => console.log("Completada la actualizacion del Objetivo")
-      });
-      
-      // this.toggleForm();
+    this.dataService.upDateEntity(this.converPerson, "/person").subscribe({
+      next: (v) => {
+        console.log("Guardado correctamente")
+        this.alertDialog(
+          "ok",
+          ['Dato guardado exitosamente'],
+          1500);
+        this.baseDataService.setCurrentBaseData(this.baseData);
+        this.form.reset();
+      },
+      error: (e) => {
+        let msg = new Array()
+        msg.push("Se quizo eliminar sin exito al Objetivo");
+        msg.push(e.message);
+        this.alertDialog("error", msg, 0);
+        console.log("Se quizo eliminar sin exito al objetivo");
+        // Restauro valor original
+        this.baseData.objetive = this.itemParaBorrar;
+      },
+      complete: () => console.log("Completada la actualizacion del Objetivo")
+    });
+
+    // this.toggleForm();
   }
 
 
@@ -223,7 +226,7 @@ export class ObjetiveComponent implements OnInit, OnDestroy {
 
   // Mensaje de alerta.
   // type: "ok", "error", "info"
-  alertDialog( type:string="ok", data:string[], timer:number=0) {
+  alertDialog(type: string = "ok", data: string[], timer: number = 0) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = false;
     dialogConfig.id = "modal-warn";
@@ -238,4 +241,10 @@ export class ObjetiveComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe(() => console.log("Cerrando alert-modal"));
   }
+
+  ngAfterViewInit(): void {
+    let element = this.renderer.selectRootElement(`#${this.fragment}`, true);
+    element.scrollIntoView({ behavior: 'smooth' });
+  }
+
 }
