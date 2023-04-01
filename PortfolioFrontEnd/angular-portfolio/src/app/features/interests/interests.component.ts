@@ -158,7 +158,8 @@ export class InterestsComponent implements OnInit, OnDestroy {
         msg.push(e.message);
         this.alertDialog("error", msg, 0 );
 
-        console.log("Se quizo agregar sin exito a: " + interest.name);
+        
+        console.log("Se quizo agregar sin exito a: " + interest.name, e.error.mensaje);
       },
       complete: () => console.log("Completado el alta del interes")
     }
