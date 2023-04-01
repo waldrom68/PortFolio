@@ -29,9 +29,10 @@ editar, agregar y eliminar datos de la DB).
 - Utilizar APIs implementadas en el backend para customizar la maquetación (layoud) tanto en la visualizacion/ocultamiento de algunos elementos/datos como así también la funcionalidad de un ordenamiento via Drag and Drop.
 
 ## Bugs conocidos y no resueltos:
-- No todos métodos que procesan la información de los formularios validan si realmente hubo cambios en las instancias de los objetos, con lo cual pueden existir pedidos http sin sentido.
+- No todos los métodos que procesan la información de los formularios validan si realmente hubo cambios en las instancias de los objetos, con lo cual pueden existir pedidos http sin sentido.
 - No tiene un buen diseño ni comportamiento los componentes contacto y login del top-nav.
 - El contenedor de Hardskill y Softskill no tiene el mismo diseño que el resto de los contenedores de caracteristicas similares.
+- Por error en el css por el cambio a ultimo momento, el cuadro de dialogo de las ventanas modales de informacion adicional (por ejemplo en las empresas/organizaciones), no se visualiza el boton de cierre.
 
 <br></br>
 ### <em>Gracias por leer todo esto, y espero no te duelan los ojos al ver el código.
