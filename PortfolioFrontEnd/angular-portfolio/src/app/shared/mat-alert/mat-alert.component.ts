@@ -1,7 +1,5 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { ModalActionsService } from 'src/app/service/modal-actions.service';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-mat-alert',
@@ -16,17 +14,17 @@ export class MatAlertComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<MatAlertComponent>,
     @Inject(MAT_DIALOG_DATA) public modalData: any,
-    private modalService: ModalActionsService,
+    // private modalService: ModalActionsService,
   ) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.id = "modal-warn";
+    dialogConfig.disableClose = false;
 
-    modalData.timer = modalData.timer ? modalData.timer : 0;
-    modalData.url = modalData.url ? modalData.url : 0;
+    modalData.url = modalData.url ? modalData.url : '';
 
     if (modalData.timer > 0 ) {
       this.delay(modalData.timer);
     }
-
-
 
   }
 

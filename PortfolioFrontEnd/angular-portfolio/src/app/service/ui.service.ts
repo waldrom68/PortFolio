@@ -5,6 +5,8 @@ import { Cards, PortfolioInit} from '../models';
 import { CARDS, PORTFOLIOINIT } from '../../assets/data/mock-data';
 
 import { DataService } from './data.service';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatAlertComponent } from '../shared/mat-alert/mat-alert.component';
 
 
 
@@ -12,7 +14,6 @@ import { DataService } from './data.service';
 @Injectable({
   providedIn: 'root'
 }) 
-
 export class UiService {
   private showComponent: boolean = false;
   private subjectShowComponent = new Subject<any>();
@@ -33,6 +34,8 @@ export class UiService {
 
   constructor(
     private dataService: DataService,
+    private dialog: MatDialog,
+
    ) {
     this.cards = CARDS
     this.portfolioinit = PORTFOLIOINIT;
@@ -90,6 +93,56 @@ export class UiService {
   onToggleComponet(value:any): Observable<any> {
     // console.log("estoy en el metodo onToggle del uiService", value)
     return this.subjectShowComponent.asObservable();
+  }
+
+
+  msgboxOk(msg?:string[]) {
+    const dialogConfig = new MatDialogConfig();
+    
+    dialogConfig.disableClose = false;
+    dialogConfig.id = "modal-warn";
+    dialogConfig.data = {
+      message: msg ? msg : ['Registración realizada exitosamente'],
+      type: 'ok',
+      timer: 1500
+    };
+    
+    const dialogRef = this.dialog.open(MatAlertComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(() => console.log("Cerrando alert-modal"));
+  }
+  
+  msgboxErr(msg?:string[]) {
+    const dialogConfig = new MatDialogConfig();
+    
+    dialogConfig.disableClose = false;
+    dialogConfig.id = "modal-warn";
+    dialogConfig.data = {
+      message: msg ? msg : ['Error ! '],
+      type: 'error',
+    };
+    
+    const dialogRef = this.dialog.open(MatAlertComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(() => console.log("Cerrando alert-modal"));
+
+  }
+
+  msgboxInf(msg:string[], url?:string) {
+    const dialogConfig = new MatDialogConfig();
+    
+    dialogConfig.disableClose = false;
+    dialogConfig.id = "modal-warn";
+    dialogConfig.data = {
+      message: msg,
+      url: url ? url : "",
+      type: 'info',
+    };
+    
+    const dialogRef = this.dialog.open(MatAlertComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(() => console.log("Cerrando alert-modal"));
+
   }
 
 }

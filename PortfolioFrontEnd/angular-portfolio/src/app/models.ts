@@ -428,7 +428,7 @@ export class Mensaje {
             this.timer = timer ? timer : 0;
             this.url = url ? url : '';
         } else {
-            console.log("ERROR en parametros del mensaje alert");
+            console.log("ERROR en parametros del mensaje del alerta");
         }
     };
 
