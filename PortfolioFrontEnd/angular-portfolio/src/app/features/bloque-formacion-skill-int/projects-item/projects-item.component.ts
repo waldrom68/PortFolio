@@ -1,11 +1,11 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, Renderer2 } from '@angular/core';
 import { FullPersonDTO, Mensaje, Project } from '../../../models'
 
 import { faPen, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { BaseDataService, DataService } from 'src/app/service/data.service';
 import { AdminService } from 'src/app/service/auth.service';
-import { FormService } from 'src/app/service/ui.service';
+import { FormService, UiService } from 'src/app/service/ui.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatAlertComponent } from 'src/app/shared/mat-alert/mat-alert.component';
 
@@ -44,13 +44,17 @@ export class ProjectsItemComponent implements OnInit, OnDestroy {
 
   openForm: number;
   private formServiceSubscription: Subscription | undefined;
-
+  element: object;
+  fragment: string = 'Init';
+  
   constructor( 
     private dataService: DataService,
     private adminService: AdminService,
     private baseDataService: BaseDataService,
     private formService: FormService,
-    private dialog: MatDialog,
+    private renderer: Renderer2,  // Se usa para renderizar tras la carga de todos los componentes iniciales, ngAfterViewInit 
+    
+    private uiService: UiService,
     ) { }
 
   ngOnInit(): void {
@@ -116,19 +120,17 @@ export class ProjectsItemComponent implements OnInit, OnDestroy {
     // Actualizacion 
     this.dataService.upDateEntity(project, "/project").subscribe( {
       next: (v) => {
+        this.uiService.msgboxOk(['Datos guardados exitosamente'],);
         console.log("Guardado correctamente")
-        this.alertDialog(
-          "ok",
-          ['Datos guardados exitosamente'],
-          1500 );
+
       },
       error: (e) => {
         let msg = new Array()
         msg.push("Se quizo modificar sin exito a: " + this.oldData.name);
         msg.push(e.message);
-        this.alertDialog("error", msg, 0 );
-
         console.log("Se quizo modificar sin exito a: " + this.oldData.name);
+        this.uiService.msgboxErr( msg,); 
+
         // Restauro valor original
         project = this.oldData;
       },
@@ -143,21 +145,9 @@ export class ProjectsItemComponent implements OnInit, OnDestroy {
   cancelation(project: Project) {
     this.toggleForm(project);  // cierro el formulario
   }
-  // Mensaje de alerta.
-  // type: "ok", "error", "info"
-  alertDialog( type:string="ok", data:string[], timer:number=0) {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = false;
-    dialogConfig.id = "modal-warn";
 
-    // dialogConfig.height = "350px";
-    // dialogConfig.width = "600px";
-    // dialogConfig.maxWidth = '700px';
-    dialogConfig.data = new Mensaje(type, data, timer)
-
-
-    const dialogRef = this.dialog.open(MatAlertComponent, dialogConfig);
-
-    dialogRef.afterClosed().subscribe(() => console.log("Cerrando alert-modal"));
+  ngAfterViewInit(): void {
+    let element = this.renderer.selectRootElement(`#${this.fragment}`, true);
+    element.scrollIntoView({ behavior: 'smooth' });
   }
 }

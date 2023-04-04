@@ -4,14 +4,13 @@ import { AdminService } from 'src/app/service/auth.service';
 
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
-import { SoftSkill, FullPersonDTO, Mensaje } from '../../models'
+import { SoftSkill, FullPersonDTO} from '../../models'
 
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MessageBoxComponent } from '../../shared/message-box/message-box.component';
 
-import { Observable, Subscription } from 'rxjs';
-import { FormService } from 'src/app/service/ui.service';
-import { MatAlertComponent } from 'src/app/shared/mat-alert/mat-alert.component';
+import { Subscription } from 'rxjs';
+import { FormService, UiService } from 'src/app/service/ui.service';
 
 
 // Declaro la funcion que debe levantarse de \src\assets\widget.js
@@ -48,6 +47,7 @@ export class SoftSkillsComponent implements OnInit, OnDestroy {
 
   constructor(
     private dataService: DataService,
+    private uiService: UiService,
 
     public matDialog: MatDialog,
     public dialog: MatDialog,
@@ -123,12 +123,9 @@ export class SoftSkillsComponent implements OnInit, OnDestroy {
       // console.log(`Se acepto el borrado del item "${this.itemParaBorrar.name}"`);
       this.dataService.delEntity(this.itemParaBorrar, "/softskill").subscribe({
         next: (v) => {
-          this.alertDialog(
-            "ok",
-            ['Se ha eliminado exitosamente'],
-            1500 );
-
           console.log("Se ha eliminado exitosamente a: ", this.itemParaBorrar);
+          this.uiService.msgboxOk( ['Se ha eliminado exitosamente'],);
+          
           this.myData = this.myData.filter((t) => { return t !== this.itemParaBorrar })
           // Actualizo la informacion en el origen
           this.baseData.softskill = this.myData;
@@ -139,7 +136,7 @@ export class SoftSkillsComponent implements OnInit, OnDestroy {
           let msg = new Array()
           msg.push("Se quizo eliminar sin exito a: " + this.itemParaBorrar.name);
           msg.push(e.message);
-          this.alertDialog("error", msg, 0 );
+          this.uiService.msgboxErr( msg,); 
 
           console.log("Se quizo eliminar sin exito a: ", this.itemParaBorrar);
         },
@@ -154,10 +151,7 @@ export class SoftSkillsComponent implements OnInit, OnDestroy {
     this.dataService.addEntity(softSkill, "/softskill").subscribe({
       next: (v) => {
         console.log("Guardado correctamente")
-        this.alertDialog(
-          "ok",
-          ['Datos guardados exitosamente'],
-          1500 );
+        this.uiService.msgboxOk(['Datos guardados exitosamente'])
 
         softSkill.id = v.id;
         softSkill.person = this.baseData.id;
@@ -168,7 +162,7 @@ export class SoftSkillsComponent implements OnInit, OnDestroy {
         let msg = new Array()
         msg.push("Se quizo agregar sin exito a: " + softSkill.name);
         msg.push(e.message);
-        this.alertDialog("error", msg, 0 );
+        this.uiService.msgboxErr( msg,); 
 
         console.log("Se quizo agregar sin exito a: " + softSkill.name);
       },
@@ -214,25 +208,6 @@ export class SoftSkillsComponent implements OnInit, OnDestroy {
 
     )
   }
-
-  // Mensaje de alerta.
-  // type: "ok", "error", "info"
-  alertDialog(type: string = "ok", data: string[], timer: number = 0) {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = false;
-    dialogConfig.id = "modal-warn";
-
-    // dialogConfig.height = "350px";
-    // dialogConfig.width = "600px";
-    // dialogConfig.maxWidth = '700px';
-    dialogConfig.data = new Mensaje(type, data, timer)
-
-
-    const dialogRef = this.dialog.open(MatAlertComponent, dialogConfig);
-
-    dialogRef.afterClosed().subscribe(() => console.log("Cerrando alert-modal"));
-  }
-
 
 ngAfterViewInit(): void {
   let element = this.renderer.selectRootElement(`#${this.fragment}`, true);

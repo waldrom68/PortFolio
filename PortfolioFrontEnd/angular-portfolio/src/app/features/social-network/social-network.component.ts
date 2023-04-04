@@ -5,11 +5,11 @@ import { faPlusCircle, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { AdminService } from 'src/app/service/auth.service';
 import { BaseDataService, DataService } from 'src/app/service/data.service';
-import { FormService } from 'src/app/service/ui.service';
-import { MatAlertComponent } from 'src/app/shared/mat-alert/mat-alert.component';
+import { UiService } from 'src/app/service/ui.service';
+
 import { MessageBoxComponent } from 'src/app/shared/message-box/message-box.component';
 
-import { FullPersonDTO, Mensaje, SocialNetwork } from '../../models'
+import { FullPersonDTO, SocialNetwork } from '../../models'
 
 
 @Component({
@@ -38,10 +38,11 @@ export class SocialNetworkComponent implements OnInit, OnDestroy {
 
   constructor(
     private dataService: DataService,
+    private uiService: UiService,
+
     private baseDataService: BaseDataService,
 
     private matDialog: MatDialog,
-    private dialog: MatDialog,
 
     private adminService: AdminService,
 
@@ -95,10 +96,7 @@ export class SocialNetworkComponent implements OnInit, OnDestroy {
     this.dataService.addEntity(socialnetwork, "/socialnetwork").subscribe({
       next: (v) => {
         console.log("Guardado correctamente")
-        this.alertDialog(
-          "ok",
-          ['Datos guardados exitosamente'],
-          1500 );
+        this.uiService.msgboxOk( ['Datos guardados exitosamente'],);
 
         socialnetwork.id = v.id;
         socialnetwork.person = this.baseData.id;
@@ -109,7 +107,7 @@ export class SocialNetworkComponent implements OnInit, OnDestroy {
         let msg = new Array()
         msg.push("Se quizo modificar sin exito a: " + socialnetwork.name);
         msg.push(e.message);
-        this.alertDialog("error", msg, 0 );
+        this.uiService.msgboxErr( msg,); 
 
         console.log("Se quizo agregar sin exito a: " + socialnetwork.name);
       },
@@ -134,10 +132,7 @@ export class SocialNetworkComponent implements OnInit, OnDestroy {
       this.dataService.delEntity(this.itemParaBorrar, "/socialnetwork").subscribe({
         next: (v) => {
           console.log("Se ha eliminado exitosamente a: ", this.itemParaBorrar)
-          this.alertDialog(
-            "ok",
-            ['Se ha eliminado exitosamentee'],
-            1500 );
+          this.uiService.msgboxOk(['Se ha eliminado exitosamentee'])
 
           console.log("Se ha eliminado exitosamente a: ", this.itemParaBorrar);
           this.baseData.socialnetwork = this.baseData.socialnetwork.filter((t) => { return t !== this.itemParaBorrar })
@@ -150,7 +145,7 @@ export class SocialNetworkComponent implements OnInit, OnDestroy {
           let msg = new Array()
           msg.push("Se quizo eliminar sin exito a: " + this.itemParaBorrar.name);
           msg.push(e.message);
-          this.alertDialog("error", msg, 0 );
+          this.uiService.msgboxErr(msg,)
 
           console.log("Se quizo eliminar sin exito a: ", this.itemParaBorrar);
         },
@@ -198,24 +193,5 @@ export class SocialNetworkComponent implements OnInit, OnDestroy {
 
     )
   }
-
-  // Mensaje de alerta.
-  // type: "ok", "error", "info"
-  alertDialog( type:string="ok", data:string[], timer:number=0) {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = false;
-    dialogConfig.id = "modal-warn";
-
-    // dialogConfig.height = "350px";
-    // dialogConfig.width = "600px";
-    // dialogConfig.maxWidth = '700px';
-    dialogConfig.data = new Mensaje(type, data, timer)
-
-
-    const dialogRef = this.dialog.open(MatAlertComponent, dialogConfig);
-
-    dialogRef.afterClosed().subscribe(() => console.log("Cerrando alert-modal"));
-  }
-
 
 }

@@ -4,13 +4,12 @@ import { AdminService } from 'src/app/service/auth.service';
 
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
-import {Project, FullPersonDTO, Mensaje} from '../../models'
+import {Project, FullPersonDTO } from '../../models'
 
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MessageBoxComponent } from '../../shared/message-box/message-box.component';
 import { Subscription } from 'rxjs';
-import { FormService } from 'src/app/service/ui.service';
-import { MatAlertComponent } from 'src/app/shared/mat-alert/mat-alert.component';
+import { FormService, UiService } from 'src/app/service/ui.service';
 
 @Component({
   selector: 'app-projects',
@@ -42,6 +41,7 @@ fragment: string = 'Init';
   constructor( 
     private dataService: DataService,
     private baseDataService: BaseDataService,
+    private uiService: UiService,
     
     public matDialog: MatDialog,
     public dialog: MatDialog,
@@ -114,12 +114,9 @@ fragment: string = 'Init';
     if (this.itemParaBorrar) {
       this.dataService.delEntity(this.itemParaBorrar, "/project").subscribe({
         next: (v) => {
-          this.alertDialog(
-            "ok",
-            ['Se ha eliminado exitosamente'],
-            1500 );
-
           console.log("Se ha eliminado exitosamente a: ", this.itemParaBorrar);
+          this.uiService.msgboxOk(['Se ha eliminado exitosamentee'] ,);
+
           this.baseData.project = this.baseData.project.filter((t) => { return t !== this.itemParaBorrar })
           // Actualizo la informacion en el origen
           // this.baseData.project = this.baseData.project;
@@ -130,7 +127,7 @@ fragment: string = 'Init';
           let msg = new Array()
           msg.push("Se quizo eliminar sin exito a: " + this.itemParaBorrar.name);
           msg.push(e.message);
-          this.alertDialog("error", msg, 0 );
+          this.uiService.msgboxErr( msg,); 
 
           console.log("Se quizo eliminar sin exito a: " , this.itemParaBorrar);
         },
@@ -144,10 +141,8 @@ fragment: string = 'Init';
     this.dataService.addEntity(project, "/project").subscribe({
       next: (v) => {
         console.log("Guardado correctamente: ");
-        this.alertDialog(
-          "ok",
-          ['Datos guardados exitosamente'],
-          1500 );
+        this.uiService.msgboxOk(['Datos guardados exitosamente'],);
+
         project.id = v.id;
         project.person = this.baseData.id;
         this.baseData.project.push(v);
@@ -157,8 +152,9 @@ fragment: string = 'Init';
                 let msg = new Array()
         msg.push("Se quizo agregar sin exito a: " +  project.name);
         msg.push(e.message);
-        this.alertDialog("error", msg, 0 );
         console.log("Se quizo agregar sin exito a: " + project.name);
+        this.uiService.msgboxErr( msg,); 
+        
       },
       complete: () => console.log("Completado el alta del Proyecto")
     });
@@ -203,24 +199,6 @@ fragment: string = 'Init';
     )
   }
 
-    // Mensaje de alerta.
-  // type: "ok", "error", "info"
-  alertDialog( type:string="ok", data:string[], timer:number=0) {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = false;
-    dialogConfig.id = "modal-warn";
-
-    // dialogConfig.height = "350px";
-    // dialogConfig.width = "600px";
-    // dialogConfig.maxWidth = '700px';
-    dialogConfig.data = new Mensaje(type, data, timer)
-
-
-    const dialogRef = this.dialog.open(MatAlertComponent, dialogConfig);
-
-    dialogRef.afterClosed().subscribe(() => console.log("Cerrando alert-modal"));
-  }
-  
 
   ngAfterViewInit(): void {
   let element = this.renderer.selectRootElement(`#${this.fragment}`, true);

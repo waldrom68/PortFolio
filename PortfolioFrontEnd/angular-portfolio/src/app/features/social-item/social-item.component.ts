@@ -1,22 +1,18 @@
 import { Component, EventEmitter, OnInit, OnDestroy, Input, Output } from '@angular/core';
 import { FullPersonDTO, Mensaje, SocialNetwork } from 'src/app/models';
-import { faTrash, faPen, faTimes, fas } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faPen, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { BaseDataService, DataService } from 'src/app/service/data.service';
 import { AdminService } from 'src/app/service/auth.service';
-import { FormService } from 'src/app/service/ui.service';
-// import {
-//   IconProp,
-//   IconPrefix,
-//   IconName,
-// } from '@fortawesome/fontawesome-svg-core';
 
 import { IconPrefix, IconName, library } from '@fortawesome/fontawesome-svg-core';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
-import { far } from '@fortawesome/free-regular-svg-icons';
+
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import { MatAlertComponent } from 'src/app/shared/mat-alert/mat-alert.component';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { UiService } from 'src/app/service/ui.service';
+
 @Component({
   selector: 'app-social-item',
   templateUrl: './social-item.component.html',
@@ -56,10 +52,13 @@ export class SocialItemComponent implements OnInit, OnDestroy {
 
   constructor(
     private library: FaIconLibrary,
+    private uiService: UiService,
+    
     private dataService: DataService,
     private adminService: AdminService,
     private baseDataService: BaseDataService,
     private dialog: MatDialog,
+
 
   ) {
     library.addIconPacks(fab);
@@ -126,17 +125,15 @@ export class SocialItemComponent implements OnInit, OnDestroy {
     // Actualizacion de Interest
     this.dataService.upDateEntity(socialnetwork, "/socialnetwork").subscribe({
       next: (v) => {
+        this.uiService.msgboxOk( ['Datos obtenidos exitosamente'],);
         console.log("Guardado correctamente")
-        this.alertDialog(
-          "ok",
-          ['Datos guardados exitosamente'],
-          1500 );
+
       },
       error: (e) => {
         let msg = new Array()
         msg.push("Se quizo modificar sin exito a: " + this.oldData.name);
         msg.push(e.message);
-        this.alertDialog("error", msg, 0 );
+        this.uiService.msgboxErr( msg,); 
         
         console.log("Se quizo modificar sin exito a: " + this.oldData.name);
         // Restauro valor original
@@ -153,21 +150,5 @@ export class SocialItemComponent implements OnInit, OnDestroy {
   cancelation(socialnetwork: SocialNetwork) {
     this.toggleForm(socialnetwork);  // cierro el formulario
   }
-  // Mensaje de alerta.
-  // type: "ok", "error", "info"
-  alertDialog( type:string="ok", data:string[], timer:number=0) {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = false;
-    dialogConfig.id = "modal-warn";
 
-    // dialogConfig.height = "350px";
-    // dialogConfig.width = "600px";
-    // dialogConfig.maxWidth = '700px';
-    dialogConfig.data = new Mensaje(type, data, timer)
-
-
-    const dialogRef = this.dialog.open(MatAlertComponent, dialogConfig);
-
-    dialogRef.afterClosed().subscribe(() => console.log("Cerrando alert-modal"));
-  }
 }

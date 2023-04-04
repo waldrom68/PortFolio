@@ -3,13 +3,13 @@ import { BaseDataService, DataService } from 'src/app/service/data.service';
 import { AdminService } from 'src/app/service/auth.service';
 import { faPlusCircle, faTimes } from '@fortawesome/free-solid-svg-icons';
 
-import { Degree, FullPersonDTO, Mensaje } from '../../models'
+import { Degree, FullPersonDTO } from '../../models'
 
 import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MessageBoxComponent } from '../../shared/message-box/message-box.component';
 import { Subscription } from 'rxjs';
-import { FormService } from 'src/app/service/ui.service';
-import { MatAlertComponent } from 'src/app/shared/mat-alert/mat-alert.component';
+import { FormService, UiService } from 'src/app/service/ui.service';
+
 
 @Component({
   selector: 'app-degree',
@@ -20,17 +20,8 @@ import { MatAlertComponent } from 'src/app/shared/mat-alert/mat-alert.component'
 export class DegreeComponent implements OnInit, OnDestroy {
   showForm: boolean = false;  // flag para mostrar o no el formulario
 
-  // myData: Degree[] = [];
-  // formData: Degree;  // instancia vacia, para cuando se solicite un alta
-
   faPlusCircle = faPlusCircle;
   faTimes = faTimes;
-
-  // @Input() showBtnAction: boolean = true;  // flag para mostrar o no los btn's de acciones del usuario
-  // @Output() showBtnActionChange = new EventEmitter<boolean>();
-
-  // @Input() myDegrees: Degree[];
-  // @Output() myDegreesChange = new EventEmitter<Degree[]>();
 
   showBtnAction: boolean = true;  // flag para mostrar o no los btn's de acciones del usuario
 
@@ -49,6 +40,8 @@ export class DegreeComponent implements OnInit, OnDestroy {
   
   constructor(
     private dataService: DataService,
+    private uiService: UiService,
+    
     public matDialog: MatDialog,
     public dialog: MatDialog,
 
@@ -120,10 +113,7 @@ export class DegreeComponent implements OnInit, OnDestroy {
       this.dataService.delEntity(this.itemParaBorrar, "/degree").subscribe({
         next: (v) => {
           console.log("Se ha eliminado exitosamente a: ", this.itemParaBorrar);
-          this.alertDialog(
-            "ok",
-            ['Se ha eliminado exitosamente'],
-            1500 );
+          this.uiService.msgboxOk(['Se ha eliminado exitosamentee'] ,);
 
           this.baseData.degree = this.baseData.degree.filter((t) => { return t !== this.itemParaBorrar })
           // Actualizo la informacion en el origen
@@ -135,7 +125,7 @@ export class DegreeComponent implements OnInit, OnDestroy {
           let msg = new Array()
           msg.push("Se quizo modificar sin exito a: " + this.itemParaBorrar.name);
           msg.push(e.message);
-          this.alertDialog("error", msg, 0 );
+          this.uiService.msgboxErr( msg,); 
 
           console.log("Se quizo eliminar sin exito a: ", this.itemParaBorrar);
         },
@@ -150,10 +140,7 @@ export class DegreeComponent implements OnInit, OnDestroy {
     this.dataService.addEntity(degree, "/degree").subscribe({
       next: (v) => {
         console.log("Guardado correctamente")
-        this.alertDialog(
-          "ok",
-          ['Datos guardados exitosamente'],
-          1500 );
+        this.uiService.msgboxOk(['Datos guardados exitosamente'],);
 
         degree.id = v.id;
         degree.person = this.baseData.id;
@@ -164,7 +151,7 @@ export class DegreeComponent implements OnInit, OnDestroy {
         let msg = new Array()
         msg.push("Se quizo agregar sin exito a: " + degree.name);
         msg.push(e.message);
-        this.alertDialog("error", msg, 0 );
+        this.uiService.msgboxErr( msg,); 
 
         console.log("Se quizo agregar sin exito a: " + degree.name);
       },
@@ -212,23 +199,6 @@ export class DegreeComponent implements OnInit, OnDestroy {
     )
   }
 
-    // Mensaje de alerta.
-  // type: "ok", "error", "info"
-  alertDialog( type:string="ok", data:string[], timer:number=0) {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = false;
-    dialogConfig.id = "modal-warn";
-
-    // dialogConfig.height = "350px";
-    // dialogConfig.width = "600px";
-    // dialogConfig.maxWidth = '700px';
-    dialogConfig.data = new Mensaje(type, data, timer)
-
-
-    const dialogRef = this.dialog.open(MatAlertComponent, dialogConfig);
-
-    dialogRef.afterClosed().subscribe(() => console.log("Cerrando alert-modal"));
-  }
 
 
 }

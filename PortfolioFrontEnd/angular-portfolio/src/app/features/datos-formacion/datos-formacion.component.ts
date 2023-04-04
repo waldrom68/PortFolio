@@ -4,14 +4,14 @@ import { AdminService } from 'src/app/service/auth.service';
 
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
-import { Studie, FullPersonDTO, Mensaje } from '../../models'
+import { Studie, FullPersonDTO } from '../../models'
 
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MessageBoxComponent } from '../../shared/message-box/message-box.component';
 
 import { Subscription } from 'rxjs';
-import { FormService } from 'src/app/service/ui.service';
-import { MatAlertComponent } from 'src/app/shared/mat-alert/mat-alert.component';
+import { FormService, UiService } from 'src/app/service/ui.service';
+
 
 @Component({
   selector: 'app-datos-formacion',
@@ -39,15 +39,15 @@ export class DatosFormacionComponent implements OnInit, OnDestroy {
   openForm: number;
   private formServiceSubscription: Subscription | undefined;
 
-element: object;
-fragment: string = 'Init';
+  element: object;
+  fragment: string = 'Init';
 
   constructor(
     private dataService: DataService,
     private baseDataService: BaseDataService,
+    private uiService: UiService,
 
     public matDialog: MatDialog,
-    private dialog: MatDialog,
     private renderer: Renderer2,  // Se usa para renderizar tras la carga de todos los componentes iniciales, ngAfterViewInit 
 
     private adminService: AdminService,
@@ -115,11 +115,7 @@ fragment: string = 'Init';
       this.dataService.delEntity(this.itemParaBorrar, "/studie").subscribe({
         next: (v) => {
           console.log("Se ha eliminado exitosamente a: ", this.itemParaBorrar);
-
-          this.alertDialog(
-            "ok",
-            ['Datos guardados exitosamente'],
-            1500);
+          this.uiService.msgboxOk(['Se ha eliminado exitosamentee'],);
 
           this.baseData.studie = this.baseData.studie.filter((t) => { return t !== this.itemParaBorrar })
           // Actualizo la informacion en el origen
@@ -131,7 +127,7 @@ fragment: string = 'Init';
           let msg = new Array()
           msg.push("Se quizo eliminar sin exito: " + this.itemParaBorrar);
           msg.push(e.message);
-          this.alertDialog("error", msg, 0);
+          this.uiService.msgboxErr(msg,);
 
           console.log("Se quizo eliminar sin exito a: ", this.itemParaBorrar);
         },
@@ -146,10 +142,7 @@ fragment: string = 'Init';
     this.dataService.addEntity(studie, "/studie").subscribe({
       next: (v) => {
         console.log("Guardado correctamente: ", v);
-        this.alertDialog(
-          "ok",
-          ['Datos guardados exitosamente'],
-          1500 );
+        this.uiService.msgboxOk(['Datos guardados exitosamente'],);
 
         studie.id = v.id;
         studie.person = this.baseData.id;
@@ -160,7 +153,7 @@ fragment: string = 'Init';
         let msg = new Array()
         msg.push("Se quizo agregar sin exito a: " + studie.name);
         msg.push(e.message);
-        this.alertDialog("error", msg, 0 );
+        this.uiService.msgboxErr(msg,);
 
         console.log("Se quizo agregar sin exito a: " + studie.name, "si realmente tiene el mismo nombre, procure hacer un pequeño cambio");
       },
@@ -207,27 +200,10 @@ fragment: string = 'Init';
     )
   }
 
-    // Mensaje de alerta.
-  // type: "ok", "error", "info"
-  alertDialog( type:string="ok", data:string[], timer:number=0) {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = false;
-    dialogConfig.id = "modal-warn";
-
-    // dialogConfig.height = "350px";
-    // dialogConfig.width = "600px";
-    // dialogConfig.maxWidth = '700px';
-    dialogConfig.data = new Mensaje(type, data, timer)
-
-
-    const dialogRef = this.dialog.open(MatAlertComponent, dialogConfig);
-
-    dialogRef.afterClosed().subscribe(() => console.log("Cerrando alert-modal"));
-  }
 
   ngAfterViewInit(): void {
-  let element = this.renderer.selectRootElement(`#${this.fragment}`, true);
-  element.scrollIntoView({ behavior: 'smooth' });
-}
+    let element = this.renderer.selectRootElement(`#${this.fragment}`, true);
+    element.scrollIntoView({ behavior: 'smooth' });
+  }
 
 }

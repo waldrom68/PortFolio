@@ -104,7 +104,7 @@ export class UiService {
     dialogConfig.data = {
       message: msg ? msg : ['Registración realizada exitosamente'],
       type: 'ok',
-      timer: 1500
+      timer: 1800
     };
     
     const dialogRef = this.dialog.open(MatAlertComponent, dialogConfig);

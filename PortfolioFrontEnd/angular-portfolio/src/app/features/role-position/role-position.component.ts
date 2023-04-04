@@ -3,12 +3,12 @@ import { BaseDataService, DataService } from 'src/app/service/data.service';
 import { AdminService } from 'src/app/service/auth.service';
 import { faPlusCircle, faTimes } from '@fortawesome/free-solid-svg-icons';
 
-import { FullPersonDTO, Mensaje, RolePosition } from '../../models'
+import { FullPersonDTO, RolePosition } from '../../models'
 
 import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MessageBoxComponent } from '../../shared/message-box/message-box.component';
 import { Subscription } from 'rxjs';
-import { MatAlertComponent } from 'src/app/shared/mat-alert/mat-alert.component';
+import { UiService } from 'src/app/service/ui.service';
 
 @Component({
   selector: 'app-role-position',
@@ -19,17 +19,10 @@ import { MatAlertComponent } from 'src/app/shared/mat-alert/mat-alert.component'
 export class RolePositionComponent implements OnInit, OnDestroy {
   showForm: boolean = false;  // flag para mostrar o no el formulario
 
-  // myData: RolePosition[] = [];
-  // formData: RolePosition;  // instancia vacia, para cuando se solicite un alta
 
   faPlusCircle = faPlusCircle;
   faTimes = faTimes;
 
-  // @Input() showBtnAction: boolean = true;  // flag para mostrar o no los btn's de acciones del usuario
-  // @Output() showBtnActionChange = new EventEmitter<boolean>();
-  
-  // @Input() myRolePositions: RolePosition[];
-  // @Output() myRolePositionsChange = new EventEmitter<RolePosition[]>();
 
   showBtnAction: boolean = true;  // flag para mostrar o no los btn's de acciones del usuario
   
@@ -45,6 +38,8 @@ export class RolePositionComponent implements OnInit, OnDestroy {
 
   constructor(
     private dataService: DataService,
+    private uiService: UiService, 
+
     public matDialog: MatDialog,
     public dialog: MatDialog,
 
@@ -103,10 +98,7 @@ export class RolePositionComponent implements OnInit, OnDestroy {
       this.dataService.delEntity(this.itemParaBorrar, "/roleposition").subscribe({
         next: (v) => {
           console.log("Se ha eliminado exitosamente a: ", this.itemParaBorrar);
-          this.alertDialog(
-            "ok",
-            ['Se ha eliminado exitosamente'],
-            1500 );
+          this.uiService.msgboxOk(['Se ha eliminado exitosamentee'] ,);
 
           this.baseData.roleposition = this.baseData.roleposition.filter((t) => { return t !== this.itemParaBorrar })
           // Actualizo la informacion en el origen
@@ -118,7 +110,7 @@ export class RolePositionComponent implements OnInit, OnDestroy {
           let msg = new Array()
           msg.push("Se quizo eliminar sin exito a: " +  this.itemParaBorrar.name);
           msg.push(e.message);
-          this.alertDialog("error", msg, 0 );
+          this.uiService.msgboxErr( msg,); 
 
           console.log("Se quizo eliminar sin exito a: ", this.itemParaBorrar);
         },
@@ -132,12 +124,9 @@ export class RolePositionComponent implements OnInit, OnDestroy {
   addItem(rolePosition: RolePosition) {
     this.dataService.addEntity(rolePosition, "/roleposition").subscribe({
       next: (v) => {
-        this.alertDialog(
-          "ok",
-          ['Datos guardados exitosamente'],
-          1500 );
-
         console.log("Guardado correctamente: ", v);
+        this.uiService.msgboxOk(['Datos guardados exitosamente'],);
+
         rolePosition.id = v.id;
         rolePosition.person = this.baseData.id;
         this.baseData.roleposition.push(rolePosition);
@@ -147,7 +136,7 @@ export class RolePositionComponent implements OnInit, OnDestroy {
         let msg = new Array()
         msg.push("Se quizo agregar sin exito a: " + rolePosition.name);
         msg.push(e.message);
-        this.alertDialog("error", msg, 0 );
+        this.uiService.msgboxErr( msg,); 
 
         console.log("Se quizo agregar sin exito a: " + rolePosition.name);
       },
@@ -193,24 +182,6 @@ export class RolePositionComponent implements OnInit, OnDestroy {
       }
 
     )
-  }
-
-    // Mensaje de alerta.
-  // type: "ok", "error", "info"
-  alertDialog( type:string="ok", data:string[], timer:number=0) {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = false;
-    dialogConfig.id = "modal-warn";
-
-    // dialogConfig.height = "350px";
-    // dialogConfig.width = "600px";
-    // dialogConfig.maxWidth = '700px';
-    dialogConfig.data = new Mensaje(type, data, timer)
-
-
-    const dialogRef = this.dialog.open(MatAlertComponent, dialogConfig);
-
-    dialogRef.afterClosed().subscribe(() => console.log("Cerrando alert-modal"));
   }
 
 

@@ -1,14 +1,12 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 // importamos las librerias de formulario que vamos a necesitar
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
-import { LoginUsuario, Mensaje } from 'src/app/models';
+import { LoginUsuario} from 'src/app/models';
 import { AuthService, AdminService } from 'src/app/service/auth.service';
 
 import { TokenService } from 'src/app/service/token.service';
-import { MatAlertComponent } from 'src/app/shared/mat-alert/mat-alert.component';
-
+import { UiService } from 'src/app/service/ui.service';
 
 @Component({
   selector: 'app-iniciar-sesion',
@@ -30,9 +28,9 @@ export class IniciarSesionComponent implements OnInit, OnDestroy {
 
   // Inyectar en el constructor el formBuilder
   constructor(
-
+    private uiService: UiService,
+    
     private adminService: AdminService,
-    private dialog: MatDialog,
 
     private authService: AuthService,
     private tokenService: TokenService,
@@ -81,6 +79,7 @@ export class IniciarSesionComponent implements OnInit, OnDestroy {
         );  // salida consola tipo ANSI
 
           console.log('Logueado correctamente como ADMIN!');
+          this.uiService.msgboxOk( ['Hola '+ loginUsuario.nombreUsuario ],);
           this.adminService.setCurrentAdmin(true);
 
         }
@@ -89,7 +88,7 @@ export class IniciarSesionComponent implements OnInit, OnDestroy {
         let msg = new Array()
         msg.push("Se quizo loguear sin exito como :" + loginUsuario.nombreUsuario);
         msg.push(e.message);
-        this.alertDialog("error", msg, 0 );
+        this.uiService.msgboxErr( msg,); 
 
         console.log("Se quizo loguear sin exito como :" + loginUsuario.nombreUsuario)
 
@@ -133,24 +132,6 @@ export class IniciarSesionComponent implements OnInit, OnDestroy {
       this.form.markAllAsTouched();
     }
 
-  }
-
-  // Mensaje de alerta.
-  // type: "ok", "error", "info"
-  alertDialog( type:string="ok", data:string[], timer:number=0) {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = false;
-    dialogConfig.id = "modal-warn";
-
-    // dialogConfig.height = "350px";
-    // dialogConfig.width = "600px";
-    // dialogConfig.maxWidth = '700px';
-    dialogConfig.data = new Mensaje(type, data, timer)
-
-
-    const dialogRef = this.dialog.open(MatAlertComponent, dialogConfig);
-
-    dialogRef.afterClosed().subscribe(() => console.log("Cerrando alert-modal"));
   }
 
 }

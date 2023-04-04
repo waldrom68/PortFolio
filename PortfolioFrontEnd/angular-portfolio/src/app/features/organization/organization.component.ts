@@ -3,12 +3,13 @@ import { BaseDataService, DataService } from 'src/app/service/data.service';
 import { AdminService } from 'src/app/service/auth.service';
 import { faPlusCircle, faTimes } from '@fortawesome/free-solid-svg-icons';
 
-import { Organization, FullPersonDTO, Mensaje } from '../../models'
+import { Organization, FullPersonDTO } from '../../models'
 
 import { MatDialog, MatDialogConfig, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MessageBoxComponent } from '../../shared/message-box/message-box.component';
 import { Subscription } from 'rxjs';
-import { MatAlertComponent } from 'src/app/shared/mat-alert/mat-alert.component';
+
+import { UiService } from 'src/app/service/ui.service';
 
 @Component({
   selector: 'app-organization',
@@ -38,6 +39,8 @@ export class OrganizationComponent implements OnInit, OnDestroy {
 
   constructor(
     private dataService: DataService,
+    private uiService: UiService,
+
     public matDialog: MatDialog,
     public dialog: MatDialog,
 
@@ -47,7 +50,7 @@ export class OrganizationComponent implements OnInit, OnDestroy {
     @Inject(MAT_DIALOG_DATA) public data: { message: string, },
     public dialogRef: MatDialogRef<OrganizationComponent>, //OrganizationModal
 
-  ) {  }
+  ) { }
 
   ngOnInit(): void {
 
@@ -90,10 +93,8 @@ export class OrganizationComponent implements OnInit, OnDestroy {
     this.dataService.addEntity(organization, "/organization").subscribe({
       next: (v) => {
         console.log("Guardado correctamente")
-        this.alertDialog(
-          "ok",
-          ['Datos guardados exitosamente'],
-          1500 );
+        this.uiService.msgboxOk(['Datos guardados exitosamente'],);
+
 
         organization.id = v.id;
         organization.person = this.baseData.id;
@@ -104,9 +105,9 @@ export class OrganizationComponent implements OnInit, OnDestroy {
         let msg = new Array()
         msg.push("Se quizo modificar sin exito a: " + organization.name);
         msg.push(e.message);
-        this.alertDialog("error", msg, 0 );
-
         console.log("Se quizo agregar sin exito a: " + organization.name);
+        this.uiService.msgboxErr(msg,);
+
       },
       complete: () => console.log("Completado el alta de la Organizacion")
     }
@@ -128,10 +129,7 @@ export class OrganizationComponent implements OnInit, OnDestroy {
     if (this.itemParaBorrar) {
       this.dataService.delEntity(this.itemParaBorrar, "/organization").subscribe({
         next: (v) => {
-          this.alertDialog(
-            "ok",
-            ['Se ha eliminado exitosamente a: ', this.itemParaBorrar],
-            1500 );
+          this.uiService.msgboxOk(['Se ha eliminado exitosamentee'],);
 
           console.log("Se ha eliminado exitosamente a: ", this.itemParaBorrar);
           this.baseData.organization = this.baseData.organization.filter((t) => { return t !== this.itemParaBorrar })
@@ -144,9 +142,9 @@ export class OrganizationComponent implements OnInit, OnDestroy {
           let msg = new Array()
           msg.push("Se quizo modificar sin exito a: " + this.itemParaBorrar.name);
           msg.push(e.message);
-          this.alertDialog("error", msg, 0 );
-
           console.log("Se quizo eliminar sin exito a: ", this.itemParaBorrar);
+          this.uiService.msgboxErr(msg,);
+
         },
         complete: () => { console.log("Completada la eliminacion de la Organization"); }
 
@@ -194,21 +192,5 @@ export class OrganizationComponent implements OnInit, OnDestroy {
 
     )
   }
-  // Mensaje de alerta.
-  // type: "ok", "error", "info"
-  alertDialog( type:string="ok", data:string[], timer:number=0) {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = false;
-    dialogConfig.id = "modal-warn";
 
-    // dialogConfig.height = "350px";
-    // dialogConfig.width = "600px";
-    // dialogConfig.maxWidth = '700px';
-    dialogConfig.data = new Mensaje(type, data, timer)
-
-
-    const dialogRef = this.dialog.open(MatAlertComponent, dialogConfig);
-
-    dialogRef.afterClosed().subscribe(() => console.log("Cerrando alert-modal"));
-  }
 }

@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
-import { FullPersonDTO, Mensaje, Person } from '../../models'
+import { FullPersonDTO, Person } from '../../models'
 
 import { faPen, faTimes, faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import { BaseDataService, DataService, ToPerson } from 'src/app/service/data.service';
@@ -10,9 +10,9 @@ import { Subscription } from 'rxjs';
 import { PersonalFormComponent } from '../personal-form/personal-form.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UploadMediaService } from 'src/app/service/upload-media.service';
-import { FormService } from 'src/app/service/ui.service';
+import { FormService, UiService } from 'src/app/service/ui.service';
 import { SocialNetworkComponent } from '../social-network/social-network.component';
-import { MatAlertComponent } from 'src/app/shared/mat-alert/mat-alert.component';
+
 
 @Component({
   selector: 'app-personal-card',
@@ -54,13 +54,13 @@ export class PersonalCardComponent implements OnInit, OnDestroy {
 
   constructor(
     private dataService: DataService,
+    private uiService: UiService,
 
     private adminService: AdminService,
 
     private baseDataService: BaseDataService,
 
     private matDialog: MatDialog,
-    private dialog: MatDialog,
 
     private uploadMediaService: UploadMediaService,
 
@@ -208,10 +208,8 @@ export class PersonalCardComponent implements OnInit, OnDestroy {
         this.dataService.upDateEntity(data.newData, "/person").subscribe({
           next: (v) => {
             console.log("Guardado correctamente")
-            this.alertDialog(
-              "ok",
-              ['Datos guardados exitosamente'],
-              1500 );
+            this.uiService.msgboxOk(['Datos guardados exitosamente'],);
+
 
             // Actualizo la variable observada por el resto de los componentes
             // this.dataService.changeGralData(data.newData);
@@ -221,7 +219,7 @@ export class PersonalCardComponent implements OnInit, OnDestroy {
             let msg = new Array()
             msg.push("Se quizo modificar sin exito a: " + this.converPerson.name);
             msg.push(e.message);
-            this.alertDialog("error", msg, 0 );
+            this.uiService.msgboxErr(msg,);
 
             console.log("Se quizo modificar sin exito a: " + this.converPerson.name);
           },
@@ -261,20 +259,18 @@ export class PersonalCardComponent implements OnInit, OnDestroy {
         this.dataService.upDateEntity(data.newData, "/socialnetwork").subscribe({
           next: (v) => {
             console.log("Guardado correctamente")
-            this.alertDialog(
-              "ok",
-              ['Datos guardados exitosamente'],
-              1500 );
+            this.uiService.msgboxOk(['Datos guardados exitosamente'],);
+
             // Actualizo la variable observada por el resto de los componentes
             // this.dataService.changeGralData(data.newData);
             this.baseDataService.setCurrentBaseData(data.newData);
           },
           error: (e) => {
-                    let msg = new Array()
-        msg.push("Se quizo modificar sin exito a: " + this.baseData.name);
-        msg.push(e.message);
-        this.alertDialog("error", msg, 0 );
+            let msg = new Array()
+            msg.push("Se quizo modificar sin exito a: " + this.baseData.name);
+            msg.push(e.message);
             console.log("Se quizo modificar sin exito a: " + this.baseData.name);
+            this.uiService.msgboxErr(msg,);
           },
           complete: () => console.log("Completado la actualizacion de Redes Sociales")
         });
@@ -283,22 +279,5 @@ export class PersonalCardComponent implements OnInit, OnDestroy {
     });  // cierro el afterclosed()
   }  // fin openPersonModal()
 
-  // Mensaje de alerta.
-  // type: "ok", "error", "info"
-  alertDialog( type:string="ok", data:string[], timer:number=0) {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = false;
-    dialogConfig.id = "modal-warn";
-
-    // dialogConfig.height = "350px";
-    // dialogConfig.width = "600px";
-    // dialogConfig.maxWidth = '700px';
-    dialogConfig.data = new Mensaje(type, data, timer)
-
-
-    const dialogRef = this.dialog.open(MatAlertComponent, dialogConfig);
-
-    dialogRef.afterClosed().subscribe(() => console.log("Cerrando alert-modal"));
-  }
 
 }

@@ -5,7 +5,7 @@ import { faTrash, faPen, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { BaseDataService, DataService } from 'src/app/service/data.service';
 import { AdminService } from 'src/app/service/auth.service';
-import { FormService } from 'src/app/service/ui.service';
+import { FormService, UiService } from 'src/app/service/ui.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatAlertComponent } from 'src/app/shared/mat-alert/mat-alert.component';
 
@@ -45,13 +45,18 @@ export class InterestsItemComponent implements OnInit, OnDestroy {
   openForm: number;
   private formServiceSubscription: Subscription | undefined;
 
+  element: object;
+  fragment: string = 'Init';
+
   constructor(
     private dataService: DataService,
     private adminService: AdminService,
     private baseDataService: BaseDataService,
     private formService: FormService,
+    private uiService: UiService, 
 
-    private dialog: MatDialog,
+    private renderer: Renderer2,  // Se usa para renderizar tras la carga de todos los componentes iniciales, ngAfterViewInit 
+
     
   ) { }
 
@@ -120,16 +125,13 @@ export class InterestsItemComponent implements OnInit, OnDestroy {
     this.dataService.upDateEntity(interest, "/interest").subscribe({
       next: (v) => {
         console.log("Guardado correctamente")
-        this.alertDialog(
-          "ok",
-          ['Datos guardados exitosamente'],
-          1500 );
+        this.uiService.msgboxOk(['Datos guardados exitosamente'],);
       },
       error: (e) => {
         let msg = new Array()
         msg.push("Se quizo modificar sin exito a: " + this.oldData.name);
         msg.push(e.message);
-        this.alertDialog("error", msg, 0 );
+        this.uiService.msgboxErr( msg,); 
         // alert("Response Error (" + e.status + ") en el metodo upDateItem()" + "\n" + e.message);
         console.log("Se quizo modificar sin exito a: " + this.oldData.name);
         // Restauro valor original
@@ -149,23 +151,11 @@ export class InterestsItemComponent implements OnInit, OnDestroy {
   }
 
 
-  // Mensaje de alerta.
-  // type: "ok", "error", "info"
-  alertDialog( type:string="ok", data:string[], timer:number=0) {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = false;
-    dialogConfig.id = "modal-warn";
-
-    // dialogConfig.height = "350px";
-    // dialogConfig.width = "600px";
-    // dialogConfig.maxWidth = '700px';
-    dialogConfig.data = new Mensaje(type, data, timer)
-
-
-    const dialogRef = this.dialog.open(MatAlertComponent, dialogConfig);
-
-    dialogRef.afterClosed().subscribe(() => console.log("Cerrando alert-modal"));
+  ngAfterViewInit(): void {
+    let element = this.renderer.selectRootElement(`#${this.fragment}`, true);
+    element.scrollIntoView({ behavior: 'smooth' });
   }
+  
 
 
 }

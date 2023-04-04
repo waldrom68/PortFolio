@@ -75,7 +75,6 @@ export class AppComponent implements OnInit {
 
 
   ngOnInit() {
-
     // Traigo todos los datos del Portfolio
     this.dataService.getPortFolioData().subscribe({
       next: (currentData) => {
@@ -86,6 +85,8 @@ export class AppComponent implements OnInit {
         this.wait = false;
         console.log("Obtenidos los datos exitosamente");
         
+        // this.uiService.msgboxOk(['Datos guardados exitosamente'],);
+        // this.uiService.msgboxOk(['Se ha eliminado exitosamentee'] ,);
 
       },
       error: (e) => {
@@ -108,7 +109,7 @@ export class AppComponent implements OnInit {
             }
             break;
         };
-        this.uiService.msgboxOk( msg,); 
+        this.uiService.msgboxErr( msg,); 
         
       },
       complete: () => { console.log("Finalizado el proceso de obtener los datos del PortFolio") }

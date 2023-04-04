@@ -4,14 +4,14 @@ import { AdminService } from 'src/app/service/auth.service';
 
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
-import { LaboralCareer, FullPersonDTO, Mensaje } from '../../models'
+import { LaboralCareer, FullPersonDTO } from '../../models'
 
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MessageBoxComponent } from '../../shared/message-box/message-box.component';
 
 import { Subscription } from 'rxjs';
-import { FormService } from 'src/app/service/ui.service';
-import { MatAlertComponent } from 'src/app/shared/mat-alert/mat-alert.component';
+import { FormService, UiService } from 'src/app/service/ui.service';
+
 
 @Component({
   selector: 'app-datos-trayectoria',
@@ -47,9 +47,9 @@ export class DatosTrayectoriaComponent implements OnInit, OnDestroy {
   constructor(
     private dataService: DataService,
     private baseDataService: BaseDataService,
+    private uiService: UiService,
 
     public matDialog: MatDialog,
-    private dialog: MatDialog,
 
     private renderer: Renderer2,  // Se usa para renderizar tras la carga de todos los componentes iniciales, ngAfterViewInit 
 
@@ -118,10 +118,7 @@ export class DatosTrayectoriaComponent implements OnInit, OnDestroy {
       this.dataService.delEntity(this.itemParaBorrar, "/laboralcareer").subscribe({
         next: (v) => {
           console.log("Se ha eliminado exitosamente a: ", this.itemParaBorrar);
-          this.alertDialog(
-            "ok",
-            ['Se ha eliminado exitosamente'],
-            1500 );
+          this.uiService.msgboxOk(['Se ha eliminado exitosamentee'] ,);
 
 
           this.baseData.laboralCareer = this.baseData.laboralCareer.filter((t) => { return t !== this.itemParaBorrar })
@@ -134,7 +131,7 @@ export class DatosTrayectoriaComponent implements OnInit, OnDestroy {
           let msg = new Array()
           msg.push("Se quizo eliminar sin exito a: " + this.itemParaBorrar.name);
           msg.push(e.message);
-          this.alertDialog("error", msg, 0 );
+          this.uiService.msgboxErr( msg,); 
 
           console.log("Se quizo eliminar sin exito a: ", this.itemParaBorrar);
         },
@@ -149,10 +146,7 @@ export class DatosTrayectoriaComponent implements OnInit, OnDestroy {
     this.dataService.addEntity(laboralCareer, "/laboralcareer").subscribe({
       next: (v) => {
         console.log("Guardado correctamente")
-        this.alertDialog(
-          "ok",
-          ['Datos guardados exitosamente'],
-          1500 );
+        this.uiService.msgboxOk(['Datos guardados exitosamente'],);
 
         laboralCareer.id = v.id;
         laboralCareer.person = this.baseData.id;
@@ -163,7 +157,7 @@ export class DatosTrayectoriaComponent implements OnInit, OnDestroy {
         let msg = new Array()
         msg.push("Se quizo agregar sin exito un trabajo");
         msg.push(e.message);
-        this.alertDialog("error", msg, 0 );
+        this.uiService.msgboxErr( msg,); 
 
         console.log("Se quizo agregar sin exito a: " + laboralCareer.resume, "si realmente tiene la misma descripcion, procure hacer un pequeño cambio");
       },
@@ -211,23 +205,6 @@ export class DatosTrayectoriaComponent implements OnInit, OnDestroy {
     )
   }
 
-    // Mensaje de alerta.
-  // type: "ok", "error", "info"
-  alertDialog( type:string="ok", data:string[], timer:number=0) {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = false;
-    dialogConfig.id = "modal-warn";
-
-    // dialogConfig.height = "350px";
-    // dialogConfig.width = "600px";
-    // dialogConfig.maxWidth = '700px';
-    dialogConfig.data = new Mensaje(type, data, timer)
-
-
-    const dialogRef = this.dialog.open(MatAlertComponent, dialogConfig);
-
-    dialogRef.afterClosed().subscribe(() => console.log("Cerrando alert-modal"));
-  }
 
   ngAfterViewInit(): void {
   let element = this.renderer.selectRootElement(`#${this.fragment}`, true);

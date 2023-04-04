@@ -7,10 +7,11 @@ import { AdminService } from 'src/app/service/auth.service';
 
 import { faTrash, faPen, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
-import { FullPersonDTO, Mensaje, Person } from '../../models'
+import { FullPersonDTO, Person } from '../../models'
 import { MessageBoxComponent } from 'src/app/shared/message-box/message-box.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatAlertComponent } from 'src/app/shared/mat-alert/mat-alert.component';
+
+import { UiService } from 'src/app/service/ui.service';
 
 
 @Component({
@@ -48,10 +49,12 @@ export class ObjetiveComponent implements OnInit, OnDestroy {
   fragment: string = 'Init';
 
   constructor(
+    private uiService: UiService, 
+    
     private formBuilder: FormBuilder,
     private dataService: DataService,
     public matDialog: MatDialog,
-    private dialog: MatDialog,
+
     private renderer: Renderer2,  // Se usa para renderizar tras la carga de todos los componentes iniciales, ngAfterViewInit 
 
     private adminService: AdminService,
@@ -107,16 +110,14 @@ export class ObjetiveComponent implements OnInit, OnDestroy {
         this.dataService.upDateEntity(this.converPerson, "/person").subscribe({
           next: (v) => {
             console.log("Guardado correctamente")
-            this.alertDialog(
-              "ok",
-              ['Datos guardados exitosamente'],
-              1500);
+            this.uiService.msgboxOk(['Datos guardados exitosamente'],);
+
           },
           error: (e) => {
             let msg = new Array()
             msg.push("Se quizo modificar sin exito el objetivo");
             msg.push(e.message);
-            this.alertDialog("error", msg, 0);
+            this.uiService.msgboxErr( msg,); 
 
             console.log("Se quizo modificar sin exito el objetivo");
             // Restauro valor original
@@ -162,10 +163,8 @@ export class ObjetiveComponent implements OnInit, OnDestroy {
     this.dataService.upDateEntity(this.converPerson, "/person").subscribe({
       next: (v) => {
         console.log("Guardado correctamente")
-        this.alertDialog(
-          "ok",
-          ['Dato guardado exitosamente'],
-          1500);
+        this.uiService.msgboxOk(['Datos guardados exitosamente'],);
+
         this.baseDataService.setCurrentBaseData(this.baseData);
         this.form.reset();
       },
@@ -173,8 +172,9 @@ export class ObjetiveComponent implements OnInit, OnDestroy {
         let msg = new Array()
         msg.push("Se quizo eliminar sin exito al Objetivo");
         msg.push(e.message);
-        this.alertDialog("error", msg, 0);
         console.log("Se quizo eliminar sin exito al objetivo");
+        this.uiService.msgboxErr( msg,); 
+
         // Restauro valor original
         this.baseData.objetive = this.itemParaBorrar;
       },
@@ -224,27 +224,9 @@ export class ObjetiveComponent implements OnInit, OnDestroy {
     )
   }
 
-  // Mensaje de alerta.
-  // type: "ok", "error", "info"
-  alertDialog(type: string = "ok", data: string[], timer: number = 0) {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = false;
-    dialogConfig.id = "modal-warn";
-
-    // dialogConfig.height = "350px";
-    // dialogConfig.width = "600px";
-    // dialogConfig.maxWidth = '700px';
-    dialogConfig.data = new Mensaje(type, data, timer)
-
-
-    const dialogRef = this.dialog.open(MatAlertComponent, dialogConfig);
-
-    dialogRef.afterClosed().subscribe(() => console.log("Cerrando alert-modal"));
-  }
-
   ngAfterViewInit(): void {
     let element = this.renderer.selectRootElement(`#${this.fragment}`, true);
     element.scrollIntoView({ behavior: 'smooth' });
   }
-
+  
 }
