@@ -1,13 +1,12 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { FullPersonDTO, HardSkill, Mensaje } from '../../../models';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, Renderer2 } from '@angular/core';
+import { FullPersonDTO, HardSkill } from '../../../models';
 
 import { faPen, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { BaseDataService, DataService } from 'src/app/service/data.service';
 import { AdminService } from 'src/app/service/auth.service';
-import { FormService } from 'src/app/service/ui.service';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { MatAlertComponent } from 'src/app/shared/mat-alert/mat-alert.component';
+import { FormService, UiService } from 'src/app/service/ui.service';
+
 
 
 @Component({
@@ -52,13 +51,17 @@ export class HardItemComponent implements OnInit, OnDestroy {
   openForm: number;
   private formServiceSubscription: Subscription | undefined;
 
+  element: object;
+  fragment: string = 'Init';
 
   constructor(
     private dataService: DataService,
     private adminService: AdminService,
     private baseDataService: BaseDataService,
     private formService: FormService,
-    private dialog: MatDialog,
+    private renderer: Renderer2,  // Se usa para renderizar tras la carga de todos los componentes iniciales, ngAfterViewInit 
+
+    private uiService: UiService,
   ) {
 
   }
@@ -124,20 +127,18 @@ export class HardItemComponent implements OnInit, OnDestroy {
   update(hardskill: HardSkill) {
     // Actualizacion de hardskill
     this.dataService.upDateEntity(hardskill, "/hardskill").subscribe({
-      next: (v) =>  {
+      next: (v) => {
         console.log("Guardado correctamente")
-        this.alertDialog(
-          "ok",
-          ['Datos guardados exitosamente'],
-          1500 );
+        this.uiService.msgboxOk(['Datos guardados exitosamente'],);
+
       },
       error: (e) => {
         let msg = new Array()
         msg.push("Se quizo modificar sin exito a: " + this.oldData.name);
         msg.push(e.message);
-        this.alertDialog("error", msg, 0 );
-
         console.log("Se quizo modificar sin exito a: " + this.oldData.name);
+        this.uiService.msgboxErr(msg,);
+
         // Restauro valor original
         hardskill = this.oldData;
       },
@@ -153,21 +154,9 @@ export class HardItemComponent implements OnInit, OnDestroy {
     this.toggleForm(hardskill);  // cierro el formulario
   }
 
-  // Mensaje de alerta.
-  // type: "ok", "error", "info"
-  alertDialog( type:string="ok", data:string[], timer:number=0) {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = false;
-    dialogConfig.id = "modal-warn";
-
-    // dialogConfig.height = "350px";
-    // dialogConfig.width = "600px";
-    // dialogConfig.maxWidth = '700px';
-    dialogConfig.data = new Mensaje(type, data, timer)
-
-
-    const dialogRef = this.dialog.open(MatAlertComponent, dialogConfig);
-
-    dialogRef.afterClosed().subscribe(() => console.log("Cerrando alert-modal"));
+  ngAfterViewInit(): void {
+    let element = this.renderer.selectRootElement(`#${this.fragment}`, true);
+    element.scrollIntoView({ behavior: 'smooth' });
   }
+
 }

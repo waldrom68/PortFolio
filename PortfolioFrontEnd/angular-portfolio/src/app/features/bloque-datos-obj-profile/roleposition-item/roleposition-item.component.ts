@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { FullPersonDTO, Mensaje, RolePosition } from '../../../models'
+import { FullPersonDTO, RolePosition } from '../../../models'
 
 import { faPen, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { BaseDataService, DataService } from 'src/app/service/data.service';
 import { AdminService } from 'src/app/service/auth.service';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { MatAlertComponent } from 'src/app/shared/mat-alert/mat-alert.component';
+
+import { UiService } from 'src/app/service/ui.service';
 
 @Component({
   selector: 'app-roleposition-item',
@@ -43,7 +43,8 @@ export class RolepositionItemComponent implements OnInit, OnDestroy {
     private dataService: DataService,
     private adminService: AdminService,
     private baseDataService: BaseDataService,
-    private dialog: MatDialog,
+    
+    private uiService: UiService, 
   ) { }
 
   ngOnInit(): void {
@@ -95,10 +96,7 @@ export class RolepositionItemComponent implements OnInit, OnDestroy {
 
       next: (v) => { 
         console.log("Guardado correctamente: ", v); 
-        this.alertDialog(
-          "ok",
-          ['Datos guardados exitosamente'],
-          1500 );
+        this.uiService.msgboxOk(['Datos guardados exitosamente'],);
 
         // Debo actualizar dataBase, laboralcareer, la cual es copia del backend.
         // Como sólo se busca la info al iniciar el sistema, debo mantener una imagen
@@ -116,7 +114,7 @@ export class RolepositionItemComponent implements OnInit, OnDestroy {
         let msg = new Array()
         msg.push("Se quizo modificar sin exito a: " + this.oldData.name);
         msg.push(e.message);
-        this.alertDialog("error", msg, 0 );
+        this.uiService.msgboxErr( msg,); 
 
         console.log("Se quizo modificar sin exito a: " + rolePosition.name);
         // Restauro valor original
@@ -132,23 +130,6 @@ export class RolepositionItemComponent implements OnInit, OnDestroy {
   
   cancelation(rolePosition: RolePosition) {
     this.toggleForm(rolePosition);  // cierro el formulario
-  }
-  // Mensaje de alerta.
-  // type: "ok", "error", "info"
-  alertDialog( type:string="ok", data:string[], timer:number=0) {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = false;
-    dialogConfig.id = "modal-warn";
-
-    // dialogConfig.height = "350px";
-    // dialogConfig.width = "600px";
-    // dialogConfig.maxWidth = '700px';
-    dialogConfig.data = new Mensaje(type, data, timer)
-
-
-    const dialogRef = this.dialog.open(MatAlertComponent, dialogConfig);
-
-    dialogRef.afterClosed().subscribe(() => console.log("Cerrando alert-modal"));
   }
 
 

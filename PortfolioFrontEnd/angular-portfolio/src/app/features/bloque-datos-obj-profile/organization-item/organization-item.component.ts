@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { FullPersonDTO, Mensaje, Organization } from '../../../models'
+import { FullPersonDTO, Organization } from '../../../models'
 
 import { faPen, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { BaseDataService, DataService } from 'src/app/service/data.service';
 import { AdminService } from 'src/app/service/auth.service';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { MatAlertComponent } from 'src/app/shared/mat-alert/mat-alert.component';
+
+import { UiService } from 'src/app/service/ui.service';
 
 
 @Component({
@@ -17,7 +17,7 @@ import { MatAlertComponent } from 'src/app/shared/mat-alert/mat-alert.component'
 export class OrganizationItemComponent implements OnInit, OnDestroy {
 
   @Input() item: Organization;
- 
+
   @Input() showBtnAction!: boolean;
   @Output() showBtnActionChange = new EventEmitter<boolean>();
 
@@ -40,13 +40,13 @@ export class OrganizationItemComponent implements OnInit, OnDestroy {
 
   baseData: FullPersonDTO;
   private BaseDataServiceSubscription: Subscription | undefined;
- 
+
   constructor(
     private dataService: DataService,
     private adminService: AdminService,
     private baseDataService: BaseDataService,
-    private dialog: MatDialog,
-  
+
+    private uiService: UiService,
   ) { }
 
   ngOnInit(): void {
@@ -94,40 +94,38 @@ export class OrganizationItemComponent implements OnInit, OnDestroy {
   }
 
   update(organization: Organization) {
-    this.dataService.upDateEntity(organization, "/organization").subscribe( {
-      
+    this.dataService.upDateEntity(organization, "/organization").subscribe({
+
       next: (v) => {
+        this.uiService.msgboxOk(['Datos guardados exitosamente'],);
         console.log("Guardado correctamente: "),
-        this.alertDialog(
-          "ok",
-          ['Datos guardados exitosamente'],
-          1500 );
-        // Debo actualizar dataBase, laboralcareer, la cual es copia del backend.
-        // Como sólo se busca la info al iniciar el sistema, debo mantener una imagen
-        // de lo que hago en la DB. 
-        // Aquí lo hago para que se actualicen todas las relaciones laborales que 
-        // contienen la Organization modificada caso contrario, no se actualizaran 
-        // las mismas en el listado de otras trayectorias que contengan la misma 
-        // organizacion.
-        this.baseData.laboralCareer.forEach(element => {
-          if (element.organization.id == organization.id)
-            element.organization.name = organization.name;
-        });
+
+          // Debo actualizar dataBase, laboralcareer, la cual es copia del backend.
+          // Como sólo se busca la info al iniciar el sistema, debo mantener una imagen
+          // de lo que hago en la DB. 
+          // Aquí lo hago para que se actualicen todas las relaciones laborales que 
+          // contienen la Organization modificada caso contrario, no se actualizaran 
+          // las mismas en el listado de otras trayectorias que contengan la misma 
+          // organizacion.
+          this.baseData.laboralCareer.forEach(element => {
+            if (element.organization.id == organization.id)
+              element.organization.name = organization.name;
+          });
       },
 
-        error: (e) => {
-          let msg = new Array()
-          msg.push("Se quizo modificar sin exito a: " + this.oldData.name);
-          msg.push(e.message);
-          this.alertDialog("error", msg, 0 );
+      error: (e) => {
+        let msg = new Array()
+        msg.push("Se quizo modificar sin exito a: " + this.oldData.name);
+        msg.push(e.message);
+        console.log("Se quizo modificar sin exito a: " + this.oldData.name);
+        this.uiService.msgboxErr(msg,);
 
-          console.log("Se quizo modificar sin exito a: " + this.oldData.name);
-          // Restauro valor original
-          organization = this.oldData;
-        },
+        // Restauro valor original
+        organization = this.oldData;
+      },
 
-        complete: () => console.log("Completada la actualizacion de la Organization")
-      });
+      complete: () => console.log("Completada la actualizacion de la Organization")
+    });
 
     this.toggleForm(organization);  // cierro el formulario
     this.baseDataService.setCurrentBaseData(this.baseData);
@@ -137,22 +135,5 @@ export class OrganizationItemComponent implements OnInit, OnDestroy {
     this.toggleForm(organization);  // cierro el formulario
   }
 
-  // Mensaje de alerta.
-  // type: "ok", "error", "info"
-  alertDialog( type:string="ok", data:string[], timer:number=0) {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = false;
-    dialogConfig.id = "modal-warn";
 
-    // dialogConfig.height = "350px";
-    // dialogConfig.width = "600px";
-    // dialogConfig.maxWidth = '700px';
-    dialogConfig.data = new Mensaje(type, data, timer)
-
-
-    const dialogRef = this.dialog.open(MatAlertComponent, dialogConfig);
-
-    dialogRef.afterClosed().subscribe(() => console.log("Cerrando alert-modal"));
-  }
 }
-  

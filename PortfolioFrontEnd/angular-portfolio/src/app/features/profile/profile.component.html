@@ -1,8 +1,8 @@
-<div *ngIf="baseData">
+<div *ngIf="baseData"  id="Init">
     <ng-container *ngIf="baseData.profile.length; else agregarProfile" >
 
         <!-- MOSTRANDO EL PERFIL -->
-        <div class="table-dark text-left container py-2" id="Init">
+        <div class="table-dark text-left container py-2">
 
             <ng-container *ngIf="!showForm">
                 <p *ngFor="let item of baseData.profile.split('\n')">
