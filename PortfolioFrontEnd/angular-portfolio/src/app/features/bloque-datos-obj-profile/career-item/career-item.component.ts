@@ -44,8 +44,8 @@ export class CareerItemComponent implements OnInit, OnDestroy {
   private BaseDataServiceSubscription: Subscription | undefined;
   openForm: number;
   private formServiceSubscription: Subscription | undefined;
-  element: object;
-  fragment: string = 'Init';
+  // element: object;
+  // fragment: string = 'Init';
 
   constructor(
     private dataService: DataService,
@@ -54,7 +54,7 @@ export class CareerItemComponent implements OnInit, OnDestroy {
     private formService: FormService,
     private uiService: UiService, 
     
-    private renderer: Renderer2,  // Se usa para renderizar tras la carga de todos los componentes iniciales, ngAfterViewInit 
+    // private renderer: Renderer2,  // Se usa para renderizar tras la carga de todos los componentes iniciales, ngAfterViewInit 
     private dialog: MatDialog,
 
   ) { }
@@ -171,10 +171,10 @@ export class CareerItemComponent implements OnInit, OnDestroy {
     this.toggleForm(laboralCareer);  // cierro el formulario
   }
 
-  ngAfterViewInit(): void {
-    let element = this.renderer.selectRootElement(`#${this.fragment}`, true);
-    element.scrollIntoView({ behavior: 'smooth' });
-  }
+  // ngAfterViewInit(): void {
+  //   let element = this.renderer.selectRootElement(`#${this.fragment}`, true);
+  //   element.scrollIntoView({ behavior: 'smooth' });
+  // }
   
 
 }

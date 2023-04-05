@@ -45,8 +45,8 @@ export class InterestsItemComponent implements OnInit, OnDestroy {
   openForm: number;
   private formServiceSubscription: Subscription | undefined;
 
-  element: object;
-  fragment: string = 'Init';
+  // element: object;
+  // fragment: string = 'Init';
 
   constructor(
     private dataService: DataService,
@@ -55,7 +55,7 @@ export class InterestsItemComponent implements OnInit, OnDestroy {
     private formService: FormService,
     private uiService: UiService, 
 
-    private renderer: Renderer2,  // Se usa para renderizar tras la carga de todos los componentes iniciales, ngAfterViewInit 
+    // private renderer: Renderer2,  // Se usa para renderizar tras la carga de todos los componentes iniciales, ngAfterViewInit 
 
     
   ) { }
@@ -151,10 +151,10 @@ export class InterestsItemComponent implements OnInit, OnDestroy {
   }
 
 
-  ngAfterViewInit(): void {
-    let element = this.renderer.selectRootElement(`#${this.fragment}`, true);
-    element.scrollIntoView({ behavior: 'smooth' });
-  }
+  // ngAfterViewInit(): void {
+  //   let element = this.renderer.selectRootElement(`#${this.fragment}`, true);
+  //   element.scrollIntoView({ behavior: 'smooth' });
+  // }
   
 
 

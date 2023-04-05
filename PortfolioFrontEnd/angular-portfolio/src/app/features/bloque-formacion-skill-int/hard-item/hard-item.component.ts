@@ -51,15 +51,15 @@ export class HardItemComponent implements OnInit, OnDestroy {
   openForm: number;
   private formServiceSubscription: Subscription | undefined;
 
-  element: object;
-  fragment: string = 'Init';
+  // element: object;
+  // fragment: string = 'Init';
 
   constructor(
     private dataService: DataService,
     private adminService: AdminService,
     private baseDataService: BaseDataService,
     private formService: FormService,
-    private renderer: Renderer2,  // Se usa para renderizar tras la carga de todos los componentes iniciales, ngAfterViewInit 
+    // private renderer: Renderer2,  // Se usa para renderizar tras la carga de todos los componentes iniciales, ngAfterViewInit 
 
     private uiService: UiService,
   ) {
@@ -154,9 +154,9 @@ export class HardItemComponent implements OnInit, OnDestroy {
     this.toggleForm(hardskill);  // cierro el formulario
   }
 
-  ngAfterViewInit(): void {
-    let element = this.renderer.selectRootElement(`#${this.fragment}`, true);
-    element.scrollIntoView({ behavior: 'smooth' });
-  }
+  // ngAfterViewInit(): void {
+  //   let element = this.renderer.selectRootElement(`#${this.fragment}`, true);
+  //   element.scrollIntoView({ behavior: 'smooth' });
+  // }
 
 }

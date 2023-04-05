@@ -44,8 +44,8 @@ export class StudieItemComponent implements OnInit, OnDestroy {
   private BaseDataServiceSubscription: Subscription | undefined;
   openForm: number;
   private formServiceSubscription: Subscription | undefined;
-  element: object;
-  fragment: string = 'Init';
+  // element: object;
+  // fragment: string = 'Init';
 
   constructor(
     private dataService: DataService,
@@ -53,7 +53,7 @@ export class StudieItemComponent implements OnInit, OnDestroy {
     private baseDataService: BaseDataService,
     private formService: FormService,
 
-    private renderer: Renderer2,  // Se usa para renderizar tras la carga de todos los componentes iniciales, ngAfterViewInit 
+    // private renderer: Renderer2,  // Se usa para renderizar tras la carga de todos los componentes iniciales, ngAfterViewInit 
     private uiService: UiService,
     private dialog: MatDialog,
 
@@ -169,9 +169,9 @@ export class StudieItemComponent implements OnInit, OnDestroy {
     this.toggleForm(studie);  // cierro el formulario
   }
 
-  ngAfterViewInit(): void {
-    let element = this.renderer.selectRootElement(`#${this.fragment}`, true);
-    element.scrollIntoView({ behavior: 'smooth' });
-  }
+  // ngAfterViewInit(): void {
+  //   let element = this.renderer.selectRootElement(`#${this.fragment}`, true);
+  //   element.scrollIntoView({ behavior: 'smooth' });
+  // }
 
 }
