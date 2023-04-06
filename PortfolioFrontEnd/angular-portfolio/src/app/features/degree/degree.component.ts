@@ -124,7 +124,7 @@ export class DegreeComponent implements OnInit, OnDestroy {
         error: (e) => {
           let msg = new Array()
           msg.push("Se quizo modificar sin exito a: " + this.itemParaBorrar.name);
-          msg.push(e.message);
+          msg.push(e.error.mensaje ? e.error.mensaje : e.message);
           this.uiService.msgboxErr( msg,); 
 
           console.log("Se quizo eliminar sin exito a: ", this.itemParaBorrar);
@@ -150,7 +150,7 @@ export class DegreeComponent implements OnInit, OnDestroy {
       error: (e) => {
         let msg = new Array()
         msg.push("Se quizo agregar sin exito a: " + degree.name);
-        msg.push(e.message);
+        msg.push(e.error.mensaje ? e.error.mensaje : e.message);
         this.uiService.msgboxErr( msg,); 
 
         console.log("Se quizo agregar sin exito a: " + degree.name);

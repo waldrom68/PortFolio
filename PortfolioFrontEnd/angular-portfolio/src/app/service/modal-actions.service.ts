@@ -114,7 +114,7 @@ export class ModalActionsService {
   //       this.toggleFlagBorrado(true);
   //     },
   //     error: (e) => {
-  //       alert("Response Error (" + e.status + ") en el metodo upDateItem()" + "\n" + e.message);
+  //       alert("Response Error (" + e.status + ") en el metodo upDateItem()" + "\n" + e.error.mensaje ? e.error.mensaje : e.message);
   //       console.log("Se quizo eliminar sin exito a: ", modalData.data);
   //       modalData.data = this.oldData;
   //       this.toggleFlagBorrado(false);

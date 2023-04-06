@@ -4,25 +4,17 @@
 
         <div id="listado" *ngIf="!showForm">
 
-            <app-interests-item *ngFor="let item of baseData.interest" 
-            [item]="item" 
-            (onDelete)="openModalDelete(item)"
-                [(showBtnAction)]="showBtnAction" 
-                (showBtnActionChange)="showBtnAction">
+            <app-interests-item *ngFor="let item of baseData.interest" [item]="item" (onDelete)="openModalDelete(item)"
+                [(showBtnAction)]="showBtnAction" (showBtnActionChange)="showBtnAction">
             </app-interests-item>
 
         </div>
     </ng-container>
 
-    <app-interests-form *ngIf="showForm && esAdmin" 
-    [ngStyle]="{'width':'100%'}" 
-    [title]="''"
-        [formData]="formData" 
-        
-        (onUpdate)="addItem($event)" 
-        (cancel)="cancelation()">
+    <app-interests-form *ngIf="showForm && esAdmin" [ngStyle]="{'width':'100%'}" [title]="''"
+        (onUpdate)="addItem($event)" (cancel)="cancelation()">
 
-        [(showBtnAction)]="showBtnAction" 
+        [(showBtnAction)]="showBtnAction"
         (showBtnActionChange)="showBtnAction">
     </app-interests-form>
 
@@ -40,8 +32,7 @@
 
 <ng-container *ngIf="esAdmin && showBtnAction">
     <br>
-    <button class="btn btn-default btn-sm" ngClass="faControl fa-ico" 
-    (click)="toggleForm()">
+    <button class="btn btn-default btn-sm" ngClass="faControl fa-ico" (click)="toggleForm()">
         <fa-icon ngClass="fa-3x text-primary" [icon]="faPlusCircle">
         </fa-icon>
     </button>

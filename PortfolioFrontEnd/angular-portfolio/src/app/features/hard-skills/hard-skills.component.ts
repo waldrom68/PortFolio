@@ -131,7 +131,7 @@ fragment: string = 'Init';
         error: (e) => {
           let msg = new Array()
           msg.push("Se quizo eliminar sin exito a: " + this.itemParaBorrar.name);
-          msg.push(e.message);
+          msg.push(e.error.mensaje ? e.error.mensaje : e.message);
           console.log("Se quizo eliminar sin exito a: " , this.itemParaBorrar);
           this.uiService.msgboxErr( msg,); 
 
@@ -157,8 +157,10 @@ fragment: string = 'Init';
       },
       error: (e) => {
         let msg = new Array()
-        msg.push("Se quizo agregar sin exito a: " + this.itemParaBorrar.name);
-        msg.push(e.message);
+        msg.push("Se quizo agregar sin exito a: " + hardSkill.name);
+        msg.push(e.error.mensaje ? e.error.mensaje : e.error.mensaje ? e.error.mensaje : e.message);
+        // console.log(e.error.mensaje ? e.error.mensaje : e.error.mensaje ? e.error.mensaje : e.message);
+        
         this.uiService.msgboxErr( msg,); 
 
         console.log("Se quizo agregar sin exito a: " + hardSkill.name);

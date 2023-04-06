@@ -218,7 +218,7 @@ export class PersonalCardComponent implements OnInit, OnDestroy {
           error: (e) => {
             let msg = new Array()
             msg.push("Se quizo modificar sin exito a: " + this.converPerson.name);
-            msg.push(e.message);
+            msg.push(e.error.mensaje ? e.error.mensaje : e.message);
             this.uiService.msgboxErr(msg,);
 
             console.log("Se quizo modificar sin exito a: " + this.converPerson.name);
@@ -268,7 +268,7 @@ export class PersonalCardComponent implements OnInit, OnDestroy {
           error: (e) => {
             let msg = new Array()
             msg.push("Se quizo modificar sin exito a: " + this.baseData.name);
-            msg.push(e.message);
+            msg.push(e.error.mensaje ? e.error.mensaje : e.message);
             console.log("Se quizo modificar sin exito a: " + this.baseData.name);
             this.uiService.msgboxErr(msg,);
           },

@@ -126,7 +126,7 @@ export class DatosFormacionComponent implements OnInit, OnDestroy {
         error: (e) => {
           let msg = new Array()
           msg.push("Se quizo eliminar sin exito: " + this.itemParaBorrar);
-          msg.push(e.message);
+          msg.push(e.error.mensaje ? e.error.mensaje : e.message);
           this.uiService.msgboxErr(msg,);
 
           console.log("Se quizo eliminar sin exito a: ", this.itemParaBorrar);
@@ -152,7 +152,7 @@ export class DatosFormacionComponent implements OnInit, OnDestroy {
       error: (e) => {
         let msg = new Array()
         msg.push("Se quizo agregar sin exito a: " + studie.name);
-        msg.push(e.message);
+        msg.push(e.error.mensaje ? e.error.mensaje : e.message);
         this.uiService.msgboxErr(msg,);
 
         console.log("Se quizo agregar sin exito a: " + studie.name, "si realmente tiene el mismo nombre, procure hacer un pequeño cambio");

@@ -27,10 +27,11 @@
 
 </div>
 
+<!-- [formData]="interest" -->
 <app-interests-form *ngIf="showForm && esAdmin" 
     [ngStyle]="{'width':'100%'}"
     [title]="''"
-    [formData]="formData"
+    [item]="item"
     
     (onUpdate)=" update($event);"
     (cancel)="cancelation($event)"

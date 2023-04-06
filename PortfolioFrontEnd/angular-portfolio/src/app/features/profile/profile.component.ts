@@ -112,7 +112,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
           error: (e) => {
             let msg = new Array()
             msg.push("Se quizo modificar sin exito el perfi");
-            msg.push(e.message);
+            msg.push(e.error.mensaje ? e.error.mensaje : e.message);
             this.uiService.msgboxErr( msg,);
 
             console.log("Se quizo modificar sin exito el perfil");
@@ -167,7 +167,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
       error: (e) => {
         let msg = new Array()
         msg.push("Se quizo eliminar sin exito el perfil");
-        msg.push(e.message);
+        msg.push(e.error.mensaje ? e.error.mensaje : e.message);
         console.log("Se quizo eliminar sin exito al perfil");
         this.uiService.msgboxErr( msg,); 
 

@@ -116,7 +116,7 @@ export class ObjetiveComponent implements OnInit, OnDestroy {
           error: (e) => {
             let msg = new Array()
             msg.push("Se quizo modificar sin exito el objetivo");
-            msg.push(e.message);
+            msg.push(e.error.mensaje ? e.error.mensaje : e.message);
             this.uiService.msgboxErr( msg,); 
 
             console.log("Se quizo modificar sin exito el objetivo");
@@ -171,7 +171,7 @@ export class ObjetiveComponent implements OnInit, OnDestroy {
       error: (e) => {
         let msg = new Array()
         msg.push("Se quizo eliminar sin exito al Objetivo");
-        msg.push(e.message);
+        msg.push(e.error.mensaje ? e.error.mensaje : e.message);
         console.log("Se quizo eliminar sin exito al objetivo");
         this.uiService.msgboxErr( msg,); 
 

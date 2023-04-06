@@ -1,12 +1,11 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { Degree, FullPersonDTO, Mensaje } from '../../../models'
+import { Degree, FullPersonDTO } from '../../../models'
 
 import { faPen, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { BaseDataService, DataService } from 'src/app/service/data.service';
 import { AdminService } from 'src/app/service/auth.service';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { MatAlertComponent } from 'src/app/shared/mat-alert/mat-alert.component';
+
 import { UiService } from 'src/app/service/ui.service';
 
 @Component({
@@ -115,12 +114,14 @@ export class DegreeItemComponent implements OnInit, OnDestroy {
       error: (e) => {
         let msg = new Array()
         msg.push("Se quizo modificar sin exito a: " + this.oldData.name);
-        msg.push(e.message);
+        msg.push(e.error.mensaje ? e.error.mensaje : e.message);
         console.log("Se quizo modificar sin exito a: " + degree.name);
         this.uiService.msgboxErr( msg,); 
 
         // Restauro valor original
-        degree = this.oldData;
+        degree.name = this.oldData.name;
+
+
       },
       complete: () => console.log("Completada la actualizacion del Nivel de Formacion")
     });

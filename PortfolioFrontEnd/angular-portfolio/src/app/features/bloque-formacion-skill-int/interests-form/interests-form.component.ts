@@ -16,7 +16,7 @@ import { FullPersonDTO, Interest } from '../../../models';
 })
 export class InterestsFormComponent implements OnInit, OnDestroy {
 
-  @Input() formData: Interest;
+  @Input() item: Interest;
 
   @Input() title:string;
 
@@ -25,6 +25,8 @@ export class InterestsFormComponent implements OnInit, OnDestroy {
 
   @Output() onUpdate: EventEmitter<Interest> = new EventEmitter()
   @Output() cancel: EventEmitter<Interest> = new EventEmitter()
+
+  formData: Interest;
 
   faCheck = faCheck;
   faTimes = faTimes;
@@ -52,6 +54,15 @@ export class InterestsFormComponent implements OnInit, OnDestroy {
         this.baseData = currentData;
       }
     );
+    if (!this.item) {
+      this.resetForm()
+      
+      // this.resetForm();
+    } else {
+      
+      this.formData = this.item;
+    }
+ 
     
     this.form = this.formBuilder.group({
       name:[this.formData.name, [Validators.required,

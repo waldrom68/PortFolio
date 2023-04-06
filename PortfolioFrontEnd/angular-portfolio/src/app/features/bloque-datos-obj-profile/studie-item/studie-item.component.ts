@@ -149,12 +149,16 @@ export class StudieItemComponent implements OnInit, OnDestroy {
       error: (e) => {
         let msg = new Array()
         msg.push("Se quizo modificar sin exito a: " + this.oldData.name);
-        msg.push(e.message);
+        msg.push(e.error.mensaje ? e.error.mensaje : e.message);
         this.uiService.msgboxErr(msg,);
 
         console.log("Se quizo agregar sin exito a: " + studie.name, "si realmente tiene el mismo nombre, procure hacer un pequeño cambio");
         // AQUI RESTAURO oldData
-        studie = this.oldData;
+        studie.endDate = this.oldData.endDate;
+        studie.organization = this.oldData.organization;
+        studie.startDate = this.oldData.startDate;
+        studie.degree = this.oldData.degree;
+        studie.name = this.oldData.name;
       },
       complete: () => console.log("Completado el alta en Formación")
     });

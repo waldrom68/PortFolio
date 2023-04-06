@@ -32,17 +32,3 @@ console.log("Modo development")
 //  */
 // import 'zone.js/plugins/zone-error';  // Included with Angular CLI.
 
-// element: object;
-// fragment: string = 'Init';
-// private renderer: Renderer2,  // Se usa para renderizar tras la carga de todos los componentes iniciales, ngAfterViewInit 
-// ngAfterViewInit(): void {
-//   let element = this.renderer.selectRootElement(`#${this.fragment}`, true);
-//   element.scrollIntoView({ behavior: 'smooth' });
-// }
-
-// private matAlert: MatAlertComponent,
-
-// let msg = new Array()
-// msg.push("Se quizo loguear sin exito como :" + loginUsuario.nombreUsuario);
-// // msg.push(e.message);
-// this.matAlert.alertDialog("error", msg, 0 );

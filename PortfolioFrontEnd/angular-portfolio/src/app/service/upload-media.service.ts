@@ -5,7 +5,7 @@ import { Observable, Subscription } from 'rxjs';
 import { FullPersonDTO, Mensaje, Person } from '../models';
 import { MatAlertComponent } from '../shared/mat-alert/mat-alert.component';
 import { BaseDataService, DataService } from './data.service';
-import { ProgressValueService } from './ui.service';
+import { ProgressValueService, UiService } from './ui.service';
 
 
 @Injectable({
@@ -32,8 +32,7 @@ export class UploadMediaService {
     private dataService: DataService,
     private baseDataService: BaseDataService,
 
-    private dialog: MatDialog,
-
+    private uiService: UiService, 
 
   ) {
     // this.DATAPORTFOLIO = this.dataService.getData();
@@ -90,28 +89,37 @@ export class UploadMediaService {
       (error) => {
         // A full list of error codes is available at
         // https://firebase.google.com/docs/storage/web/handle-errors
+        let errText: string = "";
         switch (error.code) {
           case 'storage/unauthorized':
+            errText = "Almacenamiento no autorizado, sin permisos suficientes"
             // User doesn't have permission to access the object
             break;
           case 'storage/canceled':
             // User canceled the upload
+            errText = "Almacenameniento cancelado por el usuario"
             break;
 
           // ...
 
           case 'storage/unknown':
             // Unknown error occurred, inspect error.serverResponse
+            errText = "Ha ocurrido un error inseperado, problemas con la respuesta del servidor o sin respuesda del mismo"
             break;
         }
+        let msg = new Array()
+        msg.push("Se quizo guardar la imagen sin ," + error.code + errText);
+        this.uiService.msgboxErr( msg,);
       },
       () => {
         // Upload completed successfully, now we can get the download URL
+        this.uiService.msgboxOk(['Nueva imagen almacenada exitosamente'],);
+        
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           console.log('File available at -> ', downloadURL);
 
           // PENDIENTE, es una truchada, repensarlo y refactorizar
-          // me duelen los ojos al ver lo que hice aquí ;)
+          // 
           if (name == "/fotoBG") {
             person.pathBgImage = downloadURL;
           } else {
@@ -121,11 +129,7 @@ export class UploadMediaService {
 
           this.dataService.upDateEntity(person, "/person").subscribe({
             next: (v) => {
-              this.alertDialog(
-                "ok",
-                ['Imagen guardada exitosamente'],
-                1500);
-
+              this.uiService.msgboxOk( ['Nueva imagen obtenida exitosamente'],);
               console.log("Guardado correctamente: ", v)
 
               // actualizo los valores
@@ -139,14 +143,14 @@ export class UploadMediaService {
             },
             error: (e) => {
               let msg = new Array()
-              msg.push("Se quizo modificar sin exito la imagen");
-              msg.push(e.message);
-              this.alertDialog("error", msg, 0);
+              console.log("Se quizo cambiar la imagen sin exito");
+              msg.push("Se quizo obtener la nueva imagen sin exito;");
+              msg.push(e.error.mensaje ? e.error.mensaje : e.message);
+              this.uiService.msgboxErr( msg,); 
 
-              console.log("Se quizo cambiar imagen del Perfil sin exito");
               // Restauro valor original
             },
-            complete: () => console.log("Completada la actualizacion de la imagen del perfil")
+            complete: () => console.log("Completada la actualizacion de la imagen")
           });
 
 
@@ -157,21 +161,4 @@ export class UploadMediaService {
     );
   }
 
-    // Mensaje de alerta.
-  // type: "ok", "error", "info"
-  alertDialog( type:string="ok", data:string[], timer:number=0) {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = false;
-    dialogConfig.id = "modal-warn";
-
-    // dialogConfig.height = "350px";
-    // dialogConfig.width = "600px";
-    // dialogConfig.maxWidth = '700px';
-    dialogConfig.data = new Mensaje(type, data, timer)
-
-
-    const dialogRef = this.dialog.open(MatAlertComponent, dialogConfig);
-
-    dialogRef.afterClosed().subscribe(() => console.log("Cerrando alert-modal"));
-  }
 }

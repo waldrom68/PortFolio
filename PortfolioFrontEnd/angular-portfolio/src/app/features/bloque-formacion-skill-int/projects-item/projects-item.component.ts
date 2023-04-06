@@ -127,12 +127,15 @@ export class ProjectsItemComponent implements OnInit, OnDestroy {
       error: (e) => {
         let msg = new Array()
         msg.push("Se quizo modificar sin exito a: " + this.oldData.name);
-        msg.push(e.message);
+        msg.push(e.error.mensaje ? e.error.mensaje : e.message);
         console.log("Se quizo modificar sin exito a: " + this.oldData.name);
         this.uiService.msgboxErr( msg,); 
 
         // Restauro valor original
-        project = this.oldData;
+        project.name = this.oldData.name;
+        project.resume = this.oldData.resume;
+        project.since = this.oldData.since;
+        project.url = this.oldData.url;
       },
       complete: () => console.log("Completada la actualizacion del proyecto")
     } );

@@ -148,14 +148,19 @@ export class CareerItemComponent implements OnInit, OnDestroy {
       },
       error: (e) => {
         let msg = new Array()
-        msg.push("Se quizo obtener los datos sin exito," + e.message)
+        msg.push("Se quizo obtener los datos sin exito," + e.error.mensaje ? e.error.mensaje : e.message)
         msg.push("Se quizo modificar sin exito al trabajo");
-        msg.push(e.message);
+        msg.push(e.error.mensaje ? e.error.mensaje : e.message);
         this.uiService.msgboxErr( msg,); 
 
         console.log("Se quizo agregar sin exito a: " + laboralCareer.resume, "si realmente tiene la misma descripcion, procure hacer un pequeño cambio");
         // AQUI RESTAURO oldData
-        laboralCareer = this.oldData;
+        laboralCareer.endDate = this.oldData.endDate;
+        laboralCareer.organization = this.oldData.organization;
+        laboralCareer.resume = this.oldData.resume;
+        laboralCareer.roleposition = this.oldData.roleposition;
+        laboralCareer.startDate = this.oldData.startDate;
+
       },
       complete: () => console.log("Completado el alta en Trayectoria Laboral")
     });

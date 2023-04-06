@@ -123,13 +123,13 @@ export class SoftItemComponent implements OnInit, OnDestroy {
       error: (e) => {
         let msg = new Array()
         msg.push("Se quizo modificar sin exito a: " + this.oldData.name);
-        msg.push(e.message);
+        msg.push(e.error.mensaje ? e.error.mensaje : e.message);
         console.log("Se quizo modificar sin exito a: " + this.oldData.name);
         this.uiService.msgboxErr( msg,); 
 
         // Restauro valor original
-        this.formData.name = this.oldData.name;
-        this.formData.assessment = this.oldData.assessment;
+        softskill.name = this.oldData.name;
+        softskill.assessment = this.oldData.assessment;
       },
       complete: () => console.log("Completada la actualizacion del softskill")
     } );

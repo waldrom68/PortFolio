@@ -130,7 +130,7 @@ export class DatosTrayectoriaComponent implements OnInit, OnDestroy {
         error: (e) => {
           let msg = new Array()
           msg.push("Se quizo eliminar sin exito a: " + this.itemParaBorrar.name);
-          msg.push(e.message);
+          msg.push(e.error.mensaje ? e.error.mensaje : e.message);
           this.uiService.msgboxErr( msg,); 
 
           console.log("Se quizo eliminar sin exito a: ", this.itemParaBorrar);
@@ -156,7 +156,7 @@ export class DatosTrayectoriaComponent implements OnInit, OnDestroy {
       error: (e) => {
         let msg = new Array()
         msg.push("Se quizo agregar sin exito un trabajo");
-        msg.push(e.message);
+        msg.push(e.error.mensaje ? e.error.mensaje : e.message);
         this.uiService.msgboxErr( msg,); 
 
         console.log("Se quizo agregar sin exito a: " + laboralCareer.resume, "si realmente tiene la misma descripcion, procure hacer un pequeño cambio");

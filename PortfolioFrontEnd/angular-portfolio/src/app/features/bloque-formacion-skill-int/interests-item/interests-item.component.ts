@@ -18,7 +18,7 @@ export class InterestsItemComponent implements OnInit, OnDestroy {
 
   @Input() item: Interest;
 
-  @Input() formData: Interest;
+  // @Input() formData: Interest;
 
   @Input() showBtnAction!: boolean;
   @Output() showBtnActionChange = new EventEmitter<boolean>();
@@ -97,7 +97,7 @@ export class InterestsItemComponent implements OnInit, OnDestroy {
 
   toggleForm(interest: Interest) {
     this.showForm = !this.showForm;
-    this.formData = interest;
+    // this.formData = interest;
 
     // habilito las acciones de cada item
     this.showBtnAction = !this.showBtnAction
@@ -130,12 +130,13 @@ export class InterestsItemComponent implements OnInit, OnDestroy {
       error: (e) => {
         let msg = new Array()
         msg.push("Se quizo modificar sin exito a: " + this.oldData.name);
-        msg.push(e.message);
+        msg.push(e.error.mensaje ? e.error.mensaje : e.message);
         this.uiService.msgboxErr( msg,); 
-        // alert("Response Error (" + e.status + ") en el metodo upDateItem()" + "\n" + e.message);
+        // alert("Response Error (" + e.status + ") en el metodo upDateItem()" + "\n" + e.error.mensaje ? e.error.mensaje : e.message);
         console.log("Se quizo modificar sin exito a: " + this.oldData.name);
         // Restauro valor original
-        this.formData = this.oldData;
+        // this.formData = this.oldData;
+        interest.name = this.oldData.name;
 
       },
       complete: () => console.log("Completada la actualizacion del interes")

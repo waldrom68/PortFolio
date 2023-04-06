@@ -63,7 +63,8 @@ export class IniciarSesionComponent implements OnInit, OnDestroy {
 
 
   onLoggin(loginUsuario: LoginUsuario): void {
-
+    console.log("Intentando iniciar seccion, verificando credenciales");
+    
     this.authService.login(loginUsuario).subscribe({
       next: (v) => {
         this.tokenService.setToken(v.token);
@@ -87,7 +88,7 @@ export class IniciarSesionComponent implements OnInit, OnDestroy {
       error: (e) => {
         let msg = new Array()
         msg.push("Se quizo loguear sin exito como :" + loginUsuario.nombreUsuario);
-        msg.push(e.message);
+        msg.push(e.error.mensaje ? e.error.mensaje : e.message);
         this.uiService.msgboxErr( msg,); 
 
         console.log("Se quizo loguear sin exito como :" + loginUsuario.nombreUsuario)
