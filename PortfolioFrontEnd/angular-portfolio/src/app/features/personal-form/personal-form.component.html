@@ -76,6 +76,24 @@
           </div>
           
           <div class="form-group">
+            <label class="form-label" for="urlLocation">URL mapa:</label>
+              <input type="urlLocation" 
+              id="urlLocation"
+              formControlName="urlLocation" 
+              name="urlLocation" 
+              class="form-control"
+              placeholder="ingrese la url que muestra mapa ubicacion .... "
+              [ngStyle]="{'width':'100%'}"
+              formControlName="urlLocation"
+  
+              [ngClass] = "{error: (UrlLocation.invalid && UrlLocation.touched)}"
+              >
+              <small class="mensajeError" *ngIf="form.hasError('required', 'urlLocation')"> Dato requerido </small>
+              
+          </div>
+
+            
+          <div class="form-group">
             <label class="form-label" for="profession">Profesion:</label>
             <textarea type="text" 
             id="profession"
@@ -88,8 +106,8 @@
             [ngClass] = "{error: (Profession.invalid && Profession.touched)}"
             ></textarea>
             <small class="mensajeError" *ngIf="form.hasError('required', 'profession')"> Dato requerido </small>
-            <small class="mensajeError" *ngIf="form.hasError('minlength', 'profession')"> Mínimo {{ Location.errors.minlength.requiredLength }} caracteres</small>
-            <small class="mensajeError" *ngIf="form.hasError('maxlength', 'profession')"> Máximo {{ Location.errors.maxlength.requiredLength }} caracteres</small>
+            <small class="mensajeError" *ngIf="form.hasError('minlength', 'profession')"> Mínimo {{ Profession.errors.minlength.requiredLength }} caracteres</small>
+            <small class="mensajeError" *ngIf="form.hasError('maxlength', 'profession')"> Máximo {{ Profession.errors.maxlength.requiredLength }} caracteres</small>
           </div>
 
 

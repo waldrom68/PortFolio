@@ -61,7 +61,8 @@ export class AppComponent implements OnInit {
 
   
   ) {
-        
+    // PENDIENTE, evaluar y analizar, se está llamando a 2 servicios diferentes 
+    // para obtener los mismos datos (*1)
     this.BaseDataServiceSubscription = this.baseDataService.currentBaseData.subscribe(
       currentData => {
         this.baseData = currentData;
@@ -75,6 +76,8 @@ export class AppComponent implements OnInit {
 
 
   ngOnInit() {
+    // PENDIENTE, evaluar y analizar, se está llamand a 2 servicios diferentes
+    // para obtener los mismos datos (*2)
     // Traigo todos los datos del Portfolio
     this.dataService.getPortFolioData().subscribe({
       next: (currentData) => {

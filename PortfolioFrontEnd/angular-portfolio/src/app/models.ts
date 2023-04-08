@@ -199,25 +199,28 @@ export class Person extends Base {
     since: Date;
     email: string;
     pathBgImage: string;
+    urlLocation: string;
     displaydata: DisplayData
 
     constructor(id:number, name:string, lastName:string, pathFoto:string,
         location:string, profession:string, profile:string, objetive:string,
-        since:Date, email:string, pathBgImage:string, displayData:DisplayData ) {
-        super();
-        this.id = id ? id : 0;
-        this.name = name ? name : "";
-        this.lastName = lastName ? lastName : "";
-        this.pathFoto = pathFoto ? pathFoto : "";
-        this.location = location ? location : "";
-        this.profession = profession ? profession : "";
-        this.profile = profile ? profile : "";
-        this.objetive = objetive ? objetive : "";
-        this.since = since ? since : new Date();
-        this.email = email ? email : "";
-        this.pathBgImage = pathBgImage ? pathBgImage : "";
-        this.displaydata = new DisplayData()
-    }
+        since:Date, email:string, pathBgImage:string, urlLocation:string, 
+        displayData:DisplayData ) {
+            super();
+            this.id = id ? id : 0;
+            this.name = name ? name : "";
+            this.lastName = lastName ? lastName : "";
+            this.pathFoto = pathFoto ? pathFoto : "";
+            this.location = location ? location : "";
+            this.profession = profession ? profession : "";
+            this.profile = profile ? profile : "";
+            this.objetive = objetive ? objetive : "";
+            this.since = since ? since : new Date();
+            this.email = email ? email : "";
+            this.pathBgImage = pathBgImage ? pathBgImage : "";
+            this.urlLocation = urlLocation ? urlLocation : "";
+            this.displaydata = new DisplayData()
+        }
 
 
 }
@@ -291,11 +294,6 @@ export class SocialNetwork extends Base {
 
     constructor() {
         super()
-            // this.id = 0,
-            // this.name = "",
-            // this.pathIcon = 'pen',
-            // this.orderdeploy = 0,
-            // this.person = 0
     }
 }
 export class SoftSkill extends Base {
@@ -355,6 +353,7 @@ export class FullPersonDTO {
     since: Date;
     email: string;
     pathBgImage: string;
+    urlLocation: string;
     // username: string;
     displaydata: DisplayData;
     hardskill: HardSkill[];

@@ -88,17 +88,25 @@ console.log("recibo por el html input()", this.item);
       this.cancel.emit();
 
     } else {
-      
-      if (this.form.valid) {
-  
-        this.formData.name = this.form.get("name")?.value.trim();
-        this.onUpdate.emit(this.formData);
-  
+      // console.log(this.form.statusChanges);
+      // Hubo cambios
+      if (this.form.get("name")?.value.trim() != this.formData.name) {
+
+        if (this.form.valid) {
+    
+          this.formData.name = this.form.get("name")?.value.trim();
+          this.onUpdate.emit(this.formData);
+    
+        } else {
+          
+          console.log("no es valido el valor ingresado")
+          this.form.markAllAsTouched();
+    
+        }
+
       } else {
-        
-        console.log("no es valido el valor ingresado")
-        this.form.markAllAsTouched();
-  
+        console.log("Evitando http, no hubo cambio en los datos");
+        this.cancel.emit();
       }
     }
 

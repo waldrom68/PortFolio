@@ -24,11 +24,6 @@ export class CareerFormComponent implements OnInit, OnDestroy {
 
   @Input() title: string;
 
-  // @Input() myOrganizations: Organization[];
-  // @Output() myOrganizationChange: EventEmitter<Organization[]> = new EventEmitter;
-  // @Input() myRolePositions: RolePosition[];
-  // @Output() myRolePositionsChange: EventEmitter<RolePosition[]> = new EventEmitter;
-
   @Input() showBtnAction: boolean;
   @Output() showBtnActionChange = new EventEmitter<boolean>();
 
@@ -40,7 +35,7 @@ export class CareerFormComponent implements OnInit, OnDestroy {
 
   form: FormGroup;
 
-   // Validacion Admin STATUS
+  // Validacion Admin STATUS
   esAdmin: boolean;
   private AdminServiceSubscription: Subscription | undefined;
   baseData: FullPersonDTO;
@@ -48,7 +43,6 @@ export class CareerFormComponent implements OnInit, OnDestroy {
 
 
   constructor(
-    private dataService: DataService,
     private formBuilder: FormBuilder,
     private dialog: MatDialog,  // DeleteModal
 
@@ -65,7 +59,7 @@ export class CareerFormComponent implements OnInit, OnDestroy {
         this.baseData = currentData;
       }
     );
-  
+
     this.form = this.formBuilder.group({
       resume: [this.formData.resume, [Validators.required, Validators.minLength(20), Validators.maxLength(500)]],
       startDate: [formatDate(this.formData.startDate, 'yyyy-MM-dd', 'en'), [Validators.required]],
@@ -276,25 +270,43 @@ export class CareerFormComponent implements OnInit, OnDestroy {
 
     } else {
 
-      if (this.form.valid) {
+      // console.log(this.form.statusChanges);
+      // Hubo cambios
+      console.log(this.form);
 
-        this.formData.resume = this.form.get("resume")?.value.trim();
-        this.formData.startDate = this.form.get("startDate")?.value;
-        this.formData.endDate = this.form.get("endDate")?.value;
-        this.formData.organization = this.form.get("organization")?.value;
-        this.formData.roleposition = this.form.get("roleposition")?.value;
-        this.formData.status = true;
-        this.formData.person = this.baseData.id
-        // estoy por cerrar el formulario, emito orden de actualizarse
-        this.onUpdate.emit(this.formData);
+      if (this.form.get("resume")?.value.trim() != this.formData.resume ||
+        this.form.get("startDate")?.value != this.formData.startDate ||
+        this.form.get("endDate")?.value != this.formData.endDate ||
+        this.form.get("organization")?.value != this.formData.organization ||
+        this.form.get("roleposition")?.value != this.formData.roleposition ||
+        this.form.get("startDate")?.value != this.formData.startDate) {
+
+        if (this.form.valid) {
+
+          this.formData.resume = this.form.get("resume")?.value.trim();
+          this.formData.startDate = this.form.get("startDate")?.value;
+          this.formData.endDate = this.form.get("endDate")?.value;
+          this.formData.organization = this.form.get("organization")?.value;
+          this.formData.roleposition = this.form.get("roleposition")?.value;
+          this.formData.status = true;
+          this.formData.person = this.baseData.id
+          // estoy por cerrar el formulario, emito orden de actualizarse
+          this.onUpdate.emit(this.formData);
+
+        } else {
+
+          console.log("no es valido el valor ingresado", this.form)
+          this.form.markAllAsTouched();
+
+        }
 
       } else {
-
-        console.log("no es valido el valor ingresado", this.form)
-        this.form.markAllAsTouched();
-
+        console.log("Evitando http, no hubo cambio en los datos");
+        this.cancel.emit();
       }
+
     }
+
 
   }
 

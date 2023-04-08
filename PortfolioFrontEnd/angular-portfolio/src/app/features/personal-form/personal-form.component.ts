@@ -5,11 +5,9 @@ import { Subscription } from 'rxjs';
 import { BaseDataService, DataService } from 'src/app/service/data.service';
 import { AdminService } from 'src/app/service/auth.service';
 
-// import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
-// import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, Validators, NgForm, AbstractControl } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { FullPersonDTO, Person } from 'src/app/models';
+import { FullPersonDTO } from 'src/app/models';
 
 import { formatDate } from '@angular/common';
 // import { UploadMediaService } from 'src/app/service/upload-media.service';
@@ -37,7 +35,6 @@ message: String;
 
 constructor(    
   private fb: FormBuilder,
-  private dataService: DataService,
   
   private adminService: AdminService,
   private baseDataService: BaseDataService,
@@ -67,9 +64,10 @@ constructor(
       {
         name:[this.baseData.name, [Validators.required, Validators.minLength(2), Validators.maxLength(45)  ]],
         lastName:[this.baseData.lastName, [Validators.required, Validators.minLength(2), Validators.maxLength(45) ]],
-        location:[this.baseData.location, [Validators.required, Validators.minLength(5), Validators.maxLength(45) ]],
         profession:[this.baseData.profession, [Validators.required, Validators.minLength(5), Validators.maxLength(45) ]],
-        // pathFoto:[this.baseData.pathFoto, [Validators.required ]],
+        location:[this.baseData.location, [Validators.required, Validators.minLength(5), Validators.maxLength(45) ]],
+        urlLocation:[this.baseData.urlLocation, [Validators.required, ]],
+
         email:[this.baseData.email, [Validators.required, Validators.email ]],
         since: [formatDate(this.baseData.since, 'yyyy-MM-dd', 'en'), [Validators.required ]],
       }
@@ -102,9 +100,11 @@ constructor(
   get Since(): any {
     return this.form.get("since")
   }
+  get UrlLocation(): any {
+    return this.form.get("urlLocation")
+  }
 
   realChange(form1:FormGroup, form2:FormGroup): any {
-    let verifique = 0;
     let cambios = new Array();
     let clave: any;
     Object.keys(this.form.controls).forEach((control: string) => {
@@ -131,14 +131,17 @@ constructor(
     let data = null;
     
   
-    // PENDIENTE no estoy capturando error de subida del archivo, ni que se arrepeienta de la imagen que subio antes de confirmar.
     if (this.esAdmin && this.form.valid) {
-
+      
+      // PENDIENTE Debe de existir forma alguna para validar existencia de cambios, yo lo hice artesanal
+      // Aqui utilizo un metodo, pero en el resto de los componentes, listo atributos en la evaluacion de
+      // la condicion.
       if (this.realChange(this.form, this.oldForm) != null) {
         this.baseData.name = this.form.get("name")?.value.trim();
         this.baseData.lastName = this.form.get("lastName")?.value.trim();
         
         this.baseData.location = this.form.get("location")?.value.trim();
+        this.baseData.urlLocation = this.form.get("urlLocation")?.value.trim();
         this.baseData.profession = this.form.get("profession")?.value.trim();
         // this.baseData.pathFoto = this.form.get("pathFoto")?.value.trim();
         this.baseData.email = this.form.get("email")?.value.trim();

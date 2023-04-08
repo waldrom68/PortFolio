@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { faCheck, faTimes} from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 
 import { AdminService } from 'src/app/service/auth.service';
@@ -18,7 +18,7 @@ export class InterestsFormComponent implements OnInit, OnDestroy {
 
   @Input() item: Interest;
 
-  @Input() title:string;
+  @Input() title: string;
 
   @Input() showBtnAction: boolean;
   @Output() showBtnActionChange = new EventEmitter<boolean>();
@@ -39,13 +39,13 @@ export class InterestsFormComponent implements OnInit, OnDestroy {
   baseData: FullPersonDTO;
   private BaseDataServiceSubscription: Subscription | undefined;
 
-  constructor( 
+  constructor(
     private formBuilder: FormBuilder,
 
     private adminService: AdminService,
     private baseDataService: BaseDataService,
-    ) { 
-    
+  ) {
+
   }
 
   ngOnInit() {
@@ -56,17 +56,17 @@ export class InterestsFormComponent implements OnInit, OnDestroy {
     );
     if (!this.item) {
       this.resetForm()
-      
+
       // this.resetForm();
     } else {
-      
+
       this.formData = this.item;
     }
- 
-    
+
+
     this.form = this.formBuilder.group({
-      name:[this.formData.name, [Validators.required,
-        Validators.minLength(5), Validators.maxLength(75) ]],
+      name: [this.formData.name, [Validators.required,
+      Validators.minLength(5), Validators.maxLength(75)]],
     });
 
     this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
@@ -93,8 +93,8 @@ export class InterestsFormComponent implements OnInit, OnDestroy {
   resetForm() {
     this.formData = new Interest();
   }
-  
-  onEnviar(event: Event, ) {
+
+  onEnviar(event: Event,) {
     event.preventDefault;
     // Si deja de estar logueado, no registro lo que haya modificado y cierro form.
     if (!this.esAdmin) {
@@ -102,25 +102,36 @@ export class InterestsFormComponent implements OnInit, OnDestroy {
       this.cancel.emit();
 
     } else {
-      
-      if (this.form.valid) {
-  
-        this.formData.name = this.form.get("name")?.value.trim();
-        this.formData.person = this.baseData.id
-        // estoy por cerrar el formulario, emito orden de actualizarse
-        this.onUpdate.emit(this.formData);
-  
+      // console.log(this.form.statusChanges);
+      // Hubo cambios
+      if (this.form.get("name")?.value.trim() != this.formData.name) {
+
+
+
+        if (this.form.valid) {
+
+          this.formData.name = this.form.get("name")?.value.trim();
+          this.formData.person = this.baseData.id
+          // estoy por cerrar el formulario, emito orden de actualizarse
+          this.onUpdate.emit(this.formData);
+
+        } else {
+
+          console.log("no es valido el valor ingresado")
+          this.form.markAllAsTouched();
+
+        }
+
       } else {
-        
-        console.log("no es valido el valor ingresado")
-        this.form.markAllAsTouched();
-  
+        console.log("Evitando http, no hubo cambio en los datos");
+        this.cancel.emit();
       }
+
     }
 
   }
 
-  onCancel(event: Event, ) {
+  onCancel(event: Event,) {
     this.cancel.emit();
 
   }

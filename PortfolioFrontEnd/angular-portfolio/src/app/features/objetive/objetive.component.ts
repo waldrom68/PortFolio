@@ -49,8 +49,8 @@ export class ObjetiveComponent implements OnInit, OnDestroy {
   fragment: string = 'Init';
 
   constructor(
-    private uiService: UiService, 
-    
+    private uiService: UiService,
+
     private formBuilder: FormBuilder,
     private dataService: DataService,
     public matDialog: MatDialog,
@@ -102,36 +102,43 @@ export class ObjetiveComponent implements OnInit, OnDestroy {
 
     } else {
 
-      if (this.form.valid) {
+      const newData = this.form.get("objetive")?.value.trim();
+      // Hubo un cambio de datos
+      if (newData != this.baseData.objetive) {
+        if (this.form.valid) {
 
-        this.baseData.objetive = this.form.get("objetive")?.value.trim();
-        this.converPerson = ToPerson(this.baseData);
+          this.baseData.objetive = this.form.get("objetive")?.value.trim();
+          this.converPerson = ToPerson(this.baseData);
 
-        this.dataService.upDateEntity(this.converPerson, "/person").subscribe({
-          next: (v) => {
-            console.log("Guardado correctamente")
-            this.uiService.msgboxOk(['Datos guardados exitosamente'],);
+          this.dataService.upDateEntity(this.converPerson, "/person").subscribe({
+            next: (v) => {
+              console.log("Guardado correctamente")
+              this.uiService.msgboxOk(['Datos guardados exitosamente'],);
 
-          },
-          error: (e) => {
-            let msg = new Array()
-            msg.push("Se quizo modificar sin exito el objetivo");
-            msg.push(e.error.mensaje ? e.error.mensaje : e.message);
-            this.uiService.msgboxErr( msg,); 
+            },
+            error: (e) => {
+              let msg = new Array()
+              msg.push("Se quizo modificar sin exito el objetivo");
+              msg.push(e.error.mensaje ? e.error.mensaje : e.message);
+              this.uiService.msgboxErr(msg,);
 
-            console.log("Se quizo modificar sin exito el objetivo");
-            // Restauro valor original
-            this.baseData.objetive = this.itemParaBorrar;
-          },
-          complete: () => console.log("Completada la actualizacion del Objetivo")
-        });
-        this.toggleForm();  // cierro el formulario
+              console.log("Se quizo modificar sin exito el objetivo");
+              // Restauro valor original
+              this.baseData.objetive = this.itemParaBorrar;
+            },
+            complete: () => console.log("Completada la actualizacion del Objetivo")
+          });
+          this.toggleForm();  // cierro el formulario
 
 
+        } else {
+
+          console.log("no es valido el valor ingresado")
+          this.form.markAllAsTouched();
+        }
       } else {
-
-        console.log("no es valido el valor ingresado")
-        this.form.markAllAsTouched();
+        console.log("Evitando http, no hubo cambio en los datos");
+        this.onCancel()
       }
     }
   }
@@ -173,7 +180,7 @@ export class ObjetiveComponent implements OnInit, OnDestroy {
         msg.push("Se quizo eliminar sin exito al Objetivo");
         msg.push(e.error.mensaje ? e.error.mensaje : e.message);
         console.log("Se quizo eliminar sin exito al objetivo");
-        this.uiService.msgboxErr( msg,); 
+        this.uiService.msgboxErr(msg,);
 
         // Restauro valor original
         this.baseData.objetive = this.itemParaBorrar;
@@ -228,5 +235,5 @@ export class ObjetiveComponent implements OnInit, OnDestroy {
     let element = this.renderer.selectRootElement(`#${this.fragment}`, true);
     element.scrollIntoView({ behavior: 'smooth' });
   }
-  
+
 }

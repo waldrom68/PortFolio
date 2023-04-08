@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output }  from '@angular/core';
-import { FullPersonDTO, SocialNetwork } from 'src/app/models';
+import { SocialNetwork } from 'src/app/models';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { faCheck, faTimes} from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 
 import { AdminService } from 'src/app/service/auth.service';
-import { BaseDataService } from 'src/app/service/data.service';
+
 
 @Component({
   selector: 'app-social-form',
@@ -97,20 +97,32 @@ export class SocialFormComponent implements OnInit, OnDestroy {
 
     } else {
       
-      if (this.form.valid) {
-  
-        this.formData.name = this.form.get("name")?.value.trim();
-        this.formData.iconname = this.form.get("iconname")?.value.trim();
-        this.formData.url = this.form.get("url")?.value.trim();
-        // estoy por cerrar el formulario, emito orden de actualizarse
-        this.onUpdate.emit(this.formData);
-  
+        // console.log(this.form.statusChanges);
+      // Hubo cambios
+      if (this.form.get("name")?.value.trim() != this.formData.name ||
+        this.form.get("iconname")?.value != this.formData.iconname || 
+        this.form.get("url")?.value != this.formData.url ) {
+
+        if (this.form.valid) {
+    
+          this.formData.name = this.form.get("name")?.value.trim();
+          this.formData.iconname = this.form.get("iconname")?.value.trim();
+          this.formData.url = this.form.get("url")?.value.trim();
+          // estoy por cerrar el formulario, emito orden de actualizarse
+          this.onUpdate.emit(this.formData);
+    
+        } else {
+          
+          console.log("no es valido el valor ingresado")
+          this.form.markAllAsTouched();
+    
+        }
+
       } else {
-        
-        console.log("no es valido el valor ingresado")
-        this.form.markAllAsTouched();
-  
+        console.log("Evitando http, no hubo cambio en los datos");
+        this.cancel.emit();
       }
+
     }
 
   }

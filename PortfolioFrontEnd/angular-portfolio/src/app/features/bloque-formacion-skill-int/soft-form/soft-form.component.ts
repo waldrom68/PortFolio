@@ -1,9 +1,8 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { faCheck, faTimes, faHand } from '@fortawesome/free-solid-svg-icons';
-import { Observable, Subscription } from 'rxjs';
-import { DataService } from 'src/app/service/data.service';
+import { Subscription } from 'rxjs';
 import { AdminService } from 'src/app/service/auth.service';
 
 import { SoftSkill } from 'src/app/models';
@@ -17,7 +16,7 @@ export class SoftFormComponent implements OnInit, OnDestroy {
 
   @Input() formData: SoftSkill;
   @Input() title: string;
-  
+
   @Input() showBtnAction!: boolean;
   @Output() showBtnActionChange = new EventEmitter<boolean>();
 
@@ -90,18 +89,27 @@ export class SoftFormComponent implements OnInit, OnDestroy {
       this.cancel.emit();
 
     } else {
+      // console.log(this.form.statusChanges);
+      // Hubo cambios
+      if (this.form.get("name")?.value.trim() != this.formData.name ||
+        this.form.get("assessment")?.value != this.formData.assessment) {
 
-      if (this.form.valid) {
+        if (this.form.valid) {
 
-        this.formData.name = this.form.get("name")?.value.trim();
-        this.formData.assessment = this.form.get("assessment")?.value;
-        this.onUpdate.emit(this.formData);
+          this.formData.name = this.form.get("name")?.value.trim();
+          this.formData.assessment = this.form.get("assessment")?.value;
+          this.onUpdate.emit(this.formData);
 
+        } else {
+
+          console.log("no es valido el valor ingresado")
+          this.form.markAllAsTouched();
+
+        }
+        
       } else {
-
-        console.log("no es valido el valor ingresado")
-        this.form.markAllAsTouched();
-
+        console.log("Evitando http, no hubo cambio en los datos");
+        this.cancel.emit();
       }
     }
 

@@ -37,33 +37,22 @@ export class DataService {
   // Segundo el subject será un elemento del servicio
   private isAdmin$: Subject<boolean> = new Subject<boolean>();
 
-  // Fin Almacen y servicio de flag isLoggin
-  private myImage: string;
-  // Segundo el subject será un elemento del servicio
-  private myImage$: Subject<string> = new Subject<string>();
-
- // #######################################
-  // Almacen y servicio de flag showForm
-  // Primero crear el almacen del dato si es Administrador,
-  //  el observado
-  private showForm2: boolean = false;
-  // Segundo el subject será un elemento del servicio
-  private showForm2$: Subject<boolean> = new Subject<boolean>();
-
-  // Fin Almacen y servicio de flag isLoggin
-
-
-
-
-  private currentValue: number;
-  private currentValue$ = new Subject<number>();
-
- 
-  
-  
+  // Se utiliza para detectar el logueo de usuario
   private flagChangeUser: boolean = false;
   private flagChangeUser$ = new Subject<boolean>();
+  // fin logueo de usuario
   
+  
+  // Fin Almacen y servicio de flag isLoggin
+  
+  
+  
+  // PENDIENTE EVALUAR RELEVANCIA
+  // Se preparó para implementar en progressValue de los uploads
+  private currentValue: number;
+  private currentValue$ = new Subject<number>();
+  // 
+  // FIN PENDIENTE EVALUAR RELEVANCIA
   // ################################################
   // PENDIENTE DE ELIMINAR ESTA PRACTCA CON OBSERVER
   // ################################################
@@ -189,14 +178,8 @@ export class DataService {
   getUSER() {
     return this.USER;
   }
-  gerUserID() {
-    return this.USERID
-  }
-  //   
-  // changeUser() {
-  //   this.flagChangeUser = !this.flagChangeUser;
-  //   this.flagChangeUser$.next(this.flagChangeUser);
-  // }
+  
+  //FIN PENDIENTE  Metodos en evaluacion, deben ser ereemplazados
 
   getData() {
     // Lo usan todos los componentes para tomar los
@@ -217,30 +200,12 @@ export class DataService {
     return this.http.post<Person>(`${this.LOCALHOST_API}/person/edit`, persona, httpOptions)
   }
 
+  // Actualmente usado para setear el registro de persona para Testing
+  setUserID(id:number): void {
+    this.USERID = id;
+  }
 
-
-  // getPortFolioInit(): Observable<PortfolioInit> {
-
-  //   return this.http.get<PortfolioInit>(`${this.apiURL}/PortfolioInit/?person=${this.USERID}`)
-  // }
-
-  // getPortFolioCards(): Observable<Cards[]> {
-
-  //   console.log(`${this.apiURL}/Cards/?person=${this.USERID}`)
-  //   return this.http.get<Cards[]>(`${this.apiURL}/Cards/?person=${this.USERID}`)
-  // }
-  //########### FIN PENDIENTE  Metodos en evaluacion, deben ser ereemplazados
-
-  // Person APIREST ########################################################
-  // getGralData(): Observable<Person> {
-  //   console.log("El servicio va a buscar en Person API")
-  //   const response = this.http.get<Person>(`${this.LOCALHOST_API}/person/view/${this.USERID}`).pipe(catchError(this.handleError));
-
-  //   return response;
-  //   // return this.http.get<Person>("http://localhost:8080/view/person/1")
-  // }
-
-
+ 
   // #### Nuevos metodos, con la implementacion del control de acceso  ###
   getFlagUserAdmin() {
     return this.flagChangeUser
@@ -330,6 +295,7 @@ export class DataService {
       data.since,
       data.email,
       data.pathBgImage,
+      data.urlLocation,
       data.displaydata
     ))
   }

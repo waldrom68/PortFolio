@@ -114,11 +114,12 @@ export class RolepositionItemComponent implements OnInit, OnDestroy {
         let msg = new Array()
         msg.push("Se quizo modificar sin exito a: " + this.oldData.name);
         msg.push(e.error.mensaje ? e.error.mensaje : e.message);
+        console.log("Se quizo modificar sin exito a: " + rolePosition.name);
         this.uiService.msgboxErr( msg,); 
 
-        console.log("Se quizo modificar sin exito a: " + rolePosition.name);
         // Restauro valor original
-        rolePosition = this.oldData;
+        rolePosition.name = this.oldData.name;
+
       },
 
       complete: () => console.log("Completado la actualizacion en Roles y Posiciones")

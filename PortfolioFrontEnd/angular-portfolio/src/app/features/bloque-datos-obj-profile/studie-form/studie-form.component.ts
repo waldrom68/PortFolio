@@ -65,7 +65,7 @@ export class StudieFormComponent implements OnInit, OnDestroy {
         this.baseData = currentData;
       }
     );
-    
+
     this.form = this.formBuilder.group({
       name: [this.formData.name, [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
       startDate: [formatDate(this.formData.startDate, 'yyyy-MM-dd', 'en'), [Validators.required]],
@@ -85,7 +85,7 @@ export class StudieFormComponent implements OnInit, OnDestroy {
       }
     );
 
-    
+
     this.baseData.organization.length > 0 ?
       this.form.get('organization')?.enable() :
       this.form.get('organization')?.disable()
@@ -134,7 +134,7 @@ export class StudieFormComponent implements OnInit, OnDestroy {
     // dialogConfig.backdropClass = "modal-component"
 
     dialogConfig.height = "90%";
-     dialogConfig.width = "95%";
+    dialogConfig.width = "95%";
     dialogConfig.data = { message: "Organizaciones" }
 
     const modalDialog = this.dialog.open(OrganizationComponent, dialogConfig);
@@ -196,7 +196,7 @@ export class StudieFormComponent implements OnInit, OnDestroy {
     // dialogConfig.backdropClass = "modal-component"
 
     dialogConfig.height = "90%";
-     dialogConfig.width = "95%";
+    dialogConfig.width = "95%";
     dialogConfig.data = { message: "Niveles de Formación" }
 
     const modalDialog = this.dialog.open(DegreeComponent, dialogConfig);
@@ -214,7 +214,7 @@ export class StudieFormComponent implements OnInit, OnDestroy {
         this.baseData.degree.forEach(
           (e) => {
 
-            if (e.id == this.formData.degree.id && 
+            if (e.id == this.formData.degree.id &&
               e.name != this.formData.degree.name) {
               console.log("se actualizo -> ", e)
               // Con esto, logro dejar como seleccionada la opcion en el select.
@@ -226,16 +226,16 @@ export class StudieFormComponent implements OnInit, OnDestroy {
               this.form.patchValue({ degree: e });
             }
           })
-          if (!this.formData.degree) {
+        if (!this.formData.degree) {
 
-            this.formData.degree = result[0];
-          }
-  
-          this.form.get('degree')?.enable();
+          this.formData.degree = result[0];
+        }
+
+        this.form.get('degree')?.enable();
 
       } else {  // la lista de roles quedó vacía
 
-      this.formData.degree = new Degree();
+        this.formData.degree = new Degree();
         this.form.patchValue({
           degree: "",
           defaultPos: "selected"
@@ -272,24 +272,41 @@ export class StudieFormComponent implements OnInit, OnDestroy {
 
     } else {
 
-      if (this.form.valid) {
+      // console.log(this.form.statusChanges);
+      // Hubo cambios
+      console.log(this.form);
+      
+      if (this.form.get("name")?.value.trim() != this.formData.name ||
+        this.form.get("startDate")?.value != this.formData.startDate ||
+        this.form.get("endDate")?.value != this.formData.endDate ||
+        this.form.get("organization")?.value != this.formData.organization ||
+        this.form.get("degree")?.value != this.formData.degree ||
+        this.form.get("startDate")?.value != this.formData.startDate) {
 
-        this.formData.name = this.form.get("name")?.value.trim();
-        this.formData.startDate = this.form.get("startDate")?.value;
-        this.formData.endDate = this.form.get("endDate")?.value;
-        this.formData.organization = this.form.get("organization")?.value;
-        this.formData.degree = this.form.get("degree")?.value;
-        this.formData.status = true;
-        this.formData.person = this.baseData.id
-        // estoy por cerrar el formulario, emito orden de actualizarse
-        this.onUpdate.emit(this.formData);
+        if (this.form.valid) {
+
+          this.formData.name = this.form.get("name")?.value.trim();
+          this.formData.startDate = this.form.get("startDate")?.value;
+          this.formData.endDate = this.form.get("endDate")?.value;
+          this.formData.organization = this.form.get("organization")?.value;
+          this.formData.degree = this.form.get("degree")?.value;
+          this.formData.status = true;
+          this.formData.person = this.baseData.id
+          // estoy por cerrar el formulario, emito orden de actualizarse
+          this.onUpdate.emit(this.formData);
+
+        } else {
+
+          console.log("no es valido el valor ingresado", this.form)
+          this.form.markAllAsTouched();
+
+        }
 
       } else {
-
-        console.log("no es valido el valor ingresado", this.form)
-        this.form.markAllAsTouched();
-
+        console.log("Evitando http, no hubo cambio en los datos");
+        this.cancel.emit();
       }
+
     }
 
   }

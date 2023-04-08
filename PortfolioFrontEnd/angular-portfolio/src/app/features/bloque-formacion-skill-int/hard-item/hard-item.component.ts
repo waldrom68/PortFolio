@@ -125,6 +125,8 @@ export class HardItemComponent implements OnInit, OnDestroy {
   }
 
   update(hardskill: HardSkill) {
+    console.log(this.formData);
+    
     // Actualizacion de hardskill
     this.dataService.upDateEntity(hardskill, "/hardskill").subscribe({
       next: (v) => {

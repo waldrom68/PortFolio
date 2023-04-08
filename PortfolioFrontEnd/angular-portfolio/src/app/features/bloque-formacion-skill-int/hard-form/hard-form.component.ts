@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
-import {  Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 import { AdminService } from 'src/app/service/auth.service';
 
@@ -105,20 +105,31 @@ export class HardFormComponent implements OnInit, OnDestroy {
 
     } else {
 
-      if (this.form.valid) {
+      // console.log(this.form.statusChanges);
+      // Hubo cambios
+      if (this.form.get("name")?.value.trim() != this.formData.name ||
+        this.form.get("assessment")?.value != this.formData.assessment) {
 
-        this.formData.name = this.form.get("name")?.value.trim();
-        this.formData.assessment = this.form.get("assessment")?.value;
-        this.formData.person = this.baseData.id
-        // estoy por cerrar el formulario, emito orden de actualizarse
-        this.onUpdate.emit(this.formData);
+        if (this.form.valid) {
+
+          this.formData.name = this.form.get("name")?.value.trim();
+          this.formData.assessment = this.form.get("assessment")?.value;
+          this.formData.person = this.baseData.id
+          // estoy por cerrar el formulario, emito orden de actualizarse
+          this.onUpdate.emit(this.formData);
+
+        } else {
+
+          console.log("no es valido el valor ingresado")
+          this.form.markAllAsTouched();
+
+        }
 
       } else {
-
-        console.log("no es valido el valor ingresado")
-        this.form.markAllAsTouched();
-
+        console.log("Evitando http, no hubo cambio en los datos");
+        this.cancel.emit();
       }
+
     }
 
   }
