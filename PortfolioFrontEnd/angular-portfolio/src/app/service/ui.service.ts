@@ -124,7 +124,7 @@ export class UiService {
     
     const dialogRef = this.dialog.open(MatAlertComponent, dialogConfig);
 
-    dialogRef.afterClosed().subscribe(() => console.log("Cerrando alert-modal"));
+    // dialogRef.afterClosed().subscribe(() => console.log("Cerrando alert-modal"));
 
   }
 

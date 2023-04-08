@@ -127,7 +127,7 @@ export class StudieItemComponent implements OnInit, OnDestroy {
 
     const dialogRef = this.dialog.open(MatAlertComponent, dialogConfig);
 
-    dialogRef.afterClosed().subscribe(() => console.log("Cerrando alert-modal"));
+    // dialogRef.afterClosed().subscribe(() => console.log("Cerrando alert-modal"));
   }
 
 
