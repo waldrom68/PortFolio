@@ -29,7 +29,7 @@ export class MatAlertComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("iniciando el message-box")
+    // console.log("iniciando el message-box")
   }
 
   closeModal(opcion: boolean) {

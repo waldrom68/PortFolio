@@ -140,6 +140,11 @@ export class StudieItemComponent implements OnInit, OnDestroy {
 
   update(studie: Studie) {
 
+
+
+
+
+    
     this.dataService.upDateEntity(studie, "/studie").subscribe({
       next: (v) => {
         console.log("Guardado correctamente")

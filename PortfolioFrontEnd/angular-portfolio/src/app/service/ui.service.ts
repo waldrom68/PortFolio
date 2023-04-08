@@ -109,7 +109,7 @@ export class UiService {
     
     const dialogRef = this.dialog.open(MatAlertComponent, dialogConfig);
 
-    dialogRef.afterClosed().subscribe(() => console.log("Cerrando alert-modal"));
+    // dialogRef.afterClosed().subscribe(() => console.log("Cerrando alert-modal"));
   }
   
   msgboxErr(msg?:string[]) {
@@ -120,23 +120,6 @@ export class UiService {
     dialogConfig.data = {
       message: msg ? msg : ['Error ! '],
       type: 'error',
-    };
-    
-    const dialogRef = this.dialog.open(MatAlertComponent, dialogConfig);
-
-    dialogRef.afterClosed().subscribe(() => console.log("Cerrando alert-modal"));
-
-  }
-
-  msgboxInf(msg:string[], url?:string) {
-    const dialogConfig = new MatDialogConfig();
-    
-    dialogConfig.disableClose = false;
-    dialogConfig.id = "modal-warn";
-    dialogConfig.data = {
-      message: msg,
-      url: url ? url : "",
-      type: 'info',
     };
     
     const dialogRef = this.dialog.open(MatAlertComponent, dialogConfig);

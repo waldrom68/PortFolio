@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
-import { BaseDataService, DataService } from 'src/app/service/data.service';
+import { BaseDataService } from 'src/app/service/data.service';
 import { AdminService } from 'src/app/service/auth.service';
 
 import { LaboralCareer, Organization, RolePosition, FullPersonDTO } from 'src/app/models';
@@ -244,6 +244,7 @@ export class CareerFormComponent implements OnInit, OnDestroy {
     })
   }
 
+  // Es para que en los select se ubiquen en los valores que tuvieren registrado
   compararOrganizacion(myOrganization1: Organization, myOrganization2: Organization) {
     if (myOrganization1 == null || myOrganization2 == null) {
       return false;
@@ -270,16 +271,12 @@ export class CareerFormComponent implements OnInit, OnDestroy {
 
     } else {
 
-      // console.log(this.form.statusChanges);
       // Hubo cambios
-      console.log(this.form);
-
       if (this.form.get("resume")?.value.trim() != this.formData.resume ||
-        this.form.get("startDate")?.value != this.formData.startDate ||
-        this.form.get("endDate")?.value != this.formData.endDate ||
+        this.form.get("startDate")?.value != formatDate(this.formData.startDate, 'yyyy-MM-dd', 'en') ||
+        this.form.get("endDate")?.value != formatDate(this.formData.endDate, 'yyyy-MM-dd', 'en') ||
         this.form.get("organization")?.value != this.formData.organization ||
-        this.form.get("roleposition")?.value != this.formData.roleposition ||
-        this.form.get("startDate")?.value != this.formData.startDate) {
+        this.form.get("roleposition")?.value != this.formData.roleposition ) {
 
         if (this.form.valid) {
 

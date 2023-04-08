@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
-import { BaseDataService, DataService } from 'src/app/service/data.service';
+import { BaseDataService } from 'src/app/service/data.service';
 import { AdminService } from 'src/app/service/auth.service';
 
 import { Studie, Organization, Degree, FullPersonDTO } from 'src/app/models';
@@ -48,7 +48,7 @@ export class StudieFormComponent implements OnInit, OnDestroy {
 
 
   constructor(
-    private dataService: DataService,
+
     private formBuilder: FormBuilder,
     private dialog: MatDialog,  // DeleteModal
 
@@ -247,6 +247,7 @@ export class StudieFormComponent implements OnInit, OnDestroy {
     })
   }
 
+  // Es para que en los select se ubiquen en los valores que tuvieren registrado
   compararOrganizacion(myOrganization1: Organization, myOrganization2: Organization) {
     if (myOrganization1 == null || myOrganization2 == null) {
       return false;
@@ -272,16 +273,12 @@ export class StudieFormComponent implements OnInit, OnDestroy {
 
     } else {
 
-      // console.log(this.form.statusChanges);
       // Hubo cambios
-      console.log(this.form);
-      
       if (this.form.get("name")?.value.trim() != this.formData.name ||
-        this.form.get("startDate")?.value != this.formData.startDate ||
-        this.form.get("endDate")?.value != this.formData.endDate ||
+        this.form.get("startDate")?.value != formatDate(this.formData.startDate, 'yyyy-MM-dd', 'en') ||
+        this.form.get("endDate")?.value != formatDate(this.formData.endDate, 'yyyy-MM-dd', 'en') ||
         this.form.get("organization")?.value != this.formData.organization ||
-        this.form.get("degree")?.value != this.formData.degree ||
-        this.form.get("startDate")?.value != this.formData.startDate) {
+        this.form.get("degree")?.value != this.formData.degree) {
 
         if (this.form.valid) {
 
