@@ -70,7 +70,7 @@ export class StudieFormComponent implements OnInit, OnDestroy {
     this.form = this.formBuilder.group({
       name: [this.formData.name, [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
       startDate: [formatDate(this.formData.startDate, 'yyyy-MM-dd', 'en', 'UTC-3'), [Validators.required, createGreaterThanBirthValidator(this.baseData.since)]],
-      endDate: [formatDate(this.formData.endDate, 'yyyy-MM-dd', 'en', 'UTC-3')],
+      endDate: [this.formData.endDate ? formatDate(this.formData.endDate, 'yyyy-MM-dd', 'en', 'UTC-3'): null],
 
       organization: [this.formData.organization.id ?
         this.formData.organization : '', [Validators.required]],
