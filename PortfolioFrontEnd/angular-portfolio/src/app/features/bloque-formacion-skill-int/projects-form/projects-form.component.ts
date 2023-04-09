@@ -9,6 +9,7 @@ import { AdminService } from 'src/app/service/auth.service';
 import { FullPersonDTO, Project } from 'src/app/models';
 import { formatDate } from '@angular/common';
 import { BaseDataService } from 'src/app/service/data.service';
+import { createGreaterThanBirthValidator } from 'src/app/shared/myValidators.service';
 
 
 @Component({
@@ -63,7 +64,7 @@ export class ProjectsFormComponent implements OnInit, OnDestroy {
       name: [this.formData.name, [Validators.required, Validators.minLength(1)]],
       resume: [this.formData.resume, [Validators.required, Validators.minLength(2), Validators.maxLength(500)]],
       since: [formatDate(this.formData.since ? this.formData.since : new Date(),
-        'yyyy-MM-dd', 'en'), [Validators.required]],
+        'yyyy-MM-dd', 'en', 'UTC-3'), [Validators.required, createGreaterThanBirthValidator(this.baseData.since)]],
       url: [this.formData.url]
     });
 
@@ -120,7 +121,7 @@ export class ProjectsFormComponent implements OnInit, OnDestroy {
       // Hubo cambios
       if (this.form.get("name")?.value.trim() != this.formData.name ||
         this.form.get("resume")?.value != this.formData.resume ||
-        this.form.get("since")?.value != formatDate(this.formData.since,'yyyy-MM-dd', 'en') ||
+        this.form.get("since")?.value != formatDate(this.formData.since,'yyyy-MM-dd', 'en', 'UTC-3' ) ||
         this.form.get("url")?.value != this.formData.url) {
 
         if (this.form.valid) {

@@ -66,6 +66,8 @@
 
           <small class="mensajeError mx-1" *ngIf="form.hasError('required', 'since')"> Dato requerido
           </small>
+          <small class="mensajeError mx-1" *ngIf="!form.errors?.['mayorDate']">Debe ser > a fecha nacimeinto
+          </small>
 
         </ng-container>
         <ng-template #isOk>

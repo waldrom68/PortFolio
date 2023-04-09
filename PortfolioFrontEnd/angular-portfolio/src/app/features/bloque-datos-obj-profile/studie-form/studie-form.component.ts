@@ -12,6 +12,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { OrganizationComponent } from '../../organization/organization.component';
 import { DegreeComponent } from '../../degree/degree.component';
 import { formatDate } from '@angular/common';
+import { createGreaterThanBirthValidator, createRangeValidator } from 'src/app/shared/myValidators.service';
 
 @Component({
   selector: 'app-studie-form',
@@ -68,8 +69,8 @@ export class StudieFormComponent implements OnInit, OnDestroy {
 
     this.form = this.formBuilder.group({
       name: [this.formData.name, [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
-      startDate: [formatDate(this.formData.startDate, 'yyyy-MM-dd', 'en'), [Validators.required]],
-      endDate: [formatDate(this.formData.endDate, 'yyyy-MM-dd', 'en'), []],
+      startDate: [formatDate(this.formData.startDate, 'yyyy-MM-dd', 'en', 'UTC-3'), [Validators.required, createGreaterThanBirthValidator(this.baseData.since)]],
+      endDate: [formatDate(this.formData.endDate, 'yyyy-MM-dd', 'en', 'UTC-3')],
 
       organization: [this.formData.organization.id ?
         this.formData.organization : '', [Validators.required]],
@@ -77,7 +78,12 @@ export class StudieFormComponent implements OnInit, OnDestroy {
       degree: [this.formData.degree.id ?
         this.formData.degree : '', [Validators.required]],
 
-    });
+    },
+    
+    // form group validator  
+    {
+      validators: [createRangeValidator()]
+    } );
 
     this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
       currentAdmin => {
@@ -275,8 +281,8 @@ export class StudieFormComponent implements OnInit, OnDestroy {
 
       // Hubo cambios
       if (this.form.get("name")?.value.trim() != this.formData.name ||
-        this.form.get("startDate")?.value != formatDate(this.formData.startDate, 'yyyy-MM-dd', 'en') ||
-        this.form.get("endDate")?.value != formatDate(this.formData.endDate, 'yyyy-MM-dd', 'en') ||
+        this.form.get("startDate")?.value != formatDate(this.formData.startDate, 'yyyy-MM-dd', 'en', 'UTC-3' ) ||
+        this.form.get("endDate")?.value != formatDate(this.formData.endDate, 'yyyy-MM-dd', 'en', 'UTC-3' ) ||
         this.form.get("organization")?.value != this.formData.organization ||
         this.form.get("degree")?.value != this.formData.degree) {
 
