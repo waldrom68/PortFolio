@@ -66,7 +66,7 @@ export class CareerFormComponent implements OnInit, OnDestroy {
       resume: [this.formData.resume, [Validators.required, Validators.minLength(20), Validators.maxLength(500)]],
 
       startDate: [formatDate(this.formData.startDate, 'yyyy-MM-dd', 'en', 'UTC-3' ), [Validators.required, createGreaterThanBirthValidator(this.baseData.since)]],
-      endDate: [formatDate(this.formData.endDate, 'yyyy-MM-dd', 'en', 'UTC-3')],
+      endDate: [this.formData.endDate ? formatDate(this.formData.endDate, 'yyyy-MM-dd', 'en', 'UTC-3'): null],
       organization: [this.formData.organization.id > 0 ?
         this.formData.organization : '', [Validators.required]],
 
