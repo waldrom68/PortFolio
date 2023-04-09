@@ -27,21 +27,19 @@ export function createPasswordStrengthValidator(): ValidatorFn {
 
 // Validacion de que la fecha de inicio sea superior a la fecha de nacimiento
 export function dateValid(pareto:Date):  ValidatorFn {
-  return (form: AbstractControl): ValidationErrors | null => {
-      
-      const base = pareto;
+  return (control: AbstractControl): ValidationErrors | null => {
 
-      const start  = new Date(form.get("startDate")?.value);
+    const value = new Date(control.value);
+    const base = new Date(pareto);
 
-    // El valor de la fecha de finalizacion no es requerido
-      if ( start.getTime() ) {
+    if (!value) {
+        return null;
+    }
 
-          const isRangeValid = (start  > base );
+    const dateValid = value > base;
 
-          return isRangeValid ? null : {dateValue:true};
-      }
-      
-      return null;
+    return !dateValid ? {mayorDate:true}: null;
+
   }
 }
 
