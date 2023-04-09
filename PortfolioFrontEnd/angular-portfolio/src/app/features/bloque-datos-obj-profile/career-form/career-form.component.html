@@ -111,28 +111,6 @@
 
   </div> <!--FIN ORGANIZACION Y POSICION-->
 
-    <!-- PRUEBA -->
-    <div class="row" style="width:100% ">
-      <div class="col-12">
-        <label class="form-label" for="prueba">Prueba:</label>
-        <textarea type="text" rows="6" id="prueba" formControlName="prueba" name="prueba" class="form-control "
-          placeholder="De forma compacta, mencione los aspectos claves del puesto" formControlName="prueba" [ngClass]="{'error is-invalid': (Prueba.invalid && Prueba.touched)
-          , 'is-valid':Prueba.valid}"></textarea>
-      </div>
-  
-      <div class="row error-container text-justify-left mx-3">
-        <ng-container *ngIf="(Prueba.invalid && Prueba.touched); else isOk">
-  
-          <div class="mensajeError mx-1" *ngIf="form.hasError('required', 'prueba')"> Dato requerido </div>
-          <div class="mensajeError mx-1" *ngIf="form.hasError('minlength', 'prueba')"> Mínimo {{
-            Prueba.errors.minlength.requiredLength }} caracteres</div>
- 
-        </ng-container>
-        <ng-template #isOk>
-        </ng-template>
-      </div>
-    </div>
-
   <!-- RESUMEN -->
   <div class="row" style="width:100% ">
     <div class="col-12">
@@ -171,22 +149,31 @@
 
           <small class="mensajeError mx-1" *ngIf="form.hasError('required', 'startDate')"> Dato requerido
           </small>
-
+          <small class="mensajeError mx-1" *ngIf="!form.errors?.['mayorDate']">Debe ser > a fecha nacimeinto
+          </small>
         </ng-container>
         <ng-template #isOk>
         </ng-template>
       </div>
     </div>
-    <div *ngIf="form.errors?.['dateValue']">Please enter valid start date</div>
+
     <div class="form-group col-md-6">
       <label class="form-label" for="endDate">Hasta:</label>
       <input type="date" id="endDate" name="endDate" class="form-control p-2" formControlName="endDate"
         [ngClass]="{'error is-invalid': (EndDate.invalid && EndDate.touched), 'is-valid':EndDate.valid}"
         [attr.min]='StartDate.value'>
+        
+        <div class="row error-container mx-auto">
+          <ng-container *ngIf="form.errors?.['dateRange'] else isOk">
+    
+            <small class="mensajeError mx-1"> Ingrese un rango válido</small>
+    
+          </ng-container>
+          <ng-template #isOk>
+          </ng-template>
+        </div>
     </div>
-    <!-- [min]="StartDate.value" -->
 
-    <div *ngIf="form.errors?.['dateRange']">Please enter valid range</div>
   </div> <!-- FIN FECHAS INICIO Y FIN -->
 
 

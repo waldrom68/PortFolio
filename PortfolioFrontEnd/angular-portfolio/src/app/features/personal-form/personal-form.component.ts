@@ -69,7 +69,7 @@ constructor(
         urlLocation:[this.baseData.urlLocation, [Validators.required, ]],
 
         email:[this.baseData.email, [Validators.required, Validators.email ]],
-        since: [formatDate(this.baseData.since, 'yyyy-MM-dd', 'en'), [Validators.required ]],
+        since: [formatDate(this.baseData.since, 'yyyy-MM-dd', 'en', 'UTC-3' ), [Validators.required ]],
       }
     )
     // Clono el objeto, uso assign por no tener atributos compuesto por otros objetos

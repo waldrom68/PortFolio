@@ -11,6 +11,7 @@ import { AdminService } from 'src/app/service/auth.service';
 
 import { TokenService } from 'src/app/service/token.service';
 import { UiService, FormService } from 'src/app/service/ui.service';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-main',
@@ -80,6 +81,8 @@ export class MainComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
+    console.log(formatDate(now(), 'yyyy-MM-dd hh:mm', 'en', 'UTC-3'));
+    
     this.BaseDataServiceSubscription = this.baseDataService.currentBaseData.subscribe(
       currentData => {
         this.baseData = currentData;

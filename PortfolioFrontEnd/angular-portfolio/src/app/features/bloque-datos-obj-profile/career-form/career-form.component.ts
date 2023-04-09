@@ -12,7 +12,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { OrganizationComponent } from '../../organization/organization.component';
 import { RolePositionComponent } from '../../role-position/role-position.component';
 import { formatDate } from '@angular/common';
-import { rangeValidation, createPasswordStrengthValidator, dateValid } from 'src/app/shared/myValidators.service';
+import { createRangeValidator, createGreaterThanBirthValidator, createUrlValidator } from 'src/app/shared/myValidators.service';
 
 @Component({
   selector: 'app-career-form',
@@ -64,20 +64,20 @@ export class CareerFormComponent implements OnInit, OnDestroy {
 
     this.form = this.formBuilder.group( {
       resume: [this.formData.resume, [Validators.required, Validators.minLength(20), Validators.maxLength(500)]],
-      // startDate: [formatDate(this.formData.startDate, 'yyyy-MM-dd', 'en'), [Validators.required]],
-      // endDate: [formatDate(this.formData.endDate, 'yyyy-MM-dd', 'en'), creatDateRangeValidator(startDate)],
-      startDate: [formatDate(this.formData.startDate, 'yyyy-MM-dd', 'en'), [Validators.required, dateValid(this.baseData.since)]],
-      endDate: [formatDate(this.formData.endDate, 'yyyy-MM-dd', 'en')],
+
+      startDate: [formatDate(this.formData.startDate, 'yyyy-MM-dd', 'en', 'UTC-3' ), [Validators.required, createGreaterThanBirthValidator(this.baseData.since)]],
+      endDate: [formatDate(this.formData.endDate, 'yyyy-MM-dd', 'en', 'UTC-3')],
       organization: [this.formData.organization.id > 0 ?
         this.formData.organization : '', [Validators.required]],
 
       roleposition: [this.formData.roleposition.id > 0 ?
-        this.formData.roleposition : '', [Validators.required]],
+        this.formData.roleposition : '', [Validators.required]]
+      },
 
-      prueba: ["", [ Validators.required, Validators.minLength(8), createPasswordStrengthValidator() ]] },
+      
       // form group validator  
       {
-        validators: [rangeValidation()]
+        validators: [createRangeValidator()]
       } 
     );
     
@@ -290,8 +290,8 @@ export class CareerFormComponent implements OnInit, OnDestroy {
 
       // Hubo cambios
       if (this.form.get("resume")?.value.trim() != this.formData.resume ||
-        this.form.get("startDate")?.value != formatDate(this.formData.startDate, 'yyyy-MM-dd', 'en') ||
-        this.form.get("endDate")?.value != formatDate(this.formData.endDate, 'yyyy-MM-dd', 'en') ||
+        this.form.get("startDate")?.value != formatDate(this.formData.startDate, 'yyyy-MM-dd', 'en', 'UTC-3' ) ||
+        this.form.get("endDate")?.value != formatDate(this.formData.endDate, 'yyyy-MM-dd', 'en', 'UTC-3' ) ||
         this.form.get("organization")?.value != this.formData.organization ||
         this.form.get("roleposition")?.value != this.formData.roleposition ) {
 
