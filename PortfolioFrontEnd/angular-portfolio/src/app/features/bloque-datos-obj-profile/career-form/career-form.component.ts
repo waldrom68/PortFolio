@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 
 import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
@@ -12,6 +12,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { OrganizationComponent } from '../../organization/organization.component';
 import { RolePositionComponent } from '../../role-position/role-position.component';
 import { formatDate } from '@angular/common';
+import { rangeValidation, createPasswordStrengthValidator, dateValid } from 'src/app/shared/myValidators.service';
 
 @Component({
   selector: 'app-career-form',
@@ -34,6 +35,7 @@ export class CareerFormComponent implements OnInit, OnDestroy {
   faTimes = faTimes;
 
   form: FormGroup;
+  formG2 : FormGroup;
 
   // Validacion Admin STATUS
   esAdmin: boolean;
@@ -60,17 +62,27 @@ export class CareerFormComponent implements OnInit, OnDestroy {
       }
     );
 
-    this.form = this.formBuilder.group({
+    this.form = this.formBuilder.group( {
       resume: [this.formData.resume, [Validators.required, Validators.minLength(20), Validators.maxLength(500)]],
-      startDate: [formatDate(this.formData.startDate, 'yyyy-MM-dd', 'en'), [Validators.required]],
-      endDate: [formatDate(this.formData.endDate, 'yyyy-MM-dd', 'en'), []],
-
+      // startDate: [formatDate(this.formData.startDate, 'yyyy-MM-dd', 'en'), [Validators.required]],
+      // endDate: [formatDate(this.formData.endDate, 'yyyy-MM-dd', 'en'), creatDateRangeValidator(startDate)],
+      startDate: [formatDate(this.formData.startDate, 'yyyy-MM-dd', 'en'), [Validators.required, dateValid(this.baseData.since)]],
+      endDate: [formatDate(this.formData.endDate, 'yyyy-MM-dd', 'en')],
       organization: [this.formData.organization.id > 0 ?
         this.formData.organization : '', [Validators.required]],
 
       roleposition: [this.formData.roleposition.id > 0 ?
         this.formData.roleposition : '', [Validators.required]],
-    });
+
+      prueba: ["", [ Validators.required, Validators.minLength(8), createPasswordStrengthValidator() ]] },
+      // form group validator  
+      {
+        validators: [rangeValidation()]
+      } 
+    );
+    
+
+
 
 
     this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
@@ -114,6 +126,11 @@ export class CareerFormComponent implements OnInit, OnDestroy {
   get Roleposition(): any {
     return this.form.get("roleposition")
   }
+  get Prueba() : any {
+    return this.form.get("prueba")
+  }
+
+
 
   resetForm() {
     // this.formData = { id: 0, name: "", orderdeploy: 0, person: 0 }
