@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Renderer2 } from '@angular/core';
 
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faPen, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { now } from 'moment';
 import { Subscription } from 'rxjs';
 import { FullPersonDTO } from 'src/app/models';
@@ -21,7 +21,7 @@ import { formatDate } from '@angular/common';
 
 export class MainComponent implements OnInit, OnDestroy {
   faTimes = faTimes;
-
+  faPen = faPen;
   // Variable que controla si se muestran las tarjetas, si muestra detalle,
   // las tarjetas se deben ocultar, 
   //  son pasadas en el tag de app asi: [detailCard]="CardsGroup1"

@@ -33,9 +33,15 @@
   <div class="row" style="width:100% ">
     <div class="col-12">
       <label class="form-label" for="resume">Resumen:</label>
-      <textarea type="text" rows="6" id="resume" formControlName="resume" name="resume" class="form-control "
-        placeholder="Breve descripción del producto, sus caracteristicas..." formControlName="resume" [ngClass]="{'error is-invalid': (Resume.invalid && Resume.touched)
-        , 'is-valid':Resume.valid}"></textarea>
+      <textarea type="text" rows="6" 
+        id="resume" 
+        formControlName="resume" 
+        name="resume" 
+        class="form-control "
+        placeholder="Breve descripción del producto, sus caracteristicas..." 
+        formControlName="resume" 
+        [ngClass]="{'error is-invalid': (Resume.invalid && Resume.touched), 'is-valid':Resume.valid}">
+      </textarea>
     </div>
 
     <div class="row error-container text-justify-left mx-3">

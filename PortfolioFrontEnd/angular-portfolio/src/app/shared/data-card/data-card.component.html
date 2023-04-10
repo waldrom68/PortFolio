@@ -9,16 +9,35 @@
             <a class="header"
             [id]="card.name"
             >
-                <div class="flip-box container-card">
-                    <div class="flip-box-inner">
-                        <div class="flip-box-front">
+            <!-- Si es administrador, se le quita la animación para ser mas simple -->
+            <div 
+                [ngClass]="{'no-flip-box container-card': esAdmin, 'flip-box container-card':!esAdmin}"
+                >
+                <!-- class="flip-box-inner" -->
+                    <div
+                     [ngClass]="{'no-flip-box-inner': esAdmin, 'flip-box-inner':!esAdmin}"
+                     >
+                        <div class="flip-box-front d-flex justify-content-center align-items-center">
                 
-                            <div class="font-weight-bold align-self-center">
+                            <div class="font-weight-bold col">
                                 {{card.name}}
+
+                            </div>
+                            <div *ngIf="esAdmin"
+                                class="col"
+                                >
+                                <button class="btn btn-outline-success btn-sm" 
+                                    (click)="toggleContenedor(card.name)"
+                                    ngClass="faConfirm fa-ico">
+                                    <fa-icon [icon]="faPen">
+                                    </fa-icon>
+                                </button>
                             </div>
                 
                         </div>
-                        <div class="flip-box-back" (click)="toggleContenedor(card.name)">
+
+                        <div class="flip-box-back"
+                        (click)="toggleContenedor(card.name)">
                             <span class="font-weight-bold align-self-center p-2">
                                 <p *ngIf="card.resume.length > 0 else sinresume">
                                     <small>{{card.resume}}</small>

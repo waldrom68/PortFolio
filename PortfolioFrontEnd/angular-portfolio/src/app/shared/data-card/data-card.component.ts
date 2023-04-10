@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { faPen, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { Subscription } from 'rxjs';
 import { Cards } from 'src/app/models';
+import { AdminService } from 'src/app/service/auth.service';
 
 import { UiService } from 'src/app/service/ui.service';
 
@@ -20,15 +22,27 @@ export class DataCardComponent implements OnInit {
   @Output() toggleCards = new EventEmitter();
   
   // statusCards:boolean;
+  // Validacion Admin STATUS
+  esAdmin: boolean;
+  private AdminServiceSubscription: Subscription | undefined;
 
 
-  constructor( private miServicio: UiService) {
+  constructor( 
+    private miServicio: UiService,
+    private adminService: AdminService,
+    
+    ) {
   
    }
 
 
   ngOnInit(): void {
     // this.botones = this.miServicio.getDetalles()
+    this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
+      currentAdmin => {
+        this.esAdmin = currentAdmin;
+      }
+    );
   }
 
   toggleContenedor(dato:string) {

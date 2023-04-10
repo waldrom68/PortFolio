@@ -30,14 +30,15 @@
     perspective: 0px;
 }
 
-.flip-box {
+.flip-box, .no-flip-box {
     background-color: transparent;
     perspective: 1000px;
     width: 240px;
     height: 110px;
 }
 
-    .flip-box-inner {
+    .flip-box-inner,
+    .no-flip-box-inner {
         position: relative;
         width: 100%;
         height: 100%;
