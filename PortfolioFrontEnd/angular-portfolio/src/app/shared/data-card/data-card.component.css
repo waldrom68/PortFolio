@@ -53,6 +53,10 @@
        transform: rotateY(180deg); 
     }
 
+    .container-admin {
+        transform: rotateY(-180deg); 
+    }
+
     .container-card:hover:after, .container-card:active:after {
         transform: 
             translate(-50%,-50%)
@@ -83,13 +87,13 @@
     .flip-box-back {
         color: #ffc107;
         background-image: linear-gradient(90deg,
-        var(--metal-shadow) 0%, 
-        var(--metal-dark) 50%, 
-        var(--metallight-shadow) 100% ) !important;   ;
+        black 0%, 
+        var(--acento-bg) 50%, 
+        black 100% ) !important;   ;
             
         transform: rotateY(180deg); 
         /* height: 200%; */
-        box-shadow: 1px 1px 1px 1px rgb(232, 248, 232);
+        box-shadow: 1px 1px 1px 1px rgb(214, 222, 247);
 
     }
 

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { Cards, PortfolioInit} from '../models';
+import { Card, PortfolioInit} from '../models';
 
 import { CARDS, PORTFOLIOINIT } from '../../assets/data/mock-data';
 
@@ -22,7 +22,7 @@ export class UiService {
   
   
   private statusCards:boolean = true;  // Indica si se muestran las Cards en el main
-  private cards: Cards[];  // Contiene los datos para Cards/etiquetas que levante de mock-data
+  private cards: Card[];  // Contiene los datos para Cards/etiquetas que levante de mock-data
    
   private visited:string="";  // Nombre de la tarjeta sobre la cual hice click -PENDIENTE
   
@@ -49,10 +49,14 @@ export class UiService {
     
     // Metodos para el manejo del layout de las tarjetas
   getCards() {
+    console.log(this.cards);
+    
     return this.cards;
   }
 
   getStatusCards() {
+    console.log(this.statusCards);
+    
     return this.statusCards
   }
 

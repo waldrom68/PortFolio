@@ -1,77 +1,67 @@
 <div class="row p-0 m-0">
 
-<div class="col-md-6" style="border: 1px solid;"
-
-    *ngFor="let card of detailCard"
->
-    <div class="px-2 my-3 row justify-content-center">
-        <!-- <div class="col"> -->
-            <a class="header"
-            [id]="card.name"
-            >
-            <!-- Si es administrador, se le quita la animación para ser mas simple -->
-            <div 
-                [ngClass]="{'no-flip-box container-card': esAdmin, 'flip-box container-card':!esAdmin}"
-                >
-                <!-- class="flip-box-inner" -->
-                    <div
-                     [ngClass]="{'no-flip-box-inner': esAdmin, 'flip-box-inner':!esAdmin}"
-                     >
+    <div class="col-md-6" style="border: 1px solid;" *ngFor="let card of detailCard">
+        <div class="px-2 my-3 row justify-content-center">
+            <!-- <div class="col"> -->
+            <a class="header" [id]="card.name">
+                <!-- Si es administrador, se le quita la animación para ser mas simple -->
+                <div [ngClass]="{'no-flip-box container-card': esAdmin, 'flip-box container-card':!esAdmin}">
+                    <!-- class="flip-box-inner" -->
+                    <div [ngClass]="{'no-flip-box-inner container-admin': esAdmin, 'flip-box-inner':!esAdmin}">
                         <div class="flip-box-front d-flex justify-content-center align-items-center">
-                
+
                             <div class="font-weight-bold col">
                                 {{card.name}}
 
                             </div>
-                            <div *ngIf="esAdmin"
-                                class="col"
-                                >
-                                <button class="btn btn-outline-success btn-sm" 
-                                    (click)="toggleContenedor(card.name)"
+                            <div *ngIf="esAdmin" class="col">
+                                <button class="btn btn-outline-success btn-sm m-0" (click)="toggleContenedor(card.name)"
                                     ngClass="faConfirm fa-ico">
                                     <fa-icon [icon]="faPen">
-                                    </fa-icon>
+                                    </fa-icon><span class="m-1">Datos</span>
                                 </button>
                             </div>
-                
+
                         </div>
 
-                        <div class="flip-box-back"
-                        (click)="toggleContenedor(card.name)">
+
+                        <div class="flip-box-back" (click)="toggleContenedor(card.name)">
                             <span class="font-weight-bold align-self-center p-2">
-                                <p *ngIf="card.resume.length > 0 else sinresume">
+                                <h5 *ngIf="card.resume.length > 0 else sinresume">
                                     <small>{{card.resume}}</small>
-                
-                                </p>
+
+                                </h5>
                                 <ng-template #sinresume>
-                                    {{card.name}}
+                                    <h5><small>{{card.name}}</small></h5>
                                 </ng-template>
-                                
-                                <h6 class="font-weight-normal pt-1 text-primary">ver mas</h6>
+                                <!-- not showform -->
+                                <h6 *ngIf="!esAdmin" class="font-weight-normal pt-1 text-primary">Ver mas</h6>
+                                <label *ngIf="esAdmin" class="btn btn-primary btn-sm mt-1">
+                                    <fa-icon [icon]="faPen"></fa-icon><span class="px-2"><small>Breve {{card.name}}</small></span>
+                                </label> <!-- Fin not showform -->
+                                <!-- Showform -->
+                                <!-- Abro el form, el h6 com oun input
+                                    y debo habilitar guardar y cancelar
+                                -->
                             </span>
                         </div>
                     </div>
                 </div>
             </a>
 
-        <!-- QUEDA BIEN, PERO NO ME CONVENCE USARLO AQUI -->
-            <!-- <div class="col icon-group">
+
+            <!-- QUEDA BIEN, PERO NO ME CONVENCE USARLO AQUI -->
+            <div *ngIf="esAdmin"
+            class="col icon-group" (click)="toggleContenedor(card.name)">
                 <button class="btn btn-outline-success btn-sm" 
 
                     ngClass="faConfirm fa-ico">
-                    <fa-icon [icon]="faPen"></fa-icon>
+                    <fa-icon [icon]="faPen"></fa-icon><span  class="p-2">Contenido completo</span>
                 </button>
-                <button class="btn btn-outline-danger btn-sm" 
+            <!-- FIN QUEDA BIEN -->
 
-                    ngClass="faCancel"
-                >
-                    <fa-icon [icon]="faTrash"></fa-icon>
-                </button>
-            </div> -->
-        <!-- FIN QUEDA BIEN -->
-
-    </div>
+        </div>
 
 
-</div>
+    </div> <!-- Fin bucle de cards -->
 </div>

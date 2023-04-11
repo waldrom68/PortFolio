@@ -54,7 +54,7 @@ html, body {
     font-family: var(--body-font-family);
     height: 2000px; /* Used to enable scrolling */
     background: linear-gradient(70deg, var(--triada-color-l) 0%, 
-        var(--triada-color-m) 51%, var(--triada-color-d) 85%);
+        var(--triada-color-m) 71%, var(--triada-color-d) 85%);
     }
 
 /* #2F4F4F y #72956E */
@@ -374,4 +374,14 @@ li.resume > p {
 
 
 /* rgb(35, 135, 170) */
+
+/* .user {
+    background: transparent;
+} */
+
+.admin {
+    background: linear-gradient(-45deg, rgb(237, 220, 245) 0%, 
+            rgb(110, 92, 143) 41%, rgb(223, 227, 244) 75%);
+}
+
 

@@ -10,6 +10,7 @@ import { BaseDataService, DataService, ObservableService } from './service/data.
 import { FullPersonDTO } from './models';
 
 import { Observable, Subscription } from 'rxjs';
+import { AdminService } from './service/auth.service';
 
 
 
@@ -21,38 +22,44 @@ import { Observable, Subscription } from 'rxjs';
 })
 
 export class AppComponent implements OnInit {
-  baseData: FullPersonDTO;
-  private BaseDataServiceSubscription: Subscription | undefined;
 
   title = 'angular-portfolio';
 
   faTimes = faTimes;
+    
+  // PENDIENTE, implementacion parcial, la idea es que muestre progreso o trabajo en 2do plano
+  statusWait: boolean = true;
   
-
-  showListUsers: boolean = false;
-  showDatos: boolean = false;
-
-  dataFromDialog: any;
-
-  // codigo probando el modal
-  form: FormGroup;
-
-  wait: boolean = true;
-
-  valueSubscription: Subscription;
-  progreesValueabc: number;
-  progreesValueabc$?: Observable<number>;
+  // Actualmente reloj, se actualiza cada segundo
   currentTime: Date;
-  llamado?: number
+  
+    // Validacion Admin STATUS
+    esAdmin: boolean;
+    private AdminServiceSubscription: Subscription | undefined;
+    baseData: FullPersonDTO;
+    private BaseDataServiceSubscription: Subscription | undefined;
 
- 
+
+  // PENDIENTE DE LIMPIAR O IMPLEMENTAR, RELACIONADO CON EL PROGRESS BAR
+  // valueSubscription: Subscription;
+  // progreesValueabc: number;
+  // progreesValueabc$?: Observable<number>;
+  // llamado?: number
+  
+  // showListUsers: boolean = false;
+  // showDatos: boolean = false;
+
+  // // codigo probando el modal
+  // form: FormGroup;
+  // dataFromDialog: any;
+
     constructor(
     // Inicializamos los servicios del modulo User
     private uiService: UiService,  // defino el servicio para el botton de mostrar form
   
     private dataService: DataService,
     private baseDataService: BaseDataService,
-  
+    private adminService: AdminService,
 
     // Este observable, por ahora genera un reloj que se actualiza cada 
     // segundo, la idea es controlar el tiempo de vigencia del token si 
@@ -63,13 +70,15 @@ export class AppComponent implements OnInit {
   ) {
     // PENDIENTE, evaluar y analizar, se está llamando a 2 servicios diferentes 
     // para obtener los mismos datos (*1)
-    this.BaseDataServiceSubscription = this.baseDataService.currentBaseData.subscribe(
-      currentData => {
-        this.baseData = currentData;
+    this.BaseDataServiceSubscription = this.baseDataService.currentBaseData.subscribe( );
+
+    this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
+      currentAdmin => {
+        this.esAdmin = currentAdmin;
       }
     );
 
-
+    // Implementacion del reloj
     this.observableService.createObservableService()  // 3
       .subscribe(data => this.currentTime = data);
   }
@@ -81,12 +90,14 @@ export class AppComponent implements OnInit {
     // Traigo todos los datos del Portfolio
     this.dataService.getPortFolioData().subscribe({
       next: (currentData) => {
-
+        
         this.uiService.msgboxOk( ['Datos obtenidos exitosamente'],);
-
+        this.baseData = currentData;
+        
         this.baseDataService.setCurrentBaseData(currentData);
-        this.wait = false;
+        this.statusWait = false;
         console.log("Obtenidos los datos exitosamente");
+        
         
         // this.uiService.msgboxOk(['Datos guardados exitosamente'],);
         // this.uiService.msgboxOk(['Se ha eliminado exitosamentee'] ,);
@@ -97,7 +108,7 @@ export class AppComponent implements OnInit {
         // e.status = 400, e.statusText= OK, error en el pedido al servidor
         let msg = new Array()
         msg.push("Se quizo obtener los datos sin exito," + e.message)
-        this.wait = true;
+        this.statusWait = true;
        
         console.log("Se quizo obtener los datos sin exito; ")
         switch (e.status) {

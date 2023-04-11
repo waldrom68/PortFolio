@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { faPen, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
-import { Cards } from 'src/app/models';
+import { Card } from 'src/app/models';
 import { AdminService } from 'src/app/service/auth.service';
 
 import { UiService } from 'src/app/service/ui.service';
@@ -17,7 +17,7 @@ export class DataCardComponent implements OnInit {
   faTrash = faTrash;
    
   // PENDIENTE Esta entrada no la uso para nada
-  @Input() detailCard:Cards [];
+  @Input() detailCard:Card [];
 
   @Output() toggleCards = new EventEmitter();
   

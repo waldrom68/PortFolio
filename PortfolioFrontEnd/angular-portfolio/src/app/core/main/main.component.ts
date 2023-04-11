@@ -57,7 +57,7 @@ export class MainComponent implements OnInit, OnDestroy {
   private AdminServiceSubscription: Subscription | undefined;
   openForm: number;
   private formServiceSubscription: Subscription | undefined;
-  
+
 
 
   // Inyectando servicios en el contructor
@@ -82,14 +82,14 @@ export class MainComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
 
     console.log(formatDate(now(), 'yyyy-MM-dd hh:mm', 'en', 'UTC-3'));
-    
+
     this.BaseDataServiceSubscription = this.baseDataService.currentBaseData.subscribe(
       currentData => {
         this.baseData = currentData;
       }
     );
 
-     this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
+    this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
       currentAdmin => {
         this.esAdmin = currentAdmin;
       }
@@ -97,26 +97,26 @@ export class MainComponent implements OnInit, OnDestroy {
     // Se susbcribe para ver cuantos formularios hay abiertos
     this.formServiceSubscription = this.formService.currentOpenForm.subscribe(
       currentForm => {
-        this.openForm = currentForm > 0 ? currentForm  : 0;
+        this.openForm = currentForm > 0 ? currentForm : 0;
       }
     );
 
-   // VALIDACION SI ES UN USUARIO ADMINISTRADOR Y TIENE TOKEN VIGENTE
-   if (this.tokenService.isValidAdmin()) {
-    // VALIDACION SI ES UN USUARIO ADMINISTRADOR
-    // if (this.tokenService.isAdmin()) {
-    this.adminService.setCurrentAdmin(true);
+    // VALIDACION SI ES UN USUARIO ADMINISTRADOR Y TIENE TOKEN VIGENTE
+    if (this.tokenService.isValidAdmin()) {
+      // VALIDACION SI ES UN USUARIO ADMINISTRADOR
+      // if (this.tokenService.isAdmin()) {
+      this.adminService.setCurrentAdmin(true);
 
-  } else {
-    this.adminService.setCurrentAdmin(false);
-  }
+    } else {
+      this.adminService.setCurrentAdmin(false);
+    }
 
     this.detailCards = this.miServicio.getCards();
     this.statusCards = this.miServicio.getStatusCards()
 
     // Separo los grupos
-    this.CardsGroup1 = this.detailCards.filter(function (elem: any) { return elem.group == 1; })
-    this.CardsGroup2 = this.detailCards.filter(function (elem: any) { return elem.group == 2; })
+    this.CardsGroup1 = this.detailCards.filter(function (elem: any) { return elem.grupo == 1; })
+    this.CardsGroup2 = this.detailCards.filter(function (elem: any) { return elem.grupo == 2; })
 
     // Armo etiqueta de cada grupo:
     this.labelGroup1 = this.CardsGroup1.map((valor: any) => {
@@ -149,7 +149,7 @@ export class MainComponent implements OnInit, OnDestroy {
     this.miServicio.toggleDetalles();
     this.miServicio.toggleStatusCards();
     this.statusCards = this.miServicio.getStatusCards()
-    
+
     // Ya sea que ingrese o salga de una tarjeta, se entiende que no puede 
     // coexistir un formulario abierto
     this.formService.setCurrentForm(0);

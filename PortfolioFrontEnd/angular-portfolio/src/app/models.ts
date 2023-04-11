@@ -9,16 +9,16 @@ export interface User {
     password: string,
     admin: boolean,
 }
-export interface Cards {
-    id: number,
-    name: string,
-    status: boolean,
-    group: number,
-    data: any,
-    resume: string,
-    modelTemplate: string,
-    userId: number,
-}
+// export interface Cards {
+//     id: number,
+//     name: string,
+//     status: boolean,
+//     group: number,
+//     data: any,
+//     resume: string,
+//     modelTemplate: string,
+//     userId: number,
+// }
 export interface PortfolioInit {
     id: number,
     userId: number,
@@ -74,6 +74,11 @@ export class Card extends Base {
 
     constructor() {
         super();
+        this.id = 0;
+        this.name = "";
+        this.resume = "";
+        this.orderdeploy = 0;
+        this.status = true;
     }
 }
 export class Degree extends Base {

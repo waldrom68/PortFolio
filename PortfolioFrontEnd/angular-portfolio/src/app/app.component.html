@@ -1,7 +1,12 @@
 <!-- HTML principal -->
 <!-- <router-outlet></router-outlet> -->
+{{statusWait}}
+<div
+[ngClass]="{'user': !esAdmin, 'admin': esAdmin}"
 
-<ng-container *ngIf="baseData.displaydata; else wait">
+>
+
+<ng-container *ngIf="!statusWait; else wait">
 
   <!-- https://danielk.tech/home/angular-how-to-add-a-loading-spinner -->
   <!-- <mat-spinner *ngIf="true"></mat-spinner> -->
@@ -29,5 +34,6 @@
   <div class="loader">Leyendo..
     <span id="loader"></span>
   </div>
-
 </ng-template>
+
+</div>
