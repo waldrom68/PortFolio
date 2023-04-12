@@ -10,58 +10,82 @@
                     <div [ngClass]="{'no-flip-box-inner container-admin': esAdmin, 'flip-box-inner':!esAdmin}">
                         <div class="flip-box-front d-flex justify-content-center align-items-center">
 
-                            <div class="font-weight-bold col">
+                            <span class="font-weight-bold">
                                 {{card.name}}
 
-                            </div>
-                            <div *ngIf="esAdmin" class="col">
+                            </span>
+                            <!-- <div *ngIf="esAdmin" class="col">
                                 <button class="btn btn-outline-success btn-sm m-0" (click)="toggleContenedor(card.name)"
                                     ngClass="faConfirm fa-ico">
                                     <fa-icon [icon]="faPen">
                                     </fa-icon><span class="m-1">Datos</span>
                                 </button>
+                            </div> -->
+
+                        </div>
+
+                        <ng-container *ngIf="!esAdmin && openForm == 0" class="row">
+                            <div class="flip-box-back" (click)="toggleContenedor(card.name)">
+                                <span class="font-weight-bold align-self-center p-2">
+                                    <h5 *ngIf="card.resume.length > 0 else sinresume">
+                                        <small>{{card.resume}}</small>
+                                    </h5>
+                                    <ng-template #sinresume>
+                                        <h5><small>{{card.name}}</small></h5>
+                                    </ng-template>
+                                    <!-- not showform -->
+                                    <h6 class="font-weight-normal pt-1 text-primary">Ver mas</h6>
+                                </span> <!-- Fin not showform -->
+
+                            </div>
+                        </ng-container>
+
+
+                        <ng-container *ngIf="esAdmin">
+
+                            <div class="flip-box-back">
+                                <ng-container *ngIf="!showForm || (card.id != targetId)">
+                                    <span class="font-weight-bold align-self-center p-2">
+
+                                        <h5 *ngIf="card.resume.length > 0 else sinresume">
+                                            <small>{{card.resume}}</small>
+                                        </h5>
+                                        <ng-template #sinresume>
+                                            <h5><small>{{card.name}}</small></h5>
+                                        </ng-template>
+
+                                        <label class="btn btn-outline-success btn-sm mt-1 py-0 px-1" *ngIf="openForm == 0"
+                                            (click)="toggleForm($event); onClick(card.id)">
+                                            <fa-icon [icon]="faPen"></fa-icon><span class="px-2"><small>Breve
+                                                    {{card.name}}</small></span>
+                                        </label>
+                                    </span> <!-- Fin not showform -->
+ 
+                                </ng-container>
+
+                                <app-card-data-form *ngIf="esAdmin && showForm && (card.id == targetId)" [item]="card"
+                                    [(showForm)]="showForm" (showFormChange)="showForm">
+
+                                </app-card-data-form>
+
+
                             </div>
 
-                        </div>
+                        </ng-container>
 
-
-                        <div class="flip-box-back" (click)="toggleContenedor(card.name)">
-                            <span class="font-weight-bold align-self-center p-2">
-                                <h5 *ngIf="card.resume.length > 0 else sinresume">
-                                    <small>{{card.resume}}</small>
-
-                                </h5>
-                                <ng-template #sinresume>
-                                    <h5><small>{{card.name}}</small></h5>
-                                </ng-template>
-                                <!-- not showform -->
-                                <h6 *ngIf="!esAdmin" class="font-weight-normal pt-1 text-primary">Ver mas</h6>
-                                <label *ngIf="esAdmin" class="btn btn-primary btn-sm mt-1">
-                                    <fa-icon [icon]="faPen"></fa-icon><span class="px-2"><small>Breve {{card.name}}</small></span>
-                                </label> <!-- Fin not showform -->
-                                <!-- Showform -->
-                                <!-- Abro el form, el h6 com oun input
-                                    y debo habilitar guardar y cancelar
-                                -->
-                            </span>
-                        </div>
                     </div>
                 </div>
             </a>
 
 
             <!-- QUEDA BIEN, PERO NO ME CONVENCE USARLO AQUI -->
-            <div *ngIf="esAdmin"
-            class="col icon-group" (click)="toggleContenedor(card.name)">
-                <button class="btn btn-outline-success btn-sm" 
-
-                    ngClass="faConfirm fa-ico">
-                    <fa-icon [icon]="faPen"></fa-icon><span  class="p-2">Contenido completo</span>
+            <div *ngIf="esAdmin && openForm == 0" class="row m-2 align-items-center" (click)="toggleContenedor(card.name)">
+                <button class="btn btn-primary btn-sm" ngClass="faConfirm fa-ico">
+                    <fa-icon [icon]="faPen"></fa-icon><span class="p-2">Contenido completo</span>
                 </button>
+            </div>
             <!-- FIN QUEDA BIEN -->
 
-        </div>
 
-
-    </div> <!-- Fin bucle de cards -->
-</div>
+        </div> <!-- Fin bucle de cards -->
+    </div>

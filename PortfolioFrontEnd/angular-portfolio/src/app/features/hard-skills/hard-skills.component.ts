@@ -23,14 +23,14 @@ declare function initAndSetupTheSliders(): void;
 })
 export class HardSkillsComponent implements OnInit, OnDestroy {
   showForm: boolean = false;  // flag para mostrar o no el formulario
- 
+
   // myData: HardSkill[] = [];
   // formData: HardSkill;  // instancia vacia, para cuando se solicite un alta
 
   faPlusCircle = faPlusCircle;
 
-  showBtnAction: boolean= true;  // flag para mostrar o no los btn's de acciones del usuario
- 
+  showBtnAction: boolean = true;  // flag para mostrar o no los btn's de acciones del usuario
+
   itemParaBorrar: any;  // objeto que se está por borrar, sirve para reestablecer si cancela borrado
 
   formData: HardSkill;  // instancia vacia, para cuando se solicite un alta
@@ -38,13 +38,13 @@ export class HardSkillsComponent implements OnInit, OnDestroy {
   // Validacion Admin STATUS
   esAdmin: boolean;
   private AdminServiceSubscription: Subscription | undefined;
-   baseData: FullPersonDTO;
+  baseData: FullPersonDTO;
   private BaseDataServiceSubscription: Subscription | undefined;
   openForm: number;
   private formServiceSubscription: Subscription | undefined;
-  
+
   element: object;
-fragment: string = 'Init';
+  fragment: string = 'Init';
   constructor(
     private dataService: DataService,
     private baseDataService: BaseDataService,
@@ -54,11 +54,11 @@ fragment: string = 'Init';
     public dialog: MatDialog,
 
     private renderer: Renderer2,  // Se usa para renderizar tras la carga de todos los componentes iniciales, ngAfterViewInit 
- 
+
     private adminService: AdminService,
     private formService: FormService,
-  ) { 
-    
+  ) {
+
   }
 
   ngOnInit(): void {
@@ -79,7 +79,7 @@ fragment: string = 'Init';
         this.openForm = currentForm > 0 ? currentForm : 0;
       }
     );
-    
+
     this.resetForm();
   }
 
@@ -103,8 +103,8 @@ fragment: string = 'Init';
     } else {
       this.formService.setCurrentForm(this.openForm - 1)
     }
-  }  
-  
+  }
+
   cancelation() {
     this.toggleForm();
   }
@@ -116,12 +116,12 @@ fragment: string = 'Init';
     this.openDeleteModal(hardSkill);
   }
 
-  delItem(){
+  delItem() {
     if (this.itemParaBorrar) {
-      this.dataService.delEntity(this.itemParaBorrar, "/hardskill").subscribe( {
+      this.dataService.delEntity(this.itemParaBorrar, "/hardskill").subscribe({
         next: (v) => {
           console.log("Se ha eliminado exitosamente a: ", this.itemParaBorrar);
-          this.uiService.msgboxOk(['Se ha eliminado exitosamentee'] ,);
+          this.uiService.msgboxOk(['Se ha eliminado exitosamentee'],);
 
           this.baseData.hardskill = this.baseData.hardskill.filter((t) => { return t !== this.itemParaBorrar })
           // Actualizo la informacion en el origen
@@ -132,19 +132,19 @@ fragment: string = 'Init';
           let msg = new Array()
           msg.push("Se quizo eliminar sin exito a: " + this.itemParaBorrar.name);
           msg.push(e.error.mensaje ? e.error.mensaje : e.message);
-          console.log("Se quizo eliminar sin exito a: " , this.itemParaBorrar);
-          this.uiService.msgboxErr( msg,); 
+          console.log("Se quizo eliminar sin exito a: ", this.itemParaBorrar);
+          this.uiService.msgboxErr(msg,);
 
         },
-        complete: () => {console.log("Completada la actualizacion del hardSkill");}
+        complete: () => { console.log("Completada la actualizacion del hardSkill"); }
 
       });
     }
   }
 
-  
+
   addItem(hardSkill: HardSkill) {
-    this.dataService.addEntity(hardSkill, "/hardskill").subscribe( {
+    this.dataService.addEntity(hardSkill, "/hardskill").subscribe({
       next: (v) => {
         console.log("Guardado correctamente")
         this.uiService.msgboxOk(['Datos guardados exitosamente'],);
@@ -160,8 +160,8 @@ fragment: string = 'Init';
         msg.push("Se quizo agregar sin exito a: " + hardSkill.name);
         msg.push(e.error.mensaje ? e.error.mensaje : e.error.mensaje ? e.error.mensaje : e.message);
         // console.log(e.error.mensaje ? e.error.mensaje : e.error.mensaje ? e.error.mensaje : e.message);
-        
-        this.uiService.msgboxErr( msg,); 
+
+        this.uiService.msgboxErr(msg,);
 
         console.log("Se quizo agregar sin exito a: " + hardSkill.name);
       },
@@ -171,7 +171,7 @@ fragment: string = 'Init';
     this.toggleForm();
   }
 
-  openDeleteModal(data:any) {
+  openDeleteModal(data: any) {
     const dialogConfig = new MatDialogConfig();
     // The user can't close the dialog by clicking outside its body
     dialogConfig.disableClose = true;
@@ -202,17 +202,17 @@ fragment: string = 'Init';
     modalDialog.afterClosed().subscribe(
       data => {
         console.log("Dialogo output: ", data);
-        if (data) {this.delItem() }
+        if (data) { this.delItem() }
       }
 
     )
   }
 
- 
+
   ngAfterViewInit(): void {
-  let element = this.renderer.selectRootElement(`#${this.fragment}`, true);
-  element.scrollIntoView({ behavior: 'smooth' });
-}
+    let element = this.renderer.selectRootElement(`#${this.fragment}`, true);
+    element.scrollIntoView({ behavior: 'smooth' });
+  }
 
   ngAfterViewChecked() {
     initAndSetupTheSliders();

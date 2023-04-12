@@ -58,6 +58,7 @@ import { RefreshDirective } from '../directive/refresh.directive';
 import { SocialNetworkComponent } from '../features/social-network/social-network.component';
 import { SocialFormComponent } from '../features/social-form/social-form.component';
 import { SocialItemComponent } from '../features/social-item/social-item.component';
+import { CardDataFormComponent } from '../shared/card-data-form/card-data-form.component';
 
 
 @NgModule({
@@ -66,6 +67,7 @@ import { SocialItemComponent } from '../features/social-item/social-item.compone
         FooterComponent,
         MainComponent,
         DataCardComponent,
+        CardDataFormComponent,
         PersonalCardComponent,
         ProfileComponent,
         ObjetiveComponent,
@@ -115,6 +117,7 @@ import { SocialItemComponent } from '../features/social-item/social-item.compone
         FooterComponent,
         MainComponent,
         DataCardComponent,
+        CardDataFormComponent,  // creo que no es necesario exportar este tipo de objeto
         ProfileComponent,
         ObjetiveComponent,
         DatosTrayectoriaComponent,
