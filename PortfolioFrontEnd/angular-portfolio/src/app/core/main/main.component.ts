@@ -4,9 +4,9 @@ import { Renderer2 } from '@angular/core';
 import { faPen, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { now } from 'moment';
 import { Subscription } from 'rxjs';
-import { FullPersonDTO } from 'src/app/models';
+import { Card, FullPersonDTO } from 'src/app/models';
 
-import { BaseDataService, DataService } from 'src/app/service/data.service';
+import { BaseCardService, BaseDataService, DataService } from 'src/app/service/data.service';
 import { AdminService } from 'src/app/service/auth.service';
 
 import { TokenService } from 'src/app/service/token.service';
@@ -38,7 +38,7 @@ export class MainComponent implements OnInit, OnDestroy {
 
 
   // Separo las etiquetas/cards según su grupo
-  // detailCards filtrandolo segun atributo "group"
+  // detailCards filtrandolo segun atributo "grupo"
   CardsGroup1: any;
   labelGroup1: string;
   CardsGroup2: any;
@@ -51,24 +51,30 @@ export class MainComponent implements OnInit, OnDestroy {
 
   baseData: FullPersonDTO;
   private BaseDataServiceSubscription: Subscription | undefined;
-
+  // baseCard: Card;
+  // private BaseCardServiceSubscription: Subscription | undefined;
+  
   // Validacion Admin STATUS
   esAdmin: boolean;
   private AdminServiceSubscription: Subscription | undefined;
   openForm: number;
   private formServiceSubscription: Subscription | undefined;
 
-
+  // nueva logica para el acceso a la info tras un click sobre el Card
+  showCards: boolean = true;  
+  showBtnAction: boolean = true;  // inician visibles
+  targetCardId: number = 0;
 
   // Inyectando servicios en el contructor
   constructor(
     private dataService: DataService,
     // PENDIENTE MODO PRUEBA
     private baseDataService: BaseDataService,
+    // private baseCardService: BaseCardService,
     private adminService: AdminService,
     // FIN MODO PRUEBA
 
-    private miServicio: UiService,
+    private uiService: UiService,
     private tokenService: TokenService,
     private formService: FormService,
 
@@ -81,13 +87,18 @@ export class MainComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-    console.log(formatDate(now(), 'yyyy-MM-dd hh:mm', 'en', 'UTC-3'));
+    // console.log(formatDate(now(), 'yyyy-MM-dd hh:mm', 'en', 'UTC-3'));
 
     this.BaseDataServiceSubscription = this.baseDataService.currentBaseData.subscribe(
       currentData => {
         this.baseData = currentData;
       }
     );
+    // this.BaseCardServiceSubscription  = this.baseCardService.currentBaseCard.subscribe(
+    //   currentData => {
+    //     this.baseCard = currentData;
+    //   }
+    // );
 
     this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
       currentAdmin => {
@@ -111,8 +122,12 @@ export class MainComponent implements OnInit, OnDestroy {
       this.adminService.setCurrentAdmin(false);
     }
 
-    this.detailCards = this.miServicio.getCards();
-    this.statusCards = this.miServicio.getStatusCards()
+    this.detailCards = this.uiService.getCards();
+    // console.log(this.baseCard);
+    
+    // this.detailCards = this.baseCard;
+
+    this.statusCards = this.uiService.getStatusCards()
 
     // Separo los grupos
     this.CardsGroup1 = this.detailCards.filter(function (elem: any) { return elem.grupo == 1; })
@@ -145,15 +160,23 @@ export class MainComponent implements OnInit, OnDestroy {
 
 
   toggleCards() {
+    console.log("toggleCards en main");
+    
+    this.showBtnAction = !this.showBtnAction;
     // PENDIENTE, DEBO TOGGLEAR LOS ARRAY PARCIALES, NO EL DE ORIGEN
-    this.miServicio.toggleDetalles();
-    this.miServicio.toggleStatusCards();
-    this.statusCards = this.miServicio.getStatusCards()
+    // this.uiService.toggleDetalles();
+    // this.uiService.toggleStatusCards();
+    // this.statusCards = this.uiService.getStatusCards()
+
 
     // Ya sea que ingrese o salga de una tarjeta, se entiende que no puede 
     // coexistir un formulario abierto
     this.formService.setCurrentForm(0);
   }
 
-
+  onClick(algo: any) {
+    console.log("onClick() de main", algo);
+    this.targetCardId = algo.id;
+    
+  }
 }

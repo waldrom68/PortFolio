@@ -18,15 +18,15 @@ export class UiService {
   private showComponent: boolean = false;
   private subjectShowComponent = new Subject<any>();
 
-  private portfolioinit:PortfolioInit;
+  // private portfolioinit:PortfolioInit;
   
   
   private statusCards:boolean = true;  // Indica si se muestran las Cards en el main
   private cards: Card[];  // Contiene los datos para Cards/etiquetas que levante de mock-data
-   
+  cards2: Card;
   private visited:string="";  // Nombre de la tarjeta sobre la cual hice click -PENDIENTE
   
-  portfolioinit2:PortfolioInit;
+  // portfolioinit2:PortfolioInit;
 
   private flagAction: boolean=true;
   private flagAction$ = new Subject<boolean>();
@@ -37,21 +37,29 @@ export class UiService {
     private dialog: MatDialog,
 
    ) {
-    this.cards = CARDS
-    this.portfolioinit = PORTFOLIOINIT;
+    // this.cards = CARDS;
+    this.dataService.getPortFolioCard().subscribe(
+      currentCard => {
+        console.log("Recibiendo esto->",currentCard);
+        
+        this.cards2 = currentCard;
+      }
+    )
+    // this.portfolioinit = PORTFOLIOINIT;
    }
 
 
   // Pendiente, esto debe vincularse con el logueo
-  getUserLoggin() {
-     return this.portfolioinit2.userId
-  }
+  // getUserLoggin() {
+  //    return this.portfolioinit2.userId
+  // }
     
     // Metodos para el manejo del layout de las tarjetas
   getCards() {
-    console.log(this.cards);
+    // console.log("Estas son las Cards que tengo en mock-data", this.cards);
+    console.log("Estas son las Cards que traigo de la DB", this.cards2);
     
-    return this.cards;
+    return this.cards2;
   }
 
   getStatusCards() {
@@ -66,16 +74,18 @@ export class UiService {
   }
 
   toggleDetalles(mensaje:string="") {
-    // console.log("En el servicio recibo este dato: ", mensaje)
-      this.cards.forEach(element => {
-        if (element.name === mensaje) {
-          element.status = true;
-        } else {
-          element.status = false;
-        }
-      });
-      // this.visited = mensaje
-      // console.log("En el servicio, resultado del proceso", this.cards)
+    console.log("En el servicio recibo este dato: ", mensaje)
+      console.log("en el servicio, recibo para el proceso", this.cards2);
+      
+      // this.cards.forEach(element => {
+      //   if (element.name === mensaje) {
+      //     element.status = true;
+      //   } else {
+      //     element.status = false;
+      //   }
+      // });
+      this.visited = mensaje
+      console.log("En el servicio, resultado del proceso", this.cards2)
   }
 
   toggleStatusCards(){

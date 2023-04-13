@@ -1,26 +1,26 @@
 <ng-container *ngIf="baseData; else wait">
 
-
     <div class="row text-center aling-self-center py-0 mx-0" id="Init">
 
-        <!-- codigo de prueba -->
-        <!-- <div class="container-fluid text-warning font-weight-bold bg-dark p-2">
-        {{baseData.name}}  -> Forms abiertos {{openForm}}
-    </div> -->
-
-        <!-- <ng-container  *ngIf="!wait"> -->
         <ng-container>
 
             <div class="col-sm-8 aling-self-center order-0">
-
-                <!-- area que muestra las Tarjetas por un lado, su etiqueta frontal-->
-                <ng-container *ngIf="statusCards">
+                <!-- area que muestra las Tarjetas, las Card -->
+                
+                <!-- <ng-container *ngIf="statusCards"> -->
+                <ng-container *ngIf="showBtnAction">
                     <section class="row p-0 m-0 justify-content-center">
                         <div id="separador1" class="container-fluid text-warning font-weight-bold p-2 sombreado">
                             {{labelGroup1}}
                         </div>
-                        <!-- <p class="h6 text-center">{{labelGroup1}}</p> -->
-                        <app-data-card [detailCard]="CardsGroup1" (toggleCards)="toggleCards()">
+                        
+                        <app-data-card [detailCard]="CardsGroup1"
+                        (toggleCards)="toggleCards();onClick($event)"
+
+                        [(showBtnAction)]="showBtnAction" 
+                        (showBtnActionChange)="showBtnAction"
+
+                        >
                         </app-data-card>
                     </section>
 
@@ -28,14 +28,18 @@
                         <div id="separador2" class="container-fluid text-warning font-weight-bold p-2 sombreado">
                             {{labelGroup2}}
                         </div>
-                        <!-- <p class="h6 text-center">{{labelGroup2}}</p> -->
-                        <app-data-card [detailCard]="CardsGroup2" (toggleCards)="toggleCards()">
+                        
+                        <app-data-card [detailCard]="CardsGroup2" 
+                        (toggleCards)="toggleCards();onClick($event)"
+                        >
                         </app-data-card>
                     </section>
                 </ng-container>
 
-                <!-- zona para mostrar los detalles de las tarjetas, visibles cuando selecciona -->
-                <ng-container *ngIf="!statusCards">
+                <!-- zona para mostrar el detalle de la tarjeta seleccionada -->
+                <!-- <ng-container *ngIf="!statusCards"> -->
+                    showBtnAction del main -> {{showBtnAction}}
+                <ng-container *ngIf="!showBtnAction">
                     <div class="flex">
                         <button class="btn btn-default btn-sm" ngClass='faControl faClose' (click)="toggleCards();">
                             <fa-icon [icon]="faTimes" ngClass="faClose fa-2x">
@@ -43,10 +47,11 @@
                         </button>
                     </div>
 
-
+                    {{targetCardId}}
                     <div *ngFor="let card of detailCards" ngClass="mx-auto">
-                        <ng-container *ngIf="card.status" [ngSwitch]="card.name" style="border: 1px solid">
-
+                        <!-- <ng-container *ngIf="card.status" [ngSwitch]="card.name" style="border: 1px solid"> -->
+                        <ng-container *ngIf="card.id == targetCardId" [ngSwitch]="card.name" style="border: 1px solid">
+                            Card id -> {{card.id }}
                             <div *ngSwitchCase="'Perfil'" ngClass="basic-container">
                                 <h3>{{card.name}}</h3>
 
@@ -84,7 +89,7 @@
 
                             </div>
 
-                            <div *ngSwitchCase="'Habilidades tecnicas'" ngClass="basic-container">
+                            <div *ngSwitchCase="'Habilidades técnicas'" ngClass="basic-container">
                                 <h3>{{card.name}}</h3>
 
                                 <app-hard-skills></app-hard-skills>
@@ -136,18 +141,3 @@
     </div>
 </ng-template>
 
-<!-- <ng-template #statusWait > -->
-<!-- <div 
-        class="container-fluid"
-        id="wait"
-        [ngStyle]="{'background-color': 'transparent'}">
-        <h4>Iniciando conexion al servidor
-        <div class="loader"></div></h4>
-
-
-    </div> -->
-
-<!-- <div class="loader">Iniciando
-        <span></span>
-    </div> -->
-<!-- </ng-template> -->

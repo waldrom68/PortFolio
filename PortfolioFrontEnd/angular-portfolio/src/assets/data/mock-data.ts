@@ -22,7 +22,8 @@ export const CARDS: Card[] = [
         resume: "Experiencia soft, formacion hard",
         grupo: 1,
         orderdeploy: 0,
-        status: false,
+        status: true,
+        expand: false,
         MyClass: "",
     },
     {
@@ -31,9 +32,9 @@ export const CARDS: Card[] = [
         resume: "Tras proyectos ambiciosos con gente positiva",
         grupo: 1,
         orderdeploy: 0,
-        status: false,
+        status: true,
+        expand: false,
         MyClass: "",
-
     },
     {
         id: 3,
@@ -41,7 +42,8 @@ export const CARDS: Card[] = [
         resume: "ex Directivo, desarrollador, capacitador",
         grupo: 1,
         orderdeploy: 0,
-        status: false,
+        status: true,
+        expand: false,
         MyClass: "",
     },
     {
@@ -50,7 +52,8 @@ export const CARDS: Card[] = [
         resume: "Analista de Sistemas, MBA, Full-Stack",
         grupo: 1,
         orderdeploy: 0,
-        status: false,
+        status: true,
+        expand: false,
         MyClass: "",
     },
     {
@@ -59,7 +62,8 @@ export const CARDS: Card[] = [
         resume: "Python, Django, Java, Angular, CSS3, HTML",
         grupo: 2,
         orderdeploy: 0,
-        status: false,
+        status: true,
+        expand: false,
         MyClass: "",
     },
     {
@@ -68,7 +72,8 @@ export const CARDS: Card[] = [
         resume: "Metodico y gran atención a los detalles",
         grupo: 2,
         orderdeploy: 0,
-        status: false,
+        status: true,
+        expand: false,
         MyClass: "",
     },
     {
@@ -77,7 +82,8 @@ export const CARDS: Card[] = [
         resume: "",
         grupo: 2,
         orderdeploy: 0,
-        status: false,
+        status: true,
+        expand: false,
         MyClass: "",
     },
     {
@@ -86,7 +92,8 @@ export const CARDS: Card[] = [
         resume: "",
         grupo: 2,
         orderdeploy: 0,
-        status: false,
+        status: true,
+        expand: false,
         MyClass: "",
     }
 ]

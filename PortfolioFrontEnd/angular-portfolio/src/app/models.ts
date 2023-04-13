@@ -71,6 +71,7 @@ export class Card extends Base {
     grupo: number;
     orderdeploy: number;
     status: boolean;
+    expand: boolean;
 
     constructor() {
         super();
@@ -79,8 +80,11 @@ export class Card extends Base {
         this.resume = "";
         this.orderdeploy = 0;
         this.status = true;
+        this.expand = false;
     }
 }
+
+
 export class Degree extends Base {
     id: number;
     name: string;

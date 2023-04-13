@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError, Subject, BehaviorSubject } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 
-import { Person, HardSkill, SoftSkill, LaboralCareer, Interest, Project, Organization, Degree, RolePosition, Studie, FullPersonDTO } from '../models'
+import { Person, HardSkill, SoftSkill, LaboralCareer, Interest, Project, Organization, Degree, RolePosition, Studie, FullPersonDTO, Card } from '../models'
 
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http'  // Para ejecutar los metodos GET, PUT, POST, ETC
 import { environment } from 'src/environments/environment';
@@ -224,17 +224,31 @@ export class DataService {
   private gralData: FullPersonDTO;
   private gralData$ = new Subject<FullPersonDTO>();
   
-  
- 
   getPortFolioData(): Observable<FullPersonDTO> {
     const endPoint = `${this.LOCALHOST_API}/fullperson/view/${this.USERID}`
     const response = this.http.get<FullPersonDTO>(endPoint)
     // .pipe(catchError(this.handleError));
+    
     return response;
   }
   getPortFolioData$(): Observable<FullPersonDTO> {
     return this.gralData$.asObservable();
   }
+
+
+  
+  // #### Nuevo metodo de acceso general para traer las Card del portfolio
+  private gralCard: Card;
+  private gralCard$ = new Subject<Card>();
+  
+  getPortFolioCard(): Observable<Card> {
+    const endPoint = `${this.LOCALHOST_API}/card/list/all`
+    return this.http.get<Card>(endPoint)
+  }
+  getPortFolioCard$(): Observable<Card> {
+    return this.gralCard$.asObservable();
+  }
+
 
 
 
@@ -302,6 +316,8 @@ export class DataService {
 
 
 // https://rafaelneto.dev/blog/gestionar-estado-angular-rxjs-behaviorsubject-servicios-datos-observables/
+
+// Una vez realizado el pedido a la DB, con este servicio mantengo un espejo de esa informacion
 @Injectable({
   providedIn: 'root'
 })
@@ -309,13 +325,15 @@ export class BaseDataService {
   private baseDataSubject: BehaviorSubject<FullPersonDTO> = new BehaviorSubject({} as FullPersonDTO);
   public readonly currentBaseData: Observable<FullPersonDTO> = this.baseDataSubject.asObservable();
 
+
   constructor() { }
-  
+  // Actualizo los datos de la persona del PortFolio
   setCurrentBaseData(currentData: FullPersonDTO): void {
     
     this.baseDataSubject.next(currentData);
+    
   }
-
+  
   // codigo en el componente que usa este servicio tanto como observador como modificador.
   // baseData: FullPersonDTO;
   // private BaseDataServiceSubscription: Subscription | undefined;
@@ -337,6 +355,25 @@ export class BaseDataService {
 
   }
 
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class BaseCardService {
+  
+    private BaseCardSubject: BehaviorSubject<Card> = new BehaviorSubject( {} as Card);
+    public readonly currentBaseCard: Observable<Card> = this.BaseCardSubject.asObservable();
+  
+    constructor() { }
+    
+    // Actualizo los datos de las Card del PortFolio
+    setCurrentBaseCard(currentCard: Card): void {
+      
+      this.BaseCardSubject.next(currentCard);
+  
+    }
+
+  
+    }
 
   // Fin Metodos del servicio de flag isLoggin
 

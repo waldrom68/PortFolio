@@ -42,11 +42,12 @@ import { RefreshDirective } from './directive/refresh.directive';
 
 // import { library } from '@fortawesome/fontawesome-svg-core';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { UserDataComponent } from './users/user-data/user-data.component';
 
 
 const appRouters: Routes = [
   { path: '', component: AppComponent},
-  // { path: 'user', component: UserDataComponent},
+  { path: 'user', component: UserDataComponent},
 ]
 
 
