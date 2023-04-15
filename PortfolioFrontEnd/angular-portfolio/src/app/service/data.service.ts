@@ -11,7 +11,7 @@ import { environment } from 'src/environments/environment';
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json',
-    // 'Access-Control-Allow-Origin':'*',
+    'Access-Control-Allow-Origin':'*',
     // 'Authorization':'authkey',
   })
 }
@@ -259,6 +259,7 @@ export class DataService {
     const url = `${this.LOCALHOST_API}${entityName}/edit`;
     console.log(url)
     console.log("Modificando a ... ", entidad);
+    console.log("httpOptions", httpOptions);
     return this.http.post<any>(url, entidad, httpOptions)
   }
 
@@ -268,6 +269,7 @@ export class DataService {
     const url = `${this.LOCALHOST_API}${entityName}/new`;
     console.log(url)
     console.log("Agregando a ... ", entidad);
+    console.log("httpOptions", httpOptions);
     return this.http.put<any>(url, entidad, httpOptions)
   }
   
@@ -275,8 +277,15 @@ export class DataService {
     const url = `${this.LOCALHOST_API}${entityName}/del/${entidad.id}`
     console.log(url)
     console.log("Eliminando a ... ", entidad);
+    console.log("httpOptions", httpOptions);
+    
     return this.http.delete<any>(url, httpOptions)
   }
+
+  // delHardSkills(hardskill:HardSkill): Observable<HardSkill>{
+  //   const url = `${this.LOCALHOST_API}/hardskill/del/${hardskill.id}`
+  //   return this.http.delete<HardSkill>(url, httpOptions)
+  // }
 
 
   setCurrentValue(value:number) {

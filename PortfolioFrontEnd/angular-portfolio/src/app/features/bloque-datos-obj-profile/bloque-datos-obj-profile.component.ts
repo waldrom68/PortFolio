@@ -40,7 +40,7 @@ export class BloqueDatosObjProfileComponent implements OnInit {
 
 
   alPadre() {
-    console.log("\nLlegue al Bloque principal\n [bloque-datos-obj-profile.component.ts]")
+    alert("\nLlegue al Bloque principal\n [bloque-datos-obj-profile.component.ts]")
     this.statusCards = true;
   }
 
@@ -56,7 +56,7 @@ export class BloqueDatosObjProfileComponent implements OnInit {
 
   ngOnInit(): void {
     // this.botones = this.miServicio.getDetalles();
-    this.detailCards = this.miServicio.getCards()
+    // this.detailCards = this.miServicio.getCards()
 
     this.CardsGroup1 = this.detailCards.filter(function (elem:any)
         { return elem.group == 1; }  ) 

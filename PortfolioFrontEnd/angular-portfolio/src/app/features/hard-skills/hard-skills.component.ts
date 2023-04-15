@@ -118,7 +118,8 @@ export class HardSkillsComponent implements OnInit, OnDestroy {
 
   delItem() {
     if (this.itemParaBorrar) {
-      this.dataService.delEntity(this.itemParaBorrar, "/hardskill").subscribe({
+      // this.dataService.delHardSkills(this.itemParaBorrar).subscribe({
+        this.dataService.delEntity(this.itemParaBorrar, "/hardskill").subscribe({
         next: (v) => {
           console.log("Se ha eliminado exitosamente a: ", this.itemParaBorrar);
           this.uiService.msgboxOk(['Se ha eliminado exitosamentee'],);

@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Form, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Card } from 'src/app/models';
+import { AdminService } from 'src/app/service/auth.service';
 import { FormService } from 'src/app/service/ui.service';
 
 @Component({
@@ -15,7 +16,7 @@ export class CardDataFormComponent implements OnInit {
   @Input() showForm: boolean;  // flag para mostrar el formulario
   @Output() showFormChange = new EventEmitter<boolean>();
 
-  formData: Card;  // instancia vacia, para cuando se solicite un alta.
+
   form: FormGroup;
 
   oldData: Card;  // Copia para reestablecer valores.
@@ -30,9 +31,17 @@ export class CardDataFormComponent implements OnInit {
     private formBuilder: FormBuilder,
     private formService: FormService,
 
+    private adminService: AdminService,
+
   ) { }
 
   ngOnInit() {
+    
+    this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
+      currentAdmin => {
+        this.esAdmin = currentAdmin;
+      }
+    );
     this.formServiceSubscription = this.formService.currentOpenForm.subscribe(
       currentForm => {
         this.openForm = currentForm > 0 ? currentForm : 0;
@@ -42,6 +51,7 @@ export class CardDataFormComponent implements OnInit {
       resume: [this.item.resume, [Validators.maxLength(45)]],
 
     });
+
     // Clono el objeto, uso assign por no tener atributos compuesto por otros objetos
     this.oldData = Object.assign({}, this.item)
   }
@@ -70,6 +80,7 @@ export class CardDataFormComponent implements OnInit {
 
   onCancel() {
     // this.resetForm();
+    console.log("Cerrando el form del resumen");
     this.toggleForm();
 
   }
@@ -94,14 +105,14 @@ export class CardDataFormComponent implements OnInit {
       this.toggleForm();
       // console.log(this.form.statusChanges);
       // Hubo cambios
-      if (this.form.get("resume")?.value.trim() != this.formData.resume) {
+      if (this.form.get("resume")?.value.trim() != this.oldData.resume) {
 
         if (this.form.valid) {
 
-          this.formData.resume = this.form.get("resume")?.value.trim();
-
+          this.item.resume = this.form.get("resume")?.value.trim();
+          
           // estoy por cerrar el formulario, emito orden de actualizarse
-          console.log("onEnviar mandaría a guardar esta informacion", this.formData);
+          console.log("onEnviar mandaría a guardar esta informacion", this.item);
 
         } else {
 

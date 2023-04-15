@@ -1,6 +1,10 @@
-Data-card > {{showBtnAction}}
+<!-- <li><small>OPENFORM en Data-card -> {{openForm}}</small></li>
+<li><small>showCard en Data-card -> {{showCard}}</small></li>
+<li><small>showForm en Data-card -> {{showForm}}</small></li> -->
+
+
 <div class="row p-0 m-0">
-    <div class="col-md-6" style="border: 1px solid;" *ngFor="let card of detailCard">
+    <div class="col-md-6" style="border: 1px solid;">
         <div class="px-2 my-3 row justify-content-center">
             <!-- <div class="col"> -->
             <a class="header" [id]="card.name">
@@ -24,8 +28,8 @@ Data-card > {{showBtnAction}}
 
                         </div>
 
-                        <ng-container *ngIf="!esAdmin && openForm == 0" class="row">
-                            <div class="flip-box-back" (click)="toggleContenedor(card);">
+                        <ng-container *ngIf="!esAdmin" class="row">
+                            <div class="flip-box-back" (click)="mostrarContenido(card);">
                                 <span class="font-weight-bold align-self-center p-2">
                                     <h5 *ngIf="card.resume.length > 0 else sinresume">
                                         <small>{{card.resume}}</small>
@@ -41,7 +45,7 @@ Data-card > {{showBtnAction}}
                         </ng-container>
 
 
-                        <ng-container *ngIf="esAdmin && openForm == 0">
+                        <ng-container *ngIf="esAdmin">
 
                             <div class="flip-box-back">
                                 <ng-container *ngIf="!showForm || (card.id != targetId)">
@@ -55,7 +59,7 @@ Data-card > {{showBtnAction}}
                                         </ng-template>
 
                                         <label class="btn btn-outline-success btn-sm mt-1 py-0 px-1" *ngIf="openForm == 0"
-                                            (click)="onClick(card, 'breve')">
+                                            (click)="modificarResumen(card)">
                                             <fa-icon [icon]="faPen"></fa-icon><span class="px-2"><small>Breve
                                                     {{card.name}}</small></span>
                                         </label>
@@ -65,7 +69,8 @@ Data-card > {{showBtnAction}}
 
                                 <app-card-data-form *ngIf="showForm && card.id == targetId"
                                     [item]="card"
-                                    [(showForm)]="showForm" (showFormChange)="showForm">
+                                    [(showForm)]="showForm" (showFormChange)="showForm"
+                                    >
 
                                 </app-card-data-form>
 
@@ -80,9 +85,9 @@ Data-card > {{showBtnAction}}
 
 
             <!-- QUEDA BIEN, PERO NO ME CONVENCE USARLO AQUI -->
-            <div *ngIf="esAdmin && openForm == 0" class="row m-2 align-items-center" (click)="toggleContenedor(card.name); onClick(card, 'breve')">
+            <div *ngIf="esAdmin && openForm == 0" class="row m-2 align-items-center" (click)="modificarContenido(card)">
                 <button class="btn btn-primary btn-sm" ngClass="faConfirm fa-ico">
-                    <fa-icon [icon]="faPen"></fa-icon><span class="p-2">Contenido completo</span>
+                    <fa-icon [icon]="faPen"></fa-icon><span class="p-2">Contenido y detalles</span>
                 </button>
             </div>
             <!-- FIN QUEDA BIEN -->

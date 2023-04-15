@@ -37,41 +37,41 @@ export class UiService {
     private dialog: MatDialog,
 
    ) {
-    // this.cards = CARDS;
-    this.dataService.getPortFolioCard().subscribe(
-      currentCard => {
-        console.log("Recibiendo esto->",currentCard);
+  //   // this.cards = CARDS;
+  //   this.dataService.getPortFolioCard().subscribe(
+  //     currentCard => {
+  //       console.log("Recibiendo esto->",currentCard);
         
-        this.cards2 = currentCard;
-      }
-    )
-    // this.portfolioinit = PORTFOLIOINIT;
+  //       this.cards2 = currentCard;
+  //     }
+  //   )
+  //   // this.portfolioinit = PORTFOLIOINIT;
    }
 
 
-  // Pendiente, esto debe vincularse con el logueo
-  // getUserLoggin() {
-  //    return this.portfolioinit2.userId
+  // // Pendiente, esto debe vincularse con el logueo
+  // // getUserLoggin() {
+  // //    return this.portfolioinit2.userId
+  // // }
+    
+  //   // Metodos para el manejo del layout de las tarjetas
+  // getCards() {
+  //   // console.log("Estas son las Cards que tengo en mock-data", this.cards);
+  //   console.log("Estas son las Cards que traigo de la DB", this.cards2);
+    
+  //   return this.cards2;
   // }
-    
-    // Metodos para el manejo del layout de las tarjetas
-  getCards() {
-    // console.log("Estas son las Cards que tengo en mock-data", this.cards);
-    console.log("Estas son las Cards que traigo de la DB", this.cards2);
-    
-    return this.cards2;
-  }
 
-  getStatusCards() {
-    console.log(this.statusCards);
+  // getStatusCards() {
+  //   console.log(this.statusCards);
     
-    return this.statusCards
-  }
+  //   return this.statusCards
+  // }
 
-  getLastVisited() {
-    console.log(this.visited)
-    return this.visited
-  }
+  // getLastVisited() {
+  //   console.log(this.visited)
+  //   return this.visited
+  // }
 
   toggleDetalles(mensaje:string="") {
     console.log("En el servicio recibo este dato: ", mensaje)
@@ -88,21 +88,21 @@ export class UiService {
       console.log("En el servicio, resultado del proceso", this.cards2)
   }
 
-  toggleStatusCards(){
-    // console.log("En servicio el statusCards esta en", this.statusCards)
-    this.statusCards = !this.statusCards;
-  }
+  // toggleStatusCards(){
+  //   // console.log("En servicio el statusCards esta en", this.statusCards)
+  //   this.statusCards = !this.statusCards;
+  // }
 
 
 
   
-  // -----------------------------------------------------
-  // PENDIENTE DE ELIMINAR ESTOS METODOS. REVISAR PREVIAMENTE
-  // Metodos que existian antes del uso del servicio para las Tarjetas
-  toggleComponent(value:any): void {
-    // console.log("usando el servicio de ver/no ver componente", value)
-    this.showComponent = !this.showComponent
-  }
+  // // -----------------------------------------------------
+  // // PENDIENTE DE ELIMINAR ESTOS METODOS. REVISAR PREVIAMENTE
+  // // Metodos que existian antes del uso del servicio para las Tarjetas
+  // toggleComponent(value:any): void {
+  //   // console.log("usando el servicio de ver/no ver componente", value)
+  //   this.showComponent = !this.showComponent
+  // }
 
   onToggleComponet(value:any): Observable<any> {
     // console.log("estoy en el metodo onToggle del uiService", value)

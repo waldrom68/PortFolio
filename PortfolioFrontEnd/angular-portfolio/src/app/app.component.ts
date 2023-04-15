@@ -28,7 +28,12 @@ export class AppComponent implements OnInit {
   faTimes = faTimes;
 
   // PENDIENTE, implementacion parcial, la idea es que muestre progreso o trabajo en 2do plano
-  statusWait: boolean = true;
+  statusReady: boolean = false;
+  statusWait: boolean[] = [true, true];
+  
+ 
+  statusError: boolean = false;
+  
 
   // Actualmente reloj, se actualiza cada segundo
   currentTime: Date;
@@ -89,30 +94,34 @@ export class AppComponent implements OnInit {
 
 
   ngOnInit() {
+  
+
     // PENDIENTE, evaluar y analizar, se está llamand a 2 servicios diferentes
     // para obtener los mismos datos (*2)
     // Traigo todos los datos del Portfolio
     this.dataService.getPortFolioData().subscribe({
       next: (currentData) => {
+        
 
-        this.uiService.msgboxOk(['Datos generales del PortFolio obtenidos exitosamente'],);
         this.baseData = currentData;
 
         this.baseDataService.setCurrentBaseData(currentData);
-        this.statusWait = false;
+        
         console.log("Obtenidos los datos exitosamente");
-
+        
+        
 
         // this.uiService.msgboxOk(['Datos guardados exitosamente'],);
         // this.uiService.msgboxOk(['Se ha eliminado exitosamentee'] ,);
 
       },
       error: (e) => {
+        
         // e.status = 0, error del servidor
         // e.status = 400, e.statusText= OK, error en el pedido al servidor
         let msg = new Array()
         msg.push("Se quizo obtener los datos sin exito," + e.message)
-        this.statusWait = true;
+        this.statusError = true;
 
         console.log("Se quizo obtener los datos sin exito; ")
         switch (e.status) {
@@ -126,24 +135,30 @@ export class AppComponent implements OnInit {
               msg.push("Error en la base de datos", "Reintente en unos minutos");
             }
             break;
-        };
-        this.uiService.msgboxErr(msg,);
+          };
+          this.uiService.msgboxErr(msg,);
+          
+        },
+        complete: () => { 
+          console.log("Finalizado el proceso de obtener los datos del PortFolio");
+          this.statusWait[0] = false;
+          this.statusReady = this.statusWait.every(value => !value);
 
-      },
-      complete: () => { console.log("Finalizado el proceso de obtener los datos del PortFolio") }
+          if (this.statusReady) {
+            this.uiService.msgboxOk(['Datos del PortFolio obtenidos exitosamente'],);
+          }
+          
+       }
     });
 
     // Traigo todas las Card del Portfolio
     this.dataService.getPortFolioCard().subscribe({
       next: (currentData) => {
-
-        this.uiService.msgboxOk(['Datos de la estructura del PortFolio obtenidos exitosamente'],);
         // this.detailCard = currentData;
 
         // Realizo el espejo de los datos completos del portfolio de la persona
         this.baseCardService.setCurrentBaseCard(currentData);
 
-        this.statusWait = true;
         console.log("Obtenidos los datos exitosamente", currentData);
 
         // this.uiService.msgboxOk(['Datos guardados exitosamente'],);
@@ -155,7 +170,7 @@ export class AppComponent implements OnInit {
         // e.status = 400, e.statusText= OK, error en el pedido al servidor
         let msg = new Array()
         msg.push("Se quizo obtener los datos sin exito," + e.message)
-        this.statusWait = true;
+        this.statusError = true;
 
         console.log("Se quizo obtener los datos sin exito; ")
         switch (e.status) {
@@ -173,7 +188,15 @@ export class AppComponent implements OnInit {
         // this.uiService.msgboxErr( msg,); 
 
       },
-      complete: () => { console.log("Finalizado el proceso de obtener los datos de las Card del PortFolio") }
+      complete: () => { 
+        console.log("Finalizado el proceso de obtener los datos de las Card del PortFolio");
+        this.statusWait[1] = false;
+        this.statusReady = this.statusWait.every(value => !value);
+
+        if (this.statusReady) {
+          this.uiService.msgboxOk(['Datos del PortFolio obtenidos exitosamente'],);
+        }
+    }
     });
   }
 

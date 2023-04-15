@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Renderer2 } from '@angular/core';
 
 import { faPen, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { now } from 'moment';
+
 import { Subscription } from 'rxjs';
 import { Card, FullPersonDTO } from 'src/app/models';
 
@@ -11,7 +11,7 @@ import { AdminService } from 'src/app/service/auth.service';
 
 import { TokenService } from 'src/app/service/token.service';
 import { UiService, FormService } from 'src/app/service/ui.service';
-import { formatDate } from '@angular/common';
+
 
 @Component({
   selector: 'app-main',
@@ -22,61 +22,61 @@ import { formatDate } from '@angular/common';
 export class MainComponent implements OnInit, OnDestroy {
   faTimes = faTimes;
   faPen = faPen;
-  // Variable que controla si se muestran las tarjetas, si muestra detalle,
-  // las tarjetas se deben ocultar, 
-  //  son pasadas en el tag de app asi: [detailCard]="CardsGroup1"
-  //  son recibidas en otros componentes via @Input() detailCard:Cards [];
 
-  detailCards: any;  // 
-  //  son registrada en el tag de app asi: (toggleCards)="toggleCards()"
-  //  son registradas en el componente hijo asi: @Output() toggleCards = new EventEmitter();
-  //                                              toggleContenedor(dato:string) {
-  //                                                  this.toggleCards.emit();
-  statusCards: boolean;  // Muestra las Cards/Etiquetas
+  // Datos de las Cards, actualmente recibido desde el Servicio de UI
+  // PENDIENTE, sacarlo del sercivio UI
+  // detailCards: any;  // 
 
-
-
-
-  // Separo las etiquetas/cards según su grupo
+  // Se van a separar las Cards, según su grupo
   // detailCards filtrandolo segun atributo "grupo"
   CardsGroup1: any;
-  labelGroup1: string;
   CardsGroup2: any;
+  
+  // Se prepara una etiqueta para separar los grupos
+  labelGroup1: string;
   labelGroup2: string;
   separador = [" - "];
 
+  // Se reposicionará el foco dentro de la ventana usando estas variables
+  // se hara en todos los componentes, a excepcion de los modales.
   element: object;
   fragment: string = 'Init';
-  // wait: boolean = true;
+ 
 
+  // Datos de la persona del PortFolio
   baseData: FullPersonDTO;
   private BaseDataServiceSubscription: Subscription | undefined;
-  // baseCard: Card;
-  // private BaseCardServiceSubscription: Subscription | undefined;
+  detailCards: any;
+  private BaseCardServiceSubscription: Subscription | undefined;
+
   
   // Validacion Admin STATUS
   esAdmin: boolean;
   private AdminServiceSubscription: Subscription | undefined;
-  openForm: number;
-  private formServiceSubscription: Subscription | undefined;
+
+  // openForm: number;
+  // private formServiceSubscription: Subscription | undefined;
 
   // nueva logica para el acceso a la info tras un click sobre el Card
-  showCards: boolean = true;  
-  showBtnAction: boolean = true;  // inician visibles
+  showCard: boolean = true;  
+  // showBtnAction: boolean = true;  // inician visibles
+
+  // objeto sobre el cual se hace click
   targetCardId: number = 0;
 
   // Inyectando servicios en el contructor
   constructor(
-    private dataService: DataService,
+    // private dataService: DataService,
+
     // PENDIENTE MODO PRUEBA
     private baseDataService: BaseDataService,
-    // private baseCardService: BaseCardService,
+    private baseCardService: BaseCardService,
     private adminService: AdminService,
     // FIN MODO PRUEBA
 
     private uiService: UiService,
     private tokenService: TokenService,
-    private formService: FormService,
+    // private formService: FormService,
 
     private renderer: Renderer2,  // Se usa para renderizar tras la carga de todos los componentes iniciales, ngAfterViewInit 
 
@@ -94,9 +94,15 @@ export class MainComponent implements OnInit, OnDestroy {
         this.baseData = currentData;
       }
     );
-    // this.BaseCardServiceSubscription  = this.baseCardService.currentBaseCard.subscribe(
-    //   currentData => {
-    //     this.baseCard = currentData;
+    this.BaseCardServiceSubscription  = this.baseCardService.currentBaseCard.subscribe(
+      currentData => {
+        this.detailCards = currentData;
+      }
+    );
+    // Se susbcribe para ver cuantos formularios hay abiertos
+    // this.formServiceSubscription = this.formService.currentOpenForm.subscribe(
+    //   currentForm => {
+    //     this.openForm = currentForm > 0 ? currentForm : 0;
     //   }
     // );
 
@@ -105,12 +111,7 @@ export class MainComponent implements OnInit, OnDestroy {
         this.esAdmin = currentAdmin;
       }
     );
-    // Se susbcribe para ver cuantos formularios hay abiertos
-    this.formServiceSubscription = this.formService.currentOpenForm.subscribe(
-      currentForm => {
-        this.openForm = currentForm > 0 ? currentForm : 0;
-      }
-    );
+    
 
     // VALIDACION SI ES UN USUARIO ADMINISTRADOR Y TIENE TOKEN VIGENTE
     if (this.tokenService.isValidAdmin()) {
@@ -122,13 +123,10 @@ export class MainComponent implements OnInit, OnDestroy {
       this.adminService.setCurrentAdmin(false);
     }
 
-    this.detailCards = this.uiService.getCards();
-    // console.log(this.baseCard);
+    // this.detailCards = this.uiService.getCards();
+    console.log(this.detailCards);
     
-    // this.detailCards = this.baseCard;
-
-    this.statusCards = this.uiService.getStatusCards()
-
+  
     // Separo los grupos
     this.CardsGroup1 = this.detailCards.filter(function (elem: any) { return elem.grupo == 1; })
     this.CardsGroup2 = this.detailCards.filter(function (elem: any) { return elem.grupo == 2; })
@@ -148,7 +146,7 @@ export class MainComponent implements OnInit, OnDestroy {
     // this.isAdminSubscription.unsubscribe();
     this.AdminServiceSubscription?.unsubscribe();
     this.BaseDataServiceSubscription?.unsubscribe();
-    this.formServiceSubscription?.unsubscribe();
+    // this.formServiceSubscription?.unsubscribe();
 
   }
 
@@ -159,24 +157,33 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
 
-  toggleCards() {
-    console.log("toggleCards en main");
+  // toggleCards() {
+  //   this.showCard != this.showCard;
+    // console.log("pasando por toggleCards de main, showCard queda con valor:", this.showCard);
     
-    this.showBtnAction = !this.showBtnAction;
-    // PENDIENTE, DEBO TOGGLEAR LOS ARRAY PARCIALES, NO EL DE ORIGEN
-    // this.uiService.toggleDetalles();
-    // this.uiService.toggleStatusCards();
-    // this.statusCards = this.uiService.getStatusCards()
+    // this.showBtnAction = !this.showBtnAction;
+    // // PENDIENTE, DEBO TOGGLEAR LOS ARRAY PARCIALES, NO EL DE ORIGEN
+    // // this.uiService.toggleDetalles();
+    // // this.uiService.toggleStatusCards();
+    // // this.statusCards = this.uiService.getStatusCards()
 
 
-    // Ya sea que ingrese o salga de una tarjeta, se entiende que no puede 
-    // coexistir un formulario abierto
-    this.formService.setCurrentForm(0);
+    // // Ya sea que ingrese o salga de una tarjeta, se entiende que no puede 
+    // // coexistir un formulario abierto
+    // this.formService.setCurrentForm(0);
+  // }
+
+
+  accederAlContenido(target: any) {
+    // this.showBtnAction = !this.showBtnAction;
+    // this.toggleCards()
+    this.showCard = false;
+    // console.log("accederAlContenido() en el main", target);
+    this.targetCardId = target.id;
   }
 
-  onClick(algo: any) {
-    console.log("onClick() de main", algo);
-    this.targetCardId = algo.id;
-    
+  cerrarElContenido() {
+    // this.toggleCards()
+    this.showCard = true;
   }
 }

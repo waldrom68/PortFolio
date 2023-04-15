@@ -24,11 +24,24 @@
                     </h6>
                     <hr class=" border border-warning border-5">
                     <p>Nacido en {{baseData.since | date:"yyyy"}}.</p>
-                    <p>
-                        <fa-icon [icon]="faLocationDot">
-                        </fa-icon>
-                        {{baseData.location}}
-                    </p>
+
+                    <!-- Por validacion, debe tener un enlace a una url, pero por las -->
+                    <ng-container *ngIf="baseData.urlLocation.length; else sinEnlace">
+                        <a class="url" href="{{baseData.urlLocation}}" target="_blank">
+                            <fa-icon [icon]="faLocationDot">
+                            </fa-icon>
+                            {{baseData.location}}
+                        </a>
+                    </ng-container>
+
+                    <!-- Dejo este otro contenedor sin enlace -->
+                    <ng-template #sinEnlace>
+                        <p>
+                            <fa-icon [icon]="faLocationDot">
+                            </fa-icon>
+                            {{baseData.location}}
+                        </p>
+                    </ng-template>
 
                 </div>
             </ng-container>

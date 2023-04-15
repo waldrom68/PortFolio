@@ -1,24 +1,25 @@
+
 <ng-container *ngIf="baseData; else wait">
 
     <div class="row text-center aling-self-center py-0 mx-0" id="Init">
 
         <ng-container>
-
+            <!-- <small>showCard en main -> {{showCard}}</small> -->
             <div class="col-sm-8 aling-self-center order-0">
-                <!-- area que muestra las Tarjetas, las Card -->
+                <!-- Mostrando las Cards -->
                 
                 <!-- <ng-container *ngIf="statusCards"> -->
-                <ng-container *ngIf="showBtnAction">
+                <ng-container *ngIf="showCard">
                     <section class="row p-0 m-0 justify-content-center">
                         <div id="separador1" class="container-fluid text-warning font-weight-bold p-2 sombreado">
                             {{labelGroup1}}
                         </div>
                         
-                        <app-data-card [detailCard]="CardsGroup1"
-                        (toggleCards)="toggleCards();onClick($event)"
-
-                        [(showBtnAction)]="showBtnAction" 
-                        (showBtnActionChange)="showBtnAction"
+                        <app-data-card 
+                            *ngFor="let card of CardsGroup1"
+                            [card]="card"
+                            (accederAlContenido)="accederAlContenido($event)"
+                            [(showCard)]="showCard"
 
                         >
                         </app-data-card>
@@ -29,29 +30,32 @@
                             {{labelGroup2}}
                         </div>
                         
-                        <app-data-card [detailCard]="CardsGroup2" 
-                        (toggleCards)="toggleCards();onClick($event)"
+                        <app-data-card 
+                            *ngFor="let card of CardsGroup2"
+                            [card]="card"
+                            (accederAlContenido)="accederAlContenido($event)"
+                            [(showCard)]="showCard"
+
                         >
                         </app-data-card>
                     </section>
                 </ng-container>
 
-                <!-- zona para mostrar el detalle de la tarjeta seleccionada -->
-                <!-- <ng-container *ngIf="!statusCards"> -->
-                    showBtnAction del main -> {{showBtnAction}}
-                <ng-container *ngIf="!showBtnAction">
+                <!-- Mostrando su componente hijo, ya sea con el detalle de su contenido o el acceso a los formularios para el detalle o al resumen breve.
+                 -->
+                <ng-container *ngIf="!showCard">
                     <div class="flex">
-                        <button class="btn btn-default btn-sm" ngClass='faControl faClose' (click)="toggleCards();">
+                        <button class="btn btn-default btn-sm" ngClass='faControl faClose' (click)="cerrarElContenido();">
                             <fa-icon [icon]="faTimes" ngClass="faClose fa-2x">
                             </fa-icon>
                         </button>
                     </div>
 
-                    {{targetCardId}}
                     <div *ngFor="let card of detailCards" ngClass="mx-auto">
-                        <!-- <ng-container *ngIf="card.status" [ngSwitch]="card.name" style="border: 1px solid"> -->
-                        <ng-container *ngIf="card.id == targetCardId" [ngSwitch]="card.name" style="border: 1px solid">
-                            Card id -> {{card.id }}
+
+                        <ng-container *ngIf="card.id == targetCardId" 
+                            [ngSwitch]="card.name" style="border: 1px solid">
+
                             <div *ngSwitchCase="'Perfil'" ngClass="basic-container">
                                 <h3>{{card.name}}</h3>
 

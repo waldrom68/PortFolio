@@ -15,6 +15,7 @@ export class DataCardComponent implements OnInit {
   faTimes = faTimes;
   faPen = faPen;
   faTrash = faTrash;
+  @Input() card: Card;
 
   // PENDIENTE Esta entrada no la uso para nada
   @Input() detailCard: Card[];
@@ -24,9 +25,17 @@ export class DataCardComponent implements OnInit {
   targetId: number = 0;  // para abrir sólo el form del item sobre el cual se hizo click
   // statusCards:boolean;
 
-  // Renombrar luego a showCard
+  // Manejo de la visibilidad de los botones para acceder a los forms
   @Input() showBtnAction!: boolean;
   @Output() showBtnActionChange = new EventEmitter<boolean>();
+
+  // Menejo de la visibilidad de las etiquetes o del componente con los datos
+  @Input() showCard!: boolean;
+  @Output() showCardChange = new EventEmitter<boolean>();
+
+
+  @Output() accederAlContenido = new EventEmitter<boolean>();
+
 
 
 
@@ -38,7 +47,7 @@ export class DataCardComponent implements OnInit {
 
 
   constructor(
-    private miServicio: UiService,
+    // private miServicio: UiService,
     private adminService: AdminService,
 
     private formService: FormService,
@@ -61,45 +70,69 @@ export class DataCardComponent implements OnInit {
         this.esAdmin = currentAdmin;
       }
     );
-
-    // this.esAdmin = true;
+      // this.esAdmin = true;
   }
 
-  onClick(target: any, leyenda:string) {
-    this.targetId = target.id;
-    this.showForm = true;
-    console.log("Hice click en", leyenda," Desde data-card onClick modo ADMIN hice click en", target, "showForm está en:", this.showForm);
-    this.toggleCards.emit(target);
-    // this.onClickCard.emit(this.targetId);
-  }
-
-  toggleContenedor(dato: any) {
-    console.log("Desde data-card ToggleContenedor mando este dato al servicio", dato);
-    this.toggleCards.emit(dato);
-
-    // this.miServicio.toggleDetalles(dato);
+  // OLDonClick(target: any) {
+  //   // Variable para filtrar sólo sobre el objeto sobre el cual se hizo click
+  //   this.targetId = target.id;
+  //   this.showForm = true;
+  //   console.log("Desde data-card onClick emito el toggleCards con el dato:", target);
     
+  //   this.toggleCards.emit(target);
+
+  // }
+
+
+
+  mostrarContenido(dato: any) {
+    console.log("Desde data-card mostrarContenido emito el showCard con el dato:", dato);
+    console.log("El showCard tiene el valor de -> ", this.showCard);
+    
+    this.accederAlContenido.emit(dato)
 
   }
 
-  toggleForm(event: Event) {
-    // Cierra el formulario de edicion o creacion
+  modificarResumen(target: Card) {
+    this.targetId = target.id;
+    console.log("Click en modificarResumen", target);
+    console.log(this.targetId);
+    this.formService.setCurrentForm(this.openForm + 1)  // Ingreso directamente al form, lo cuento
+    
     this.showForm = !this.showForm;
-    console.log("Desde data-card ToggleForm modo ADMIN hice click en",event)
-    // REnombrar a showCards ------
-    console.log("toggleCards en Data-card");
-    this.showBtnAction = !this.showBtnAction
-    this.showBtnActionChange.emit(this.showBtnAction)
+    // this.showCard = !this.showCard;
+    // this.showCardChange.emit(this.showCard);
 
-
-
-
-    if (this.showForm) {
-      this.formService.setCurrentForm(this.openForm + 1)
-    } else {
-      this.formService.setCurrentForm(this.openForm - 1)
-    }
   }
+
+  modificarContenido(dato: any) {
+    console.log("Click en modificarContenido", dato);
+    
+    this.mostrarContenido(dato)
+    this.showCard = !this.showCard;
+    this.showCardChange.emit(this.showCard);
+    
+  }
+
+
+  // toggleForm() {
+  //   // Cierra el formulario de edicion o creacion
+  //   this.showForm = !this.showForm;
+
+  //   // REnombrar a showCards ------
+  //   console.log("Desde Data-card toggleForm emito showBtnActionChange con este dato:", this.showBtnAction);
+  //   this.showBtnAction = !this.showBtnAction
+  //   this.showBtnActionChange.emit(this.showBtnAction)
+
+
+
+
+  //   if (this.showForm) {
+  //     this.formService.setCurrentForm(this.openForm + 1)
+  //   } else {
+  //     this.formService.setCurrentForm(this.openForm - 1)
+  //   }
+  // }
 
 
 }

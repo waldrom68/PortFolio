@@ -1,9 +1,9 @@
 <!-- HTML principal -->
 <!-- <router-outlet></router-outlet> -->
-{{statusWait}}
+
 <div [ngClass]="{'user': !esAdmin, 'admin': esAdmin}">
 
-  <ng-container *ngIf="!statusWait; else wait">
+  <ng-container *ngIf="statusReady &&!statusError; else wait">
 
     <!-- https://danielk.tech/home/angular-how-to-add-a-loading-spinner -->
     <!-- <mat-spinner *ngIf="true"></mat-spinner> -->
@@ -26,9 +26,16 @@
   </ng-container>
 
   <ng-template #wait>
-    <div class="loader">Leyendo..
+
+    <div  *ngIf="!statusError" class="loader">Leyendo..
       <span id="loader"></span>
     </div>
+    <div *ngIf="statusError">
+      <b><i><h1 class="display-4">Hubo un error con los servicios que se utilizan</h1></i></b>
+      <b><i><h2 class="display-6" style="color:white">Verifique su conexión o vuelva a intentar en unos minutos</h2></i></b>
+    </div>
+    
   </ng-template>
+  
 
 </div>
