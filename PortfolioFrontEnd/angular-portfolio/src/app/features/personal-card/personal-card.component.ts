@@ -101,8 +101,7 @@ export class PersonalCardComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    // PENDIENTE, ESTÁ VINCULADO A LA PRACTICA DE OBSERVER
-    // FIN A LA PRACTICA DE OBSERVER 
+    
     this.AdminServiceSubscription?.unsubscribe();
     this.BaseDataServiceSubscription?.unsubscribe();
     this.formServiceSubscription?.unsubscribe();

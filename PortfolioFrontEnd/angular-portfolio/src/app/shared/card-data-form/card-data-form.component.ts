@@ -1,24 +1,25 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Form, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { Card } from 'src/app/models';
+import { Card, FullPersonDTO, Person } from 'src/app/models';
 import { AdminService } from 'src/app/service/auth.service';
-import { FormService } from 'src/app/service/ui.service';
+import { BaseCardService, BaseDataService, DataService, ToPerson } from 'src/app/service/data.service';
+import { FormService, UiService } from 'src/app/service/ui.service';
 
 @Component({
   selector: 'app-card-data-form',
   templateUrl: './card-data-form.component.html',
   styleUrls: ['./card-data-form.component.css']
 })
-export class CardDataFormComponent implements OnInit {
+export class CardDataFormComponent implements OnInit, OnDestroy {
   @Input() item: Card;
 
   @Input() showForm: boolean;  // flag para mostrar el formulario
   @Output() showFormChange = new EventEmitter<boolean>();
 
-
+  @Output() onUpdate: EventEmitter<Card> = new EventEmitter()
+  
   form: FormGroup;
-
   oldData: Card;  // Copia para reestablecer valores.
 
   // Validacion Admin STATUS
@@ -26,17 +27,37 @@ export class CardDataFormComponent implements OnInit {
   private AdminServiceSubscription: Subscription | undefined;
   openForm: number;
   private formServiceSubscription: Subscription | undefined;
+  baseCard: Card;
+  private BaseCardServiceSubscription: Subscription | undefined;
+  baseData: FullPersonDTO;
+  private BaseDataServiceSubscription: Subscription | undefined;
 
+  converPerson: Person;
+  
   constructor(
     private formBuilder: FormBuilder,
     private formService: FormService,
+    private baseDataService: BaseDataService,
+    // private baseCardService: BaseCardService,
+    private dataService: DataService,
+    private uiService: UiService,  // manejo de las notificaciones
 
     private adminService: AdminService,
 
-  ) { }
+  ) {
 
-  ngOnInit() {
-    
+    this.BaseDataServiceSubscription = this.baseDataService.currentBaseData.subscribe(
+      currentData => {
+        this.baseData = currentData;
+      }
+    );
+
+    // this.BaseCardServiceSubscription = this.baseCardService.currentBaseCard.subscribe(
+    //   currentData => {
+    //     this.baseCard = currentData;
+    //   }
+    // );
+
     this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
       currentAdmin => {
         this.esAdmin = currentAdmin;
@@ -47,6 +68,13 @@ export class CardDataFormComponent implements OnInit {
         this.openForm = currentForm > 0 ? currentForm : 0;
       }
     );
+
+   }
+
+  ngOnInit() {
+
+
+
     this.form = this.formBuilder.group({
       resume: [this.item.resume, [Validators.maxLength(45)]],
 
@@ -55,6 +83,15 @@ export class CardDataFormComponent implements OnInit {
     // Clono el objeto, uso assign por no tener atributos compuesto por otros objetos
     this.oldData = Object.assign({}, this.item)
   }
+
+  ngOnDestroy() {
+
+    this.AdminServiceSubscription?.unsubscribe();
+    this.BaseDataServiceSubscription?.unsubscribe();
+    this.formServiceSubscription?.unsubscribe();
+
+  }
+
 
   get Resume(): any {
     return this.form.get("resume")
@@ -74,9 +111,7 @@ export class CardDataFormComponent implements OnInit {
 
   }
 
-  // resetForm(){
-  //   this.form.reset();
-  // }
+
 
   onCancel() {
     // this.resetForm();
@@ -85,11 +120,6 @@ export class CardDataFormComponent implements OnInit {
 
   }
 
-  // upDate(formulario: any) {
-  //   console.log("Hice click en guardar", formulario.value);
-  //   this.toggleForm();
-
-  // }
 
   onEnviar(event: Event,) {
     event.preventDefault;
@@ -112,7 +142,9 @@ export class CardDataFormComponent implements OnInit {
           this.item.resume = this.form.get("resume")?.value.trim();
           
           // estoy por cerrar el formulario, emito orden de actualizarse
+
           console.log("onEnviar mandaría a guardar esta informacion", this.item);
+          this.onUpdate.emit(this.item)
 
         } else {
 
@@ -128,4 +160,6 @@ export class CardDataFormComponent implements OnInit {
 
     }
   }
+
+
 }

@@ -18,7 +18,7 @@
 :root {
     /* --body-font-family:'Julius-Sans-One','roboto', system-ui, "Segoe UI", "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; */
     --body-font-family:'Quinta-light','roboto', system-ui, "Segoe UI", "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-
+    --font-size: 110%;
     --metal: #e3e3e3;
     --metallight-shadow: #b5b5b5;
     --metaldark-shadow: #787878;
@@ -29,6 +29,7 @@
     color: rgb(141, 174, 177);
     --grosor: 5px;
     --text-color: rgb(199, 201, 202);
+    --text-warning: rgb(255, 193, 7) ;
     /* --atencion:rgb(199, 199, 45) ; */
     --triada-color-l: #bd93f9;
     --triada-color-m: #6272a4;
@@ -52,6 +53,7 @@ html, body { height: 100%;
         
 html, body {
     font-family: var(--body-font-family);
+    font-size: var(--font-size);
     height: 2000px; /* Used to enable scrolling */
     background: linear-gradient(70deg, var(--triada-color-l) 0%, 
         var(--triada-color-m) 71%, var(--triada-color-d) 85%);
@@ -65,7 +67,7 @@ h1,h2,h3,h4,h5,h6 {
     /* letter-spacing: 1.5rem; */
     }
 a.header {
-    font-size: 1.2rem;
+    font-size: calc(var(--font-size) * 1.1);
     letter-spacing: .1rem;
     font-style: italic;
 }
@@ -98,7 +100,7 @@ mat-dialog-container#modal-component, mat-dialog-container#modal-delete {
 }
     .close > span {
         padding: 0px 15px;
-        font-size: 2rem;
+        font-size: calc(var(--font-size) * 1.1);
         color: var(--danger);
     }
         .close > span:hover {
@@ -203,7 +205,7 @@ button.fa-ico {
     background-color:rgb(176, 76, 65); 
     color: white;
     font-weight: bold;
-    font-size:x-small ;
+    font-size: calc(var(--font-size) * 0.9) ;
     padding: 5px;
     }
 
@@ -224,7 +226,7 @@ button.fa-ico {
     text-align:center;
     line-height:150px;
     font-family:sans-serif;
-    font-size:20px;
+    font-size:calc(var(--font-size) * 1);
     color:white;
     letter-spacing:4px;
     text-transform:uppercase;
@@ -298,7 +300,7 @@ button.fa-ico {
     }
 ul.head {
     cursor: pointer !important;
-    font-size: 120%;
+    font-size: calc(var(--font-size) * 1.1);
     padding: 0.5rem;
     color: var(--text-color);
     border-left: .3rem solid var(--text-color) !important;
@@ -331,7 +333,7 @@ ul.head a:hover {
     cursor: pointer;
 }
 
-a.url:hover {
+a.url:hover, a.url:active, a.url:visited {
     border: none;
     color: #0056b3;
     text-decoration: none;
@@ -341,9 +343,10 @@ a.url:hover {
 
 
 
+
 li.resume > p {
     cursor: auto !important;
-    font-size: smaller;
+    font-size: calc(var(--font-size) * .9);
     padding-left: 1rem;
     font-style: italic;
     margin-bottom: 0.5rem;

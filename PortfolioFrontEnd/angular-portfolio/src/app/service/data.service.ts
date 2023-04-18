@@ -259,7 +259,7 @@ export class DataService {
     const url = `${this.LOCALHOST_API}${entityName}/edit`;
     console.log(url)
     console.log("Modificando a ... ", entidad);
-    console.log("httpOptions", httpOptions);
+    // console.log("httpOptions", httpOptions);
     return this.http.post<any>(url, entidad, httpOptions)
   }
 
@@ -269,7 +269,7 @@ export class DataService {
     const url = `${this.LOCALHOST_API}${entityName}/new`;
     console.log(url)
     console.log("Agregando a ... ", entidad);
-    console.log("httpOptions", httpOptions);
+    // console.log("httpOptions", httpOptions);
     return this.http.put<any>(url, entidad, httpOptions)
   }
   
@@ -277,7 +277,7 @@ export class DataService {
     const url = `${this.LOCALHOST_API}${entityName}/del/${entidad.id}`
     console.log(url)
     console.log("Eliminando a ... ", entidad);
-    console.log("httpOptions", httpOptions);
+    // console.log("httpOptions", httpOptions);
     
     return this.http.delete<any>(url, httpOptions)
   }

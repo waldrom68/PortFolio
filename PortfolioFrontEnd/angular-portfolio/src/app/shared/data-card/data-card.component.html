@@ -30,12 +30,11 @@
 
                         <ng-container *ngIf="!esAdmin" class="row">
                             <div class="flip-box-back" (click)="mostrarContenido(card);">
-                                <span class="font-weight-bold align-self-center p-2">
+                                <span class="font-weight-bold align-self-center pt-2">
                                     <h5 *ngIf="card.resume.length > 0 else sinresume">
                                         <small>{{card.resume}}</small>
                                     </h5>
                                     <ng-template #sinresume>
-                                        <small>{{card.orderdeploy}}</small>
                                         <h5><small>{{card.name}}</small></h5>
                                     </ng-template>
                                     <!-- not showform -->
@@ -50,7 +49,7 @@
 
                             <div class="flip-box-back">
                                 <ng-container *ngIf="!showForm || (card.id != targetId)">
-                                    <span class="font-weight-bold align-self-center p-2">
+                                    <span class="font-weight-bold align-self-center pt-2">
 
                                         <h5 *ngIf="card.resume.length > 0 else sinresume">
                                             <small>{{card.resume}}</small>
@@ -70,7 +69,9 @@
 
                                 <app-card-data-form *ngIf="showForm && card.id == targetId"
                                     [item]="card"
-                                    [(showForm)]="showForm" (showFormChange)="showForm"
+                                    [(showForm)]="showForm" 
+                                    (showFormChange)="showForm"
+                                    (onUpdate)= onUpdate($event)
                                     >
 
                                 </app-card-data-form>
@@ -86,10 +87,16 @@
 
 
             <!-- QUEDA BIEN, PERO NO ME CONVENCE USARLO AQUI -->
-            <div *ngIf="esAdmin && openForm == 0" class="row m-2 align-items-center" (click)="modificarContenido(card)">
-                <button class="btn btn-primary btn-sm" ngClass="faConfirm fa-ico">
+            <div *ngIf="esAdmin" class="row m-2 align-items-center" (click)="modificarContenido(card)">
+                
+                <button *ngIf="openForm > 0" [disabled]="true"
+                class="btn btn-primary btn-sm faConfirm fa-ico">
                     <fa-icon [icon]="faPen"></fa-icon><span class="p-2">Contenido y detalles</span>
                 </button>
+                <button *ngIf="openForm == 0" [disabled]="false"
+                    class="btn btn-primary btn-sm faConfirm fa-ico">
+                        <fa-icon [icon]="faPen"></fa-icon><span class="p-2">Contenido y detalles</span>
+                    </button>
             </div>
             <!-- FIN QUEDA BIEN -->
 

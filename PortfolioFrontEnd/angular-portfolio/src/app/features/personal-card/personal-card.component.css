@@ -45,3 +45,10 @@
   background-color: transparent !important;
   color: #f1f1f1;
 }
+
+a.url:hover, a.url:active, a.url:visited {
+  border: none;
+  color: var(--text-warning) ;
+  text-decoration: none;
+  cursor: pointer;
+}

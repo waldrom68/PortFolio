@@ -125,7 +125,7 @@ export class SocialItemComponent implements OnInit, OnDestroy {
     // Actualizacion de Interest
     this.dataService.upDateEntity(socialnetwork, "/socialnetwork").subscribe({
       next: (v) => {
-        this.uiService.msgboxOk( ['Datos obtenidos exitosamente'],);
+        this.uiService.msgboxOk( ['Datos guardados exitosamente'],);
         console.log("Guardado correctamente")
 
       },

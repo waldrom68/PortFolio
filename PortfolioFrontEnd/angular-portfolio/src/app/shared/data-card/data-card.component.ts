@@ -3,6 +3,7 @@ import { faPen, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { Card } from 'src/app/models';
 import { AdminService } from 'src/app/service/auth.service';
+import { DataService } from 'src/app/service/data.service';
 
 import { FormService, UiService } from 'src/app/service/ui.service';
 
@@ -49,16 +50,12 @@ export class DataCardComponent implements OnInit {
   constructor(
     // private miServicio: UiService,
     private adminService: AdminService,
-
+    private dataService: DataService,
+    
     private formService: FormService,
+    private uiService: UiService,  // manejo de las notificaciones
 
   ) {
-
-  }
-
-
-  ngOnInit(): void {
-    // this.botones = this.miServicio.getDetalles()
     this.formServiceSubscription = this.formService.currentOpenForm.subscribe(
       currentForm => {
         this.openForm = currentForm > 0 ? currentForm : 0;
@@ -70,43 +67,33 @@ export class DataCardComponent implements OnInit {
         this.esAdmin = currentAdmin;
       }
     );
-      // this.esAdmin = true;
   }
 
-  // OLDonClick(target: any) {
-  //   // Variable para filtrar sólo sobre el objeto sobre el cual se hizo click
-  //   this.targetId = target.id;
-  //   this.showForm = true;
-  //   console.log("Desde data-card onClick emito el toggleCards con el dato:", target);
-    
-  //   this.toggleCards.emit(target);
 
-  // }
+  ngOnInit(): void {
+    // this.botones = this.miServicio.getDetalles()
+
+      // this.esAdmin = true;
+  }
 
 
 
   mostrarContenido(dato: any) {
-    console.log("Desde data-card mostrarContenido emito el showCard con el dato:", dato);
-    console.log("El showCard tiene el valor de -> ", this.showCard);
-    
+  
     this.accederAlContenido.emit(dato)
 
   }
 
   modificarResumen(target: Card) {
+
     this.targetId = target.id;
-    console.log("Click en modificarResumen", target);
-    console.log(this.targetId);
     this.formService.setCurrentForm(this.openForm + 1)  // Ingreso directamente al form, lo cuento
-    
-    this.showForm = !this.showForm;
-    // this.showCard = !this.showCard;
-    // this.showCardChange.emit(this.showCard);
+        this.showForm = !this.showForm;
+
 
   }
 
   modificarContenido(dato: any) {
-    console.log("Click en modificarContenido", dato);
     
     this.mostrarContenido(dato)
     this.showCard = !this.showCard;
@@ -114,4 +101,25 @@ export class DataCardComponent implements OnInit {
     
   }
 
+  onUpdate(card: Card) {
+    // Actualizacion de Card
+    // Actualizo los datos via dataService
+    this.dataService.upDateEntity(card, "/card").subscribe({
+      next: (v) => {
+        console.log("Guardado correctamente")
+        this.uiService.msgboxOk(['Datos guardados exitosamente'],);
+
+      },
+      error: (e) => {
+        let msg = new Array()
+        msg.push("Se quizo modificar sin exito a: " + card.name);
+        msg.push(e.error.mensaje ? e.error.mensaje : e.message);
+        this.uiService.msgboxErr(msg,);
+
+        console.log("Se quizo modificar sin exito a: " + card.name);
+      },
+      complete: () => console.log("Completado la actualizacion de datos")
+    });
+
+  }
 }

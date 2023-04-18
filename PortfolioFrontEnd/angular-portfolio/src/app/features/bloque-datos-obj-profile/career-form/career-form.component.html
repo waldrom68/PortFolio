@@ -116,7 +116,8 @@
     <div class="col-12">
       <label class="form-label" for="resume">Resumen:</label>
       <textarea type="text" rows="6" id="resume" formControlName="resume" name="resume" class="form-control "
-        placeholder="De forma compacta, mencione los aspectos claves del puesto" formControlName="resume" [ngClass]="{'error is-invalid': (Resume.invalid && Resume.touched)
+        placeholder="De forma compacta, mencione los aspectos claves del puesto" formControlName="resume" 
+        [ngClass]="{'error is-invalid': (Resume.invalid && Resume.touched)
         , 'is-valid':Resume.valid}"></textarea>
     </div>
 

@@ -1,7 +1,7 @@
 # <span style="color:Antiquewhite; font-size: 1.5em">Proyecto Integrador Portfolio Web Full Stack ED3
 
 # <span style="color:Aquamarine">Diseño
-<div style= "font-size: 1.5em"> El proyecto tiene arquitectura distribuida y ésta es la interfaz de usuario (front end) la cual muestra los datos.
+<div style= "font-size: 1.5em"> El proyecto tiene arquitectura distribuida y ésta es la interfaz de usuario (front end).
 
 Utiliza las APIs necesarias para obtener los datos por medio de una aplicacion back end alojada en un SERVIDOR WEB, la cual se nutre de una base de datos desplegada en otro servicio web, en un DB SERVER.
 
@@ -57,7 +57,7 @@ BACKEND java . Docker -Free Web Services:
 <hr>
 
 ## <span style="color:Aquamarine"> Pendientes o próximas actualizaciones
-- Implementar la entidad del backend ProjectMedia para que el componente proyectos, además de la descripcion y su link, permita visualizar imagenes/videos. Esto tiene la complejidad de para el manejo de eliminacion/modificacion en el storage de firebase.
+- Implementar la entidad del backend ProjectMedia para que el componente proyectos, además de la descripcion y su link, permita visualizar imagenes/videos. Esto agregaba la complejidad para el manejo de eliminacion/modificacion en el storage de firebase, en esta instancia, prioricé otras implementaciones para agregar valor al proyecto.
 
 - Validacion con expresion regular en los inputs de las url.
 
@@ -71,7 +71,7 @@ BACKEND java . Docker -Free Web Services:
 
 - Refactorización de código, limpiar códigos de pruebas, limpiar importaciones, variables y métodos que terminaron no siendo utilizados dentro de las clases/componentes.
 
-- Utilizar APIs implementadas en el backend para customizar aún más la maquetación (layoud) tanto en la visualizacion/ocultamiento de algunos elementos/datos como así también la funcionalidad de un ordenamiento via Drag and Drop.
+- Utilizar APIs implementadas en el backend para customizar aún más la maquetación (layout) tanto en la visualizacion/ocultamiento de algunos elementos/datos como así también la funcionalidad de un ordenamiento via Drag and Drop.
 
 - Implementar progress bar o algún otro efecto visual para que el usuario ADMIN note que SU PEDIDO está siendo ejecutado en 2do plano y puede demorar hasta 5 minutos  (recordar que si los servidores del backend o de la DB se encontraban en modo hibernación un pedido http suele tardar mucho por los planes free).
 
@@ -85,13 +85,14 @@ BACKEND java . Docker -Free Web Services:
 
 - Por error en el css por el cambio a ultimo momento, el cuadro de dialogo de las ventanas modales con informacion adicional, no se visualiza el boton de cierre y tiene mal los margenes/alineacion/justificacion (por ejemplo en las empresas/organizaciones).
 
-- No es muy visible que se tiene acceso a link exteriores o informaciones adicionales.
+- Falta definir y unificar criterios en el CSS (resaltado y/o tipo de cursor) para los hover/active/visited en link a url's exteriores, a información adicional, etc.
 <hr>
 
 <br></br>
 
-##  <div style="color:Antiquewhite">Espero no  duelan los ojos al ver el código, seguramente existen formas mas simples para resolver situaciones. <br> Claramente aún no las descubrí ni las investigué.</div>
+##  <div style="color:Antiquewhite">Espero no  duelan los ojos al ver el código, seguramente existen formas mas simples para resolver algunas situaciones. <br> Claramente aún no las descubrí ni las investigué.</div>
 
 
 <br></br>
-<span style="color:Antiquewhite"><b>¡ Gracias por leer todo esto !<br>WALTER (abril 2023)<b><em>
+<span style="color:Antiquewhite"><b>¡ Gracias por leer todo esto !<br>WALTER (abril 2023)<b><em><br>
+<span style="color:Antiquewhite;">waldrom68@gmail.com

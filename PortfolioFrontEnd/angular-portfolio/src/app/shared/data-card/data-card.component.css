@@ -85,7 +85,7 @@
             var(--metaldark-shadow) 100% ) !important;   ;
     }
     .flip-box-back {
-        color: #ffc107;
+        color: var(--text-warning);
         background-image: linear-gradient(90deg,
         black 0%, 
         var(--acento-bg) 50%, 

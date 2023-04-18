@@ -8,7 +8,8 @@
             <div class="col-sm-8 aling-self-center order-0">
                 <!-- Mostrando las Cards -->
                 
-                <!-- <ng-container *ngIf="statusCards"> -->
+                <!-- Esto se debiera manejar con doble bucle para no usar 2 variables, 
+                    PENDIENTE INVESTIGAR como reemplazar labelGroup's -->
                 <ng-container *ngIf="showCard">
                     <section class="row p-0 m-0 justify-content-center"
                     >
@@ -38,10 +39,11 @@
                         >
                         </app-data-card>
                     </section>
+
                 </ng-container>
 
-                <!-- Mostrando su componente hijo, ya sea con el detalle de su contenido o el acceso a los formularios para el detalle o al resumen breve.
-                 -->
+                <!-- Mostrando su componente hijo, ya sea con el detalle de su contenido o el acceso a los formularios
+                 para el detalle o al resumen breve. -->
                 <ng-container *ngIf="!showCard">
                     <div class="flex">
                         <button class="btn btn-default btn-sm" ngClass='faControl faClose' (click)="cerrarElContenido();">
@@ -50,6 +52,8 @@
                         </button>
                     </div>
 
+                    <!-- PENDIENTE, INVESTIGAR REDUCIR COMPLEJIDAD, TAL VEZ MANEJO DE DIRECTIVAS PARA CARGAR 
+                         LOS DIFERENTES COMPONENTES -->
                     <div *ngFor="let card of detailCards" ngClass="mx-auto">
 
                         <ng-container *ngIf="card.id == targetCardId" 
@@ -139,9 +143,14 @@
 </ng-container>
 
 <ng-template #wait>
-
+    <!-- PENDIENTE, MODIFICAR EL CONTENIDO DESDE EL TS, para no colocar este código 
+        LOGICA SIMILAR A UN SPINNER/PROGRESS BAR EN 2PLANO -->
+    <!-- algo tipo JS como:
+        document.querySelector(".loader").innerText, si existe cambiar texto 
+    -->
     <div class="loader">Ingresando
         <span id="loader"></span>
     </div>
+    
 </ng-template>
 
