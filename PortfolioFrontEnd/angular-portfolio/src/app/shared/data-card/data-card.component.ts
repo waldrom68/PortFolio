@@ -114,25 +114,4 @@ export class DataCardComponent implements OnInit {
     
   }
 
-
-  // toggleForm() {
-  //   // Cierra el formulario de edicion o creacion
-  //   this.showForm = !this.showForm;
-
-  //   // REnombrar a showCards ------
-  //   console.log("Desde Data-card toggleForm emito showBtnActionChange con este dato:", this.showBtnAction);
-  //   this.showBtnAction = !this.showBtnAction
-  //   this.showBtnActionChange.emit(this.showBtnAction)
-
-
-
-
-  //   if (this.showForm) {
-  //     this.formService.setCurrentForm(this.openForm + 1)
-  //   } else {
-  //     this.formService.setCurrentForm(this.openForm - 1)
-  //   }
-  // }
-
-
 }

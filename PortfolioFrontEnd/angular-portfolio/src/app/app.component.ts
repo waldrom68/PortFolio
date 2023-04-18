@@ -3,13 +3,10 @@ import { UiService } from 'src/app/service/ui.service';  // para escuchar el bot
 
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
-import { FormGroup } from '@angular/forms';
-
-
 import { BaseCardService, BaseDataService, DataService, ObservableService } from './service/data.service';
 import { Card, FullPersonDTO } from './models';
 
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { AdminService } from './service/auth.service';
 
 
@@ -53,12 +50,6 @@ export class AppComponent implements OnInit {
   // progreesValueabc$?: Observable<number>;
   // llamado?: number
 
-  // showListUsers: boolean = false;
-  // showDatos: boolean = false;
-
-  // // codigo probando el modal
-  // form: FormGroup;
-  // dataFromDialog: any;
 
   constructor(
     // Inicializamos los servicios del modulo User
@@ -94,25 +85,17 @@ export class AppComponent implements OnInit {
 
 
   ngOnInit() {
-  
-
     // PENDIENTE, evaluar y analizar, se está llamand a 2 servicios diferentes
     // para obtener los mismos datos (*2)
     // Traigo todos los datos del Portfolio
     this.dataService.getPortFolioData().subscribe({
       next: (currentData) => {
-        
 
         this.baseData = currentData;
 
         this.baseDataService.setCurrentBaseData(currentData);
         
         console.log("Obtenidos los datos exitosamente");
-        
-        
-
-        // this.uiService.msgboxOk(['Datos guardados exitosamente'],);
-        // this.uiService.msgboxOk(['Se ha eliminado exitosamentee'] ,);
 
       },
       error: (e) => {
@@ -151,18 +134,20 @@ export class AppComponent implements OnInit {
        }
     });
 
-    // Traigo todas las Card del Portfolio
+    // Traigo todas las Card layout para el Portfolio
     this.dataService.getPortFolioCard().subscribe({
       next: (currentData) => {
-        // this.detailCard = currentData;
-
+  
+        // Realizo un ordenamiento de los datos
+        currentData.sort((a: any, b: any) =>
+          a.grupo - b.grupo ||
+          a.orderdeploy - b.orderdeploy ||
+          a.name.localeCompare(b.name)
+        );
         // Realizo el espejo de los datos completos del portfolio de la persona
         this.baseCardService.setCurrentBaseCard(currentData);
 
         console.log("Obtenidos los datos exitosamente", currentData);
-
-        // this.uiService.msgboxOk(['Datos guardados exitosamente'],);
-        // this.uiService.msgboxOk(['Se ha eliminado exitosamentee'] ,);
 
       },
       error: (e) => {
@@ -185,7 +170,6 @@ export class AppComponent implements OnInit {
             }
             break;
         };
-        // this.uiService.msgboxErr( msg,); 
 
       },
       complete: () => { 

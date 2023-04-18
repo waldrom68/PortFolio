@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { Renderer2 } from '@angular/core';
 
 import { faPen, faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -6,11 +6,13 @@ import { faPen, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { Card, FullPersonDTO } from 'src/app/models';
 
-import { BaseCardService, BaseDataService, DataService } from 'src/app/service/data.service';
+import { BaseCardService, BaseDataService } from 'src/app/service/data.service';
 import { AdminService } from 'src/app/service/auth.service';
 
 import { TokenService } from 'src/app/service/token.service';
-import { UiService, FormService } from 'src/app/service/ui.service';
+import { UiService } from 'src/app/service/ui.service';
+
+import { ChangeDetectorRef } from '@angular/core';
 
 
 @Component({
@@ -31,7 +33,7 @@ export class MainComponent implements OnInit, OnDestroy {
   // detailCards filtrandolo segun atributo "grupo"
   CardsGroup1: any;
   CardsGroup2: any;
-  
+
   // Se prepara una etiqueta para separar los grupos
   labelGroup1: string;
   labelGroup2: string;
@@ -41,7 +43,7 @@ export class MainComponent implements OnInit, OnDestroy {
   // se hara en todos los componentes, a excepcion de los modales.
   element: object;
   fragment: string = 'Init';
- 
+
 
   // Datos de la persona del PortFolio
   baseData: FullPersonDTO;
@@ -49,7 +51,7 @@ export class MainComponent implements OnInit, OnDestroy {
   detailCards: any;
   private BaseCardServiceSubscription: Subscription | undefined;
 
-  
+
   // Validacion Admin STATUS
   esAdmin: boolean;
   private AdminServiceSubscription: Subscription | undefined;
@@ -58,7 +60,7 @@ export class MainComponent implements OnInit, OnDestroy {
   // private formServiceSubscription: Subscription | undefined;
 
   // nueva logica para el acceso a la info tras un click sobre el Card
-  showCard: boolean = true;  
+  showCard: boolean = true;
   // showBtnAction: boolean = true;  // inician visibles
 
   // objeto sobre el cual se hace click
@@ -72,6 +74,7 @@ export class MainComponent implements OnInit, OnDestroy {
     private baseDataService: BaseDataService,
     private baseCardService: BaseCardService,
     private adminService: AdminService,
+    private changeDetectorRefs: ChangeDetectorRef,
     // FIN MODO PRUEBA
 
     private uiService: UiService,
@@ -87,16 +90,18 @@ export class MainComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-    // console.log(formatDate(now(), 'yyyy-MM-dd hh:mm', 'en', 'UTC-3'));
+    console.log("pasando por el ngOnInit()");
+    
 
     this.BaseDataServiceSubscription = this.baseDataService.currentBaseData.subscribe(
       currentData => {
         this.baseData = currentData;
       }
     );
-    this.BaseCardServiceSubscription  = this.baseCardService.currentBaseCard.subscribe(
+    this.BaseCardServiceSubscription = this.baseCardService.currentBaseCard.subscribe(
       currentData => {
         this.detailCards = currentData;
+        this.changeDetectorRefs.detectChanges();
       }
     );
     // Se susbcribe para ver cuantos formularios hay abiertos
@@ -111,7 +116,7 @@ export class MainComponent implements OnInit, OnDestroy {
         this.esAdmin = currentAdmin;
       }
     );
-    
+
 
     // VALIDACION SI ES UN USUARIO ADMINISTRADOR Y TIENE TOKEN VIGENTE
     if (this.tokenService.isValidAdmin()) {
@@ -124,12 +129,13 @@ export class MainComponent implements OnInit, OnDestroy {
     }
 
     // this.detailCards = this.uiService.getCards();
-    console.log(this.detailCards);
-    
-  
+
+ 
     // Separo los grupos
     this.CardsGroup1 = this.detailCards.filter(function (elem: any) { return elem.grupo == 1; })
     this.CardsGroup2 = this.detailCards.filter(function (elem: any) { return elem.grupo == 2; })
+
+
 
     // Armo etiqueta de cada grupo:
     this.labelGroup1 = this.CardsGroup1.map((valor: any) => {
@@ -157,23 +163,6 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
 
-  // toggleCards() {
-  //   this.showCard != this.showCard;
-    // console.log("pasando por toggleCards de main, showCard queda con valor:", this.showCard);
-    
-    // this.showBtnAction = !this.showBtnAction;
-    // // PENDIENTE, DEBO TOGGLEAR LOS ARRAY PARCIALES, NO EL DE ORIGEN
-    // // this.uiService.toggleDetalles();
-    // // this.uiService.toggleStatusCards();
-    // // this.statusCards = this.uiService.getStatusCards()
-
-
-    // // Ya sea que ingrese o salga de una tarjeta, se entiende que no puede 
-    // // coexistir un formulario abierto
-    // this.formService.setCurrentForm(0);
-  // }
-
-
   accederAlContenido(target: any) {
     // this.showBtnAction = !this.showBtnAction;
     // this.toggleCards()
@@ -185,5 +174,50 @@ export class MainComponent implements OnInit, OnDestroy {
   cerrarElContenido() {
     // this.toggleCards()
     this.showCard = true;
+  }
+
+  checkRender(): boolean {
+    console.log('checkRender');
+    return true;
+  }
+
+  cambio() {
+    console.log("Ordené cambiar orden");
+
+   for (let index = 0; index < this.CardsGroup1.length; index++) {
+    const element = this.CardsGroup1[index];
+    element.orderdeploy = 1;
+    if (element.name =="Perfil") {
+      element.orderdeploy = 0;
+    }
+   } 
+
+   for (let index = 0; index < this.CardsGroup2.length; index++) {
+    const element = this.CardsGroup2[index];
+    element.orderdeploy = 1;
+    if (element.name =="Habilidades técnicas") {
+      element.orderdeploy = 0;
+    }
+   } 
+
+   this.CardsGroup1.sort((a: any, b: any) =>
+   a.grupo - b.grupo ||
+   a.orderdeploy - b.orderdeploy ||
+   a.name.localeCompare(b.name)
+ );
+   this.CardsGroup2.sort((a: any, b: any) =>
+   a.grupo - b.grupo ||
+   a.orderdeploy - b.orderdeploy ||
+   a.name.localeCompare(b.name)
+ );
+
+  // this.CardsGroup1 = this.detailCards.filter(function (elem: any) { return elem.grupo == 1; })
+  // this.CardsGroup2 = this.detailCards.filter(function (elem: any) { return elem.grupo == 2; })
+
+  console.log(this.CardsGroup1);
+  console.log(this.CardsGroup2);
+  
+
+  
   }
 }

@@ -241,7 +241,7 @@ export class DataService {
   private gralCard: Card;
   private gralCard$ = new Subject<Card>();
   
-  getPortFolioCard(): Observable<Card> {
+  getPortFolioCard(): Observable<any> {
     const endPoint = `${this.LOCALHOST_API}/card/list/all`
     return this.http.get<Card>(endPoint)
   }

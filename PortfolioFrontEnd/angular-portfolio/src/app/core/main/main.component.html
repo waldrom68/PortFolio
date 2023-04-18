@@ -1,6 +1,6 @@
 
 <ng-container *ngIf="baseData; else wait">
-
+    <button (click)="cambio();">Un cambio</button>
     <div class="row text-center aling-self-center py-0 mx-0" id="Init">
 
         <ng-container>
@@ -10,18 +10,18 @@
                 
                 <!-- <ng-container *ngIf="statusCards"> -->
                 <ng-container *ngIf="showCard">
-                    <section class="row p-0 m-0 justify-content-center">
-                        <div id="separador1" class="container-fluid text-warning font-weight-bold p-2 sombreado">
-                            {{labelGroup1}}
-                        </div>
-                        
-                        <app-data-card 
-                            *ngFor="let card of CardsGroup1"
-                            [card]="card"
+                    <section class="row p-0 m-0 justify-content-center"
+                    >
+                    <div id="separador1" class="container-fluid text-warning font-weight-bold p-2 sombreado">
+                        {{labelGroup1}}
+                    </div>
+                    
+                    <app-data-card 
+                    *ngFor="let card of CardsGroup1"
+                    [card]="card"
                             (accederAlContenido)="accederAlContenido($event)"
                             [(showCard)]="showCard"
-
-                        >
+                            >
                         </app-data-card>
                     </section>
 
@@ -35,7 +35,6 @@
                             [card]="card"
                             (accederAlContenido)="accederAlContenido($event)"
                             [(showCard)]="showCard"
-
                         >
                         </app-data-card>
                     </section>
@@ -134,6 +133,7 @@
 
 
         </ng-container>
+        
     </div>
 
 </ng-container>
