@@ -43,6 +43,7 @@ import { RefreshDirective } from './directive/refresh.directive';
 // import { library } from '@fortawesome/fontawesome-svg-core';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { UserDataComponent } from './users/user-data/user-data.component';
+import { ContainerListComponent } from './shared/container-list/container-list.component';
 
 
 const appRouters: Routes = [
@@ -59,13 +60,14 @@ const appRouters: Routes = [
     // ProjectsComponent, 
     // InterestsComponent,
     // DataComponent
-   ],
+  ],
   imports: [
-
+    
     BrowserModule,
     FontAwesomeModule,  // Catch this module for export to other levels
     HttpClientModule,  // para el uso del servicio que lee la db.json
     RouterModule.forRoot(appRouters, {enableTracing:false}),
+    
     
     SharedModule,
     CoreModule,  // add the Core module here
@@ -84,6 +86,7 @@ const appRouters: Routes = [
   exports: [
     SharedModule,
     FontAwesomeModule,
+
    ],
 
   providers: [ModalActionsService, DataService, UiService, interceptorProvider ],

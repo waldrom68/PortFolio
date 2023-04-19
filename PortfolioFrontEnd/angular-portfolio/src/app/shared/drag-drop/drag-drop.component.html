@@ -1,0 +1,14 @@
+<div class="container-fluid border border-5 border-danger" id="dropzone" cdkDropList>
+    <div class="example-block" cdkDragLockAxis="x" cdkDrag>
+    Drag me
+  </div>
+</div>
+
+<div class="container-fluid border border-5 border-danger">
+    <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+        <div class="example-box" *ngFor="let movieName of Movies" cdkDrag>{{movieName}}</div>
+      </div>
+
+</div>
+
+  

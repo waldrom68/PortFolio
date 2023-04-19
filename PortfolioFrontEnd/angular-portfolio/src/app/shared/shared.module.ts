@@ -25,6 +25,9 @@ import { CUSTOM_DATE_FORMATS } from './mat-datepicker/custom-date-formats';
 import { MatDatepickerComponent } from './mat-datepicker/mat-datepicker.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCardModule } from '@angular/material/card';
+import { ContainerListComponent } from './container-list/container-list.component';
+import { DragDropComponent } from './drag-drop/drag-drop.component';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 
 
@@ -50,6 +53,8 @@ const MaterialModules = [
     MatAlertComponent,
     MatInputPromptComponent,
     MatDatepickerComponent,
+    ContainerListComponent,
+    DragDropComponent,
     // CourseDialogComponent,
     
     
@@ -60,6 +65,7 @@ const MaterialModules = [
     MatDialogModule,
     ReactiveFormsModule,
     MatMomentDateModule,
+    DragDropModule,
     MaterialModules
   ],
   exports: [
@@ -67,6 +73,8 @@ const MaterialModules = [
     BtnDisplayComponent,
     MatDatepickerComponent,
     FontAwesomeModule,
+    ContainerListComponent,
+    DragDropComponent,
     MaterialModules
 
   ],
