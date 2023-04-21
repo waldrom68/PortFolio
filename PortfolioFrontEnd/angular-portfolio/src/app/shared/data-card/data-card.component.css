@@ -82,7 +82,7 @@
             var(--metallight-shadow) 25%, 
             var(--metal) 50%, 
             var(--metallight-shadow) 75%, 
-            var(--metaldark-shadow) 100% ) !important;   ;
+            var(--metaldark-shadow) 100% ) !important;
     }
     .flip-box-back {
         color: var(--text-warning);

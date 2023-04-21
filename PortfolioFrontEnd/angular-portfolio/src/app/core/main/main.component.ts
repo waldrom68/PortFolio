@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Renderer2 } from '@angular/core';
 
-import { faPen, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faPen, faTimes, faArrowDownAZ } from '@fortawesome/free-solid-svg-icons';
 
 import { Subscription } from 'rxjs';
 import { FullPersonDTO } from 'src/app/models';
@@ -11,6 +11,8 @@ import { AdminService } from 'src/app/service/auth.service';
 
 import { TokenService } from 'src/app/service/token.service';
 import { UiService } from 'src/app/service/ui.service';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { ContainerListComponent } from 'src/app/shared/container-list/container-list.component';
 
 
 
@@ -65,6 +67,9 @@ export class MainComponent implements OnInit, OnDestroy {
   // objeto sobre el cual se hace click
   targetCardId: number = 0;
 
+
+  listToOrdered: any;
+  oldData: FullPersonDTO;
   // Inyectando servicios en el contructor
   constructor(
 
@@ -73,14 +78,22 @@ export class MainComponent implements OnInit, OnDestroy {
     private adminService: AdminService,
 
     private tokenService: TokenService,
-  
+
     private renderer: Renderer2,  // Se usa para renderizar tras la carga de todos los componentes iniciales, ngAfterViewInit 
 
+    private dialog: MatDialog,  // Modal para el reordenamiento
   ) {
 
     this.BaseDataServiceSubscription = this.baseDataService.currentBaseData.subscribe(
       currentData => {
         this.baseData = currentData;
+
+        this.listToOrdered = this.baseData.hardskill;
+        this.oldData = Object.assign({}, this.baseData);
+        console.log("main constructor, baseData.hardskill", this.baseData.hardskill);
+        console.log("main constructor, oldData", this.oldData.hardskill);
+        console.log("main constructor, listToOrdered", this.listToOrdered);
+
       }
     );
 
@@ -110,6 +123,8 @@ export class MainComponent implements OnInit, OnDestroy {
 
     this.prepareLayout();
     this.sortCard();
+
+
 
   }
 
@@ -146,7 +161,7 @@ export class MainComponent implements OnInit, OnDestroy {
     }).join(this.separador)
   }
 
-  
+
   sortCard() {
     this.CardsGroup1.sort((a: any, b: any) =>
       a.grupo - b.grupo ||
@@ -168,35 +183,83 @@ export class MainComponent implements OnInit, OnDestroy {
 
 
   // PENDIENTE ###########################################
-  cambio() {
-    // ELIMINAR METODO DE PRUEBA AL IMPLEMENTAR MODULO DE REORDENADO
-    console.log("Ordené cambiar orden");
-
-    for (let index = 0; index < this.CardsGroup1.length; index++) {
-      const element = this.CardsGroup1[index];
-      element.orderdeploy = 1;
-      if (element.name == "Perfil") {
-        element.orderdeploy = 0;
-      }
+  openOrdered() {
+      const dialogConfig = new MatDialogConfig();
+      // The user can't close the dialog by clicking outside its body
+      dialogConfig.disableClose = true;
+      dialogConfig.id = "modal-component";
+      // dialogConfig.panelClass = "modal-component";
+      // dialogConfig.backdropClass = "modal-component"
+  
+      dialogConfig.height = "95%";
+      dialogConfig.width = "100%";
+      dialogConfig.data = { listToOrdered: this.listToOrdered }
+  
+      const modalDialog = this.dialog.open(ContainerListComponent, dialogConfig);
+  
+      modalDialog.afterClosed().subscribe(result => {
+  
+        // PENDIENTE, ESTO ES ¡ UNA CHANCHADA !, REPENSARLO DESDE CERO
+        // Con altas, bajas y modificaciones, ya sea si impactan o no
+        // en la DB. Ideal, si hay alta, quede en la instancia nueva, 
+        // si se eliminó todo no debiera quedar en blanco, etc.
+        if (result.length > 0) {
+  
+          this.baseData.organization.forEach(
+            (e) => {
+  
+              // if (e.id != this.formData.organization.id ||
+              //   e.name != this.formData.organization.name) {
+              //   console.log("se actualizo a -> ", e)
+              //   // Con esto, logro dejar como seleccionada la opcion en el select.
+              //   // No encontré otra manera, de otra forma mostraba seleccion, pero
+              //   // no figuraba seleccionado, con ello era invalid.
+              //   // In patchValue method of FormGroup, we can omit other fields that 
+              //   // is not required to be set dynamically.
+              //   this.formData.organization = e;
+              //   this.form.patchValue({ organization: e });
+  
+              // }
+            });
+  
+          // if (!this.formData.organization) {
+          //   // console.log("Aparentemente hubo un agregado");
+          //   this.formData.organization = result[0];
+          // }
+  
+          // // this.myorganizations = this.oldData
+          // this.form.get('organization')?.enable();
+  
+  
+        } else {
+          // this.formData.organization = new Organization();
+          // this.form.patchValue({
+          //   organization: "",
+          //   defaultOrg: "selected",
+          // });
+  
+          // this.form.get('organization')?.disable();
+        }
+  
+      })
+  
     }
+  
 
-    for (let index = 0; index < this.CardsGroup2.length; index++) {
-      const element = this.CardsGroup2[index];
-      element.orderdeploy = 1;
-      if (element.name == "Habilidades técnicas") {
-        element.orderdeploy = 0;
-      }
-    }
+  orderedCancel() {
+    console.log("llegue a cancelar orden del main");
+    this.baseData.hardskill = this.oldData.hardskill;
+    this.baseDataService.setCurrentBaseData(this.baseData);
+    console.log("Esto tengo en baseData", this.baseData.hardskill);
+    // console.log("Esto tengo en oldData", this.oldData);
 
-    // LOS PASOS REALES SERÍAN:
-    // asegurar la peristencia de los datos
-    // actualizo detailCards
-    // preparo layout separando los grupos y armando los separadores
-    // ordeno los CardsGroups
-    this.baseCardService.setCurrentBaseCard(this.detailCards);
-    this.prepareLayout();
-    this.sortCard();
 
   }
+  orderedUpdate(lista: any) {
+    console.log("llegue a guardar orden del main con esto: ", lista);
+    console.log("Esto tengo en baseData", this.baseData.hardskill);
+    // PENDIENTE, ASEGURAR PERSISTENCIA
 
+
+  }
 }

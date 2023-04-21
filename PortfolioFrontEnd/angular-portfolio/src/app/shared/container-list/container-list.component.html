@@ -1,3 +1,18 @@
-<p>container-list works!</p>
+<div class="modal-header">
+    <h5 class="modal-title">
+        Personalice el orden
+    </h5>
 
-<app-drag-drop></app-drag-drop>
+    <button type="button" class="close" aria-label="Close" (click)="dialogRef.close(false)">
+        <span aria-hidden="false">&times;</span>
+    </button>
+</div>
+
+<div>
+
+    <app-drag-drop [(listToOrdered)]="listToOrdered" 
+        (listToOrderedChange)="sendOrderList(listToOrdered); dialogRef.close(false)"
+        (onCancel)="cancel(); dialogRef.close(false)"
+    ></app-drag-drop>
+
+</div>

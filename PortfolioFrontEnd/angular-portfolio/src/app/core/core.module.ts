@@ -59,6 +59,7 @@ import { SocialNetworkComponent } from '../features/social-network/social-networ
 import { SocialFormComponent } from '../features/social-form/social-form.component';
 import { SocialItemComponent } from '../features/social-item/social-item.component';
 import { CardDataFormComponent } from '../shared/card-data-form/card-data-form.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -151,6 +152,8 @@ import { CardDataFormComponent } from '../shared/card-data-form/card-data-form.c
         // InterestsItemComponent,
         // PersonalCardComponent,
         // FontAwesomeModule
+        SharedModule,
+
     ],
     imports: [
         CommonModule,
@@ -159,7 +162,9 @@ import { CardDataFormComponent } from '../shared/card-data-form/card-data-form.c
         ReactiveFormsModule,
 
         MatDatepickerModule,
-        MatNativeDateModule
+        MatNativeDateModule,
+        SharedModule
+
         
     ]
 })
