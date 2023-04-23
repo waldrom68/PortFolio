@@ -1,7 +1,7 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 
 import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { faPlusCircle, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faPlusCircle, faTimes, faUpDown } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { AdminService } from 'src/app/service/auth.service';
 import { BaseDataService, DataService } from 'src/app/service/data.service';
@@ -10,6 +10,7 @@ import { UiService } from 'src/app/service/ui.service';
 import { MessageBoxComponent } from 'src/app/shared/message-box/message-box.component';
 
 import { FullPersonDTO, SocialNetwork } from '../../models'
+import { ContainerListComponent } from 'src/app/shared/container-list/container-list.component';
 
 
 @Component({
@@ -23,6 +24,7 @@ export class SocialNetworkComponent implements OnInit, OnDestroy {
 
   faPlusCircle = faPlusCircle;
   faTimes = faTimes;
+  faUpDown = faUpDown;
 
   private itemParaBorrar: any;  // objeto que se está por borrar, sirve para reestablecer si cancela borrado
 
@@ -35,6 +37,9 @@ export class SocialNetworkComponent implements OnInit, OnDestroy {
   baseData: FullPersonDTO;
   private BaseDataServiceSubscription: Subscription | undefined;
 
+  // componente order
+  listToOrdered: SocialNetwork[];
+  oldData: SocialNetwork[];
 
   constructor(
     private dataService: DataService,
@@ -43,6 +48,7 @@ export class SocialNetworkComponent implements OnInit, OnDestroy {
     private baseDataService: BaseDataService,
 
     private matDialog: MatDialog,
+    public dialog: MatDialog,
 
     private adminService: AdminService,
 
@@ -50,9 +56,8 @@ export class SocialNetworkComponent implements OnInit, OnDestroy {
     public dialogRef: MatDialogRef<SocialNetworkComponent>, //OrganizationModal
 
 
-  ) { }
+  ) { 
 
-  ngOnInit() {
     this.BaseDataServiceSubscription = this.baseDataService.currentBaseData.subscribe(
       currentData => {
         this.baseData = currentData;
@@ -65,6 +70,12 @@ export class SocialNetworkComponent implements OnInit, OnDestroy {
       }
     );
 
+  }
+
+  ngOnInit() {
+
+    this.listToOrdered = this.baseData.socialnetwork;
+    this.oldData = Object.assign({}, this.baseData.socialnetwork);
 
   }
 
@@ -194,4 +205,79 @@ export class SocialNetworkComponent implements OnInit, OnDestroy {
     )
   }
 
+    // BLOQUE CODIGO DE ORDER COMPONENT
+    openOrdered() {
+      const dialogConfig = new MatDialogConfig();
+      // The user can't close the dialog by clicking outside its body
+      dialogConfig.disableClose = true;
+      dialogConfig.id = "modal-reorder";
+      // dialogConfig.panelClass = "modal-component";
+      // dialogConfig.backdropClass = "modal-component"
+  
+      dialogConfig.height = "auto";
+      dialogConfig.width = "auto";
+      dialogConfig.data = {
+        listToOrdered: this.listToOrdered,
+        fields: ["name"],
+      }
+  
+      const modalDialog = this.dialog.open(ContainerListComponent, dialogConfig);
+  
+      modalDialog.afterClosed().subscribe(
+        data => {
+          // console.log("Dialogo output: ", data);
+          if (data) {
+            this.orderedUpdate()
+          }
+          else {
+            this.orderedCancel();
+          }
+        }
+  
+      )
+  
+    }
+  
+    orderedCancel() {
+      console.log("Cancelada operacion de reorden");
+  
+    }
+  
+    orderedUpdate() {
+      this.listToOrdered.forEach((elemento: SocialNetwork) => {
+        elemento.person = this.baseData.id
+      })
+  
+      this.saveReOrder();
+  
+    }
+  
+    saveReOrder() {
+      this.dataService.upDateOrderEntity(this.listToOrdered, "/socialnetwork").subscribe({
+        next: (v) => {
+          console.log("Nuevo orden guardado exitosamente");
+          this.uiService.msgboxOk(['Nuevo orden guardado exitosamente'],);
+          this.baseDataService.setCurrentBaseData(this.baseData);
+  
+        },
+        error: (e) => {
+          let msg = new Array()
+          msg.push("Se quizo guardar un reordenamiento sin exito");
+          msg.push(e.error.mensaje ? e.error.mensaje : e.message);
+          this.uiService.msgboxErr(msg,);
+  
+          this.orderedCancel();
+          // PENDIENTE, solucion de compromiso para revertir cambios
+          for (let index = 0; index < this.baseData.socialnetwork.length; index++) {
+            const element = this.oldData[index];
+            this.baseData.socialnetwork[index] = element;
+          }
+          console.log("Se quizo guardar un reordenamiento sin exito", e.error.mensaje);
+        },
+        complete: () => console.log("Completado el reordenamiento del social network")
+      }
+      );
+    }
+    // FIN BLOQUE DE ORDER COMPONENT
+    
 }

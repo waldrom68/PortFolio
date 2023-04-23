@@ -222,7 +222,7 @@ export class SoftSkillsComponent implements OnInit, OnDestroy {
     const dialogConfig = new MatDialogConfig();
     // The user can't close the dialog by clicking outside its body
     dialogConfig.disableClose = true;
-    dialogConfig.id = "modal-component";
+    dialogConfig.id = "modal-reorder";
     // dialogConfig.panelClass = "modal-component";
     // dialogConfig.backdropClass = "modal-component"
 

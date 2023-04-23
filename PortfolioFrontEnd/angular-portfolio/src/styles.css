@@ -95,7 +95,7 @@ section.row:nth-child(1), section.row:nth-child(2) {
     max-width: 200px;
 }
 /* MODAL STYLE */
-mat-dialog-container#modal-component, mat-dialog-container#modal-delete {
+mat-dialog-container#modal-component, mat-dialog-container#modal-delete, mat-dialog-container#modal-reorder {
     border: 3px solid #262626 !important;
     border-radius: 15px !important;
     background-color: #1a1a1a !important;
