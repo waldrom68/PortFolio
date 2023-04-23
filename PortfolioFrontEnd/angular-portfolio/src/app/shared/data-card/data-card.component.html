@@ -45,7 +45,7 @@
                         </ng-container>
 
 
-                        <ng-container *ngIf="esAdmin">
+                        <ng-container *ngIf="esAdmin" class="row">
 
                             <div class="flip-box-back">
                                 <ng-container *ngIf="!showForm || (card.id != targetId)">
@@ -60,8 +60,7 @@
 
                                         <label class="btn btn-outline-success btn-sm mt-1 py-0 px-1" *ngIf="openForm == 0"
                                             (click)="modificarResumen(card)">
-                                            <fa-icon [icon]="faPen"></fa-icon><span class="px-2"><small>Breve
-                                                    {{card.name}}</small></span>
+                                            <fa-icon [icon]="faPen"></fa-icon><span class="px-2"><small>Resumen</small></span>
                                         </label>
                                     </span> <!-- Fin not showform -->
                                 
@@ -84,22 +83,20 @@
                     </div>
                 </div>
             </a>
-
-
-            <!-- QUEDA BIEN, PERO NO ME CONVENCE USARLO AQUI -->
-            <div *ngIf="esAdmin" class="row m-2 align-items-center" (click)="modificarContenido(card)">
-                
-                <button *ngIf="openForm > 0" [disabled]="true"
-                class="btn btn-primary btn-sm faConfirm fa-ico">
-                    <fa-icon [icon]="faPen"></fa-icon><span class="p-2">Contenido y detalles</span>
-                </button>
-                <button *ngIf="openForm == 0" [disabled]="false"
-                    class="btn btn-primary btn-sm faConfirm fa-ico">
-                        <fa-icon [icon]="faPen"></fa-icon><span class="p-2">Contenido y detalles</span>
-                    </button>
-            </div>
-            <!-- FIN QUEDA BIEN -->
-
-
-        </div> <!-- Fin bucle de cards -->
+        </div>
     </div>
+</div>
+
+<!-- QUEDA BIEN, PERO NO ME CONVENCE USARLO AQUI -->
+<div *ngIf="esAdmin" class="row m-2 d-flex justify-content-center" (click)="modificarContenido(card)">
+    
+    <button *ngIf="openForm > 0" [disabled]="true"
+    class="btn btn-primary btn-sm">
+        <fa-icon [icon]="faPen"></fa-icon><span class="p-2">{{card.name}}</span>
+    </button>
+    <button *ngIf="openForm == 0" [disabled]="false"
+        class="btn btn-primary btn-sm">
+            <fa-icon [icon]="faPen"></fa-icon><span class="p-2">{{card.name}}</span>
+    </button>
+</div>
+<!-- FIN QUEDA BIEN -->

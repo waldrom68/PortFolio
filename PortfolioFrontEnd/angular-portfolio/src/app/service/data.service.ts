@@ -262,7 +262,7 @@ export class DataService {
     // console.log("httpOptions", httpOptions);
     return this.http.post<any>(url, entidad, httpOptions)
   }
-
+  
   addEntity(entidad: any, entityName: string): Observable<any> {
     entidad.person = this.USERID;
     entidad.id = -1;
@@ -281,6 +281,17 @@ export class DataService {
     
     return this.http.delete<any>(url, httpOptions)
   }
+
+  upDateOrderEntity(entidades: any, entityName: string): Observable<any> {
+    entidades.person = this.USERID;
+    const url = `${this.LOCALHOST_API}${entityName}/reorder`;
+    console.log(url)
+    console.log("Modificando a ... ", entidades);
+    // console.log("httpOptions", httpOptions);
+    return this.http.post<any>(url, entidades, httpOptions)
+  }
+
+
 
   // delHardSkills(hardskill:HardSkill): Observable<HardSkill>{
   //   const url = `${this.LOCALHOST_API}/hardskill/del/${hardskill.id}`

@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { BaseDataService, DataService } from 'src/app/service/data.service';
 import { AdminService } from 'src/app/service/auth.service';
 
-import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { faPlusCircle, faUpDown } from '@fortawesome/free-solid-svg-icons';
 
 import { FullPersonDTO, Interest } from '../../models'
 
@@ -10,6 +10,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MessageBoxComponent } from '../../shared/message-box/message-box.component';
 import { Subscription } from 'rxjs';
 import { FormService, UiService } from 'src/app/service/ui.service';
+import { ContainerListComponent } from 'src/app/shared/container-list/container-list.component';
 
 
 @Component({
@@ -22,6 +23,7 @@ export class InterestsComponent implements OnInit, OnDestroy {
   showForm: boolean = false;  // flag para mostrar o no el formulario
 
   faPlusCircle = faPlusCircle;
+  faUpDown = faUpDown;
 
   showBtnAction: boolean = true;  // flag para mostrar o no los btn's de acciones del usuario
 
@@ -39,6 +41,10 @@ export class InterestsComponent implements OnInit, OnDestroy {
   element: object;
   fragment: string = 'Init';
 
+  // componente order
+  listToOrdered: Interest[];
+  oldData: Interest[];
+
   constructor(
     private dataService: DataService,
     private baseDataService: BaseDataService,
@@ -52,10 +58,6 @@ export class InterestsComponent implements OnInit, OnDestroy {
     private formService: FormService,
 
   ) {
-    
-  }
-
-  ngOnInit(): void {
     this.BaseDataServiceSubscription = this.baseDataService.currentBaseData.subscribe(
       currentData => {
         this.baseData = currentData;
@@ -72,6 +74,12 @@ export class InterestsComponent implements OnInit, OnDestroy {
         this.openForm = currentForm > 0 ? currentForm : 0;
       }
     );
+  }
+
+  ngOnInit(): void {
+    this.listToOrdered = this.baseData.interest;
+    this.oldData = Object.assign({}, this.baseData.interest);
+
     this.resetForm();
   }
 
@@ -141,7 +149,7 @@ export class InterestsComponent implements OnInit, OnDestroy {
   addItem(interest: Interest) {
     this.dataService.addEntity(interest, "/interest").subscribe({
       next: (v) => {
-        console.log("Agregado correctamente: ");
+        console.log("Agregado correctamente: ", interest);
         this.uiService.msgboxOk(['Datos guardados exitosamente'],);
 
         interest.id = v.id;
@@ -164,7 +172,6 @@ export class InterestsComponent implements OnInit, OnDestroy {
     this.resetForm();
     this.toggleForm();
   }
-
 
   openDeleteModal(data: any) {
     const dialogConfig = new MatDialogConfig();
@@ -203,8 +210,88 @@ export class InterestsComponent implements OnInit, OnDestroy {
     )
   }
 
+  // BLOQUE CODIGO DE ORDER COMPONENT
+  openOrdered() {
+    const dialogConfig = new MatDialogConfig();
+    // The user can't close the dialog by clicking outside its body
+    dialogConfig.disableClose = true;
+    dialogConfig.id = "modal-component";
+    // dialogConfig.panelClass = "modal-component";
+    // dialogConfig.backdropClass = "modal-component"
+
+    dialogConfig.height = "100%";
+    dialogConfig.width = "auto";
+    dialogConfig.data = {
+      listToOrdered: this.listToOrdered,
+      fields: ["name", "assessment"],
+    }
+
+    const modalDialog = this.dialog.open(ContainerListComponent, dialogConfig);
+
+    modalDialog.afterClosed().subscribe(
+      data => {
+        // console.log("Dialogo output: ", data);
+        if (data) {
+          this.orderedUpdate()
+        }
+        else {
+          this.orderedCancel();
+        }
+      }
+
+    )
+
+  }
+
+  orderedCancel() {
+    console.log("Cancelada operacion de reorden");
+
+  }
+
+  orderedUpdate() {
+    this.listToOrdered.forEach((elemento: Interest) => {
+      elemento.person = this.baseData.id
+    })
+
+    this.saveReOrder();
+
+  }
+
+  saveReOrder() {
+    this.dataService.upDateOrderEntity(this.listToOrdered, "/interest").subscribe({
+      next: (v) => {
+        console.log("Nuevo orden guardado exitosamente");
+        this.uiService.msgboxOk(['Nuevo orden guardado exitosamente'],);
+        this.baseDataService.setCurrentBaseData(this.baseData);
+
+      },
+      error: (e) => {
+        let msg = new Array()
+        msg.push("Se quizo guardar un reordenamiento sin exito");
+        msg.push(e.error.mensaje ? e.error.mensaje : e.message);
+        this.uiService.msgboxErr(msg,);
+
+        this.orderedCancel();
+        // PENDIENTE, solucion de compromiso para revertir cambios
+        for (let index = 0; index < this.baseData.interest.length; index++) {
+          const element = this.oldData[index];
+          this.baseData.interest[index] = element;
+        }
+        console.log("Se quizo guardar un reordenamiento sin exito", e.error.mensaje);
+      },
+      complete: () => console.log("Completado el reordenamiento del interest")
+    }
+    );
+  }
+  // FIN BLOQUE DE ORDER COMPONENT
+
+
+
   ngAfterViewInit(): void {
     let element = this.renderer.selectRootElement(`#${this.fragment}`, true);
     element.scrollIntoView({ behavior: 'smooth' });
   }
+
+
+
 }

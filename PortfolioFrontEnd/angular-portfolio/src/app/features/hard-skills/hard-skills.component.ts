@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { BaseDataService, DataService } from 'src/app/service/data.service';
 import { AdminService } from 'src/app/service/auth.service';
 
-import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { faPlusCircle, faUpDown } from '@fortawesome/free-solid-svg-icons';
 
 import { HardSkill, FullPersonDTO } from '../../models'
 
@@ -11,6 +11,7 @@ import { MessageBoxComponent } from '../../shared/message-box/message-box.compon
 
 import { Subscription } from 'rxjs';
 import { FormService, UiService } from 'src/app/service/ui.service';
+import { ContainerListComponent } from 'src/app/shared/container-list/container-list.component';
 
 
 // Declaro la funcion que debe levantarse de \src\assets\widget.js
@@ -24,10 +25,8 @@ declare function initAndSetupTheSliders(): void;
 export class HardSkillsComponent implements OnInit, OnDestroy {
   showForm: boolean = false;  // flag para mostrar o no el formulario
 
-  // myData: HardSkill[] = [];
-  // formData: HardSkill;  // instancia vacia, para cuando se solicite un alta
-
   faPlusCircle = faPlusCircle;
+  faUpDown = faUpDown;
 
   showBtnAction: boolean = true;  // flag para mostrar o no los btn's de acciones del usuario
 
@@ -45,6 +44,11 @@ export class HardSkillsComponent implements OnInit, OnDestroy {
 
   element: object;
   fragment: string = 'Init';
+
+  // componente order
+  listToOrdered: HardSkill[];
+  oldData: HardSkill[];
+
   constructor(
     private dataService: DataService,
     private baseDataService: BaseDataService,
@@ -52,20 +56,16 @@ export class HardSkillsComponent implements OnInit, OnDestroy {
 
     public matDialog: MatDialog,
     public dialog: MatDialog,
-
     private renderer: Renderer2,  // Se usa para renderizar tras la carga de todos los componentes iniciales, ngAfterViewInit 
 
     private adminService: AdminService,
     private formService: FormService,
+
   ) {
-
-  }
-
-  ngOnInit(): void {
     this.BaseDataServiceSubscription = this.baseDataService.currentBaseData.subscribe(
       currentData => {
         this.baseData = currentData;
-        // this.myData = currentData.interest;
+        this.listToOrdered = this.baseData.hardskill;
       }
     );
 
@@ -79,6 +79,11 @@ export class HardSkillsComponent implements OnInit, OnDestroy {
         this.openForm = currentForm > 0 ? currentForm : 0;
       }
     );
+  }
+
+  ngOnInit(): void {
+    this.listToOrdered = this.baseData.hardskill;
+    this.oldData = Object.assign({}, this.baseData.hardskill);
 
     this.resetForm();
   }
@@ -119,7 +124,7 @@ export class HardSkillsComponent implements OnInit, OnDestroy {
   delItem() {
     if (this.itemParaBorrar) {
       // this.dataService.delHardSkills(this.itemParaBorrar).subscribe({
-        this.dataService.delEntity(this.itemParaBorrar, "/hardskill").subscribe({
+      this.dataService.delEntity(this.itemParaBorrar, "/hardskill").subscribe({
         next: (v) => {
           console.log("Se ha eliminado exitosamente a: ", this.itemParaBorrar);
           this.uiService.msgboxOk(['Se ha eliminado exitosamentee'],);
@@ -209,6 +214,83 @@ export class HardSkillsComponent implements OnInit, OnDestroy {
     )
   }
 
+
+  // BLOQUE CODIGO DE ORDER COMPONENT
+  openOrdered() {
+    const dialogConfig = new MatDialogConfig();
+    // The user can't close the dialog by clicking outside its body
+    dialogConfig.disableClose = true;
+    dialogConfig.id = "modal-component";
+    // dialogConfig.panelClass = "modal-component";
+    // dialogConfig.backdropClass = "modal-component"
+
+    dialogConfig.height = "100%";
+    dialogConfig.width = "auto";
+    dialogConfig.data = {
+      listToOrdered: this.listToOrdered,
+      fields: ["name", "assessment"],
+    }
+
+    const modalDialog = this.dialog.open(ContainerListComponent, dialogConfig);
+
+    modalDialog.afterClosed().subscribe(
+      data => {
+        // console.log("Dialogo output: ", data);
+        if (data) {
+          this.orderedUpdate()
+        }
+        else {
+          this.orderedCancel();
+        }
+      }
+
+    )
+
+  }
+
+  orderedCancel() {
+    console.log("Cancelada operacion de reorden");
+
+  }
+
+  orderedUpdate() {
+    this.listToOrdered.forEach((elemento: HardSkill) => {
+      elemento.person = this.baseData.id
+    })
+
+    this.saveReOrder();
+
+  }
+
+  saveReOrder() {
+    this.dataService.upDateOrderEntity(this.listToOrdered, "/hardskill").subscribe({
+      next: (v) => {
+        console.log("Nuevo orden guardado exitosamente");
+        this.uiService.msgboxOk(['Nuevo orden guardado exitosamente'],);
+        this.baseDataService.setCurrentBaseData(this.baseData);
+
+      },
+      error: (e) => {
+        let msg = new Array()
+        msg.push("Se quizo guardar un reordenamiento sin exito");
+        msg.push(e.error.mensaje ? e.error.mensaje : e.message);
+        this.uiService.msgboxErr(msg,);
+
+        this.orderedCancel();
+
+        // PENDIENTE, solucion de compromiso para revertir cambios
+        for (let index = 0; index < this.baseData.hardskill.length; index++) {
+          const element = this.oldData[index];
+          this.baseData.hardskill[index] = element;
+        }
+
+        console.log("Se quizo guardar un reordenamiento sin exito", e.error.mensaje);
+      },
+      complete: () => console.log("Completado el reordenamiento del hardskill")
+    }
+    );
+  }
+  // FIN BLOQUE DE ORDER COMPONENT
 
   ngAfterViewInit(): void {
     let element = this.renderer.selectRootElement(`#${this.fragment}`, true);

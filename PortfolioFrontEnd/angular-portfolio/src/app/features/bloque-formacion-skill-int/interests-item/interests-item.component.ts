@@ -124,7 +124,7 @@ export class InterestsItemComponent implements OnInit, OnDestroy {
     // Actualizacion de Interest
     this.dataService.upDateEntity(interest, "/interest").subscribe({
       next: (v) => {
-        console.log("Guardado correctamente")
+        console.log("Guardado correctamente", interest)
         this.uiService.msgboxOk(['Datos guardados exitosamente'],);
       },
       error: (e) => {

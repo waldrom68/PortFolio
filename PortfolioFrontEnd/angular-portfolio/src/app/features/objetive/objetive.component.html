@@ -2,7 +2,7 @@
     <ng-container *ngIf="baseData.objetive.length; else agregarObjetive" > 
 
         <!-- MOSTRANDO EL OBJETIVO -->
-        <div class="table-dark text-left container py-2">
+        <div class="table-dark text-left table-responsive py-2">
 
             <ng-container *ngIf="!showForm">
                 <p *ngFor="let item of baseData.objetive.split('\n')">

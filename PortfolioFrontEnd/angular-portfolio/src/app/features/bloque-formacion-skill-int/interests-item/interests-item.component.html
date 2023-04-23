@@ -1,7 +1,8 @@
-<div class="table-dark row" id="Init" *ngIf="!showForm && openForm == 0">
-    <!-- <div  class="row container-fluid"> -->
+<div id="Init" *ngIf="!showForm && openForm == 0">
 
-    <div [ngClass]="{'p-0 col-10':esAdmin, 'col-12':!esAdmin}">
+        <!-- [ngClass]="{'p-0 col-10':esAdmin, 'col-12':!esAdmin}" -->
+    <div 
+    >
         <div [ngClass]="color" (mouseover)="changeStyle($event)" (mouseout)="changeStyle($event)">
 
             <ul class="head border rounded fade-in-ul mb-0 mt-2">
@@ -29,7 +30,7 @@
 
 <!-- [formData]="interest" -->
 <app-interests-form *ngIf="showForm && esAdmin" 
-    [ngStyle]="{'width':'100%'}"
+    
     [title]="''"
     [item]="item"
     

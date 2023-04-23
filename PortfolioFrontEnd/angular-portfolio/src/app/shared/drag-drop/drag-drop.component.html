@@ -1,7 +1,7 @@
   <div class="container-fluid border border-5 border-danger" *ngIf="listToOrdered">
     <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
-      <!-- <div class="example-box" *ngFor="let elemento of listToOrdered" cdkDrag> -->
-      <table class="table move-list text-center align-middle">
+
+      <table class="table-responsive move-list text-center align-middle">
         <colgroup>
           <col >
           <col >
@@ -9,71 +9,81 @@
         </colgroup>
         <thead>
           <tr>
-            <th scope="col">
-              <label class="btn btn-secondary btn-block"
+            
+            <th scope="col" *ngIf="fields.includes('since')">
+              <label class="btn btn-secondary btn-block bg-dark"
+                (click)="sinceOrdered();">
+                <fa-icon *ngIf="sinceOrder" [icon]="faArrowDown19" ngClass="fa-1x">
+                </fa-icon>
+                <fa-icon *ngIf="!sinceOrder" [icon]="faArrowDown91" ngClass="fa-1x">
+                </fa-icon>
+                <span class="ml-1">Por desde</span>
+              </label>
+            </th>
+
+            <th scope="col" *ngIf="fields.includes('name')">
+              <label class="btn btn-secondary btn-block bg-dark "
                 (click)="nameOrdered();">
                 <fa-icon *ngIf="nameOrder" [icon]="faArrowDownAZ" ngClass="fa-1x">
                 </fa-icon>
                 <fa-icon *ngIf="!nameOrder" [icon]="faArrowDownZA" ngClass="fa-1x">
                 </fa-icon>
-                
                 <span class="ml-1">Por nombre</span>
               </label>
             </th>
-            <th scope="col">
-              <label class="btn btn-secondary btn-block"
+            
+            <th scope="col" *ngIf="fields.includes('resume')">
+              <label class="btn btn-secondary btn-block bg-dark"
+                (click)="nameOrdered();">
+                <fa-icon *ngIf="resumeOrder" [icon]="faArrowDownAZ" ngClass="fa-1x">
+                </fa-icon>
+                <fa-icon *ngIf="!resumeOrder" [icon]="faArrowDownZA" ngClass="fa-1x">
+                </fa-icon>
+                <span class="ml-1">Por resume</span>
+              </label>
+            </th>
+
+            <th scope="col" *ngIf="fields.includes('assessment')">
+              <label class="btn btn-secondary btn-block bg-dark"
                 (click)="assessmentOrdered();">
                 <fa-icon *ngIf="assessmentOrder" [icon]="faArrowDown19" ngClass="fa-1x">
                 </fa-icon>
                 <fa-icon *ngIf="!assessmentOrder" [icon]="faArrowDown91" ngClass="fa-1x">
                 </fa-icon>
-                
                 <span class="ml-1">Por valor</span>
               </label>
-
             </th>
-            <th></th>
+
+
+
           </tr>
         </thead>
         <tbody class="align-middle">
           <tr class="move-block text-center" *ngFor="let elemento of listToOrdered" cdkDrag
-
           >
-            <!-- {{elemento.name}}, {{elemento.assessment}} -->
-            <td>{{elemento.name}}</td>
-            <td>{{elemento.assessment}}</td>
+
+            <td *ngIf="fields.includes('since')">{{elemento.since  | date:'MM-yyyy'}}</td>
+
+            <td *ngIf="fields.includes('name')">{{elemento.name}}</td>
+
+            <td *ngIf="fields.includes('resume')">{{elemento.resume}}</td>
+
+            <td *ngIf="fields.includes('assessment')">{{elemento.assessment}}</td>
+
             <td class="flex bg-dark">
               <fa-icon [icon]="faUpDown" ngClass="fa-1x"></fa-icon>
             </td>
+
+
           </tr>
         </tbody>
 
-
       </table>
 
-      <!-- </div> -->
     </div>
   </div>
 
-<div class="modal-footer">
 
-  <!-- SUBMIT O CANCELAR Y CERRAR -->
-    <div class="form-row m-2">
-
-      <div class="form-group col d-flex align-items-center m-auto justify-content-around">
-        <button (click)="processReordering();" class="btn btn-success btn-sm p-2 m-2">
-          Guardar
-        </button>
-      </div>
-      <div class="form-group col d-flex align-items-center m-auto justify-content-around">
-        <button class="btn btn-danger btn-sm p-2 m-2" 
-        (click)="onDragEnded();">
-          Cancelar
-        </button>
-
-      </div>
-    </div> <!-- FIN SUBMIT CANCEL -->
-  </div>
   
   <!-- <i class="fa-solid fa-arrow-up-wide-short"></i> -->
 

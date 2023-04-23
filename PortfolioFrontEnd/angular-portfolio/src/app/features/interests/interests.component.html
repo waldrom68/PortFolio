@@ -1,21 +1,47 @@
-<div class="table-dark text-left container-fluid py-4" id="Init">
+
+<!-- style="display: table-row-group;" -->
+<div class="table-dark text-left container-fluid py-1 pb-4" id="Init" 
+ >
 
     <ng-container *ngIf="baseData.interest.length; else agregar">
+        <!-- style="display: flex;
+        justify-content: end;" -->
+        <div class="row d-flex justify-content-start"
+        >
+            <button *ngIf="esAdmin && ( openForm == 0)"
+            (click)="openOrdered();"
+            class="m-1"
+            >
+                <fa-icon [icon]="faUpDown" ngClass="fa-1x">
+                </fa-icon>
+                <small><span class="ml-1">Orden</span></small>
+            </button>
+        </div>
 
-        <div id="listado" *ngIf="!showForm">
+        <div id="listado mt-2" *ngIf="!showForm">
 
-            <app-interests-item *ngFor="let item of baseData.interest" [item]="item" (onDelete)="openModalDelete(item)"
-                [(showBtnAction)]="showBtnAction" (showBtnActionChange)="showBtnAction">
+            <app-interests-item 
+            *ngFor="let item of baseData.interest" 
+            [item]="item" 
+
+            (onDelete)="openModalDelete(item)"
+            [(showBtnAction)]="showBtnAction" 
+            (showBtnActionChange)="showBtnAction"
+            >
             </app-interests-item>
 
         </div>
     </ng-container>
 
-    <app-interests-form *ngIf="showForm && esAdmin" [ngStyle]="{'width':'100%'}" [title]="''"
-        (onUpdate)="addItem($event)" (cancel)="cancelation()">
+    <app-interests-form 
+    *ngIf="showForm && esAdmin"
 
+        (onUpdate)="addItem($event)" 
+        (cancel)="cancelation()"
+        
         [(showBtnAction)]="showBtnAction"
         (showBtnActionChange)="showBtnAction">
+        >
     </app-interests-form>
 
 
@@ -32,8 +58,15 @@
 
 <ng-container *ngIf="esAdmin && showBtnAction">
     <br>
-    <button class="btn btn-default btn-sm" ngClass="faControl fa-ico" (click)="toggleForm()">
-        <fa-icon ngClass="fa-3x text-primary" [icon]="faPlusCircle">
+    <button class="btn btn-default btn-sm" 
+        ngClass="faControl fa-ico"
+        (click)="toggleForm()"
+        >
+        <fa-icon
+        ngClass="fa-3x text-primary"
+            [icon]="faPlusCircle"
+            
+            >
         </fa-icon>
     </button>
 </ng-container>

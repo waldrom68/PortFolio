@@ -3,7 +3,7 @@
     <ng-container *ngIf="baseData.profile.length; else agregarProfile" >
 
         <!-- MOSTRANDO EL PERFIL -->
-        <div class="table-dark text-left container py-2">
+        <div class="table-dark text-left table-responsive py-2 px-1">
 
             <ng-container *ngIf="!showForm">
                 <p *ngFor="let item of baseData.profile.split('\n')">

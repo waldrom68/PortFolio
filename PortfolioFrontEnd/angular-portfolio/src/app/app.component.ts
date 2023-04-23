@@ -175,9 +175,10 @@ export class AppComponent implements OnInit {
         this.statusWait[0] = false;
         this.statusReady = this.statusWait.every(value => !value);
 
-        if (this.statusReady) {
-          this.uiService.msgboxOk(['Datos obtenidos exitosamente'],);
-        }
+        // SOLO NOTIFICO ERROR DE LECTURA
+        // if (this.statusReady) {
+        //   this.uiService.msgboxOk(['Datos obtenidos exitosamente'],);
+        // }
 
       }
     });

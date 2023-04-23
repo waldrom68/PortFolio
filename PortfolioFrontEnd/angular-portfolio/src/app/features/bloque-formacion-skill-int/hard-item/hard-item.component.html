@@ -1,6 +1,6 @@
-<ng-container *ngIf="!showForm" class="table-row-group" id="Init">
+<ng-container *ngIf="!showForm" class="table-row-group">
 
-    <div class="container-chart" id="{{item.name.replace(regex,'')}}" 
+    <div class="row container-chart" id="{{item.name.replace(regex,'')}}" 
     attr.aria-label='{{item.name}}' 
     attr.aria-value='{{item.assessment}}'
     [ngClass]="color" (mouseover)="changeStyle($event)" (mouseout)="changeStyle($event)"

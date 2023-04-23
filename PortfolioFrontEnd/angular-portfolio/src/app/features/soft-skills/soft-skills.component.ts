@@ -2,15 +2,16 @@ import { Component, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { BaseDataService, DataService } from 'src/app/service/data.service';
 import { AdminService } from 'src/app/service/auth.service';
 
-import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { faPlusCircle, faUpDown } from '@fortawesome/free-solid-svg-icons';
 
-import { SoftSkill, FullPersonDTO} from '../../models'
+import { SoftSkill, FullPersonDTO } from '../../models'
 
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MessageBoxComponent } from '../../shared/message-box/message-box.component';
 
 import { Subscription } from 'rxjs';
 import { FormService, UiService } from 'src/app/service/ui.service';
+import { ContainerListComponent } from 'src/app/shared/container-list/container-list.component';
 
 
 // Declaro la funcion que debe levantarse de \src\assets\widget.js
@@ -24,10 +25,10 @@ export class SoftSkillsComponent implements OnInit, OnDestroy {
 
   showForm: boolean = false;  // flag para mostrar o no el formulario
 
-  myData: SoftSkill[] = [];
   formData: SoftSkill;  // instancia vacia, para cuando se solicite un alta
 
   faPlusCircle = faPlusCircle;
+  faUpDown = faUpDown;
 
   showBtnAction: boolean = true;  // flag para mostrar o no los btn's de acciones del usuario
 
@@ -45,8 +46,13 @@ export class SoftSkillsComponent implements OnInit, OnDestroy {
   element: object;
   fragment: string = 'Init';
 
+  // componente order
+  listToOrdered: SoftSkill[];
+  oldData: SoftSkill[];
+
   constructor(
     private dataService: DataService,
+    private baseDataService: BaseDataService,
     private uiService: UiService,
 
     public matDialog: MatDialog,
@@ -55,16 +61,9 @@ export class SoftSkillsComponent implements OnInit, OnDestroy {
     private renderer: Renderer2,  // Se usa para renderizar tras la carga de todos los componentes iniciales, ngAfterViewInit
 
     private adminService: AdminService,
-    private baseDataService: BaseDataService,
     private formService: FormService,
 
   ) {
-    this.resetForm()
-  }
-
-
-  ngOnInit(): void {
-
     this.AdminServiceSubscription = this.adminService.currentAdmin.subscribe(
       currentAdmin => {
         this.esAdmin = currentAdmin;
@@ -73,7 +72,6 @@ export class SoftSkillsComponent implements OnInit, OnDestroy {
     this.BaseDataServiceSubscription = this.baseDataService.currentBaseData.subscribe(
       currentData => {
         this.baseData = currentData;
-        this.myData = currentData.softskill;
       }
     );
     this.formServiceSubscription = this.formService.currentOpenForm.subscribe(
@@ -81,6 +79,16 @@ export class SoftSkillsComponent implements OnInit, OnDestroy {
         this.openForm = currentForm > 0 ? currentForm : 0;
       }
     );
+
+  }
+
+
+  ngOnInit(): void {
+
+    this.listToOrdered = this.baseData.softskill;
+    this.oldData = Object.assign({}, this.baseData.softskill);
+    
+    this.resetForm()
 
   }
 
@@ -124,11 +132,11 @@ export class SoftSkillsComponent implements OnInit, OnDestroy {
       this.dataService.delEntity(this.itemParaBorrar, "/softskill").subscribe({
         next: (v) => {
           console.log("Se ha eliminado exitosamente a: ", this.itemParaBorrar);
-          this.uiService.msgboxOk( ['Se ha eliminado exitosamente'],);
-          
-          this.myData = this.myData.filter((t) => { return t !== this.itemParaBorrar })
+          this.uiService.msgboxOk(['Se ha eliminado exitosamente'],);
+
+          this.baseData.softskill = this.baseData.softskill.filter((t) => { return t !== this.itemParaBorrar })
           // Actualizo la informacion en el origen
-          this.baseData.softskill = this.myData;
+          this.baseData.softskill = this.baseData.softskill;
           this.itemParaBorrar = null;
 
         },
@@ -136,7 +144,7 @@ export class SoftSkillsComponent implements OnInit, OnDestroy {
           let msg = new Array()
           msg.push("Se quizo eliminar sin exito a: " + this.itemParaBorrar.name);
           msg.push(e.error.mensaje ? e.error.mensaje : e.message);
-          this.uiService.msgboxErr( msg,); 
+          this.uiService.msgboxErr(msg,);
 
           console.log("Se quizo eliminar sin exito a: ", this.itemParaBorrar);
         },
@@ -155,14 +163,14 @@ export class SoftSkillsComponent implements OnInit, OnDestroy {
 
         softSkill.id = v.id;
         softSkill.person = this.baseData.id;
-        this.myData.push(softSkill);
-        this.baseData.softskill = this.myData;
+        this.baseData.softskill.push(softSkill);
+        this.baseData.softskill = this.baseData.softskill;
       },
       error: (e) => {
         let msg = new Array()
         msg.push("Se quizo agregar sin exito a: " + softSkill.name);
         msg.push(e.error.mensaje ? e.error.mensaje : e.message);
-        this.uiService.msgboxErr( msg,); 
+        this.uiService.msgboxErr(msg,);
 
         console.log("Se quizo agregar sin exito a: " + softSkill.name);
       },
@@ -209,10 +217,85 @@ export class SoftSkillsComponent implements OnInit, OnDestroy {
     )
   }
 
-ngAfterViewInit(): void {
-  let element = this.renderer.selectRootElement(`#${this.fragment}`, true);
-  element.scrollIntoView({ behavior: 'smooth' });
-}
+  // BLOQUE CODIGO DE ORDER COMPONENT
+  openOrdered() {
+    const dialogConfig = new MatDialogConfig();
+    // The user can't close the dialog by clicking outside its body
+    dialogConfig.disableClose = true;
+    dialogConfig.id = "modal-component";
+    // dialogConfig.panelClass = "modal-component";
+    // dialogConfig.backdropClass = "modal-component"
+
+    dialogConfig.height = "100%";
+    dialogConfig.width = "auto";
+    dialogConfig.data = {
+      listToOrdered: this.listToOrdered,
+      fields: ["name", "assessment"],
+    }
+
+    const modalDialog = this.dialog.open(ContainerListComponent, dialogConfig);
+
+    modalDialog.afterClosed().subscribe(
+      data => {
+        // console.log("Dialogo output: ", data);
+        if (data) {
+          this.orderedUpdate()
+        }
+        else {
+          this.orderedCancel();
+        }
+      }
+
+    )
+
+  }
+
+  orderedCancel() {
+    console.log("Cancelada operacion de reorden");
+
+  }
+
+  orderedUpdate() {
+    this.listToOrdered.forEach((elemento: SoftSkill) => {
+      elemento.person = this.baseData.id
+    })
+
+    this.saveReOrder();
+
+  }
+
+  saveReOrder() {
+    this.dataService.upDateOrderEntity(this.listToOrdered, "/softskill").subscribe({
+      next: (v) => {
+        console.log("Nuevo orden guardado exitosamente");
+        this.uiService.msgboxOk(['Nuevo orden guardado exitosamente'],);
+        this.baseDataService.setCurrentBaseData(this.baseData);
+
+      },
+      error: (e) => {
+        let msg = new Array()
+        msg.push("Se quizo guardar un reordenamiento sin exito");
+        msg.push(e.error.mensaje ? e.error.mensaje : e.message);
+        this.uiService.msgboxErr(msg,);
+
+        this.orderedCancel();
+        // PENDIENTE, solucion de compromiso para revertir cambios
+        for (let index = 0; index < this.baseData.softskill.length; index++) {
+          const element = this.oldData[index];
+          this.baseData.softskill[index] = element;
+        }
+        console.log("Se quizo guardar un reordenamiento sin exito", e.error.mensaje);
+      },
+      complete: () => console.log("Completado el reordenamiento del softskill")
+    }
+    );
+  }
+  // FIN BLOQUE DE ORDER COMPONENT
+
+  ngAfterViewInit(): void {
+    let element = this.renderer.selectRootElement(`#${this.fragment}`, true);
+    element.scrollIntoView({ behavior: 'smooth' });
+  }
 
   ngAfterViewChecked() {
     // console.log("se termino ngAfterViewChecked")

@@ -1,10 +1,9 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { CdkDragDrop, CdkDragEnd, CdkDragEnter, moveItemInArray, CdkDragExit } from '@angular/cdk/drag-drop';
-import { FullPersonDTO, HardSkill } from 'src/app/models';
-import { Subscription } from 'rxjs';
-import { BaseDataService } from 'src/app/service/data.service';
-import { AbstractControl } from '@angular/forms';
-import { HammerLoader } from '@angular/platform-browser';
+// import { FullPersonDTO } from 'src/app/models';
+// import { Subscription } from 'rxjs';
+// import { BaseDataService } from 'src/app/service/data.service';
+
 import { faArrowDownAZ, faArrowDownZA, faArrowDown19, faArrowDown91, faUpDown } from '@fortawesome/free-solid-svg-icons';
 
 
@@ -16,14 +15,16 @@ import { faArrowDownAZ, faArrowDownZA, faArrowDown19, faArrowDown91, faUpDown } 
 
 
 
-export class DragDropComponent implements OnInit, OnDestroy {
+export class DragDropComponent implements OnInit /*, OnDestroy*/ {
   // https://material.angular.io/cdk/drag-drop/overview
   // https://blog.openreplay.com/drag-and-drop-with-angular-material/
   // https://www.positronx.io/angular-drag-and-drop-tutorial-with-example/
   // https://stackblitz.com/edit/angular-avfyze?file=app%2Fcdk-drag-drop-connected-sorting-example.ts
 
-  @Input() listToOrdered: any[];
+  @Input() listToOrdered: any;
   @Output() listToOrderedChange = new EventEmitter<any>();
+  
+  @Input() fields: any[];
 
   @Output() onCancel: EventEmitter<any> = new EventEmitter();
   @Output() onUpDate: EventEmitter<any> = new EventEmitter();
@@ -34,11 +35,11 @@ export class DragDropComponent implements OnInit, OnDestroy {
   faArrowDown91 = faArrowDown91;
   faUpDown = faUpDown;
 
-  baseData: FullPersonDTO;
-  private BaseDataServiceSubscription: Subscription | undefined;
+  // baseData: FullPersonDTO;
+  // private BaseDataServiceSubscription: Subscription | undefined;
 
   // listToOrdered: any[] = [];
-  oldData: any;
+  oldData: any[];
 
   realChange = new Array();
 
@@ -68,66 +69,63 @@ export class DragDropComponent implements OnInit, OnDestroy {
 
 
   constructor(
-    private baseDataService: BaseDataService,
+    // private baseDataService: BaseDataService,
   ) {
-    this.BaseDataServiceSubscription = this.baseDataService.currentBaseData.subscribe(
-      currentData => {
-        this.baseData = currentData;
-        this.oldData = Object.assign({}, this.listToOrdered);
-      }
-    );
+    // this.BaseDataServiceSubscription = this.baseDataService.currentBaseData.subscribe(
+    //   currentData => {
+    //     this.baseData = currentData;
+        
+    //   }
+    // );
   }
 
   ngOnInit(): void {
     // Clono el objeto, uso assign por no tener atributos compuesto por otros objetos
-    
-    // this.listToOrdered = this.baseData.hardskill;
-    console.log("Esto tengo el oldDAta, en el init()", this.oldData);
+    this.oldData = Object.assign({}, this.listToOrdered);
+
   }
 
-  ngOnDestroy(): void {
-    this.BaseDataServiceSubscription?.unsubscribe();
-  }
+  // ngOnDestroy(): void {
+  //   this.BaseDataServiceSubscription?.unsubscribe();
+  // }
 
 
 
   processReordering() {
-    console.log("llegue a drag-drop processReordering");
-    
     this.realChange = this.compareObjects(this.listToOrdered, this.oldData)
     if (this.realChange?.length > 0) {
-      console.log("Registrar estos cambios: ", this.realChange);
+
       for (let elemento = 0; elemento < this.listToOrdered.length; elemento++) {
         const element = this.listToOrdered[elemento];
         element.orderdeploy = elemento + 1;
 
+        // DOY FORMATO A LOS CAMPOS DE FECHA
+        element.since ? element.since : new Date(),
+        'yyyy-MM-dd', 'en', 'UTC-3'
+        // DOY FORMATO A LOS CAMPOS DE FECHA
+        element.startDate ? element.startDate : new Date(),
+        'yyyy-MM-dd', 'en', 'UTC-3'
+        // DOY FORMATO A LOS CAMPOS DE FECHA
+        element.endDate ? element.endDate : new Date(),
+        'yyyy-MM-dd', 'en', 'UTC-3'
       }
-      // this.onUpDate.emit();
+
       this.listToOrderedChange.emit(this.listToOrdered);
-      // PENDIENTE, this.listToOrdered es lo que debo emitir hacia el padre para la persistencia
-      // Y esto debe eliminarse
-      // this.baseData.hardskill = this.listToOrdered;
-      // this.baseDataService.setCurrentBaseData(this.baseData);
-      // console.log("Hice click en guardar, esto quedó en listToOrdered ? ", this.listToOrdered);
-      // console.log("Hice click en guardar, esto queda baseData.hardskill ? ", this.baseData.hardskill);
+
     } else {
       console.log("No hubo cambios para procesar");
-      
     }
     
   }
   
   onDragEnded() {
-    console.log("llegue a drag-drop onDragEnded");
-    
+    // REUBICADO EN COMPONENTE QUE TIENE EL LISTADO, container-list.ts
+    // for (let index = 0; index < this.listToOrdered.length; index++) {
+    //   const element = this.oldData[index];
+    //   this.listToOrdered[index] = element;
+    // }
+    // this.listToOrderedChange.emit(this.listToOrdered);
     this.onCancel.emit();
-    // this.baseData.hardskill = this.oldData;
-    // this.baseDataService.setCurrentBaseData(this.baseData);
-    this.deployOrdered();
-
-    // PENDIENTE, esto debiera eliminarse, oldData es lo que debo emitir al padre
-    // console.log("Hice click en cancelar, esto queda en listToOrdered ? ", this.listToOrdered);
-    // console.log("Hice click en cancelar, esto queda baseData.hardskill ? ", this.baseData.hardskill);
 
   }
 
@@ -148,12 +146,26 @@ export class DragDropComponent implements OnInit, OnDestroy {
     this.nameOrder = !this.nameOrder;
   }
 
+  
+  resumeOrder = true;
+  resumeOrdered() {
+    if (this.resumeOrder) {
+      this.listToOrdered.sort((a: any, b: any) => 
+        a.resume.localeCompare(b.resume)
+      );
+      
+    } else {
+      this.listToOrdered.sort((a: any, b: any) => 
+      b.resume.localeCompare(a.resume)
+      );
+      
+    }
+    this.resumeOrder = !this.resumeOrder;
+  }
+
 
   assessmentOrder = true;
   assessmentOrdered() {
-    this.listToOrdered.sort((a: any, b: any) =>
-      a.assessment - b.assessment
-    );
     if (this.assessmentOrder) {
       this.listToOrdered.sort((a: any, b: any) =>
       a.assessment - b.assessment
@@ -166,14 +178,18 @@ export class DragDropComponent implements OnInit, OnDestroy {
     this.assessmentOrder = !this.assessmentOrder;
   }
 
-
-  deployOrdered() {
-    this.listToOrdered.sort((a: any, b: any) =>
-      a.orderdeploy - b.orderdeploy ||
-      a.id - b.id ||  // PENDIENTE Esto debiera borrarse
-      a.resume?.localeCompare(b.resume) ||
-      a.name?.localeCompare(b.name)
+  sinceOrder = true;
+  sinceOrdered() {
+    if (this.sinceOrder) {
+      this.listToOrdered.sort((a: any, b: any) =>
+      a.since - b.since
     );
+    } else {
+      this.listToOrdered.sort((a: any, b: any) =>
+      b.since - a.since
+    );
+    }
+    this.sinceOrder = !this.sinceOrder;
   }
 
 

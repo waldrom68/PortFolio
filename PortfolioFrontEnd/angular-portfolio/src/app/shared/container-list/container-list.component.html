@@ -1,18 +1,39 @@
 <div class="modal-header">
-    <h5 class="modal-title">
-        Personalice el orden
-    </h5>
 
-    <button type="button" class="close" aria-label="Close" (click)="dialogRef.close(false)">
-        <span aria-hidden="false">&times;</span>
-    </button>
+    <h5 class="modal-title m-auto">Personalizar orden</h5>
+    
 </div>
 
-<div>
+<div class="modal-header">
 
-    <app-drag-drop [(listToOrdered)]="listToOrdered" 
-        (listToOrderedChange)="sendOrderList(listToOrdered); dialogRef.close(false)"
+    <app-drag-drop 
+    [(listToOrdered)]="listToOrdered" 
+    [fields]="fields"
+        (listToOrderedChange)="sendOrderList(listToOrdered); dialogRef.close(true)"
         (onCancel)="cancel(); dialogRef.close(false)"
     ></app-drag-drop>
+
+</div>
+
+
+<div class="modal-footer">
+
+    <!-- SUBMIT O CANCELAR Y CERRAR -->
+      <div class="form-row m-2">
+  
+        <div class="form-group col d-flex align-items-center m-auto justify-content-around">
+          <button (click)="sendOrderList(listToOrdered); dialogRef.close(true)" 
+          class="btn btn-success btn-sm p-2 m-2">
+            Guardar
+          </button>
+        </div>
+        <div class="form-group col d-flex align-items-center m-auto justify-content-around">
+          <button class="btn btn-danger btn-sm p-2 m-2" 
+          (click)="cancel(); dialogRef.close(false)">
+            Cancelar
+          </button>
+  
+        </div>
+      </div> <!-- FIN SUBMIT CANCEL -->
 
 </div>
