@@ -1,15 +1,40 @@
   <div class="container-fluid border border-5 border-danger" *ngIf="listToOrdered">
     <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
 
-      <table class="table-responsive move-list text-center align-middle">
+      <table class="move-list table-responsive text-center align-middle">
         <colgroup>
+          <col >
+          <col >
+          <col >
           <col >
           <col >
           <!-- <col class="bg-danger" > -->
         </colgroup>
-        <thead>
+        <thead style="border-bottom:2px dashed whitesmoke !important;">
           <tr>
             
+            <th scope="col" *ngIf="fields.includes('startdate')">
+              <label class="btn btn-secondary btn-block bg-dark"
+                (click)="startOrdered();">
+                <fa-icon *ngIf="startDate" [icon]="faArrowDown19" ngClass="fa-1x">
+                </fa-icon>
+                <fa-icon *ngIf="!startDate" [icon]="faArrowDown91" ngClass="fa-1x">
+                </fa-icon>
+                <span class="ml-1">Desde</span>
+              </label>
+            </th>
+
+            <th scope="col" *ngIf="fields.includes('enddate')">
+              <label class="btn btn-secondary btn-block bg-dark"
+                (click)="endOrdered();">
+                <fa-icon *ngIf="endDate" [icon]="faArrowDown19" ngClass="fa-1x">
+                </fa-icon>
+                <fa-icon *ngIf="!endDate" [icon]="faArrowDown91" ngClass="fa-1x">
+                </fa-icon>
+                <span class="ml-1">Hasta</span>
+              </label>
+            </th>
+
             <th scope="col" *ngIf="fields.includes('since')">
               <label class="btn btn-secondary btn-block bg-dark"
                 (click)="sinceOrdered();">
@@ -17,7 +42,7 @@
                 </fa-icon>
                 <fa-icon *ngIf="!sinceOrder" [icon]="faArrowDown91" ngClass="fa-1x">
                 </fa-icon>
-                <span class="ml-1">Por desde</span>
+                <span class="ml-1">Fecha</span>
               </label>
             </th>
 
@@ -28,18 +53,18 @@
                 </fa-icon>
                 <fa-icon *ngIf="!nameOrder" [icon]="faArrowDownZA" ngClass="fa-1x">
                 </fa-icon>
-                <span class="ml-1">Por nombre</span>
+                <span class="ml-1">Nombre</span>
               </label>
             </th>
             
             <th scope="col" *ngIf="fields.includes('resume')">
               <label class="btn btn-secondary btn-block bg-dark"
-                (click)="nameOrdered();">
+                (click)="resumeOrdered();">
                 <fa-icon *ngIf="resumeOrder" [icon]="faArrowDownAZ" ngClass="fa-1x">
                 </fa-icon>
                 <fa-icon *ngIf="!resumeOrder" [icon]="faArrowDownZA" ngClass="fa-1x">
                 </fa-icon>
-                <span class="ml-1">Por resume</span>
+                <span class="ml-1">Resumen</span>
               </label>
             </th>
 
@@ -50,7 +75,7 @@
                 </fa-icon>
                 <fa-icon *ngIf="!assessmentOrder" [icon]="faArrowDown91" ngClass="fa-1x">
                 </fa-icon>
-                <span class="ml-1">Por valor</span>
+                <span class="ml-1">Valor</span>
               </label>
             </th>
 
@@ -62,11 +87,17 @@
           <tr class="move-block text-center" *ngFor="let elemento of listToOrdered" cdkDrag
           >
 
+            <td *ngIf="fields.includes('startdate')">{{elemento.startDate  | date:'MM-yyyy'}}</td>
+
+            <td *ngIf="fields.includes('enddate')">{{elemento.endDate  | date:'MM-yyyy'}}</td>
+
             <td *ngIf="fields.includes('since')">{{elemento.since  | date:'MM-yyyy'}}</td>
 
             <td *ngIf="fields.includes('name')">{{elemento.name}}</td>
 
-            <td *ngIf="fields.includes('resume')">{{elemento.resume}}</td>
+            <td *ngIf="fields.includes('resume')">
+              <span style="font-size: initial;"> {{truncateString(elemento.resume, 45)}}</span>
+            </td>
 
             <td *ngIf="fields.includes('assessment')">{{elemento.assessment}}</td>
 

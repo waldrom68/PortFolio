@@ -1,8 +1,19 @@
-<div class="table-dark text-left container-fluid py-4" id="Init">
+<div class="table-dark text-left container-fluid py-1 pb-4" id="Init"  >
 
-    <ng-container *ngIf="baseData.studie.length; else agregar">
-        
-        <div *ngIf="!showForm">
+    <ng-container *ngIf="baseData.laboralCareer.length; else agregar">
+        <div class="row d-flex justify-content-start"
+        >
+            <button *ngIf="esAdmin && ( openForm == 0)"
+            (click)="openOrdered();"
+            class="m-1"
+            >
+                <fa-icon [icon]="faUpDown" ngClass="fa-1x">
+                </fa-icon>
+                <small><span class="ml-1">Orden</span></small>
+            </button>
+        </div>
+
+    <div class="listado mt-2" *ngIf="!showForm">
            
             <app-studie-item 
                 *ngFor="let item of baseData.studie"
@@ -20,7 +31,6 @@
 
     <app-studie-form
         *ngIf="showForm && esAdmin"
-        [ngStyle]="{'width':'100%'}"
         [title]="''"
 
         (onUpdate)=" addItem($event)"

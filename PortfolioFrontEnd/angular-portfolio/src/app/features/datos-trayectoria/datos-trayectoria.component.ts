@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { BaseDataService, DataService } from 'src/app/service/data.service';
 import { AdminService } from 'src/app/service/auth.service';
 
-import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { faPlusCircle, faUpDown } from '@fortawesome/free-solid-svg-icons';
 
 import { LaboralCareer, FullPersonDTO } from '../../models'
 
@@ -11,6 +11,7 @@ import { MessageBoxComponent } from '../../shared/message-box/message-box.compon
 
 import { Subscription } from 'rxjs';
 import { FormService, UiService } from 'src/app/service/ui.service';
+import { ContainerListComponent } from 'src/app/shared/container-list/container-list.component';
 
 
 @Component({
@@ -23,6 +24,7 @@ export class DatosTrayectoriaComponent implements OnInit, OnDestroy {
   showForm: boolean = false;  // flag para mostrar o no el formulario
 
   faPlusCircle = faPlusCircle;
+  faUpDown = faUpDown;
 
   showBtnAction: boolean = true;  // flag para mostrar o no los btn's de acciones del usuario
 
@@ -44,6 +46,10 @@ export class DatosTrayectoriaComponent implements OnInit, OnDestroy {
   element: object;
   fragment: string = 'Init';
 
+  // componente order
+  listToOrdered: LaboralCareer[];
+  oldData: LaboralCareer[];
+
   constructor(
     private dataService: DataService,
     private baseDataService: BaseDataService,
@@ -55,10 +61,7 @@ export class DatosTrayectoriaComponent implements OnInit, OnDestroy {
 
     private adminService: AdminService,
     private formService: FormService,
-  ) { }
-
-
-  ngOnInit(): void {
+  ) {
     this.BaseDataServiceSubscription = this.baseDataService.currentBaseData.subscribe(
       currentData => {
         this.baseData = currentData;
@@ -75,6 +78,16 @@ export class DatosTrayectoriaComponent implements OnInit, OnDestroy {
         this.openForm = currentForm > 0 ? currentForm : 0;
       }
     );
+
+   }
+
+
+  ngOnInit(): void {
+
+    
+    this.listToOrdered = this.baseData.laboralCareer;
+    this.oldData = Object.assign({}, this.baseData.laboralCareer);
+
     this.resetForm()
 
   }
@@ -205,6 +218,82 @@ export class DatosTrayectoriaComponent implements OnInit, OnDestroy {
     )
   }
 
+  // BLOQUE CODIGO DE ORDER COMPONENT
+  openOrdered() {
+    const dialogConfig = new MatDialogConfig();
+    // The user can't close the dialog by clicking outside its body
+    dialogConfig.disableClose = true;
+    dialogConfig.id = "modal-reorder";
+    // dialogConfig.panelClass = "modal-component";
+    // dialogConfig.backdropClass = "modal-component"
+
+    dialogConfig.height = "100%";
+    dialogConfig.width = "auto";
+    dialogConfig.data = {
+      listToOrdered: this.listToOrdered,
+      fields: ["startdate","enddate","resume"],
+    }
+
+    const modalDialog = this.matDialog.open(ContainerListComponent, dialogConfig);
+
+    modalDialog.afterClosed().subscribe(
+      data => {
+        // console.log("Dialogo output: ", data);
+        if (data) {
+          this.orderedUpdate()
+        }
+        else {
+          this.orderedCancel();
+        }
+      }
+
+    )
+
+  }
+
+  orderedCancel() {
+    console.log("Cancelada operacion de reorden");
+
+  }
+
+  orderedUpdate() {
+    this.listToOrdered.forEach((elemento: LaboralCareer) => {
+      elemento.person = this.baseData.id
+    })
+
+    this.saveReOrder();
+
+  }
+
+  saveReOrder() {
+    this.dataService.upDateOrderEntity(this.listToOrdered, "/laboralcareer").subscribe({
+      next: (v) => {
+        console.log("Nuevo orden guardado exitosamente");
+        this.uiService.msgboxOk(['Nuevo orden guardado exitosamente'],);
+        this.baseDataService.setCurrentBaseData(this.baseData);
+
+      },
+      error: (e) => {
+        let msg = new Array()
+        msg.push("Se quizo guardar un reordenamiento sin exito");
+        msg.push(e.error.mensaje ? e.error.mensaje : e.message);
+        this.uiService.msgboxErr(msg,);
+
+        this.orderedCancel();
+        // this.baseData.project = this.oldData;
+        
+        // PENDIENTE, solucion de compromiso para revertir cambios
+        for (let index = 0; index < this.baseData.project.length; index++) {
+          const element = this.oldData[index];
+          this.baseData.laboralCareer[index] = element;
+        }
+        console.log("Se quizo guardar un reordenamiento sin exito", e.error.mensaje);
+      },
+      complete: () => console.log("Completado el reordenamiento de la trayectoria")
+    }
+    );
+  }
+  // FIN BLOQUE DE ORDER COMPONENT
 
   ngAfterViewInit(): void {
   let element = this.renderer.selectRootElement(`#${this.fragment}`, true);

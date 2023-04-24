@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Inject, Output, OnDestroy } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 
+
 @Component({
   selector: 'app-container-list',
   templateUrl: './container-list.component.html',
@@ -18,6 +19,27 @@ export class ContainerListComponent implements OnInit, OnDestroy {
 
   oldData: any[];
   copy: [];
+  realChange = new Array();
+
+
+  compareObjects(object1: any, object2: any): any {
+    let cambios = new Array();
+    let clave: any;
+    Object.keys(object1).forEach((control: any) => {
+      // console.log(control);
+
+      const typedControl: any = object1[control];
+      if (typedControl != object2[control]) {
+        clave = control;
+        cambios[clave] = { key: control, "newValue": typedControl }
+      }
+
+    });
+    console.log(`Hubo concretamente ${Object.keys(cambios).length} cambios`);
+
+    return Object.keys(cambios).length > 0 ? cambios : null;
+  }
+
 
   constructor(
     public matDialog: MatDialog,
@@ -51,7 +73,7 @@ export class ContainerListComponent implements OnInit, OnDestroy {
   }
 
   sendOrderList(lista:any) {
-
+    this.processReordering();
     this.listToOrdered = lista;
     this.listToOrderedChange.emit(this.listToOrdered);
   }
@@ -70,6 +92,34 @@ export class ContainerListComponent implements OnInit, OnDestroy {
 
     this.listToOrderedChange.emit(this.listToOrdered);
     this.onCancel.emit();
+  }
+
+  processReordering() {
+    this.realChange = this.compareObjects(this.listToOrdered, this.oldData)
+    if (this.realChange?.length > 0) {
+
+      for (let elemento = 0; elemento < this.listToOrdered.length; elemento++) {
+        const element = this.listToOrdered[elemento];
+        element.orderdeploy = elemento + 1;
+
+        // DOY FORMATO A LOS CAMPOS DE FECHA
+        element.since ? element.since : new Date(),
+        'yyyy-MM-dd', 'en', 'UTC-3'
+        // DOY FORMATO A LOS CAMPOS DE FECHA
+        element.startDate ? element.startDate : new Date(),
+        'yyyy-MM-dd', 'en', 'UTC-3'
+        // DOY FORMATO A LOS CAMPOS DE FECHA
+        element.endDate ? element.endDate : new Date(),
+        'yyyy-MM-dd', 'en', 'UTC-3'
+      }
+      console.log("esto es lo que queda despues de processReordering", this.listToOrdered);
+      
+      this.listToOrderedChange.emit(this.listToOrdered);
+
+    } else {
+      console.log("No hubo cambios para procesar");
+    }
+    
   }
 
 }

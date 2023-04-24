@@ -74,6 +74,7 @@ a.header {
 
 ul, li {
     list-style-type: none;
+    font-size: large;
 }
 
 p {
@@ -340,7 +341,7 @@ ul.head a:hover {
 
 a.url:hover, a.url:active, a.url:visited {
     border: none;
-    color: #0056b3;
+    color: blue;
     text-decoration: none;
     cursor: pointer;
 }

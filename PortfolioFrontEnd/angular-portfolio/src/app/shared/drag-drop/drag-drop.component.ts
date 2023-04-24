@@ -14,7 +14,6 @@ import { faArrowDownAZ, faArrowDownZA, faArrowDown19, faArrowDown91, faUpDown } 
 })
 
 
-
 export class DragDropComponent implements OnInit /*, OnDestroy*/ {
   // https://material.angular.io/cdk/drag-drop/overview
   // https://blog.openreplay.com/drag-and-drop-with-angular-material/
@@ -41,25 +40,25 @@ export class DragDropComponent implements OnInit /*, OnDestroy*/ {
   // listToOrdered: any[] = [];
   oldData: any[];
 
-  realChange = new Array();
+  // realChange = new Array();
 
-  compareObjects(object1: any, object2: any): any {
-    let cambios = new Array();
-    let clave: any;
-    Object.keys(object1).forEach((control: any) => {
-      // console.log(control);
+  // compareObjects(object1: any, object2: any): any {
+  //   let cambios = new Array();
+  //   let clave: any;
+  //   Object.keys(object1).forEach((control: any) => {
+  //     // console.log(control);
 
-      const typedControl: any = object1[control];
-      if (typedControl != object2[control]) {
-        clave = control;
-        cambios[clave] = { key: control, "newValue": typedControl }
-      }
+  //     const typedControl: any = object1[control];
+  //     if (typedControl != object2[control]) {
+  //       clave = control;
+  //       cambios[clave] = { key: control, "newValue": typedControl }
+  //     }
 
-    });
-    console.log(`Hubo concretamente ${Object.keys(cambios).length} cambios`);
+  //   });
+  //   console.log(`Hubo concretamente ${Object.keys(cambios).length} cambios`);
 
-    return Object.keys(cambios).length > 0 ? cambios : null;
-  }
+  //   return Object.keys(cambios).length > 0 ? cambios : null;
+  // }
 
 
   drop(event: CdkDragDrop<string[]>) {
@@ -90,33 +89,34 @@ export class DragDropComponent implements OnInit /*, OnDestroy*/ {
   // }
 
 
+  // processReordering() {
+  // REUBICADO EN COMPONENTE QUE TIENE EL LISTADO, container-list.ts
+  //   this.realChange = this.compareObjects(this.listToOrdered, this.oldData)
+  //   if (this.realChange?.length > 0) {
 
-  processReordering() {
-    this.realChange = this.compareObjects(this.listToOrdered, this.oldData)
-    if (this.realChange?.length > 0) {
+  //     for (let elemento = 0; elemento < this.listToOrdered.length; elemento++) {
+  //       const element = this.listToOrdered[elemento];
+  //       element.orderdeploy = elemento + 1;
 
-      for (let elemento = 0; elemento < this.listToOrdered.length; elemento++) {
-        const element = this.listToOrdered[elemento];
-        element.orderdeploy = elemento + 1;
+  //       // DOY FORMATO A LOS CAMPOS DE FECHA
+  //       element.since ? element.since : new Date(),
+  //       'yyyy-MM-dd', 'en', 'UTC-3'
+  //       // DOY FORMATO A LOS CAMPOS DE FECHA
+  //       element.startDate ? element.startDate : new Date(),
+  //       'yyyy-MM-dd', 'en', 'UTC-3'
+  //       // DOY FORMATO A LOS CAMPOS DE FECHA
+  //       element.endDate ? element.endDate : new Date(),
+  //       'yyyy-MM-dd', 'en', 'UTC-3'
+  //     }
+  //     console.log("esto es lo que queda despues de processReordering", this.listToOrdered);
+      
+  //     this.listToOrderedChange.emit(this.listToOrdered);
 
-        // DOY FORMATO A LOS CAMPOS DE FECHA
-        element.since ? element.since : new Date(),
-        'yyyy-MM-dd', 'en', 'UTC-3'
-        // DOY FORMATO A LOS CAMPOS DE FECHA
-        element.startDate ? element.startDate : new Date(),
-        'yyyy-MM-dd', 'en', 'UTC-3'
-        // DOY FORMATO A LOS CAMPOS DE FECHA
-        element.endDate ? element.endDate : new Date(),
-        'yyyy-MM-dd', 'en', 'UTC-3'
-      }
-
-      this.listToOrderedChange.emit(this.listToOrdered);
-
-    } else {
-      console.log("No hubo cambios para procesar");
-    }
+  //   } else {
+  //     console.log("No hubo cambios para procesar");
+  //   }
     
-  }
+  // }
   
   onDragEnded() {
     // REUBICADO EN COMPONENTE QUE TIENE EL LISTADO, container-list.ts
@@ -192,5 +192,41 @@ export class DragDropComponent implements OnInit /*, OnDestroy*/ {
     this.sinceOrder = !this.sinceOrder;
   }
 
+  startOrder = true;
+  startOrdered() {
+    if (this.startOrder) {
+      this.listToOrdered.sort((a: any, b: any) =>
+      a.startDate - b.startDate
+    );
+    } else {
+      this.listToOrdered.sort((a: any, b: any) =>
+      b.startDate - a.startDate
+    );
+    }
+    this.startOrder = !this.startOrder;
+  }
+
+  endOrder = true;
+  endOrdered() {
+    if (this.endOrder) {
+      this.listToOrdered.sort((a: any, b: any) =>
+      a.endDate - b.endDate
+    );
+    } else {
+      this.listToOrdered.sort((a: any, b: any) =>
+      b.endDate - a.endDate
+    );
+    }
+    this.endOrder = !this.endOrder;
+  }
+
+  truncateString(str:string, num:number) {
+    if (str.length > num) {
+      return str.slice(0, num) + "...";
+    } else {
+      return str;
+    }
+
+}
 
 }

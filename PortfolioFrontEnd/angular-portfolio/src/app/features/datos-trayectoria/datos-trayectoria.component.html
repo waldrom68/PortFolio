@@ -1,25 +1,36 @@
-<div class="table-dark text-left container-fluid py-4" id="Init" >
+<div class="table-dark text-left container-fluid py-1 pb-4" id="Init"  >
 
     <ng-container *ngIf="baseData.laboralCareer.length; else agregar">
-    
-        <div id="listado" *ngIf="!showForm" >
+        <div class="row d-flex justify-content-start"
+        >
+            <button *ngIf="esAdmin && ( openForm == 0)"
+            (click)="openOrdered();"
+            class="m-1"
+            >
+                <fa-icon [icon]="faUpDown" ngClass="fa-1x">
+                </fa-icon>
+                <small><span class="ml-1">Orden</span></small>
+            </button>
+        </div>
+
+    <div class="listado mt-2" *ngIf="!showForm">
 
             <app-career-item 
-                *ngFor="let item of baseData.laboralCareer"
-                [item]= "item"
-                (onDelete)="openModalDelete(item)"
+            *ngFor="let item of baseData.laboralCareer"
+            [item]="item"
 
-                [(showBtnAction)]="showBtnAction" 
-                (showBtnActionChange)="showBtnAction">
-                >
+            (onDelete)="openModalDelete(item)"
+            [(showBtnAction)]="showBtnAction"
+            (showBtnActionChange)="showBtnAction"
+            >
             </app-career-item>
 
         </div>
     </ng-container>
 
+    <!-- [ngStyle]="{'width':'100%'}" -->
     <app-career-form
         *ngIf="showForm && esAdmin"
-        [ngStyle]="{'width':'100%'}"
         [title]="''"
         [formData]="formData"
         

@@ -1,29 +1,29 @@
-<div class="table-dark row " id="Init" *ngIf="!showForm && openForm == 0">
+<div id="Init" *ngIf="!showForm && openForm == 0">
     <!-- <div  class="row container-fluid"> -->
 
-    <div [ngClass]="{'p-0 col-10':esAdmin, 'col-12':!esAdmin}">
-        <div [ngClass]="color" (mouseover)="changeStyle($event)" (mouseout)="changeStyle($event)">
+    <!-- <div [ngClass]="{'p-0 col-10':esAdmin, 'col-12':!esAdmin}"> -->
+    <div [ngClass]="color" (mouseover)="changeStyle($event)" (mouseout)="changeStyle($event)">
 
-            <ul class="head border rounded fade-in-ul mb-0 mt-2">
-                <div *ngIf="item.endDate; else elseBlock"
-                ngClass="information"
-                (click)="verOrga(item);"
-                >
-                    <h6>({{item.startDate | date:'MM-yyyy' }} hasta {{item.endDate | date:'MM-yyyy'}})
-                        {{item.organization.name}} -{{item.degree.name}}-</h6>
-                </div>
-                <ng-template #elseBlock>
-                    <h6>(Desde {{item.startDate | date:'MM-yyyy' }}) {{item.organization.name}}
-                        -{{item.degree.name}}-</h6>
-                </ng-template>
+        <ul class="head border rounded fade-in-ul mb-0 mt-2">
+            <div *ngIf="item.endDate; else elseBlock"
+            ngClass="information"
+            (click)="verOrga(item);"
+            >
+                <h6>({{item.startDate | date:'MM-yyyy' }} hasta {{item.endDate | date:'MM-yyyy'}})
+                    {{item.organization.name}} -{{item.degree.name}}-</h6>
+            </div>
+            <ng-template #elseBlock>
+                <h6>(Desde {{item.startDate | date:'MM-yyyy' }}) {{item.organization.name}}
+                    -{{item.degree.name}}-</h6>
+            </ng-template>
 
-                <li class="resume" *ngFor="let elemento of item.name.split('\n')"
-                >
-                    <p><i> {{elemento}}</i></p>
-                </li>
-            </ul>
-        </div>
+            <li class="resume" *ngFor="let elemento of item.name.split('\n')"
+            >
+                <p><i> {{elemento}}</i></p>
+            </li>
+        </ul>
     </div>
+    <!-- </div> -->
 
     <!-- ##################### -->
     <div *ngIf="esAdmin  && openForm == 0" class="col icon-group">
@@ -43,10 +43,15 @@
 </div>
 <!-- </div> -->
 
-<app-studie-form *ngIf="showForm && esAdmin" [ngStyle]="{'width':'100%'}" 
+<app-studie-form *ngIf="showForm && esAdmin" 
+
 [title]="''" 
 [formData]="item"
 
 (onUpdate)="update($event);"
-(cancel)="cancelation($event)">
+(cancel)="cancelation($event)"
+
+[(showBtnAction)]="showBtnAction" 
+(showBtnActionChange)="showBtnAction"
+>
 </app-studie-form>

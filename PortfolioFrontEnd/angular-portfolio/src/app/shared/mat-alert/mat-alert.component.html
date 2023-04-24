@@ -1,3 +1,7 @@
+<div class="modal-header justify-content-end m-0 p-0">
+  <span *ngIf="modalData.type=='info'" class="close text-dark" aria-hidden="false" (click)="dismiss()">&times;</span>
+</div>
+
 <div class="modal-dialog modal-lg" tabindex="-1" id="prueba">
 
   <div class="modal-content" [ngClass]="{error: modalData.type=='error', ok: modalData.type=='ok', info: modalData.type=='info'}">
@@ -22,7 +26,7 @@
       </div>
 
       <div class="col-auto  m-0 p-0">
-        <span *ngIf="modalData.type!='ok'" class="close" aria-hidden="false" (click)="dismiss()">&times;</span>
+        <span *ngIf="modalData.type=='error'" class="close" aria-hidden="false" (click)="dismiss()">&times;</span>
         <span *ngIf="modalData.type=='ok'" aria-hidden="false" (click)="dismiss()">&#10003;</span>
       </div>
     </div>

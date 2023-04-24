@@ -7,12 +7,15 @@
     border-radius: 4px;
     overflow: auto;
     margin-right: 1rem;
+    margin-bottom: 1rem;
+    overflow: auto;
 }
 
 .move-block {
     color: #ccc;
     cursor: move;
     border: 3px dashed transparent !important;
+    border: 3px double gray !important;
 } 
 
 .cdk-drag-preview {
@@ -54,5 +57,6 @@
 
 .table {
     border-collapse: separate;
-    border-spacing:0 10px;
+    /* border-spacing:0 10px; */
 }
+
