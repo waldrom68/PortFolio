@@ -1,7 +1,9 @@
 <!-- HTML principal -->
 <!-- <router-outlet></router-outlet> -->
 
-<div [ngClass]="{'user': !esAdmin, 'admin': esAdmin}">
+<div [ngClass]="{'user': !esAdmin, 'admin': esAdmin}" 
+  [ngStyle]="{ 'cursor': cursorStyle }"  
+  id="Init">
 
   <ng-container *ngIf="statusReady &&!statusError; else wait">
 

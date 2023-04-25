@@ -46,6 +46,9 @@ export class AppComponent implements OnInit {
   // progreesValueabc$?: Observable<number>;
   // llamado?: number
 
+  // PRUEBA PARA EL MANEJO DEL CURSOR DESDE EL CODIGO, PARA LOS STATUS WAIT
+  cursorStyle = 'default'
+
 
   constructor(
     // Inicializamos los servicios del modulo User

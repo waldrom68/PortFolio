@@ -72,7 +72,7 @@
       <div class="col-sm-6">
         <!-- <fa-icon class="text-warning fa-1x" [icon]="faAt"> </fa-icon> -->
         <fa-icon class="text-warning fa-1x latente" [icon]="faArrowRight"> </fa-icon>
-        <h5 class="text-white text-center ml-2">{{baseData.email}}</h5>
+        <h6 class="text-white text-center ml-2">{{baseData.email}}</h6>
 
       </div>
 
@@ -80,21 +80,23 @@
 
 
 
-        <div *ngFor="let elemento of baseData.socialnetwork" class="fa-container m-2 d-flex">
+        <div *ngFor="let elemento of baseData.socialnetwork" class="m-2 d-flex">
           
           <!-- Por validacion, debe tener un enlace a una url, pero por las -->
-          <ng-container *ngIf="elemento.url.length; else sinEnlace">
-            <a class="url" href="https://{{elemento.url}}" target="_blank">
-              <fa-icon *ngIf="iconExists(iconPrefix, elemento.iconname);"
-                [icon]="[iconPrefix , elemento.iconname]"></fa-icon>
-                <span class="fa-container ml-2">{{elemento.name}}</span>
-            </a>
+          <ng-container *ngIf="elemento.url.length; else sinEnlace"  >
+            <div class="url" >
+              <a href="https://{{elemento.url}}" target="_blank">
+                <fa-icon *ngIf="iconExists(iconPrefix, elemento.iconname);"
+                  [icon]="[iconPrefix , elemento.iconname]"></fa-icon>
+                  <span class="ml-2">{{elemento.name}}</span>
+              </a>
+            </div>
           </ng-container>
           <!-- Dejo este otro contenedor sin enlace -->
           <ng-template #sinEnlace>
             <fa-icon *ngIf="iconExists(iconPrefix, elemento.iconname);"
               [icon]="[iconPrefix , elemento.iconname]"></fa-icon>
-            <span class="fa-container ml-2">{{elemento.name}}</span>
+            <span class="ml-2">{{elemento.name}}</span>
           </ng-template>
         </div>
 

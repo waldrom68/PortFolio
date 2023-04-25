@@ -50,5 +50,6 @@ a.url:hover, a.url:active, a.url:visited {
   border: none;
   color: var(--text-warning) ;
   text-decoration: none;
-  cursor: pointer;
+  cursor: help !important;
 }
+

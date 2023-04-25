@@ -18,14 +18,20 @@ button:hover {
 }
 
 
-.fa-container {
+.fa-container, .url {
     color: grey !important;
     background-color: transparent !important;
     cursor: pointer;
 }
-.fa-container:hover {
+.fa-container:hover, .url:hover {
     color: white !important;
     background-color: transparent !important;
+}
+
+a:hover, a:active, a:visited {
+    color: white !important;
+    text-decoration: none;
+    cursor: pointer;
 }
 
 .latente {

@@ -11,7 +11,8 @@ export const environment = {
   },
   production: true,
   // apiURL: "https://yoprogramo-waldrom68.koyeb.app:8000",
-  apiURL: "https://yoprogramo-waldrom68.onrender.com",
+  apiURL: "https://yoprogramo-waldrom68.onrender.com", 
+  // apiURL: "https://portfolio-service-wdr.onrender.com",  // RENDER
   idPersona:1,
 };
 
